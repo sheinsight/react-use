@@ -13,7 +13,7 @@ Primarily inspired by [VueUse](https://vueuse.org/), along with influences from 
 - **Flexibility**: Features include [ElementTarget](/docs/features/element-target), [Ref Getter](/docs/features/ref-getter), [Pausable](/docs/features/pausable), and more.
 - **SSR-friendly**: Ensures that all Hooks are compatible with Server-side Rendering (SSR).
 - **Tree-shakable**: Designed and delivered with ESM, import only what you need.
-- **Lightweight**: Boasts [zero dependencies](https://github.com/sheinsight/hooks/blob/main/package.json).
+- **Lightweight**: Boasts [zero dependencies](https://github.com/sheinsight/use/blob/main/package.json).
 - **First-class TypeScript Support**: Written in [TypeScript](https://www.typescriptlang.org/) with well-named type definitions.
 - **~~Comprehensive Testing~~**: (Coming soon...)
 
