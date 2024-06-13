@@ -33,7 +33,7 @@ export function useCssVar<T extends HTMLElement = HTMLElement>(
   const { defaultValue = '', observe = false } = options
 
   const [variable, _setVariable] = useSafeState(
-    ensureSSRSecurity(() => getCssVar(unwrapGettable(propName), defaultValue), defaultValue),
+    ensureSSRSecurity(() => getCssVar(unwrapGettable(propName), target, defaultValue), defaultValue),
   )
 
   const el = useTargetElement<T>(target)

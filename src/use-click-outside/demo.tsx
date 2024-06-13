@@ -3,7 +3,7 @@ import { useClickOutside, useCounter } from '@shined/use'
 import { useRef } from 'react'
 
 const cls =
-  'px-4 size-60px rounded text-white flex items-center justify-center cursor-pointer select-none hover:opacity-80 active:opacity-96 transition'
+  'px-4 size-60px rounded text-white flex items-center justify-center cursor-pointer select-none hover:opacity-96 active:opacity-80 transition'
 
 export function App() {
   const [count, actions] = useCounter(0)
