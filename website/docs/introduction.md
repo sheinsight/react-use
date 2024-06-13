@@ -24,4 +24,4 @@ Visit the [Get Started](/docs/get-started) section to explore how it can be inte
 - **Safe State**: Implements a [safe state](/docs/optimization/safe-state) strategy for all stateful Hooks, reducing bugs and unwanted behaviors.
 - **Stable functions**: Every exported function benefits from [stabilization](/docs/optimization/stabilization) by default.
 - **Latest State**: Avoids the expired closure issues by using [latest](/docs/optimization/latest-state) state internally.
-- **Reduced Unnecessary Rerenders**: use [Pausable](/docs/features/pausable) instance to control the behavior of some Hooks optionally.
+- **Reduced Unnecessary Rerenders**: Use [Pausable](/docs/features/pausable) instance to control the behavior of some Hooks optionally.
