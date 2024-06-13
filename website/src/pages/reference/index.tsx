@@ -5,5 +5,5 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 export default function Reference() {
   const { siteConfig } = useDocusaurusContext()
   const hook = hooks[0]?.name ?? 'create-single-loading'
-  return <Redirect to={`${siteConfig.baseUrl}/reference/${hook}`} />
+  return <Redirect to={`${siteConfig.baseUrl}reference/${hook}`} />
 }
