@@ -1,0 +1,102 @@
+# useStyleTag
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" />
+
+A React Hook that helps to apply a style tag to the document with ease in React.
+
+## Demo
+
+Try to click to load css, and then edit the style (such as `* { color: red; }`) in the input box below and see the style applied to the document.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const styleTag = useStyleTag(initialCss, options)
+```
+
+### Options
+
+```tsx
+export interface UseStyleTagOptions {
+  /**
+   * Media query for styles to apply
+   */
+  media?: string
+  /**
+   * Whether to load the style tag immediately
+   *
+   * @default true
+   */
+  immediate?: boolean
+  /**
+   * Whether to manually load the style tag
+   *
+   * @default false
+   */
+  manual?: boolean
+  /**
+   * Unique identifier of the style tag
+   *
+   * @default auto-incremented
+   */
+  id?: string
+}
+```
+
+### Returns
+
+```tsx
+export interface UseStyleTagReturn {
+  /**
+   * Unique identifier of the style tag
+   */
+  id: string
+  /**
+   * CSS content
+   */
+  css: string
+  /**
+   * Set CSS content
+   */
+  setCss: (newCss: string) => void
+  /**
+   * Reset CSS content to initial value
+   */
+  resetCss(): void
+  /**
+   * Load the style tag
+   */
+  load(): void
+  /**
+   * Unload the style tag
+   */
+  unload(): void
+  /**
+   * A ref that holds the style tag element
+   */
+  styleTag: MutableRefObject<HTMLStyleElement | null>
+  /**
+   * A ref that holds the loading state of the style tag
+   */
+  isLoaded: MutableRefObject<boolean>
+}
+```

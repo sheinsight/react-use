@@ -1,0 +1,74 @@
+# useWindowScroll
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" />
+
+A React Hook that helps to track and manipulate window scroll state.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const scroll = useWindowScroll(options)
+```
+
+### Options
+
+```tsx
+export interface UseWindowScrollOptions {
+  /**
+   * The scroll behavior, set to 'smooth' to enable smooth scrolling.
+   *
+   * @default 'auto'
+   */
+  behavior?: ScrollBehavior
+}
+```
+
+### Returns
+
+```tsx
+export interface UseWindowScrollReturn extends Position {
+  /**
+   * Scrolls the window to the specified position.
+   *
+   * @param newPos The new position to scroll to.
+   */
+  scrollTo(newPos: Partial<Position>): void
+  /**
+   * Scrolls the window to the top.
+   */
+  scrollToTop(): void
+  /**
+   * Scrolls the window to the bottom.
+   */
+  scrollToBottom(): void
+  /**
+   * Scrolls the window to the left.
+   */
+  scrollToLeft(): void
+  /**
+   * Scrolls the window to the right.
+   */
+  scrollToRight(): void
+}
+```

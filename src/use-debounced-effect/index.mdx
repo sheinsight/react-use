@@ -1,0 +1,48 @@
+# useDebouncedEffect
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" lowLevel />
+
+A React Hook like [React.useEffect](https://react.dev/reference/react/useEffect), but debounced.
+
+## Demo
+
+Quickly click the button below, you will see the effect is debounced.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+useDebouncedEffect(callback, deps, options)
+```
+
+### Callback
+
+Same as [React.useEffect](https://react.dev/reference/react/useEffect).
+
+### Deps
+
+Same as [React.useEffect](https://react.dev/reference/react/useEffect).
+
+### Options
+
+import Link from '@docusaurus/Link'
+
+See <Link to="/reference/use-debounced-fn/#options">Options of `useDebouncedFn`</Link>.

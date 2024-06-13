@@ -1,0 +1,80 @@
+# usePerformanceObserver
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" pausable isSupported lowLevel />
+
+A React Hook that helps to use [PerformanceObserver API](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver) with ease.
+
+## Demo
+
+Try to open DevTools to see the performance observer logs.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { observerRef, isSupported, ...controls } = usePerformanceObserver(callback, options)
+```
+
+### Callback
+
+`PerformanceObserverCallback` function that will be called when the observer is triggered.
+
+### Options
+
+```tsx
+export type UseWebObserverOptions = {
+  /**
+   * Start the observer immediate after calling this function
+   *
+   * @default true
+   */
+  immediate?: boolean
+}
+
+interface PerformanceObserverInit {
+  buffered?: boolean
+  entryTypes?: string[]
+  type?: string
+}
+
+export type UsePerformanceObserverOptions = UseWebObserverOptions & PerformanceObserverInit
+```
+
+### Returns
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+```tsx
+export type UseWebObserverReturn<Observer> = Pausable & {
+  /**
+   * ref that holds the observer instance
+   */
+  observerRef: React.MutableRefObject<Observer | null>
+  /**
+   * Check if the observer is supported in the current environment
+   */
+  isSupported: boolean
+}
+
+export type UsePerformanceObserverReturn = UseWebObserverReturn<PerformanceObserver>
+```

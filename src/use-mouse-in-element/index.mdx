@@ -1,0 +1,89 @@
+# useMouseInElement
+
+import { HooksType } from '@/components'
+
+<HooksType category="Sensors" pausable />
+
+A React Hook that tracks mouse position in an element.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { isOutside, elementX, elementY, ...rest } = useMouseInElement(elementTarget, options)
+```
+
+### ElementTarget
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### Options
+
+```tsx
+export type MouseInElementOptions = UseMouseOptions & { handleOutside?: boolean }
+```
+
+### Returns
+
+<Tip type="pausable" />
+
+```tsx
+export type UseMouseInElementReturn = Pausable & {
+  /**
+   * Whether the mouse is outside the element
+   */
+  isOutside: boolean
+  /**
+   * The x position of the mouse relative to the element
+   */
+  elementX: number
+  /**
+   * The y position of the mouse relative to the element
+   */
+  elementY: number
+  /**
+   * The x position of the element
+   */
+  elementPositionX: number
+  /**
+   * The y position of the element
+   */
+  elementPositionY: number
+  /**
+   * The height of the element
+   */
+  elementHeight: number
+  /**
+   * The width of the element
+   */
+  elementWidth: number
+  /**
+   * The mouse state
+   */
+  stop(): void
+  /**
+   * The mouse state
+   */
+  mouse: UseMouseReturn
+}
+```

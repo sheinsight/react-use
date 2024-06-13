@@ -1,0 +1,76 @@
+# useElementByPoint
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" isSupported />
+
+A React Hook that returns the element at a given point.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { isSupported, element, ...controls } = useElementByPoint(options)
+```
+
+### Options
+
+```tsx
+export type UseElementByPointOptions<M extends boolean = false> = Position & {
+  /**
+   * Whether to return multiple elements
+   *
+   * @default false
+   */
+  multiple?: M
+  /**
+   * Whether to execute immediately
+   *
+   * @default true
+   */
+  immediate?: boolean
+  /**
+   * The interval to execute
+   *
+   * @default 'requestAnimationFrame'
+   */
+  interval?: 'requestAnimationFrame' | number
+}
+```
+
+### Return
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+```tsx
+export type UseElementByPointReturn<E extends Element | null | Element[]> = Pausable & {
+  /**
+   * Whether the browser supports the API
+   */
+  isSupported: boolean
+  /**
+   * The element at the specified position
+   */
+  element: E
+}
+```

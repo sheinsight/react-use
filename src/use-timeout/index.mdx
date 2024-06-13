@@ -1,0 +1,74 @@
+# useTimeout
+
+import { HooksType } from '@/components'
+
+<HooksType category="Animation" pausable />
+
+A React Hook that create a state that changes after a specified delay.
+
+## Demo
+
+Try to click the check button quickly in two seonds and after two seconds, or reset timeout and do it again.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const isTimeout = useTimeout(2000)
+const { isTimeout, start, pause, reset } = useTimeout(2000, { controls: true })
+```
+
+### Interval
+
+A `number` that represents the delay in milliseconds.
+
+### Options
+
+```tsx
+export interface UseTimeoutOptions<Controls extends boolean, Callback extends AnyFunc = AnyFunc>
+  extends UseTimeoutFnOptions {
+  /**
+   * Expose more controls
+   *
+   * @default false
+   */
+  controls?: Controls
+  /**
+   * Callback on timeout
+   */
+  callback?: Callback
+}
+```
+
+### Returns
+
+```tsx
+export type UseTimeoutReturn<Controls extends boolean, C extends AnyFunc = AnyFunc> = Controls extends true
+  ? Pausable<[], Parameters<C> | []> & {
+      /**
+       * Timeout state
+       */
+      isTimeout: boolean
+      /**
+       * Reset the timeout
+       */
+      reset(): void
+    }
+  : boolean
+```

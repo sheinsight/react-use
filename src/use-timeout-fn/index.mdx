@@ -1,0 +1,69 @@
+# useTimeoutFn
+
+import { HooksType } from '@/components'
+
+<HooksType category="Animation" pausable />
+
+A React Hook that helps to create a timeout function.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const pausable = useTimeoutFn(handler, interval, options)
+```
+
+### Handler
+
+A `function` to call when the timeout expires.
+
+### Interval
+
+A `number` interval for the timeout in ms.
+
+### Options
+
+```tsx
+export interface UseTimeoutFnOptions {
+  /**
+   * Start the timer immediate after calling this function
+   *
+   * @default true
+   */
+  immediate?: boolean
+  /**
+   * Render the component immediately when the timer ends
+   *
+   * When you need `isActive` ref to be updated immediately after the timer ends, set this to `true`
+   *
+   * @default false
+   */
+  updateOnEnd?: boolean
+}
+```
+
+### Returns
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+A `Pausable` instance.

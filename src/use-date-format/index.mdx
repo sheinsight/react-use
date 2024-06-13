@@ -1,0 +1,109 @@
+# useDateFormat
+
+import { HooksType } from '@/components'
+
+<HooksType category="Utilities" />
+
+A React Hook that returns a formatted date string, like `dayjs().format()`, but not depend on any library.
+
+## Demo
+
+Try to edit the fotmat template below and see the result.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Formats
+
+| Format | Output                   | Description                             |
+| ------ | ------------------------ | --------------------------------------- |
+| `Yo`   | 2018th                   | Ordinal formatted year                  |
+| `YY`   | 18                       | Two-digit year                          |
+| `YYYY` | 2018                     | Four-digit year                         |
+| `M`    | 1-12                     | The month, beginning at 1               |
+| `Mo`   | 1st, 2nd, ..., 12th      | The month, ordinal formatted            |
+| `MM`   | 01-12                    | The month, 2-digits                     |
+| `MMM`  | Jan-Dec                  | The abbreviated month name              |
+| `MMMM` | January-December         | The full month name                     |
+| `D`    | 1-31                     | The day of the month                    |
+| `Do`   | 1st, 2nd, ..., 31st      | The day of the month, ordinal formatted |
+| `DD`   | 01-31                    | The day of the month, 2-digits          |
+| `H`    | 0-23                     | The hour                                |
+| `Ho`   | 0th, 1st, 2nd, ..., 23rd | The hour, ordinal formatted             |
+| `HH`   | 00-23                    | The hour, 2-digits                      |
+| `h`    | 1-12                     | The hour, 12-hour clock                 |
+| `ho`   | 1st, 2nd, ..., 12th      | The hour, 12-hour clock, sorted         |
+| `hh`   | 01-12                    | The hour, 12-hour clock, 2-digits       |
+| `m`    | 0-59                     | The minute                              |
+| `mo`   | 0th, 1st, ..., 59th      | The minute, ordinal formatted           |
+| `mm`   | 00-59                    | The minute, 2-digits                    |
+| `s`    | 0-59                     | The second                              |
+| `so`   | 0th, 1st, ..., 59th      | The second, ordinal formatted           |
+| `ss`   | 00-59                    | The second, 2-digits                    |
+| `SSS`  | 000-999                  | The millisecond, 3-digits               |
+| `A`    | AM PM                    | The meridiem                            |
+| `AA`   | A.M. P.M.                | The meridiem, periods                   |
+| `a`    | am pm                    | The meridiem, lowercase                 |
+| `aa`   | a.m. p.m.                | The meridiem, lowercase and periods     |
+| `d`    | 0-6                      | The day of the week, with Sunday as 0   |
+| `dd`   | S-S                      | The min name of the day of the week     |
+| `ddd`  | Sun-Sat                  | The short name of the day of the week   |
+| `dddd` | Sunday-Saturday          | The name of the day of the week         |
+
+> Meridiem can be customized by `customMeridiem` in `options`.
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const dateStr = useDateFormat(dateLike, format, options)
+```
+
+### DateLike
+
+```tsx
+export type DateLike = Date | number | string
+```
+
+### Format
+
+A `string` that represents the format of the output date string.
+
+### Options
+
+```tsx
+export type FormatDateOptions = {
+  /**
+   * The locales argument indicates the locale to use.
+   */
+  locales?: Intl.LocalesArgument
+  /**
+   * A custom function to format the meridiem.
+   */
+  customMeridiem?: (hours: number, minutes: number, isLowercase?: boolean, hasPeriod?: boolean) => string
+}
+
+export type UseDateFormatOptions = FormatDateOptions & {
+  /**
+   * fallback string when date is invalid
+   */
+  fallbackStr?: string
+}
+```
+
+### Returns
+
+A `string` that represents the formatted date string.

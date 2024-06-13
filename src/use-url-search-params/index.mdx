@@ -1,0 +1,81 @@
+# useUrlSearchParams
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" />
+
+A React Hook that helps to manage the URL search params.
+
+There three mode in `useUrlSearchParams`:
+
+- **history**: like `/path/to/page?a=1&b=2`
+- **hash**: like `/path/to/page#heading?a=1&b=2` (with `?` in hash)
+- **hash-params**: like `/path/to/page#/a=1&b=2` (without `?` in hash)
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const [usp, setUsp, clearUsp] = useUrlSearchParams(mode, options)
+```
+
+### Mode
+
+```tsx
+export type UseUrlSearchParamsMode = 'history' | 'hash' | 'hash-params'
+```
+
+### Options
+
+```tsx
+export interface UseUrlSearchParamsOptions<T> {
+  /**
+   * Remove nullish values from the URLSearchParams
+   *
+   * @default true
+   */
+  removeNullishValues?: boolean
+  /**
+   * Remove falsy values from the URLSearchParams
+   *
+   * @default false
+   */
+  removeFalsyValues?: boolean
+  /**
+   * Initial value for the URLSearchParams
+   *
+   * @default {}
+   */
+  initialValue?: T & Record<any, any>
+  /**
+   * Write back to `window.history` automatically
+   *
+   * @default true
+   */
+  write?: boolean
+}
+```
+
+### Returns
+
+```tsx
+export type UseUrlSearchParamsReturn<T extends Record<string, any>> = [T, UseSetStateSetMergedState<T>, Noop]
+```

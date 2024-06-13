@@ -1,0 +1,82 @@
+# useDropZone
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" />
+
+A React Hook that allows you to create a dropzone.
+
+## Demo
+
+Try to drop a PNG file from your computer, or just test the over state via image below.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { isOverDropZone, files } = useDropZone(elementTarget, options)
+```
+
+### ElementTarget
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### Options
+
+```tsx
+export type UseDropZoneOptions = {
+  /**
+   * The file types that are accepted by the drop zone.
+   */
+  dataTypes?: string[] | ((types: readonly string[]) => boolean)
+  /**
+   * A callback that is called when the user drops files in the drop zone.
+   */
+  onDrop?: (files: File[] | null, event: DragEvent) => void
+  /**
+   * A callback that is called when the user drags files over the drop zone.
+   */
+  onEnter?: (files: File[] | null, event: DragEvent) => void
+  /**
+   * A callback that is called when the user drags files out of the drop zone.
+   */
+  onLeave?: (files: File[] | null, event: DragEvent) => void
+  /**
+   * A callback that is called when the user drags files over the drop zone.
+   */
+  onOver?: (files: File[] | null, event: DragEvent) => void
+}
+```
+
+### Returns
+
+```tsx
+export type UseDropZoneReturn = {
+  /**
+   * The files that were dropped in the drop zone.
+   */
+  files: File[] | null
+  /**
+   * Whether the user is currently dragging files over the drop zone.
+   */
+  isOverDropZone: boolean
+}
+```

@@ -1,0 +1,96 @@
+# useCounter
+
+import { HooksType } from '@/components'
+
+<HooksType category="State" />
+
+A React Hook that provides a counter with increment, decrement and reset functions.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const [count, actions] = useCounter(options)
+```
+
+### Options
+
+```tsx
+export type UseCounterOptions = {
+  /**
+   * the maximum value of the counter
+   */
+  max?: number
+  /**
+   * the minimum value of the counter
+   */
+  min?: number
+}
+```
+
+### Returns
+
+```tsx
+export type Count = number
+
+export interface UseCounterReturnAction {
+  /**
+   * increment the counter
+   */
+  inc: (delta?: number) => void
+  /**
+   * decrement the counter
+   */
+  dec: (delta?: number) => void
+  /**
+   * set the counter
+   */
+  set: (value: number) => void
+  /**
+   * get the counter
+   */
+  get(): number
+  /**
+   * reset the counter
+   */
+  reset: (n?: number) => void
+}
+
+export type UseCounterReturn = [
+  /**
+   * The count state of the counter
+   */
+  Count,
+  /**
+   * The actions to control the counter
+   */
+  UseCounterReturnAction,
+  /**
+   * The whole state of the counter
+   */
+  {
+    count: number
+    max: number
+    min: number
+    initialCount: number
+  },
+]
+```

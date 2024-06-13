@@ -1,0 +1,42 @@
+# useMounted
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" />
+
+A React Hook that returns a [Ref Getter](/docs/features/ref-getter) that indicates whether the component is mounted or not.
+
+## Demo
+
+Try to click `Start Timer`, and then click the "Toggle mount" button in one second to see the result.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const isMounted = useMounted()
+```
+
+import { Tip } from '@/components'
+
+<Tip type="ref-getter" name="isUnmounted" />
+
+### Returns
+
+A Ref Getter that return a boolean value that indicates whether the component is mounted or not.

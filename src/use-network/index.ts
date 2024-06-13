@@ -1,0 +1,116 @@
+import { useStableFn } from '@shined/use'
+import { useEffect, useRef } from 'react'
+import { useEventListener } from '../use-event-listener'
+import { useSetState } from '../use-set-state'
+import { useSupported } from '../use-supported'
+import { ensureSSRSecurity, now } from '../utils'
+
+export type NetworkType = 'bluetooth' | 'cellular' | 'ethernet' | 'none' | 'wifi' | 'wimax' | 'other' | 'unknown'
+export type NetworkEffectiveType = 'slow-2g' | '2g' | '3g' | '4g' | undefined
+
+export interface UseNetworkReturn {
+  /**
+   * A Ref Getter to check if the browser supports the Network Information API.
+   */
+  isSupported: boolean
+  /**
+   * If the user is currently connected.
+   */
+  isOnline: boolean
+  /**
+   * The time since the user was last connected.
+   */
+  offlineAt: number | undefined
+  /**
+   * At this time, if the user is offline and reconnects.
+   */
+  onlineAt: number | undefined
+  /**
+   * download speed in Mbps.
+   */
+  downlink: number | undefined
+  /**
+   * The max reachable download speed in Mbps.
+   */
+  downlinkMax: number | undefined
+  /**
+   * The detected effective speed type.
+   */
+  effectiveType: NetworkEffectiveType | undefined
+  /**
+   * The estimated effective round-trip time of the current connection.
+   */
+  rtt: number | undefined
+  /**
+   * If the user activated data saver mode.
+   */
+  saveData: boolean | undefined
+  /**
+   * The detected connection/network type. Only supported in Web Worker in Chrome.
+   *
+   * @see https://developer.mozilla.org/zh-CN/docs/Web/API/NetworkInformation/type
+   */
+  type: NetworkType
+}
+
+export interface ExtendedNavigator extends Navigator {
+  connection?: {
+    downlink: number
+    downlinkMax: number
+    effectiveType: NetworkEffectiveType
+    rtt: number
+    saveData: boolean
+    type: NetworkType
+    addEventListener: (type: 'change', listener: () => void) => void
+    removeEventListener: (type: 'change', listener: () => void) => void
+    dispatchEvent: (event: Event) => boolean
+  }
+}
+
+export function useNetwork(): UseNetworkReturn {
+  const isSupported = useSupported(() => 'connection' in navigator)
+  const connectionRef = useRef<ExtendedNavigator['connection'] | null>(null)
+
+  const [state, setState] = useSetState(
+    ensureSSRSecurity(getNetwork, {
+      isOnline: true,
+      offlineAt: undefined,
+      onlineAt: now(),
+      downlink: undefined,
+      downlinkMax: undefined,
+      effectiveType: undefined,
+      rtt: undefined,
+      saveData: undefined,
+      type: 'unknown',
+    }),
+  )
+
+  const updateNetworkInformation = useStableFn(() => setState(getNetwork()))
+
+  useEffect(() => {
+    if (!isSupported) return
+
+    connectionRef.current = (navigator as ExtendedNavigator)?.connection
+
+    updateNetworkInformation()
+  }, [isSupported])
+
+  useEventListener(connectionRef, 'change', updateNetworkInformation, false)
+  useEventListener(() => window, ['offline', 'online'], updateNetworkInformation)
+
+  return { isSupported, ...state }
+}
+
+function getNetwork(): Omit<UseNetworkReturn, 'isSupported'> {
+  return {
+    isOnline: navigator.onLine,
+    offlineAt: navigator.onLine ? undefined : now(),
+    onlineAt: navigator.onLine ? now() : undefined,
+    downlink: (navigator as ExtendedNavigator)?.connection?.downlink,
+    downlinkMax: (navigator as ExtendedNavigator)?.connection?.downlinkMax,
+    effectiveType: (navigator as ExtendedNavigator)?.connection?.effectiveType,
+    rtt: (navigator as ExtendedNavigator)?.connection?.rtt,
+    saveData: (navigator as ExtendedNavigator)?.connection?.saveData,
+    type: (navigator as ExtendedNavigator)?.connection?.type ?? 'unknown',
+  }
+}

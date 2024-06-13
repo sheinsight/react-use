@@ -1,0 +1,69 @@
+# useIntervalFn
+
+import { HooksType } from '@/components'
+
+<HooksType category="Animation" pausable />
+
+A React Hook that create a function that will be called every `interval` milliseconds.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const controls = useIntervalFn(callback, interval, options)
+```
+
+### Callback
+
+A `function` that will be called every `interval` milliseconds.
+
+### Interval
+
+A `number` representing the interval in milliseconds.
+
+### Options
+
+```tsx
+export interface UseIntervalFnOptions {
+  /**
+   * Whether to start the interval immediately on mounted
+   *
+   * @default true
+   */
+  immediate?: boolean
+  /**
+   * Whether to execute the callback immediately before the interval starts
+   *
+   * @default false
+   */
+  immediateCallback?: boolean
+}
+```
+
+### Returns
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+```tsx
+export type UseIntervalFnReturn = Pausable
+```

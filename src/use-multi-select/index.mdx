@@ -1,0 +1,98 @@
+# useMultiSelect
+
+import { HooksType } from '@/components'
+
+<HooksType category="ProUtilities" />
+
+A React Hook that manages multi-select state.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const multiSelect = useMultiSelect(list, defaultSelected)
+```
+
+### List
+
+A list of items to manage multi-select state.
+
+### DefaultSelected
+
+A list of items that are selected by default.
+
+### Returns
+
+<details>
+<summary>Show Type Definitions</summary>
+```tsx
+export type UseMultiSelectReturn<T> = {
+  /**
+   * The selected items
+   */
+  selected: T[]
+  /**
+   * Whether none of the items are selected
+   */
+  isNoneSelected: boolean
+  /**
+   * Whether all of the items are selected
+   */
+  isAllSelected: boolean
+  /**
+   * Whether some of the items are selected
+   */
+  isPartiallySelected: boolean
+  /**
+   * Whether the item is selected
+   */
+  isItemSelected: (item: T) => boolean
+  /**
+   * Set the selected items
+   */
+  setSelected: ReactSetState<T[]>
+  /**
+   * Select the item
+   */
+  select: (item: T) => void
+  /**
+   * Select all items
+   */
+  selectAll(): void
+  /**
+   * Unselect the item
+   */
+  unSelect: (item: T) => void
+  /**
+   * Unselect all items
+   */
+  unSelectAll(): void
+  /**
+   * Toggle the item
+   */
+  toggle: (item: T) => void
+  /**
+   * Toggle all items
+   */
+  toggleAll(): void
+}
+```
+</details>

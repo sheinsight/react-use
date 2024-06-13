@@ -1,0 +1,39 @@
+# useKeyDown
+
+import { HooksType } from '@/components'
+
+<HooksType category="Sensors" />
+
+A React Hook that helps to handle `keydown` event.
+
+## Demo
+
+Try to (long) press `Enter` to increase the counter.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+import Link from '@docusaurus/Link'
+
+It's derivated from `useKeyStroke`, see <Link to="/reference/use-key-stroke">`useKeyStroke`</Link> for more details.
+
+```tsx
+// same as `useKeyStroke(keyFilter, handler, {...options, eventName: 'keydown'})`
+const stop = useKeyDown(keyFilter, handler, options)
+```

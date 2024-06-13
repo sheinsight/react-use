@@ -1,0 +1,75 @@
+# useFocus
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" />
+
+A React Hook that allows you to focus on an element when it is mounted.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const focus = useFocus(elementTarget, options)
+```
+
+### ElementTarget
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### Options
+
+```tsx
+export type UseFocusOptions = {
+  /**
+   * initial focus state
+   *
+   * @default false
+   */
+  initialValue?: boolean
+}
+```
+
+### Returns
+
+```tsx
+export type UseFocusReturn = [
+  /**
+   * focus state
+   */
+  focused: boolean,
+  /**
+   * focus actions
+   */
+  actions: {
+    /**
+     * focus the target element
+     */
+    focus(): void
+    /**
+     * blur the target element
+     */
+    blur(): void
+  },
+]
+```

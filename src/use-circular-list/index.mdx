@@ -1,0 +1,91 @@
+# useCircularList
+
+import { HooksType } from '@/components'
+
+<HooksType category="ProUtilities" />
+
+A React Hook that creates and shifts a circular list.
+
+:::tip
+
+If you need to manage a state that toggle between two stable values, consider utilizing [useToggle](/reference/use-toggle) as an alternative.
+
+:::
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const [value, index, actions] = useCircularList<T>(initialList: T[], options)
+```
+
+### Options
+
+```tsx
+export interface UseCycleListOptions<T, R extends T = T> {
+  /**
+   * Initial value
+   */
+  initialValue?: R
+  /**
+   * Fallback index when the value is not found
+   */
+  fallbackIndex?: number
+  /**
+   * Custom function to get the index of the value
+   */
+  getIndexOf?: (value: T, list: T[]) => number
+}
+```
+
+### Returns
+
+```tsx
+export type UseCycleListActions<T> = {
+  /**
+   * Move to the next value
+   */
+  next: (step?: number) => T
+  /**
+   * Move to the previous value
+   */
+  prev: (step?: number) => T
+  /**
+   * Move to the value at the specified index
+   */
+  go: (index: number) => T
+}
+
+export type UseCycleListReturn<T> = [
+  /**
+   * Current value
+   */
+  state: T,
+  /**
+   * Actions to control the list
+   */
+  UseCycleListActions<T>,
+  /**
+   * Current index
+   */
+  index: number,
+]
+```

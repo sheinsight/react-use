@@ -1,0 +1,71 @@
+# useScrollLock
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" />
+
+A React Hook that helps to lock/unlock the scroll behavior of an element.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const [isLocked, setLocked, actions] = useScrollLock(elementTarget, initialState)
+```
+
+### ElementTarget
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### InitialState
+
+A `boolean` value to determine the initial state of the scroll lock.
+
+### Returns
+
+```tsx
+export type UseScrollLockReturn = [
+  /**
+   * Whether the scroll is locked
+   */
+  isLocked: boolean,
+  /**
+   * Set the scroll lock
+   */
+  setLock: ReactSetState<boolean>,
+  {
+    /**
+     * Lock the scroll
+     */
+    lock(): void
+    /**
+     * Unlock the scroll
+     */
+    unlock(): void
+    /**
+     * Toggle the scroll lock
+     */
+    toggle(): void
+  },
+]
+```

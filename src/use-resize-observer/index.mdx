@@ -1,0 +1,79 @@
+# useResizeObserver
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" lowLevel />
+
+A React Hook that helps to use [ResizeObserver API](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver) to observe the size changes of an element.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { observerRef, isSupported, ...controls } = useResizeObserver(callback, options)
+```
+
+### Callback
+
+`ResizeObserverCallback` function that will be called when the observer is triggered.
+
+### Options
+
+```tsx
+export interface UseWebObserverOptions {
+  /**
+   * Start the observer immediate after calling this function
+   *
+   * @default true
+   */
+  immediate?: boolean
+}
+
+interface ResizeObserverOptions {
+  box?: ResizeObserverBoxOptions
+}
+
+export interface UseResizeObserverOptions extends UseWebObserverOptions, ResizeObserverOptions {
+  /** @default 'content-box' */
+  box?: ResizeObserverBoxOptions
+}
+```
+
+### Returns
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+```tsx
+export type UseWebObserverReturn<Observer> = Pausable & {
+  /**
+   * ref that holds the observer instance
+   */
+  observerRef: React.MutableRefObject<Observer | null>
+  /**
+   * Check if the observer is supported in the current environment
+   */
+  isSupported: boolean
+}
+
+export interface UseResizeObserverReturn extends Pausable, UseWebObserverReturn<ResizeObserver> {}
+```

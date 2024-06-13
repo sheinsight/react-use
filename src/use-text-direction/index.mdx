@@ -1,0 +1,66 @@
+# useTextDirection
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" />
+
+A React Hook that helps to get/set the text direction of an element.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const [dir, setDir] = useTextDirection(options)
+```
+
+### Options
+
+```tsx
+export interface UseTextDirectionOptions {
+  /**
+   * The target element to set the text direction attribute.
+   *
+   * @default 'html'
+   */
+  target?: ElementTarget
+  /**
+   * The initial text direction value.
+   *
+   * @default 'ltr'
+   */
+  initialValue?: UseTextDirectionValue
+}
+```
+
+### Returns
+
+```tsx
+export type UseTextDirectionReturn = [
+  /**
+   * The current text direction value.
+   */
+  dir: UseTextDirectionValue,
+  /**
+   * Sets the text direction value.
+   */
+  setDir: ReactSetState<UseTextDirectionValue>,
+]
+```

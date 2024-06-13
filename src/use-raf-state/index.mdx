@@ -1,0 +1,44 @@
+# useRafState
+
+import { HooksType } from '@/components'
+
+<HooksType category="State" />
+
+A React Hook like [React.useState](https://react.dev/reference/react/useState), but the state will only update on the next frame using [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) for better performance.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const [state, setState] = useRafState(initialState, options)
+```
+
+### InitialState
+
+Same as [React.useState](https://react.dev/reference/react/useState).
+
+### Options
+
+See [useSafeState#options](/reference/use-safe-state/#options) for more details.
+
+### Returns
+
+Same as [React.useState](https://react.dev/reference/react/useState).

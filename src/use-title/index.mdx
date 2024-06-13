@@ -1,0 +1,68 @@
+# useTitle
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" />
+
+A React Hook that helps to manage the title of the document.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const initialTitle = useTitle(newTitle, options)
+```
+
+### NewTitle
+
+A `string` that represents the new title of the document.
+
+### Options
+
+```tsx
+/**
+ * `%s` will be replaced by the title if the template is a `string`
+ */
+export type UseTitleTemplate = string | ((title: string) => string)
+
+export type UseTitleOptions = {
+  /**
+   * Restore the original title when unmounted
+   *
+   * @default false
+   */
+  restoreOnUnmount?: boolean
+  /**
+   * A template to format the title
+   *
+   * @default '%s'
+   */
+  template?: UseTitleTemplate
+}
+```
+
+### Returns
+
+import { Tip } from '@/components'
+
+<Tip type="ref-getter" name="initialTitle" />
+
+A Ref Getter that returns the current title of the document.

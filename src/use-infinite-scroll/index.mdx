@@ -1,0 +1,86 @@
+# useInfiniteScroll
+
+import { HooksType } from '@/components'
+
+<HooksType category="ProUtilities" />
+
+A React Hook that allows you to use infinite scroll in your components.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { isLoading, isLoadDone } = useInfiniteScroll(elementTarget, options)
+```
+
+### ElementTarget
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### Options
+
+import Link from '@docusaurus/Link'
+
+`UseScrollOptions` is options of `useScroll`, see [useScroll#options](/reference/use-scroll/#options) for more details.
+
+```tsx
+export type UseInfiniteScrollOptions<T extends HTMLElement = HTMLElement> = UseScrollOptions & {
+  /**
+   * distance from the bottom of the scroll container
+   *
+   * @default 0
+   */
+  distance?: number
+  /**
+   * scroll direction
+   *
+   * @default 'bottom'
+   */
+  direction?: 'top' | 'bottom' | 'left' | 'right'
+  /**
+   * interval between each scroll event
+   *
+   * @default 100
+   */
+  interval?: number
+  /**
+   * check if can load more
+   */
+  canLoadMore?: (el: T) => boolean
+}
+```
+
+### Returns
+
+```tsx
+export type UseInfiniteScrollReturn = {
+  /**
+   * loading state
+   */
+  isLoading: boolean
+  /**
+   * load done state
+   */
+  isLoadDone: boolean
+}
+```

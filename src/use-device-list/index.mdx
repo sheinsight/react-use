@@ -1,0 +1,94 @@
+# useDeviceList
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" isSupported />
+
+A React Hook that returns a list of devices that are currently connected.
+
+## Demo
+
+Grant permission to access the devices.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const device = useDeviceList(options)
+```
+
+### Options
+
+```tsx
+export type UseDeviceListOptions = {
+  onUpdated?: (devices: MediaDeviceInfo[]) => void
+  /**
+   * Request for permissions immediately if it's not granted,
+   * otherwise label and deviceIds could be empty
+   *
+   * @default false
+   */
+  requestPermissions?: boolean
+  /**
+   * Request for types of media permissions
+   *
+   * @default { audio: true, video: true }
+   */
+  constraints?: MediaStreamConstraints
+}
+```
+
+### Returns
+
+```tsx
+export type UseDeviceListReturn = {
+  /**
+   * List of all devices
+   */
+  devices: MediaDeviceInfo[]
+  /**
+   * a getter to get all video inputs
+   */
+  videoInputs(): MediaDeviceInfo[]
+  /**
+   * a getter to get all audio inputs
+   */
+  audioInputs(): MediaDeviceInfo[]
+  /**
+   * a getter to get all audio outputs
+   */
+  audioOutputs(): MediaDeviceInfo[]
+  /**
+   * a boolean to check if permission is granted
+   */
+  isPermissionGranted: boolean
+  /**
+   * a function to check if the browser supports the API
+   */
+  isSupported: boolean
+  /**
+   * a function to request for permissions to access the media devices
+   */
+  ensurePermission(): Promise<boolean>
+  /**
+   * a function to update the list of devices
+   */
+  update(): Promise<void>
+}
+```

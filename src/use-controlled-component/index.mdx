@@ -1,0 +1,97 @@
+# useControlledComponent
+
+import { HooksType } from '@/components'
+
+<HooksType category="Utilities" />
+
+A React Hook that helps you to manage controlled components that receive `value` and `onChange` props meeting the following type.
+
+```tsx
+export interface ControlledComponentProps<T> = {
+  /**
+   * The value of the controlled component
+   */
+  value: T
+  /**
+   * The callback that is called when the value of the controlled component changes
+   */
+  onChange: (eventOrValue: T | { target: { value: T } }) => void
+}
+```
+
+## Demo
+
+Try to clear the input and type something.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const input = useControlledComponent(initialValue, options)
+```
+
+### InitialValue
+
+Initial value of the component, can be a `string`, `number`, `boolean`, `object`, `array` etc.
+
+### Options
+
+```tsx
+export interface UseControlledComponentOptions<T = string, P extends object = object> extends UseSafeStateOptions {
+  /**
+   * The callback that is called when the value of the controlled component changes
+   */
+  onChange?: (value: T, preValue?: T) => void
+  /**
+   * The callback that is called when the value of the controlled component is reset
+   */
+  onReset?: (initialValue: T) => void
+  /**
+   * The props of the controlled component
+   */
+  props?: P
+  /**
+   * The fallback value of the controlled component
+   */
+  fallbackValue?: T
+}
+```
+
+### Returns
+
+```tsx
+export interface UseControlledComponentReturn<T> {
+  /**
+   * The value of the controlled component
+   */
+  value: T
+  /**
+   * The props that should be passed to the controlled component
+   */
+  props: ControlledComponentProps<T>
+  /**
+   * Reset the value of the controlled component to the initial value
+   */
+  reset(): void
+  /**
+   * Set the value of the controlled component
+   */
+  setValue: (value: T) => void
+}
+```

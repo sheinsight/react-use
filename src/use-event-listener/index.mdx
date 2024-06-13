@@ -1,0 +1,73 @@
+# useEventListener
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" />
+
+A React Hook that use `EventListener` with ease.
+
+Register using `addEventListener` on mounted, and `removeEventListener` automatically on unmounted.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+// target is `window` by default
+useEventListener(eventName, handler, options)
+
+// specify tagret explicitly
+useEventListener(eventTarget, eventName, handler, options)
+```
+
+### EventTarget
+
+Target can be:
+
+> A "⚛️" prefix is means that it can also be a [React Ref](https://react.dev/learn/referencing-values-with-refs) that contains it.
+
+- `window` (default)
+- `document`
+- ⚛️ native [EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget)
+- ⚛️ DOM Element
+- ⚛️ Object that implements `EventTarget` interface (`addEventListener` and `removeEventListener`)
+- ⚛️ `null` or `undefined`
+
+### EventName
+
+`string | string[]`, a `string` or `strings` representing the event types to listen for. It will be automatically inferred from the `EventTarget` type.
+
+### Handler
+
+`Function | Funtions[]`, a `function` or `funcitons` that receives a notification when an event of the specified type occurs. `Event` will also be automatically.
+
+### Options
+
+Options that will be passed to `addEventListener` and `removeEventListener`.
+
+```tsx
+export type Options = boolean | AddEventListenerOptions | undefined
+```
+
+For more details options, see [EventTarget.addEventListener#options](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#options)
+
+### Returns
+
+A `function` that **removes** the event listener.

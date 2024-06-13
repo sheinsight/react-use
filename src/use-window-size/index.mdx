@@ -1,0 +1,81 @@
+# useWindowSize
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" />
+
+A React Hook that helps to track window height and innerWidth, and optionnally listen orientation media query.
+
+## Demo
+
+Try to resize the window to see the effect.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const size = useWindowSize(options)
+```
+
+### Options
+
+```tsx
+export interface UseWindowSizeOptions {
+  /**
+   * The initial width of the window.
+   *
+   * @default Number.POSITIVE_INFINITY
+   */
+  initialWidth?: number
+  /**
+   * The initial height of the window.
+   *
+   * @default Number.POSITIVE_INFINITY
+   */
+  initialHeight?: number
+  /**
+   * Whether to listen to orientation changes.
+   *
+   * @default true
+   */
+  listenOrientation?: boolean
+  /**
+   * Whether to include the scrollbar width.
+   *
+   * @default true
+   */
+  includeScrollbar?: boolean
+}
+```
+
+### Returns
+
+```tsx
+export interface WindowSize {
+  width: number
+  height: number
+}
+
+export interface UseWindowSizeReturn extends Size {
+  /**
+   * Update the window size.
+   */
+  update(): void
+}
+```

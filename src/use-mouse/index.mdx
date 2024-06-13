@@ -1,0 +1,118 @@
+# useMouse
+
+import { HooksType } from '@/components'
+
+<HooksType category="Sensors" pausable />
+
+A React Hook that tracks mouse position.
+
+## Demo
+
+Try to scroll the page or move your mouse around to see the difference between various types.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { x, y, position, sourceType, stop } = useMouse(options)
+```
+
+### Options
+
+```tsx
+export type UseMouseOptions = {
+  /**
+   * Type of coordinates to extract from the event.
+   *
+   * @default 'page'
+   */
+  type?: UseMouseCoordType | UseMouseEventExtractor
+  /**
+   * Target element to attach the event listeners.
+   *
+   * @default window
+   */
+  target?: Window | EventTarget | null | undefined
+  /**
+   * Whether to enable touch events.
+   *
+   * @default true
+   */
+  touch?: boolean
+  /**
+   * Whether to enable scroll events.
+   *
+   * @default true
+   */
+  scroll?: boolean
+  /**
+   * Whether to reset the position when touch ends.
+   *
+   * @default false
+   */
+  resetOnTouchEnds?: boolean
+  /**
+   * Initial position.
+   *
+   * @default { x: 0, y: 0 }
+   */
+  initialValue?: Position
+  /**
+   * Whether to start to update position immediately.
+   *
+   * @default false
+   */
+  immediate?: boolean
+}
+```
+
+### Returns
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+```tsx
+export type Position = {
+  /**
+   * X coordinate
+   */
+  x: number
+  /**
+   * Y coordinate
+   */
+  y: number
+}
+
+export type UseMouseReturn = Position &
+  Pausable & {
+    /**
+     * mouse event position.
+     */
+    position: Position
+    /**
+     * Source type of the event.
+     */
+    sourceType: UseMouseSourceType
+    /**
+     * stop the mouse event listener immediately.
+     */
+    stop(): void
+  }
+```

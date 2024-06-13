@@ -1,0 +1,69 @@
+# useCssVar
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" />
+
+A React Hook that allows you to use CSS variables in your components.
+
+## Demo
+
+Try to toggle dark mode or click button below to see the effect.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const [variable, setVariable] = useCssVar(variableName, options, target)
+```
+
+### VariableName
+
+`string`, The name of the CSS variable you want to use.
+
+### Options
+
+```tsx
+export type UseCssVarOptions = {
+  /**
+   * default value of the css variable
+   *
+   * @default ''
+   */
+  defaultValue?: string
+  /**
+   * whether to observe the changes of the css variable
+   *
+   * @default false
+   */
+  observe?: boolean
+}
+```
+
+### ElementTarget
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+`() => document.documentElement` by defaults.
+
+### Returns
+
+Same as [React.useState](https://react.dev/reference/react/useState), a tuple with the current value of the CSS variable and a function to update it.

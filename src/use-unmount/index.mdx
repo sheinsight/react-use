@@ -1,0 +1,36 @@
+# useUnmount
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" />
+
+A React Hook that helps to run a callback when the component unmounts.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+useUnmount(handler)
+```
+
+### Handler
+
+A `function` that will be called when the component unmounts, can be **async**.

@@ -1,0 +1,82 @@
+# useClipboardItems
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" isSupported />
+
+Almost same as [useClipboard](/reference/use-clipboard), but support multiple items via [ClipboardItem](https://developer.mozilla.org/en-US/docs/Web/API/ClipboardItem).
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const clipboard = useClipboardItems(options)
+```
+
+### Options
+
+```tsx
+export type UseClipboardItemsOptions<Source> = {
+  /**
+   * Enabled reading for clipboard, need to request permission
+   *
+   * @default false
+   */
+  read?: boolean
+  /**
+   * Copy source
+   */
+  source?: Source
+  /**
+   * Milliseconds to reset state of `copied` ref
+   *
+   * @default 1500
+   */
+  copiedDuration?: number
+}
+```
+
+### Returns
+
+```tsx
+export type UseClipboardItemsReturn<Optional> = {
+  /**
+   * Check if the browser supports clipboard API
+   */
+  isSupported: boolean
+  /**
+   * Clipboard items
+   */
+  content: ClipboardItems
+  /**
+   * Check if the content is copied
+   */
+  copied: boolean
+  /**
+   * Copy content to clipboard
+   */
+  copy: Optional extends true ? (content?: ClipboardItems) => Promise<void> : (text: ClipboardItems) => Promise<void>
+  /**
+   * Clear clipboard
+   */
+  clear(): void
+}
+```

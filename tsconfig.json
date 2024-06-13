@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "module": "esnext",
+    "target": "esnext",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "allowJs": false,
+    "noEmit": true,
+    "strict": true,
+    "paths": {
+      "@shined/use": ["./src"],
+      "@/test": ["./testing"],
+      "@/components": ["./website/src/components"],
+      "@formkit/auto-animate/react": ["./website/node_modules/@formkit/auto-animate/react"],
+      "react-hot-toast": ["./website/node_modules/react-hot-toast"]
+    }
+  },
+  "include": ["./src"]
+}

@@ -1,0 +1,40 @@
+# useDeepCompareLayoutEffect
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" lowLevel />
+
+Same as [useDeepCompareEffect](/reference/use-deep-compare-effect), but use `useLayoutEffect` instead of `useEffect`.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+useDeepCompareLayoutEffect(callback, deps)
+```
+
+### Callback
+
+Same as [React.useLayoutEffect](https://react.dev/reference/react/useLayoutEffect).
+
+### Deps
+
+Same as [React.useLayoutEffect](https://react.dev/reference/react/useLayoutEffect).

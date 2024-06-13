@@ -1,0 +1,82 @@
+# useCountdown
+
+import { HooksType } from '@/components'
+
+<HooksType category="Utilities" pausable />
+
+A React Hook that provides a countdown timer.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const ms = useCountdown(dateLike)
+const countdown = useCountdown(dateLike, options) // with manual controls
+```
+
+### DateLike
+
+```tsx
+type DateLike = string | number | Date | undefined
+```
+
+### Options
+
+```tsx
+export type UseCountdownOptions<Controls extends boolean = false> = {
+  /**
+   * whether to start the countdown immediately
+   *
+   * @default true
+   */
+  immediate?: boolean
+  /**
+   * whether to expose the controls
+   *
+   * @default false
+   */
+  controls?: Controls
+  /**
+   * the interval to update the countdown
+   *
+   * @default 'requestAnimationFrame'
+   */
+  interval?: 'requestAnimationFrame' | number
+  /**
+   * a callback function to be called when the countdown is updated
+   */
+  onUpdate?: (ms: number, seconds: number) => void
+  /**
+   * a callback function to be called when the countdown is stopped
+   */
+  onStop?(): void
+}
+```
+
+### Returns
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+```tsx
+export type UseCountdownReturn<Controls extends boolean> = Controls extends true ? { ms: number } & Pausable : number
+```

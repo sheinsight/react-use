@@ -1,0 +1,42 @@
+# useAsyncEffect
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" />
+
+A React Hook which is like [React.useEffect](https://react.dev/reference/react/useEffect) but support **cancellable** **async** function.
+
+## Demo
+
+Check the count, it will increase 1 every second.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+useAsyncEffect(callback, deps?)
+```
+
+### Callback
+
+Same as [React.useEffect](https://react.dev/reference/react/useEffect).
+
+### Deps
+
+Same as [React.useEffect](https://react.dev/reference/react/useEffect).

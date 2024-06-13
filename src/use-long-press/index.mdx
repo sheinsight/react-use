@@ -1,0 +1,114 @@
+# useLongPress
+
+import { HooksType } from '@/components'
+
+<HooksType category="Sensors" />
+
+A React Hook that helps to handle long press events.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const lp = useLongPress(elementTarget, handler, options)
+```
+
+### ElementTarget
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### Handler
+
+```tsx
+export type UseLongPressHandler = (evt: PointerEvent) => void
+```
+
+### Options
+
+```tsx
+export type UseLongPressModifiers = {
+  /**
+   * Whether to prevent the default behavior of the event
+   */
+  preventDefault?: boolean
+  /**
+   * Whether to stop the propagation of the event
+   */
+  stopPropagation?: boolean
+  /**
+   * Whether to only trigger the event once
+   */
+  once?: boolean
+  /**
+   * Whether to capture the event
+   */
+  capture?: boolean
+  /**
+   * Whether to only trigger the event on the target element itself
+   */
+  self?: boolean
+}
+
+export interface UseLongPressOptions {
+  /**
+   * Time in ms till `longpress` gets called
+   *
+   * @default 500
+   */
+  delay?: number
+  /**
+   * Event modifiers
+   */
+  modifiers?: UseLongPressModifiers
+  /**
+   * Allowance of moving distance in pixels,
+   * The action will get canceled When moving too far from the pointerdown position.
+   *
+   * @default 10
+   */
+  distanceThreshold?: number | false
+}
+```
+
+### Returns
+
+```tsx
+export type UseLongPressReturn = {
+  /**
+   * Whether the element is pressed
+   */
+  isPressed: boolean
+  /**
+   * Whether the element is long pressed
+   */
+  isLongPressed: boolean
+  /**
+   * Whether the element is meet the threshold
+   */
+  isMeetThreshold: boolean
+  /**
+   * Stop the long press event
+   */
+  stop(): void
+}
+```

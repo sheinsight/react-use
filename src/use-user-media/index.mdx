@@ -1,0 +1,75 @@
+# useUserMedia
+
+import { HooksType } from '@/components'
+
+<HooksType category="Sensors" isSupported />
+
+A React Hook that helps to manage the user media.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { stream, isSupported } = useUserMedia(options)
+```
+
+### Options
+
+```tsx
+export interface UseUserMediaOptions {
+  /**
+   * Callback when MediaStream is ready
+   */
+  onStart?: (stream: MediaStream) => void
+  /**
+   * Callback when MediaStream is stopped
+   */
+  onStop?(): void
+  /**
+   * Recreate stream when deviceIds or constraints changed
+   *
+   * @default true
+   */
+  autoSwitch?: boolean
+  /**
+   * MediaStreamConstraints to be applied to the requested MediaStream
+   * If provided, the constraints will override videoDeviceId and audioDeviceId
+   *
+   * @default {}
+   */
+  constraints?: MediaStreamConstraints
+}
+```
+
+### Returns
+
+```tsx
+export interface UseUserMediaReturn extends Pausable {
+  /**
+   * The current MediaStream
+   */
+  stream: MutableRefObject<MediaStream | null>
+  /**
+   * Whether the browser supports getUserMedia
+   */
+  isSupported: boolean
+}
+```

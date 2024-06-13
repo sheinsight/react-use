@@ -1,0 +1,26 @@
+{
+  "name": "nextjs-ssr",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3006",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@shined/use": "workspace:*",
+    "next": "14.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "braces": ">=3.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.2",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
+    "typescript": "^5.4.5"
+  }
+}

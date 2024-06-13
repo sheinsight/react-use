@@ -1,0 +1,115 @@
+# useWebObserver
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" pausable isSupported lowLevel />
+
+A low level React Hooks that helps to use Observer with ease. Avaliable Observer:
+
+```tsx
+export type WebObserverType =
+  | 'IntersectionObserver'
+  | 'MutationObserver'
+  | 'ResizeObserver'
+  | 'PerformanceObserver'
+  | 'ReportingObserver'
+```
+
+You should **NOT** use this hook directly, use the high level hooks below instead:
+
+- [useIntersectionObserver](/reference/use-intersection-observer)
+- [useMutationObserver](/reference/use-mutation-observer)
+- [useResizeObserver](/reference/use-resize-observer)
+- [usePerformanceObserver](/reference/use-performance-observer)
+- [useReportingObserver](/reference/use-reporting-observer)
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+export interface UseWebObserverOptions {
+  /**
+   * Start the observer immediate after calling this function
+   *
+   * @default true
+   */
+  immediate?: boolean
+}
+
+export interface UseWebObserverReturn<Observer> extends Pausable {
+  /**
+   * ref that holds the observer instance
+   */
+  observerRef: React.MutableRefObject<Observer | null>
+  /**
+   * Check if the observer is supported in the current environment
+   */
+  isSupported: boolean
+}
+
+export type WebObserverType =
+  | 'IntersectionObserver'
+  | 'MutationObserver'
+  | 'ResizeObserver'
+  | 'PerformanceObserver'
+  | 'ReportingObserver'
+
+export function useWebObserver(
+  observer: 'IntersectionObserver',
+  target: Arrayable<ElementTarget>,
+  callback: IntersectionObserverCallback,
+  options?: UseWebObserverOptions,
+  initOptions?: IntersectionObserverInit,
+  observerOptions?: undefined,
+): UseWebObserverReturn<IntersectionObserver>
+export function useWebObserver(
+  observer: 'MutationObserver',
+  target: Arrayable<ElementTarget>,
+  callback: MutationCallback,
+  options?: UseWebObserverOptions,
+  initOptions?: undefined,
+  observerOptions?: MutationObserverInit,
+): UseWebObserverReturn<MutationObserver>
+export function useWebObserver(
+  observer: 'ResizeObserver',
+  target: Arrayable<ElementTarget>,
+  callback: ResizeObserverCallback,
+  options?: UseWebObserverOptions,
+  initOptions?: undefined,
+  observerOptions?: ResizeObserverOptions,
+): UseWebObserverReturn<ResizeObserver>
+export function useWebObserver(
+  observer: 'PerformanceObserver',
+  target: undefined,
+  callback: PerformanceObserverCallback,
+  options?: UseWebObserverOptions,
+  initOptions?: undefined,
+  observerOptions?: PerformanceObserverInit,
+): UseWebObserverReturn<PerformanceObserver>
+export function useWebObserver(
+  observer: 'ReportingObserver',
+  target: undefined,
+  callback: ReportingObserverCallback,
+  options?: UseWebObserverOptions,
+  initOptions?: ReportingObserverOptions,
+  observerOptions?: undefined,
+): UseWebObserverReturn<ReportingObserver>
+```

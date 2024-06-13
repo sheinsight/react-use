@@ -1,0 +1,111 @@
+# useBluetooth
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" isSupported />
+
+A React Hook that provides a simple API to interact with the Web [Bluetooth API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API).
+
+## Demo
+
+Click `requestDevice` to choose a Bluetooth device, and then click `connect` to connect to the device.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const bluetooth = useBlueTooth(options)
+```
+
+### Options
+
+```tsx
+export type UseBluetoothRequestDeviceOptions = {
+  /**
+   * An array of filter objects indicating the properties of devices that will be matched.
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/Bluetooth/requestDevice#filters
+   */
+  filters?: BluetoothLEScanFilter[] | undefined
+  /**
+   * A list of services that the application wishes to access on the remote device.
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/BluetoothRemoteGATTService/uuid
+   */
+  optionalServices?: BluetoothServiceUUID[] | undefined
+}
+
+export type UseBluetoothOptions = UseBluetoothRequestDeviceOptions & {
+  /**
+   * Whether to accept all devices
+   *
+   * @default false
+   */
+  acceptAllDevices?: boolean
+  /**
+   * Whether to connect immediately
+   *
+   * @default true
+   */
+  immediate?: boolean
+}
+```
+
+### Returns
+
+```tsx
+export type UseBlueToothReturn = {
+  /**
+   * Whether the device is connected
+   */
+  isConnected: boolean
+  /**
+   * Whether the device is connecting
+   */
+  isConnecting: boolean
+  /**
+   * The error that occurred while connecting
+   */
+  error: unknown | null
+  /**
+   * The GATT server
+   */
+  server: BluetoothRemoteGATTServer | undefined
+  /**
+   * The device
+   */
+  device: BluetoothDevice | undefined
+  /**
+   * Connect to the Bluetooth GATT server
+   */
+  connect(): Promise<BluetoothRemoteGATTServer | undefined>
+  /**
+   * Disconnect from the Bluetooth GATT server
+   */
+  disconnect(): void
+  /**
+   * Whether the browser supports the Web Bluetooth API
+   */
+  isSupported: boolean
+  /**
+   * Request a Bluetooth device
+   */
+  requestDevice(): Promise<BluetoothDevice | undefined>
+}
+```

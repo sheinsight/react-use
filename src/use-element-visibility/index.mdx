@@ -1,0 +1,61 @@
+# useElementVisibility
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" />
+
+A React Hook that allows you to check if an element is visible in the viewport.
+
+## Demo
+
+Scroll down on the dashed box to see the visibility status of the element.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const visibility = useElementVisibility(elementTarget, options)
+```
+
+### ElementTarget
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### Options
+
+```tsx
+export type UseElementVisibilityOptions = Pick<UseIntersectionObserverOptions, 'threshold'> & {
+  /**
+   * The target element to observe
+   */
+  scrollTarget?: ElementTarget
+  /**
+   * A callback function that will be called when the visibility of the target element changes
+   */
+  onChange?: (visibility: boolean) => void
+}
+```
+
+`UseIntersectionObserverOptions` is options of `useIntersectionObserver`, see [useIntersectionObserver#options](/reference/use-intersection-observer/#options) for more details.
+
+### Returns
+
+A `boolean` value that indicates if the target element is visible in the viewport.

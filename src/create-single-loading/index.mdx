@@ -1,0 +1,102 @@
+# createSingleLoading
+
+import { HooksType } from '@/components'
+
+<HooksType category="ProUtilities" />
+
+A utility that provide a way to manage single (or global) loading state via multiple Hooks or simple JS/TS functions, use [Reactive](https://sheinsight.github.io/reactive/) under the hood.
+
+:::tip
+You need to install `@shined/reactive` to use this Hook.
+
+```bash
+# pnpm
+pnpm install @shined/reactive
+
+# npm
+npm install @shined/reactive
+
+# yarn
+yarn add @shined/reactive
+```
+
+:::
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source tsx />
+
+## API
+
+```tsx
+const pageLoading = createSingleLoading()
+const { set, get, bind, useLoding, useAsyncFn } = pageLoading
+```
+
+### Options
+
+```tsx
+export interface CreateSingleLoadingOptions {
+  /**
+   * Whether set to false on error
+   *
+   * @default true
+   */
+  resetOnError?: boolean
+  /**
+   * Initial loading state
+   *
+   * @default false
+   */
+  initialState?: boolean
+}
+```
+
+### Returns
+
+```tsx
+export interface useAsyncFnExtendReturn<T extends AnyFunc> extends UseAsyncFnReturn<T> {
+  /**
+   * Set the loading state
+   */
+  setLoading: (value: boolean) => void
+}
+
+export interface CreateSingleLoadingReturn {
+  /**
+   * Use loading state with async function via Hook in React
+   */
+  useAsyncFn: <T extends AnyFunc>(func: T) => useAsyncFnExtendReturn<T>
+  /**
+   * Use loading state via Hook in React
+   */
+  useLoading(): boolean
+  /**
+   * Set the loading state via store in JS/TS
+   */
+  set(value: boolean): void
+  /**
+   * Get the loading state via store in JS/TS
+   */
+  get(): boolean
+  /**
+   * Bind the loading state to the async function in JS/TS
+   */
+  bind: <T extends AnyFunc>(func: T) => T
+}
+```

@@ -1,0 +1,38 @@
+# useActiveElement
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" lowLevel />
+
+A React hook that returns the currently **active element** (via `document.activeElement`).
+
+## Demo
+
+Click on the `input`, `button` below or change with `tab` to see the active element change.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const activeElement = useActiveElement()
+```
+
+### Returns
+
+A HTML `element` or `null`.

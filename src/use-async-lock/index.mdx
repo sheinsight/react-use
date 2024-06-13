@@ -1,0 +1,52 @@
+# useAsyncLock
+
+import { HooksType } from '@/components'
+
+<HooksType category="Utilities" />
+
+A React Hook to create a function that can be used to ensure that **only one is running at a time**.
+
+## Demo
+
+Quickly and repeatedly click the button to check the effect.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const lockedFn = useAsyncLock(fn, onMeetLock)
+```
+
+### Fn
+
+```tsx
+export type Fn = (...args: any[]) => Promise<any>
+```
+
+### OnMeetLock
+
+```tsx
+export type onMeetLock = () => void
+```
+
+### Returns
+
+```tsx
+export type lockedFn = (...args: T) => Promise<ReturnType<T>>
+```

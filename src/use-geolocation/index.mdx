@@ -1,0 +1,91 @@
+# useGeolocation
+
+import { HooksType } from '@/components'
+
+<HooksType category="Sensors" pausable isSupported />
+
+A React Hook that provides a simple way to get the user's [geolocation](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation).
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const geo = useGeolocation(options)
+```
+
+### Options
+
+```tsx
+/**
+ * DOM built-in Geolocation API options
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition#options
+ */
+interface PositionOptions {
+  enableHighAccuracy?: boolean
+  maximumAge?: number
+  timeout?: number
+}
+
+export type UseGeolocationOptions = PositionOptions & {
+  /**
+   * Whether to start watching the geolocation immediately.
+   *
+   * @default true
+   */
+  immediate?: boolean
+}
+```
+
+### Returns
+
+```tsx
+export type UseGeolocationReturn = Pausable & {
+  /**
+   * Whether the geolocation API is supported.
+   */
+  isSupported: boolean
+  /**
+   * The current latitude.
+   */
+  latitude: number
+  /**
+   * The current longitude.
+   */
+  longitude: number
+  /**
+   * The current geolocation state.
+   */
+  isLocating: boolean
+  /**
+   * The timestamp when the geolocation was last updated.
+   */
+  locatedAt: number | null
+  /**
+   * The error object if any.
+   */
+  error: GeolocationPositionError | null
+  /**
+   * The current geolocation coordinates.
+   */
+  coords: GeolocationPosition['coords']
+}
+```

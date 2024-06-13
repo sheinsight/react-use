@@ -1,0 +1,55 @@
+# useGetterRef
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" lowLevel />
+
+A React Hook that create a gettable ref, a function way to get the latest value of a ref.
+
+## Demo
+
+Try to increase the counter and then toast the latest ref value.
+
+> NOTE: Changes in the ref value will not trigger a re-render, you should call `render` to update the UI.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const [ref, getter] = useGetterRef(initialValue)
+```
+
+### InitialValue
+
+Initial value of the ref.
+
+### Returns
+
+```tsx
+export type UseGetterRefReturn<T> = [
+  /**
+   * A mutable ref object that can be used to store a value.
+   */
+  ref: React.MutableRefObject<T>,
+  /**
+   * A getter function that returns the current value of the ref.
+   */
+  getter: () => T,
+]
+```

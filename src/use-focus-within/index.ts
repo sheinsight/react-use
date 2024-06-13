@@ -1,0 +1,26 @@
+import { useEffect } from 'react'
+import { useActiveElement } from '../use-active-element'
+import { useSafeState } from '../use-safe-state'
+import { normalizeElement, useTargetElement } from '../use-target-element'
+import { ensureSSRSecurity } from '../utils'
+
+import type { ElementTarget } from '../use-target-element'
+
+export function useFocusWithin(target: ElementTarget): boolean {
+  const el = useTargetElement(target)
+  const activeElement = useActiveElement()
+
+  const [focused, setFocused] = useSafeState(
+    ensureSSRSecurity(() => isFocusWithin(target, document.activeElement), false),
+  )
+
+  useEffect(() => {
+    setFocused(!!(el.current && isFocusWithin(el.current, activeElement)))
+  }, [activeElement, el.current])
+
+  return focused
+}
+
+function isFocusWithin<T extends Element>(target: ElementTarget<T>, activeEl: Element | null) {
+  return Boolean(activeEl && (normalizeElement(target)?.contains(activeEl) ?? false))
+}

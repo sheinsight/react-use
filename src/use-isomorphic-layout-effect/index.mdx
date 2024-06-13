@@ -1,0 +1,32 @@
+# useIsomorphicLayoutEffect
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" />
+
+A React Hook that will automatically use [React.useLayoutEffect](https://react.dev/reference/react/useLayoutEffect) in client side and [React.useEffect](https://react.dev/reference/react/useEffect) in server side to avoid the warning of `useLayoutEffect` in Server-side Rendering (SSR).
+
+## Demo
+
+Try to change count and then open DevTools to see the effect.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+Same as [React.useLayoutEffect](https://react.dev/reference/react/useLayoutEffect).

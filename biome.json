@@ -1,0 +1,161 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.8.1/schema.json",
+  "organizeImports": {
+    "enabled": true
+  },
+  "files": {
+    "include": [
+      "src/**/*.ts",
+      "src/**/*.tsx",
+      "./scripts/**/*.ts",
+      "./website/**/*.ts",
+      "./website/**/*.tsx",
+      "./testing/**/*.ts",
+      "./testing/**/*.tsx"
+    ],
+    "ignore": ["./src/utils/react-fast-compare.ts"],
+    "ignoreUnknown": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "correctness": {
+        "useExhaustiveDependencies": {
+          "level": "warn",
+          "options": {
+            "hooks": [
+              { "name": "useSafeState", "stableResult": [1] },
+              { "name": "useSetState", "stableResult": [1] },
+              { "name": "useSignalState", "stableResult": [1] },
+              { "name": "useCounter", "stableResult": [1] },
+              { "name": "useToggle", "stableResult": [1] },
+              { "name": "useTextDirection", "stableResult": [1] },
+              { "name": "usePausable", "stableResult": true },
+              { "name": "useStableFn", "stableResult": true },
+              { "name": "useLatest", "stableResult": true },
+              { "name": "useIntervalFn", "stableResult": true },
+              { "name": "useRafLoop", "stableResult": true },
+              { "name": "useAsyncLock", "stableResult": true },
+              {
+                "name": "useAsyncEffect",
+                "closureIndex": 0,
+                "dependenciesIndex": 1,
+                "stableResult": true
+              },
+              {
+                "name": "useAsyncUpdateEffect",
+                "closureIndex": 0,
+                "dependenciesIndex": 1,
+                "stableResult": true
+              },
+              {
+                "name": "useDebouncedEffect",
+                "closureIndex": 0,
+                "dependenciesIndex": 1,
+                "stableResult": true
+              },
+              {
+                "name": "useDeepCompareEffect",
+                "closureIndex": 0,
+                "dependenciesIndex": 1,
+                "stableResult": true
+              },
+              {
+                "name": "useDeepCompareLayoutEffect",
+                "closureIndex": 0,
+                "dependenciesIndex": 1,
+                "stableResult": true
+              },
+              {
+                "name": "useEffectOnce",
+                "closureIndex": 0,
+                "stableResult": true
+              },
+              {
+                "name": "useIsomorphicLayoutEffect",
+                "closureIndex": 0,
+                "dependenciesIndex": 1,
+                "stableResult": true
+              },
+              {
+                "name": "useLayoutEffectOnce",
+                "closureIndex": 0,
+                "stableResult": true
+              },
+              {
+                "name": "usePausableEffect",
+                "closureIndex": 0,
+                "dependenciesIndex": 1,
+                "stableResult": true
+              },
+              {
+                "name": "usePausableLayoutEffect",
+                "closureIndex": 0,
+                "dependenciesIndex": 1,
+                "stableResult": true
+              },
+              {
+                "name": "usePausableUpdateDeepCompareEffect",
+                "closureIndex": 0,
+                "dependenciesIndex": 1,
+                "stableResult": true
+              },
+              {
+                "name": "usePausableUpdateEffect",
+                "closureIndex": 0,
+                "dependenciesIndex": 1,
+                "stableResult": true
+              },
+              {
+                "name": "useThrottledEffect",
+                "closureIndex": 0,
+                "dependenciesIndex": 1,
+                "stableResult": true
+              },
+              {
+                "name": "useTrackedEffect",
+                "closureIndex": 0,
+                "dependenciesIndex": 1,
+                "stableResult": true
+              },
+              {
+                "name": "useUpdateDeepCompareEffect",
+                "closureIndex": 0,
+                "dependenciesIndex": 1,
+                "stableResult": true
+              },
+              {
+                "name": "useUpdateEffect",
+                "closureIndex": 0,
+                "dependenciesIndex": 1,
+                "stableResult": true
+              },
+              {
+                "name": "useUpdateLayoutEffect",
+                "closureIndex": 0,
+                "dependenciesIndex": 1,
+                "stableResult": true
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "lineWidth": 120
+  },
+  "javascript": {
+    "formatter": {
+      "semicolons": "asNeeded",
+      "quoteStyle": "single"
+    }
+  },
+  "css": {
+    "formatter": {
+      "quoteStyle": "single"
+    }
+  }
+}

@@ -1,0 +1,76 @@
+# useAsyncFn
+
+import { HooksType } from '@/components'
+
+<HooksType category="Utilities" />
+
+A React Hook to run **async** funtion with optional **loading** and **return** state.
+
+## Demo
+
+Click to mock fetch, and check the loading state.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { run, loading, value, error } = useAsyncFn(asyncFn, options)
+```
+
+### AsyncFn
+
+```tsx
+export type AsyncFn = (...args: any[]) => Promise<any>
+```
+
+### Options
+
+```tsx
+export type UseAsyncFnOptions = {
+  /**
+   * whether to clear the value before running the function
+   *
+   * @default false
+   */
+  clearBeforeRun?: boolean
+}
+```
+
+### Returns
+
+```tsx
+export type UseAsyncFnReturn<T extends AnyFunc> = {
+  /**
+   * a function to run the async function
+   */
+  run: T
+  /**
+   * whether the async function is loading
+   */
+  loading: boolean
+  /**
+   * the error thrown by the async function
+   */
+  error: unknown | null
+  /**
+   * the value returned by the async function
+   */
+  value: Awaited<ReturnType<T>> | undefined
+}
+```

@@ -1,0 +1,102 @@
+# usePermission
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" isSupported lowLevel />
+
+A React Hook that helps to qeury the permission status of a browser feature.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const state = usePermission(permissionDesc, options)
+const { state, isSupported, query } = usePermission(permissionDesc, { controls: true, ...otherOptions })
+```
+
+### PermissionDesc
+
+```tsx
+type DescriptorNamePolyfill =
+  | 'accelerometer'
+  | 'accessibility-events'
+  | 'ambient-light-sensor'
+  | 'background-sync'
+  | 'camera'
+  | 'clipboard-read'
+  | 'clipboard-write'
+  | 'gyroscope'
+  | 'magnetometer'
+  | 'microphone'
+  | 'notifications'
+  | 'payment-handler'
+  | 'persistent-storage'
+  | 'push'
+  | 'speaker'
+
+export type GeneralPermissionDescriptor = PermissionDescriptor | { name: DescriptorNamePolyfill }
+
+export type PermissionDesc = GeneralPermissionDescriptor | GeneralPermissionDescriptor['name'] | false
+```
+
+### Options
+
+```tsx
+export type UsePermissionOptions<Controls extends boolean> = {
+  /**
+   * Expose more controls
+   *
+   * @default false
+   */
+  controls?: Controls
+  /**
+   * Whether to query immediately
+   *
+   * @default true
+   */
+  immediate?: boolean
+  /**
+   *
+   */
+  onStateChange?: (state: PermissionState) => void
+}
+```
+
+### Returns
+
+```tsx
+export type UsePermissionReturn<Controls extends boolean> = Controls extends true
+  ? {
+      /**
+       * A Ref Getter to check if the permission is supported
+       */
+      isSupported: boolean
+      /**
+       * Query the permission status
+       */
+      state: RefObject<PermissionState>
+      /**
+       * Query the permission status
+       */
+      query(): Promise<PermissionStatus | null>
+    }
+  : RefObject<PermissionState>
+```

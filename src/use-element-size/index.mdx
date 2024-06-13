@@ -1,0 +1,67 @@
+# useElementSize
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" />
+
+A React Hook that returns the size of an element.
+
+## Demo
+
+Try to resize the textarea to see the size changes.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { width, height, ...useResizeObserverReturn } = useElementSize(elementTarget, defaultValue, options)
+```
+
+### ElementTarget
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### DefaultValue
+
+```tsx
+export type ElementSize = {
+  /**
+   * The width of the element.
+   */
+  width: number
+  /**
+   * The height of the element.
+   */
+  height: number
+}
+```
+
+### Options
+
+Options of `useResizeObserver`, see [useResizeObserver#options](/reference/use-resize-observer/#options) for more details.
+
+### Returns
+
+Returns of `useResizeObserver`, see [useResizeObserver#returns](/reference/use-resize-observer/#returns) for more details.
+
+```tsx
+export type UseElementSizeReturn = ElementSize & UseResizeObserverReturn
+```

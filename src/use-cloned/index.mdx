@@ -1,0 +1,80 @@
+# useCloned
+
+import { HooksType } from '@/components'
+
+<HooksType category="State" />
+
+A React Hook that returns a cloned state with the same properties and values as the original state.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const [cloned, setCloned, sync] = useCloned(state, options)
+```
+
+### State
+
+Any valid JavaScript type, such as `string`, `number`, `object`, `array`, etc.
+
+### Options
+
+```tsx
+export type UseClonedOptions = {
+  /**
+   * Clone function
+   *
+   * @default defaultCloneFn
+   */
+  clone?: <T>(source: T) => T
+  /**
+   * Whether to manually trigger the clone function
+   *
+   * @default false
+   */
+  manual?: boolean
+  /**
+   * Whether to deep compare the source object
+   *
+   * @default true
+   */
+  deep?: boolean
+}
+```
+
+### Returns
+
+```tsx
+export type UseClonedReturn<T> = [
+  /**
+   * Cloned state
+   */
+  cloned: T,
+  /**
+   * Set cloned state
+   */
+  setCloned: ReactSetState<T>,
+  /**
+   * Sync cloned state with source state
+   */
+  sync: () => void,
+]
+```

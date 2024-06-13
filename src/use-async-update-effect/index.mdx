@@ -1,0 +1,32 @@
+# useAsyncUpdateEffect
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" lowLevel />
+
+A React Hook which is like [useAsyncEffect](/reference/use-async-effect) but **ignore the execution at first mount**.
+
+## Demo
+
+It will **NOT** execute at first mount before you toggle the status to trigger the effect to start the interval.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+See [useAsyncEffect](/reference/use-async-effect/#api).

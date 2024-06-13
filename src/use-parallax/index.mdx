@@ -1,0 +1,86 @@
+# useParallax
+
+import { HooksType } from '@/components'
+
+<HooksType category="ProUtilities" pausable />
+
+A React Hook that create a parallax effect.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const parallax = useParallax(elementTarget, options)
+```
+
+### ElementTarget
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### Options
+
+```tsx
+export type UseParallaxOptions = {
+  /**
+   * Adjust the tilt value from device orientation sensor
+   */
+  deviceOrientationTiltAdjust?: (i: number) => number
+  /**
+   * Adjust the roll value from device orientation sensor
+   */
+  deviceOrientationRollAdjust?: (i: number) => number
+  /**
+   * Adjust the tilt value from mouse sensor
+   */
+  mouseTiltAdjust?: (i: number) => number
+  /**
+   * Adjust the roll value from mouse sensor
+   */
+  mouseRollAdjust?: (i: number) => number
+}
+```
+
+### Returns
+
+<Tip type="pausable" />
+
+```tsx
+export interface UseParallaxReturn extends Pausable {
+  /**
+   * Roll value. Scaled to `-0.5 ~ 0.5`
+   */
+  roll: number
+  /**
+   * Tilt value. Scaled to `-0.5 ~ 0.5`
+   */
+  tilt: number
+  /**
+   * Container style presets
+   */
+  containerStyle: (perspective?: number) => React.CSSProperties
+  /**
+   * Element style presets
+   */
+  elementStyle: (rotateRatio?: number, duration?: number) => React.CSSProperties
+}
+```
