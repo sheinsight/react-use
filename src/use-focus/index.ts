@@ -52,7 +52,7 @@ export function useFocus<T extends HTMLElement = HTMLElement>(
   useEventListener(el, 'blur', () => setFocused(false))
 
   useMount(() => {
-    const isCurrentFocused = isElActive(el.current)
+    const isCurrentFocused = isElActive(el)
 
     if (focused && !isCurrentFocused) focus()
     if (!focused && isCurrentFocused) setFocused(true)

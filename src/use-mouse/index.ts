@@ -141,7 +141,14 @@ export function useMouse(options: UseMouseOptions = {}): UseMouseReturn {
   const cleanups = useLatest([
     useEventListener(target, ['mousemove', 'dragover'], mouseHandler, evtOptions),
     useEventListener(target, isTouch ? ['touchstart', 'touchmove'] : [], touchHandler, evtOptions),
-    useEventListener(target, resetOnEnds ? 'touchend' : [], () => setPosition(initialValue), evtOptions),
+    useEventListener(
+      target,
+      resetOnEnds ? 'touchend' : [],
+      () => {
+        pausable.isActive() && setPosition(initialValue)
+      },
+      evtOptions,
+    ),
     useEventListener(() => window, isScroll ? 'scroll' : [], scrollHandler, evtOptions),
   ])
 

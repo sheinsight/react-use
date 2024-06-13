@@ -7,7 +7,7 @@ export function App() {
   const screen = useMouse({ type: 'screen' })
   const move = useMouse({ type: 'movement' })
 
-  const controls = [page, client, screen]
+  const controls = [page, client, screen, move]
   const isActive = controls.every((e) => e.isActive())
 
   return (

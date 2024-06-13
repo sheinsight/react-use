@@ -7,7 +7,6 @@ export function App() {
 
   const [bounding] = useElementBounding(element as HTMLElement | null)
   const styleTag = useStyleTag('* { cursor: crosshair !important; }')
-
   const isActive = mouseControls.isActive() && controls.isActive()
 
   const pause = () => {
@@ -51,7 +50,7 @@ export function App() {
           width: `${bounding.width}px`,
           height: `${bounding.height}px`,
           backgroundColor: controls.isActive() ? 'rgb(46 133 85 / 0.24)' : 'transparent',
-          zIndex: controls.isActive() ? 99999 : 'unset',
+          zIndex: controls.isActive() ? 9999999 : 'unset',
         }}
       />
       <div className={lineCls} style={{ left: x, top: 0, width: controls.isActive() ? 1 : 0, height: '100%' }} />

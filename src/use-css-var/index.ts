@@ -43,7 +43,7 @@ export function useCssVar<T extends HTMLElement = HTMLElement>(
     const { propName, defaultValue } = latest.current
 
     if (el.current) {
-      const value = getCssVar(propName, el.current, defaultValue)
+      const value = getCssVar(propName, el, defaultValue)
       _setVariable(value || defaultValue)
     }
   })

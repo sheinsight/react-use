@@ -101,7 +101,7 @@ export function useElementBounding<T extends HTMLElement = HTMLElement>(
   })
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: effect need to re-run when reset, windowResize or windowScroll changes
-  useEffect(() => void update(), [reset, windowScroll, windowResize])
+  useEffect(() => void update(), [el.current, reset, windowScroll, windowResize])
 
   useResizeObserver(el, update)
   useMutationObserver(el, update, { attributeFilter: ['style', 'class'] })

@@ -46,7 +46,7 @@ export function useElementSize<T extends HTMLElement = HTMLElement>(
       const isSvg = el.current?.namespaceURI?.includes('svg')
 
       if (isSvg && el.current) {
-        setSize(getElSize(el.current))
+        setSize(getElSize(el))
       } else {
         if (boxSize && box.length) {
           setSize({
