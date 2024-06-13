@@ -9,8 +9,6 @@ export function App() {
     console.log('Last Active:', idleInfo.lastActive.current)
   }, 1000)
 
-  console.log('render test')
-
   return (
     <Card>
       <KeyValue label="Is User Idle" value={idleInfo.isIdle} />

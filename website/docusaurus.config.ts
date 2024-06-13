@@ -9,7 +9,7 @@ export default {
   tagline: 'A simple yet powerful collection of React hooks.',
   // favicon: 'img/favicon.ico',
   url: 'https://shined-hooks.vercel.app',
-  baseUrl: '/',
+  baseUrl: '/use',
   organizationName: 'sheinsight',
   projectName: '@shined/use',
   onBrokenLinks: 'throw',
