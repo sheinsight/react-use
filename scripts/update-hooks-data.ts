@@ -2,6 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import url from 'node:url'
 
+// TODO: re-write use import.meta.dirname
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 const srcDir = path.resolve(__dirname, '../src')
 const targetPath = path.resolve(__dirname, '../website/src/pages/search/hooks.json')

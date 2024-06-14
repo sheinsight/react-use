@@ -9,6 +9,10 @@ export default defineConfig({
       dark: { dark: '[data-theme="dark"]' },
     }),
     presetIcons({
+      cdn: 'https://esm.sh/',
+      // collections: {
+      //   mdi: () => import('@iconify-json/mdi/icons.json').then((i) => i.default),
+      // },
       extraProperties: {
         display: 'inline-block',
       },

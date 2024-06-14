@@ -46,15 +46,9 @@ devDependencies:
   '@docusaurus/types':
     specifier: 3.3.2
     version: 3.3.2(react-dom@18.3.1)(react@18.3.1)
-  '@iconify-json/mdi':
-    specifier: ^1.1.66
-    version: 1.1.66
   '@unocss/postcss':
     specifier: ^0.59.4
     version: 0.59.4(postcss@8.4.38)
-  '@unocss/preset-icons':
-    specifier: ^0.59.4
-    version: 0.59.4
   gray-matter:
     specifier: ^4.0.3
     version: 4.0.3
@@ -2572,12 +2566,6 @@ packages:
     resolution: {integrity: sha512-foQZKJig7Ob0BMAYBfcJk8d77QtOe7Wo4ox7ff1lQYoNNAb6jwcY1ncdoy2e9wQZzvNy7ODZCYJkK8kzmcAnAg==}
     dependencies:
       '@hapi/hoek': 9.3.0
-
-  /@iconify-json/mdi@1.1.66:
-    resolution: {integrity: sha512-7KPF2RVUUWav/hXCM8Ti/smqu3cmgePJpiX9CSkldiL+80+eBRBeKlc4vPOc9jhAItlqIU1vKsbKoPP0JIfgbg==}
-    dependencies:
-      '@iconify/types': 2.0.0
-    dev: true
 
   /@iconify/types@2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -9747,10 +9735,8 @@ time:
   /@docusaurus/tsconfig@3.3.2: '2024-05-03T14:30:07.590Z'
   /@docusaurus/types@3.3.2: '2024-05-03T14:30:07.929Z'
   /@formkit/auto-animate@0.8.2: '2024-04-10T16:20:50.136Z'
-  /@iconify-json/mdi@1.1.66: '2024-04-07T15:24:26.533Z'
   /@mdx-js/react@3.0.1: '2024-02-12T10:50:27.073Z'
   /@unocss/postcss@0.59.4: '2024-04-18T11:36:16.010Z'
-  /@unocss/preset-icons@0.59.4: '2024-04-18T11:35:26.193Z'
   /braces@3.0.3: '2024-05-21T08:59:11.390Z'
   /change-case@5.4.4: '2024-04-03T22:34:57.150Z'
   /clsx@2.1.1: '2024-04-23T05:26:04.645Z'
