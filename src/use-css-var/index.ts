@@ -4,7 +4,7 @@ import { useMutationObserver } from '../use-mutation-observer'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
 import { normalizeElement, useTargetElement } from '../use-target-element'
-import { ensureSSRSecurity, isFunction, unwrapGettable } from '../utils'
+import { isFunction, unwrapGettable } from '../utils'
 
 import type { ReactSetState } from '../use-safe-state'
 import type { ElementTarget } from '../use-target-element'
@@ -32,9 +32,7 @@ export function useCssVar<T extends HTMLElement = HTMLElement>(
 ): [string, ReactSetState<string>] {
   const { defaultValue = '', observe = false } = options
 
-  const [variable, _setVariable] = useSafeState(
-    ensureSSRSecurity(() => getCssVar(unwrapGettable(propName), target, defaultValue), defaultValue),
-  )
+  const [variable, _setVariable] = useSafeState(defaultValue)
 
   const el = useTargetElement<T>(target)
   const latest = useLatest({ variable, propName: unwrapGettable(propName), defaultValue })

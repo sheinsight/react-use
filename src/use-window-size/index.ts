@@ -4,7 +4,6 @@ import { useMount } from '../use-mount'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
 import { useUpdateEffect } from '../use-update-effect'
-import { ensureSSRSecurity } from '../utils'
 
 import type { Size } from '../utils'
 
@@ -50,12 +49,8 @@ export function useWindowSize(options: UseWindowSizeOptions = {}): UseWindowSize
     includeScrollbar = true,
   } = options
 
-  const [windowSize, setWindowSize] = useSafeState<Size>(
-    ensureSSRSecurity(() => getWindowSize(includeScrollbar), { width: initialWidth, height: initialHeight }),
-    { deep: true },
-  )
-
-  const update = useStableFn(() => setWindowSize(getWindowSize(includeScrollbar)))
+  const [size, setSize] = useSafeState<Size>({ width: initialWidth, height: initialHeight }, { deep: true })
+  const update = useStableFn(() => setSize(getWindowSize(includeScrollbar)))
 
   useMount(update)
 
@@ -66,7 +61,7 @@ export function useWindowSize(options: UseWindowSizeOptions = {}): UseWindowSize
   // biome-ignore lint/correctness/useExhaustiveDependencies: effect need to re-run when orientation changes
   useUpdateEffect(() => update(), [isPortrait])
 
-  return { ...windowSize, update }
+  return { ...size, update }
 }
 
 function getWindowSize(includeScrollbar = true) {

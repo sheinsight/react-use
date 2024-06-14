@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { useDeepCompareEffect } from '../use-deep-compare-effect'
 import { useLatest } from '../use-latest'
 import { useSafeState } from '../use-safe-state'
-import { ensureSSRSecurity, unwrapArrayable, unwrapGettable } from '../utils'
+import { unwrapArrayable, unwrapGettable } from '../utils'
 
 import type { Gettable, Arrayable } from '../utils'
 
@@ -22,11 +22,7 @@ export function useMediaQuery<T extends UseMediaQueryType, R extends Arrayable<T
   const { ...addEventListenerOptions } = options
   const queryStrings = unwrapArrayable(query).filter(Boolean).map(unwrapGettable)
   const mediaQueries = useRef<(MediaQueryList & { handler?: MediaQueryChangeListener })[]>([])
-
-  const [matches, setMatches] = useSafeState(
-    ensureSSRSecurity(() => getMatches(queryStrings), [false]),
-    { deep: true },
-  )
+  const [matches, setMatches] = useSafeState([false], { deep: true })
 
   const latest = useLatest(matches)
 

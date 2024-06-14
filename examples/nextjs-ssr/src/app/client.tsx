@@ -1,6 +1,6 @@
 'use client'
 
-import { useCircularList, useElementSize, useTitle } from '@shined/use'
+import { useBrowserMemory, useCircularList, useElementSize, useTitle } from '@shined/use'
 
 export function Client() {
   const { width, height } = useElementSize('#el-textarea')
@@ -8,6 +8,7 @@ export function Client() {
 
   useTitle('Client')
 
+  const { jsHeapSizeLimit, usedJSHeapSize, totalJSHeapSize } = useBrowserMemory()
   const [state, action, idx] = useCircularList(Array.from({ length: 3 }, (_, i) => i + 1))
 
   return (
@@ -17,6 +18,9 @@ export function Client() {
       <div>
         state: {state}, index: {idx}
       </div>
+
+      <pre>{JSON.stringify({ jsHeapSizeLimit, usedJSHeapSize, totalJSHeapSize }, null, 2)}</pre>
+
       <button
         type="button"
         onClick={() => {

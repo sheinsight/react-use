@@ -1,6 +1,5 @@
 import { useResizeObserver } from '../use-resize-observer'
 import { useSafeState } from '../use-safe-state'
-import { ensureSSRSecurity } from '../utils'
 import { normalizeElement, useTargetElement } from '../use-target-element'
 
 import type { UseResizeObserverOptions, UseResizeObserverReturn } from '../use-resize-observer'
@@ -25,12 +24,7 @@ export function useElementSize<T extends HTMLElement = HTMLElement>(
   options: UseResizeObserverOptions = {},
 ): UseElementSizeReturn {
   const el = useTargetElement<T>(target)
-
-  const [size, setSize] = useSafeState(
-    ensureSSRSecurity(() => getElSize(target, defaultValue), defaultValue),
-    { deep: true },
-  )
-
+  const [size, setSize] = useSafeState(defaultValue, { deep: true })
   const { box = 'content-box' } = options
 
   const { observerRef, isSupported, ...controls } = useResizeObserver(

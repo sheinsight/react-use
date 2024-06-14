@@ -5,7 +5,6 @@ import { useMutationObserver } from '../use-mutation-observer'
 import { useResizeObserver } from '../use-resize-observer'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
-import { ensureSSRSecurity } from '../utils'
 import { normalizeElement, useTargetElement } from '../use-target-element'
 
 import type { ElementTarget } from '../use-target-element'
@@ -81,11 +80,7 @@ export function useElementBounding<T extends HTMLElement = HTMLElement>(
   const { reset = true, windowResize = true, windowScroll = true } = options
   const el = useTargetElement<T>(target)
 
-  const [bounding, setBounding] = useSafeState(
-    ensureSSRSecurity(() => getElBounding(target), { ...defaultElBounding }),
-    { deep: true },
-  )
-
+  const [bounding, setBounding] = useSafeState({ ...defaultElBounding }, { deep: true })
   const latest = useLatest({ reset })
 
   const update = useStableFn(() => {

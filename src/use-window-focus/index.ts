@@ -1,10 +1,9 @@
 import { useEventListener } from '../use-event-listener'
 import { useMount } from '../use-mount'
 import { useSafeState } from '../use-safe-state'
-import { ensureSSRSecurity } from '../utils'
 
 export function useWindowFocus(): boolean {
-  const [isFocused, setIsFocused] = useSafeState(ensureSSRSecurity(() => document.hasFocus(), false))
+  const [isFocused, setIsFocused] = useSafeState(false)
 
   useMount(() => setIsFocused(document.hasFocus()))
 

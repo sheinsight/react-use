@@ -1,7 +1,6 @@
 import { useEventListener } from '../use-event-listener'
 import { useMount } from '../use-mount'
 import { useSafeState } from '../use-safe-state'
-import { ensureSSRSecurity } from '../utils'
 
 export interface UseActiveElementOptions {
   /**
@@ -16,9 +15,7 @@ export interface UseActiveElementOptions {
  * use the active element, optionally traversing the shadow DOM
  */
 export function useActiveElement(options: UseActiveElementOptions = {}): Element | null {
-  const [element, setElement] = useSafeState<Element | null>(
-    ensureSSRSecurity(() => getActiveElement(options.deep), null),
-  )
+  const [element, setElement] = useSafeState<Element | null>(null)
 
   function updateElement() {
     setElement(getActiveElement(options.deep))

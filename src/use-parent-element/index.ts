@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import { useSafeState } from '../use-safe-state'
-import { ensureSSRSecurity } from '../utils'
 import { normalizeElement, useTargetElement } from '../use-target-element'
 
 import type { ElementTarget } from '../use-target-element'
@@ -11,7 +10,7 @@ export function useParentElement<T extends HTMLElement = HTMLElement>(
   target: ElementTarget<T>,
 ): UseParentElementReturn {
   const el = useTargetElement<T>(target)
-  const [parent, setParent] = useSafeState<HTMLElement | null>(ensureSSRSecurity(() => getParentElement(target), null))
+  const [parent, setParent] = useSafeState<HTMLElement | null>(null)
 
   useEffect(() => {
     if (!el.current) return

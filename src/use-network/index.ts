@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react'
 import { useEventListener } from '../use-event-listener'
 import { useSetState } from '../use-set-state'
 import { useSupported } from '../use-supported'
-import { ensureSSRSecurity, now } from '../utils'
+import { now } from '../utils'
 
 export type NetworkType = 'bluetooth' | 'cellular' | 'ethernet' | 'none' | 'wifi' | 'wimax' | 'other' | 'unknown'
 export type NetworkEffectiveType = 'slow-2g' | '2g' | '3g' | '4g' | undefined
@@ -71,19 +71,17 @@ export function useNetwork(): UseNetworkReturn {
   const isSupported = useSupported(() => 'connection' in navigator)
   const connectionRef = useRef<ExtendedNavigator['connection'] | null>(null)
 
-  const [state, setState] = useSetState(
-    ensureSSRSecurity(getNetwork, {
-      isOnline: true,
-      offlineAt: undefined,
-      onlineAt: now(),
-      downlink: undefined,
-      downlinkMax: undefined,
-      effectiveType: undefined,
-      rtt: undefined,
-      saveData: undefined,
-      type: 'unknown',
-    }),
-  )
+  const [state, setState] = useSetState({
+    isOnline: true,
+    offlineAt: undefined as number | undefined,
+    onlineAt: 0 as number | undefined,
+    downlink: undefined as number | undefined,
+    downlinkMax: undefined as number | undefined,
+    effectiveType: undefined as NetworkEffectiveType,
+    rtt: undefined as number | undefined,
+    saveData: undefined as boolean | undefined,
+    type: 'unknown' as NetworkType,
+  })
 
   const updateNetworkInformation = useStableFn(() => setState(getNetwork()))
 

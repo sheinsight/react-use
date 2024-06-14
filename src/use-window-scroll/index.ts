@@ -4,7 +4,6 @@ import { useMount } from '../use-mount'
 import { useMutationObserver } from '../use-mutation-observer'
 import { useSetState } from '../use-set-state'
 import { useStableFn } from '../use-stable-fn'
-import { ensureSSRSecurity } from '../utils'
 
 import type { Position } from '../utils'
 
@@ -54,7 +53,7 @@ export function useWindowScroll(options: UseWindowScrollOptions = {}): UseWindow
   const { behavior = 'auto' } = options
 
   const [state, setState] = useSetState<Position & { maxX: number; maxY: number }>(
-    ensureSSRSecurity(getPositionState, { x: 0, y: 0, maxX: 0, maxY: 0 }),
+    { x: 0, y: 0, maxX: 0, maxY: 0 },
     { deep: true },
   )
 

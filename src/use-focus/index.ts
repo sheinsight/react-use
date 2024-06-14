@@ -3,7 +3,6 @@ import { useEventListener } from '../use-event-listener'
 import { useMount } from '../use-mount'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
-import { ensureSSRSecurity } from '../utils'
 import { normalizeElement, useTargetElement } from '../use-target-element'
 
 import type { ElementTarget } from '../use-target-element'
@@ -42,13 +41,9 @@ export function useFocus<T extends HTMLElement = HTMLElement>(
   options: UseFocusOptions = {},
 ): UseFocusReturn {
   const el = useTargetElement<T>(target)
-
-  const [focused, setFocused] = useSafeState(
-    ensureSSRSecurity(() => isElActive(target), options?.initialValue ?? false),
-  )
+  const [focused, setFocused] = useSafeState(options?.initialValue ?? false)
 
   useEventListener(el, 'focus', () => setFocused(true))
-
   useEventListener(el, 'blur', () => setFocused(false))
 
   useMount(() => {
@@ -60,7 +55,6 @@ export function useFocus<T extends HTMLElement = HTMLElement>(
 
   const focus = useStableFn(() => el.current?.focus())
   const blur = useStableFn(() => el.current?.blur())
-
   const actions = useCreation(() => ({ focus, blur }))
 
   return [focused, actions] as const
