@@ -19,10 +19,8 @@ export function App() {
       <button type="button" className="el border-0 text-base rounded bg-primary/80 px-4 py-1">
         button.el
       </button>
-      {/* prettier-ignore */}
-      <div className="rounded bg-amber/80 px-4 py-1" id="id">
-        #id
-      </div>
+      {/* biome-ignore format: for demo */}
+      <div className="rounded bg-amber/80 px-4 py-1" id="id">#id</div>
       <div className="class rounded bg-blue/80 px-4 py-1">div.class</div>
       <section className="rounded bg-red/80 px-4 py-1">section</section>
     </Card>

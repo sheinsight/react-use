@@ -15,14 +15,10 @@ export function App() {
         <Button onClick={() => setState({ count: state.count + 1 })}>Change count</Button>
         <div>/</div>
         <Button onClick={() => history.commit()}>Commit</Button>
-        {/* prettier-ignore */}
-        <Button disabled={!history.canUndo} onClick={history.undo}>
-          Undo
-        </Button>
-        {/* prettier-ignore */}
-        <Button disabled={!history.canRedo} onClick={history.redo}>
-          Redo
-        </Button>
+        {/* biome-ignore format: for demo */}
+        <Button disabled={!history.canUndo} onClick={history.undo}>Undo</Button>
+        {/* biome-ignore format: for demo */}
+        <Button disabled={!history.canRedo} onClick={history.redo}>Redo</Button>
         <Button onClick={history.clear}>Clear</Button>
       </Zone>
       <Zone border="primary">

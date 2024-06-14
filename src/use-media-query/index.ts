@@ -4,7 +4,7 @@ import { useLatest } from '../use-latest'
 import { useSafeState } from '../use-safe-state'
 import { unwrapArrayable, unwrapGettable } from '../utils'
 
-import type { Gettable, Arrayable } from '../utils'
+import type { Arrayable, Gettable } from '../utils'
 
 export type UseMediaQueryType = Gettable<string>
 export type MediaQueryChangeListener = (this: MediaQueryList, ev: MediaQueryListEvent) => void

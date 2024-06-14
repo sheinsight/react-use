@@ -14,14 +14,10 @@ export function App() {
         <KeyValue label="Count">{count}</KeyValue>
       </Zone>
       <Zone>
-        {/* prettier-ignore */}
-        <Button disabled={!isActive} onClick={() => controls.pause(true)}>
-          Pause
-        </Button>
-        {/* prettier-ignore */}
-        <Button disabled={isActive} onClick={() => controls.resume(true)}>
-          Resume
-        </Button>
+        {/* biome-ignore format: for demo */}
+        <Button disabled={!isActive} onClick={() => controls.pause(true)}>Pause</Button>
+        {/* biome-ignore format: for demo */}
+        <Button disabled={isActive} onClick={() => controls.resume(true)}>Resume</Button>
       </Zone>
     </Card>
   )

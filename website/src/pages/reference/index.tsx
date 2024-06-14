@@ -1,6 +1,6 @@
 import { Redirect } from '@docusaurus/router'
-import hooks from '../search/hooks.json'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
+import hooks from '../search/hooks.json'
 
 export default function Reference() {
   const { siteConfig } = useDocusaurusContext()

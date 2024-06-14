@@ -28,16 +28,12 @@ export function App() {
   return (
     <Card>
       <div className={railCls}>
-        {/* prettier-ignore */}
-        <div className={`${boxCls} bg-blue`} style={{ left: rafLeft }}>
-          RAF
-        </div>
+        {/* biome-ignore format: for demo */}
+        <div className={`${boxCls} bg-blue`} style={{ left: rafLeft }}>RAF</div>
       </div>
       <div className={railCls}>
-        {/* prettier-ignore */}
-        <div className={`${boxCls} bg-red`} style={{ left: iLeft }}>
-          Interval
-        </div>
+        {/* biome-ignore format: for demo */}
+        <div className={`${boxCls} bg-red`} style={{ left: iLeft }}>Interval</div>
       </div>
       <Zone>
         <Button onClick={start}>Start</Button>

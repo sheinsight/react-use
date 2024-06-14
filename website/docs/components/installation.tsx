@@ -56,7 +56,6 @@ export function Installation() {
 }
 
 export function VscodeIconsFileTypePnpm(props: SVGProps<SVGSVGElement>) {
-  // prettier-ignore
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="1.6rem" height="1.6rem" viewBox="0 0 32 32" {...props}>
       <title>pnpm</title>
@@ -73,7 +72,6 @@ export function VscodeIconsFileTypePnpm(props: SVGProps<SVGSVGElement>) {
 }
 
 export function VscodeIconsFileTypeNpm(props: SVGProps<SVGSVGElement>) {
-  // prettier-ignore
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="1.6rem" height="1.6rem" viewBox="0 0 32 32" {...props}>
       <title>npm</title>
@@ -86,7 +84,6 @@ export function VscodeIconsFileTypeNpm(props: SVGProps<SVGSVGElement>) {
 }
 
 export function VscodeIconsFileTypeYarn(props: SVGProps<SVGSVGElement>) {
-  // prettier-ignore
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="1.6rem" height="1.6rem" viewBox="0 0 32 32" {...props}>
       <title>yarn</title>
@@ -99,7 +96,6 @@ export function VscodeIconsFileTypeYarn(props: SVGProps<SVGSVGElement>) {
 }
 
 export function VscodeIconsFileTypeBun(props: SVGProps<SVGSVGElement>) {
-  // prettier-ignore
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="1.6rem" height="1.6rem" viewBox="0 0 32 32" {...props}>
       <title>bun</title>

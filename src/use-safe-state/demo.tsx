@@ -17,10 +17,8 @@ export function App() {
     <Card>
       <Zone border="primary" row={false}>
         <KeyValue label="Basic State" value={state} />
-        {/* prettier-ignore */}
-        <Zone>
-          <Button onClick={() => setState(OTP())}>Set state</Button>
-        </Zone>
+        {/* biome-ignore format: for demo */}
+        <Zone><Button onClick={() => setState(OTP())}>Set state</Button></Zone>
       </Zone>
       <Zone border="primary" row={false}>
         <KeyValue label="Shallow Object State" value={shallowState.name} />

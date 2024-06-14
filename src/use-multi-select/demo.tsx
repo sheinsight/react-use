@@ -1,23 +1,8 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
 import { useMultiSelect } from '@shined/use'
 
-// prettier-ignore
-const list = [
-  'grape 🍇',
-  'watermelon 🍉',
-  'orange 🍊',
-  'banana 🍌',
-  'pineapple 🍍',
-  'mango 🥭',
-  'apple 🍎',
-  'pear 🍐',
-  'peach 🍑',
-  'cherry 🍒',
-  'strawberry 🍓',
-  'blueberry 🫐',
-  'kiwifruit 🥝',
-  'coconut 🥥',
-]
+// biome-ignore format: for demo
+const list = [ 'grape 🍇', 'watermelon 🍉', 'orange 🍊', 'banana 🍌', 'pineapple 🍍', 'mango 🥭', 'apple 🍎', 'pear 🍐', 'peach 🍑', 'cherry 🍒', 'strawberry 🍓', 'blueberry 🫐', 'kiwifruit 🥝', 'coconut 🥥']
 
 export function App() {
   const multiSelect = useMultiSelect(list)
