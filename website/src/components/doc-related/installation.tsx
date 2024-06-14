@@ -21,14 +21,14 @@ const npmLabel = (
 const yarnLabel = (
   <div className="flex items-center gap-2">
     <VscodeIconsFileTypeYarn />
-    yarn
+    Yarn
   </div>
 )
 
 const bunLabel = (
   <div className="flex items-center gap-2">
     <VscodeIconsFileTypeBun />
-    yarn
+    Bun
   </div>
 )
 
