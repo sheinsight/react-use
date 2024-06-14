@@ -3,7 +3,7 @@ import { useLatest } from '../use-latest'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
 import { useSupported } from '../use-supported'
-import { isClient, timestamp } from '../utils'
+import { timestamp } from '../utils'
 
 import type { UseIntervalFnOptions } from '../use-interval-fn'
 
@@ -77,7 +77,7 @@ export function useBrowserMemory(options: UseBrowserMemoryOptions = {}): UseBrow
 
   const [state, setState] = useSafeState({
     timestamp: Date.now(),
-    memory: SSRFriendlyGetInitialMemory() as MemoryInfo | undefined,
+    memory: undefined as MemoryInfo | undefined,
   })
 
   const update = useStableFn(() => {
@@ -103,12 +103,4 @@ export function useBrowserMemory(options: UseBrowserMemoryOptions = {}): UseBrow
     isSupported,
     update,
   }
-}
-
-function SSRFriendlyGetInitialMemory() {
-  if (!isClient) {
-    return undefined
-  }
-
-  return (performance as PerformanceWithMemory).memory
 }
