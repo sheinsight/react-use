@@ -1,8 +1,8 @@
-import type { SVGProps } from 'react'
-
 import CodeBlock from '@theme/CodeBlock'
 import TabItem from '@theme/TabItem'
 import Tabs from '@theme/Tabs'
+
+import type { SVGProps } from 'react'
 
 const pnpmLabel = (
   <div className="flex items-center gap-2">
@@ -32,24 +32,24 @@ const bunLabel = (
   </div>
 )
 
-export function Installation() {
+export function Installation({ npmName = '' }: { npmName?: string }) {
   return (
     <Tabs>
-      {/* @ts-expect-error element is valid */}
+      {/* @ts-expect-error: element is valid as label */}
       <TabItem value="pnpm" label={pnpmLabel} default>
-        <CodeBlock language="bash">pnpm add @shined/use</CodeBlock>
+        <CodeBlock language="bash">pnpm add {npmName}</CodeBlock>
       </TabItem>
-      {/* @ts-expect-error element is valid */}
+      {/* @ts-expect-error: element is valid as label */}
       <TabItem value="npm" label={npmLabel} default>
-        <CodeBlock language="bash">npm install @shined/use</CodeBlock>
+        <CodeBlock language="bash">npm install {npmName}</CodeBlock>
       </TabItem>
-      {/* @ts-expect-error element is valid */}
+      {/* @ts-expect-error: element is valid as label */}
       <TabItem value="yarn" label={yarnLabel} default>
-        <CodeBlock language="bash">yarn add @shined/use</CodeBlock>
+        <CodeBlock language="bash">yarn add {npmName}</CodeBlock>
       </TabItem>
-      {/* @ts-expect-error element is valid */}
+      {/* @ts-expect-error: element is valid as label */}
       <TabItem value="bun" label={bunLabel} default>
-        <CodeBlock language="bash">bun add @shined/use</CodeBlock>
+        <CodeBlock language="bash">bun add {npmName}</CodeBlock>
       </TabItem>
     </Tabs>
   )

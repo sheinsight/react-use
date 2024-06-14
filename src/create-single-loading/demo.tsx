@@ -36,7 +36,8 @@ export function App() {
         <Button disabled={loading} onClick={fnWithError.run}>Fetch with Error</Button>
       </Zone>
       <Zone>
-        <Button onClick={() => fetchOutsideReact(1)}>Fetch outside React</Button>
+        {/* biome-ignore format: for demo */}
+        <Button disabled={loading} onClick={() => fetchOutsideReact(1)}>Fetch outside React</Button>
         <Button onClick={() => fn.setLoading(!loading)}>Toggle by Hook</Button>
         <Button onClick={() => pageLoading.set(!loading)}>Toggle by instance</Button>
       </Zone>
