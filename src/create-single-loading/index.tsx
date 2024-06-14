@@ -1,5 +1,5 @@
 import { create } from '@shined/reactive'
-import { useAsyncFn as _useAsyncFn } from '../use-async-fn'
+import { useAsyncFn as useAsyncFnOrigin } from '../use-async-fn'
 
 import type { ReactNode } from 'react'
 import type { UseAsyncFnReturn } from '../use-async-fn'
@@ -63,9 +63,9 @@ export function createSingleLoading(options: CreateSingleLoadingOptions = {}): C
       store.mutate.loading = true
 
       try {
-        const res = await func(...args)
+        const result = await func(...args)
         store.mutate.loading = false
-        return res
+        return result
       } catch (error) {
         if (resetOnError) {
           store.mutate.loading = initialState
@@ -92,7 +92,7 @@ export function createSingleLoading(options: CreateSingleLoadingOptions = {}): C
 
   function useAsyncFn<T extends AnyFunc>(asyncFunc: T) {
     const loading = useLoading()
-    const { run, value, error } = _useAsyncFn(bind(asyncFunc))
+    const { run, value, error } = useAsyncFnOrigin(bind(asyncFunc))
 
     return {
       run,
