@@ -5,8 +5,8 @@ import { useRafLoop } from '../use-raf-loop'
 import { isString } from '../utils/basic'
 import { unwrapGettable } from '../utils/unwrap'
 
-import type { UseRafLoopOptions } from '../use-raf-loop'
 import type { Pausable } from '../use-pausable'
+import type { UseRafLoopOptions } from '../use-raf-loop'
 import type { AnyFunc, Gettable, SetIntervalReturn } from '../utils/basic'
 
 export interface UseIntervalFnOptions extends Omit<UseRafLoopOptions, 'fpsLimit'> {}

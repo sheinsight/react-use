@@ -8,5 +8,3 @@ afterEach(() => {
   vi.resetAllMocks()
 })
 
-// madge --image graph.png --exclude '((index\.mdx)|(demo\.tsx))'  ./src/**/*
-
