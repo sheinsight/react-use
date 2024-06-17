@@ -1,12 +1,12 @@
 import { Card, KeyValue } from '@/components'
-import { usePageLeave } from '@shined/use'
+import { useDocumentLeave } from '@shined/use'
 
 export function App() {
-  const isUserLeavePage = usePageLeave()
+  const isUserLeaveDocument = useDocumentLeave()
 
   return (
     <Card>
-      <KeyValue label="Is user leave page">{isUserLeavePage}</KeyValue>
+      <KeyValue label="Is user leave page">{isUserLeaveDocument}</KeyValue>
     </Card>
   )
 }
