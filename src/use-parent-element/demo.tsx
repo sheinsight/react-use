@@ -9,7 +9,7 @@ export function App() {
     <Card>
       <KeyValue label="Parent Element" value={elStr} />
       <Zone id="parent" border="primary">
-        Paren #parent
+        Parent #parent
         <Zone id="el-use-parent" border="amber">
           Child #el-use-parent
         </Zone>
