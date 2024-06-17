@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { useEventListener } from '../use-event-listener'
 import { useSetState } from '../use-set-state'
 import { useTargetElement } from '../use-target-element'
-import { isFunction, notNullish } from '../utils'
+import { isFunction, notNullish } from '../utils/basic'
 
 import type { ElementTarget } from '../use-target-element'
 

@@ -2,9 +2,10 @@ import { useRef } from 'react'
 import { useDeepCompareEffect } from '../use-deep-compare-effect'
 import { useLatest } from '../use-latest'
 import { useStableFn } from '../use-stable-fn'
-import { isString, unwrapArrayable, unwrapGettable, unwrapReffable } from '../utils'
+import { isString } from '../utils/basic'
+import { unwrapArrayable, unwrapGettable, unwrapReffable } from '../utils/unwrap'
 
-import type { Arrayable, Gettable, GettableOrReffable, Noop } from '../utils'
+import type { Arrayable, Gettable, GettableOrReffable, Noop } from '../utils/basic'
 
 export interface InferEventTarget<Events> {
   // biome-ignore lint/suspicious/noExplicitAny: need any

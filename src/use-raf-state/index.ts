@@ -2,7 +2,7 @@ import { useRafFn } from '../use-raf-fn'
 import { useSafeState } from '../use-safe-state'
 
 import type { ReactSetState, UseSafeStateOptions } from '../use-safe-state'
-import type { Gettable } from '../utils'
+import type { Gettable } from '../utils/basic'
 
 export interface UseRafStateOptions extends UseSafeStateOptions {}
 

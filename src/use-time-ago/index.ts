@@ -1,6 +1,6 @@
 import { normalizeDate } from '../use-date-format'
 import { useNow } from '../use-now'
-import { unwrapGettable } from '../utils'
+import { unwrapGettable } from '../utils/unwrap'
 
 import { formatTimeAgo } from './format-time-ago'
 export { formatTimeAgo } from './format-time-ago'
@@ -10,7 +10,7 @@ export type { FormatTimeAgoOptions } from './format-time-ago'
 
 import type { DateLike } from '../use-date-format'
 import type { Pausable } from '../use-pausable'
-import type { Gettable } from '../utils'
+import type { Gettable } from '../utils/basic'
 
 export type UseTimeAgoReturn<Controls extends boolean = false> = Controls extends true
   ? { timeAgo: string } & Pausable

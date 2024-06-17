@@ -3,7 +3,7 @@ import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
 
 import type { ReactSetState, UseSafeStateOptions } from '../use-safe-state'
-import type { Gettable } from '../utils'
+import type { Gettable } from '../utils/basic'
 
 export interface UseSignalStateOptions extends UseSafeStateOptions {}
 

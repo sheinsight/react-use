@@ -3,7 +3,7 @@ import { useLatest } from '../use-latest'
 import { useStableFn } from '../use-stable-fn'
 import { useUnmount } from '../use-unmount'
 
-import type { AnyFunc, Noop } from '../utils'
+import type { AnyFunc, Noop } from '../utils/basic'
 
 // biome-ignore lint/suspicious/noExplicitAny: need any
 export type EventBusListener<T = any, P = any> = (event: T, payload?: P) => void

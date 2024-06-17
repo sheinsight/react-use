@@ -1,7 +1,7 @@
 import { useSafeState } from '../use-safe-state'
 import { useUpdateDeepCompareEffect } from '../use-update-deep-compare-effect'
 import { useUpdateEffect } from '../use-update-effect'
-import { timestamp } from '../utils'
+import { timestamp } from '../utils/basic'
 
 export interface UseLastChangedOptions {
   /**

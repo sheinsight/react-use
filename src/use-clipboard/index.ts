@@ -5,10 +5,10 @@ import { useSetState } from '../use-set-state'
 import { useStableFn } from '../use-stable-fn'
 import { useSupported } from '../use-supported'
 import { useTimeoutFn } from '../use-timeout-fn'
-import { unwrapGettable } from '../utils'
+import { unwrapGettable } from '../utils/unwrap'
 
 import type { UsePermissionReturn } from '../use-permission'
-import type { Gettable } from '../utils'
+import type { Gettable } from '../utils/basic'
 
 export interface UseClipboardOptions<Source> {
   /**

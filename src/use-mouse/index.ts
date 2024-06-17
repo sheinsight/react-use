@@ -4,10 +4,10 @@ import { useLatest } from '../use-latest'
 import { usePausable } from '../use-pausable'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
-import { isDefined, isFunction } from '../utils'
+import { isDefined, isFunction } from '../utils/basic'
 
 import type { Pausable } from '../use-pausable'
-import type { Position } from '../utils'
+import type { Position } from '../utils/basic'
 
 export type UseMouseCoordType = 'page' | 'client' | 'screen' | 'movement'
 export type UseMouseSourceType = 'mouse' | 'touch' | null

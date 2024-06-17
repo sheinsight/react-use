@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { useEffectOnce } from '../use-effect-once'
 import { useLatest } from '../use-latest'
 
-import type { AnyFunc } from '../utils'
+import type { AnyFunc } from '../utils/basic'
 
 /**
  * Run the callback when the component is mounted.

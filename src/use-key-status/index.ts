@@ -1,6 +1,9 @@
-import { useKeyDown, useKeyUp, useLatest, useSafeState } from '..'
+import { useKeyDown } from '../use-key-down'
+import { useKeyUp } from '../use-key-up'
+import { useLatest } from '../use-latest'
+import { useSafeState } from '../use-safe-state'
 
-import type { KeyFilter, UseKeyStrokeHandler, UseKeyStrokeOptions } from '..'
+import type { KeyFilter, UseKeyStrokeHandler, UseKeyStrokeOptions } from '../use-key-stroke'
 
 export interface UseKeyStatusHandler extends UseKeyStrokeHandler {}
 export interface UseKeyStatusOptions extends Omit<UseKeyStrokeOptions, 'eventName' | 'dedupe'> {}

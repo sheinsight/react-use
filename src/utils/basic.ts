@@ -1,6 +1,10 @@
 import { version as ReactVersion } from 'react'
 
+import type { DependencyList, EffectCallback } from 'react'
+
 import type { RefObject } from 'react'
+
+export type ExtendedReactEffect<T = unknown> = (effect: EffectCallback, deps?: DependencyList, ...args: T[]) => void
 
 export type Noop = () => void
 // biome-ignore lint/suspicious/noExplicitAny: any function

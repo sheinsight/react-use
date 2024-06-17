@@ -3,7 +3,7 @@ import { useLatest } from '../use-latest'
 import { useMount } from '../use-mount'
 import { useStableFn } from '../use-stable-fn'
 import { useUnmount } from '../use-unmount'
-import { createPromiseWithResolvers, isClient, noop } from '../utils'
+import { createPromiseWithResolvers, isClient, noop } from '../utils/basic'
 
 import type { MutableRefObject } from 'react'
 

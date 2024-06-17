@@ -2,11 +2,11 @@ import { useState } from 'react'
 import { useLatest } from '../use-latest'
 import { useStableFn } from '../use-stable-fn'
 import { useUnmounted } from '../use-unmounted'
-import { isFunction, isReact18OrLater } from '../utils'
+import { isFunction, isReact18OrLater } from '../utils/basic'
 import { deepEqual } from '../utils/equal'
 
 import type { Dispatch, SetStateAction } from 'react'
-import type { Gettable } from '../utils'
+import type { Gettable } from '../utils/basic'
 
 export type ReactSetState<T> = Dispatch<SetStateAction<T>>
 

@@ -6,7 +6,7 @@ import { usePrevious } from '../use-previous'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
 import { useUpdateEffect } from '../use-update-effect'
-import { isString } from '../utils'
+import { isString } from '../utils/basic'
 
 import type { ReactSetState } from '../use-safe-state'
 

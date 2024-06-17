@@ -3,7 +3,6 @@ import { useLatest } from '../use-latest'
 import { usePausable } from '../use-pausable'
 import { useStableFn } from '../use-stable-fn'
 
-import type { UseIntervalFnOptions } from '../use-interval-fn'
 import type { Pausable } from '../use-pausable'
 
 export interface UseRafLoopCallbackArgs {
@@ -17,13 +16,25 @@ export interface UseRafLoopCallbackArgs {
   timestamp: DOMHighResTimeStamp
 }
 
-export interface UseRafLoopOptions extends UseIntervalFnOptions {
+export interface UseRafLoopOptions {
   /**
    * The maximum fps limit
    *
    * @default undefined
    */
   fpsLimit?: number
+  /**
+   * Whether to start the interval immediately on mounted
+   *
+   * @default true
+   */
+  immediate?: boolean
+  /**
+   * Whether to execute the callback immediately before the interval starts
+   *
+   * @default false
+   */
+  immediateCallback?: boolean
 }
 
 export type UseRafLoopCallback = (args: UseRafLoopCallbackArgs) => void

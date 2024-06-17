@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { normalizeElement } from './normalize-element'
 
 import type { MutableRefObject, RefObject } from 'react'
-import type { Gettable } from '../utils'
+import type { Gettable } from '../utils/basic'
 import type { AtomBaseTarget, ElementTarget, GlobalTarget } from './normalize-element'
 
 export * from './normalize-element'

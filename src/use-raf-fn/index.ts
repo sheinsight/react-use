@@ -2,9 +2,9 @@ import { useRef } from 'react'
 import { useLatest } from '../use-latest'
 import { useStableFn } from '../use-stable-fn'
 import { useUnmount } from '../use-unmount'
-import { isClient } from '../utils'
+import { isClient } from '../utils/basic'
 
-import type { AnyFunc } from '../utils'
+import type { AnyFunc } from '../utils/basic'
 
 export function useRafFn<T extends AnyFunc>(callback: T, autoClean = true): (...args: Parameters<T>) => void {
   const latest = useLatest({ callback, autoClean })

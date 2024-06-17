@@ -2,7 +2,7 @@ import { useCreation } from '../use-creation'
 import { useLatest } from '../use-latest'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
-import { isDefined } from '../utils'
+import { isDefined } from '../utils/basic'
 
 import type { ReactSetState } from '../use-safe-state'
 

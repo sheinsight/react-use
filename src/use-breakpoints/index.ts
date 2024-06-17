@@ -4,7 +4,7 @@ import { useLatest } from '../use-latest'
 import { useMediaQuery } from '../use-media-query'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
-import { increaseWithUnit, isNumber } from '../utils'
+import { increaseWithUnit, isNumber } from '../utils/basic'
 
 export type Breakpoints<K extends string = string> = Record<K, number | string>
 

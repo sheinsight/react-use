@@ -2,9 +2,9 @@ import { useRef } from 'react'
 import { useDeepCompareEffect } from '../use-deep-compare-effect'
 import { useLatest } from '../use-latest'
 import { useSafeState } from '../use-safe-state'
-import { unwrapArrayable, unwrapGettable } from '../utils'
+import { unwrapArrayable, unwrapGettable } from '../utils/unwrap'
 
-import type { Arrayable, Gettable } from '../utils'
+import type { Arrayable, Gettable } from '../utils/basic'
 
 export type UseMediaQueryType = Gettable<string>
 export type MediaQueryChangeListener = (this: MediaQueryList, ev: MediaQueryListEvent) => void

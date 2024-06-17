@@ -2,10 +2,10 @@ import { useEffect, useRef } from 'react'
 import { useLatest } from '../use-latest'
 import { usePausable } from '../use-pausable'
 import { useRender } from '../use-render'
-import { unwrapGettable } from '../utils'
+import { unwrapGettable } from '../utils/unwrap'
 
 import type { Pausable } from '../use-pausable'
-import type { AnyFunc, Gettable, SetTimeoutReturn } from '../utils'
+import type { AnyFunc, Gettable, SetTimeoutReturn } from '../utils/basic'
 
 export interface UseTimeoutFnOptions {
   /**

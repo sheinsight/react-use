@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { useCreation } from '../use-creation'
 import { useLatest } from '../use-latest'
 import { useSafeState } from '../use-safe-state'

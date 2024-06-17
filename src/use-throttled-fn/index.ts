@@ -1,8 +1,9 @@
 import { useCreation } from '../use-creation'
 import { useLatest } from '../use-latest'
-import { throttle as createThrottledFn } from '../utils'
+import { throttle as createThrottledFn } from '../utils/throttle'
 
-import type { AnyFunc, ThrottleOptions } from '../utils'
+import type { AnyFunc } from '../utils/basic'
+import type { ThrottleOptions } from '../utils/throttle'
 
 export interface UseThrottledFnOptions extends ThrottleOptions {}
 

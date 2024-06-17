@@ -2,7 +2,7 @@ import { useEventListener } from '../use-event-listener'
 import { useLatest } from '../use-latest'
 import { useStableFn } from '../use-stable-fn'
 
-import type { Noop } from '../utils'
+import type { Noop } from '../utils/basic'
 
 export interface UseBeforeUnloadOptions {
   /**

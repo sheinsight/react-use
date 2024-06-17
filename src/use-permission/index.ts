@@ -4,7 +4,7 @@ import { useLatest } from '../use-latest'
 import { useStableFn } from '../use-stable-fn'
 import { useSupported } from '../use-supported'
 import { useUpdateDeepCompareEffect } from '../use-update-deep-compare-effect'
-import { createSingletonPromise, isString } from '../utils'
+import { createSingletonPromise, isString } from '../utils/basic'
 
 import type { RefObject } from 'react'
 

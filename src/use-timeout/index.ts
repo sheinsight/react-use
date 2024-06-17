@@ -5,7 +5,7 @@ import { useTimeoutFn } from '../use-timeout-fn'
 
 import type { Pausable } from '../use-pausable'
 import type { UseTimeoutFnOptions } from '../use-timeout-fn'
-import type { AnyFunc } from '../utils'
+import type { AnyFunc } from '../utils/basic'
 
 export interface UseTimeoutOptions<Controls extends boolean, Callback extends AnyFunc = AnyFunc>
   extends UseTimeoutFnOptions {

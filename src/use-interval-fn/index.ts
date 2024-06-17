@@ -2,25 +2,14 @@ import { useEffect, useRef } from 'react'
 import { useLatest } from '../use-latest'
 import { usePausable } from '../use-pausable'
 import { useRafLoop } from '../use-raf-loop'
-import { isString, unwrapGettable } from '../utils'
+import { isString } from '../utils/basic'
+import { unwrapGettable } from '../utils/unwrap'
 
+import type { UseRafLoopOptions } from '../use-raf-loop'
 import type { Pausable } from '../use-pausable'
-import type { AnyFunc, Gettable, SetIntervalReturn } from '../utils'
+import type { AnyFunc, Gettable, SetIntervalReturn } from '../utils/basic'
 
-export interface UseIntervalFnOptions {
-  /**
-   * Whether to start the interval immediately on mounted
-   *
-   * @default true
-   */
-  immediate?: boolean
-  /**
-   * Whether to execute the callback immediately before the interval starts
-   *
-   * @default false
-   */
-  immediateCallback?: boolean
-}
+export interface UseIntervalFnOptions extends Omit<UseRafLoopOptions, 'fpsLimit'> {}
 
 export type UseIntervalFnInterval = Gettable<number> | 'requestAnimationFrame'
 

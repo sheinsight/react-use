@@ -3,11 +3,11 @@ import { useMount } from '../use-mount'
 import { usePausableUpdateDeepCompareEffect } from '../use-pausable-update-deep-compare-effect'
 import { useSetState } from '../use-set-state'
 import { useStableFn } from '../use-stable-fn'
-import { isDefined, notNullish } from '../utils'
+import { isDefined, notNullish } from '../utils/basic'
 
 import type { Arrayable } from 'vitest'
 import type { UseSetStateSetMergedState } from '../use-set-state'
-import type { Noop, PureObject } from '../utils'
+import type { Noop, PureObject } from '../utils/basic'
 
 export type UrlParams = Record<string, Arrayable<string | number | boolean | undefined>>
 export type UseUrlSearchParamsMode = 'history' | 'hash' | 'hash-params'

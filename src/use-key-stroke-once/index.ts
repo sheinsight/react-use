@@ -1,7 +1,8 @@
-import { useKeyStroke, useLatest } from '..'
+import { useKeyStroke } from '../use-key-stroke'
+import { useLatest } from '../use-latest'
 
-import type { KeyFilter, UseKeyStrokeHandler, UseKeyStrokeOptions } from '..'
-import type { Noop } from '../utils'
+import type { KeyFilter, UseKeyStrokeHandler, UseKeyStrokeOptions } from '../use-key-stroke'
+import type { Noop } from '../utils/basic'
 
 export function useKeyStrokeOnce(
   key?: KeyFilter,

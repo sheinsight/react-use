@@ -1,7 +1,8 @@
-import { isFunction, isString, unwrapGettable, unwrapReffable } from '../utils'
+import { isFunction, isString } from '../utils/basic'
+import { unwrapGettable, unwrapReffable } from '../utils/unwrap'
 
 import type { MutableRefObject, RefObject } from 'react'
-import type { Gettable } from '../utils'
+import type { Gettable } from '../utils/basic'
 
 export type AtomBaseTarget = Element | null
 export type GlobalTarget = Window | Document

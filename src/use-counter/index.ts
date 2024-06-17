@@ -4,7 +4,7 @@ import { useSetState } from '../use-set-state'
 import { useStableFn } from '../use-stable-fn'
 import { useUpdateDeepCompareEffect } from '../use-update-deep-compare-effect'
 import { useUpdateEffect } from '../use-update-effect'
-import { clamp } from '../utils'
+import { clamp } from '../utils/basic'
 
 export interface UseCounterOptions {
   /**

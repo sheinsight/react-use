@@ -3,10 +3,10 @@ import { useCreation } from '../use-creation'
 import { useEventListener } from '../use-event-listener'
 import { useStableFn } from '../use-stable-fn'
 import { useTargetElement } from '../use-target-element'
-import { isFunction, isObject, isString } from '../utils'
+import { isFunction, isObject, isString } from '../utils/basic'
 
 import type { ElementTarget } from '../use-target-element'
-import type { Noop } from '../utils'
+import type { Noop } from '../utils/basic'
 
 export type KeyPredicate = (event: KeyboardEvent) => boolean
 export type KeyFilter = true | string | string[] | KeyPredicate

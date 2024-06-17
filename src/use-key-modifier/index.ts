@@ -1,8 +1,8 @@
 import { useEventListener } from '../use-event-listener'
 import { useSafeState } from '../use-safe-state'
-import { isFunction } from '../utils'
+import { isFunction } from '../utils/basic'
 
-import type { WindowEventName } from '../utils'
+import type { WindowEventName } from '../utils/basic'
 
 export type KeyModifier =
   | 'Alt'

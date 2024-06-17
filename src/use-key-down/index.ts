@@ -1,7 +1,7 @@
-import { useKeyStroke } from '..'
+import { useKeyStroke } from '../use-key-stroke'
 
-import type { KeyFilter, UseKeyStrokeHandler, UseKeyStrokeOptions } from '..'
-import type { Noop } from '../utils'
+import type { KeyFilter, UseKeyStrokeHandler, UseKeyStrokeOptions } from '../use-key-stroke'
+import type { Noop } from '../utils/basic'
 
 export function useKeyDown(
   key?: KeyFilter,

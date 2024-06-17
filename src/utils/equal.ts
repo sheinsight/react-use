@@ -1,4 +1,4 @@
-import { hasOwn } from '.'
+import { hasOwn } from './basic'
 import { reactFastCompare } from './react-fast-compare'
 
 export function shallowEqual<T>(objA: T, objB: T) {

@@ -6,7 +6,7 @@ import { useStableFn } from '../use-stable-fn'
 import { useTargetElement } from '../use-target-element'
 
 import type { ElementTarget } from '../use-target-element'
-import type { Position, SetTimeoutReturn } from '../utils'
+import type { Position, SetTimeoutReturn } from '../utils/basic'
 
 const DEFAULT_DELAY = 500
 const DEFAULT_THRESHOLD = 10

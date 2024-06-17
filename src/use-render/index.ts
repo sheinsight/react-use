@@ -1,7 +1,7 @@
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
 
-import type { Noop } from '../utils'
+import type { Noop } from '../utils/basic'
 
 export function useRender(): Noop {
   const [_, setState] = useSafeState({})

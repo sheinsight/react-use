@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
-import { createThrottledEffect } from '../utils'
+import { createThrottledEffect } from '../utils/create-effect/throttled'
 
-import type { ThrottleOptions } from '../utils'
+import type { ThrottleOptions } from '../utils/throttle'
 
 export interface UseThrottledEffectOptions extends ThrottleOptions {}
 

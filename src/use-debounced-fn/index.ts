@@ -1,8 +1,9 @@
 import { useCreation } from '../use-creation'
 import { useLatest } from '../use-latest'
-import { debounce as createDebouncedFn } from '../utils'
+import { debounce as createDebouncedFn } from '../utils/debounce'
 
-import type { AnyFunc, DebounceOptions } from '../utils'
+import type { AnyFunc } from '../utils/basic'
+import type { DebounceOptions } from '../utils/debounce'
 
 export interface UseDebouncedFnOptions extends DebounceOptions {}
 

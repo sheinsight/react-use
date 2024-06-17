@@ -1,10 +1,10 @@
 import { useLatest } from '../use-latest'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
-import { isFunction } from '../utils'
+import { isFunction } from '../utils/basic'
 
 import type { UseSafeStateOptions } from '../use-safe-state'
-import type { Gettable, PureObject } from '../utils'
+import type { Gettable, PureObject } from '../utils/basic'
 
 export type UseSetStateSetMergedState<T extends PureObject> = <K extends keyof T>(
   state: Partial<Pick<T, K>> | null | ((pre: Readonly<T>) => Partial<Pick<T, K>> | T | null),

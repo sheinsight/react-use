@@ -6,7 +6,7 @@ import { useStableFn } from '../use-stable-fn'
 import { useSupported } from '../use-supported'
 import { useTargetElement } from '../use-target-element'
 import { useUnmount } from '../use-unmount'
-import { isDefined, isFunction, notNullish } from '../utils'
+import { isDefined, isFunction, notNullish } from '../utils/basic'
 import { EventHandlerList, getCompatibleAttr } from './compatible-attributes'
 
 import type { ElementTarget } from '../use-target-element'

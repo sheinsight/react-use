@@ -1,10 +1,10 @@
 import { useCreation } from '../use-creation'
 
-import { formatDate, normalizeDate } from './mini-dayjs'
-export { formatDate, normalizeDate } from './mini-dayjs'
+import { formatDate, normalizeDate } from './format-date'
+export { formatDate, normalizeDate } from './format-date'
 
-import type { DateLike, FormatDateOptions } from './mini-dayjs'
-export type { DateLike, FormatDateOptions } from './mini-dayjs'
+import type { DateLike, FormatDateOptions } from './format-date'
+export type { DateLike, FormatDateOptions } from './format-date'
 
 export interface UseDateFormatOptions extends FormatDateOptions {
   /**
@@ -32,9 +32,10 @@ export function useDateFormat(
   const { fallback: fallbackStr = '' } = options
 
   const result = useCreation(() => {
-    const nDate = date ? normalizeDate(date) : null
-    return nDate ? formatDate(normalizeDate(nDate), formatStr, options) : fallbackStr
-  }, [date, formatStr, fallbackStr])
+    const nDate = normalizeDate(date)
+    const isInvalid = Number.isNaN(nDate.getTime())
+    return isInvalid ? fallbackStr : formatDate(nDate, formatStr, options)
+  }, [date, formatStr, fallbackStr, options])
 
   return result
 }

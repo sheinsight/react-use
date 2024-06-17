@@ -1,5 +1,5 @@
 import { useIsomorphicLayoutEffect } from '../use-isomorphic-layout-effect'
-import { createPausableEffect } from '../utils/create-effect'
+import { createPausableEffect } from '../utils/create-effect/pausable'
 
 /**
  * like `React.useLayoutEffect`, but can be paused.

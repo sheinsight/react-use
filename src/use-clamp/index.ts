@@ -1,9 +1,9 @@
 import { useCounter } from '../use-counter'
 import { useUpdateEffect } from '../use-update-effect'
-import { unwrapGettable } from '../utils'
+import { unwrapGettable } from '../utils/unwrap'
 
 import type { UseCounterReturnAction } from '../use-counter'
-import type { Gettable } from '../utils'
+import type { Gettable } from '../utils/basic'
 
 export function useClamp(
   value: Gettable<number>,

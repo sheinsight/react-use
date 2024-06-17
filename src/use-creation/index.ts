@@ -9,14 +9,14 @@ interface CreationRefState<T> {
   preDeps?: DependencyList
 }
 
-export function useCreation<T>(create: () => T, deps?: DependencyList): T {
-  const { current: state } = useRef<CreationRefState<T>>({})
+export function useCreation<T>(create: () => T, currDeps?: DependencyList): T {
+  const { current: creation } = useRef<CreationRefState<T>>({})
 
-  if (!state.created || !deepEqual(state.preDeps, deps)) {
-    state.value = create()
-    state.created = true
-    state.preDeps = deps
+  if (!creation.created || !deepEqual(creation.preDeps, currDeps)) {
+    creation.value = create()
+    creation.created = true
+    creation.preDeps = currDeps
   }
 
-  return state.value as T
+  return creation.value as T
 }

@@ -4,11 +4,12 @@ import { useMutationObserver } from '../use-mutation-observer'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
 import { normalizeElement, useTargetElement } from '../use-target-element'
-import { isFunction, unwrapGettable } from '../utils'
+import { isFunction } from '../utils/basic'
+import { unwrapGettable } from '../utils/unwrap'
 
 import type { ReactSetState } from '../use-safe-state'
 import type { ElementTarget } from '../use-target-element'
-import type { Gettable } from '../utils'
+import type { Gettable } from '../utils/basic'
 
 export interface UseCssVarOptions {
   /**

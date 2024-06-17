@@ -3,7 +3,7 @@ import { useWebObserver } from '../use-web-observer'
 import type { Pausable } from '../use-pausable'
 import type { ElementTarget } from '../use-target-element'
 import type { UseWebObserverOptions, UseWebObserverReturn } from '../use-web-observer'
-import type { Arrayable } from '../utils'
+import type { Arrayable } from '../utils/basic'
 
 export interface UseResizeObserverOptions extends UseWebObserverOptions, ResizeObserverOptions {
   /** @default 'content-box' */

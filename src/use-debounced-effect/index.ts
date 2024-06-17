@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
-import { createDebouncedEffect } from '../utils'
+import { createDebouncedEffect } from '../utils/create-effect/debounced'
 
-import type { DebounceOptions } from '../utils'
+import type { DebounceOptions } from '../utils/debounce'
 
 export interface UseDebouncedEffectOptions extends DebounceOptions {}
 

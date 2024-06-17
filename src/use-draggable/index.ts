@@ -5,7 +5,7 @@ import { useTargetElement } from '../use-target-element'
 
 import type { CSSProperties } from 'react'
 import type { ElementTarget, GlobalTarget } from '../use-target-element'
-import type { PointerType, Position } from '../utils'
+import type { PointerType, Position } from '../utils/basic'
 
 export interface UseDraggableOptions {
   /**

@@ -4,12 +4,13 @@ import { useLatest } from '../use-latest'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
 import { useUpdateEffect } from '../use-update-effect'
-import { notNullish, now, unwrapGettable } from '../utils'
-import type { Gettable } from './../utils/basic'
+import { notNullish, now } from '../utils/basic'
+import { unwrapGettable } from '../utils/unwrap'
 
 import type { DateLike } from '../use-date-format'
 import type { UseIntervalFnInterval } from '../use-interval-fn'
 import type { Pausable } from '../use-pausable'
+import type { Gettable } from '../utils/basic'
 
 export interface UseCountdownDateItem {
   d: number

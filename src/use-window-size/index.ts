@@ -5,7 +5,7 @@ import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
 import { useUpdateEffect } from '../use-update-effect'
 
-import type { Size } from '../utils'
+import type { Size } from '../utils/basic'
 
 export interface UseWindowSizeOptions {
   /**

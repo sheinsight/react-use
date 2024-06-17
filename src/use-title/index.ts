@@ -4,7 +4,7 @@ import { useLatest } from '../use-latest'
 import { useMount } from '../use-mount'
 import { useStableFn } from '../use-stable-fn'
 import { useUnmount } from '../use-unmount'
-import { isFunction } from '../utils'
+import { isFunction } from '../utils/basic'
 
 /**
  * `%s` will be replaced by the title if the template is a `string`

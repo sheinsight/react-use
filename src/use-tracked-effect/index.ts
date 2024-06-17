@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { useLatest } from '../use-latest'
 import { useUpdateEffect } from '../use-update-effect'
-import { isDev } from '../utils'
+import { isDev } from '../utils/basic'
 
 import type { DependencyList as Deps } from 'react'
 

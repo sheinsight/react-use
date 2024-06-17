@@ -2,9 +2,9 @@ import { useEventListener } from '../use-event-listener'
 import { useLatest } from '../use-latest'
 import { useStableFn } from '../use-stable-fn'
 import { normalizeElement, useTargetElement } from '../use-target-element'
-import { isString, notNullish } from '../utils'
+import { isString, notNullish } from '../utils/basic'
 
-import type { ElementTarget } from '..'
+import type { ElementTarget } from '../use-target-element'
 
 export interface UseClickOutsideOptions {
   /**

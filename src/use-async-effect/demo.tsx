@@ -1,7 +1,7 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
 import { useAsyncEffect, useCounter, useToggle } from '@shined/use'
 
-import type { SetIntervalReturn } from '../utils'
+import type { SetIntervalReturn } from '../utils/basic'
 
 export function App() {
   const [show, toggle] = useToggle(true)

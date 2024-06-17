@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
-import { createAsyncEffect } from '../utils'
+import { createAsyncEffect } from '../utils/create-effect/async'
 
-import type { AsyncEffectCallback } from '../utils'
+import type { AsyncEffectCallback } from '../utils/create-effect/async'
 
 export interface UseAsyncEffectCallback extends AsyncEffectCallback {}
 

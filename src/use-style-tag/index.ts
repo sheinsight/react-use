@@ -5,7 +5,7 @@ import { useLatest } from '../use-latest'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
 import { useUpdateEffect } from '../use-update-effect'
-import { isClient } from '../utils'
+import { isClient } from '../utils/basic'
 
 import type { MutableRefObject } from 'react'
 

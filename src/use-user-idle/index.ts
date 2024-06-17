@@ -6,11 +6,11 @@ import { usePausable } from '../use-pausable'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
 import { useThrottledFn } from '../use-throttled-fn'
-import { timestamp } from '../utils'
+import { timestamp } from '../utils/basic'
 
 import type { MutableRefObject } from 'react'
 import type { Pausable } from '../use-pausable'
-import type { SetTimeoutReturn, WindowEventName } from '../utils'
+import type { SetTimeoutReturn, WindowEventName } from '../utils/basic'
 
 export interface UseUserIdleOptions {
   /**

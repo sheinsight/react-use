@@ -2,11 +2,11 @@ import { useIntervalFn } from '../use-interval-fn'
 import { useLatest } from '../use-latest'
 import { useSafeState } from '../use-safe-state'
 import { useSupported } from '../use-supported'
-import { notNullish } from '../utils'
+import { notNullish } from '../utils/basic'
 
 import type { UseIntervalFnInterval } from '../use-interval-fn'
 import type { Pausable } from '../use-pausable'
-import type { Position } from '../utils'
+import type { Position } from '../utils/basic'
 
 export interface UseElementByPointReturn<E extends Element | Element[]> extends Pausable {
   /**

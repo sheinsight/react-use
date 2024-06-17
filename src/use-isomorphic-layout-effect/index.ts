@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect } from 'react'
-import { isClient } from '../utils'
+import { isClient } from '../utils/basic'
 
 /**
  * Like `React.useLayoutEffect`, but safe for Server-side Rendering (SSR).

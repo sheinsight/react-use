@@ -1,4 +1,4 @@
-import { isFunction, isNumber } from '../utils'
+import { isFunction, isNumber } from '../utils/basic'
 
 export type TimeAgoFormatter<T = number> = (value: T, isPast: boolean) => string
 export type TimeAgoUnitNamesDefault = 'second' | 'minute' | 'hour' | 'day' | 'week' | 'month' | 'year'

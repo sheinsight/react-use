@@ -3,7 +3,7 @@ import { useAsyncFn as useAsyncFnOrigin } from '../use-async-fn'
 
 import type { ReactNode } from 'react'
 import type { UseAsyncFnReturn } from '../use-async-fn'
-import type { AnyFunc } from '../utils'
+import type { AnyFunc } from '../utils/basic'
 
 export interface UseSingleLoadingProviderProps {
   children: ReactNode | undefined

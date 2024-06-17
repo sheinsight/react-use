@@ -1,4 +1,4 @@
-import type { AnyFunc } from '.'
+import type { AnyFunc } from './basic'
 
 export type ThrottleOptions = {
   /**

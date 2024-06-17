@@ -1,5 +1,5 @@
 import { useCreation } from '../use-creation'
-import { isNumber, isObject } from '../utils'
+import { isNumber, isObject } from '../utils/basic'
 
 import { generateLoremIpsum } from './generate-lorem-ipsum'
 export { generateLoremIpsum } from './generate-lorem-ipsum'

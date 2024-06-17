@@ -3,7 +3,7 @@ import { useLatest } from '../use-latest'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
 import { useSupported } from '../use-supported'
-import { timestamp } from '../utils'
+import { timestamp } from '../utils/basic'
 
 import type { UseIntervalFnOptions } from '../use-interval-fn'
 

@@ -1,7 +1,7 @@
 import { useUpdateEffect } from '../use-update-effect'
-import { createAsyncEffect } from '../utils'
+import { createAsyncEffect } from '../utils/create-effect/async'
 
-import type { AsyncEffectCallback } from '../utils'
+import type { AsyncEffectCallback } from '../utils/create-effect/async'
 
 export interface UseAsyncUpdateEffectCallback extends AsyncEffectCallback {}
 

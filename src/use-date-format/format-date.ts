@@ -1,6 +1,6 @@
-// mainly from https://
+// mainly from https://github.com/vueuse/vueuse/blob/main/packages/shared/useDateFormat/index.ts
 
-import { isString } from '../utils'
+import { isString } from '../utils/basic'
 
 const REGEX_PARSE =
   /* #__PURE__ */ /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/

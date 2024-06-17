@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { useLatest } from '../use-latest'
 
-import type { AnyFunc, WithThis } from '../utils'
+import type { AnyFunc, WithThis } from '../utils/basic'
 
 /**
  * Return a version of the function that is stable, which means its memory address will never change.

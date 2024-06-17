@@ -1,4 +1,4 @@
-import { isFunction, isObject } from '.'
+import { isFunction, isObject } from './basic'
 
 export function unwrapGettable<T>(val: T | (() => T)): T {
   return isFunction(val) ? val() : val

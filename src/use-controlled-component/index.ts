@@ -1,7 +1,7 @@
 import { useLatest } from '../use-latest'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
-import { isFunction, isObject } from '../utils'
+import { isFunction, isObject } from '../utils/basic'
 
 import type { UseSafeStateOptions } from '../use-safe-state'
 
