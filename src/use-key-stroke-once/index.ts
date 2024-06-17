@@ -11,14 +11,11 @@ export function useKeyStrokeOnce(
 ): Noop {
   const latest = useLatest({ handler })
 
-  const stopListen: Noop = useKeyStroke(
+  return useKeyStroke(
     key,
     (event) => {
       latest.current.handler?.(event)
-      stopListen()
     },
     { ...options, once: true },
   )
-
-  return stopListen
 }
