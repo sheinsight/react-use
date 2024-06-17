@@ -1,6 +1,8 @@
 node_modules
 
 dist
+build
+plans
 graph.png
 
 .DS_Store
