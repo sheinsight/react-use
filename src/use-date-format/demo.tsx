@@ -7,10 +7,7 @@ export function App() {
   const time = useDateFormat(now, 'HH:mm:ss • hh:mm:ss • H:m:s • h:m:s')
   const input = useControlledComponent("[Today is] M/D/YYYY, ddd, [now is] A H [o'clock] m [min] s [sec] SSS [ms]")
 
-  const playground = useDateFormat(now, input.value, {
-    locales: 'en-US',
-    customMeridiem: (hours: number) => (hours < 12 ? 'A.M.' : 'P.M.'),
-  })
+  const playground = useDateFormat(now, input.value, { locales: 'en-US' })
 
   return (
     <Card>

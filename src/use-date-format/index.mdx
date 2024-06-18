@@ -21,9 +21,9 @@ import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Formats
+## Format Tokens
 
-| Format | Output                   | Description                             |
+| Token | Output                   | Description                             |
 | ------ | ------------------------ | --------------------------------------- |
 | `Yo`   | 2018th                   | Ordinal formatted year                  |
 | `YY`   | 18                       | Two-digit year                          |
@@ -100,7 +100,7 @@ export type UseDateFormatOptions = FormatDateOptions & {
   /**
    * fallback string when date is invalid
    */
-  fallbackStr?: string
+  fallback?: string
 }
 ```
 
