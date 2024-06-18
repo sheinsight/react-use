@@ -1,7 +1,7 @@
 import Link from '@docusaurus/Link'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
-import { SearchHooks } from './components/search'
 import Layout from '@theme/Layout'
+import { SearchHooks } from './components/search'
 
 export default function Home() {
   const { siteConfig } = useDocusaurusContext()

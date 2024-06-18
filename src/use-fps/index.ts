@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { useRafLoop } from '../use-raf-loop'
 import { useSafeState } from '../use-safe-state'
+import { isDefined } from '../utils/basic'
 
 import type { Pausable } from '../use-pausable'
 
@@ -23,13 +24,18 @@ export interface UseFpsReturn extends Pausable {
 export function useFps(options: UseFpsOptions = {}): UseFpsReturn {
   const { every = 10 } = options
 
-  const last = useRef(performance.now())
+  const last = useRef<DOMHighResTimeStamp>()
   const ticks = useRef(0)
   const [fps, setFps] = useSafeState(0)
 
   const controls = useRafLoop(
     () => {
+      if (!isDefined(last.current)) {
+        last.current = performance.now()
+      }
+
       ticks.current += 1
+
       if (ticks.current >= every) {
         const now = performance.now()
         const diff = now - last.current
