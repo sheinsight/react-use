@@ -17,9 +17,6 @@ dependencies:
   '@mdx-js/react':
     specifier: ^3.0.1
     version: 3.0.1(@types/react@18.3.1)(react@18.3.1)
-  braces:
-    specifier: '>=3.0.3'
-    version: 3.0.3
   change-case:
     specifier: ^5.4.4
     version: 5.4.4
@@ -64,9 +61,6 @@ devDependencies:
   unocss:
     specifier: ^0.61.0
     version: 0.61.0(@unocss/webpack@0.61.0)(postcss@8.4.38)(vite@5.2.11)
-  ws:
-    specifier: 8.17.1
-    version: 8.17.1
 
 packages:
 
@@ -10097,6 +10091,7 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
+    dev: false
 
   /xdg-basedir@5.1.0:
     resolution: {integrity: sha512-GCPAHLvrIH13+c0SuacwvRYj2SxJXQ4kaVTT5xgL3kPrz56XxkF21IGhjSE1+W0aw7gpBWRGXLCPnPby6lSpmQ==}
@@ -10143,7 +10138,6 @@ time:
   /@formkit/auto-animate@0.8.2: '2024-04-10T16:20:50.136Z'
   /@mdx-js/react@3.0.1: '2024-02-12T10:50:27.073Z'
   /@unocss/webpack@0.61.0: '2024-06-11T20:00:26.506Z'
-  /braces@3.0.3: '2024-05-21T08:59:11.390Z'
   /change-case@5.4.4: '2024-04-03T22:34:57.150Z'
   /clsx@2.1.1: '2024-04-23T05:26:04.645Z'
   /gray-matter@4.0.3: '2021-04-24T03:06:31.539Z'
@@ -10154,4 +10148,3 @@ time:
   /react@18.3.1: '2024-04-26T16:42:26.496Z'
   /typescript@5.2.2: '2023-08-24T16:38:15.233Z'
   /unocss@0.61.0: '2024-06-11T20:00:56.035Z'
-  /ws@8.17.1: '2024-06-16T14:49:10.217Z'

@@ -32,9 +32,6 @@ devDependencies:
   '@types/web-bluetooth':
     specifier: ^0.0.20
     version: 0.0.20
-  braces:
-    specifier: '>=3.0.3'
-    version: 3.0.3
   esno:
     specifier: ^4.7.0
     version: 4.7.0
@@ -62,9 +59,6 @@ devDependencies:
   vitest:
     specifier: ^1.6.0
     version: 1.6.0(@types/node@20.14.2)(jsdom@24.1.0)
-  ws:
-    specifier: 8.17.1
-    version: 8.17.1
 
 packages:
 
@@ -3836,7 +3830,6 @@ time:
   /@types/react-dom@18.3.0: '2024-04-25T20:07:30.940Z'
   /@types/react@18.3.3: '2024-05-23T20:07:54.038Z'
   /@types/web-bluetooth@0.0.20: '2023-11-07T18:59:42.174Z'
-  /braces@3.0.3: '2024-05-21T08:59:11.390Z'
   /esno@4.7.0: '2024-03-03T21:30:59.610Z'
   /jsdom@24.1.0: '2024-05-26T09:22:23.832Z'
   /oxlint@0.4.2: '2024-05-28T15:21:58.245Z'
@@ -3846,4 +3839,3 @@ time:
   /typescript@5.4.5: '2024-04-10T14:25:19.427Z'
   /unocss@0.59.4: '2024-04-18T11:37:29.998Z'
   /vitest@1.6.0: '2024-05-03T15:22:40.746Z'
-  /ws@8.17.1: '2024-06-16T14:49:10.217Z'
