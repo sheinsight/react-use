@@ -111,11 +111,6 @@ export default {
           position: 'left',
         },
         {
-          to: '/search',
-          label: 'Hooks',
-          position: 'right',
-        },
-        {
           href: 'https://github.com/sheinsight/use',
           label: 'GitHub',
           position: 'right',

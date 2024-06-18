@@ -1,7 +1,6 @@
 import { useRef } from 'react'
 import { useLatest } from '../use-latest'
 import { useUpdateEffect } from '../use-update-effect'
-import { isDev } from '../utils/basic'
 
 import type { DependencyList as Deps } from 'react'
 
@@ -13,8 +12,6 @@ export function useTrackedEffect(callback: TrackedEffectCallback, deps?: Deps) {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: for dev
   useUpdateEffect(() => {
-    if (!isDev) return // only run in development mode
-
     const depIndexes = findChangedIndexes(previousDepsRef.current, deps)
 
     const previousDeps = previousDepsRef.current
