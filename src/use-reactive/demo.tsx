@@ -11,8 +11,8 @@ export function App() {
   return (
     <Card>
       <Zone>
-        {/* biome-ignore lint/suspicious/noAssignInExpressions: node wrap for demo */}
-        <Button onClick={() => (mutate.name = OTP())}>Random name</Button>
+        {/* biome-ignore lint/suspicious/noAssignInExpressions: no wrap for demo */}
+        <Button onClick={() => void (mutate.name = OTP())}>Random name</Button>
         <Button onClick={() => mutate.age++}>Age++</Button>
         <Button onClick={() => mutate.hobbies.push(OTP())}>Add hobby</Button>
       </Zone>

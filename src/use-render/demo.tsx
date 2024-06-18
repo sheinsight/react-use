@@ -14,9 +14,9 @@ export function App() {
         <Button onClick={() => countRef.current--}>Dec</Button>
         <Button onClick={render}>Render</Button>
         {/* biome-ignore lint/style/noCommaOperator: no wrap for demo */}
-        <Button onClick={() => (countRef.current++, render())}>Inc with render</Button>
+        <Button onClick={() => void (countRef.current++, render())}>Inc with render</Button>
         {/* biome-ignore lint/style/noCommaOperator: no wrap for demo */}
-        <Button onClick={() => (countRef.current--, render())}>Dec with render</Button>
+        <Button onClick={() => void (countRef.current--, render())}>Dec with render</Button>
       </Zone>
     </Card>
   )

@@ -17,13 +17,13 @@ export function App() {
   const intervalC = useIntervalFn(intervalHandler, 1000 / FPS, config)
 
   // biome-ignore lint/style/noCommaOperator: no wrap for demo
-  const start = () => (rafC.resume(true), intervalC.resume(true))
+  const start = () => void (rafC.resume(true), intervalC.resume(true))
   // biome-ignore lint/style/noCommaOperator: no wrap for demo
-  const stop = () => (rafC.pause(true), intervalC.pause(true))
+  const stop = () => void (rafC.pause(true), intervalC.pause(true))
   // biome-ignore lint/style/noCommaOperator: no wrap for demo
-  const reset = () => (stop(), setRafLeft(8), setILeft(8))
+  const reset = () => void (stop(), setRafLeft(8), setILeft(8))
   // biome-ignore lint/style/noCommaOperator: no wrap for demo
-  const restart = () => (reset(), rafC.resume(true), intervalC.resume(true))
+  const restart = () => void (reset(), rafC.resume(true), intervalC.resume(true))
 
   return (
     <Card>

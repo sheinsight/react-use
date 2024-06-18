@@ -8,9 +8,9 @@ export function useWindowFocus(): boolean {
   useMount(() => setIsFocused(document.hasFocus()))
 
   // biome-ignore format: no wrap
-  useEventListener(() => window,'blur',() => setIsFocused(false))
+  useEventListener(() => window,'blur', () => setIsFocused(false))
   // biome-ignore format: no wrap
-  useEventListener(() => window,'focus',() => setIsFocused(true))
+  useEventListener(() => window,'focus', () => setIsFocused(true))
 
   return isFocused
 }
