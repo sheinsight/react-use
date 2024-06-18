@@ -6,7 +6,7 @@ import { camelCase } from 'change-case'
 import hooks from './hooks.json'
 
 const filterLabelCls =
-  'inline-flex gap-1 items-center rounded border border-solid text-xs border-gray/20 px-2 py-1 rounded-full cursor-pointer'
+  'transition will-change-auto inline-flex gap-1 items-center rounded border border-solid text-xs border-gray/20 px-2 py-1 rounded-full cursor-pointer'
 
 export function SearchHooks() {
   const categories = useCreation(() => Array.from(new Set(hooks.map((e) => e.category))).sort())
@@ -42,7 +42,7 @@ export function SearchHooks() {
   }
 
   return (
-    <div className="flex flex-col gap-4 mt-12 p-4 w-100% lg:w-640px">
+    <div className="flex flex-col gap-4 mt-12 p-4 w-full md:w-640px">
       <div>
         <input
           {...input.props}
@@ -100,15 +100,15 @@ export function SearchHooks() {
         </div>
       </div>
       <div className="flex flex-wrap items-center gap-1">
-        <span
+        <div
           onClick={clearParams}
           onKeyDown={clearParams}
           className={`${filterLabelCls} bg-amber/20 flex items-center gap-1 hover:bg-amber/32`}
         >
           <div className="i-mdi:filter-remove-outline w-1rem h-1rem" />
           Clear Filters
-        </span>
-        <span className="ml-2 text-gray/80">{filteredHooks.length} hooks found, sorted by name from A-Z</span>
+        </div>
+        <span className="ml-2 text-gray">{filteredHooks.length} hooks found.</span>
       </div>
 
       <div className="overflow-y-scroll md:pt-2 md:h-46vh">
