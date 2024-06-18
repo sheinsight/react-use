@@ -45,7 +45,7 @@ export function Labels(
   const isLast = categoryOrder === 'last'
 
   const cate = (
-    <Label to={`/search?category=${category}`}>
+    <Label to={`/?category=${category}`}>
       {iconMap[category as keyof typeof iconMap] || ''}
       {category}
     </Label>
@@ -56,28 +56,28 @@ export function Labels(
       {category && !isLast && cate}
 
       {lowLevel && (
-        <Label bgColor="red" to="/search?feature=LowLevel">
+        <Label bgColor="red" to="/?feature=LowLevel">
           {iconMap.LowLevel}
           LowLevel
         </Label>
       )}
 
       {devOnly && (
-        <Label bgColor="purple" to="/search?feature=DevOnly">
+        <Label bgColor="purple" to="/?feature=DevOnly">
           {iconMap.DevOnly}
           DevOnly
         </Label>
       )}
 
       {isSupported && (
-        <Label bgColor="blue" to="/search?feature=IsSupported">
+        <Label bgColor="blue" to="/?feature=IsSupported">
           {iconMap.IsSupported}
           isSupported
         </Label>
       )}
 
       {pausable && (
-        <Label bgColor="amber" to="/search?feature=Pausable">
+        <Label bgColor="amber" to="/?feature=Pausable">
           {iconMap.Pausable}
           Pausable
         </Label>

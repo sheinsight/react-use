@@ -16,23 +16,24 @@
     "@docusaurus/preset-classic": "3.3.2",
     "@formkit/auto-animate": "^0.8.2",
     "@mdx-js/react": "^3.0.1",
+    "braces": ">=3.0.3",
     "change-case": "^5.4.4",
     "clsx": "^2.1.1",
     "prism-react-renderer": "^2.3.1",
     "raw-loader": "^4.0.2",
-    "react-hot-toast": "^2.4.1",
-    "braces": ">=3.0.3"
+    "react-hot-toast": "^2.4.1"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.3.2",
     "@docusaurus/tsconfig": "3.3.2",
     "@docusaurus/types": "3.3.2",
-    "@unocss/postcss": "^0.61.0",
+    "@unocss/webpack": "^0.61.0",
     "gray-matter": "^4.0.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "typescript": "~5.2.2",
-    "unocss": "^0.61.0"
+    "unocss": "^0.61.0",
+    "ws":"8.17.1"
   },
   "browserslist": {
     "production": [

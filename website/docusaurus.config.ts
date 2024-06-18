@@ -28,13 +28,21 @@ export default {
     },
   },
   plugins: [
-    () => ({
-      name: 'postcss-unocss',
-      configurePostCss(postcssOptions) {
-        postcssOptions.plugins.push('@unocss/postcss')
-        return postcssOptions
-      },
-    }),
+    async () => {
+      const { default: UnoCSS } = await import('@unocss/webpack')
+
+      return {
+        name: 'webpack-unocss',
+        configureWebpack() {
+          return {
+            plugins: [UnoCSS()],
+            optimization: {
+              realContentHash: true,
+            },
+          }
+        },
+      }
+    },
     () => ({
       name: 'resolve-alias',
       configureWebpack() {
