@@ -3,25 +3,25 @@ import { useControlledComponent, useDateFormat, useNow } from '@shined/react-use
 
 export function App() {
   const now = useNow()
-  const data = useDateFormat(now, 'YYYY-MM-DD • YYYY/MM/DD • YYYY.M.D • YYYY 年 M 月 D 日')
+  const data = useDateFormat(now, 'YYYY-MM-DD • YYYY/MM/DD • YYYY.M.D • YYYY MMMM D, YYYY')
   const time = useDateFormat(now, 'HH:mm:ss • hh:mm:ss • H:m:s • h:m:s')
-
-  const input = useControlledComponent('今天是 YYYY 年 M 月 D 日，dddd，现在是AA h 点 m 分 s 秒 SSS 毫秒。')
+  const input = useControlledComponent("[Today is] M/D/YYYY, ddd, [now is] A H [o'clock] m [min] s [sec] SSS [ms]")
 
   const playground = useDateFormat(now, input.value, {
-    locales: 'zh-CN',
-    customMeridiem: (hours: number) => (hours < 12 ? '上午' : '下午'),
+    locales: 'en-US',
+    customMeridiem: (hours: number) => (hours < 12 ? 'A.M.' : 'P.M.'),
   })
 
   return (
     <Card>
       <Zone border="primary" row={false}>
-        <KeyValue label="Formatted Date" value={data} />
-        <KeyValue label="Formatted Time" value={time} />
+        <KeyValue label="Date" value={data} />
+        <KeyValue label="Time" value={time} />
       </Zone>
       <Zone border="primary" row={false}>
-        <KeyValue label="Formatted Result" value={playground} />
-        <LabelInput label="Format Template" className="flex-1" placeholder="Format Template" {...input.props} />
+        <KeyValue label="Render Result" value={playground} />
+        {/* Offers a flexible input for custom date-time formatting */}
+        <LabelInput label="Template" className="flex-1" placeholder="Template" {...input.props} />
       </Zone>
     </Card>
   )
