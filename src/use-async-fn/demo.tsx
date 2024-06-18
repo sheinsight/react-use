@@ -7,8 +7,8 @@ export function App() {
   return (
     <Card>
       <Zone>
-        <KeyValue label="Value" value={fetchFn.value} />
         <KeyValue label="Loading" value={fetchFn.loading} />
+        <KeyValue label="Value" value={fetchFn.value ?? 'click to fetch'} />
       </Zone>
       <Button disabled={fetchFn.loading} onClick={fetchFn.run}>
         Fetch

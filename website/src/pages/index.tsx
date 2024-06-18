@@ -1,6 +1,7 @@
 import Link from '@docusaurus/Link'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import Layout from '@theme/Layout'
+import { Button } from '../components'
 import { SearchHooks } from './components/search'
 
 export default function Home() {
@@ -14,10 +15,12 @@ export default function Home() {
             <span className="text-3.6rem">🪝</span>
             <h2 className="font-mono">{siteConfig.title}</h2>
             <p>{siteConfig.tagline}</p>
-            <div className="flex md:flex-col gap-4">
-              <Link to="/docs/introduction">&rarr; Introduction</Link>
-              <Link to="/docs/get-started">&rarr; Get Started</Link>
-              <Link to="/reference">&rarr; Reference</Link>
+            <div className="flex gap-4 items-center">
+              <Link to="/docs/get-started">
+                <Button>Get Started</Button>
+              </Link>
+              <Link to="/docs/introduction">Introduction</Link>
+              <Link to="/reference">Reference</Link>
             </div>
           </div>
           <SearchHooks />
