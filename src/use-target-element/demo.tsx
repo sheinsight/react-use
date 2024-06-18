@@ -1,5 +1,5 @@
 import { Card } from '@/components'
-import { useIntervalFn, useTargetElement } from '@shined/use'
+import { useIntervalFn, useTargetElement } from '@shined/react-use'
 
 export function App() {
   const el1 = useTargetElement('button.el')

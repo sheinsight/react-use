@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useDeviceList } from '@shined/use'
+import { useDeviceList } from '@shined/react-use'
 
 export function App() {
   const device = useDeviceList({ requestPermissions: true })

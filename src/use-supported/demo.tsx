@@ -1,5 +1,5 @@
 import { Card, KeyValue } from '@/components'
-import { useSupported } from '@shined/use'
+import { useSupported } from '@shined/react-use'
 
 export function App() {
   const isSupported = useSupported(() => 'EyeDropper' in window)

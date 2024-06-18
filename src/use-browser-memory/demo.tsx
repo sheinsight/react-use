@@ -1,5 +1,5 @@
 import { Card, KeyValue, Zone } from '@/components'
-import { useBrowserMemory } from '@shined/use'
+import { useBrowserMemory } from '@shined/react-use'
 
 const size = (v: number) => `${(v / 1024 / 1024).toFixed(2)} MB`
 

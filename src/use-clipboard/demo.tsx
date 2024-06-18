@@ -1,5 +1,5 @@
 import { Button, Card, Input, KeyValue } from '@/components'
-import { useClipboard, useControlledComponent } from '@shined/use'
+import { useClipboard, useControlledComponent } from '@shined/react-use'
 
 const hash = () => Math.random().toString(36).slice(2, 8).toUpperCase()
 

@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { usePausable } from '@shined/use'
+import { usePausable } from '@shined/react-use'
 
 export function App() {
   const pausable = usePausable(false)

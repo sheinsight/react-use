@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useCloned, useSafeState } from '@shined/use'
+import { useCloned, useSafeState } from '@shined/react-use'
 
 export function App() {
   const [state, setState] = useSafeState({

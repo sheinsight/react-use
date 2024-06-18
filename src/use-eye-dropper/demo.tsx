@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useEyeDropper } from '@shined/use'
+import { useEyeDropper } from '@shined/react-use'
 
 export function App() {
   const eyeDropper = useEyeDropper({ initialValue: '#33AAFF' })

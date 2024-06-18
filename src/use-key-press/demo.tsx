@@ -1,5 +1,5 @@
 import { Card, KeyValue } from '@/components'
-import { useCounter, useKeyPress, useUnmount } from '@shined/use'
+import { useCounter, useKeyPress, useUnmount } from '@shined/react-use'
 import { Toaster, toast } from 'react-hot-toast'
 
 export function App() {

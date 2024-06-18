@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useTimeoutFn, useUnmount } from '@shined/use'
+import { useTimeoutFn, useUnmount } from '@shined/react-use'
 import { Toaster, toast } from 'react-hot-toast'
 
 export function App() {

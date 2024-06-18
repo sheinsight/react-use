@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue } from '@/components'
-import { useMutationObserver, useUnmount } from '@shined/use'
+import { useMutationObserver, useUnmount } from '@shined/react-use'
 import { useRef } from 'react'
 import { Toaster, toast } from 'react-hot-toast'
 

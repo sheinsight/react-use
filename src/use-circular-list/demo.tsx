@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue } from '@/components'
-import { useCircularList } from '@shined/use'
+import { useCircularList } from '@shined/react-use'
 
 const fruits = ['🍌 banner', '🍎 apple', '🍇 grape', '🍉 watermelon', '🍊 orange']
 

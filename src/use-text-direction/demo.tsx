@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useLoremIpsum, useTextDirection } from '@shined/use'
+import { useLoremIpsum, useTextDirection } from '@shined/react-use'
 
 export function App() {
   const lorem = useLoremIpsum()

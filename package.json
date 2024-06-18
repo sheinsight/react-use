@@ -1,5 +1,5 @@
 {
-  "name": "@shined/use",
+  "name": "@shined/react-use",
   "type": "module",
   "version": "0.0.0-alpha.0",
   "packageManager": "pnpm@8.15.8",
@@ -23,6 +23,7 @@
   },
   "keywords": [
     "react",
+    "react-use",
     "react-hooks",
     "shined"
   ],

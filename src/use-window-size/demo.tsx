@@ -1,5 +1,5 @@
 import { Card, KeyValue } from '@/components'
-import { useWindowSize } from '@shined/use'
+import { useWindowSize } from '@shined/react-use'
 
 export function App() {
   const size = useWindowSize()

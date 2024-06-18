@@ -1,5 +1,5 @@
 import { Card, Input, KeyValue, Zone } from '@/components'
-import { useDateFormat, useGeolocation } from '@shined/use'
+import { useDateFormat, useGeolocation } from '@shined/react-use'
 
 export function App() {
   const geo = useGeolocation()

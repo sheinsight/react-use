@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useCounter, useDateFormat, useNow } from '@shined/use'
+import { useCounter, useDateFormat, useNow } from '@shined/react-use'
 
 export function App() {
   // A Date object that updates at each frame by default

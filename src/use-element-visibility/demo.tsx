@@ -1,5 +1,5 @@
 import { Card, KeyValue } from '@/components'
-import { useElementVisibility } from '@shined/use'
+import { useElementVisibility } from '@shined/react-use'
 
 export function App() {
   const visibility = useElementVisibility('#el-visibility')

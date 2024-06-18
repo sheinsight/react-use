@@ -9,7 +9,7 @@ import {
   useNetwork,
   useSafeState,
   useTextSelection,
-} from '@shined/use'
+} from '@shined/react-use'
 
 export const PartThree = () => {
   const fullscreenRef = useRef<HTMLDivElement>(null)

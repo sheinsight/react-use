@@ -1,5 +1,5 @@
 import { Card, KeyValue } from '@/components'
-import { useDocumentVisibility, useTitle } from '@shined/use'
+import { useDocumentVisibility, useTitle } from '@shined/react-use'
 
 export function App() {
   const visibility = useDocumentVisibility()

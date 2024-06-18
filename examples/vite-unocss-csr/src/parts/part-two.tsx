@@ -9,7 +9,7 @@ import {
   useMouse,
   useStyleTag,
   useTextDirection,
-} from '@shined/use'
+} from '@shined/react-use'
 
 export const PartTwo = () => {
   const { x, y } = useMouse({ type: 'client' })

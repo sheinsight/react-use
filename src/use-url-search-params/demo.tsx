@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, OTP, Zone } from '@/components'
-import { useUrlSearchParams } from '@shined/use'
+import { useUrlSearchParams } from '@shined/react-use'
 
 export function App() {
   const [usp, setUsp, clearUsp] = useUrlSearchParams('history', {

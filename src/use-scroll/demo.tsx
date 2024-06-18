@@ -1,5 +1,5 @@
 import { Card } from '@/components'
-import { useScroll } from '@shined/use'
+import { useScroll } from '@shined/react-use'
 import { useRef } from 'react'
 
 export function App() {

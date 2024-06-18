@@ -1,5 +1,5 @@
 import { Card, KeyValue } from '@/components'
-import { useClickOutside, useCounter } from '@shined/use'
+import { useClickOutside, useCounter } from '@shined/react-use'
 import { useRef } from 'react'
 
 const cls =

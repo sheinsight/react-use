@@ -1,5 +1,5 @@
 import { Card } from '@/components'
-import { useElementBounding } from '@shined/use'
+import { useElementBounding } from '@shined/react-use'
 
 export function App() {
   const [bounding, _update] = useElementBounding('#el-bounding')

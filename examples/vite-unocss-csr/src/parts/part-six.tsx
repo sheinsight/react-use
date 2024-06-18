@@ -6,7 +6,7 @@ import {
   useKeyUp,
   useLongPress,
   useUrlSearchParams,
-} from '@shined/use'
+} from '@shined/react-use'
 import { useRef } from 'react'
 
 export const PartSix = () => {

@@ -1,5 +1,5 @@
 import { Card, KeyValue } from '@/components'
-import { useDocumentLeave } from '@shined/use'
+import { useDocumentLeave } from '@shined/react-use'
 
 export function App() {
   const isUserLeaveDocument = useDocumentLeave()

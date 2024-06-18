@@ -5,13 +5,13 @@ import type * as Preset from '@docusaurus/preset-classic'
 import type { Config } from '@docusaurus/types'
 
 export default {
-  title: '@shined/use',
+  title: '@shined/react-use',
   tagline: 'A simple yet powerful collection of React hooks.',
   // favicon: 'img/favicon.ico',
   url: 'https://shined-hooks.vercel.app',
-  baseUrl: '/use',
+  baseUrl: '/react-use',
   organizationName: 'sheinsight',
-  projectName: '@shined/use',
+  projectName: '@shined/react-use',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   i18n: {
@@ -36,7 +36,7 @@ export default {
             alias: {
               react: path.resolve('./node_modules/react'),
               'react/jsx-runtime': path.resolve('./node_modules/react/jsx-runtime'),
-              '@shined/use': path.resolve('../src'),
+              '@shined/react-use': path.resolve('../src'),
               '@/components': path.resolve('./src/components'),
             },
           },
@@ -64,7 +64,7 @@ export default {
         id: 'hooks',
         path: '../src',
         routeBasePath: '/reference/',
-        editUrl: 'https://github.com/sheinsight/use/tree/main/reference/',
+        editUrl: 'https://github.com/sheinsight/react-use/tree/main/reference/',
         include: ['**/*.{mdx,md}'],
       },
     ],
@@ -74,7 +74,7 @@ export default {
         id: 'changelogs',
         path: './changelog',
         routeBasePath: '/changelog',
-        editUrl: 'https://github.com/sheinsight/use/tree/main/website/',
+        editUrl: 'https://github.com/sheinsight/react-use/tree/main/website/',
         include: ['**/*.{mdx,md}'],
       },
     ],
@@ -86,7 +86,7 @@ export default {
         docs: {
           sidebarPath: './sidebars.ts',
           sidebarCollapsed: true,
-          editUrl: 'https://github.com/sheinsight/use/tree/main/website/',
+          editUrl: 'https://github.com/sheinsight/react-use/tree/main/website/',
           exclude: ['components/**'],
         },
         theme: {
@@ -100,7 +100,7 @@ export default {
   ],
   themeConfig: {
     navbar: {
-      title: '@shined/use',
+      title: '@shined/react-use',
       items: [
         {
           type: 'docSidebar',
@@ -119,7 +119,7 @@ export default {
           position: 'left',
         },
         {
-          href: 'https://github.com/sheinsight/use',
+          href: 'https://github.com/sheinsight/react-use',
           label: 'GitHub',
           position: 'right',
         },

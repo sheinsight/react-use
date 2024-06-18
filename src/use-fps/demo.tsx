@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useFps } from '@shined/use'
+import { useFps } from '@shined/react-use'
 
 export function App() {
   const { fps, ...controls } = useFps()

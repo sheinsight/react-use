@@ -1,4 +1,4 @@
-# @shined/use
+# @shined/react-use
 
 ![Static Badge](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome)
 

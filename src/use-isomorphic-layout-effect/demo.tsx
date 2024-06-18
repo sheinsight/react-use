@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useCounter, useIsomorphicLayoutEffect } from '@shined/use'
+import { useCounter, useIsomorphicLayoutEffect } from '@shined/react-use'
 
 export function App() {
   const [count, actions] = useCounter(0)

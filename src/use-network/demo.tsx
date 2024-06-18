@@ -1,5 +1,5 @@
 import { Card, KeyValue, Zone } from '@/components'
-import { useNetwork } from '@shined/use'
+import { useNetwork } from '@shined/react-use'
 
 export function App() {
   const network = useNetwork()

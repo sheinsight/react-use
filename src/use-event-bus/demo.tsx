@@ -1,5 +1,5 @@
 import { Button, Card, Zone } from '@/components'
-import { useEffectOnce, useEventBus, useUnmount } from '@shined/use'
+import { useEffectOnce, useEventBus, useUnmount } from '@shined/react-use'
 import { Toaster, toast } from 'react-hot-toast'
 
 type EventType = 'eventA' | 'eventB' | 'eventC'

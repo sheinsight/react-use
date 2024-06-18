@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useRafState } from '@shined/use'
+import { useRafState } from '@shined/react-use'
 
 export function App() {
   const [state, setState] = useRafState({ count: 0 })

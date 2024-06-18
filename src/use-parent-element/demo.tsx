@@ -1,5 +1,5 @@
 import { Button, Card, Input, KeyValue, Zone } from '@/components'
-import { useParentElement } from '@shined/use'
+import { useParentElement } from '@shined/react-use'
 
 export function App() {
   const parentEl = useParentElement('#el-use-parent')

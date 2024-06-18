@@ -1,5 +1,5 @@
 import { Card } from '@/components'
-import { useParallax } from '@shined/use'
+import { useParallax } from '@shined/react-use'
 
 const wrapperCls = 'inline-block bg-amber/12 rounded-2'
 const elementCls = 'size-80 m-16 bg-primary/80 rounded-2'

@@ -1,5 +1,5 @@
 import { Button, Card, Input, Zone } from '@/components'
-import { useStyleTag } from '@shined/use'
+import { useStyleTag } from '@shined/react-use'
 
 const initialCss = '#el-style-tag { background: skyblue; }'
 

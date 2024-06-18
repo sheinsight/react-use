@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue } from '@/components'
-import { useSafeState, useScriptTag } from '@shined/use'
+import { useSafeState, useScriptTag } from '@shined/react-use'
 
 declare global {
   interface Window {

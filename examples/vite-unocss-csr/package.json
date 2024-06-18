@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@shined/use": "workspace:*",
+    "@shined/react-use": "workspace:*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "braces": ">=3.0.3"

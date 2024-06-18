@@ -1,5 +1,5 @@
 import { Card, KeyValue } from '@/components'
-import { useOnline } from '@shined/use'
+import { useOnline } from '@shined/react-use'
 
 export function App() {
   const isOnline = useOnline()

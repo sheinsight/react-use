@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone, wait as mockFetch } from '@/components'
-import { useAsyncFn } from '@shined/use'
+import { useAsyncFn } from '@shined/react-use'
 
 export function App() {
   const fetchFn = useAsyncFn(() => mockFetch(300))

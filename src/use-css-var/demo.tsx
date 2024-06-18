@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useCssVar, useLoremIpsum } from '@shined/use'
+import { useCssVar, useLoremIpsum } from '@shined/react-use'
 
 const random256 = () => Math.floor(Math.random() * 256)
 const randomColor = () => `rgb(${random256()}, ${random256()}, ${random256()})`

@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useResetState } from '@shined/use'
+import { useResetState } from '@shined/react-use'
 
 export function App() {
   const [state, setState, reset, initialValue] = useResetState(0)

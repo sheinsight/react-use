@@ -1,5 +1,5 @@
 import { Card, KeyValue, Zone } from '@/components'
-import { useMediaQuery } from '@shined/use'
+import { useMediaQuery } from '@shined/react-use'
 
 export function App() {
   const isPhoneView = useMediaQuery('(0 < width <= 767px)')

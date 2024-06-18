@@ -1,5 +1,5 @@
 import { Button, Card, Input, KeyValue, Zone } from '@/components'
-import { useActiveElement } from '@shined/use'
+import { useActiveElement } from '@shined/react-use'
 
 export function App() {
   const activeElement = useActiveElement()

@@ -9,7 +9,7 @@
     "noEmit": true,
     "strict": true,
     "paths": {
-      "@shined/use": ["./src"],
+      "@shined/react-use": ["./src"],
       "@/test": ["./testing"],
       "@/components": ["./website/src/components"],
       "@formkit/auto-animate/react": ["./website/node_modules/@formkit/auto-animate/react"],

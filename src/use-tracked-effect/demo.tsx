@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, LabelInput, Zone } from '@/components'
-import { useCounter, useSetState, useTrackedEffect } from '@shined/use'
+import { useCounter, useSetState, useTrackedEffect } from '@shined/react-use'
 
 export function App() {
   const [state, setState] = useSetState({ name: 'John Doe', age: 30 })

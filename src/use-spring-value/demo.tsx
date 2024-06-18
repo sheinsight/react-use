@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useSpringValue } from '@shined/use'
+import { useSpringValue } from '@shined/react-use'
 
 const cls =
   'grid place-items-center rounded-2 absolute left-42px will-change-auto bg-primary/80 text-white w-48 h-20 transition ease-in'

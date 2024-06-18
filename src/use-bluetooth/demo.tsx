@@ -1,5 +1,5 @@
 import { Button, Card, Input, KeyValue, Zone } from '@/components'
-import { useBluetooth, useControlledComponent, useSetState } from '@shined/use'
+import { useBluetooth, useControlledComponent, useSetState } from '@shined/react-use'
 import { useEffect } from 'react'
 
 export function App() {

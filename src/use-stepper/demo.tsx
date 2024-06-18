@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, LabelInput, Zone } from '@/components'
-import { useSetState, useStepper } from '@shined/use'
+import { useSetState, useStepper } from '@shined/react-use'
 
 export function App() {
   const [form, setForm] = useSetState({ name: '', email: '', address: '', payment: '' })

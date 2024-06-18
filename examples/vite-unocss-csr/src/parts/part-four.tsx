@@ -10,7 +10,7 @@ import {
   useSpringValue,
   useTimeAgo,
   useTitle,
-} from '@shined/use'
+} from '@shined/react-use'
 
 export const PartFour = () => {
   const divRef = useRef<HTMLDivElement | null>(null)

@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useMouse } from '@shined/use'
+import { useMouse } from '@shined/react-use'
 
 export function App() {
   const page = useMouse() // type is 'page' by default

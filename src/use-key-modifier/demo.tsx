@@ -1,5 +1,5 @@
 import { Card, Key, Zone } from '@/components'
-import { useKeyModifier } from '@shined/use'
+import { useKeyModifier } from '@shined/react-use'
 
 export function App() {
   const isShiftPressed = useKeyModifier('Shift')

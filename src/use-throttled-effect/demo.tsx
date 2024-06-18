@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useCounter, useThrottledEffect, useUnmount } from '@shined/use'
+import { useCounter, useThrottledEffect, useUnmount } from '@shined/react-use'
 import { Toaster, toast } from 'react-hot-toast'
 
 const wait = 1000

@@ -9,7 +9,7 @@ import {
   useSafeState,
   useScrollLock,
   useStateHistory,
-} from '@shined/use'
+} from '@shined/react-use'
 
 const addTen = (a: number) => {
   return new Promise<number>((resolve) => {

@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useDeepCompareEffect, useUnmount } from '@shined/use'
+import { useDeepCompareEffect, useUnmount } from '@shined/react-use'
 import { useEffect, useState } from 'react'
 import { Toaster, toast } from 'react-hot-toast'
 

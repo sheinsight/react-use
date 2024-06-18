@@ -1,5 +1,5 @@
 import { Button, Card, Input, KeyValue, Zone } from '@/components'
-import { useFocusWithin } from '@shined/use'
+import { useFocusWithin } from '@shined/react-use'
 
 export function App() {
   const isFocusWithin = useFocusWithin('#el-focus-within')

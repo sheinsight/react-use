@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useElementBounding, useElementByPoint, useMouse, useStyleTag } from '@shined/use'
+import { useElementBounding, useElementByPoint, useMouse, useStyleTag } from '@shined/react-use'
 
 export function App() {
   const { x, y, ...mouseControls } = useMouse({ type: 'client' })

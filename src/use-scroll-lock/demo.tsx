@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useScrollLock } from '@shined/use'
+import { useScrollLock } from '@shined/react-use'
 import { useRef } from 'react'
 
 export function App() {

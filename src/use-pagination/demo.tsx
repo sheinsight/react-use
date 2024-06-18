@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, LabelInput, Zone } from '@/components'
-import { useControlledComponent, usePagination } from '@shined/use'
+import { useControlledComponent, usePagination } from '@shined/react-use'
 
 const TOTAL = 100
 

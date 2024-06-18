@@ -1,5 +1,5 @@
 import { Button, Card, Zone } from '@/components'
-import { useSetState, useStateHistory } from '@shined/use'
+import { useSetState, useStateHistory } from '@shined/react-use'
 
 const hash = () => Math.random().toString(36).substring(3, 9).toUpperCase()
 

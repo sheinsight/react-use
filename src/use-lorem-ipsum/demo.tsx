@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue } from '@/components'
-import { useLoremIpsum, useRender } from '@shined/use'
+import { useLoremIpsum, useRender } from '@shined/react-use'
 
 export function App() {
   const render = useRender()

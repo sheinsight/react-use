@@ -1,5 +1,5 @@
 import { Card } from '@/components'
-import { useReportingObserver } from '@shined/use'
+import { useReportingObserver } from '@shined/react-use'
 
 export function App() {
   useReportingObserver((reports, _observer) => {

@@ -1,5 +1,5 @@
 import { Button, Card, Input } from '@/components'
-import { useSetState } from '@shined/use'
+import { useSetState } from '@shined/react-use'
 
 export function App() {
   const [state, setState] = useSetState({ name: 'John Doe', age: '30' })

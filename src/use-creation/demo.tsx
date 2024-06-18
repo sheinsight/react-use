@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useCounter, useCreation, useUnmount } from '@shined/use'
+import { useCounter, useCreation, useUnmount } from '@shined/react-use'
 import { useEffect } from 'react'
 import { Toaster, toast } from 'react-hot-toast'
 

@@ -1,5 +1,5 @@
 import { Card, KeyValue } from '@/components'
-import { useWindowFocus } from '@shined/use'
+import { useWindowFocus } from '@shined/react-use'
 
 export function App() {
   const isWinFocused = useWindowFocus()

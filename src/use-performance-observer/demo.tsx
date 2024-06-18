@@ -1,5 +1,5 @@
 import { Card, KeyValue } from '@/components'
-import { usePerformanceObserver } from '@shined/use'
+import { usePerformanceObserver } from '@shined/react-use'
 
 const entryTypes = ['paint', 'paint', 'navigation', 'resource', 'mark', 'measure']
 

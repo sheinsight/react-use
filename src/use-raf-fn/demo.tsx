@@ -1,5 +1,5 @@
 import { Button, Card } from '@/components'
-import { useRafFn } from '@shined/use'
+import { useRafFn } from '@shined/react-use'
 
 export function App() {
   const logInRaf = useRafFn(() => {

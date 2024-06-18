@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useRender } from '@shined/use'
+import { useRender } from '@shined/react-use'
 import { useRef } from 'react'
 
 export function App() {

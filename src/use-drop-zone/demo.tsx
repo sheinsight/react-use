@@ -1,5 +1,5 @@
 import { Card, KeyValue, Zone } from '@/components'
-import { useDropZone } from '@shined/use'
+import { useDropZone } from '@shined/react-use'
 
 export function App() {
   const { isOverDropZone, files } = useDropZone('#drop-zone')

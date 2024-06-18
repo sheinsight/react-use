@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue } from '@/components'
-import { useCounter, useStableFn, useUnmount, useUpdateEffect } from '@shined/use'
+import { useCounter, useStableFn, useUnmount, useUpdateEffect } from '@shined/react-use'
 import { Toaster, toast } from 'react-hot-toast'
 
 export function App() {

@@ -1,5 +1,5 @@
 import { Button, Card, Zone, wait as mockFetch } from '@/components'
-import { useMemoize, useUnmount } from '@shined/use'
+import { useMemoize, useUnmount } from '@shined/react-use'
 import { Toaster, toast } from 'react-hot-toast'
 
 async function getUserById(id: number) {

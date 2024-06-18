@@ -1,6 +1,6 @@
 'use client'
 
-import { useBrowserMemory, useCircularList, useElementSize, useTitle } from '@shined/use'
+import { useBrowserMemory, useCircularList, useElementSize, useTitle } from '@shined/react-use'
 
 export function Client() {
   const { width, height } = useElementSize('#el-textarea')

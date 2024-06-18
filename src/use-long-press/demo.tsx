@@ -1,7 +1,7 @@
 import { Card } from '@/components'
-import { useLongPress } from '@shined/use'
+import { useLongPress } from '@shined/react-use'
 
-import type { UseLongPressReturn } from '@shined/use'
+import type { UseLongPressReturn } from '@shined/react-use'
 
 const getTipAndBgColor = (lp: UseLongPressReturn) => {
   if (lp.isMeetThreshold) return { tip: 'Meet threshold 😅', bgColor: 'bg-red/80' }

@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useAsyncEffect, useCounter, useToggle } from '@shined/use'
+import { useAsyncEffect, useCounter, useToggle } from '@shined/react-use'
 
 import type { SetIntervalReturn } from '../utils/basic'
 

@@ -1,5 +1,5 @@
 import { Card, KeyValue, LabelInput, Zone } from '@/components'
-import { useControlledComponent, useDateFormat, useNow } from '@shined/use'
+import { useControlledComponent, useDateFormat, useNow } from '@shined/react-use'
 
 export function App() {
   const now = useNow()

@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, OTP, Zone, wait as mockFetch } from '@/components'
-import { useAsyncFn, useAsyncLock, useCounter, useSafeState } from '@shined/use'
+import { useAsyncFn, useAsyncLock, useCounter, useSafeState } from '@shined/react-use'
 
 export function App() {
   const [data, setData] = useSafeState<string>('none')

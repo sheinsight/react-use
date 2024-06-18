@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useClamp, useCounter } from '@shined/use'
+import { useClamp, useCounter } from '@shined/react-use'
 
 export function App() {
   const [max, maxActions] = useCounter(10)

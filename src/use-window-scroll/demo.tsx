@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useWindowScroll } from '@shined/use'
+import { useWindowScroll } from '@shined/react-use'
 
 export function App() {
   const scroll = useWindowScroll({ behavior: 'smooth' })

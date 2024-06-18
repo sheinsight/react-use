@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue } from '@/components'
-import { usePermission, useRender } from '@shined/use'
+import { usePermission, useRender } from '@shined/react-use'
 
 export function App() {
   const render = useRender()

@@ -1,5 +1,5 @@
 import { Button, Card } from '@/components'
-import { useClipboardItems } from '@shined/use'
+import { useClipboardItems } from '@shined/react-use'
 
 export function App() {
   const clipboard = useClipboardItems()

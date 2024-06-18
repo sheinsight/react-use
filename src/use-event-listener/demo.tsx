@@ -1,5 +1,5 @@
 import { Card, Zone } from '@/components'
-import { useEventListener, useUnmount } from '@shined/use'
+import { useEventListener, useUnmount } from '@shined/react-use'
 import { useRef } from 'react'
 import { Toaster, toast } from 'react-hot-toast'
 

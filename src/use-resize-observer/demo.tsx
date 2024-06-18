@@ -1,5 +1,5 @@
 import { Card } from '@/components'
-import { useResizeObserver, useSafeState } from '@shined/use'
+import { useResizeObserver, useSafeState } from '@shined/react-use'
 
 export function App() {
   const [state, setState] = useSafeState('')

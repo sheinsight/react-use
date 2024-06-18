@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useInterval } from '@shined/use'
+import { useInterval } from '@shined/react-use'
 
 export function App() {
   const intervals = useInterval(100)

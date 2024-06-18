@@ -1,5 +1,5 @@
 import { Card, KeyValue } from '@/components'
-import { useTimeAgo } from '@shined/use'
+import { useTimeAgo } from '@shined/react-use'
 import { useRef } from 'react'
 
 export function App() {

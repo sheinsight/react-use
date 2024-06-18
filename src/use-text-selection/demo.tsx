@@ -1,5 +1,5 @@
 import { Card, KeyValue, Zone } from '@/components'
-import { useLoremIpsum, useTextSelection } from '@shined/use'
+import { useLoremIpsum, useTextSelection } from '@shined/react-use'
 
 export function App() {
   const lorem = useLoremIpsum()

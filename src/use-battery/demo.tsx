@@ -1,5 +1,5 @@
 import { Card, KeyValue } from '@/components'
-import { useBattery } from '@shined/use'
+import { useBattery } from '@shined/react-use'
 
 export function App() {
   const battery = useBattery()

@@ -16,7 +16,7 @@ import {
   useTargetElement,
   useToggle,
   useUserMedia,
-} from '@shined/use'
+} from '@shined/react-use'
 
 export const Playground = () => {
   const [showChild, toggle] = useToggle(true)

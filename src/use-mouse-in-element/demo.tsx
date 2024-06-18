@@ -1,5 +1,5 @@
 import { Card, KeyValue, Zone } from '@/components'
-import { useMouseInElement } from '@shined/use'
+import { useMouseInElement } from '@shined/react-use'
 
 export function App() {
   const mouseInEl = useMouseInElement('#el-mouse-in-element')

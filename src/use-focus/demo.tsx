@@ -1,5 +1,5 @@
 import { Button, Card, Input, KeyValue, Zone } from '@/components'
-import { useFocus } from '@shined/use'
+import { useFocus } from '@shined/react-use'
 
 export function App() {
   const [inputFocused] = useFocus('#el-focus-input')

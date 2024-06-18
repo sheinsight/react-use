@@ -1,5 +1,5 @@
 import { Button, Card, Zone } from '@/components'
-import { useIntervalFn, useRafLoop, useSafeState } from '@shined/use'
+import { useIntervalFn, useRafLoop, useSafeState } from '@shined/react-use'
 
 const FPS = 60
 const config = { immediate: false }

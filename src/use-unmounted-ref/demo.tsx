@@ -1,5 +1,5 @@
 import { Button, Card, Zone } from '@/components'
-import { useToggle, useUnmount, useUnmountedRef } from '@shined/use'
+import { useToggle, useUnmount, useUnmountedRef } from '@shined/react-use'
 import { Toaster, toast } from 'react-hot-toast'
 
 export function App() {

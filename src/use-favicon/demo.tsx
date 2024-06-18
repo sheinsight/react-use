@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useFavicon } from '@shined/use'
+import { useFavicon } from '@shined/react-use'
 
 export function App() {
   const [favicon, actions] = useFavicon()

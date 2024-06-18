@@ -1,6 +1,6 @@
 import { Button, Card, Input, Zone } from '@/components'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { useDynamicList } from '@shined/use'
+import { useDynamicList } from '@shined/react-use'
 
 export function App() {
   const [containerRef] = useAutoAnimate()

@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useCounter, useDateFormat, useLastUpdated } from '@shined/use'
+import { useCounter, useDateFormat, useLastUpdated } from '@shined/react-use'
 
 export function App() {
   const [count, actions] = useCounter()

@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useCounter, useThrottledFn } from '@shined/use'
+import { useCounter, useThrottledFn } from '@shined/react-use'
 
 const wait = 1000
 

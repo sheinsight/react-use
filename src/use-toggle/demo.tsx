@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useCircularList, useToggle } from '@shined/use'
+import { useCircularList, useToggle } from '@shined/react-use'
 
 export function App() {
   const [bool, toggleBool] = useToggle(true)

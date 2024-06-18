@@ -1,5 +1,5 @@
 import { Card, KeyValue, Zone } from '@/components'
-import { useMousePressed } from '@shined/use'
+import { useMousePressed } from '@shined/react-use'
 
 const boxCls = 'size-120px grid place-content-center rounded bg-red'
 

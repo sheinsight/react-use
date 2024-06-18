@@ -1,5 +1,5 @@
 import { Card } from '@/components'
-import { useDraggable } from '@shined/use'
+import { useDraggable } from '@shined/react-use'
 
 export function App() {
   const draggable = useDraggable('#drag-me', {

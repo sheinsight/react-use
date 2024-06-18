@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useFullscreen, useStyleTag } from '@shined/use'
+import { useFullscreen, useStyleTag } from '@shined/react-use'
 
 export function App() {
   // for demo purpose to make text more contrast

@@ -1,5 +1,5 @@
 import { Card, Input } from '@/components'
-import { useEffectOnce, useSafeState, useSignalState } from '@shined/use'
+import { useEffectOnce, useSafeState, useSignalState } from '@shined/react-use'
 
 export function App() {
   const [name, setName] = useSignalState('')

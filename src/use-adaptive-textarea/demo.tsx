@@ -1,5 +1,5 @@
 import { Card, KeyValue } from '@/components'
-import { useAdaptiveTextarea, useCounter, useLoremIpsum } from '@shined/use'
+import { useAdaptiveTextarea, useCounter, useLoremIpsum } from '@shined/react-use'
 
 export function App() {
   const lorem = useLoremIpsum()

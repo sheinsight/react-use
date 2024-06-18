@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Introduction
 
-`@shined/use` is an SSR-friendly and highly optimized React Hooks library that offers a variety of **useful**, **reusable** Hooks written in **TypeScript**.
+`@shined/react-use` is an SSR-friendly and highly optimized React Hooks library that offers a variety of **useful**, **reusable** Hooks written in **TypeScript**.
 
 ## 🚀 Features
 
@@ -13,7 +13,7 @@ Primarily inspired by [VueUse](https://vueuse.org/), along with influences from 
 - **Flexibility**: Features include [ElementTarget](/docs/features/element-target), [Ref Getter](/docs/features/ref-getter), [Pausable](/docs/features/pausable), and more.
 - **SSR-friendly**: Ensures that all Hooks are compatible with Server-side Rendering (SSR).
 - **Tree-shakable**: Designed and delivered with ESM, import only what you need.
-- **Lightweight**: Boasts [zero dependencies](https://github.com/sheinsight/use/blob/main/package.json).
+- **Lightweight**: Boasts [zero dependencies](https://github.com/sheinsight/react-use/blob/main/package.json).
 - **First-class TypeScript Support**: Written in [TypeScript](https://www.typescriptlang.org/) with well-named type definitions.
 - **~~Comprehensive Testing~~**: (Coming soon...)
 

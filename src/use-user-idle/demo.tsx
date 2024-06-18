@@ -1,5 +1,5 @@
 import { Card, KeyValue } from '@/components'
-import { useIntervalFn, useUserIdle } from '@shined/use'
+import { useIntervalFn, useUserIdle } from '@shined/react-use'
 
 export function App() {
   // 1_000 is for demo. 60_000 by default when not provided

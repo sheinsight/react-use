@@ -7,7 +7,7 @@ import {
   useSafeState,
   useUnmount,
   useUpdateEffect,
-} from '@shined/use'
+} from '@shined/react-use'
 import { Toaster, toast } from 'react-hot-toast'
 
 export function App() {

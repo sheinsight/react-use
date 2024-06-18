@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone } from '@/components'
-import { useCounter, useDebouncedFn } from '@shined/use'
+import { useCounter, useDebouncedFn } from '@shined/react-use'
 
 const wait = 300
 

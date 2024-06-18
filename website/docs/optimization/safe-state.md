@@ -6,7 +6,7 @@ sidebar_position: 1
 
 ## Overview
 
-`@shined/use` implement [useSafeState](/reference/use-safe-state) for all state management operations within components. This method ensures that state updates are controlled and secure, especially in scenarios that involve asynchronous operations or potential unexpected component unmounts. It's designed as a replacement for `React.useState`.
+`@shined/react-use` implement [useSafeState](/reference/use-safe-state) for all state management operations within components. This method ensures that state updates are controlled and secure, especially in scenarios that involve asynchronous operations or potential unexpected component unmounts. It's designed as a replacement for `React.useState`.
 
 In essence, the behavior of `useSafeState` adapts based on the React version used:
 

@@ -1,6 +1,6 @@
 import { Button, Card, Input, Zone } from '@/components'
-import { useControlledComponent } from '@shined/use'
-import { useMount, useTitle, useToggle } from '@shined/use'
+import { useControlledComponent } from '@shined/react-use'
+import { useMount, useTitle, useToggle } from '@shined/react-use'
 
 export function App() {
   const [show, toggle] = useToggle(true)

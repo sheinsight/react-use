@@ -1,5 +1,5 @@
 import { Card, KeyValue } from '@/components'
-import { useHover } from '@shined/use'
+import { useHover } from '@shined/react-use'
 
 export function App() {
   const isHovered = useHover('#el-hover')

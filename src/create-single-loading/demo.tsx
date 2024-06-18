@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, Zone, wait as mockFetch } from '@/components'
-import { createSingleLoading } from '@shined/use'
+import { createSingleLoading } from '@shined/react-use'
 
 const pageLoading = createSingleLoading()
 

@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Versioning
 
-`@shined/use` strictly adheres to the principles of [Semantic Versioning (SemVer)](https://semver.org/), ensuring a predictable and transparent method for managing version numbers and compatibility. Understanding how version numbers are incremented can help you prepare for upgrades and integrate new features with confidence.
+`@shined/react-use` strictly adheres to the principles of [Semantic Versioning (SemVer)](https://semver.org/), ensuring a predictable and transparent method for managing version numbers and compatibility. Understanding how version numbers are incremented can help you prepare for upgrades and integrate new features with confidence.
 
 ## SemVer Versioning
 

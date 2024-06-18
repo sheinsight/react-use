@@ -1,5 +1,5 @@
 import { Button, Card, Zone } from '@/components'
-import { useDeviceList, useUserMedia } from '@shined/use'
+import { useDeviceList, useUserMedia } from '@shined/react-use'
 import { useRef } from 'react'
 
 export function App() {

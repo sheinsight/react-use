@@ -1,5 +1,5 @@
 import { Card, KeyValue, Zone } from '@/components'
-import { useIntersectionObserver, useSafeState } from '@shined/use'
+import { useIntersectionObserver, useSafeState } from '@shined/react-use'
 
 const threshold = [0, 0.25, 0.5, 0.75, 1]
 const targetCls = 'my-2 h-32 p-2 bg-primary/80 text-white rounded grid place-content-center'

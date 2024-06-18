@@ -1,5 +1,5 @@
 import { Card, KeyValue, Zone, wait as mockFetch } from '@/components'
-import { generateLoremIpsum, useInfiniteScroll, useSafeState } from '@shined/use'
+import { generateLoremIpsum, useInfiniteScroll, useSafeState } from '@shined/react-use'
 
 export function App() {
   const [list, setList] = useSafeState<{ idx: number; text: string }[]>([])

@@ -1,5 +1,5 @@
 import { Button, Card, KeyValue, OTP, Zone } from '@/components'
-import { useSafeState, useUnmount, useUpdateEffect } from '@shined/use'
+import { useSafeState, useUnmount, useUpdateEffect } from '@shined/react-use'
 import { Toaster, toast } from 'react-hot-toast'
 
 export function App() {

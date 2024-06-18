@@ -15,7 +15,7 @@ import {
   useMousePressed,
   useScroll,
   useWindowScroll,
-} from '@shined/use'
+} from '@shined/react-use'
 
 export function PartOne() {
   const hoverRef = useRef<HTMLDivElement>(null)

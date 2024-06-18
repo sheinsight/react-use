@@ -1,5 +1,5 @@
 import { Card, Key } from '@/components'
-import { useKeyStatus } from '@shined/use'
+import { useKeyStatus } from '@shined/react-use'
 
 export function App() {
   const isPlusPressed = useKeyStatus('-')
