@@ -111,7 +111,7 @@ export function SearchHooks() {
         <span className="ml-2 text-gray/80">{filteredHooks.length} hooks found, sorted by name from A-Z</span>
       </div>
 
-      <div className="overflow-y-scroll md:pt-2 md:h-48vh">
+      <div className="overflow-y-scroll md:pt-2 md:h-46vh">
         <div className="flex flex-col gap-2">
           {filteredHooks.map((hook) => {
             const props = {
