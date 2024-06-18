@@ -12,8 +12,8 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@docusaurus/core": "3.3.2",
-    "@docusaurus/preset-classic": "3.3.2",
+    "@docusaurus/core": "3.4.0",
+    "@docusaurus/preset-classic": "3.4.0",
     "@formkit/auto-animate": "^0.8.2",
     "@mdx-js/react": "^3.0.1",
     "change-case": "^5.4.4",
@@ -23,9 +23,9 @@
     "react-hot-toast": "^2.4.1"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.3.2",
-    "@docusaurus/tsconfig": "3.3.2",
-    "@docusaurus/types": "3.3.2",
+    "@docusaurus/module-type-aliases": "3.4.0",
+    "@docusaurus/tsconfig": "3.4.0",
+    "@docusaurus/types": "3.4.0",
     "@unocss/webpack": "^0.61.0",
     "gray-matter": "^4.0.3",
     "react": "^18.3.1",

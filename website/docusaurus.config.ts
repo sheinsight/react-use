@@ -28,21 +28,6 @@ export default {
     },
   },
   plugins: [
-    async () => {
-      const { default: UnoCSS } = await import('@unocss/webpack')
-
-      return {
-        name: 'webpack-unocss',
-        configureWebpack() {
-          return {
-            plugins: [UnoCSS()],
-            optimization: {
-              realContentHash: true,
-            },
-          }
-        },
-      }
-    },
     () => ({
       name: 'resolve-alias',
       configureWebpack() {
@@ -58,6 +43,21 @@ export default {
         }
       },
     }),
+    async () => {
+      const { default: UnoCSS } = await import('@unocss/webpack')
+
+      return {
+        name: 'webpack-unocss',
+        configureWebpack() {
+          return {
+            plugins: [UnoCSS()],
+            optimization: {
+              realContentHash: true,
+            },
+          }
+        },
+      }
+    },
     [
       '@docusaurus/plugin-content-docs',
       {
@@ -87,13 +87,13 @@ export default {
           sidebarPath: './sidebars.ts',
           sidebarCollapsed: true,
           editUrl: 'https://github.com/sheinsight/use/tree/main/website/',
-          exclude: ['**/components/**'],
+          exclude: ['components/**'],
         },
         theme: {
           customCss: './src/css/custom.css',
         },
         pages: {
-          exclude: ['**/components/**'],
+          exclude: ['components/**'],
         },
       } satisfies Preset.Options,
     ],
