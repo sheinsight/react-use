@@ -1,5 +1,5 @@
-import { useEffect } from 'react'
 import { useLatest } from '../use-latest'
+import { useMount } from '../use-mount'
 import { useMutationObserver } from '../use-mutation-observer'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
@@ -58,9 +58,9 @@ export function useCssVar<T extends HTMLElement = HTMLElement>(
     _setVariable(value)
   })
 
-  useMutationObserver(observe ? el : null, getPropertyValue, { attributes: true })
+  useMount(() => void getPropertyValue())
 
-  useEffect(() => void getPropertyValue(), [])
+  useMutationObserver(observe ? el : null, getPropertyValue, { attributes: true })
 
   return [variable, setVariable] as const
 }
@@ -74,5 +74,5 @@ function getCssVar<T extends HTMLElement = HTMLElement>(
 
   if (!el) return defaultValue
 
-  return window.getComputedStyle(el).getPropertyValue(propName).trim() || ''
+  return window.getComputedStyle(el).getPropertyValue(propName).trim()
 }

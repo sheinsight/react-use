@@ -98,8 +98,8 @@ export function useWebObserver(...args: any[]): any {
   const pausable = usePausable(false, stopObserver, (ref) => {
     ref.current = false
 
-    const { initOptions, observerOptions } = latest.current
-    const els = getElements(latest.current.target)
+    const { initOptions, observerOptions, target } = latest.current
+    const els = getElements(target)
 
     const hasNoElements = ['PerformanceObserver', 'ReportingObserver'].includes(observer)
 
