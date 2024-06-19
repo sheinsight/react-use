@@ -9,9 +9,9 @@ export function App() {
 
   return (
     <Card>
-      <KeyValue label="Stable lorem ipsum" value={lorem} />
-      <KeyValue label="Stable lorem ipsum 2" value={lorem2} />
-      <KeyValue label="Random lorem ipsum" value={randomLorem} />
+      <KeyValue labelWidth="180px" label="Stable lorem ipsum" value={lorem} />
+      <KeyValue labelWidth="180px" label="Stable lorem ipsum 2" value={lorem2} />
+      <KeyValue labelWidth="180px" label="Random lorem ipsum" value={randomLorem} />
       <Button onClick={render}>Rerender</Button>
     </Card>
   )
