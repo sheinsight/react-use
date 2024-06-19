@@ -1,4 +1,3 @@
-import { useLatest } from '../use-latest'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
 import { isFunction } from '../utils/basic'
@@ -17,11 +16,12 @@ export function useSetState<T extends PureObject>(
   options: UseSetStateOptions = {},
 ): [T, UseSetStateSetMergedState<T>] {
   const [state, _setState] = useSafeState<T>(initialState, options)
-  const latest = useLatest(state)
 
   const setState: UseSetStateSetMergedState<T> = useStableFn((patch) => {
-    const newState = isFunction(patch) ? patch(latest.current) : patch
-    return _setState(newState ? Object.assign({}, latest.current, newState) : latest.current)
+    return _setState((prevState) => {
+      const newState = isFunction(patch) ? patch(prevState) : patch
+      return newState ? Object.assign({}, prevState, newState) : prevState
+    })
   })
 
   return [state, setState] as const

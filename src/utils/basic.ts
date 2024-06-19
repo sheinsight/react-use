@@ -20,7 +20,6 @@ export type Reffable<T> = T | RefObject<T>
 export type GettableOrReffable<T> = Gettable<T> | Reffable<T>
 
 export type WindowEventName = keyof WindowEventMap
-
 export type PointerType = 'mouse' | 'touch' | 'pen'
 
 export type Position = {
@@ -60,17 +59,17 @@ export const isDev = process.env.NODE_ENV !== 'production'
 // useful in Server-side Rendering (SSR)
 export const isClient = Boolean(typeof window !== 'undefined' && isFunction(window?.document?.createElement))
 
-export function noop() {}
+export function noop(): undefined {}
 
-export function now() {
+export function now(): number {
   return Date.now()
 }
 
-export function timestamp() {
+export function timestamp(): number {
   return +Date.now()
 }
 
-export function clamp(n: number, min: number, max: number) {
+export function clamp(n: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, n))
 }
 
@@ -98,11 +97,11 @@ export function isObject(val: unknown): val is object {
   return Object.prototype.toString.call(val) === '[object Object]'
 }
 
-export function isReact18OrLater() {
+export function isReact18OrLater(): boolean {
   return Number(ReactVersion?.split('.')[0].trim()) >= 18
 }
 
-export function hasOwn<T extends object, K extends PropertyKey>(val: T, key: K) {
+export function hasOwn<T extends object, K extends PropertyKey>(val: T, key: K): boolean {
   return Object.prototype.hasOwnProperty.call(val, key)
 }
 
