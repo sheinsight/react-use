@@ -4,9 +4,9 @@ import { useFavicon, useMount } from '@site/../src'
 import React from 'react'
 
 export default function Root({ children }) {
-  const [_, actions] = useFavicon()
+  const favicon = useFavicon()
 
-  useMount(() => actions.setEmojiFavicon('🪝'))
+  useMount(() => favicon.setEmojiFavicon('🪝'))
 
   return <>{children}</>
 }
