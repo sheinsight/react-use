@@ -12,7 +12,7 @@ export interface UseTimeoutOptions<Controls extends boolean, Callback extends An
   /**
    * Expose more controls
    *
-   * @default false
+   * @defaultValue false
    */
   controls?: Controls
   /**

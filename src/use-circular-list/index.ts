@@ -15,6 +15,10 @@ export interface UseCycleListOptions<T, R extends T = T> {
   fallbackIndex?: number
   /**
    * Custom function to get the index of the value
+   *
+   * @param {T} value - `T`, the value to find
+   * @param {T[]} list - `T[]`, the list to search
+   * @returns {number} `number`, the index of the value
    */
   getIndexOf?: (value: T, list: T[]) => number
 }
@@ -22,19 +26,28 @@ export interface UseCycleListOptions<T, R extends T = T> {
 export type UseCycleListActions<T> = {
   /**
    * Move to the next value
+   *
+   * @param {number} [step] - `number`, the step to move
+   * @returns {T} `T`, the next value
    */
   next: (step?: number) => T
   /**
    * Move to the previous value
+   *
+   * @param {number} [step] - `number`, the step to move
+   * @returns {T} `T`, the previous value
    */
   prev: (step?: number) => T
   /**
    * Move to the value at the specified index
+   *
+   * @param {number} index - `number`, the index to move
+   * @returns {T} `T`, the value at the specified index
    */
   go: (index: number) => T
 }
 
-export type UseCycleListReturn<T> = [
+export type UseCycleListReturns<T> = readonly [
   /**
    * Current value
    */
@@ -49,11 +62,19 @@ export type UseCycleListReturn<T> = [
   index: number,
 ]
 
-// TODO: rewrite using `NoInfer` in TS 5.4, now downgrade temporarily
+/**
+ * A React Hook that helps to create a circular list that can cycle through the list.
+ *
+ * TODO: rewrite using `NoInfer` in TS 5.4, now downgrade temporarily
+ *
+ * @param {T[]} list - `T[]`, the list to cycle
+ * @param {UseCycleListOptions} [options] - `UseCycleListOptions`, see {@link UseCycleListOptions}
+ * @returns {UseCycleListReturns} `UseCycleListReturns`, see {@link UseCycleListReturns}
+ */
 export function useCircularList<T, R extends T = T>(
   list: T[],
   options: UseCycleListOptions<T, R> = {},
-): UseCycleListReturn<T> {
+): UseCycleListReturns<T> {
   const { initialValue = list[0], fallbackIndex = 0, getIndexOf } = options
 
   const latest = useLatest({ fallbackIndex, list, getIndexOf })

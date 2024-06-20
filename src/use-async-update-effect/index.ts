@@ -6,8 +6,14 @@ import type { AsyncEffectCallback } from '../utils/create-effect/async'
 export interface UseAsyncUpdateEffectCallback extends AsyncEffectCallback {}
 
 /**
- * like `useUpdateEffect` but it's can accept an `async` function
+ * A React Hook which is like `useAsyncEffect` but **ignore the execution at first mount**.
  *
- * @tip it should not return a cleanup function as it's `async` which cannot cleanup as expected
+ * It should not return a cleanup function as it's `async` which cannot cleanup as expected.
+ *
+ * If you need to cleanup something, use `isCancelled` in {@link UseAsyncEffectCallback} instead to check effect status.
+ *
+ * @param {UseAsyncUpdateEffectCallback} asyncEffectCallback - `UseAsyncUpdateEffectCallback`, a callback function for async effect, see {@link UseAsyncUpdateEffectCallback}
+ * @param {DependencyList} [deps] - `DependencyList`, an array of dependencies, see [React.useEffect](https://react.dev/reference/react/useEffect)
+ *
  */
 export const useAsyncUpdateEffect = createAsyncEffect(useUpdateEffect)

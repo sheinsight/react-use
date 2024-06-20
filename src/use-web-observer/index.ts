@@ -14,7 +14,7 @@ export interface UseWebObserverOptions {
   /**
    * Start the observer immediate after calling this function
    *
-   * @default true
+   * @defaultValue true
    */
   immediate?: boolean
 }

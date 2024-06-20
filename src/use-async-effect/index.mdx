@@ -6,6 +6,12 @@ import { HooksType } from '@/components'
 
 A React Hook which is like [React.useEffect](https://react.dev/reference/react/useEffect) but support **cancellable** **async** function.
 
+:::note
+It should not return a cleanup function as it's `async` which cannot cleanup as expected.
+
+If you need to cleanup something, use `isCancelled` in `UseAsyncEffectCallback` instead to check effect status.
+:::
+
 ## Demo
 
 Toggle the status several times, and you will find that all **obsolete** timers are deleted as expected, although we do not return a cleanup function in effect.

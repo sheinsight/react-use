@@ -16,18 +16,18 @@ export interface UseDeviceListOptions {
    * Request for permissions immediately if it's not granted,
    * otherwise label and deviceIds could be empty
    *
-   * @default false
+   * @defaultValue false
    */
   requestPermissions?: boolean
   /**
    * Request for types of media permissions
    *
-   * @default { audio: true, video: true }
+   * @defaultValue { audio: true, video: true }
    */
   constraints?: MediaStreamConstraints
 }
 
-export interface UseDeviceListReturn {
+export interface UseDeviceListReturns {
   /**
    * List of all devices
    */
@@ -62,7 +62,7 @@ export interface UseDeviceListReturn {
   update(): Promise<void>
 }
 
-export function useDeviceList(options: UseDeviceListOptions = {}): UseDeviceListReturn {
+export function useDeviceList(options: UseDeviceListOptions = {}): UseDeviceListReturns {
   const { requestPermissions = false, constraints = { audio: true, video: true }, onUpdated } = options
 
   const [state, setState] = useSetState({

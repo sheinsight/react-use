@@ -10,21 +10,29 @@ export interface UseBeforeUnloadOptions {
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
    *
-   * @default false
+   * @defaultValue false
    */
   preventDefault?: boolean
 }
 
-export type UseBeforeUnloadCallback = (e: BeforeUnloadEvent) => void
+/**
+ * A callback function to run before the page is unloaded
+ *
+ * @param {BeforeUnloadEvent} event - `BeforeUnloadEvent`, the event object
+ * @returns {void} `void`
+ */
+export type UseBeforeUnloadCallback = (event: BeforeUnloadEvent) => void
 
 /**
- * Do something before page unload (close or refresh and etc.), and optionally show a dialog to confirm.
  *
- * You can set `preventDefault` to `true` to show the confirm leave dialog.
+ * A React Hook to perform actions **before the page is unloaded** (e.g., closing, refreshing the page) and optionally trigger a browser-native confirmation dialog.
  *
- * NOTICE: Dialog only shows after user interacts with the page by default, like clicking a link, closing the tab, etc.
+ * set `preventDefault` to `true` to show the confirm leave dialog.
  *
- * @see https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
+ * @param {UseBeforeUnloadCallback} callback - `UseBeforeUnloadCallback`, the callback function to run before the page is unloaded, see {@link UseBeforeUnloadCallback}
+ * @param {UseBeforeUnloadOptions} [options={}] - `UseBeforeUnloadOptions`, options to configure the hook, see {@link UseBeforeUnloadOptions}
+ * @returns {Noop} `Noop`, a function that clear the event listener, see {@link Noop}
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event | BeforeUnloadEvent - MDN}
  */
 export function useBeforeUnload(callback: UseBeforeUnloadCallback, options: UseBeforeUnloadOptions = {}): Noop {
   const { preventDefault = false } = options

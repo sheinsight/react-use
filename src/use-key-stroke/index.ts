@@ -16,31 +16,31 @@ export interface UseKeyStrokeOptions {
   /**
    * The event name to listen for.
    *
-   * @default 'keydown'
+   * @defaultValue 'keydown'
    */
   eventName?: KeyStrokeEventName
   /**
    * The target to add the event listener to.
    *
-   * @default window
+   * @defaultValue window
    */
   target?: ElementTarget
   /**
    * Set to `true` to use passive event listeners.
    *
-   * @default false
+   * @defaultValue false
    */
   passive?: boolean
   /**
    * Set to `true` to ignore repeated events when the key is being held down.
    *
-   * @default false
+   * @defaultValue false
    */
   dedupe?: boolean
   /**
    * Set to `true` to remove the event listener after the first event.
    *
-   * @default false
+   * @defaultValue false
    */
   once?: boolean
 }

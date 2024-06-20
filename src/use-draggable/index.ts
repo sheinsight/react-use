@@ -11,55 +11,55 @@ export interface UseDraggableOptions {
   /**
    * Whether to drag the element only when the pointer is exactly on the target element.
    *
-   * @default false
+   * @defaultValue false
    */
   exact?: boolean
   /**
    * Whether to prevent the default behavior of the pointer event.
    *
-   * @default false
+   * @defaultValue false
    */
   preventDefault?: boolean
   /**
    * Whether to stop the propagation of the pointer event.
    *
-   * @default false
+   * @defaultValue false
    */
   stopPropagation?: boolean
   /**
    * Whether to capture the pointer event.
    *
-   * @default true
+   * @defaultValue true
    */
   capture?: boolean
   /**
    * The element that should be dragged.
    *
-   * @default target
+   * @defaultValue target
    */
   handle?: ElementTarget
   /**
    * The element that should be dragged.
    *
-   * @default window
+   * @defaultValue window
    */
   draggingElement?: ElementTarget | GlobalTarget
   /**
    * The element that should contain the draggable element.
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   containerElement?: ElementTarget
   /**
    * The types of pointer events that should be handled.
    *
-   * @default ['mouse', 'touch', 'pen']
+   * @defaultValue ['mouse', 'touch', 'pen']
    */
   pointerTypes?: PointerType[]
   /**
    * The initial position of the draggable element.
    *
-   * @default { x: 0; y: 0 }
+   * @defaultValue { x: 0; y: 0 }
    */
   initialValue?: Position
   /**
@@ -75,16 +75,16 @@ export interface UseDraggableOptions {
    */
   onEnd?: (position: Position, event: PointerEvent) => void
   /**
-   * @default 'both'
+   * @defaultValue 'both'
    */
   axis?: 'x' | 'y' | 'both'
   /**
-   * @default false
+   * @defaultValue false
    */
   disabled?: boolean
 }
 
-export interface UseDraggableReturn {
+export interface UseDraggableReturns {
   /**
    * The x-coordinate of the draggable element.
    */
@@ -114,7 +114,7 @@ export interface UseDraggableReturn {
 /** @see {@link https://developer.mozilla.org/zh-CN/docs/Web/API/MouseEvent/button MDN} */
 const MAIN_MOUSE_BUTTON_TYPE = 0
 
-export function useDraggable(target: ElementTarget, options: UseDraggableOptions = {}): UseDraggableReturn {
+export function useDraggable(target: ElementTarget, options: UseDraggableOptions = {}): UseDraggableReturns {
   const {
     exact = false,
     preventDefault = false,

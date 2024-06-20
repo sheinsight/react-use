@@ -45,19 +45,19 @@ export type UseCountdownOptions<Controls extends boolean = false> = {
   /**
    * whether to start the countdown immediately
    *
-   * @default true
+   * @defaultValue true
    */
   immediate?: boolean
   /**
    * whether to expose the controls
    *
-   * @default false
+   * @defaultValue false
    */
   controls?: Controls
   /**
    * the interval to update the countdown
    *
-   * @default 'requestAnimationFrame'
+   * @defaultValue 'requestAnimationFrame'
    */
   interval?: 'requestAnimationFrame' | number
   /**
@@ -78,5 +78,5 @@ import { Tip } from '@/components'
 <Tip type="pausable" />
 
 ```tsx
-export type UseCountdownReturn<Controls extends boolean> = Controls extends true ? { ms: number } & Pausable : number
+export type UseCountdownReturns<Controls extends boolean> = Controls extends true ? { ms: number } & Pausable : number
 ```

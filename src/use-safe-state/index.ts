@@ -15,7 +15,7 @@ export type UseSafeStateOptions = {
    * Deeply compare the new state with the old state before updating.
    * If true, only update the state when the new state is different from the old state.
    *
-   * @default false
+   * @defaultValue false
    */
   deep?: boolean
 }

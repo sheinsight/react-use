@@ -15,13 +15,13 @@ export type UseTitleOptions = {
   /**
    * Restore the original title when unmounted
    *
-   * @default true
+   * @defaultValue true
    */
   restoreOnUnmount?: boolean
   /**
    * A template to format the title
    *
-   * @default '%s'
+   * @defaultValue '%s'
    */
   template?: UseTitleTemplate
 }

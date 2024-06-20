@@ -12,7 +12,7 @@ import type { UseIntervalFnOptions } from '../use-interval-fn'
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/API/Performance/memory
  */
-export interface MemoryInfo {
+interface MemoryInfo {
   /**
    * The maximum size of the heap, in bytes, that is available to the context.
    */
@@ -29,15 +29,21 @@ export interface MemoryInfo {
   [Symbol.toStringTag]: 'MemoryInfo'
 }
 
-export interface UseBrowserMemoryOptions extends UseIntervalFnOptions {
-  interval?: number
-}
-
-export interface PerformanceWithMemory extends Performance {
+interface PerformanceWithMemory extends Performance {
+  /**
+   * Performance.memory
+   */
   memory: MemoryInfo
 }
 
-export interface UseBrowserMemoryReturn {
+export interface UseBrowserMemoryOptions extends UseIntervalFnOptions {
+  /**
+   * The interval to update the memory info
+   */
+  interval?: number
+}
+
+export interface UseBrowserMemoryReturns {
   /**
    * The timestamp when the memory info was last updated.
    */
@@ -68,10 +74,16 @@ export interface UseBrowserMemoryReturn {
   update(): void
 }
 
-export function useBrowserMemory(options: UseBrowserMemoryOptions = {}): UseBrowserMemoryReturn {
+/**
+ * A React Hook that helps to get the memory info of the browser.
+ *
+ * @param {UseBrowserMemoryOptions} [options={}] - `UseBrowserMemoryOptions`, options to configure the hook, see {@link UseBrowserMemoryOptions}
+ * @returns {UseBrowserMemoryReturns} `UseBrowserMemoryReturns`, see {@link UseBrowserMemoryReturns}
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Performance/memory#browser_compatibility | Performance.memory's browser compatibility - MDN}
+ */
+export function useBrowserMemory(options: UseBrowserMemoryOptions = {}): UseBrowserMemoryReturns {
   const { interval = 1000, ...useIntervalFnOptions } = options
 
-  // https://developer.mozilla.org/en-US/docs/Web/API/Performance/memory#browser_compatibility
   const isSupported = useSupported(() => 'memory' in performance)
   const latest = useLatest({ isSupported })
 

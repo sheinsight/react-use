@@ -49,13 +49,13 @@ export interface CreateSingleLoadingOptions {
   /**
    * Whether set to false on error
    *
-   * @default true
+   * @defaultValue true
    */
   resetOnError?: boolean
   /**
    * Initial loading state
    *
-   * @default false
+   * @defaultValue false
    */
   initialState?: boolean
 }
@@ -64,33 +64,49 @@ export interface CreateSingleLoadingOptions {
 ### Returns
 
 ```tsx
-export interface useAsyncFnExtendReturn<T extends AnyFunc> extends UseAsyncFnReturn<T> {
+export interface UseAsyncFnExtendReturns<T extends AnyFunc> extends UseAsyncFnReturns<T> {
   /**
    * Set the loading state
+   *
+   * @param {boolean} value - `boolean`, the loading value to set
+   * @returns {void} `void`
    */
   setLoading: (value: boolean) => void
 }
 
-export interface CreateSingleLoadingReturn {
+export interface CreateSingleLoadingReturns {
   /**
-   * Use loading state with async function via Hook in React
+   * A Hook in React to use bound async function with loading state
+   *
+   * @param {AnyFunc} asyncFn - `AnyFunc`, the async function to bind, see {@link AnyFunc}
+   * @returns {UseAsyncFnExtendReturns} see {@link UseAsyncFnExtendReturns}
    */
-  useAsyncFn: <T extends AnyFunc>(func: T) => useAsyncFnExtendReturn<T>
+  useAsyncFn: <T extends AnyFunc>(asyncFn: T) => UseAsyncFnExtendReturns<T>
   /**
-   * Use loading state via Hook in React
+   * A Hook in React to use loading state
+   *
+   * @returns {boolean} `boolean`, the loading state
    */
   useLoading(): boolean
   /**
    * Set the loading state via store in JS/TS
+   *
+   * @param {boolean} value - `boolean`, the value to set
+   * @returns {void} `void`
    */
-  set(value: boolean): void
+  set: (value: boolean) => void
   /**
    * Get the loading state via store in JS/TS
+   *
+   * @returns {boolean} `boolean`, the loading state
    */
   get(): boolean
   /**
    * Bind the loading state to the async function in JS/TS
+   *
+   * @param {AnyFunc} asyncFn - `AnyFunc`, the async function to bind, see {@link AnyFunc}
+   * @returns {AnyFunc} `AnyFunc`, same as `asyncFn` param, see {@link AnyFunc}
    */
-  bind: <T extends AnyFunc>(func: T) => T
+  bind: <T extends AnyFunc>(asyncFn: T) => T
 }
 ```

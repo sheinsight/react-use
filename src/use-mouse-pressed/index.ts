@@ -9,13 +9,13 @@ export interface MousePressedOptions {
   /**
    * Whether to listen to touch events
    *
-   * @default true
+   * @defaultValue true
    */
   touch?: boolean
   /**
    * Whether to listen to drag events
    *
-   * @default true
+   * @defaultValue true
    */
   drag?: boolean
   /**
@@ -23,13 +23,13 @@ export interface MousePressedOptions {
    *
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#capture MDN - addEventListener#capture}
    *
-   * @default false
+   * @defaultValue false
    */
   capture?: boolean
   /**
    * The initial value of the mouse press
    *
-   * @default false
+   * @defaultValue false
    */
   initialValue?: boolean
 }

@@ -11,7 +11,7 @@ export interface UseTimeoutFnOptions {
   /**
    * Start the timer immediate after calling this function
    *
-   * @default true
+   * @defaultValue true
    */
   immediate?: boolean
   /**
@@ -19,7 +19,7 @@ export interface UseTimeoutFnOptions {
    *
    * When you need `isActive` ref to be updated immediately after the timer ends, set this to `true`
    *
-   * @default false
+   * @defaultValue false
    */
   updateOnEnd?: boolean
 }

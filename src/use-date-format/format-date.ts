@@ -27,7 +27,7 @@ export type FormatDateOptions = {
    *
    * @see https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table
    *
-   * @default false
+   * @defaultValue false
    */
   unicodeSymbols?: boolean
   /**

@@ -16,13 +16,13 @@ export interface ElementSize {
   height: number
 }
 
-export interface UseElementSizeReturn extends ElementSize, UseResizeObserverReturn {}
+export interface UseElementSizeReturns extends ElementSize, UseResizeObserverReturn {}
 
 export function useElementSize<T extends HTMLElement = HTMLElement>(
   target: ElementTarget<T>,
   defaultValue: ElementSize = { width: 0, height: 0 },
   options: UseResizeObserverOptions = {},
-): UseElementSizeReturn {
+): UseElementSizeReturns {
   const el = useTargetElement<T>(target)
   const [size, setSize] = useSafeState(defaultValue, { deep: true })
   const { box = 'content-box' } = options

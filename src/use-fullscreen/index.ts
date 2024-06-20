@@ -15,12 +15,12 @@ export interface UseFullscreenOptions {
   /**
    * Automatically exit fullscreen when component is unmounted
    *
-   * @default false
+   * @defaultValue false
    */
   autoExit?: boolean
 }
 
-export interface UseFullscreenReturn {
+export interface UseFullscreenReturns {
   /**
    * Whether the browser supports fullscreen API
    */
@@ -33,10 +33,6 @@ export interface UseFullscreenReturn {
    * Whether the element itself is in fullscreen mode
    */
   isSelfFullscreen: boolean
-  /**
-   * The element that is currently in fullscreen mode
-   */
-  fullscreenElement: Element | null
   /**
    * Enter fullscreen mode
    */
@@ -51,7 +47,10 @@ export interface UseFullscreenReturn {
   toggle(): Promise<void>
 }
 
-export function useFullscreen(target: ElementTarget = 'html', options: UseFullscreenOptions = {}) {
+export function useFullscreen(
+  target: ElementTarget = 'html',
+  options: UseFullscreenOptions = {},
+): UseFullscreenReturns {
   const { autoExit = false } = options
 
   const el = useTargetElement(target)

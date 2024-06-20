@@ -38,32 +38,32 @@ export type UseElementByPointOptions<M extends boolean = false> = Position & {
   /**
    * Whether to return multiple elements
    *
-   * @default false
+   * @defaultValue false
    */
   multiple?: M
   /**
    * Whether to execute immediately
    *
-   * @default true
+   * @defaultValue true
    */
   immediate?: boolean
   /**
    * The interval to execute
    *
-   * @default 'requestAnimationFrame'
+   * @defaultValue 'requestAnimationFrame'
    */
   interval?: 'requestAnimationFrame' | number
 }
 ```
 
-### Return
+### Returns
 
 import { Tip } from '@/components'
 
 <Tip type="pausable" />
 
 ```tsx
-export type UseElementByPointReturn<E extends Element | null | Element[]> = Pausable & {
+export type UseElementByPointReturns<E extends Element | null | Element[]> = Pausable & {
   /**
    * Whether the browser supports the API
    */

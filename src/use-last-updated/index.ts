@@ -7,13 +7,13 @@ export interface UseLastChangedOptions {
   /**
    * The initial value of the last updated timestamp.
    *
-   * @default null
+   * @defaultValue null
    */
   initialValue?: number | null
   /**
    * If `true`, deep compares the source object.
    *
-   * @default false
+   * @defaultValue false
    */
   deep?: boolean
 }

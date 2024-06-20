@@ -24,13 +24,13 @@ export interface UseModifierOptions<Initial> {
   /**
    * Event names that will prompt update to modifier states
    *
-   * @default ['mousedown', 'mouseup', 'keydown', 'keyup']
+   * @defaultValue ['mousedown', 'mouseup', 'keydown', 'keyup']
    */
   events?: WindowEventName[]
   /**
    * Initial value of the returned ref
    *
-   * @default null
+   * @defaultValue null
    */
   initial?: Initial
 }

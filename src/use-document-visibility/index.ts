@@ -21,7 +21,3 @@ export function useDocumentVisibility(callback?: UseDocumentVisibilityCallback):
 
   return visibility
 }
-
-function getVisibilityState(): DocumentVisibilityState {
-  return document.visibilityState
-}

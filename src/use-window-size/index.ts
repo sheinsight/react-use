@@ -11,25 +11,25 @@ export interface UseWindowSizeOptions {
   /**
    * The initial width of the window.
    *
-   * @default Number.POSITIVE_INFINITY
+   * @defaultValue Number.POSITIVE_INFINITY
    */
   initialWidth?: number
   /**
    * The initial height of the window.
    *
-   * @default Number.POSITIVE_INFINITY
+   * @defaultValue Number.POSITIVE_INFINITY
    */
   initialHeight?: number
   /**
    * Whether to listen to orientation changes.
    *
-   * @default true
+   * @defaultValue true
    */
   listenOrientation?: boolean
   /**
    * Whether to include the scrollbar width.
    *
-   * @default true
+   * @defaultValue true
    */
   includeScrollbar?: boolean
 }

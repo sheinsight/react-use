@@ -6,7 +6,7 @@ import type { UseWebObserverOptions, UseWebObserverReturn } from '../use-web-obs
 import type { Arrayable } from '../utils/basic'
 
 export interface UseResizeObserverOptions extends UseWebObserverOptions, ResizeObserverOptions {
-  /** @default 'content-box' */
+  /** @defaultValue 'content-box' */
   box?: ResizeObserverBoxOptions
 }
 

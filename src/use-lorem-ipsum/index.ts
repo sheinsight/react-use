@@ -8,19 +8,19 @@ export interface UseLoremIpsumOptions {
   /**
    * The length of the generated text sentence.
    *
-   * @default 1
+   * @defaultValue 1
    */
   length?: number
   /**
    * The minimum number of words in a sentence.
    *
-   * @default ['.', '!', '?']
+   * @defaultValue ['.', '!', '?']
    */
   sentenceEnds?: string[]
   /**
    * Whether to keep the same value between renders.
    *
-   * @default true
+   * @defaultValue true
    */
   stable?: boolean
 }

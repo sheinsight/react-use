@@ -8,12 +8,12 @@ export interface UseAsyncFnOptions {
   /**
    * whether to clear the value before running the function
    *
-   * @default false
+   * @defaultValue false
    */
   clearBeforeRun?: boolean
 }
 
-export interface UseAsyncFnReturn<T extends AnyFunc> {
+export interface UseAsyncFnReturns<T extends AnyFunc> {
   /**
    * a function to run the async function
    */
@@ -32,7 +32,13 @@ export interface UseAsyncFnReturn<T extends AnyFunc> {
   value: Awaited<ReturnType<T>> | undefined
 }
 
-export function useAsyncFn<T extends AnyFunc>(fn: T, options: UseAsyncFnOptions = {}): UseAsyncFnReturn<T> {
+/**
+ * A React Hook to run **async** functions with extra **loading** state that indicates whether the promise is pending.
+ *
+ * @param {AnyFunc} fn - `AnyFunc`, the async function to run, see {@link AnyFunc}
+ * @returns {UseAsyncFnReturns} `UseAsyncFnReturns`, see {@link UseAsyncFnReturns}
+ */
+export function useAsyncFn<T extends AnyFunc>(fn: T, options: UseAsyncFnOptions = {}): UseAsyncFnReturns<T> {
   const { clearBeforeRun } = options
 
   const [state, setState] = useSetState({

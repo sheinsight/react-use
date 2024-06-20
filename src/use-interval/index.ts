@@ -2,7 +2,7 @@ import { useCounter } from '../use-counter'
 import { useIntervalFn } from '../use-interval-fn'
 import { useLatest } from '../use-latest'
 
-import type { UseCounterReturnAction } from '../use-counter'
+import type { UseCounterReturnsAction } from '../use-counter'
 import type { UseIntervalFnInterval } from '../use-interval-fn'
 import type { Pausable } from '../use-pausable'
 
@@ -10,13 +10,13 @@ export interface UseIntervalOptions<Controls extends boolean> {
   /**
    * Expose more controls
    *
-   * @default false
+   * @defaultValue false
    */
   controls?: Controls
   /**
    * Execute the update immediately on calling
    *
-   * @default true
+   * @defaultValue true
    */
   immediate?: boolean
   /**
@@ -25,7 +25,7 @@ export interface UseIntervalOptions<Controls extends boolean> {
   callback?: (count: number) => void
 }
 
-export interface UseIntervalAction extends UseCounterReturnAction, Pausable {
+export interface UseIntervalAction extends UseCounterReturnsAction, Pausable {
   /**
    * Reset the count, optionally set a new count
    */

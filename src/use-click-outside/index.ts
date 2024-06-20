@@ -19,7 +19,7 @@ export function useClickOutside(
   target: ElementTarget,
   handler: UseClickOutsideHandler,
   options: UseClickOutsideOptions = {},
-) {
+): void {
   const { ignore = [] } = options
   const el = useTargetElement(target)
   const latest = useLatest({ ignore, handler })

@@ -9,13 +9,13 @@ export interface UseNowOptions<Controls extends boolean> extends UseIntervalFnOp
   /**
    * Expose more controls
    *
-   * @default false
+   * @defaultValue false
    */
   controls?: Controls
   /**
    * Update interval in milliseconds, or use requestAnimationFrame
    *
-   * @default requestAnimationFrame
+   * @defaultValue requestAnimationFrame
    */
   interval?: UseIntervalFnInterval
   /**

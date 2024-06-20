@@ -21,13 +21,13 @@ export interface UseTimeAgoOptions<Controls extends boolean, UnitNames extends s
   /**
    * Expose more controls
    *
-   * @default false
+   * @defaultValue false
    */
   controls?: Controls
   /**
    * Intervals to update, set 0 to disable auto update
    *
-   * @default 30_000
+   * @defaultValue 30_000
    */
   updateInterval?: number
 }

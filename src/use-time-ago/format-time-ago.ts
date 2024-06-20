@@ -17,7 +17,7 @@ export type FormatTimeAgoOptions<UnitNames extends string = TimeAgoUnitNamesDefa
   /**
    * Maximum unit (of diff in milliseconds) to display the full date instead of relative
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   max?: UnitNames | number
   /**
@@ -31,13 +31,13 @@ export type FormatTimeAgoOptions<UnitNames extends string = TimeAgoUnitNamesDefa
   /**
    * Minimum display time unit (default is minute)
    *
-   * @default false
+   * @defaultValue false
    */
   showSecond?: boolean
   /**
    * Rounding method to apply.
    *
-   * @default 'round'
+   * @defaultValue 'round'
    */
   rounding?: 'round' | 'ceil' | 'floor' | number
   /**

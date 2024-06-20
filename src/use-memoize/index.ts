@@ -16,13 +16,13 @@ export interface UseMemoizeOptions<Result, Args extends unknown[]> {
   /**
    * Custom cache key generator
    *
-   * @default JSON.stringify(args)
+   * @defaultValue JSON.stringify(args)
    */
   getKey?: (...args: Args) => string | number
   /**
    * Custom cache, can be a Map or other object that implements the cache interface
    *
-   * @default new Map()
+   * @defaultValue new Map()
    */
   cache?: UseMemoizeCache<CacheKey, Result>
 }

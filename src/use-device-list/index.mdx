@@ -42,13 +42,13 @@ export type UseDeviceListOptions = {
    * Request for permissions immediately if it's not granted,
    * otherwise label and deviceIds could be empty
    *
-   * @default false
+   * @defaultValue false
    */
   requestPermissions?: boolean
   /**
    * Request for types of media permissions
    *
-   * @default { audio: true, video: true }
+   * @defaultValue { audio: true, video: true }
    */
   constraints?: MediaStreamConstraints
 }

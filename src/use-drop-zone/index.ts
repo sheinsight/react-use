@@ -29,7 +29,7 @@ export interface UseDropZoneOptions {
   onOver?: (files: File[] | null, event: DragEvent) => void
 }
 
-export interface UseDropZoneReturn {
+export interface UseDropZoneReturns {
   /**
    * The files that were dropped in the drop zone.
    */
@@ -43,7 +43,7 @@ export interface UseDropZoneReturn {
 export function useDropZone(
   target: ElementTarget,
   options: UseDropZoneOptions | UseDropZoneOptions['onDrop'] = {},
-): UseDropZoneReturn {
+): UseDropZoneReturns {
   const el = useTargetElement(target)
 
   const [state, setState] = useSetState({

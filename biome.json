@@ -26,6 +26,9 @@
     "enabled": true,
     "rules": {
       "recommended": true,
+      "style": {
+        "noInferrableTypes": "off"
+      },
       "correctness": {
         "useExhaustiveDependencies": {
           "level": "warn",

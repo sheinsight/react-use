@@ -21,55 +21,55 @@ export interface UseScriptTagOptions {
   /**
    * Whether load script immediately at mount
    *
-   * @default true
+   * @defaultValue true
    */
   immediate?: boolean
   /**
    * Whether the script is loaded asynchronously
    *
-   * @default true
+   * @defaultValue true
    */
   async?: boolean
   /**
    * The type of the script
    *
-   * @default 'text/javascript'
+   * @defaultValue 'text/javascript'
    */
   type?: string
   /**
    * Whether to control the loading of the script manually
    *
-   * @default false
+   * @defaultValue false
    */
   manual?: boolean
   /**
    * The value of the `crossorigin` attribute
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   crossOrigin?: 'anonymous' | 'use-credentials'
   /**
    * The value of the `referrerpolicy` attribute
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   referrerPolicy?: ReferrerPolicy
   /**
    * Whether the script is a module script
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   noModule?: boolean
   /**
    * Whether the script is deferred
    *
-   * @default false
+   * @defaultValue false
    */
   defer?: boolean
   /**
    * Additional attributes to be set on the script element
    *
-   * @default {}
+   * @defaultValue {}
    */
   attrs?: Record<string, string>
 }

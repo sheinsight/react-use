@@ -21,7 +21,7 @@ export function useDateFormat(
   /**
    * format string
    *
-   * @default 'YYYY-MM-DD HH:mm:ss'
+   * @defaultValue 'YYYY-MM-DD HH:mm:ss'
    */
   formatStr = 'YYYY-MM-DD HH:mm:ss',
   /**

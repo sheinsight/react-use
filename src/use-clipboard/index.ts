@@ -14,7 +14,7 @@ export interface UseClipboardOptions<Source> {
   /**
    * Enabled reading for clipboard, need to request permission
    *
-   * @default false
+   * @defaultValue false
    */
   read?: boolean
   /**
@@ -24,12 +24,12 @@ export interface UseClipboardOptions<Source> {
   /**
    * Milliseconds to reset state of `copied` ref
    *
-   * @default 1500
+   * @defaultValue 1500
    */
   copiedDuration?: number
 }
 
-export interface UseClipboardReturn<HasSource> {
+export interface UseClipboardReturns<HasSource> {
   /**
    * Whether the clipboard is supported
    */
@@ -52,11 +52,11 @@ export interface UseClipboardReturn<HasSource> {
   clear(): void
 }
 
-export function useClipboard(options?: UseClipboardOptions<undefined>): UseClipboardReturn<false>
-export function useClipboard(options: UseClipboardOptions<Gettable<string>>): UseClipboardReturn<true>
+export function useClipboard(options?: UseClipboardOptions<undefined>): UseClipboardReturns<false>
+export function useClipboard(options: UseClipboardOptions<Gettable<string>>): UseClipboardReturns<true>
 export function useClipboard(
   options: UseClipboardOptions<Gettable<string> | undefined> = {},
-): UseClipboardReturn<boolean> {
+): UseClipboardReturns<boolean> {
   const { read = false, source, copiedDuration = 1500 } = options
 
   const permissionRead = usePermission('clipboard-read')

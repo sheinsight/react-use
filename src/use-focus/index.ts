@@ -11,12 +11,12 @@ export interface UseFocusOptions {
   /**
    * initial focus state
    *
-   * @default false
+   * @defaultValue false
    */
   initialValue?: boolean
 }
 
-export type UseFocusReturn = [
+export type UseFocusReturns = readonly [
   /**
    * focus state
    */
@@ -39,7 +39,7 @@ export type UseFocusReturn = [
 export function useFocus<T extends HTMLElement = HTMLElement>(
   target: ElementTarget<T>,
   options: UseFocusOptions = {},
-): UseFocusReturn {
+): UseFocusReturns {
   const el = useTargetElement<T>(target)
   const [focused, setFocused] = useSafeState(options?.initialValue ?? false)
 

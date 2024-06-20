@@ -9,19 +9,19 @@ export interface UseFpsOptions {
   /**
    * Calculate the FPS on every x frames.
    *
-   * @default 10
+   * @defaultValue 10
    */
   every?: number
 }
 
-export interface UseFpsReturn extends Pausable {
+export interface UseFpsReturns extends Pausable {
   /**
    * Current FPS
    */
   fps: number
 }
 
-export function useFps(options: UseFpsOptions = {}): UseFpsReturn {
+export function useFps(options: UseFpsOptions = {}): UseFpsReturns {
   const { every = 10 } = options
 
   const last = useRef<DOMHighResTimeStamp>()

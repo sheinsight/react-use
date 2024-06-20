@@ -16,25 +16,25 @@ export interface UseUserIdleOptions {
   /**
    * Event names that listen to for detected user activity
    *
-   * @default ['mousemove', 'mousedown', 'resize', 'keydown', 'touchstart', 'wheel']
+   * @defaultValue ['mousemove', 'mousedown', 'resize', 'keydown', 'touchstart', 'wheel']
    */
   events?: WindowEventName[]
   /**
    * Listen for document visibility change
    *
-   * @default true
+   * @defaultValue true
    */
   watchVisibility?: boolean
   /**
    * Initial state of the ref idle
    *
-   * @default false
+   * @defaultValue false
    */
   initialState?: boolean
   /**
    * Reset the idle state immediately
    *
-   * @default true
+   * @defaultValue true
    */
   immediate?: boolean
 }

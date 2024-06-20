@@ -36,7 +36,7 @@ const battery = useBattery()
 ### Returns
 
 ```tsx
-export type UseBatteryReturn = {
+export interface UseBatteryReturns {
   /**
    * Whether the battery is charging
    */
@@ -46,11 +46,11 @@ export type UseBatteryReturn = {
    */
   level: number
   /**
-   * The seconds remaining to charge the battery fully
+   * The time remaining to charge the battery fully
    */
   chargingTime: number
   /**
-   * The seconds remaining to discharge the battery fully
+   * The time remaining to discharge the battery fully
    */
   dischargingTime: number
   /**

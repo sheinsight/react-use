@@ -13,24 +13,24 @@ export interface UseElementBoundingOptions {
   /**
    * Reset the bounding box when the element is not found
    *
-   * @default true
+   * @defaultValue true
    */
   reset?: boolean
   /**
    * Update the bounding box when the window is resized
    *
-   * @default true
+   * @defaultValue true
    */
   windowResize?: boolean
   /**
    * Update the bounding box when the window is scrolled
    *
-   * @default true
+   * @defaultValue true
    */
   windowScroll?: boolean
 }
 
-export type UseElementBoundingReturn = [
+export type UseElementBoundingReturns = readonly [
   {
     /**
      * The height of the element
@@ -76,7 +76,7 @@ const defaultElBounding = { x: 0, y: 0, height: 0, width: 0, top: 0, right: 0, b
 export function useElementBounding<T extends HTMLElement = HTMLElement>(
   target: ElementTarget<T>,
   options: UseElementBoundingOptions = {},
-): UseElementBoundingReturn {
+): UseElementBoundingReturns {
   const { reset = true, windowResize = true, windowScroll = true } = options
   const el = useTargetElement<T>(target)
 
@@ -107,7 +107,7 @@ export function useElementBounding<T extends HTMLElement = HTMLElement>(
   return [bounding, update] as const
 }
 
-function getElBounding<T extends HTMLElement>(target: ElementTarget<T>): UseElementBoundingReturn[0] {
+function getElBounding<T extends HTMLElement>(target: ElementTarget<T>): UseElementBoundingReturns[0] {
   const el = normalizeElement(target)
 
   if (!el) return defaultElBounding

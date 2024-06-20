@@ -46,7 +46,7 @@ export type UseEventBusOptions = {
   /**
    * Whether to automatically clean up the listener when the component is unmounted.
    *
-   * @default true
+   * @defaultValue true
    */
   autoCleanup?: boolean
 }
@@ -55,7 +55,7 @@ export type UseEventBusOptions = {
 ### Returns
 
 ```tsx
-export type UseEventBusReturn<T, P> = {
+export type UseEventBusReturns<T, P> = {
   /**
    * Subscribe to an event. When calling emit, the listeners will execute.
    *

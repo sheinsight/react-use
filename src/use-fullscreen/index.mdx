@@ -44,7 +44,7 @@ export type UseFullscreenOptions = {
   /**
    * Automatically exit fullscreen when component is unmounted
    *
-   * @default false
+   * @defaultValue false
    */
   autoExit?: boolean
 }
@@ -53,7 +53,7 @@ export type UseFullscreenOptions = {
 ### Returns
 
 ```tsx
-export type UseFullscreenReturn = {
+export interface UseFullscreenReturns {
   /**
    * Whether the browser supports fullscreen API
    */
@@ -66,10 +66,6 @@ export type UseFullscreenReturn = {
    * Whether the element itself is in fullscreen mode
    */
   isSelfFullscreen: boolean
-  /**
-   * The element that is currently in fullscreen mode
-   */
-  fullscreenElement: Element | null
   /**
    * Enter fullscreen mode
    */

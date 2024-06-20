@@ -28,7 +28,7 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const pagination = usePagination(options)
+const [state, actions] = usePagination(options)
 ```
 
 ### Options
@@ -38,19 +38,19 @@ export type UsePaginationOptions = {
   /**
    * Total number of items.
    *
-   * @default Number.POSITIVE_INFINITY
+   * @defaultValue Number.POSITIVE_INFINITY
    */
   total?: number
   /**
    * The number of items to display per page.
    *
-   * @default 10
+   * @defaultValue 10
    */
   pageSize?: number
   /**
    * The current page number.
    *
-   * @default 1
+   * @defaultValue 1
    */
   page?: number
   /**
@@ -71,7 +71,7 @@ export type UsePaginationOptions = {
 ### Returns
 
 ```tsx
-export type PaginationInfo = {
+export interface PaginationInfo {
   /**
    * Total number of items.
    */
@@ -96,23 +96,37 @@ export type PaginationInfo = {
    * Whether the current page is the last page.
    */
   isLastPage: boolean
-  /**
-   * Go to the previous page.
-   */
-  prev(): void
-  /**
-   * Go to the next page.
-   */
-  next(): void
-  /**
-   * Go to the specified page.
-   */
-  go: (page: number) => void
-  /**
-   * Set the number of items to display per page.
-   */
-  setPageSize: (size: number) => void
 }
 
-export type UsePaginationReturn = PaginationInfo
+export type UsePaginationReturns = [
+  PaginationInfo,
+  {
+    /**
+     * Go to the previous page.
+     *
+     * @returns {void} `void`
+     */
+    prev(): void
+    /**
+     * Go to the next page.
+     *
+     * @returns {void} `void`
+     */
+    next(): void
+    /**
+     * Go to the specified page.
+     *
+     * @param {number} page - `number`, the page number
+     * @returns {void} `void`
+     */
+    go: (page: number) => void
+    /**
+     * Set the number of items to display per page.
+     *
+     * @param {number} size - `number`, the number of items to display per page
+     * @returns {void} `void`
+     */
+    setPageSize: (size: number) => void
+  },
+]
 ```

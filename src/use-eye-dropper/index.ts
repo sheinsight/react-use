@@ -30,24 +30,24 @@ export interface UseEyeDropperOptions {
   /**
    * Initial sRGBHex.
    *
-   * @default ''
+   * @defaultValue ''
    */
   initialValue?: string
   /**
    * Whether to convert the sRGBHex to uppercase.
    *
-   * @default true
+   * @defaultValue true
    */
   upperCase?: boolean
   /**
    * Whether to keep the leading hash in the sRGBHex.
    *
-   * @default true
+   * @defaultValue true
    */
   keepLeadingHash?: boolean
 }
 
-export interface UseEyeDropperReturn {
+export interface UseEyeDropperReturns {
   /**
    * Whether the EyeDropper is supported.
    */
@@ -64,7 +64,7 @@ export interface UseEyeDropperReturn {
   open: (options?: EyeDropperOpenOptions) => Promise<string | null>
 }
 
-export function useEyeDropper(options: UseEyeDropperOptions = {}): UseEyeDropperReturn {
+export function useEyeDropper(options: UseEyeDropperOptions = {}): UseEyeDropperReturns {
   const { initialValue = '', upperCase = true, keepLeadingHash = true } = options
 
   const isSupported = useSupported(() => 'EyeDropper' in window)

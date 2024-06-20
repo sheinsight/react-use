@@ -5,18 +5,7 @@ import { useEventListener } from '../use-event-listener'
 import { useSafeState } from '../use-safe-state'
 import { useSupported } from '../use-supported'
 
-export interface BatteryManager extends EventTarget {
-  charging: boolean
-  chargingTime: number
-  dischargingTime: number
-  level: number
-}
-
-export interface NavigatorWithBattery extends Navigator {
-  getBattery(): Promise<BatteryManager>
-}
-
-export interface UseBatteryReturn {
+export interface UseBatteryReturns {
   /**
    * Whether the battery is charging
    */
@@ -43,9 +32,41 @@ export interface UseBatteryReturn {
   update(): void
 }
 
+interface BatteryManager extends EventTarget {
+  /**
+   * Whether the battery is charging
+   */
+  charging: boolean
+  /**
+   * The time remaining to charge the battery fully
+   */
+  chargingTime: number
+  /**
+   * The time remaining to discharge the battery fully
+   */
+  dischargingTime: number
+  /**
+   * The battery level as a floating point number between 0 and 1
+   */
+  level: number
+}
+
+interface NavigatorWithBattery extends Navigator {
+  /**
+   * Get the battery manager
+   */
+  getBattery(): Promise<BatteryManager>
+}
+
 const batteryEvents = ['chargingchange', 'chargingtimechange', 'dischargingtimechange', 'levelchange']
 
-export function useBattery(): UseBatteryReturn {
+/**
+ * A React Hook that get [Battery](https://developer.mozilla.org/zh-CN/docs/Web/API/Battery_Status_API) state with ease.
+ *
+ * @returns {UseBatteryReturns} `UseBatteryReturns`, see {@link UseBatteryReturns}
+ * @see {@link https://developer.mozilla.org/zh-CN/docs/Web/API/Battery_Status_API | Battery Status API - MDN}
+ */
+export function useBattery(): UseBatteryReturns {
   const isSupported = useSupported(() => 'getBattery' in navigator)
 
   const [state, setState] = useSafeState(

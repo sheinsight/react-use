@@ -6,8 +6,13 @@ import type { AsyncEffectCallback } from '../utils/create-effect/async'
 export type UseAsyncEffectCallback = AsyncEffectCallback
 
 /**
- * like `React.useEffect` but it's can accept an `async` function
+ * A React Hook which is like [React.useEffect](https://react.dev/reference/react/useEffect) but support **cancellable** **async** function.
  *
- * @tip it should not return a cleanup function as it's `async` which cannot cleanup as expected
+ * It should not return a cleanup function as it's `async` which cannot cleanup as expected.
+ *
+ * If you need to cleanup something, use `isCancelled` in {@link UseAsyncEffectCallback} instead to check effect status.
+ *
+ * @param {AsyncEffectCallback} asyncEffectCallback - `AsyncEffectCallback`, a callback function for async effect, see {@link AsyncEffectCallback}
+ * @param {DependencyList} [deps] - `DependencyList`, an array of dependencies, see [React.useEffect](https://react.dev/reference/react/useEffect)
  */
 export const useAsyncEffect = createAsyncEffect(useEffect)

@@ -16,24 +16,24 @@ export interface UseFaviconOptions {
   /**
    * Base URL for the favicon
    *
-   * @default ''
+   * @defaultValue ''
    */
   baseUrl?: string
   /**
    * The rel attribute of the favicon link element
    *
-   * @default 'icon'
+   * @defaultValue 'icon'
    */
   rel?: string
   /**
    * Sync the favicon in document `<link rel='icon' />` to hooks state on mount
    *
-   * @default true
+   * @defaultValue true
    */
   syncOnMount?: boolean
 }
 
-export type UseFaviconReturn = [
+export type UseFaviconReturns = readonly [
   /**
    * The current favicon URL
    */
@@ -71,7 +71,7 @@ function getFavicon(rel = 'icon'): string | null {
   return href
 }
 
-export function useFavicon(newIcon: FaviconType = null, options: UseFaviconOptions = {}): UseFaviconReturn {
+export function useFavicon(newIcon: FaviconType = null, options: UseFaviconOptions = {}): UseFaviconReturns {
   const { baseUrl = '', rel = 'icon', syncOnMount = true } = options
   const [favicon, setFavicon] = useSafeState(newIcon ?? null)
   const previousFavicon = usePrevious(favicon)

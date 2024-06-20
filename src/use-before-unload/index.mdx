@@ -4,7 +4,7 @@ import { HooksType } from '@/components'
 
 <HooksType category="Browser" />
 
-A React Hook to perform actions **before the page is unloaded** (e.g., closing, refreshing the page) and optionally trigger a browser-native confirmation dialog.
+A React Hook to perform actions **before the page is unloaded** (e.g., closing, refreshing the page) and optionally trigger a browser-native confirmation dialog. set `preventDefault` to `true` to show the confirm leave dialog.
 
 ## Demo
 
@@ -38,20 +38,30 @@ useBeforeUnload(callback, options)
 A function that will be called right before the page is potentially unloaded.
 
 ```tsx
-export type UseBeforeUnloadCallback = (e: BeforeUnloadEvent) => void
+/**
+ * A callback function to run before the page is unloaded
+ *
+ * @param {BeforeUnloadEvent} event - `BeforeUnloadEvent`, the event object
+ * @returns {void} `void`
+ */
+export type UseBeforeUnloadCallback = (event: BeforeUnloadEvent) => void
 ```
 
 ### Options
 
 ```tsx
-export type UseBeforeUnloadOptions = {
+export interface UseBeforeUnloadOptions {
   /**
    * Whether to prevent the default behavior of the event, which leads to showing a browser-native message
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
    *
-   * @default false
+   * @defaultValue false
    */
   preventDefault?: boolean
 }
 ```
+
+### Returns
+
+A clear function to remove the event listener.

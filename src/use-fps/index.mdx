@@ -38,7 +38,7 @@ export type UseFpsOptions = {
   /**
    * Calculate the FPS on every x frames.
    *
-   * @default 10
+   * @defaultValue 10
    */
   every?: number
 }
@@ -51,7 +51,7 @@ import { Tip } from '@/components'
 <Tip type="pausable" />
 
 ```tsx
-export type UseFpsReturn = Pausable & {
+export type UseFpsReturns = Pausable & {
   /**
    * Current FPS
    */

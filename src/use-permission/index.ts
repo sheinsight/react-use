@@ -32,13 +32,13 @@ export interface UsePermissionOptions<Controls extends boolean> {
   /**
    * Expose more controls
    *
-   * @default false
+   * @defaultValue false
    */
   controls?: Controls
   /**
    * Whether to query immediately
    *
-   * @default true
+   * @defaultValue true
    */
   immediate?: boolean
   /**

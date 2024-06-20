@@ -20,19 +20,19 @@ export interface UseRafLoopOptions {
   /**
    * The maximum fps limit
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   fpsLimit?: number
   /**
    * Whether to start the interval immediately on mounted
    *
-   * @default true
+   * @defaultValue true
    */
   immediate?: boolean
   /**
    * Whether to execute the callback immediately before the interval starts
    *
-   * @default false
+   * @defaultValue false
    */
   immediateCallback?: boolean
 }

@@ -6,13 +6,16 @@ export interface UseActiveElementOptions {
   /**
    * Whether to traverse the shadow DOM to find the active element
    *
-   * @default true
+   * @defaultValue false
    */
   deep?: boolean
 }
 
 /**
- * use the active element, optionally traversing the shadow DOM
+ * A React Hook that returns the currently **active element** (via `document.activeElement`), optionally traversing the shadow DOM.
+ *
+ * @param {UseActiveElementOptions} options - `UseActiveElementOptions`, options to configure the hook, see {@link UseActiveElementOptions}
+ * @returns {Element | null} `Element | null`, the currently active element, `null` if there is none, see {@link Element}
  */
 export function useActiveElement(options: UseActiveElementOptions = {}): Element | null {
   const [element, setElement] = useSafeState<Element | null>(null)
@@ -36,9 +39,11 @@ export function useActiveElement(options: UseActiveElementOptions = {}): Element
 }
 
 /**
- * find the active element, optionally traversing the shadow DOM
+ * Get the currently active element, optionally traversing the shadow DOM.
+ *
+ * @param {boolean} [deep=false] - `boolean`, Whether to traverse the shadow DOM to find the active element
  */
-function getActiveElement(deep = false): Element | null {
+function getActiveElement(deep: boolean = false): Element | null {
   let element = document.activeElement
 
   if (deep) {

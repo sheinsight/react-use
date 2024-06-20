@@ -42,19 +42,19 @@ export type UseClonedOptions = {
   /**
    * Clone function
    *
-   * @default defaultCloneFn
+   * @defaultValue defaultCloneFn
    */
   clone?: <T>(source: T) => T
   /**
    * Whether to manually trigger the clone function
    *
-   * @default false
+   * @defaultValue false
    */
   manual?: boolean
   /**
    * Whether to deep compare the source object
    *
-   * @default true
+   * @defaultValue true
    */
   deep?: boolean
 }
@@ -63,7 +63,7 @@ export type UseClonedOptions = {
 ### Returns
 
 ```tsx
-export type UseClonedReturn<T> = [
+export type UseClonedReturns<T> = [
   /**
    * Cloned state
    */

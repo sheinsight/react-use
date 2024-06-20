@@ -11,7 +11,7 @@ export type EventBusListener<T = any, P = any> = (event: T, payload?: P) => void
 export type EventBusEvents<T, P = any> = Set<EventBusListener<T, P>>
 export type EventBusIdentifier = symbol | string | number
 
-export interface UseEventBusReturn<T, P> {
+export interface UseEventBusReturns<T, P> {
   /**
    * Subscribe to an event. When calling emit, the listeners will execute.
    *
@@ -52,7 +52,7 @@ export interface UseEventBusOptions {
   /**
    * Whether to automatically clean up the listener when the component is unmounted.
    *
-   * @default true
+   * @defaultValue true
    */
   autoCleanup?: boolean
 }
@@ -64,7 +64,7 @@ export const events = /* #__PURE__ */ new Map<EventBusIdentifier, EventBusEvents
 export function useEventBus<T = any, P = any>(
   key: EventBusIdentifier,
   options: UseEventBusOptions = {},
-): UseEventBusReturn<T, P> {
+): UseEventBusReturns<T, P> {
   const { autoCleanup = true } = options
 
   const cleanups = useRef<Noop[]>([])

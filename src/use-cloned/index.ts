@@ -10,24 +10,24 @@ export interface UseClonedOptions {
   /**
    * Clone function
    *
-   * @default defaultCloneFn
+   * @defaultValue defaultCloneFn
    */
   clone?: <T>(source: T) => T
   /**
    * Whether to manually trigger the clone function
    *
-   * @default false
+   * @defaultValue false
    */
   manual?: boolean
   /**
    * Whether to deep compare the source object
    *
-   * @default true
+   * @defaultValue true
    */
   deep?: boolean
 }
 
-export type UseClonedReturn<T> = [
+export type UseClonedReturns<T> = [
   /**
    * Cloned state
    */
@@ -48,7 +48,7 @@ export function defaultCloneFn<T>(source: T): T {
   return JSON.parse(JSON.stringify(source))
 }
 
-export function useCloned<T>(source: T, options: UseClonedOptions = {}): UseClonedReturn<T> {
+export function useCloned<T>(source: T, options: UseClonedOptions = {}): UseClonedReturns<T> {
   const { deep = true, manual = false, clone = defaultCloneFn } = options
 
   const [cloned, setCloned] = useSafeState(defaultCloneFn(source))

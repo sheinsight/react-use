@@ -42,7 +42,7 @@ export interface UseWebObserverOptions {
   /**
    * Start the observer immediate after calling this function
    *
-   * @default true
+   * @defaultValue true
    */
   immediate?: boolean
 }
@@ -52,7 +52,7 @@ interface ResizeObserverOptions {
 }
 
 export interface UseResizeObserverOptions extends UseWebObserverOptions, ResizeObserverOptions {
-  /** @default 'content-box' */
+  /** @defaultValue 'content-box' */
   box?: ResizeObserverBoxOptions
 }
 ```

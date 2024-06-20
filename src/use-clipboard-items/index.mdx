@@ -38,7 +38,7 @@ export type UseClipboardItemsOptions<Source> = {
   /**
    * Enabled reading for clipboard, need to request permission
    *
-   * @default false
+   * @defaultValue false
    */
   read?: boolean
   /**
@@ -48,7 +48,7 @@ export type UseClipboardItemsOptions<Source> = {
   /**
    * Milliseconds to reset state of `copied` ref
    *
-   * @default 1500
+   * @defaultValue 1500
    */
   copiedDuration?: number
 }
@@ -57,7 +57,7 @@ export type UseClipboardItemsOptions<Source> = {
 ### Returns
 
 ```tsx
-export type UseClipboardItemsReturn<Optional> = {
+export type UseClipboardItemsReturns<Optional> = {
   /**
    * Check if the browser supports clipboard API
    */

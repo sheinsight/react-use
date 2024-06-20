@@ -1,4 +1,5 @@
 import { useClamp } from '../use-clamp'
+import { useCreation } from '../use-creation'
 import { useLatest } from '../use-latest'
 import { useStableFn } from '../use-stable-fn'
 import { useUpdateEffect } from '../use-update-effect'
@@ -7,31 +8,40 @@ export interface UsePaginationOptions {
   /**
    * Total number of items.
    *
-   * @default Number.POSITIVE_INFINITY
+   * @defaultValue Number.POSITIVE_INFINITY
    */
   total?: number
   /**
    * The number of items to display per page.
    *
-   * @default 10
+   * @defaultValue 10
    */
   pageSize?: number
   /**
    * The current page number.
    *
-   * @default 1
+   * @defaultValue 1
    */
   page?: number
   /**
    * Callback when the `page` change.
+   *
+   * @param {PaginationInfo} pagination - `PaginationInfo`, the pagination info
+   * @returns {void} `void`
    */
   onPageChange?: (pagination: PaginationInfo) => void
   /**
    * Callback when the `pageSize` change.
+   *
+   * @param {PaginationInfo} pagination - `PaginationInfo`, the pagination info
+   * @returns {void} `void`
    */
   onPageSizeChange?: (pagination: PaginationInfo) => void
   /**
    * Callback when the `pageCount` change.
+   *
+   * @param {PaginationInfo} pagination - `PaginationInfo`, the pagination info
+   * @returns {void} `void`
    */
   onPageCountChange?: (pagination: PaginationInfo) => void
 }
@@ -61,27 +71,41 @@ export interface PaginationInfo {
    * Whether the current page is the last page.
    */
   isLastPage: boolean
-  /**
-   * Go to the previous page.
-   */
-  prev(): void
-  /**
-   * Go to the next page.
-   */
-  next(): void
-  /**
-   * Go to the specified page.
-   */
-  go: (page: number) => void
-  /**
-   * Set the number of items to display per page.
-   */
-  setPageSize: (size: number) => void
 }
 
-export interface UsePaginationReturn extends PaginationInfo {}
+export type UsePaginationReturns = [
+  PaginationInfo,
+  {
+    /**
+     * Go to the previous page.
+     *
+     * @returns {void} `void`
+     */
+    prev(): void
+    /**
+     * Go to the next page.
+     *
+     * @returns {void} `void`
+     */
+    next(): void
+    /**
+     * Go to the specified page.
+     *
+     * @param {number} page - `number`, the page number
+     * @returns {void} `void`
+     */
+    go: (page: number) => void
+    /**
+     * Set the number of items to display per page.
+     *
+     * @param {number} size - `number`, the number of items to display per page
+     * @returns {void} `void`
+     */
+    setPageSize: (size: number) => void
+  },
+]
 
-export function usePagination(options: UsePaginationOptions = {}): UsePaginationReturn {
+export function usePagination(options: UsePaginationOptions = {}): UsePaginationReturns {
   const {
     total = Number.POSITIVE_INFINITY,
     page = 1,
@@ -108,18 +132,9 @@ export function usePagination(options: UsePaginationOptions = {}): UsePagination
     pageCount,
     isFirstPage: currentPage === 1,
     isLastPage: isInfinity ? false : currentPage === pageCount,
-    go,
-    prev,
-    next,
-    setPageSize,
   }
 
-  const latest = useLatest({
-    pagination,
-    onPageChange,
-    onPageCountChange,
-    onPageSizeChange,
-  })
+  const latest = useLatest({ pagination, onPageChange, onPageCountChange, onPageSizeChange })
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: effect need to re-run when currentPage changes
   useUpdateEffect(() => {
@@ -136,5 +151,7 @@ export function usePagination(options: UsePaginationOptions = {}): UsePagination
     latest.current.onPageSizeChange?.(latest.current.pagination)
   }, [currentPageSize])
 
-  return pagination
+  const actions = useCreation(() => ({ go, prev, next, setPageSize }))
+
+  return [pagination, actions] as const
 }

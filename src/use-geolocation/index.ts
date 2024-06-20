@@ -10,12 +10,12 @@ export interface UseGeolocationOptions extends PositionOptions {
   /**
    * Whether to start watching the geolocation immediately.
    *
-   * @default true
+   * @defaultValue true
    */
   immediate?: boolean
 }
 
-export interface UseGeolocationReturn extends Pausable {
+export interface UseGeolocationReturns extends Pausable {
   /**
    * Whether the geolocation API is supported.
    */
@@ -46,7 +46,7 @@ export interface UseGeolocationReturn extends Pausable {
   coords: GeolocationPosition['coords']
 }
 
-export function useGeolocation(options: UseGeolocationOptions = {}): UseGeolocationReturn {
+export function useGeolocation(options: UseGeolocationOptions = {}): UseGeolocationReturns {
   const { enableHighAccuracy = true, maximumAge = 30000, timeout = 27000, immediate = true } = options
 
   const pausable = usePausable(

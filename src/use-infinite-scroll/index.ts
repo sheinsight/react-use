@@ -13,25 +13,25 @@ export interface UseInfiniteScrollOptions<R> extends UseScrollOptions {
   /**
    * Whether to trigger the first load immediately
    *
-   * @default true
+   * @defaultValue true
    */
   immediate?: boolean
   /**
    * distance from the bottom of the scroll container
    *
-   * @default 0
+   * @defaultValue 0
    */
   distance?: number
   /**
    * scroll direction
    *
-   * @default 'bottom'
+   * @defaultValue 'bottom'
    */
   direction?: 'top' | 'bottom' | 'left' | 'right'
   /**
    * interval between each scroll event
    *
-   * @default 100
+   * @defaultValue 100
    */
   interval?: number
   /**

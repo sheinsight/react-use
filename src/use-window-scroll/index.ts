@@ -11,7 +11,7 @@ export interface UseWindowScrollOptions {
   /**
    * The scroll behavior, set to 'smooth' to enable smooth scrolling.
    *
-   * @default 'auto'
+   * @defaultValue 'auto'
    */
   behavior?: ScrollBehavior
 }

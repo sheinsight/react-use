@@ -12,7 +12,7 @@ export interface UseClipboardItemsOptions<Source> {
   /**
    * Enabled reading for clipboard, need to request permission
    *
-   * @default false
+   * @defaultValue false
    */
   read?: boolean
   /**
@@ -22,12 +22,12 @@ export interface UseClipboardItemsOptions<Source> {
   /**
    * Milliseconds to reset state of `copied` ref
    *
-   * @default 1500
+   * @defaultValue 1500
    */
   copiedDuration?: number
 }
 
-export interface UseClipboardItemsReturn<Optional> {
+export interface UseClipboardItemsReturns<Optional> {
   /**
    * Check if the browser supports clipboard API
    */
@@ -54,11 +54,11 @@ function isAllowed(status: UsePermissionReturn<false>) {
   return status.current && ['granted', 'prompt'].includes(status.current)
 }
 
-export function useClipboardItems(options?: UseClipboardItemsOptions<undefined>): UseClipboardItemsReturn<false>
-export function useClipboardItems(options: UseClipboardItemsOptions<ClipboardItems>): UseClipboardItemsReturn<true>
+export function useClipboardItems(options?: UseClipboardItemsOptions<undefined>): UseClipboardItemsReturns<false>
+export function useClipboardItems(options: UseClipboardItemsOptions<ClipboardItems>): UseClipboardItemsReturns<true>
 export function useClipboardItems(
   options: UseClipboardItemsOptions<ClipboardItems | undefined> = {},
-): UseClipboardItemsReturn<boolean> {
+): UseClipboardItemsReturns<boolean> {
   const { read = false, source, copiedDuration = 1500 } = options
 
   const isSupported = useSupported(() => 'clipboard' in navigator)

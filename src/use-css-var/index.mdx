@@ -44,13 +44,13 @@ export type UseCssVarOptions = {
   /**
    * default value of the css variable
    *
-   * @default ''
+   * @defaultValue ''
    */
   defaultValue?: string
   /**
    * whether to observe the changes of the css variable
    *
-   * @default false
+   * @defaultValue false
    */
   observe?: boolean
 }
@@ -67,3 +67,8 @@ import { Tip } from '@/components'
 ### Returns
 
 Same as [React.useState](https://react.dev/reference/react/useState), a tuple with the current value of the CSS variable and a function to update it.
+
+```tsx
+export type UseCssVarReturns = readonly [string, ReactSetState<string>]
+```
+

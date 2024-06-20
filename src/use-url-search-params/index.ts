@@ -16,25 +16,25 @@ export interface UseUrlSearchParamsOptions<T> {
   /**
    * Remove nullish values from the URLSearchParams
    *
-   * @default true
+   * @defaultValue true
    */
   removeNullishValues?: boolean
   /**
    * Remove falsy values from the URLSearchParams
    *
-   * @default false
+   * @defaultValue false
    */
   removeFalsyValues?: boolean
   /**
    * Initial value for the URLSearchParams
    *
-   * @default {}
+   * @defaultValue {}
    */
   initialValue?: T & Record<string, Arrayable<string | number | boolean | undefined>>
   /**
    * Write back to `window.history` automatically
    *
-   * @default true
+   * @defaultValue true
    */
   write?: boolean
 }

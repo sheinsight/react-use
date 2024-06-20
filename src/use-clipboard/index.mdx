@@ -38,7 +38,7 @@ export type UseClipboardOptions<Source> = {
   /**
    * Enabled reading for clipboard, need to request permission
    *
-   * @default false
+   * @defaultValue false
    */
   read?: boolean
   /**
@@ -48,7 +48,7 @@ export type UseClipboardOptions<Source> = {
   /**
    * Milliseconds to reset state of `copied` ref
    *
-   * @default 1500
+   * @defaultValue 1500
    */
   copiedDuration?: number
 }
@@ -57,7 +57,7 @@ export type UseClipboardOptions<Source> = {
 ### Returns
 
 ```tsx
-export interface UseClipboardReturn<HasSource> {
+export interface UseClipboardReturns<HasSource> {
   /**
    * Whether the clipboard is supported
    */

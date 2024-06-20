@@ -25,37 +25,37 @@ export interface UseManualStateHistoryOptions<Raw, Serialized = Raw> {
   /**
    * The capacity of the history records
    *
-   * @default Number.POSITIVE_INFINITY
+   * @defaultValue Number.POSITIVE_INFINITY
    */
   capacity?: number
   /**
    * Whether to clone the source state
    *
-   * @default false
+   * @defaultValue false
    */
   clone?: boolean | CloneFn<Raw>
   /**
    * The throttle options
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   throttle?: number | UseThrottledFnOptions
   /**
    * The debounce options
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   debounce?: number | UseDebouncedFnOptions
   /**
    * The dump function to serialize the source state
    *
-   * @default (v) => v
+   * @defaultValue (v) => v
    */
   dump?: (v: Raw) => Serialized
   /**
    * The parse function to deserialize the serialized state
    *
-   * @default (v) => v
+   * @defaultValue (v) => v
    */
   parse?: (v: Serialized) => Raw
 }

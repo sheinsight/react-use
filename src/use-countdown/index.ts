@@ -24,19 +24,19 @@ export interface UseCountdownOptions<Controls extends boolean = false> {
   /**
    * whether to start the countdown immediately
    *
-   * @default true
+   * @defaultValue true
    */
   immediate?: boolean
   /**
    * whether to expose the controls
    *
-   * @default false
+   * @defaultValue false
    */
   controls?: Controls
   /**
    * the interval to update the countdown
    *
-   * @default 'requestAnimationFrame'
+   * @defaultValue 'requestAnimationFrame'
    */
   interval?: UseIntervalFnInterval
   /**
@@ -49,7 +49,7 @@ export interface UseCountdownOptions<Controls extends boolean = false> {
   onStop?(): void
 }
 
-export type UseCountdownReturn<Controls extends boolean> = Controls extends true
+export type UseCountdownReturns<Controls extends boolean> = Controls extends true
   ? { ms: number; isStop: boolean } & Pausable
   : number
 
@@ -62,13 +62,13 @@ function calRemainingTime(date: Gettable<DateLike>) {
   return 0
 }
 
-export function useCountdown(date: Gettable<DateLike>): UseCountdownReturn<false>
-export function useCountdown(date: Gettable<DateLike>, options: UseCountdownOptions<false>): UseCountdownReturn<false>
-export function useCountdown(date: Gettable<DateLike>, options: UseCountdownOptions<true>): UseCountdownReturn<true>
+export function useCountdown(date: Gettable<DateLike>): UseCountdownReturns<false>
+export function useCountdown(date: Gettable<DateLike>, options: UseCountdownOptions<false>): UseCountdownReturns<false>
+export function useCountdown(date: Gettable<DateLike>, options: UseCountdownOptions<true>): UseCountdownReturns<true>
 export function useCountdown(
   date: Gettable<DateLike>,
   options: UseCountdownOptions<boolean> = {},
-): UseCountdownReturn<boolean> {
+): UseCountdownReturns<boolean> {
   const {
     immediate = true,
     controls: exposeControls = false,

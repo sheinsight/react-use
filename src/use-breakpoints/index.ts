@@ -6,6 +6,9 @@ import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
 import { increaseWithUnit, isNumber } from '../utils/basic'
 
+/**
+ * A object that contains different breakpoints
+ */
 export type Breakpoints<K extends string = string> = Record<K, number | string>
 
 export interface UseBreakpointsOptions {
@@ -15,34 +18,50 @@ export interface UseBreakpointsOptions {
    * 'min-width' - .lg will be true when the viewport is greater than or equal to the lg breakpoint (mobile-first)
    * 'max-width' - .lg will be true when the viewport is smaller than the xl breakpoint (desktop-first)
    *
-   * @default "min-width"
+   * @defaultValue "min-width"
    */
   strategy?: 'min-width' | 'max-width'
 }
 
-export type useBreakpointsReturn<K extends string> = Record<K, boolean> & {
+export type UseBreakpointsReturns<K extends string> = Record<K, boolean> & {
   /**
    * The current breakpoints states
    */
   breakpoints: Record<K, boolean>
   /**
    * Check if the viewport is greater than the given breakpoint
+   *
+   * @param {K} k - `K`, the breakpoint key
+   * @returns {boolean} `boolean`, whether the viewport is greater than the given breakpoint
    */
   isGreater: (k: K) => boolean
   /**
    * Check if the viewport is greater or equal to the given breakpoint
+   *
+   * @param {K} k - `K`, the breakpoint key
+   * @returns {boolean} `boolean`, whether the viewport is greater or equal to the given breakpoint
    */
   isGreaterOrEqual: (k: K) => boolean
   /**
    * Check if the viewport is smaller than the given breakpoint
+   *
+   * @param {K} k - `K`, the breakpoint key
+   * @returns {boolean} `boolean`, whether the viewport is smaller than the given breakpoint
    */
   isSmaller: (k: K) => boolean
   /**
    * Check if the viewport is smaller or equal to the given breakpoint
+   *
+   * @param {K} k - `K`, the breakpoint key
+   * @returns {boolean} `boolean`, whether the viewport is smaller or equal to the given breakpoint
    */
   isSmallerOrEqual: (k: K) => boolean
   /**
    * Check if the viewport is between the given breakpoints
+   *
+   * @param {K} a - `K`, the breakpoint key
+   * @param {K} b - `K`, the breakpoint key
+   * @returns {boolean} `boolean`, whether the viewport is between the given breakpoints
    */
   isInBetween: (a: K, b: K) => boolean
   /**
@@ -54,14 +73,21 @@ export type useBreakpointsReturn<K extends string> = Record<K, boolean> & {
 /**
  * five breakpoints by default, align with tailwindcss breakpoints
  *
- * @see https://tailwindcss.com/docs/responsive-design
+ * @see {@link https://tailwindcss.com/docs/responsive-design | Tailwind CSS - Responsive Design}
  * */
 export const defaultBreakpoints = { sm: 640, md: 768, lg: 1024, xl: 1280, xxl: 1536 }
 
+/**
+ * A React Hook that provides a simple API to interact with the viewport breakpoints.
+ *
+ * @param {Breakpoints} [breakpoints=defaultBreakpoints] - `Breakpoints`, the breakpoints to use, see {@link Breakpoints} and {@link defaultBreakpoints}
+ * @param {UseBreakpointsOptions} [options={}] - `UseBreakpointsOptions`, options to configure the hook, see {@link UseBreakpointsOptions}
+ * @returns {UseBreakpointsReturns} `UseBreakpointsReturns`, see {@link UseBreakpointsReturns}
+ */
 export function useBreakpoints<K extends string>(
   breakpoints: Breakpoints<K> = defaultBreakpoints as Breakpoints<K>,
   options: UseBreakpointsOptions = {},
-): useBreakpointsReturn<K> {
+): UseBreakpointsReturns<K> {
   const { strategy = 'min-width' } = options
   const latest = useLatest({ breakpoints, strategy, ...options })
 

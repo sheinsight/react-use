@@ -4,19 +4,19 @@ export type DebounceOptions = {
   /**
    * Time to wait before invoking the function
    *
-   * @default 0
+   * @defaultValue 0
    */
   wait?: number
   /**
    * immediately invoke before the timeout
    *
-   * @default false
+   * @defaultValue false
    */
   leading?: boolean
   /**
    * invoke the function after the timeout
    *
-   * @default true
+   * @defaultValue true
    */
   trailing?: boolean
 }

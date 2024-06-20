@@ -13,42 +13,42 @@ export interface UseAdaptiveTextareaOptions<T extends HTMLElement = HTMLElement>
   /**
    * a list of dependencies to trigger the resize
    *
-   * @default []
+   * @defaultValue []
    */
   watch?: DependencyList
   /**
    * a list of events to trigger the resize
    *
-   * @default ['input']
+   * @defaultValue ['input']
    */
   events?: (keyof HTMLElementEventMap)[]
   /**
    * whether to automatically adjust the height of the `textarea` element
    *
-   * @default true
+   * @defaultValue true
    */
   autoHeight?: boolean
   /**
    * a target element to apply the height style
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   styleTarget?: ElementTarget<T>
   /**
    * a style property to apply the height value
    *
-   * @default 'height'
+   * @defaultValue 'height'
    */
   styleProp?: 'height' | 'minHeight'
   /**
    * a callback function to be called when the height of the `textarea` element changes
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   onResize?: (height: number, prevHeight: number) => void
 }
 
-export interface UseAdaptiveTextareaReturn {
+export interface UseAdaptiveTextareaReturns {
   /**
    * a React ref that should be passed to the `textarea` element
    */
@@ -59,18 +59,21 @@ export interface UseAdaptiveTextareaReturn {
   height: number
   /**
    * a function to manually resize the `textarea` element
+   *
+   * @returns {void} `void`
    */
   resize(): void
 }
 
 /**
- * Automatically adjust the height of a `textarea` element based on its content
+ * A React Hook that helps to create **adaptive** textarea that automatically adjust height based on its content.
  *
- * @tip set `rows={1}` attribute & `resize: none` style to the `textarea` before using this Hook
+ * @param {UseAdaptiveTextareaOptions} options - `UseAdaptiveTextareaOptions`, see {@link UseAdaptiveTextareaOptions}
+ * @returns {UseAdaptiveTextareaReturns} `UseAdaptiveTextareaReturns`, see {@link UseAdaptiveTextareaReturns}
  */
 export function useAdaptiveTextarea<T extends HTMLElement>(
   options: UseAdaptiveTextareaOptions<T> = {},
-): UseAdaptiveTextareaReturn {
+): UseAdaptiveTextareaReturns {
   const { onResize, events = ['input'], autoHeight = true, watch = [], styleTarget, styleProp = 'height' } = options
 
   const taRef = useRef<HTMLTextAreaElement>(null)

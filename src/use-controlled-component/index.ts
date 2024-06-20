@@ -35,7 +35,7 @@ export interface ControlledComponentProps<T> {
   onChange: (eventOrValue?: T | { target: { value: T } }) => void
 }
 
-export interface UseControlledComponentReturn<T> {
+export interface UseControlledComponentReturns<T> {
   /**
    * The value of the controlled component
    */
@@ -57,7 +57,7 @@ export interface UseControlledComponentReturn<T> {
 export function useControlledComponent<T = string, P extends object = object>(
   initialValue: T = '' as T,
   options: UseControlledComponentOptions<T, P> = {},
-): UseControlledComponentReturn<T> {
+): UseControlledComponentReturns<T> {
   const { fallbackValue, onReset, props, onChange, ...stateOptions } = options
 
   const [value, setValue] = useSafeState(initialValue as T, stateOptions)

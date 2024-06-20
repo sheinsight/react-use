@@ -36,32 +36,33 @@ const bluetooth = useBlueTooth(options)
 ### Options
 
 ```tsx
-export type UseBluetoothRequestDeviceOptions = {
+export interface BluetoothRequestDeviceOptions {
   /**
    * An array of filter objects indicating the properties of devices that will be matched.
    *
-   * @see https://developer.mozilla.org/en-US/docs/Web/API/Bluetooth/requestDevice#filters
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Bluetooth/requestDevice#filters | requestDevice#filters - MDN}
    */
   filters?: BluetoothLEScanFilter[] | undefined
   /**
    * A list of services that the application wishes to access on the remote device.
    *
-   * @see https://developer.mozilla.org/en-US/docs/Web/API/BluetoothRemoteGATTService/uuid
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/BluetoothRemoteGATTService/uuid | BluetoothRemoteGATTService/uuid - MDN}
    */
   optionalServices?: BluetoothServiceUUID[] | undefined
 }
 
-export type UseBluetoothOptions = UseBluetoothRequestDeviceOptions & {
+export interface UseBluetoothOptions extends BluetoothRequestDeviceOptions {
   /**
    * Whether to accept all devices
    *
-   * @default false
+   * @defaultValue false
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Bluetooth/requestDevice#acceptAllDevices | requestDevice#acceptAllDevices - MDN}
    */
   acceptAllDevices?: boolean
   /**
    * Whether to connect immediately
    *
-   * @default true
+   * @defaultValue true
    */
   immediate?: boolean
 }
@@ -70,7 +71,7 @@ export type UseBluetoothOptions = UseBluetoothRequestDeviceOptions & {
 ### Returns
 
 ```tsx
-export type UseBlueToothReturn = {
+export interface UseBlueToothReturns {
   /**
    * Whether the device is connected
    */
@@ -93,10 +94,16 @@ export type UseBlueToothReturn = {
   device: BluetoothDevice | undefined
   /**
    * Connect to the Bluetooth GATT server
+   *
+   * @returns {Promise<BluetoothRemoteGATTServer | undefined>} The GATT server, see {@link BluetoothRemoteGATTServer}
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/BluetoothRemoteGATTServer | BluetoothRemoteGATTServer - MDN}
    */
   connect(): Promise<BluetoothRemoteGATTServer | undefined>
   /**
    * Disconnect from the Bluetooth GATT server
+   *
+   * @returns {void} `void`
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/BluetoothRemoteGATTServer/disconnect | BluetoothRemoteGATTServer.disconnect - MDN}
    */
   disconnect(): void
   /**
@@ -105,6 +112,9 @@ export type UseBlueToothReturn = {
   isSupported: boolean
   /**
    * Request a Bluetooth device
+   *
+   * @returns {Promise<BluetoothDevice | undefined>} The Bluetooth device, see {@link BluetoothDevice}
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Bluetooth/requestDevice | Bluetooth.requestDevice - MDN}
    */
   requestDevice(): Promise<BluetoothDevice | undefined>
 }

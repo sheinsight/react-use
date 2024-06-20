@@ -15,22 +15,24 @@ export interface UseCssVarOptions {
   /**
    * default value of the css variable
    *
-   * @default ''
+   * @defaultValue ''
    */
   defaultValue?: string
   /**
    * whether to observe the changes of the css variable
    *
-   * @default false
+   * @defaultValue false
    */
   observe?: boolean
 }
+
+export type UseCssVarReturns = readonly [string, ReactSetState<string>]
 
 export function useCssVar<T extends HTMLElement = HTMLElement>(
   propName: Gettable<string>,
   options: UseCssVarOptions = {},
   target: ElementTarget<T> = () => document.documentElement as T,
-): [string, ReactSetState<string>] {
+): UseCssVarReturns {
   const { defaultValue = '', observe = false } = options
 
   const [variable, _setVariable] = useSafeState(defaultValue)

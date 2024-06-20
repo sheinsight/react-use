@@ -4,7 +4,7 @@ import { HooksType } from '@/components'
 
 <HooksType category="ProUtilities" />
 
-A React Hook that creates and shifts a circular list.
+A React Hook that helps to create a circular list that can cycle through the list.
 
 :::tip
 
@@ -51,6 +51,10 @@ export interface UseCycleListOptions<T, R extends T = T> {
   fallbackIndex?: number
   /**
    * Custom function to get the index of the value
+   *
+   * @param {T} value - `T`, the value to find
+   * @param {T[]} list - `T[]`, the list to search
+   * @returns {number} `number`, the index of the value
    */
   getIndexOf?: (value: T, list: T[]) => number
 }
@@ -62,19 +66,28 @@ export interface UseCycleListOptions<T, R extends T = T> {
 export type UseCycleListActions<T> = {
   /**
    * Move to the next value
+   *
+   * @param {number} [step] - `number`, the step to move
+   * @returns {T} `T`, the next value
    */
   next: (step?: number) => T
   /**
    * Move to the previous value
+   *
+   * @param {number} [step] - `number`, the step to move
+   * @returns {T} `T`, the previous value
    */
   prev: (step?: number) => T
   /**
    * Move to the value at the specified index
+   *
+   * @param {number} index - `number`, the index to move
+   * @returns {T} `T`, the value at the specified index
    */
   go: (index: number) => T
 }
 
-export type UseCycleListReturn<T> = [
+export type UseCycleListReturns<T> = readonly [
   /**
    * Current value
    */

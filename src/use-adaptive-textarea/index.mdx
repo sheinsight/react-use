@@ -4,11 +4,11 @@ import { HooksType } from '@/components'
 
 <HooksType category="Element" />
 
-A React Hook that helps to create **adaptive** textarea.
+A React Hook that helps to create **adaptive** textarea that automatically adjust height based on its content.
 
 ## Demo
 
-Input and feel free to wrap the text in the textarea.
+Input in the textarea, and see the height of the textarea automatically adjust.
 
 import { App } from './demo'
 
@@ -36,41 +36,41 @@ const { ref, height, resize } = useAdaptiveTextarea(options)
 ### Options
 
 ```tsx
-export type UseAdaptiveTextareaOptions<T extends HTMLElement = HTMLElement> = {
+export interface UseAdaptiveTextareaOptions<T extends HTMLElement = HTMLElement> {
   /**
    * a list of dependencies to trigger the resize
    *
-   * @default []
+   * @defaultValue []
    */
   watch?: DependencyList
   /**
    * a list of events to trigger the resize
    *
-   * @default ['input']
+   * @defaultValue ['input']
    */
   events?: (keyof HTMLElementEventMap)[]
   /**
    * whether to automatically adjust the height of the `textarea` element
    *
-   * @default true
+   * @defaultValue true
    */
   autoHeight?: boolean
   /**
    * a target element to apply the height style
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   styleTarget?: ElementTarget<T>
   /**
    * a style property to apply the height value
    *
-   * @default 'height'
+   * @defaultValue 'height'
    */
   styleProp?: 'height' | 'minHeight'
   /**
    * a callback function to be called when the height of the `textarea` element changes
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   onResize?: (height: number, prevHeight: number) => void
 }
@@ -79,7 +79,7 @@ export type UseAdaptiveTextareaOptions<T extends HTMLElement = HTMLElement> = {
 ### Returns
 
 ```tsx
-export type UseAdaptiveTextareaReturn = {
+export interface UseAdaptiveTextareaReturns {
   /**
    * a React ref that should be passed to the `textarea` element
    */
@@ -90,6 +90,8 @@ export type UseAdaptiveTextareaReturn = {
   height: number
   /**
    * a function to manually resize the `textarea` element
+   *
+   * @returns {void} `void`
    */
   resize(): void
 }

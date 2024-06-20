@@ -8,7 +8,7 @@ import type { UseIntervalFnInterval } from '../use-interval-fn'
 import type { Pausable } from '../use-pausable'
 import type { Position } from '../utils/basic'
 
-export interface UseElementByPointReturn<E extends Element | Element[]> extends Pausable {
+export interface UseElementByPointReturns<E extends Element | Element[]> extends Pausable {
   /**
    * Whether the browser supports the API
    */
@@ -23,19 +23,19 @@ export interface UseElementByPointOptions<M extends boolean = false> extends Pos
   /**
    * Whether to return multiple elements
    *
-   * @default false
+   * @defaultValue false
    */
   multiple?: M
   /**
    * Whether to execute immediately
    *
-   * @default true
+   * @defaultValue true
    */
   immediate?: boolean
   /**
    * The interval to execute
    *
-   * @default 'requestAnimationFrame'
+   * @defaultValue 'requestAnimationFrame'
    */
   interval?: UseIntervalFnInterval
 }
@@ -43,7 +43,7 @@ export interface UseElementByPointOptions<M extends boolean = false> extends Pos
 export function useElementByPoint<
   M extends boolean = false,
   E extends Element | Element[] = M extends true ? Element[] : Element,
->(options: UseElementByPointOptions<M>): UseElementByPointReturn<E> {
+>(options: UseElementByPointOptions<M>): UseElementByPointReturns<E> {
   const { x, y, multiple = false, interval = 'requestAnimationFrame', immediate = true } = options
   const [element, setElement] = useSafeState<E | null>(null)
   const latest = useLatest({ x, y, multiple })

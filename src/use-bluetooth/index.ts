@@ -9,13 +9,13 @@ export interface BluetoothRequestDeviceOptions {
   /**
    * An array of filter objects indicating the properties of devices that will be matched.
    *
-   * @see https://developer.mozilla.org/en-US/docs/Web/API/Bluetooth/requestDevice#filters
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Bluetooth/requestDevice#filters | requestDevice#filters - MDN}
    */
   filters?: BluetoothLEScanFilter[] | undefined
   /**
    * A list of services that the application wishes to access on the remote device.
    *
-   * @see https://developer.mozilla.org/en-US/docs/Web/API/BluetoothRemoteGATTService/uuid
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/BluetoothRemoteGATTService/uuid | BluetoothRemoteGATTService/uuid - MDN}
    */
   optionalServices?: BluetoothServiceUUID[] | undefined
 }
@@ -24,18 +24,19 @@ export interface UseBluetoothOptions extends BluetoothRequestDeviceOptions {
   /**
    * Whether to accept all devices
    *
-   * @default false
+   * @defaultValue false
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Bluetooth/requestDevice#acceptAllDevices | requestDevice#acceptAllDevices - MDN}
    */
   acceptAllDevices?: boolean
   /**
    * Whether to connect immediately
    *
-   * @default true
+   * @defaultValue true
    */
   immediate?: boolean
 }
 
-export interface UseBlueToothReturn {
+export interface UseBlueToothReturns {
   /**
    * Whether the device is connected
    */
@@ -58,10 +59,16 @@ export interface UseBlueToothReturn {
   device: BluetoothDevice | undefined
   /**
    * Connect to the Bluetooth GATT server
+   *
+   * @returns {Promise<BluetoothRemoteGATTServer | undefined>} The GATT server, see {@link BluetoothRemoteGATTServer}
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/BluetoothRemoteGATTServer | BluetoothRemoteGATTServer - MDN}
    */
   connect(): Promise<BluetoothRemoteGATTServer | undefined>
   /**
    * Disconnect from the Bluetooth GATT server
+   *
+   * @returns {void} `void`
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/BluetoothRemoteGATTServer/disconnect | BluetoothRemoteGATTServer.disconnect - MDN}
    */
   disconnect(): void
   /**
@@ -70,11 +77,20 @@ export interface UseBlueToothReturn {
   isSupported: boolean
   /**
    * Request a Bluetooth device
+   *
+   * @returns {Promise<BluetoothDevice | undefined>} The Bluetooth device, see {@link BluetoothDevice}
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Bluetooth/requestDevice | Bluetooth.requestDevice - MDN}
    */
   requestDevice(): Promise<BluetoothDevice | undefined>
 }
 
-export function useBluetooth(options?: UseBluetoothOptions): UseBlueToothReturn {
+/**
+ * A React Hook that provides a simple API to interact with the Web [Bluetooth API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API).
+ *
+ * @param {UseBluetoothOptions} [options={}] - `UseBluetoothOptions`, options to configure the hook, see {@link UseBluetoothOptions}
+ * @returns {UseBlueToothReturns} `UseBlueToothReturns`, see {@link UseBlueToothReturns}
+ */
+export function useBluetooth(options?: UseBluetoothOptions): UseBlueToothReturns {
   const { filters, immediate = true, optionalServices, acceptAllDevices = false } = options || {}
 
   const isSupported = useSupported(() => 'bluetooth' in navigator)

@@ -19,7 +19,7 @@ export interface UseCounterOptions {
 
 export type Count = number
 
-export interface UseCounterReturnAction {
+export interface UseCounterReturnsAction {
   /**
    * increment the counter
    */
@@ -42,7 +42,7 @@ export interface UseCounterReturnAction {
   reset: (n?: number) => void
 }
 
-export type UseCounterReturn = [
+export type UseCounterReturns = [
   /**
    * The count state of the counter
    */
@@ -50,7 +50,7 @@ export type UseCounterReturn = [
   /**
    * The actions to control the counter
    */
-  UseCounterReturnAction,
+  UseCounterReturnsAction,
   /**
    * The whole state of the counter
    */
@@ -62,7 +62,7 @@ export type UseCounterReturn = [
   },
 ]
 
-export function useCounter(initialCount?: number, options: UseCounterOptions = {}): UseCounterReturn {
+export function useCounter(initialCount?: number, options: UseCounterOptions = {}): UseCounterReturns {
   const [state, setState] = useSetState(
     {
       initialCount: initialCount ?? 0,

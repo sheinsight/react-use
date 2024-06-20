@@ -42,19 +42,19 @@ export type UseFaviconOptions = {
   /**
    * Base URL for the favicon
    *
-   * @default ''
+   * @defaultValue ''
    */
   baseUrl?: string
   /**
    * The rel attribute of the favicon link element
    *
-   * @default 'icon'
+   * @defaultValue 'icon'
    */
   rel?: string
   /**
    * Sync the favicon in document `<link rel='icon' />` to hooks state on mount
    *
-   * @default true
+   * @defaultValue true
    */
   syncOnMount?: boolean
 }
@@ -63,7 +63,7 @@ export type UseFaviconOptions = {
 ### Returns
 
 ```tsx
-export type UseFaviconReturn = [
+export type UseFaviconReturns = readonly [
   /**
    * The current favicon URL
    */

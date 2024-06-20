@@ -3,7 +3,7 @@ import { useCreation } from '../use-creation'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
 
-export type UseDynamicListReturn<T> = [
+export type UseDynamicListReturns<T> = readonly [
   /**
    * list of items
    */
@@ -64,7 +64,7 @@ export type UseDynamicListReturn<T> = [
   },
 ]
 
-export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturn<T> {
+export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturns<T> {
   const listIdxRef = useRef(0)
   const keysRef = useRef<number[]>([])
 

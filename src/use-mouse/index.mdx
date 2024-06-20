@@ -40,43 +40,43 @@ export type UseMouseOptions = {
   /**
    * Type of coordinates to extract from the event.
    *
-   * @default 'page'
+   * @defaultValue 'page'
    */
   type?: UseMouseCoordType | UseMouseEventExtractor
   /**
    * Target element to attach the event listeners.
    *
-   * @default window
+   * @defaultValue window
    */
   target?: Window | EventTarget | null | undefined
   /**
    * Whether to enable touch events.
    *
-   * @default true
+   * @defaultValue true
    */
   touch?: boolean
   /**
    * Whether to enable scroll events.
    *
-   * @default true
+   * @defaultValue true
    */
   scroll?: boolean
   /**
    * Whether to reset the position when touch ends.
    *
-   * @default false
+   * @defaultValue false
    */
   resetOnTouchEnds?: boolean
   /**
    * Initial position.
    *
-   * @default { x: 0, y: 0 }
+   * @defaultValue { x: 0, y: 0 }
    */
   initialValue?: Position
   /**
    * Whether to start to update position immediately.
    *
-   * @default false
+   * @defaultValue false
    */
   immediate?: boolean
 }
