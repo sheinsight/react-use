@@ -70,7 +70,7 @@ const UseMouseBuiltinExtractors: Record<UseMouseCoordType, UseMouseEventExtracto
   },
 }
 
-export interface UseMouseReturn extends Position, Pausable {
+export interface UseMouseReturns extends Position, Pausable {
   /**
    * mouse event position.
    */
@@ -85,7 +85,7 @@ export interface UseMouseReturn extends Position, Pausable {
   stop(): void
 }
 
-export function useMouse(options: UseMouseOptions = {}): UseMouseReturn {
+export function useMouse(options: UseMouseOptions = {}): UseMouseReturns {
   const {
     type = 'page',
     touch = true,

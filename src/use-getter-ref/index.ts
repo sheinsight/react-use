@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { useStableFn } from '../use-stable-fn'
 
-export type UseGetterRefReturn<T> = [
+export type UseGetterRefReturns<T> = [
   /**
    * A mutable ref object that can be used to store a value.
    */
@@ -12,7 +12,7 @@ export type UseGetterRefReturn<T> = [
   getter: () => T,
 ]
 
-export function useGetterRef<T>(initial: T): UseGetterRefReturn<T> {
+export function useGetterRef<T>(initial: T): UseGetterRefReturns<T> {
   const ref = useRef<T>(initial)
   const getter = useStableFn(() => ref.current)
   return [ref, getter] as const

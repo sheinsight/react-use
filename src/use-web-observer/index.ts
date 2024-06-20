@@ -19,7 +19,7 @@ export interface UseWebObserverOptions {
   immediate?: boolean
 }
 
-export interface UseWebObserverReturn<Observer> extends Pausable {
+export interface UseWebObserverReturns<Observer> extends Pausable {
   /**
    * ref that holds the observer instance
    */
@@ -48,7 +48,7 @@ export function useWebObserver(
   options?: UseWebObserverOptions,
   initOptions?: IntersectionObserverInit,
   observerOptions?: undefined,
-): UseWebObserverReturn<IntersectionObserver>
+): UseWebObserverReturns<IntersectionObserver>
 export function useWebObserver(
   observer: 'MutationObserver',
   target: Arrayable<ElementTarget>,
@@ -56,7 +56,7 @@ export function useWebObserver(
   options?: UseWebObserverOptions,
   initOptions?: undefined,
   observerOptions?: MutationObserverInit,
-): UseWebObserverReturn<MutationObserver>
+): UseWebObserverReturns<MutationObserver>
 export function useWebObserver(
   observer: 'ResizeObserver',
   target: Arrayable<ElementTarget>,
@@ -64,7 +64,7 @@ export function useWebObserver(
   options?: UseWebObserverOptions,
   initOptions?: undefined,
   observerOptions?: ResizeObserverOptions,
-): UseWebObserverReturn<ResizeObserver>
+): UseWebObserverReturns<ResizeObserver>
 export function useWebObserver(
   observer: 'PerformanceObserver',
   target: undefined,
@@ -72,7 +72,7 @@ export function useWebObserver(
   options?: UseWebObserverOptions,
   initOptions?: undefined,
   observerOptions?: PerformanceObserverInit,
-): UseWebObserverReturn<PerformanceObserver>
+): UseWebObserverReturns<PerformanceObserver>
 export function useWebObserver(
   observer: 'ReportingObserver',
   target: undefined,
@@ -80,7 +80,7 @@ export function useWebObserver(
   options?: UseWebObserverOptions,
   initOptions?: ReportingObserverOptions,
   observerOptions?: undefined,
-): UseWebObserverReturn<ReportingObserver>
+): UseWebObserverReturns<ReportingObserver>
 // biome-ignore lint/suspicious/noExplicitAny: for overload
 export function useWebObserver(...args: any[]): any {
   const [observer, target, callback, options = {}, initOptions = {}, observerOptions = {}] = args

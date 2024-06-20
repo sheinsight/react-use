@@ -6,7 +6,7 @@ import { useSetState } from '../use-set-state'
 import { useStableFn } from '../use-stable-fn'
 import { useTargetElement } from '../use-target-element'
 
-import type { UseMouseOptions, UseMouseReturn } from '../use-mouse'
+import type { UseMouseOptions, UseMouseReturns } from '../use-mouse'
 import type { Pausable } from '../use-pausable'
 import type { ElementTarget } from '../use-target-element'
 
@@ -14,7 +14,7 @@ export interface MouseInElementOptions extends UseMouseOptions {
   handleOutside?: boolean
 }
 
-export interface UseMouseInElementReturn extends Pausable {
+export interface UseMouseInElementReturns extends Pausable {
   /**
    * Whether the mouse is outside the element
    */
@@ -50,10 +50,13 @@ export interface UseMouseInElementReturn extends Pausable {
   /**
    * The mouse state
    */
-  mouse: UseMouseReturn
+  mouse: UseMouseReturns
 }
 
-export function useMouseInElement(target: ElementTarget, options: MouseInElementOptions = {}): UseMouseInElementReturn {
+export function useMouseInElement(
+  target: ElementTarget,
+  options: MouseInElementOptions = {},
+): UseMouseInElementReturns {
   const { handleOutside = true } = options
 
   const mType = options.type || 'page'

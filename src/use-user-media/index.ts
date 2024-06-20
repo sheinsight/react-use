@@ -32,7 +32,7 @@ export interface UseUserMediaOptions {
   constraints?: MediaStreamConstraints
 }
 
-export interface UseUserMediaReturn extends Pausable {
+export interface UseUserMediaReturns extends Pausable {
   /**
    * The current MediaStream
    */
@@ -43,7 +43,7 @@ export interface UseUserMediaReturn extends Pausable {
   isSupported: boolean
 }
 
-export function useUserMedia(options: UseUserMediaOptions = {}): UseUserMediaReturn {
+export function useUserMedia(options: UseUserMediaOptions = {}): UseUserMediaReturns {
   const { autoSwitch = true, onStart, onStop, constraints = {} } = options
 
   const stream = useRef<MediaStream | null>(null)

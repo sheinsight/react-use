@@ -77,7 +77,7 @@ export type Pausable<PauseArgs extends unknown[] = [], ResumeArgs extends unknow
   resume: (...args: ResumeArgs) => void
 }
 
-export type UseSpringValueReturn = Pausable & {
+export type UseSpringValueReturns = Pausable & {
   /**
    * The current value of the spring.
    */

@@ -39,7 +39,7 @@ export interface UseUrlSearchParamsOptions<T> {
   write?: boolean
 }
 
-export type UseUrlSearchParamsReturn<T extends Record<string, Arrayable<string | number | boolean | undefined>>> = [
+export type UseUrlSearchParamsReturns<T extends Record<string, Arrayable<string | number | boolean | undefined>>> = [
   T,
   UseSetStateSetMergedState<T>,
   Noop,
@@ -47,7 +47,7 @@ export type UseUrlSearchParamsReturn<T extends Record<string, Arrayable<string |
 
 export function useUrlSearchParams<
   T extends Record<string, Arrayable<string | number | boolean | undefined>> = UrlParams,
->(mode: UseUrlSearchParamsMode = 'history', options: UseUrlSearchParamsOptions<T> = {}): UseUrlSearchParamsReturn<T> {
+>(mode: UseUrlSearchParamsMode = 'history', options: UseUrlSearchParamsOptions<T> = {}): UseUrlSearchParamsReturns<T> {
   const {
     initialValue = {} as T,
     removeNullishValues: rmNullish = true,

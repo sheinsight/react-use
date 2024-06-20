@@ -34,7 +34,7 @@ export interface MousePressedOptions {
   initialValue?: boolean
 }
 
-export interface UseMousePressedReturn {
+export interface UseMousePressedReturns {
   /**
    * Whether the mouse is pressed
    */
@@ -48,7 +48,7 @@ export interface UseMousePressedReturn {
 export function useMousePressed(
   target: ElementTarget | (() => Window) | (() => Document) = () => window,
   options: MousePressedOptions = {},
-) {
+): UseMousePressedReturns {
   const { touch = true, drag = true, capture = false, initialValue = false } = options
 
   const el = useTargetElement(target)

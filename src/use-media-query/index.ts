@@ -8,7 +8,7 @@ import type { Arrayable, Gettable } from '../utils/basic'
 
 export type UseMediaQueryType = Gettable<string>
 export type MediaQueryChangeListener = (this: MediaQueryList, ev: MediaQueryListEvent) => void
-export type UseMediaQueryReturn<T, R> = R extends T[] ? boolean[] : boolean
+export type UseMediaQueryReturns<T, R> = R extends T[] ? boolean[] : boolean
 
 export interface UseMediaQueryOptions extends AddEventListenerOptions {}
 
@@ -18,7 +18,7 @@ export interface UseMediaQueryOptions extends AddEventListenerOptions {}
 export function useMediaQuery<T extends UseMediaQueryType, R extends Arrayable<T> = Arrayable<T>>(
   query: R,
   options: UseMediaQueryOptions = {},
-): UseMediaQueryReturn<T, R> {
+): UseMediaQueryReturns<T, R> {
   const { ...addEventListenerOptions } = options
   const queryStrings = unwrapArrayable(query).filter(Boolean).map(unwrapGettable)
   const mediaQueries = useRef<(MediaQueryList & { handler?: MediaQueryChangeListener })[]>([])

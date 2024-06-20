@@ -30,7 +30,7 @@ export interface UseSpringValueConfig {
   precision?: number
 }
 
-export interface UseSpringValueReturn extends Pausable {
+export interface UseSpringValueReturns extends Pausable {
   /**
    * The current value of the spring.
    */
@@ -41,7 +41,7 @@ export interface UseSpringValueReturn extends Pausable {
   restart(): void
 }
 
-export function useSpringValue(start: number, end: number, config: UseSpringValueConfig = {}): UseSpringValueReturn {
+export function useSpringValue(start: number, end: number, config: UseSpringValueConfig = {}): UseSpringValueReturns {
   const { stiffness = 220, damping = 50, mass = 1, precision = 0.01, immediate = true } = config
 
   const [value, setValue] = useSafeState(start)

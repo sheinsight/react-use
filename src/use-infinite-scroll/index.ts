@@ -40,7 +40,7 @@ export interface UseInfiniteScrollOptions<R> extends UseScrollOptions {
   canLoadMore?: (previousReturn: R | undefined) => boolean
 }
 
-export interface UseInfiniteScrollReturn {
+export interface UseInfiniteScrollReturns {
   /**
    * loading state
    */
@@ -60,7 +60,7 @@ export function useInfiniteScroll<R = any, T extends HTMLElement = HTMLElement>(
   target: ElementTarget<T>,
   onLoadMore: (previousReturn: R | undefined) => R | Promise<R>,
   options: UseInfiniteScrollOptions<R> = {},
-): UseInfiniteScrollReturn {
+): UseInfiniteScrollReturns {
   const { direction = 'bottom', immediate = true, interval = 100, canLoadMore = () => true, distance = 100 } = options
 
   const el = useTargetElement<T>(target)

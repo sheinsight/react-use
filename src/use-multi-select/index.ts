@@ -6,58 +6,62 @@ import { useStableFn } from '../use-stable-fn'
 
 import type { ReactSetState } from '../use-safe-state'
 
-export interface UseMultiSelectReturn<T> {
-  /**
-   * The selected items
-   */
-  selected: T[]
-  /**
-   * Whether none of the items are selected
-   */
-  isNoneSelected: boolean
-  /**
-   * Whether all of the items are selected
-   */
-  isAllSelected: boolean
-  /**
-   * Whether some of the items are selected
-   */
-  isPartiallySelected: boolean
-  /**
-   * Whether the item is selected
-   */
-  isItemSelected: (item: T) => boolean
-  /**
-   * Set the selected items
-   */
-  setSelected: ReactSetState<T[]>
-  /**
-   * Select the item
-   */
-  select: (item: T) => void
-  /**
-   * Select all items
-   */
-  selectAll(): void
-  /**
-   * Unselect the item
-   */
-  unSelect: (item: T) => void
-  /**
-   * Unselect all items
-   */
-  unSelectAll(): void
-  /**
-   * Toggle the item
-   */
-  toggle: (item: T) => void
-  /**
-   * Toggle all items
-   */
-  toggleAll(): void
-}
+export type UseMultiSelectReturns<T> = readonly [
+  {
+    /**
+     * The selected items
+     */
+    selected: T[]
+    /**
+     * Whether none of the items are selected
+     */
+    isNoneSelected: boolean
+    /**
+     * Whether all of the items are selected
+     */
+    isAllSelected: boolean
+    /**
+     * Whether some of the items are selected
+     */
+    isPartiallySelected: boolean
+  },
+  {
+    /**
+     * Whether the item is selected
+     */
+    isItemSelected: (item: T) => boolean
+    /**
+     * Set the selected items
+     */
+    setSelected: ReactSetState<T[]>
+    /**
+     * Select the item
+     */
+    select: (item: T) => void
+    /**
+     * Select all items
+     */
+    selectAll(): void
+    /**
+     * Unselect the item
+     */
+    unSelect: (item: T) => void
+    /**
+     * Unselect all items
+     */
+    unSelectAll(): void
+    /**
+     * Toggle the item
+     */
+    toggle: (item: T) => void
+    /**
+     * Toggle all items
+     */
+    toggleAll(): void
+  },
+]
 
-export function useMultiSelect<T>(items: T[], defaultSelected: T[] = []): UseMultiSelectReturn<T> {
+export function useMultiSelect<T>(items: T[], defaultSelected: T[] = []): UseMultiSelectReturns<T> {
   const [selected, setSelected] = useSafeState<T[]>(defaultSelected)
   const selectedSet = useCreation(() => new Set(selected), [selected])
   const latestSet = useLatest(selectedSet)
@@ -107,22 +111,23 @@ export function useMultiSelect<T>(items: T[], defaultSelected: T[] = []): UseMul
 
   const isItemSelected = useStableFn((item: T) => latestSet.current.has(item))
 
-  return {
+  const state = {
     selected,
     isNoneSelected,
     isAllSelected,
     isPartiallySelected,
+  }
 
+  const actions = useCreation(() => ({
     isItemSelected,
-    setSelected,
-
     select,
     selectAll,
-
-    unSelect,
-    unSelectAll,
-
+    setSelected,
     toggle,
     toggleAll,
-  }
+    unSelect,
+    unSelectAll,
+  }))
+
+  return [state, actions] as const
 }

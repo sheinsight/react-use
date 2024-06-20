@@ -110,7 +110,7 @@ export function ensureSSRSecurity<T, S extends T>(fn: () => T, fallback: S): T {
   return isClient ? fn() : fallback
 }
 
-export interface PromiseWithResolversReturn<T> {
+export interface PromiseWithResolversReturns<T> {
   resolve: (value: T | PromiseLike<T>) => void
   reject: (reason: unknown) => void
   promise: Promise<T>
@@ -121,7 +121,7 @@ export interface PromiseWithResolversReturn<T> {
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/withResolvers#browser_compatibility
  */
-export function createPromiseWithResolvers<T = void>(): PromiseWithResolversReturn<T> {
+export function createPromiseWithResolvers<T = void>(): PromiseWithResolversReturns<T> {
   let resolve!: (value: T | PromiseLike<T>) => void
   let reject!: (reason: unknown) => void
 

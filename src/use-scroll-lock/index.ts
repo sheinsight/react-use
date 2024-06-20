@@ -9,7 +9,7 @@ import { useUnmount } from '../use-unmount'
 import type { ReactSetState } from '../use-safe-state'
 import type { ElementTarget } from '../use-target-element'
 
-export type UseScrollLockReturn = [
+export type UseScrollLockReturns = [
   /**
    * Whether the scroll is locked
    */
@@ -39,7 +39,7 @@ const globalOverflowCache = new WeakMap<Element, CSSStyleDeclaration['overflow']
 export function useScrollLock<T extends HTMLElement = HTMLElement>(
   target: ElementTarget<T>,
   initialState = false,
-): UseScrollLockReturn {
+): UseScrollLockReturns {
   const el = useTargetElement<T>(target)
   const [isLocked, setLocked] = useSafeState(initialState)
 

@@ -39,7 +39,7 @@ export interface UseUserIdleOptions {
   immediate?: boolean
 }
 
-export interface UseUserIdleReturn extends Pausable<[reset?: boolean], [reset?: boolean]> {
+export interface UseUserIdleReturns extends Pausable<[reset?: boolean], [reset?: boolean]> {
   /**
    * Whether the user is idle
    */
@@ -59,7 +59,7 @@ export interface UseUserIdleReturn extends Pausable<[reset?: boolean], [reset?: 
 const defaultEvents: WindowEventName[] = ['mousemove', 'mousedown', 'resize', 'keydown', 'touchstart', 'wheel']
 const oneMinute = 60_000
 
-export function useUserIdle(timeout: number = oneMinute, options: UseUserIdleOptions = {}): UseUserIdleReturn {
+export function useUserIdle(timeout: number = oneMinute, options: UseUserIdleOptions = {}): UseUserIdleReturns {
   const { immediate = true, initialState = false, watchVisibility = true, events = defaultEvents } = options
 
   const lastActiveRef = useRef(Date.now())

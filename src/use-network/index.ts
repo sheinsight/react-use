@@ -8,7 +8,7 @@ import { now } from '../utils/basic'
 export type NetworkType = 'bluetooth' | 'cellular' | 'ethernet' | 'none' | 'wifi' | 'wimax' | 'other' | 'unknown'
 export type NetworkEffectiveType = 'slow-2g' | '2g' | '3g' | '4g' | undefined
 
-export interface UseNetworkReturn {
+export interface UseNetworkReturns {
   /**
    * A Ref Getter to check if the browser supports the Network Information API.
    */
@@ -53,7 +53,7 @@ export interface UseNetworkReturn {
   type: NetworkType
 }
 
-export interface ExtendedNavigator extends Navigator {
+interface ExtendedNavigator extends Navigator {
   connection?: {
     downlink: number
     downlinkMax: number
@@ -67,7 +67,7 @@ export interface ExtendedNavigator extends Navigator {
   }
 }
 
-export function useNetwork(): UseNetworkReturn {
+export function useNetwork(): UseNetworkReturns {
   const isSupported = useSupported(() => 'connection' in navigator)
   const connectionRef = useRef<ExtendedNavigator['connection'] | null>(null)
 
@@ -99,7 +99,7 @@ export function useNetwork(): UseNetworkReturn {
   return { isSupported, ...state }
 }
 
-function getNetwork(): Omit<UseNetworkReturn, 'isSupported'> {
+function getNetwork(): Omit<UseNetworkReturns, 'isSupported'> {
   return {
     isOnline: navigator.onLine,
     offlineAt: navigator.onLine ? undefined : now(),

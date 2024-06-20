@@ -27,7 +27,7 @@ export interface UseMemoizeOptions<Result, Args extends unknown[]> {
   cache?: UseMemoizeCache<CacheKey, Result>
 }
 
-export interface UseMemoizeReturn<Result, Args extends unknown[]> {
+export interface UseMemoizeReturns<Result, Args extends unknown[]> {
   /**
    * Memoized function
    */
@@ -57,7 +57,7 @@ export interface UseMemoizeReturn<Result, Args extends unknown[]> {
 export function useMemoize<Result, Args extends unknown[]>(
   resolver: (...args: Args) => Result,
   options: UseMemoizeOptions<Result, Args> = {},
-): UseMemoizeReturn<Result, Args> {
+): UseMemoizeReturns<Result, Args> {
   const cache = useCreation((): UseMemoizeCache<CacheKey, Result> => {
     if (options?.cache) return options.cache
     return new Map<CacheKey, Result>()
@@ -83,7 +83,7 @@ export function useMemoize<Result, Args extends unknown[]>(
 
   const clearData = useStableFn(() => cache.clear())
 
-  const memoized: Partial<UseMemoizeReturn<Result, Args>> = (...args: Args): Result => {
+  const memoized: Partial<UseMemoizeReturns<Result, Args>> = (...args: Args): Result => {
     const key = getKey(...args)
     if (latest.current.cache.has(key)) {
       return latest.current.cache.get(key) as Result
@@ -97,5 +97,5 @@ export function useMemoize<Result, Args extends unknown[]>(
   memoized.getKey = getKey
   memoized.cache = cache
 
-  return memoized as UseMemoizeReturn<Result, Args>
+  return memoized as UseMemoizeReturns<Result, Args>
 }

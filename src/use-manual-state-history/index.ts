@@ -60,7 +60,7 @@ export interface UseManualStateHistoryOptions<Raw, Serialized = Raw> {
   parse?: (v: Serialized) => Raw
 }
 
-export interface UseManualStateHistoryReturn<Raw, Serialized> {
+export interface UseManualStateHistoryReturns<Raw, Serialized> {
   /**
    * The source state
    */
@@ -122,7 +122,7 @@ function defaultParse<R, S>(clone?: boolean | CloneFn<R>) {
 export function useManualStateHistory<Raw, Serialized = Raw>(
   source: Raw,
   options: UseManualStateHistoryOptions<Raw, Serialized> = {},
-): UseManualStateHistoryReturn<Raw, Serialized> {
+): UseManualStateHistoryReturns<Raw, Serialized> {
   const {
     clone = false,
     dump = defaultDump<Raw, Serialized>(clone),

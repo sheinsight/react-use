@@ -2,7 +2,7 @@ import { useWebObserver } from '../use-web-observer'
 
 import type { Pausable } from '../use-pausable'
 import type { ElementTarget } from '../use-target-element'
-import type { UseWebObserverOptions, UseWebObserverReturn } from '../use-web-observer'
+import type { UseWebObserverOptions, UseWebObserverReturns } from '../use-web-observer'
 import type { Arrayable } from '../utils/basic'
 
 export interface UseResizeObserverOptions extends UseWebObserverOptions, ResizeObserverOptions {
@@ -10,13 +10,13 @@ export interface UseResizeObserverOptions extends UseWebObserverOptions, ResizeO
   box?: ResizeObserverBoxOptions
 }
 
-export interface UseResizeObserverReturn extends Pausable, UseWebObserverReturn<ResizeObserver> {}
+export interface UseResizeObserverReturns extends Pausable, UseWebObserverReturns<ResizeObserver> {}
 
 export function useResizeObserver<T extends HTMLElement>(
   target: Arrayable<ElementTarget<T>>,
   callback: ResizeObserverCallback,
   options: UseResizeObserverOptions = {},
-): UseResizeObserverReturn {
+): UseResizeObserverReturns {
   const { immediate = true, ...observerOptions } = options
   return useWebObserver('ResizeObserver', target, callback, { immediate }, undefined, observerOptions)
 }

@@ -53,5 +53,5 @@ If `queryString` is a `string`, returns a `boolean` value that indicates whether
 If `queryString` is an array, returns an array of `boolean` values that indicate whether the media queries match.
 
 ```tsx
-export type UseMediaQueryReturn<T, R> = R extends T[] ? boolean[] : boolean
+export type UseMediaQueryReturns<T, R> = R extends T[] ? boolean[] : boolean
 ```

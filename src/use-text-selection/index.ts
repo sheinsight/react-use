@@ -4,7 +4,7 @@ import { useSafeState } from '../use-safe-state'
 
 import type { MutableRefObject } from 'react'
 
-export interface UseTextSelectionReturn {
+export interface UseTextSelectionReturns {
   /**
    * A React Ref object that holds the current Selection object.
    */
@@ -23,7 +23,7 @@ export interface UseTextSelectionReturn {
   ranges: Range[]
 }
 
-export function useTextSelection(): UseTextSelectionReturn {
+export function useTextSelection(): UseTextSelectionReturns {
   const selectionRef = useRef<Selection | null>(null)
   const [selectionState, setSelectionState] = useSafeState({
     text: '',

@@ -24,11 +24,11 @@ export interface UseNowOptions<Controls extends boolean> extends UseIntervalFnOp
   callback?: (now: Date) => void
 }
 
-export type UseNowReturn<Controls extends boolean> = Controls extends true ? { now: Date } & Pausable : Date
+export type UseNowReturns<Controls extends boolean> = Controls extends true ? { now: Date } & Pausable : Date
 
-export function useNow(options?: UseNowOptions<false>): UseNowReturn<false>
-export function useNow(options: UseNowOptions<true>): UseNowReturn<true>
-export function useNow(options: UseNowOptions<boolean> = {}): UseNowReturn<boolean> {
+export function useNow(options?: UseNowOptions<false>): UseNowReturns<false>
+export function useNow(options: UseNowOptions<true>): UseNowReturns<true>
+export function useNow(options: UseNowOptions<boolean> = {}): UseNowReturns<boolean> {
   const {
     controls: exposeControls = false,
     callback,

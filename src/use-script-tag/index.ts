@@ -74,7 +74,7 @@ export interface UseScriptTagOptions {
   attrs?: Record<string, string>
 }
 
-export type UseScriptTagReturn = {
+export type UseScriptTagReturns = {
   /**
    * The script element Ref
    */
@@ -95,7 +95,7 @@ export function useScriptTag(
   src: string,
   onLoaded: (el: HTMLScriptElement) => void = noop,
   options: UseScriptTagOptions = {},
-): UseScriptTagReturn {
+): UseScriptTagReturns {
   const {
     immediate = true,
     manual = false,

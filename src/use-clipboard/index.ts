@@ -7,7 +7,7 @@ import { useSupported } from '../use-supported'
 import { useTimeoutFn } from '../use-timeout-fn'
 import { unwrapGettable } from '../utils/unwrap'
 
-import type { UsePermissionReturn } from '../use-permission'
+import type { UsePermissionReturns } from '../use-permission'
 import type { Gettable } from '../utils/basic'
 
 export interface UseClipboardOptions<Source> {
@@ -123,6 +123,6 @@ function legacyRead() {
   return document.getSelection()?.toString() ?? ''
 }
 
-function isAllowed(status: UsePermissionReturn<false>) {
+function isAllowed(status: UsePermissionReturns<false>) {
   return status.current && ['granted', 'prompt'].includes(status.current)
 }

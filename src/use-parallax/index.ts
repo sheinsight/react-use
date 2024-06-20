@@ -25,7 +25,7 @@ export interface UseParallaxOptions {
   mouseRollAdjust?: (i: number) => number
 }
 
-export interface UseParallaxReturn extends Pausable {
+export interface UseParallaxReturns extends Pausable {
   /**
    * Roll value. Scaled to `-0.5 ~ 0.5`
    */
@@ -44,7 +44,7 @@ export interface UseParallaxReturn extends Pausable {
   elementStyle: (rotateRatio?: number, duration?: number) => React.CSSProperties
 }
 
-export function useParallax(target: ElementTarget, options: UseParallaxOptions = {}): UseParallaxReturn {
+export function useParallax(target: ElementTarget, options: UseParallaxOptions = {}): UseParallaxReturns {
   const latest = useLatest({
     deviceOrientationTiltAdjust: (e) => e,
     deviceOrientationRollAdjust: (e) => e,

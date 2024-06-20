@@ -23,7 +23,7 @@ export interface UseTextDirectionOptions {
   initialValue?: UseTextDirectionValue
 }
 
-export type UseTextDirectionReturn = [
+export type UseTextDirectionReturns = readonly [
   /**
    * The current text direction value.
    */
@@ -34,7 +34,7 @@ export type UseTextDirectionReturn = [
   setDir: ReactSetState<UseTextDirectionValue>,
 ]
 
-export function useTextDirection(options: UseTextDirectionOptions = {}): UseTextDirectionReturn {
+export function useTextDirection(options: UseTextDirectionOptions = {}): UseTextDirectionReturns {
   const { target = 'html', initialValue = 'ltr' } = options
 
   const el = useTargetElement(target)

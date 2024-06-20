@@ -12,13 +12,13 @@ export interface UseToggleReturnActions<O, T> {
   setState: ReactSetState<O | T>
 }
 
-export type UseToggleReturn<O, T> = [O | T, () => void, UseToggleReturnActions<O, T>]
+export type UseToggleReturns<O, T> = [O | T, () => void, UseToggleReturnActions<O, T>]
 
-export function useToggle(one: true, theOther?: false): UseToggleReturn<true, false>
-export function useToggle(one: false, theOther?: true): UseToggleReturn<false, true>
-export function useToggle(one: boolean, theOther?: boolean): UseToggleReturn<boolean, boolean>
-export function useToggle<O, T>(one: O, theOther: T): UseToggleReturn<O, T>
-export function useToggle<O, T>(one: O, theOther: T): UseToggleReturn<O, T> {
+export function useToggle(one: true, theOther?: false): UseToggleReturns<true, false>
+export function useToggle(one: false, theOther?: true): UseToggleReturns<false, true>
+export function useToggle(one: boolean, theOther?: boolean): UseToggleReturns<boolean, boolean>
+export function useToggle<O, T>(one: O, theOther: T): UseToggleReturns<O, T>
+export function useToggle<O, T>(one: O, theOther: T): UseToggleReturns<O, T> {
   const [state, setState] = useSafeState<O | T>(one)
   const latest = useLatest({ one, theOther: isDefined(theOther) ? theOther : (!one as T) })
 

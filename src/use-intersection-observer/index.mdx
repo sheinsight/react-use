@@ -70,7 +70,7 @@ export type UseIntersectionObserverOptions = UseWebObserverOptions & Intersectio
 <Tip type="pausable" />
 
 ```tsx
-export interface UseWebObserverReturn<Observer> extends Pausable {
+export interface UseWebObserverReturns<Observer> extends Pausable {
   /**
    * ref that holds the observer instance
    */
@@ -81,5 +81,5 @@ export interface UseWebObserverReturn<Observer> extends Pausable {
   isSupported: boolean
 }
 
-export type UseIntersectionObserverReturn = UseWebObserverReturn<IntersectionObserver>
+export type UseIntersectionObserverReturns = UseWebObserverReturns<IntersectionObserver>
 ```

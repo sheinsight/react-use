@@ -54,7 +54,7 @@ export interface UseLongPressOptions {
   distanceThreshold?: number | false
 }
 
-const defaultFalsyState: Pick<UseLongPressReturn, 'isPressed' | 'isLongPressed' | 'isMeetThreshold'> = {
+const defaultFalsyState: Pick<UseLongPressReturns, 'isPressed' | 'isLongPressed' | 'isMeetThreshold'> = {
   isPressed: false,
   isLongPressed: false,
   isMeetThreshold: false,
@@ -62,7 +62,7 @@ const defaultFalsyState: Pick<UseLongPressReturn, 'isPressed' | 'isLongPressed' 
 
 export type UseLongPressHandler = (evt: PointerEvent) => void
 
-export interface UseLongPressReturn {
+export interface UseLongPressReturns {
   /**
    * Whether the element is pressed
    */
@@ -85,7 +85,7 @@ export function useLongPress(
   target: ElementTarget,
   handler?: UseLongPressHandler,
   options?: UseLongPressOptions,
-): UseLongPressReturn {
+): UseLongPressReturns {
   const el = useTargetElement(target)
   const timeout = useRef<SetTimeoutReturn | null>(null)
   const posStart = useRef<Position | undefined>()

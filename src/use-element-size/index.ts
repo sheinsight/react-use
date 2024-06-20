@@ -2,7 +2,7 @@ import { useResizeObserver } from '../use-resize-observer'
 import { useSafeState } from '../use-safe-state'
 import { normalizeElement, useTargetElement } from '../use-target-element'
 
-import type { UseResizeObserverOptions, UseResizeObserverReturn } from '../use-resize-observer'
+import type { UseResizeObserverOptions, UseResizeObserverReturns } from '../use-resize-observer'
 import type { ElementTarget } from '../use-target-element'
 
 export interface ElementSize {
@@ -16,7 +16,7 @@ export interface ElementSize {
   height: number
 }
 
-export interface UseElementSizeReturns extends ElementSize, UseResizeObserverReturn {}
+export interface UseElementSizeReturns extends ElementSize, UseResizeObserverReturns {}
 
 export function useElementSize<T extends HTMLElement = HTMLElement>(
   target: ElementTarget<T>,

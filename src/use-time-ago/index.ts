@@ -12,7 +12,7 @@ import type { DateLike } from '../use-date-format'
 import type { Pausable } from '../use-pausable'
 import type { Gettable } from '../utils/basic'
 
-export type UseTimeAgoReturn<Controls extends boolean = false> = Controls extends true
+export type UseTimeAgoReturns<Controls extends boolean = false> = Controls extends true
   ? { timeAgo: string } & Pausable
   : string
 
@@ -35,11 +35,11 @@ export interface UseTimeAgoOptions<Controls extends boolean, UnitNames extends s
 export function useTimeAgo<UnitNames extends string = TimeAgoUnitNamesDefault>(
   time: Gettable<DateLike>,
   options?: UseTimeAgoOptions<false, UnitNames>,
-): UseTimeAgoReturn<false>
+): UseTimeAgoReturns<false>
 export function useTimeAgo<UnitNames extends string = TimeAgoUnitNamesDefault>(
   time: Gettable<DateLike>,
   options: UseTimeAgoOptions<true, UnitNames>,
-): UseTimeAgoReturn<true>
+): UseTimeAgoReturns<true>
 export function useTimeAgo<UnitNames extends string = TimeAgoUnitNamesDefault>(
   time: Gettable<DateLike>,
   options: UseTimeAgoOptions<boolean, UnitNames> = {},

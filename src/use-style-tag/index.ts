@@ -9,7 +9,7 @@ import { isClient } from '../utils/basic'
 
 import type { MutableRefObject } from 'react'
 
-export interface UseStyleTagReturn {
+export interface UseStyleTagReturns {
   /**
    * Unique identifier of the style tag
    */
@@ -71,7 +71,7 @@ export interface UseStyleTagOptions {
 
 const globalState = /* #__PURE__ */ { id: 0 }
 
-export function useStyleTag(initialCss = '', options: UseStyleTagOptions = {}): UseStyleTagReturn {
+export function useStyleTag(initialCss = '', options: UseStyleTagOptions = {}): UseStyleTagReturns {
   const isLoaded = useRef(false)
   const styleTag = useRef<HTMLStyleElement | null>(null)
 

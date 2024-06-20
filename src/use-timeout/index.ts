@@ -21,7 +21,7 @@ export interface UseTimeoutOptions<Controls extends boolean, Callback extends An
   callback?: Callback
 }
 
-export type UseTimeoutReturn<Controls extends boolean, C extends AnyFunc = AnyFunc> = Controls extends true
+export type UseTimeoutReturns<Controls extends boolean, C extends AnyFunc = AnyFunc> = Controls extends true
   ? Pausable<[], Parameters<C> | []> & {
       /**
        * Timeout state
@@ -34,11 +34,11 @@ export type UseTimeoutReturn<Controls extends boolean, C extends AnyFunc = AnyFu
     }
   : boolean
 
-export function useTimeout(interval?: number, options?: UseTimeoutOptions<false>): UseTimeoutReturn<false>
+export function useTimeout(interval?: number, options?: UseTimeoutOptions<false>): UseTimeoutReturns<false>
 export function useTimeout<C extends AnyFunc>(
   interval: number,
   options: UseTimeoutOptions<true, C>,
-): UseTimeoutReturn<true, C>
+): UseTimeoutReturns<true, C>
 export function useTimeout<C extends AnyFunc>(interval = 1000, options: UseTimeoutOptions<boolean, C> = {}) {
   const { controls: exposeControls = false, immediate, callback } = options
   const [isTimeout, setIsTimeout] = useSafeState(false)

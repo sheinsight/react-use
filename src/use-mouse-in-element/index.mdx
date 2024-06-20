@@ -48,7 +48,7 @@ export type MouseInElementOptions = UseMouseOptions & { handleOutside?: boolean 
 <Tip type="pausable" />
 
 ```tsx
-export type UseMouseInElementReturn = Pausable & {
+export type UseMouseInElementReturns = Pausable & {
   /**
    * Whether the mouse is outside the element
    */
@@ -84,6 +84,6 @@ export type UseMouseInElementReturn = Pausable & {
   /**
    * The mouse state
    */
-  mouse: UseMouseReturn
+  mouse: UseMouseReturns
 }
 ```

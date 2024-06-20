@@ -62,7 +62,7 @@ import { Tip } from '@/components'
 <Tip type="pausable" />
 
 ```tsx
-export type UseWebObserverReturn<Observer> = Pausable & {
+export type UseWebObserverReturns<Observer> = Pausable & {
   /**
    * ref that holds the observer instance
    */
@@ -73,5 +73,5 @@ export type UseWebObserverReturn<Observer> = Pausable & {
   isSupported: boolean
 }
 
-export interface UseReportingObserverReturn extends UseWebObserverReturn<ReportingObserver> {}
+export interface UseReportingObserverReturns extends UseWebObserverReturns<ReportingObserver> {}
 ```

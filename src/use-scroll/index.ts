@@ -57,7 +57,7 @@ export interface UseScrollOptions {
   immediate?: boolean
 }
 
-export interface UseScrollReturn extends Pausable {
+export interface UseScrollReturns extends Pausable {
   /**
    * scroll x position
    */
@@ -102,7 +102,7 @@ const ARRIVED_STATE_THRESHOLD_PIXELS = 1
 export function useScroll<T extends HTMLElement>(
   target: ElementTarget<T>,
   options: UseScrollOptions = {},
-): UseScrollReturn {
+): UseScrollReturns {
   const {
     throttle = 0,
     idle = 200,

@@ -16,7 +16,7 @@ export interface UseWindowScrollOptions {
   behavior?: ScrollBehavior
 }
 
-export interface UseWindowScrollReturn extends Position {
+export interface UseWindowScrollReturns extends Position {
   /**
    * The maximum scroll position on the x-axis.
    */
@@ -49,7 +49,7 @@ export interface UseWindowScrollReturn extends Position {
   scrollToRight(): void
 }
 
-export function useWindowScroll(options: UseWindowScrollOptions = {}): UseWindowScrollReturn {
+export function useWindowScroll(options: UseWindowScrollOptions = {}): UseWindowScrollReturns {
   const { behavior = 'auto' } = options
 
   const [state, setState] = useSetState<Position & { maxX: number; maxY: number }>(

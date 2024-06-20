@@ -35,12 +35,12 @@ export interface UseModifierOptions<Initial> {
   initial?: Initial
 }
 
-export type UseKeyModifierReturn<Initial> = Initial extends boolean ? boolean : boolean | null
+export type UseKeyModifierReturns<Initial> = Initial extends boolean ? boolean : boolean | null
 
 export function useKeyModifier<Initial extends boolean | null>(
   modifier: KeyModifier,
   options: UseModifierOptions<Initial> = {},
-): UseKeyModifierReturn<Initial> {
+): UseKeyModifierReturns<Initial> {
   const { events = defaultEvents, initial = null } = options
   const [state, setState] = useSafeState(initial as boolean)
 

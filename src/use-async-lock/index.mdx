@@ -46,7 +46,7 @@ A function that will be called when the function is locked and is called again.
 A function that can be used to ensure that **only one is running at a time**, return a promise that resolves the return value of the async function or the return value of the invalid operation callback function.
 
 ```tsx
-export type UseAsyncLockReturn<T extends AnyFunc, R extends AnyFunc> = (
+export type UseAsyncLockReturns<T extends AnyFunc, R extends AnyFunc> = (
   ...args: Parameters<T>
 ) => R extends undefined
   ? Promise<Awaited<ReturnType<T>> | undefined>

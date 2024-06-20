@@ -4,11 +4,11 @@ import { normalizeElement, useTargetElement } from '../use-target-element'
 
 import type { ElementTarget } from '../use-target-element'
 
-export type UseParentElementReturn = HTMLElement | null
+export type UseParentElementReturns = HTMLElement | null
 
 export function useParentElement<T extends HTMLElement = HTMLElement>(
   target: ElementTarget<T>,
-): UseParentElementReturn {
+): UseParentElementReturns {
   const el = useTargetElement<T>(target)
   const [parent, setParent] = useSafeState<HTMLElement | null>(null)
 

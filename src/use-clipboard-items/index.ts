@@ -6,7 +6,7 @@ import { useSupported } from '../use-supported'
 import { useTimeoutFn } from '../use-timeout-fn'
 
 import { useLatest } from '../use-latest'
-import type { UsePermissionReturn } from '../use-permission'
+import type { UsePermissionReturns } from '../use-permission'
 
 export interface UseClipboardItemsOptions<Source> {
   /**
@@ -50,7 +50,7 @@ export interface UseClipboardItemsReturns<Optional> {
   clear(): void
 }
 
-function isAllowed(status: UsePermissionReturn<false>) {
+function isAllowed(status: UsePermissionReturns<false>) {
   return status.current && ['granted', 'prompt'].includes(status.current)
 }
 

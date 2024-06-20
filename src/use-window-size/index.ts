@@ -34,14 +34,14 @@ export interface UseWindowSizeOptions {
   includeScrollbar?: boolean
 }
 
-export interface UseWindowSizeReturn extends Size {
+export interface UseWindowSizeReturns extends Size {
   /**
    * Update the window size.
    */
   update(): void
 }
 
-export function useWindowSize(options: UseWindowSizeOptions = {}): UseWindowSizeReturn {
+export function useWindowSize(options: UseWindowSizeOptions = {}): UseWindowSizeReturns {
   const {
     initialWidth = Number.POSITIVE_INFINITY,
     initialHeight = Number.POSITIVE_INFINITY,

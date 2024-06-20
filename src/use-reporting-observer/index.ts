@@ -1,14 +1,14 @@
 import { useWebObserver } from '../use-web-observer'
 
-import type { UseWebObserverOptions, UseWebObserverReturn } from '../use-web-observer'
+import type { UseWebObserverOptions, UseWebObserverReturns } from '../use-web-observer'
 
 export interface UseReportingObserverOptions extends UseWebObserverOptions, ReportingObserverOptions {}
-export interface UseReportingObserverReturn extends UseWebObserverReturn<ReportingObserver> {}
+export interface UseReportingObserverReturns extends UseWebObserverReturns<ReportingObserver> {}
 
 export function useReportingObserver(
   callback: ReportingObserverCallback,
   options: UseReportingObserverOptions = {},
-): UseReportingObserverReturn {
+): UseReportingObserverReturns {
   const { immediate = true, ...initOptions } = options
   return useWebObserver('ReportingObserver', undefined, callback, { immediate }, initOptions)
 }

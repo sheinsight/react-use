@@ -71,3 +71,7 @@ export type UseModifierOptions<Initial> = {
 ### Returns
 
 `boolean | null`, `boolean` indicates if the key modifier is pressed, `null` is means that the events not yet fired.
+
+```tsx
+export type UseKeyModifierReturns<Initial> = Initial extends boolean ? boolean : boolean | null
+```

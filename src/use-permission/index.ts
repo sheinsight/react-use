@@ -47,7 +47,7 @@ export interface UsePermissionOptions<Controls extends boolean> {
   onStateChange?: (state: PermissionState) => void
 }
 
-export type UsePermissionReturn<Controls extends boolean> = Controls extends true
+export type UsePermissionReturns<Controls extends boolean> = Controls extends true
   ? {
       /**
        * A Ref Getter to check if the permission is supported
@@ -67,15 +67,15 @@ export type UsePermissionReturn<Controls extends boolean> = Controls extends tru
 export function usePermission(
   permissionDesc: PermissionDesc,
   options?: UsePermissionOptions<false>,
-): UsePermissionReturn<false>
+): UsePermissionReturns<false>
 export function usePermission(
   permissionDesc: PermissionDesc,
   options: UsePermissionOptions<true>,
-): UsePermissionReturn<true>
+): UsePermissionReturns<true>
 export function usePermission(
   permissionDesc: PermissionDesc,
   options: UsePermissionOptions<boolean> = {},
-): UsePermissionReturn<boolean> {
+): UsePermissionReturns<boolean> {
   const { controls: exposeControls = false, immediate = true, onStateChange } = options
 
   const desc = permissionDesc

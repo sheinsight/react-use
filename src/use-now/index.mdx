@@ -64,5 +64,5 @@ import { Tip } from '@/components'
 If `controls` is `true`, returns an object with `now` and `Pausable` Instance, else returns the current `Date` instance.
 
 ```tsx
-export type UseNowReturn<Controls extends boolean> = Controls extends true ? { now: Date } & Pausable : Date
+export type UseNowReturns<Controls extends boolean> = Controls extends true ? { now: Date } & Pausable : Date
 ```

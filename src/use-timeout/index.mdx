@@ -59,7 +59,7 @@ export interface UseTimeoutOptions<Controls extends boolean, Callback extends An
 ### Returns
 
 ```tsx
-export type UseTimeoutReturn<Controls extends boolean, C extends AnyFunc = AnyFunc> = Controls extends true
+export type UseTimeoutReturns<Controls extends boolean, C extends AnyFunc = AnyFunc> = Controls extends true
   ? Pausable<[], Parameters<C> | []> & {
       /**
        * Timeout state

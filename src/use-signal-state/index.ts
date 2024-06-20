@@ -7,9 +7,9 @@ import type { Gettable } from '../utils/basic'
 
 export interface UseSignalStateOptions extends UseSafeStateOptions {}
 
-export type UseSignalStateReturn<T> = [() => T, ReactSetState<T>]
+export type UseSignalStateReturns<T> = [() => T, ReactSetState<T>]
 
-export function useSignalState<T>(state: Gettable<T>, options: UseSignalStateOptions = {}): UseSignalStateReturn<T> {
+export function useSignalState<T>(state: Gettable<T>, options: UseSignalStateOptions = {}): UseSignalStateReturns<T> {
   const [_state, setState] = useSafeState(state, options)
   const stateRef = useLatest(_state)
   const stateGetter = useStableFn(() => stateRef.current)

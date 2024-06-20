@@ -99,7 +99,7 @@ import { Tip } from '@/components'
 <Tip type="pausable" />
 
 ```tsx
-export type UseTimeAgoReturn<Controls extends boolean = false> = Controls extends true
+export type UseTimeAgoReturns<Controls extends boolean = false> = Controls extends true
   ? { timeAgo: string } & Pausable
   : string
 ```

@@ -2,7 +2,7 @@ import { useCounter } from '../use-counter'
 import { useLatest } from '../use-latest'
 import { useStableFn } from '../use-stable-fn'
 
-export interface UseStepperReturn<StepName, Steps, Step> {
+export interface UseStepperReturns<StepName, Steps, Step> {
   /**
    * List of steps.
    */
@@ -77,7 +77,7 @@ export interface UseStepperReturn<StepName, Steps, Step> {
   isAfter: (step: StepName) => boolean
 }
 
-export function useStepper<T>(steps: T[], initialIdx?: number): UseStepperReturn<T, T[], T> {
+export function useStepper<T>(steps: T[], initialIdx?: number): UseStepperReturns<T, T[], T> {
   const [idx, actions] = useCounter(initialIdx ?? 0)
 
   const at = useStableFn((index: number) => {

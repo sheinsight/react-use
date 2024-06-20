@@ -30,7 +30,7 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const { width, height, ...useResizeObserverReturn } = useElementSize(elementTarget, defaultValue, options)
+const { width, height, ...useResizeObserverReturns } = useElementSize(elementTarget, defaultValue, options)
 ```
 
 ### ElementTarget
@@ -63,5 +63,5 @@ Options of `useResizeObserver`, see [useResizeObserver#options](/reference/use-r
 Returns of `useResizeObserver`, see [useResizeObserver#returns](/reference/use-resize-observer/#returns) for more details.
 
 ```tsx
-export type UseElementSizeReturns = ElementSize & UseResizeObserverReturn
+export type UseElementSizeReturns = ElementSize & UseResizeObserverReturns
 ```

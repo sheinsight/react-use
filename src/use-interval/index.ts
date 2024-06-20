@@ -32,7 +32,7 @@ export interface UseIntervalAction extends UseCounterReturnsAction, Pausable {
   reset: (count?: number) => void
 }
 
-export type UseIntervalWithControlsReturn = [
+export type UseIntervalWithControlsReturns = [
   /**
    * Current count
    */
@@ -43,13 +43,18 @@ export type UseIntervalWithControlsReturn = [
   UseIntervalAction,
 ]
 
-export type UseIntervalReturn<Controls extends boolean> = Controls extends true ? UseIntervalWithControlsReturn : number
+export type UseIntervalReturns<Controls extends boolean> = Controls extends true
+  ? UseIntervalWithControlsReturns
+  : number
 
 export function useInterval(
   interval?: UseIntervalFnInterval,
   options?: UseIntervalOptions<false>,
-): UseIntervalReturn<false>
-export function useInterval(interval: UseIntervalFnInterval, options: UseIntervalOptions<true>): UseIntervalReturn<true>
+): UseIntervalReturns<false>
+export function useInterval(
+  interval: UseIntervalFnInterval,
+  options: UseIntervalOptions<true>,
+): UseIntervalReturns<true>
 export function useInterval(interval: UseIntervalFnInterval = 1000, options: UseIntervalOptions<boolean> = {}) {
   const { controls: exposeControls = false, immediate = true, callback } = options
   const [count, actions] = useCounter(0)

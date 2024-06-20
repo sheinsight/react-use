@@ -76,7 +76,7 @@ export interface UseIntervalAction extends UseCounterReturnsAction, Pausable {
   reset: (count?: number) => void
 }
 
-export type UseIntervalWithControlsReturn = [
+export type UseIntervalWithControlsReturns = [
   /**
    * Current count
    */
@@ -87,5 +87,5 @@ export type UseIntervalWithControlsReturn = [
   UseIntervalAction,
 ]
 
-export type UseIntervalReturn<Controls extends boolean> = Controls extends true ? UseIntervalWithControlsReturn : number
+export type UseIntervalReturns<Controls extends boolean> = Controls extends true ? UseIntervalWithControlsReturns : number
 ```
