@@ -19,18 +19,21 @@ export function Source({ name, tsx }: SourceProps) {
   ].map((item) => ({ ...item, url: `${url}/${item.path}` }))
 
   return (
-    <div className="flex gap-2">
-      {list.map((item) => (
-        <a
-          key={item.name}
-          className="px-2 py-0 bg-primary/12 rounded text-primary/80 hover:text-primary"
-          href={item.url}
-          target="_blank"
-          rel="noreferrer"
-        >
-          {item.name}
-        </a>
-      ))}
+    <div>
+      <p>Click links below to view source on GitHub.</p>
+      <div className="flex gap-4">
+        {list.map((item) => (
+          <a
+            key={item.name}
+            className="py-0 text-primary/80 hover:text-primary"
+            href={item.url}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {item.name}
+          </a>
+        ))}
+      </div>
     </div>
   )
 }

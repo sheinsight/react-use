@@ -30,12 +30,18 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-useAsyncEffect(callback, deps?)
+useAsyncEffect(asyncCallback, deps)
 ```
 
-### Callback
+### AsyncCallback
 
-Same as [React.useEffect](https://react.dev/reference/react/useEffect).
+A effect callback, support **async** function.
+
+```tsx
+export type AsyncEffectCallback = (isCancelled: () => boolean) => void
+
+export type UseAsyncEffectCallback = AsyncEffectCallback
+```
 
 ### Deps
 

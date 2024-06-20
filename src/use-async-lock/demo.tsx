@@ -8,9 +8,10 @@ export function App() {
   const fetchData = useAsyncFn(async () => {
     await mockFetch(300)
     setData(OTP())
+    return OTP()
   })
 
-  const lockedFetchData = useAsyncLock(fetchData.run, () => countActions.inc())
+  const lockedFetchData = useAsyncLock(fetchData.run, countActions.inc)
 
   return (
     <Card>

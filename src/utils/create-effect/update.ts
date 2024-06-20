@@ -10,7 +10,7 @@ export function createUpdateEffect<T = unknown>(effect: ExtendedReactEffect<T>) 
 
   return (callback: () => void, deps?: DependencyList, ...args: T[]): void => {
     const isActualUpdate = useRef(false)
-    const latestCallback = useLatest(callback)
+    const latest = useLatest({ callback })
 
     effectOnce(
       () => {
@@ -26,7 +26,7 @@ export function createUpdateEffect<T = unknown>(effect: ExtendedReactEffect<T>) 
         if (!isActualUpdate.current) {
           isActualUpdate.current = true
         } else {
-          return latestCallback.current()
+          return latest.current.callback()
         }
       },
       deps,

@@ -1,5 +1,5 @@
-import CodeBlock from '@theme/CodeBlock'
 import { useToggle } from '@site/../src'
+import CodeBlock from '@theme/CodeBlock'
 import { Button } from '../demo-related'
 
 const ignores = ['prettier-ignore', 'biome-ignore']

@@ -19,7 +19,10 @@ export function App() {
         <KeyValue label="elementHeight" value={mouseInEl.elementHeight} />
         <KeyValue label="elementWidth" value={mouseInEl.elementWidth} />
       </Zone>
-      <div id="el-mouse-in-element" className="mt-2 size-120px rounded bg-red" />
+      <div
+        id="el-mouse-in-element"
+        className={`mt-2 size-120px rounded ${mouseInEl.isOutside ? 'bg-amber/80' : 'bg-primary/80'}`}
+      />
     </Card>
   )
 }

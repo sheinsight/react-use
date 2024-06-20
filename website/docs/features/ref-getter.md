@@ -51,6 +51,10 @@ console.log(isActive) // Outputs: true
 
 It is a ref getter created by `usePausable`, see [Pausable](/docs/features/pausable) for more details.
 
+### `isCancelled` {#is-cancelled}
+
+It is a ref getter params in `useAsyncEffect` callback, see [useAsyncEffect](/reference/use-async-effect) for more details.
+
 ### `isMounted` {#is-mounted}
 
 It is a ref getter created by `useMounted`, see [useMounted](/reference/use-mounted) for more details.

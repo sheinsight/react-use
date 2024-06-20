@@ -30,23 +30,25 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const lockedFn = useAsyncLock(fn, onMeetLock)
+const lockedFn = useAsyncLock(asyncFn, onMeetLock)
 ```
 
-### Fn
+### AsyncFn
 
-```tsx
-export type Fn = (...args: any[]) => Promise<any>
-```
+A function that returns a promise.
 
 ### OnMeetLock
 
-```tsx
-export type onMeetLock = () => void
-```
+A function that will be called when the function is locked and is called again.
 
 ### Returns
 
+A function that can be used to ensure that **only one is running at a time**, return a promise that resolves the return value of the async function or the return value of the invalid operation callback function.
+
 ```tsx
-export type lockedFn = (...args: T) => Promise<ReturnType<T>>
+export type UseAsyncLockReturn<T extends AnyFunc, R extends AnyFunc> = (
+  ...args: Parameters<T>
+) => R extends undefined
+  ? Promise<Awaited<ReturnType<T>> | undefined>
+  : Promise<Awaited<ReturnType<T>> | Awaited<ReturnType<R>>>Promise<ReturnType<T>>
 ```
