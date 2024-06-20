@@ -11,9 +11,9 @@ const fetchOutsideReact = pageLoading.bind(async (num: number) => {
 export function App() {
   const loading = pageLoading.useLoading()
 
-  const fn = pageLoading.useAsyncFn(() => mockFetch())
-  const fn2 = pageLoading.useAsyncFn(() => mockFetch())
-  const fn3 = pageLoading.useAsyncFn(() => mockFetch())
+  const fetchUser = pageLoading.useAsyncFn(() => mockFetch())
+  const fetchPost = pageLoading.useAsyncFn(() => mockFetch())
+  const fetchComment = pageLoading.useAsyncFn(() => mockFetch())
 
   const fnWithError = pageLoading.useAsyncFn(async () => {
     await mockFetch()
@@ -27,19 +27,19 @@ export function App() {
       </Zone>
       <Zone>
         {/* biome-ignore format: for demo */}
-        <Button disabled={loading} onClick={fn.run}>Fetch</Button>
+        <Button disabled={loading} onClick={fetchUser.run}>fetchUser</Button>
         {/* biome-ignore format: for demo */}
-        <Button disabled={loading} onClick={fn2.run}>Fetch 2</Button>
+        <Button disabled={loading} onClick={fetchPost.run}>fetchPost</Button>
         {/* biome-ignore format: for demo */}
-        <Button disabled={loading} onClick={fn3.run}>Fetch 3</Button>
+        <Button disabled={loading} onClick={fetchComment.run}>fetchComment</Button>
         {/* biome-ignore format: for demo */}
         <Button disabled={loading} onClick={fnWithError.run}>Fetch with Error</Button>
       </Zone>
       <Zone>
         {/* biome-ignore format: for demo */}
         <Button disabled={loading} onClick={() => fetchOutsideReact(1)}>Fetch outside React</Button>
-        <Button onClick={() => fn.setLoading(!loading)}>Toggle loading via Hook</Button>
-        <Button onClick={() => pageLoading.set(!loading)}>Toggle loading via instance</Button>
+        <Button onClick={() => fetchUser.setLoading(!loading)}>Toggle via Hook</Button>
+        <Button onClick={() => pageLoading.set(!loading)}>Toggle via instance</Button>
       </Zone>
     </Card>
   )

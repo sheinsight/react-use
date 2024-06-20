@@ -1,29 +1,16 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, Card, KeyValue } from '@/components'
 import { useAsyncEffect, useCounter, useToggle } from '@shined/react-use'
 
-import type { SetIntervalReturn } from '../utils/basic'
-
 export function App() {
-  const [show, toggle] = useToggle(true)
-
-  return (
-    <Card>
-      <Button onClick={toggle}>Toggle mount</Button>
-      {show && <Count />}
-    </Card>
-  )
-}
-
-function Count() {
   const [status, toggle] = useToggle(false)
   const [count, actions] = useCounter(0)
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: for demo
   useAsyncEffect(
     async (isCancelled) => {
-      const timer: SetIntervalReturn = window.setInterval(() => {
+      const timer = setInterval(() => {
         // use `isCancelled()` to check if the effect is cancelled (unmount).
-        if (isCancelled()) return window.clearInterval(timer)
+        if (isCancelled()) return clearInterval(timer)
         // safely do something when component is not unmount.
         actions.inc(1)
       }, 1000)
@@ -32,9 +19,11 @@ function Count() {
   )
 
   return (
-    <Zone row={false} border="amber" width="">
+    <Card row={false}>
       <KeyValue label="Count" value={count} />
-      <Button onClick={toggle}>Toggle Status</Button>
-    </Zone>
+      <div>
+        <Button onClick={toggle}>Toggle Status</Button>
+      </div>
+    </Card>
   )
 }

@@ -16,6 +16,7 @@ export type UseToggleReturn<O, T> = [O | T, () => void, UseToggleReturnActions<O
 
 export function useToggle(one: true, theOther?: false): UseToggleReturn<true, false>
 export function useToggle(one: false, theOther?: true): UseToggleReturn<false, true>
+export function useToggle(one: boolean, theOther?: boolean): UseToggleReturn<boolean, boolean>
 export function useToggle<O, T>(one: O, theOther: T): UseToggleReturn<O, T>
 export function useToggle<O, T>(one: O, theOther: T): UseToggleReturn<O, T> {
   const [state, setState] = useSafeState<O | T>(one)
