@@ -62,3 +62,5 @@ It is a ref getter created by `useMounted`, see [useMounted](/reference/use-moun
 ### `isUnmounted` {#is-unmounted}
 
 It is a ref getter created by `useUnmounted`, see [useUnmounted](/reference/use-unmounted) for more details.
+
+... and more to come!

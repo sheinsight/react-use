@@ -15,7 +15,7 @@ export type UseTitleOptions = {
   /**
    * Restore the original title when unmounted
    *
-   * @defaultValue true
+   * @defaultValue false
    */
   restoreOnUnmount?: boolean
   /**
@@ -28,7 +28,7 @@ export type UseTitleOptions = {
 
 export function useTitle(newTitle: string, options: UseTitleOptions = {}): () => string {
   const initialTitle = useRef('')
-  const { template = '%s', restoreOnUnmount = true } = options
+  const { template = '%s', restoreOnUnmount = false } = options
 
   const latest = useLatest({ template, restoreOnUnmount })
 

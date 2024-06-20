@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useLatest } from '../use-latest'
 import { useMount } from '../use-mount'
 import { usePrevious } from '../use-previous'
@@ -8,6 +8,8 @@ import { useUpdateEffect } from '../use-update-effect'
 import { isString } from '../utils/basic'
 
 import type { ReactSetState } from '../use-safe-state'
+import { useUnmount } from '../use-unmount'
+import { useGetterRef } from '../use-getter-ref'
 
 export type FaviconType = string | null | undefined
 
@@ -30,6 +32,12 @@ export interface UseFaviconOptions {
    * @defaultValue true
    */
   syncOnMount?: boolean
+  /**
+   * Restore the previous favicon on unmount
+   *
+   * @defaultValue false
+   */
+  restoreOnUnmount?: boolean
 }
 
 export interface UseFaviconReturns {
@@ -59,8 +67,7 @@ function emojiSvgHref(emoji: string): string {
   return `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>${emoji}</text></svg>`
 }
 
-function getFavicon(rel = 'icon'): string | null {
-  if (!document || !document.head) return null
+function getFavicon(rel = 'icon'): string {
   const elements = document.head.querySelectorAll<HTMLLinkElement>(`link[rel*="${rel}"]`)
   const href = Array.from(elements)
     .filter((el) => el.href)
@@ -69,11 +76,12 @@ function getFavicon(rel = 'icon'): string | null {
 }
 
 export function useFavicon(newIcon: FaviconType = null, options: UseFaviconOptions = {}): UseFaviconReturns {
-  const { baseUrl = '', rel = 'icon', syncOnMount = true } = options
+  const { baseUrl = '', rel = 'icon', restoreOnUnmount = false, syncOnMount = true } = options
   const [faviconHref, setFaviconHref] = useSafeState(newIcon ?? null)
   const previousFavicon = usePrevious(faviconHref)
 
-  const latest = useLatest({ faviconHref, previousFavicon })
+  const [initialFaviconRef, initialFavicon] = useGetterRef<string>('')
+  const latest = useLatest({ restoreOnUnmount, faviconHref, previousFavicon })
 
   const applyIcon = useStableFn((icon: string) => {
     if (!document || !document.head) return
@@ -97,15 +105,19 @@ export function useFavicon(newIcon: FaviconType = null, options: UseFaviconOptio
     }
   })
 
-  const syncFavicon = useStableFn(() => {
+  const syncFavicon = useStableFn((isInitial: boolean = false) => {
     const href = getFavicon(rel)
 
     if (href && href !== latest.current.faviconHref) {
+      if (isInitial) {
+        initialFaviconRef.current = href
+      }
+
       setFaviconHref(href)
     }
   })
 
-  useMount(() => !faviconHref && syncOnMount && syncFavicon())
+  useMount(() => !faviconHref && syncOnMount && syncFavicon(true))
 
   useEffect(() => {
     const isUpdatedIcon = isString(faviconHref) && faviconHref !== latest.current.previousFavicon
@@ -113,6 +125,12 @@ export function useFavicon(newIcon: FaviconType = null, options: UseFaviconOptio
   }, [faviconHref])
 
   useUpdateEffect(() => void setFaviconHref(newIcon), [newIcon])
+
+  useUnmount(() => {
+    if (latest.current.restoreOnUnmount) {
+      applyIcon(initialFavicon())
+    }
+  })
 
   const setPreviousFavicon = useStableFn(() => {
     const { previousFavicon } = latest.current
