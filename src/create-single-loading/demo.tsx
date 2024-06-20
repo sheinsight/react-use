@@ -38,8 +38,8 @@ export function App() {
       <Zone>
         {/* biome-ignore format: for demo */}
         <Button disabled={loading} onClick={() => fetchOutsideReact(1)}>Fetch outside React</Button>
-        <Button onClick={() => fn.setLoading(!loading)}>Toggle by Hook</Button>
-        <Button onClick={() => pageLoading.set(!loading)}>Toggle by instance</Button>
+        <Button onClick={() => fn.setLoading(!loading)}>Toggle loading via Hook</Button>
+        <Button onClick={() => pageLoading.set(!loading)}>Toggle loading via instance</Button>
       </Zone>
     </Card>
   )

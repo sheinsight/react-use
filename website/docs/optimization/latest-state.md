@@ -6,7 +6,7 @@ sidebar_position: 3
 
 ## Overview
 
-To address common issues associated with closures capturing stale state or props, `@shined/react-use` automatically manages the latest state within its hooks. This internal mechanism ensures that state updates or effect dependencies always reference the most current data, safeguarding against bugs that typically arise from asynchronous operations relying on outdated state.
+To address common issues associated with closures capturing stale state or props, `@shined/react-use` automatically manages the latest state within its Hooks. This internal mechanism ensures that state updates or effect dependencies always reference the most current data, safeguarding against bugs that typically arise from asynchronous operations relying on outdated state.
 
 ## Practical Implications
 
@@ -18,7 +18,7 @@ This feature is particularly vital in scenarios involving delayed responses, suc
 
 ## Ensure Latest State in Your Codebase
 
-States in `@shined/react-use` is always the latest, but if you need to ensure the latest state in your codebase, you can use the following hooks:
+States in `@shined/react-use` is always the latest, but if you need to ensure the latest state in your codebase, you can use the following Hooks:
 
 ### use `useLatest` Hook
 

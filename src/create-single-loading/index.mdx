@@ -9,6 +9,7 @@ A utility that provide a way to manage single (or global) loading state via mult
 import { Installation } from '@/components'
 
 :::tip
+
 You need to install `@shined/reactive` to use this utility.
 
 <Installation npmName='@shined/reactive' />
@@ -37,7 +38,7 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const pageLoading = createSingleLoading()
+const pageLoading = createSingleLoading(options)
 const { set, get, bind, useLoding, useAsyncFn } = pageLoading
 ```
 

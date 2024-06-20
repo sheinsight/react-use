@@ -6,7 +6,7 @@ import type { Config } from '@docusaurus/types'
 
 export default {
   title: '@shined/react-use',
-  tagline: 'A simple yet powerful collection of React hooks.',
+  tagline: 'A simple yet powerful collection of React Hooks.',
   // favicon: 'img/favicon.ico',
   url: 'https://shined-hooks.vercel.app',
   baseUrl: '/react-use',

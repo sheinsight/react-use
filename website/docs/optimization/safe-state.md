@@ -10,7 +10,7 @@ sidebar_position: 1
 
 In essence, the behavior of `useSafeState` adapts based on the React version used:
 
-- **React 17 and earlier**: The state updates only if the component is still mounted, a behavior ensured by the `useUnmounted` hook. This approach effectively suppresses the common React warnings related to setting state on unmounted components.
+- **React 17 and earlier**: The state updates only if the component is still mounted, a behavior ensured by the `useUnmounted` Hook. This approach effectively suppresses the common React warnings related to setting state on unmounted components.
 - **React 18 and later**: It functions identically to `React.useState`, leveraging React’s internal mechanisms for handling state updates more gracefully on unmounted components.
 
 ## Handling `setState` Calls on Unmounted Components
