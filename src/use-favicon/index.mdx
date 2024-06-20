@@ -63,28 +63,26 @@ export type UseFaviconOptions = {
 ### Returns
 
 ```tsx
-export type UseFaviconReturns = readonly [
+export interface UseFaviconReturns {
   /**
    * The current favicon URL
    */
-  favicon: string | null,
-  {
-    /**
-     * Set the favicon URL
-     */
-    setFavicon: ReactSetState<string | null>
-    /**
-     * Sync the favicon in document `<link rel='icon' />` to hooks state
-     */
-    syncFavicon(): void
-    /**
-     * Set the favicon to an emoji
-     */
-    setEmojiFavicon: (emoji: string) => void
-    /**
-     * Set the favicon to the previous favicon
-     */
-    setPreviousFavicon(): void
-  },
-]
+  href: string | null
+  /**
+   * Set the favicon URL
+   */
+  setFavicon: ReactSetState<string | null>
+  /**
+   * Sync the favicon in document `<link rel='icon' />` to hooks state
+   */
+  syncFavicon(): void
+  /**
+   * Set the favicon to an emoji
+   */
+  setEmojiFavicon: (emoji: string) => void
+  /**
+   * Set the favicon to the previous favicon
+   */
+  setPreviousFavicon(): void
+}
 ```

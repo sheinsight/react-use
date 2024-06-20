@@ -1,4 +1,4 @@
-# useCloned
+# useClonedState
 
 import { HooksType } from '@/components'
 
@@ -28,7 +28,7 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const [cloned, setCloned, sync] = useCloned(state, options)
+const [cloned, setCloned, sync] = useClonedState(state, options)
 ```
 
 ### State
@@ -38,7 +38,7 @@ Any valid JavaScript type, such as `string`, `number`, `object`, `array`, etc.
 ### Options
 
 ```tsx
-export type UseClonedOptions = {
+export type UseClonedStateOptions = {
   /**
    * Clone function
    *
@@ -63,7 +63,7 @@ export type UseClonedOptions = {
 ### Returns
 
 ```tsx
-export type UseClonedReturns<T> = [
+export type UseClonedStateReturns<T> = [
   /**
    * Cloned state
    */

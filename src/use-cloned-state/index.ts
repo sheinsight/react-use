@@ -6,7 +6,7 @@ import { useUpdateEffect } from '../use-update-effect'
 
 import type { ReactSetState } from '../use-safe-state'
 
-export interface UseClonedOptions {
+export interface UseClonedStateOptions {
   /**
    * Clone function
    *
@@ -27,7 +27,7 @@ export interface UseClonedOptions {
   deep?: boolean
 }
 
-export type UseClonedReturns<T> = [
+export type UseClonedStateReturns<T> = [
   /**
    * Cloned state
    */
@@ -48,19 +48,19 @@ export function defaultCloneFn<T>(source: T): T {
   return JSON.parse(JSON.stringify(source))
 }
 
-export function useCloned<T>(source: T, options: UseClonedOptions = {}): UseClonedReturns<T> {
+export function useClonedState<T>(source: T, options: UseClonedStateOptions = {}): UseClonedStateReturns<T> {
   const { deep = true, manual = false, clone = defaultCloneFn } = options
 
   const [cloned, setCloned] = useSafeState(defaultCloneFn(source))
   const latestState = useLatest({ manual, source, clone })
 
-  const sync = useStableFn(() => {
+  const syncCloned = useStableFn(() => {
     const { clone, source } = latestState.current
     setCloned(clone(source))
   })
 
-  useUpdateEffect(() => void (!latestState.current.manual && sync()), deep ? [] : [source])
-  useUpdateDeepCompareEffect(() => void (!latestState.current.manual && sync()), deep ? [source] : [])
+  useUpdateEffect(() => void (!latestState.current.manual && syncCloned()), deep ? [] : [source])
+  useUpdateDeepCompareEffect(() => void (!latestState.current.manual && syncCloned()), deep ? [source] : [])
 
-  return [cloned, setCloned, sync] as const
+  return [cloned, setCloned, syncCloned] as const
 }

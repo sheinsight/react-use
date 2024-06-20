@@ -1,4 +1,4 @@
-import { defaultCloneFn } from '../use-cloned'
+import { defaultCloneFn } from '../use-cloned-state'
 import { useDebouncedFn } from '../use-debounced-fn'
 import { useLatest } from '../use-latest'
 import { useSetState } from '../use-set-state'
@@ -6,7 +6,7 @@ import { useStableFn } from '../use-stable-fn'
 import { useThrottledFn } from '../use-throttled-fn'
 import { isFunction, isNumber, timestamp } from '../utils/basic'
 
-import type { CloneFn } from '../use-cloned'
+import type { CloneFn } from '../use-cloned-state'
 import type { UseDebouncedFnOptions } from '../use-debounced-fn'
 import type { UseThrottledFnOptions } from '../use-throttled-fn'
 

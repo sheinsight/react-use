@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { useCreation } from '../use-creation'
 import { useLatest } from '../use-latest'
 import { useMount } from '../use-mount'
 import { usePrevious } from '../use-previous'
@@ -33,30 +32,28 @@ export interface UseFaviconOptions {
   syncOnMount?: boolean
 }
 
-export type UseFaviconReturns = readonly [
+export interface UseFaviconReturns {
   /**
    * The current favicon URL
    */
-  favicon: string | null,
-  {
-    /**
-     * Set the favicon URL
-     */
-    setFavicon: ReactSetState<string | null>
-    /**
-     * Sync the favicon in document `<link rel='icon' />` to hooks state
-     */
-    syncFavicon(): void
-    /**
-     * Set the favicon to an emoji
-     */
-    setEmojiFavicon: (emoji: string) => void
-    /**
-     * Set the favicon to the previous favicon
-     */
-    setPreviousFavicon(): void
-  },
-]
+  href: string | null
+  /**
+   * Set the favicon URL
+   */
+  setFavicon: ReactSetState<string | null>
+  /**
+   * Sync the favicon in document `<link rel='icon' />` to hooks state
+   */
+  syncFavicon(): void
+  /**
+   * Set the favicon to an emoji
+   */
+  setEmojiFavicon: (emoji: string) => void
+  /**
+   * Set the favicon to the previous favicon
+   */
+  setPreviousFavicon(): void
+}
 
 function emojiSvgHref(emoji: string): string {
   return `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>${emoji}</text></svg>`
@@ -73,10 +70,10 @@ function getFavicon(rel = 'icon'): string | null {
 
 export function useFavicon(newIcon: FaviconType = null, options: UseFaviconOptions = {}): UseFaviconReturns {
   const { baseUrl = '', rel = 'icon', syncOnMount = true } = options
-  const [favicon, setFavicon] = useSafeState(newIcon ?? null)
-  const previousFavicon = usePrevious(favicon)
+  const [faviconHref, setFaviconHref] = useSafeState(newIcon ?? null)
+  const previousFavicon = usePrevious(faviconHref)
 
-  const latest = useLatest({ favicon, previousFavicon })
+  const latest = useLatest({ faviconHref, previousFavicon })
 
   const applyIcon = useStableFn((icon: string) => {
     if (!document || !document.head) return
@@ -103,37 +100,36 @@ export function useFavicon(newIcon: FaviconType = null, options: UseFaviconOptio
   const syncFavicon = useStableFn(() => {
     const href = getFavicon(rel)
 
-    if (href && href !== latest.current.favicon) {
-      setFavicon(href)
+    if (href && href !== latest.current.faviconHref) {
+      setFaviconHref(href)
     }
   })
 
-  useMount(() => !favicon && syncOnMount && syncFavicon())
+  useMount(() => !faviconHref && syncOnMount && syncFavicon())
 
   useEffect(() => {
-    const isUpdatedIcon = isString(favicon) && favicon !== latest.current.previousFavicon
-    isUpdatedIcon && applyIcon(favicon)
-  }, [favicon])
+    const isUpdatedIcon = isString(faviconHref) && faviconHref !== latest.current.previousFavicon
+    isUpdatedIcon && applyIcon(faviconHref)
+  }, [faviconHref])
 
-  useUpdateEffect(() => void setFavicon(newIcon), [newIcon])
+  useUpdateEffect(() => void setFaviconHref(newIcon), [newIcon])
 
   const setPreviousFavicon = useStableFn(() => {
     const { previousFavicon } = latest.current
     if (!previousFavicon) return
     applyIcon(previousFavicon)
-    setFavicon(previousFavicon)
+    setFaviconHref(previousFavicon)
   })
 
   const setEmojiFavicon = useStableFn((emoji: string) => {
-    setFavicon(emojiSvgHref(encodeURIComponent(emoji)))
+    setFaviconHref(emojiSvgHref(encodeURIComponent(emoji)))
   })
 
-  const actions = useCreation(() => ({
-    setFavicon,
+  return {
+    href: faviconHref,
+    setFavicon: setFaviconHref,
     syncFavicon,
     setEmojiFavicon,
     setPreviousFavicon,
-  }))
-
-  return [favicon, actions] as const
+  }
 }
