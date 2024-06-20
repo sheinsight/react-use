@@ -1,15 +1,15 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
+import { useGetterRef } from '../use-getter-ref'
 import { useLatest } from '../use-latest'
 import { useMount } from '../use-mount'
 import { usePrevious } from '../use-previous'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
+import { useUnmount } from '../use-unmount'
 import { useUpdateEffect } from '../use-update-effect'
 import { isString } from '../utils/basic'
 
 import type { ReactSetState } from '../use-safe-state'
-import { useUnmount } from '../use-unmount'
-import { useGetterRef } from '../use-getter-ref'
 
 export type FaviconType = string | null | undefined
 
