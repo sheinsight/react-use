@@ -30,6 +30,7 @@
   "files": [
     "dist"
   ],
+  "homepage": "https://sheinsight.github.io/react-use/",
   "repository": {
     "type": "git",
     "url": "https://github.com/sheinsight/react-use"
