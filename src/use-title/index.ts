@@ -1,5 +1,6 @@
-import { useRef } from 'react'
+import { useCreation } from '@shined/react-use'
 import { useDeepCompareEffect } from '../use-deep-compare-effect'
+import { useGetterRef } from '../use-getter-ref'
 import { useLatest } from '../use-latest'
 import { useMount } from '../use-mount'
 import { useStableFn } from '../use-stable-fn'
@@ -26,14 +27,14 @@ export type UseTitleOptions = {
   template?: UseTitleTemplate
 }
 
-export function useTitle(newTitle: string, options: UseTitleOptions = {}): () => string {
-  const initialTitle = useRef('')
+export function useTitle(newTitle: string, options: UseTitleOptions = {}) {
+  const [originalTitleRef, originalTitle] = useGetterRef('')
   const { template = '%s', restoreOnUnmount = false } = options
 
   const latest = useLatest({ template, restoreOnUnmount })
 
   useMount(() => {
-    initialTitle.current = document.title
+    originalTitleRef.current = document.title
   })
 
   useDeepCompareEffect(() => {
@@ -41,7 +42,7 @@ export function useTitle(newTitle: string, options: UseTitleOptions = {}): () =>
   }, [newTitle])
 
   const restore = useStableFn(() => {
-    document.title = initialTitle.current
+    document.title = originalTitle()
   })
 
   useUnmount(() => {
@@ -50,7 +51,7 @@ export function useTitle(newTitle: string, options: UseTitleOptions = {}): () =>
     }
   })
 
-  return useStableFn(() => initialTitle.current)
+  return restore
 }
 
 function format(text: string, template: UseTitleTemplate) {

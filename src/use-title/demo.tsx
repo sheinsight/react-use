@@ -1,6 +1,6 @@
 import { Button, Card, Input, Zone } from '@/components'
 import { useControlledComponent } from '@shined/react-use'
-import { useMount, useTitle, useToggle } from '@shined/react-use'
+import { useTitle, useToggle } from '@shined/react-use'
 
 export function App() {
   const [show, toggle] = useToggle(true)
@@ -14,23 +14,16 @@ export function App() {
 }
 
 function Child() {
-  const input = useControlledComponent('')
+  const input = useControlledComponent('useTitle')
 
-  const initialTitle = useTitle(input.value, {
+  useTitle(input.value, {
     template: '🌟 %s 🌟',
     restoreOnUnmount: true,
   })
 
-  useMount(() => input.setValue(initialTitle()))
-
-  function resetTitle() {
-    document.title = initialTitle()
-  }
-
   return (
     <Zone border="primary">
       <Input placeholder="Title" {...input.props} />
-      <Button onClick={resetTitle}>Reset title</Button>
     </Zone>
   )
 }
