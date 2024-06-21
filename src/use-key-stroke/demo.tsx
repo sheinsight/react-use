@@ -4,8 +4,8 @@ import { useCounter, useKeyStatus, useKeyStroke } from '@shined/react-use'
 export function App() {
   const [count, actions] = useCounter()
 
-  useKeyStroke('-', () => actions.dec(), { dedupe: true })
-  useKeyStroke('=', () => actions.inc())
+  useKeyStroke(['=', 'ArrowUp'], () => actions.inc())
+  useKeyStroke(['-', 'ArrowDown'], () => actions.dec())
 
   const isPlusPressed = useKeyStatus('-')
   const isEqualPressed = useKeyStatus('=')
