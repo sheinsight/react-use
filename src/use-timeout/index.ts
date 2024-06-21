@@ -34,6 +34,9 @@ export type UseTimeoutReturns<Controls extends boolean, C extends AnyFunc = AnyF
     }
   : boolean
 
+/**
+ * A React Hook that create a state that changes after a specified delay.
+ */
 export function useTimeout(interval?: number, options?: UseTimeoutOptions<false>): UseTimeoutReturns<false>
 export function useTimeout<C extends AnyFunc>(
   interval: number,

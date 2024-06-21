@@ -105,6 +105,9 @@ export type UsePaginationReturns = [
   },
 ]
 
+/**
+ * A React Hook that manage pagination state.
+ */
 export function usePagination(options: UsePaginationOptions = {}): UsePaginationReturns {
   const {
     total = Number.POSITIVE_INFINITY,

@@ -75,6 +75,9 @@ function getFavicon(rel = 'icon'): string {
   return href
 }
 
+/**
+ * A React Hook that allows you to change the favicon of the page.
+ */
 export function useFavicon(newIcon: FaviconType = null, options: UseFaviconOptions = {}): UseFaviconReturns {
   const { baseUrl = '', rel = 'icon', restoreOnUnmount = false, syncOnMount = true } = options
   const [faviconHref, setFaviconHref] = useSafeState(newIcon ?? null)

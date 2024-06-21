@@ -10,6 +10,9 @@ export * from './normalize-element'
 // biome-ignore lint/complexity/noBannedTypes: for the future
 export type UseTargetElementOptions = {}
 
+/**
+ * A React Hook that helps to get the target element via selector, ref, element and more.
+ */
 export function useTargetElement<T extends GlobalTarget>(
   target: Gettable<T>,
   options?: UseTargetElementOptions,

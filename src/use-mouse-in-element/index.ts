@@ -53,6 +53,9 @@ export interface UseMouseInElementReturns extends Pausable {
   mouse: UseMouseReturns
 }
 
+/**
+ * A React Hook that tracks mouse position in an element.
+ */
 export function useMouseInElement(
   target: ElementTarget,
   options: MouseInElementOptions = {},

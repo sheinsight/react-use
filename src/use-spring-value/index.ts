@@ -41,6 +41,11 @@ export interface UseSpringValueReturns extends Pausable {
   restart(): void
 }
 
+/**
+ * A React Hook that returns a **spring value**.
+ *
+ * Spring Value: A dynamic value that simulate a spring physics changed with time.
+ */
 export function useSpringValue(start: number, end: number, config: UseSpringValueConfig = {}): UseSpringValueReturns {
   const { stiffness = 220, damping = 50, mass = 1, precision = 0.01, immediate = true } = config
 

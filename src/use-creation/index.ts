@@ -9,6 +9,9 @@ interface CreationRefState<T> {
   preDeps?: DependencyList
 }
 
+/**
+ * A React Hook that creates a memoized value that only re-create when the dependencies change.
+ */
 export function useCreation<T>(create: () => T, currDeps?: DependencyList): T {
   const { current: creation } = useRef<CreationRefState<T>>({})
 

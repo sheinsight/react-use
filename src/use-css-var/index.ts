@@ -28,6 +28,9 @@ export interface UseCssVarOptions {
 
 export type UseCssVarReturns = readonly [string, ReactSetState<string>]
 
+/**
+ * A React Hook that allows you to use CSS variables in your components.
+ */
 export function useCssVar<T extends HTMLElement = HTMLElement>(
   propName: Gettable<string>,
   options: UseCssVarOptions = {},

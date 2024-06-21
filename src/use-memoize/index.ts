@@ -54,6 +54,9 @@ export interface UseMemoizeReturns<Result, Args extends unknown[]> {
   cache: UseMemoizeCache<CacheKey, Result>
 }
 
+/**
+ * A React Hook that return a function that memoize value (return same memoized value for same arguments).
+ */
 export function useMemoize<Result, Args extends unknown[]>(
   resolver: (...args: Args) => Result,
   options: UseMemoizeOptions<Result, Args> = {},

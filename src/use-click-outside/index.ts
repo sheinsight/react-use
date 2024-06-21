@@ -15,6 +15,9 @@ export interface UseClickOutsideOptions {
 
 export type UseClickOutsideHandler = (evt: MouseEvent | PointerEvent) => void
 
+/**
+ * A React Hook that allows you to detect clicks outside of a specified element.
+ */
 export function useClickOutside(
   target: ElementTarget,
   handler: UseClickOutsideHandler,

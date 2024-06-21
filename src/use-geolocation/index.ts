@@ -46,6 +46,9 @@ export interface UseGeolocationReturns extends Pausable {
   coords: GeolocationPosition['coords']
 }
 
+/**
+ * A React Hook that provides a simple way to get the user's [geolocation](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation).
+ */
 export function useGeolocation(options: UseGeolocationOptions = {}): UseGeolocationReturns {
   const { enableHighAccuracy = true, maximumAge = 30000, timeout = 27000, immediate = true } = options
 

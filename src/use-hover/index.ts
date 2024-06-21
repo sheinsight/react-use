@@ -28,6 +28,9 @@ export interface UseHoverOptions {
   onChange?: (isHovered: boolean, e: MouseEvent) => void
 }
 
+/**
+ * A React Hook that helps to track the hover state of an element.
+ */
 export function useHover<T extends HTMLElement = HTMLElement>(
   target: ElementTarget<T>,
   options: UseHoverOptions = {},

@@ -52,6 +52,9 @@ export interface UseClipboardReturns<HasSource> {
   clear(): void
 }
 
+/**
+ * A React Hook that copy text with [Clipboard API](https://developer.mozilla.org/zh-CN/docs/Web/API/Clipboard_API) or fallback to `document.execCommand('copy')` if it's not available.
+ */
 export function useClipboard(options?: UseClipboardOptions<undefined>): UseClipboardReturns<false>
 export function useClipboard(options: UseClipboardOptions<Gettable<string>>): UseClipboardReturns<true>
 export function useClipboard(

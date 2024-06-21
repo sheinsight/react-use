@@ -40,6 +40,9 @@ export interface UseElementByPointOptions<M extends boolean = false> extends Pos
   interval?: UseIntervalFnInterval
 }
 
+/**
+ * A React Hook that returns the element at a given point.
+ */
 export function useElementByPoint<
   M extends boolean = false,
   E extends Element | Element[] = M extends true ? Element[] : Element,

@@ -37,6 +37,9 @@ export interface UseModifierOptions<Initial> {
 
 export type UseKeyModifierReturns<Initial> = Initial extends boolean ? boolean : boolean | null
 
+/**
+ * A React Hook that allows you to detect if a [key modifier](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/getModifierState) is pressed.
+ */
 export function useKeyModifier<Initial extends boolean | null>(
   modifier: KeyModifier,
   options: UseModifierOptions<Initial> = {},

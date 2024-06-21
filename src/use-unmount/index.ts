@@ -4,6 +4,9 @@ import { isFunction } from '../utils/basic'
 
 import type { AnyFunc } from '../utils/basic'
 
+/**
+ * A React Hook that helps to run a callback when the component unmounts.
+ */
 export function useUnmount(callback?: AnyFunc | null | undefined | false) {
   const latest = useLatest(callback)
 

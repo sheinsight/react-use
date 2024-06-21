@@ -47,6 +47,9 @@ export type UseIntervalReturns<Controls extends boolean> = Controls extends true
   ? UseIntervalWithControlsReturns
   : number
 
+/**
+ * A React Hook that create a interval counter.
+ */
 export function useInterval(
   interval?: UseIntervalFnInterval,
   options?: UseIntervalOptions<false>,

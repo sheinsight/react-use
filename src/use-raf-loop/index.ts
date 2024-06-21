@@ -39,6 +39,9 @@ export interface UseRafLoopOptions {
 
 export type UseRafLoopCallback = (args: UseRafLoopCallbackArgs) => void
 
+/**
+ * A React Hook that helps to run a function on every frame using [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame).
+ */
 export function useRafLoop(callback: UseRafLoopCallback, options: UseRafLoopOptions = {}): Pausable {
   const { immediate = true, immediateCallback = false, fpsLimit = undefined } = options
   const limit = fpsLimit ? 1000 / fpsLimit : null

@@ -5,7 +5,7 @@ import { useSafeState } from '../use-safe-state'
 import type { DependencyList } from 'react'
 
 /**
- * SSR friendly version of `useSupported` that returns a boolean indicating whether the current environment supports the given feature.
+ * A React Hook that helps to check if browser supports a feature in both client and Server-side Rendering (SSR).
  */
 export function useSupported(callback: () => unknown, deps: DependencyList = []): boolean {
   const [isSupported, setIsSupported] = useSafeState<boolean>(false)

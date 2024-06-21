@@ -62,6 +62,9 @@ export interface UseDeviceListReturns {
   update(): Promise<void>
 }
 
+/**
+ * A React Hook that returns a list of devices that are currently connected.
+ */
 export function useDeviceList(options: UseDeviceListOptions = {}): UseDeviceListReturns {
   const { requestPermissions = false, constraints = { audio: true, video: true }, onUpdated } = options
 

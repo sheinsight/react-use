@@ -15,6 +15,9 @@ export interface UseStateHistoryReturns<Raw, Serialized>
   extends UseManualStateHistoryReturns<Raw, Serialized>,
     Pausable<[commit?: boolean], [commit?: boolean]> {}
 
+/**
+ * A React Hook that track and manipulate the history of a state automatically.
+ */
 export function useStateHistory<Raw, Serialized = Raw>(
   source: Raw,
   options: UseStateHistoryOptions<Raw, Serialized> = {},

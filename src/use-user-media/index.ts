@@ -43,6 +43,9 @@ export interface UseUserMediaReturns extends Pausable {
   isSupported: boolean
 }
 
+/**
+ * A React Hook that helps to manage the user media.
+ */
 export function useUserMedia(options: UseUserMediaOptions = {}): UseUserMediaReturns {
   const { autoSwitch = true, onStart, onStop, constraints = {} } = options
 

@@ -6,6 +6,9 @@ import type { ElementTarget } from '../use-target-element'
 
 export type UseParentElementReturns = HTMLElement | null
 
+/**
+ * A React Hook that track the parent element of an element.
+ */
 export function useParentElement<T extends HTMLElement = HTMLElement>(
   target: ElementTarget<T>,
 ): UseParentElementReturns {

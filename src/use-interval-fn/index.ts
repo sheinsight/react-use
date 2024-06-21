@@ -13,6 +13,9 @@ export interface UseIntervalFnOptions extends Omit<UseRafLoopOptions, 'fpsLimit'
 
 export type UseIntervalFnInterval = Gettable<number> | 'requestAnimationFrame'
 
+/**
+ * A React Hook that create a function that will be called every `interval` milliseconds.
+ */
 export function useIntervalFn(
   callback: AnyFunc,
   interval: UseIntervalFnInterval = 1000,

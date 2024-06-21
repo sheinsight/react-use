@@ -26,6 +26,11 @@ function addListener(
   return () => target.removeEventListener(event, listener, options)
 }
 
+/**
+ * A React Hook that use `EventListener` with ease.
+ *
+ * Register using `addEventListener` on mounted, and `removeEventListener` automatically on unmounted.
+ */
 // default window
 export function useEventListener<E extends keyof WindowEventMap>(
   event: Arrayable<E>,

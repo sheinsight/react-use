@@ -91,6 +91,9 @@ export type UseScriptTagReturns = {
   unload(): void
 }
 
+/**
+ * A React Hook that helps to apply a script tag to the document with ease in React.
+ */
 export function useScriptTag(
   src: string,
   onLoaded: (el: HTMLScriptElement) => void = noop,

@@ -5,6 +5,9 @@ import type { UseWebObserverOptions, UseWebObserverReturns } from '../use-web-ob
 export interface UseReportingObserverOptions extends UseWebObserverOptions, ReportingObserverOptions {}
 export interface UseReportingObserverReturns extends UseWebObserverReturns<ReportingObserver> {}
 
+/**
+ * A React Hook that helps to use [ReportingObserver API](https://developer.mozilla.org/en-US/docs/Web/API/ReportingObserver) to report errors and warnings with ease.
+ */
 export function useReportingObserver(
   callback: ReportingObserverCallback,
   options: UseReportingObserverOptions = {},

@@ -2,6 +2,6 @@ import { useEffect } from 'react'
 import { createUpdateEffect } from '../utils/create-effect/update'
 
 /**
- * Like `React.useEffect`, but only runs on updates.
+ * A React Hook like [React.useEffect](https://react.dev/reference/react/useEffect), but ignore the first invocation on mount.
  */
 export const useUpdateEffect = createUpdateEffect(useEffect)

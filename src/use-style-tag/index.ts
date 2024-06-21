@@ -71,6 +71,9 @@ export interface UseStyleTagOptions {
 
 const globalState = /* #__PURE__ */ { id: 0 }
 
+/**
+ * A React Hook that helps to apply a style tag to the document with ease in React.
+ */
 export function useStyleTag(initialCss = '', options: UseStyleTagOptions = {}): UseStyleTagReturns {
   const isLoaded = useRef(false)
   const styleTag = useRef<HTMLStyleElement | null>(null)

@@ -49,6 +49,9 @@ export interface UseWindowScrollReturns extends Position {
   scrollToRight(): void
 }
 
+/**
+ * A React Hook that helps to track and manipulate window scroll state.
+ */
 export function useWindowScroll(options: UseWindowScrollOptions = {}): UseWindowScrollReturns {
   const { behavior = 'auto' } = options
 

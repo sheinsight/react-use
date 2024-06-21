@@ -23,6 +23,9 @@ export interface UseTextSelectionReturns {
   ranges: Range[]
 }
 
+/**
+ * A React Hook that helps to get the selection state of the document.
+ */
 export function useTextSelection(): UseTextSelectionReturns {
   const selectionRef = useRef<Selection | null>(null)
   const [selectionState, setSelectionState] = useSafeState({

@@ -61,6 +61,9 @@ export type UseMultiSelectReturns<T> = readonly [
   },
 ]
 
+/**
+ * A React Hook that manages multi-select state.
+ */
 export function useMultiSelect<T>(items: T[], defaultSelected: T[] = []): UseMultiSelectReturns<T> {
   const [selected, setSelected] = useSafeState<T[]>(defaultSelected)
   const selectedSet = useCreation(() => new Set(selected), [selected])

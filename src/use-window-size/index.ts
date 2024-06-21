@@ -41,6 +41,9 @@ export interface UseWindowSizeReturns extends Size {
   update(): void
 }
 
+/**
+ * A React Hook that helps to track window height and innerWidth, and optionnally listen orientation media query.
+ */
 export function useWindowSize(options: UseWindowSizeOptions = {}): UseWindowSizeReturns {
   const {
     initialWidth = Number.POSITIVE_INFINITY,

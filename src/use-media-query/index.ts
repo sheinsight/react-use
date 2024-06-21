@@ -13,7 +13,7 @@ export type UseMediaQueryReturns<T, R> = R extends T[] ? boolean[] : boolean
 export interface UseMediaQueryOptions extends AddEventListenerOptions {}
 
 /**
- * React Hook to listen to media query changes.
+ * A React Hook that tracks the state of CSS media query/queries.
  */
 export function useMediaQuery<T extends UseMediaQueryType, R extends Arrayable<T> = Arrayable<T>>(
   query: R,

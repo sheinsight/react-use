@@ -45,6 +45,15 @@ export type UseUrlSearchParamsReturns<T extends Record<string, Arrayable<string 
   Noop,
 ]
 
+/**
+ * A React Hook that helps to manage the URL search params.
+ *
+ * There three mode in `useUrlSearchParams`:
+ *
+ * - **history**: like `/path/to/page?a=1&b=2`
+ * - **hash**: like `/path/to/page#heading?a=1&b=2` (with `?` in hash)
+ * - **hash-params**: like `/path/to/page#/a=1&b=2` (without `?` in hash)
+ */
 export function useUrlSearchParams<
   T extends Record<string, Arrayable<string | number | boolean | undefined>> = UrlParams,
 >(mode: UseUrlSearchParamsMode = 'history', options: UseUrlSearchParamsOptions<T> = {}): UseUrlSearchParamsReturns<T> {

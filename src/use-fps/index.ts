@@ -21,6 +21,9 @@ export interface UseFpsReturns extends Pausable {
   fps: number
 }
 
+/**
+ * A React Hook that returns the current frames per second (FPS) of the browser.
+ */
 export function useFps(options: UseFpsOptions = {}): UseFpsReturns {
   const { every = 10 } = options
 

@@ -60,6 +60,9 @@ export interface UseEventBusOptions {
 // biome-ignore lint/suspicious/noExplicitAny: need any
 export const events = /* #__PURE__ */ new Map<EventBusIdentifier, EventBusEvents<any>>()
 
+/**
+ * A React Hook that provides a simple event bus for your application.
+ */
 // biome-ignore lint/suspicious/noExplicitAny: need any
 export function useEventBus<T = any, P = any>(
   key: EventBusIdentifier,

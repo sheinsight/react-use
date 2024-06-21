@@ -67,6 +67,9 @@ interface ExtendedNavigator extends Navigator {
   }
 }
 
+/**
+ * A React Hook that tracks network status.
+ */
 export function useNetwork(): UseNetworkReturns {
   const isSupported = useSupported(() => 'connection' in navigator)
   const connectionRef = useRef<ExtendedNavigator['connection'] | null>(null)

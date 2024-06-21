@@ -64,6 +64,9 @@ export interface UseEyeDropperReturns {
   open: (options?: EyeDropperOpenOptions) => Promise<string | null>
 }
 
+/**
+ * A React Hook that allows you to use the eye dropper tool to get the color of a pixel on the screen.
+ */
 export function useEyeDropper(options: UseEyeDropperOptions = {}): UseEyeDropperReturns {
   const { initialValue = '', upperCase = true, keepLeadingHash = true } = options
 

@@ -7,6 +7,9 @@ interface SnapshotOptions<StateSlice> {
   isEqual?: (a: StateSlice, b: StateSlice) => boolean
 }
 
+/**
+ * A React Hook that helps to use [Reactive](https://sheinsight.github.io/reactive) in React with ease.
+ */
 export function useReactive<State extends object>(initialState: State): [State, State]
 export function useReactive<State extends object>(initialState: State, options?: SnapshotOptions<State>): [State, State]
 export function useReactive<State extends object>(

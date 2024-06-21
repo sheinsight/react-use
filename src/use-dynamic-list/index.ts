@@ -64,6 +64,9 @@ export type UseDynamicListReturns<T> = readonly [
   },
 ]
 
+/**
+ * A React Hook that helps to manage dynamic list of items.
+ */
 export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturns<T> {
   const listIdxRef = useRef(0)
   const keysRef = useRef<number[]>([])

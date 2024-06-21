@@ -36,6 +36,9 @@ export type UseScrollLockReturns = [
 
 const globalOverflowCache = new WeakMap<Element, CSSStyleDeclaration['overflow']>()
 
+/**
+ * A React Hook that helps to lock/unlock the scroll behavior of an element.
+ */
 export function useScrollLock<T extends HTMLElement = HTMLElement>(
   target: ElementTarget<T>,
   initialState = false,

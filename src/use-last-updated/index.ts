@@ -18,6 +18,9 @@ export interface UseLastChangedOptions {
   deep?: boolean
 }
 
+/**
+ * A React Hook that record the last updated time of a state.
+ */
 export function useLastUpdated<T = unknown>(source: T, options?: UseLastChangedOptions): number | null {
   const { initialValue = null, deep = false } = options ?? {}
   const [updatedAt, setUpdatedAt] = useSafeState<number | null>(initialValue)

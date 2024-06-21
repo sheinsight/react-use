@@ -24,6 +24,9 @@ export interface UseTimeoutFnOptions {
   updateOnEnd?: boolean
 }
 
+/**
+ * A React Hook that helps to create a timeout function.
+ */
 export function useTimeoutFn<Callback extends AnyFunc = AnyFunc>(
   callback: Callback,
   interval: Gettable<number>,

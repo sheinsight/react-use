@@ -14,6 +14,11 @@ export interface UseToggleReturnActions<O, T> {
 
 export type UseToggleReturns<O, T> = [O | T, () => void, UseToggleReturnActions<O, T>]
 
+/**
+ * A React Hook that helps to manage a togglable state.
+ *
+ * If you need to manage a state that alternates among several values, consider utilizing [useCircularList](https://sheinsight.github.io/react-use/reference/use-circular-list) as an alternative.
+ */
 export function useToggle(one: true, theOther?: false): UseToggleReturns<true, false>
 export function useToggle(one: false, theOther?: true): UseToggleReturns<false, true>
 export function useToggle(one: boolean, theOther?: boolean): UseToggleReturns<boolean, boolean>

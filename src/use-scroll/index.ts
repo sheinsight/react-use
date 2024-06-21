@@ -99,6 +99,9 @@ export interface UseScrollReturns extends Pausable {
 const INIT_DIRECTIONS = { left: false, right: false, top: false, bottom: false }
 const ARRIVED_STATE_THRESHOLD_PIXELS = 1
 
+/**
+ * A React Hook that track the scroll state of target element.
+ */
 export function useScroll<T extends HTMLElement>(
   target: ElementTarget<T>,
   options: UseScrollOptions = {},

@@ -48,6 +48,9 @@ export function defaultCloneFn<T>(source: T): T {
   return JSON.parse(JSON.stringify(source))
 }
 
+/**
+ * A React Hook that returns a cloned state with the same properties and values as the original state.
+ */
 export function useClonedState<T>(source: T, options: UseClonedStateOptions = {}): UseClonedStateReturns<T> {
   const { deep = true, manual = false, clone = defaultCloneFn } = options
 

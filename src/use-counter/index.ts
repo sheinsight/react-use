@@ -62,6 +62,9 @@ export type UseCounterReturns = [
   },
 ]
 
+/**
+ * A React Hook that provides a counter with increment, decrement and reset functions.
+ */
 export function useCounter(initialCount?: number, options: UseCounterOptions = {}): UseCounterReturns {
   const [state, setState] = useSetState(
     {

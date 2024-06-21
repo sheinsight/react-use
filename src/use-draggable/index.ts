@@ -114,6 +114,9 @@ export interface UseDraggableReturns {
 /** @see {@link https://developer.mozilla.org/zh-CN/docs/Web/API/MouseEvent/button MDN} */
 const MAIN_MOUSE_BUTTON_TYPE = 0
 
+/**
+ * A React Hook that helps to make element draggable.
+ */
 export function useDraggable(target: ElementTarget, options: UseDraggableOptions = {}): UseDraggableReturns {
   const {
     exact = false,

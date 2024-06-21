@@ -32,6 +32,9 @@ export interface UseTimeAgoOptions<Controls extends boolean, UnitNames extends s
   updateInterval?: number
 }
 
+/**
+ * A React Hook that helps to format a date to a human-readable time ago string. It will automatically update the time ago string every 30 seconds by default.
+ */
 export function useTimeAgo<UnitNames extends string = TimeAgoUnitNamesDefault>(
   time: Gettable<DateLike>,
   options?: UseTimeAgoOptions<false, UnitNames>,

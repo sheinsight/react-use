@@ -81,6 +81,9 @@ export interface UseLongPressReturns {
   stop(): void
 }
 
+/**
+ * A React Hook that helps to handle long press events.
+ */
 export function useLongPress(
   target: ElementTarget,
   handler?: UseLongPressHandler,

@@ -60,6 +60,9 @@ function createKeyPredicate(keyFilter?: KeyFilter): KeyPredicate {
 
 export type UseKeyStrokeHandler = (event: KeyboardEvent) => void
 
+/**
+ * A React Hook that helps to handle key strokes.
+ */
 export function useKeyStroke(key?: KeyFilter, handler?: UseKeyStrokeHandler, options?: UseKeyStrokeOptions): Noop
 export function useKeyStroke(handler?: UseKeyStrokeHandler, options?: UseKeyStrokeOptions): Noop
 // biome-ignore lint/suspicious/noExplicitAny: for overload

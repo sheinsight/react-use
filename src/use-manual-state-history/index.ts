@@ -119,6 +119,9 @@ function defaultParse<R, S>(clone?: boolean | CloneFn<R>) {
   return (clone ? (isFunction(clone) ? clone : defaultCloneFn) : fnBypass) as unknown as FnCloneOrBypass<S, R>
 }
 
+/**
+ * A React Hook that allows you to manage the state history manually.
+ */
 export function useManualStateHistory<Raw, Serialized = Raw>(
   source: Raw,
   options: UseManualStateHistoryOptions<Raw, Serialized> = {},

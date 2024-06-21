@@ -16,6 +16,9 @@ export interface UseElementVisibilityOptions extends Pick<UseIntersectionObserve
   onChange?: (visibility: boolean) => void
 }
 
+/**
+ * A React Hook that allows you to check if an element is visible in the viewport.
+ */
 export function useElementVisibility(target: ElementTarget, options: UseElementVisibilityOptions = {}): boolean {
   const { scrollTarget, threshold = 0, onChange } = options
 

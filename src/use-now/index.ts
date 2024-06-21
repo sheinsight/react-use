@@ -26,6 +26,9 @@ export interface UseNowOptions<Controls extends boolean> extends UseIntervalFnOp
 
 export type UseNowReturns<Controls extends boolean> = Controls extends true ? { now: Date } & Pausable : Date
 
+/**
+ * A React Hook that tracks the current date.
+ */
 export function useNow(options?: UseNowOptions<false>): UseNowReturns<false>
 export function useNow(options: UseNowOptions<true>): UseNowReturns<true>
 export function useNow(options: UseNowOptions<boolean> = {}): UseNowReturns<boolean> {

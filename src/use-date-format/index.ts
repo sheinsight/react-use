@@ -13,6 +13,15 @@ export interface UseDateFormatOptions extends FormatDateOptions {
   fallback?: string
 }
 
+/**
+ * A dependency-free React Hook to format date using symbols, similar to the `format` function found in libraries.
+ *
+ * Such as [dayjs#format](https://day.js.org/docs/en/display/format), [momentjs#format](https://momentjs.com/docs/#/displaying/format/), or [date-fns#format](https://date-fns.org/docs/format).
+ *
+ * By default, the formatting behavior aligns with that of `dayjs`, `momentjs`, and `date-fns@^1`.
+ *
+ * You can set `unicodeSymbols` option to `true` to use [Unicde Standard Date Symbols](https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table), which is similar to `date-fns@^2` and subsequent versions.
+ */
 export function useDateFormat(
   /**
    * a date object or a date string

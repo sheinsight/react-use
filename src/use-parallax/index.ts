@@ -44,6 +44,9 @@ export interface UseParallaxReturns extends Pausable {
   elementStyle: (rotateRatio?: number, duration?: number) => React.CSSProperties
 }
 
+/**
+ * A React Hook that create a parallax effect.
+ */
 export function useParallax(target: ElementTarget, options: UseParallaxOptions = {}): UseParallaxReturns {
   const latest = useLatest({
     deviceOrientationTiltAdjust: (e) => e,

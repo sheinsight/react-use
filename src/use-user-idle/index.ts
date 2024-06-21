@@ -59,6 +59,9 @@ export interface UseUserIdleReturns extends Pausable<[reset?: boolean], [reset?:
 const defaultEvents: WindowEventName[] = ['mousemove', 'mousedown', 'resize', 'keydown', 'touchstart', 'wheel']
 const oneMinute = 60_000
 
+/**
+ * A React Hook that helps to detect whether the user is idle or not.
+ */
 export function useUserIdle(timeout: number = oneMinute, options: UseUserIdleOptions = {}): UseUserIdleReturns {
   const { immediate = true, initialState = false, watchVisibility = true, events = defaultEvents } = options
 

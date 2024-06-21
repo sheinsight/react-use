@@ -12,6 +12,9 @@ export interface UseResizeObserverOptions extends UseWebObserverOptions, ResizeO
 
 export interface UseResizeObserverReturns extends Pausable, UseWebObserverReturns<ResizeObserver> {}
 
+/**
+ * A React Hook that helps to use [ResizeObserver API](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver) to observe the size changes of an element.
+ */
 export function useResizeObserver<T extends HTMLElement>(
   target: Arrayable<ElementTarget<T>>,
   callback: ResizeObserverCallback,

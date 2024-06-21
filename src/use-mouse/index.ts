@@ -85,6 +85,12 @@ export interface UseMouseReturns extends Position, Pausable {
   stop(): void
 }
 
+/**
+ * A React Hook that tracks mouse position.
+ *
+ * @param {UseMouseOptions} options - `UseMouseOptions`, options to configure the hook, see {@link UseMouseOptions}
+ * @returns {UseMouseReturns} `UseMouseReturns`, see {@link UseMouseReturns}
+ */
 export function useMouse(options: UseMouseOptions = {}): UseMouseReturns {
   const {
     type = 'page',

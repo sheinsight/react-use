@@ -34,6 +34,9 @@ export type UseTextDirectionReturns = readonly [
   setDir: ReactSetState<UseTextDirectionValue>,
 ]
 
+/**
+ * A React Hook that helps to get/set the text direction of an element.
+ */
 export function useTextDirection(options: UseTextDirectionOptions = {}): UseTextDirectionReturns {
   const { target = 'html', initialValue = 'ltr' } = options
 

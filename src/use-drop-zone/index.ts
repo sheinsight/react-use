@@ -40,6 +40,9 @@ export interface UseDropZoneReturns {
   isOverDropZone: boolean
 }
 
+/**
+ * A React Hook that allows you to create a dropzone.
+ */
 export function useDropZone(
   target: ElementTarget,
   options: UseDropZoneOptions | UseDropZoneOptions['onDrop'] = {},

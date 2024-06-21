@@ -47,6 +47,9 @@ export interface UseFullscreenReturns {
   toggle(): Promise<void>
 }
 
+/**
+ * A React Hook that allows you to use the [requestFullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Element/requestFullscreen) with ease.
+ */
 export function useFullscreen(
   target: ElementTarget = 'html',
   options: UseFullscreenOptions = {},

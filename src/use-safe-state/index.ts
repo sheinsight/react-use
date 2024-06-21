@@ -20,6 +20,11 @@ export type UseSafeStateOptions = {
   deep?: boolean
 }
 
+/**
+ * A React Hook similar to [React.useState](https://react.dev/reference/react/useState), including an optional deep comparison feature (`false` by default).
+ *
+ * For a detailed explanation on the advantages of `useSafeState`, please refer to the [Safe State](https://sheinsight.github.io/react-use/docs/optimization/safe-state) documentation.
+ */
 export function useSafeState<T>(initialState: Gettable<T>, options?: UseSafeStateOptions): [T, ReactSetState<T>]
 export function useSafeState<T = undefined>(): [T | undefined, ReactSetState<T | undefined>]
 export function useSafeState<T>(initialState?: Gettable<T>, options?: UseSafeStateOptions) {

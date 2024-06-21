@@ -4,6 +4,9 @@ import { useSafeState } from '../use-safe-state'
 
 export type UseDocumentVisibilityCallback = (state: string, event: Event) => void
 
+/**
+ * A React Hook that returns `document.visibilityState`.
+ */
 export function useDocumentVisibility(callback?: UseDocumentVisibilityCallback): DocumentVisibilityState {
   const latest = useLatest({ callback })
 

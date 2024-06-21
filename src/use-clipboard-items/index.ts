@@ -54,6 +54,9 @@ function isAllowed(status: UsePermissionReturns<false>) {
   return status.current && ['granted', 'prompt'].includes(status.current)
 }
 
+/**
+ * Almost same as [useClipboard](https://sheinsight.github.io/react-use/reference/use-clipboard), but support multiple items via [ClipboardItem](https://developer.mozilla.org/en-US/docs/Web/API/ClipboardItem).
+ */
 export function useClipboardItems(options?: UseClipboardItemsOptions<undefined>): UseClipboardItemsReturns<false>
 export function useClipboardItems(options: UseClipboardItemsOptions<ClipboardItems>): UseClipboardItemsReturns<true>
 export function useClipboardItems(

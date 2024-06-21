@@ -12,6 +12,9 @@ export type UseGetterRefReturns<T> = [
   getter: () => T,
 ]
 
+/**
+ * A React Hook that create a gettable ref, a function way to get the latest value of a ref.
+ */
 export function useGetterRef<T>(initial: T): UseGetterRefReturns<T> {
   const ref = useRef<T>(initial)
   const getter = useStableFn(() => ref.current)

@@ -36,6 +36,9 @@ export type UseFocusReturns = readonly [
   },
 ]
 
+/**
+ * A React Hook that allows you to focus on an element when it is mounted.
+ */
 export function useFocus<T extends HTMLElement = HTMLElement>(
   target: ElementTarget<T>,
   options: UseFocusOptions = {},

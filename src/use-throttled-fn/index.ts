@@ -7,6 +7,9 @@ import type { ThrottleOptions } from '../utils/throttle'
 
 export interface UseThrottledFnOptions extends ThrottleOptions {}
 
+/**
+ * A React Hook that helps to create a debounced function.
+ */
 export function useThrottledFn<T extends AnyFunc, P extends Parameters<T>>(
   fn: T,
   options: UseThrottledFnOptions = {},

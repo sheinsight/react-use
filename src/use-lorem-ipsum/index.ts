@@ -25,6 +25,9 @@ export interface UseLoremIpsumOptions {
   stable?: boolean
 }
 
+/**
+ * A React Hook that helps to generate [Lorem Ipsum](https://www.lipsum.com/) text. Useful for testing and placeholder text.
+ */
 export function useLoremIpsum(n?: number): string
 export function useLoremIpsum(options?: UseLoremIpsumOptions): string
 export function useLoremIpsum(arg?: number | UseLoremIpsumOptions): string {

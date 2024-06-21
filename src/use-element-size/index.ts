@@ -18,6 +18,9 @@ export interface ElementSize {
 
 export interface UseElementSizeReturns extends ElementSize, UseResizeObserverReturns {}
 
+/**
+ * A React Hook that returns the size of an element.
+ */
 export function useElementSize<T extends HTMLElement = HTMLElement>(
   target: ElementTarget<T>,
   defaultValue: ElementSize = { width: 0, height: 0 },

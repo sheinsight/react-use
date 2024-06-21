@@ -55,6 +55,9 @@ export interface UseInfiniteScrollReturns {
   calculate(): void
 }
 
+/**
+ * A React Hook that allows you to use infinite scroll in your components.
+ */
 // biome-ignore lint/suspicious/noExplicitAny: need any
 export function useInfiniteScroll<R = any, T extends HTMLElement = HTMLElement>(
   target: ElementTarget<T>,

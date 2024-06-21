@@ -7,6 +7,9 @@ import type { DebounceOptions } from '../utils/debounce'
 
 export interface UseDebouncedFnOptions extends DebounceOptions {}
 
+/**
+ * A React Hook that create a debounced function.
+ */
 export function useDebouncedFn<T extends AnyFunc, P extends Parameters<T>>(
   fn: T,
   options: UseDebouncedFnOptions = {},

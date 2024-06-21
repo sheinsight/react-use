@@ -41,6 +41,27 @@ function getElements(target: Arrayable<ElementTarget>) {
   return unwrapArrayable(target).map(normalizeElement).filter(notNullish)
 }
 
+/**
+ * A low level React Hooks that helps to use Observer with ease. Available Observer:
+ *
+ * ```tsx
+ * export type WebObserverType =
+ *   | 'IntersectionObserver'
+ *   | 'MutationObserver'
+ *   | 'ResizeObserver'
+ *   | 'PerformanceObserver'
+ *   | 'ReportingObserver'
+ * ```
+ *
+ * You should **NOT** use this Hook directly, use the high level Hooks below instead:
+ *
+ * - [useIntersectionObserver](https://sheinsight.github.io/react-use/reference/use-intersection-observer)
+ * - [useMutationObserver](https://sheinsight.github.io/react-use/reference/use-mutation-observer)
+ * - [useResizeObserver](https://sheinsight.github.io/react-use/reference/use-resize-observer)
+ * - [usePerformanceObserver](https://sheinsight.github.io/react-use/reference/use-performance-observer)
+ * - [useReportingObserver](https://sheinsight.github.io/react-use/reference/use-reporting-observer)
+ *
+ */
 export function useWebObserver(
   observer: 'IntersectionObserver',
   target: Arrayable<ElementTarget>,

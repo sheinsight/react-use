@@ -54,6 +54,9 @@ export interface UseControlledComponentReturns<T> {
   setValue: (value: T) => void
 }
 
+/**
+ * A React Hook that helps you to manage controlled components that receive `value` and `onChange` props meeting the following type.
+ */
 export function useControlledComponent<T = string, P extends object = object>(
   initialValue: T = '' as T,
   options: UseControlledComponentOptions<T, P> = {},

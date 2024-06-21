@@ -11,6 +11,9 @@ export type UseSetStateSetMergedState<T extends PureObject> = <K extends keyof T
 
 export interface UseSetStateOptions extends UseSafeStateOptions {}
 
+/**
+ * A React Hook that helps to use state like `this.setState` method of React's legacy class component.
+ */
 export function useSetState<T extends PureObject>(
   initialState: Gettable<T>,
   options: UseSetStateOptions = {},

@@ -64,6 +64,9 @@ export type UsePermissionReturns<Controls extends boolean> = Controls extends tr
     }
   : RefObject<PermissionState>
 
+/**
+ * A React Hook that helps to query the permission status of a browser feature.
+ */
 export function usePermission(
   permissionDesc: PermissionDesc,
   options?: UsePermissionOptions<false>,

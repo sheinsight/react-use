@@ -6,6 +6,9 @@ export interface UseDocumentLeaveEvent {
   toElement?: EventTarget | null
 }
 
+/**
+ * A React Hook that tracks whether the user is leaving the document.
+ */
 export function useDocumentLeave() {
   const [isLeft, setIsLeft] = useSafeState(false)
 

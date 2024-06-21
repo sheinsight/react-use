@@ -45,6 +45,9 @@ export interface UseMousePressedReturns {
   sourceType: UseMouseSourceType
 }
 
+/**
+ * A React Hook that tracks mouse pressed state.
+ */
 export function useMousePressed(
   target: ElementTarget | (() => Window) | (() => Document) = () => window,
   options: MousePressedOptions = {},

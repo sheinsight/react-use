@@ -8,6 +8,9 @@ import type { Gettable } from '../utils/basic'
 
 export interface UseResetStateOptions extends UseSafeStateOptions {}
 
+/**
+ * A React Hook like [React.useState](https://react.dev/reference/react/useState), but provide a `reset` function to reset the state to initial value.
+ */
 export function useResetState<T>(
   initialState: Gettable<T>,
   options?: UseResetStateOptions,

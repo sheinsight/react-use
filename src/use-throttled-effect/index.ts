@@ -6,6 +6,6 @@ import type { ThrottleOptions } from '../utils/throttle'
 export interface UseThrottledEffectOptions extends ThrottleOptions {}
 
 /**
- * like `React.useEffect`, but throttled.
+ * A React Hook like [React.useEffect](https://react.dev/reference/react/useEffect), but throttled.
  */
 export const useThrottledEffect = createThrottledEffect(useEffect)

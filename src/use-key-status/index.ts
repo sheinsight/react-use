@@ -8,6 +8,9 @@ import type { KeyFilter, UseKeyStrokeHandler, UseKeyStrokeOptions } from '../use
 export interface UseKeyStatusHandler extends UseKeyStrokeHandler {}
 export interface UseKeyStatusOptions extends Omit<UseKeyStrokeOptions, 'eventName' | 'dedupe'> {}
 
+/**
+ * A React Hook that helps to track the press status of a key.
+ */
 export function useKeyStatus(
   key?: KeyFilter,
   handler?: UseKeyStatusHandler,

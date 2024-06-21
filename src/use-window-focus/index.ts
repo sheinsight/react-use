@@ -2,6 +2,9 @@ import { useEventListener } from '../use-event-listener'
 import { useMount } from '../use-mount'
 import { useSafeState } from '../use-safe-state'
 
+/**
+ * A React Hook that helps to detect whether the window is focused or not.
+ */
 export function useWindowFocus(): boolean {
   const [isFocused, setIsFocused] = useSafeState(false)
 

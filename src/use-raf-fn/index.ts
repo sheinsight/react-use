@@ -6,6 +6,9 @@ import { isClient } from '../utils/basic'
 
 import type { AnyFunc } from '../utils/basic'
 
+/**
+ * A React Hook that run a function only once on the next frame using [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame).
+ */
 export function useRafFn<T extends AnyFunc>(callback: T, autoClean = true): (...args: Parameters<T>) => void {
   const latest = useLatest({ callback, autoClean })
   const rafIdRef = useRef<number | null>(null)

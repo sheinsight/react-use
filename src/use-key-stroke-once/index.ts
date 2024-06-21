@@ -4,6 +4,9 @@ import { useLatest } from '../use-latest'
 import type { KeyFilter, UseKeyStrokeHandler, UseKeyStrokeOptions } from '../use-key-stroke'
 import type { Noop } from '../utils/basic'
 
+/**
+ * A React Hook that helps to handle key strokes **once**.
+ */
 export function useKeyStrokeOnce(
   key?: KeyFilter,
   handler?: UseKeyStrokeHandler,

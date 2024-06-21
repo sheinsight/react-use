@@ -62,6 +62,9 @@ function calRemainingTime(date: Gettable<DateLike>) {
   return 0
 }
 
+/**
+ * A React Hook that provides a countdown timer.
+ */
 export function useCountdown(date: Gettable<DateLike>): UseCountdownReturns<false>
 export function useCountdown(date: Gettable<DateLike>, options: UseCountdownOptions<false>): UseCountdownReturns<false>
 export function useCountdown(date: Gettable<DateLike>, options: UseCountdownOptions<true>): UseCountdownReturns<true>
