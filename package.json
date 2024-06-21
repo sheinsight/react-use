@@ -30,6 +30,10 @@
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sheinsight/react-use"
+  },
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
