@@ -1,9 +1,9 @@
-name: Deploy docs
+name: GitHub Pages
 
 on:
   push:
-    branches: 
-      - "main"
+    branches:
+      - 'main'
   workflow_dispatch:
 
 permissions:
@@ -13,7 +13,7 @@ permissions:
 
 concurrency:
   group: 'pages'
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   deploy:

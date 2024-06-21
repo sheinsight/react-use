@@ -1,0 +1,44 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - 'main'
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    permissions:
+      id-token: write
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.node-version'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build package
+        run: pnpm run build
+
+      - name: Run test
+        run: pnpm run test:ci
+
+      - name: Publish package
+        run: pnpm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.SHINED_NPM_PUBLISH_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
