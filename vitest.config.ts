@@ -8,7 +8,7 @@ export default defineConfig({
     setupFiles: ['./vitest.setup.ts'],
     passWithNoTests: true,
     alias: {
-      '@/test': new URL('./test/', import.meta.url).pathname,
+      '@/test': new URL('./testing/', import.meta.url).pathname,
     },
   },
 })

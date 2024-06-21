@@ -16,5 +16,6 @@
       "react-hot-toast": ["./website/node_modules/react-hot-toast"]
     }
   },
-  "include": ["./src"]
+  "include": ["./src"],
+  "exclude": ["./website", "./src/**/demo.tsx"]
 }
