@@ -7,7 +7,6 @@ export function App() {
   const [count, actions] = useCounter(0)
   const [depCount, depActions] = useCounter(0)
 
-  // highlight-start
   const map = useCreation(() => {
     console.log('Creating map...')
 
@@ -19,7 +18,6 @@ export function App() {
 
     return new Map<string, string>(entries)
   }, [depCount])
-  // highlight-end
 
   useEffect(() => {
     toast.success(`Creating map... ${depCount}`)

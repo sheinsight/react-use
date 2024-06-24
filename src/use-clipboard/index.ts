@@ -62,21 +62,32 @@ export function useClipboard(
 ): UseClipboardReturns<boolean> {
   const { read = false, source, copiedDuration = 1500 } = options
 
-  const permissionRead = usePermission('clipboard-read')
-  const permissionWrite = usePermission('clipboard-write')
   const [state, setState] = useSetState({ text: '', copied: false }, { deep: true })
   const isSupported = useSupported(() => 'clipboard' in navigator)
   const { resume: startTimeout } = useTimeoutFn(() => setState({ copied: false }), copiedDuration)
 
   const latest = useLatest({
+    read,
     isSupported,
     sourceValue: unwrapGettable(source),
   })
 
+  const permissionRead = usePermission('clipboard-read', {
+    onStateChange() {
+      if (latest.current.read) updateText()
+    },
+  })
+
+  const permissionWrite = usePermission('clipboard-write')
+
   const updateText = useStableFn(async () => {
     if (latest.current.isSupported && isAllowed(permissionRead)) {
-      const value = await navigator.clipboard.readText()
-      setState({ text: value })
+      // to prevent error when document is not focused
+      // => Failed to execute 'readText' on 'Clipboard': Document is not focused.
+      if (document.hasFocus()) {
+        const value = await navigator.clipboard.readText()
+        setState({ text: value })
+      }
     } else {
       setState({ text: legacyRead() })
     }
@@ -85,7 +96,7 @@ export function useClipboard(
   const copy = useStableFn(async (value = latest.current.sourceValue) => {
     if (latest.current.isSupported && value) {
       if (latest.current.isSupported && isAllowed(permissionWrite)) {
-        await navigator?.clipboard.writeText(value)
+        await navigator.clipboard.writeText(value)
       } else {
         legacyCopy(value)
       }
@@ -115,7 +126,7 @@ function legacyCopy(value: string) {
   textarea.value = value
   textarea.style.position = 'absolute'
   textarea.style.opacity = '0'
-  textarea.style.zIndex = '-1'
+  textarea.style.zIndex = '-999999999'
   document.body.appendChild(textarea)
   textarea.select()
   document.execCommand('copy')

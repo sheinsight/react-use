@@ -5,8 +5,6 @@ const hash = () => Math.random().toString(36).slice(2, 8).toUpperCase()
 
 export function App() {
   const input = useControlledComponent(hash())
-
-  // highlight-next-line
   const clipboard = useClipboard({ read: true })
 
   return (
