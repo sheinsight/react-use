@@ -30,13 +30,13 @@ export function App() {
   const [state, setState] = useSafeState(0)
 
   useEffectOnce(() => {
-    const timer = window.setInterval(() => {
+    const timer = setInterval(() => {
       // This `state` is stale, which is always be `0`.
       // It should be `setState((pre) => pre + 1)`,
       // or use `useLatest` to get the latest value to avoid stale closure
       setState(state + 1)
     }, 1000)
-    return () => window.clearInterval(timer)
+    return () => clearInterval(timer)
   })
 
   useUnmount(() => toast.remove())

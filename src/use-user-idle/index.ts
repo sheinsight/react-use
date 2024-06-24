@@ -81,10 +81,10 @@ export function useUserIdle(timeout: number = oneMinute, options: UseUserIdleOpt
 
     if (updateTimestamp) lastActiveRef.current = timestamp()
 
-    timer.current !== null && window.clearTimeout(timer.current)
+    timer.current !== null && clearTimeout(timer.current)
 
     if (restart) {
-      timer.current = window.setTimeout(() => setIsIdle(true), latestTimeout.current)
+      timer.current = setTimeout(() => setIsIdle(true), latestTimeout.current)
     }
   })
 

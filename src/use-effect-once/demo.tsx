@@ -5,8 +5,8 @@ export function App() {
   const [count, actions] = useCounter(0)
 
   useEffectOnce(() => {
-    const timer = window.setInterval(actions.inc, 1000)
-    return () => window.clearInterval(timer)
+    const timer = setInterval(actions.inc, 1000)
+    return () => clearInterval(timer)
   })
 
   return (

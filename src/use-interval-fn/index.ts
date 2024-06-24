@@ -31,7 +31,7 @@ export function useIntervalFn(
 
   function clearTime() {
     if (timer.current !== null) {
-      window.clearInterval(timer.current)
+      clearInterval(timer.current)
       timer.current = null
     }
   }
@@ -42,7 +42,7 @@ export function useIntervalFn(
     if (isString(intervalValue) || intervalValue <= 0) return
 
     immediateCallback && callback()
-    timer.current = window.setInterval(() => latest.current.callback(), intervalValue)
+    timer.current = setInterval(() => latest.current.callback(), intervalValue)
   })
 
   useEffect(() => {

@@ -38,7 +38,7 @@ export function useTimeoutFn<Callback extends AnyFunc = AnyFunc>(
 
   function clearTimer() {
     if (timerRef.current !== null) {
-      window.clearTimeout(timerRef.current)
+      clearTimeout(timerRef.current)
       timerRef.current = null
     }
   }
@@ -48,7 +48,7 @@ export function useTimeoutFn<Callback extends AnyFunc = AnyFunc>(
 
     clearTimer()
 
-    timerRef.current = window.setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       ref.current = false
       timerRef.current = null
       latest.current.callback(...args)

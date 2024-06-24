@@ -44,8 +44,8 @@ export type Size = {
   height: number
 }
 
-export type SetTimeoutReturn = ReturnType<Window['setTimeout']>
-export type SetIntervalReturn = ReturnType<Window['setInterval']>
+export type SetTimeoutReturn = ReturnType<(typeof globalThis)['setTimeout']>
+export type SetIntervalReturn = ReturnType<(typeof globalThis)['setInterval']>
 
 declare const process: {
   env: {

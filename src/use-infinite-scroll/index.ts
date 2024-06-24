@@ -94,7 +94,7 @@ export function useInfiniteScroll<R = any, T extends HTMLElement = HTMLElement>(
 
     const [res, _] = await Promise.all([
       onLoadMore(previousReturn.current),
-      new Promise((resolve) => window.setTimeout(resolve, interval)),
+      new Promise((resolve) => setTimeout(resolve, interval)),
     ])
 
     setState({ ...latest.current.state, isLoading: false })

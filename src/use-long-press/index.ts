@@ -103,7 +103,7 @@ export function useLongPress(
 
   function clearTimer() {
     if (timeout.current) {
-      window.clearTimeout(timeout.current)
+      clearTimeout(timeout.current)
       timeout.current = null
     }
     posStart.current = undefined
@@ -125,7 +125,7 @@ export function useLongPress(
     setState({ isPressed: true })
 
     posStart.current = { x: ev.x, y: ev.y }
-    timeout.current = window.setTimeout(() => latest.current.handler(ev), options?.delay ?? DEFAULT_DELAY)
+    timeout.current = setTimeout(() => latest.current.handler(ev), options?.delay ?? DEFAULT_DELAY)
   }
 
   function onMove(ev: PointerEvent) {
