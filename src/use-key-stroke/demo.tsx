@@ -5,7 +5,7 @@ export function App() {
   const [count, actions] = useCounter()
 
   useKeyStroke(['=', 'ArrowUp'], () => actions.inc())
-  useKeyStroke(['-', 'ArrowDown'], () => actions.dec())
+  useKeyStroke(['-', 'ArrowDown'], () => actions.dec(), { dedupe: true })
 
   const isPlusPressed = useKeyStatus('-')
   const isEqualPressed = useKeyStatus('=')
