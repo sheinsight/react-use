@@ -12,8 +12,8 @@
   "exports": {
     ".": {
       "types": {
-        "require": "./dist/index.d.cts",
         "import": "./dist/index.d.ts",
+        "require": "./dist/index.d.cts",
         "default": "./dist/index.d.ts"
       },
       "import": "./dist/index.js",
@@ -31,9 +31,19 @@
     "dist"
   ],
   "homepage": "https://sheinsight.github.io/react-use/",
+  "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/sheinsight/react-use"
+    "url": "git+https://github.com/sheinsight/react-use.git"
+  },
+  "bugs": "https://github.com/sheinsight/react-use/issues",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ]
+    }
   },
   "scripts": {
     "dev": "tsup --watch",
