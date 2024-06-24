@@ -51,6 +51,7 @@
     "lint": "biome check && oxlint && pnpm run typecheck",
     "lint:fix": "biome check --fix --unsafe && oxlint --fix",
     "prepack": "clean-pkg-json",
+    "prerelease": "pnpm run lint",
     "release": "bumpp --no-push",
     "test": "vitest",
     "test:ci": "pnpm run lint && vitest",
