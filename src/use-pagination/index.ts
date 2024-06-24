@@ -29,24 +29,24 @@ export interface UsePaginationOptions {
    * @param {PaginationInfo} pagination - `PaginationInfo`, the pagination info
    * @returns {void} `void`
    */
-  onPageChange?: (pagination: PaginationInfo) => void
+  onPageChange?: (pagination: UsePaginationState) => void
   /**
    * Callback when the `pageSize` change.
    *
    * @param {PaginationInfo} pagination - `PaginationInfo`, the pagination info
    * @returns {void} `void`
    */
-  onPageSizeChange?: (pagination: PaginationInfo) => void
+  onPageSizeChange?: (pagination: UsePaginationState) => void
   /**
    * Callback when the `pageCount` change.
    *
    * @param {PaginationInfo} pagination - `PaginationInfo`, the pagination info
    * @returns {void} `void`
    */
-  onPageCountChange?: (pagination: PaginationInfo) => void
+  onPageCountChange?: (pagination: UsePaginationState) => void
 }
 
-export interface PaginationInfo {
+export interface UsePaginationState {
   /**
    * Total number of items.
    */
@@ -74,7 +74,7 @@ export interface PaginationInfo {
 }
 
 export type UsePaginationReturns = [
-  PaginationInfo,
+  UsePaginationState,
   {
     /**
      * Go to the previous page.

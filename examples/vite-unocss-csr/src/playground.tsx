@@ -51,7 +51,7 @@ export const Playground = () => {
 
   useBeforeUnload((e) => console.log('callback'))
 
-  const pagination = usePagination()
+  const [pagination, actions] = usePagination()
 
   const { videoInputs } = useDeviceList({ requestPermissions: true })
 
@@ -98,22 +98,22 @@ export const Playground = () => {
 
       <div className="m-4 flex flex-col gap-2">
         <div className="flex gap2">
-          <button type="button" onClick={pagination.prev}>
+          <button type="button" onClick={actions.prev}>
             prev
           </button>
-          <button type="button" onClick={() => pagination.go(1)}>
+          <button type="button" onClick={() => actions.go(1)}>
             1
           </button>
-          <button type="button" onClick={() => pagination.go(2)}>
+          <button type="button" onClick={() => actions.go(2)}>
             2
           </button>
-          <button type="button" onClick={() => pagination.go(3)}>
+          <button type="button" onClick={() => actions.go(3)}>
             3
           </button>
-          <button type="button" onClick={() => pagination.go(4)}>
+          <button type="button" onClick={() => actions.go(4)}>
             4
           </button>
-          <button type="button" onClick={pagination.next}>
+          <button type="button" onClick={actions.next}>
             next
           </button>
         </div>

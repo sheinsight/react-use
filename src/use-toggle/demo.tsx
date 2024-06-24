@@ -3,7 +3,7 @@ import { useCircularList, useToggle } from '@shined/react-use'
 
 export function App() {
   const [bool, toggleBool] = useToggle(true)
-  const [mode, toggleMode] = useToggle('light', 'dark')
+  const [mode, toggleMode] = useToggle(['light', 'dark'] as const)
   const [value, listActions] = useCircularList(['A', 'B', 'C', 'D', 'F', 'G'])
 
   return (

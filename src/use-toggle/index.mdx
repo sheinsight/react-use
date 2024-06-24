@@ -34,5 +34,35 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
+const [value, toggle, actions] = useToggle(bool)
+const [value, toggle, actions] = useToggle(one, theOther)
+```
 
+### Parameters
+
+It accepts one or two parameters:
+
+- `bool`: A `boolean`, the initial value of the state, will be toggled between `true` and `false`.
+
+- `one`, `theOther`: The two values that the state toggles between.
+
+### Returns
+
+```tsx
+export interface UseToggleReturnActions<O, T> {
+  /**
+   * Set the state to the left value.
+   */
+  setLeft(): void
+  /**
+   * Set the state to the right value.
+   */
+  setRight(): void
+  /**
+   * Set the state to a new value.
+   */
+  setState: ReactSetState<O | T>
+}
+
+export type UseToggleReturns<O, T> = [O | T, () => void, UseToggleReturnActions<O, T>]
 ```

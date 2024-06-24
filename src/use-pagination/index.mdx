@@ -28,7 +28,7 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const [state, actions] = usePagination(options)
+const [pagination, pagiActions] = usePagination(options)
 ```
 
 ### Options
@@ -56,22 +56,22 @@ export type UsePaginationOptions = {
   /**
    * Callback when the `page` change.
    */
-  onPageChange?: (pagination: PaginationInfo) => void
+  onPageChange?: (pagination: UsePaginationState) => void
   /**
    * Callback when the `pageSize` change.
    */
-  onPageSizeChange?: (pagination: PaginationInfo) => void
+  onPageSizeChange?: (pagination: UsePaginationState) => void
   /**
    * Callback when the `pageCount` change.
    */
-  onPageCountChange?: (pagination: PaginationInfo) => void
+  onPageCountChange?: (pagination: UsePaginationState) => void
 }
 ```
 
 ### Returns
 
 ```tsx
-export interface PaginationInfo {
+export interface UsePaginationState {
   /**
    * Total number of items.
    */
@@ -99,7 +99,7 @@ export interface PaginationInfo {
 }
 
 export type UsePaginationReturns = [
-  PaginationInfo,
+  UsePaginationState,
   {
     /**
      * Go to the previous page.
