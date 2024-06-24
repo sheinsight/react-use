@@ -30,7 +30,7 @@ export function debounce<T extends AnyFunc>(fn: T, options: DebounceOptions = {}
   const debounced = function (this: ThisParameterType<T>, ...args: Parameters<T>) {
     const invokeLeading = leading && !leadingInvoked
 
-    const later = () => {
+    const invoke = () => {
       timeoutId = null
       if (trailing && !leadingInvoked) fn.apply(this, args)
       leadingInvoked = false
@@ -43,12 +43,12 @@ export function debounce<T extends AnyFunc>(fn: T, options: DebounceOptions = {}
       fn.apply(this, args)
     }
 
-    timeoutId = setTimeout(() => later(), wait)
+    timeoutId = setTimeout(invoke, wait)
 
-    if (!leading && !trailing && !timeoutId) {
-      fn.apply(this, args)
-      leadingInvoked = false
-    }
+    // if (!leading && !trailing) {
+    //   fn.apply(this, args)
+    //   leadingInvoked = false
+    // }
   }
 
   debounced.clear = () => {
