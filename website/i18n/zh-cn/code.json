@@ -1,4 +1,20 @@
 {
+  "homepage.tagline":{
+    "message": "一个 SSR 友好、覆盖面广、标准化和高度优化的 React Hooks 库",
+    "description": "tagline"
+  },
+  "homepage.button.introduction":{
+    "message": "介绍",
+    "description": "introduction"
+  },
+  "homepage.button.getStarted":{
+    "message": "起步",
+    "description": "getStarted"
+  },
+  "homepage.button.reference":{
+    "message": "API 文档",
+    "description": "getStarted"
+  },
   "theme.ErrorPageContent.title": {
     "message": "页面已崩溃。",
     "description": "The title of the fallback page when the page crashed"

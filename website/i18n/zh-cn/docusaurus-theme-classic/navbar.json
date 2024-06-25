@@ -8,7 +8,7 @@
     "description": "Navbar item with label Guide"
   },
   "item.label.Reference": {
-    "message": "参考",
+    "message": "API 文档",
     "description": "Navbar item with label Reference"
   },
   "item.label.Playground": {

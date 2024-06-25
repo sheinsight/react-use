@@ -3,6 +3,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import Layout from '@theme/Layout'
 import { Button } from '../components'
 import { SearchHooks } from './components/search'
+import Translate from '@docusaurus/Translate'
 
 export default function Home() {
   const { siteConfig } = useDocusaurusContext()
@@ -25,13 +26,23 @@ export default function Home() {
               />
               <img src="https://pkg-size.dev/badge/bundle/108270" alt="Version Badge" />
             </div>
-            <p className="text-pretty text-center max-w-320px md:max-w-400px md:text-left">{siteConfig.tagline}</p>
+            <p className="text-pretty text-center max-w-320px md:max-w-400px md:text-left">
+              <Translate id="homepage.tagline">
+                An SSR-friendly, comprehensive, and highly optimized React Hooks library.
+              </Translate>
+            </p>
             <div className="flex gap-4 items-center">
               <Link to="/docs/introduction">
-                <Button>Introduction</Button>
+                <Button>
+                  <Translate id="homepage.button.introduction">Introduction</Translate>
+                </Button>
               </Link>
-              <Link to="/docs/get-started">Get Started</Link>
-              <Link to="/reference">Reference</Link>
+              <Link to="/docs/get-started">
+                <Translate id="homepage.button.getStarted">Get Started</Translate>
+              </Link>
+              <Link to="/reference">
+                <Translate id="homepage.button.reference">Reference</Translate>
+              </Link>
             </div>
           </div>
           <SearchHooks />

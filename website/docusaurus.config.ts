@@ -7,7 +7,6 @@ import type { Config } from '@docusaurus/types'
 export default {
   title: '@shined/react-use',
   tagline: 'An SSR-friendly, comprehensive, and highly optimized React Hooks library.',
-
   url: 'https://shined-hooks.vercel.app',
   baseUrl: '/react-use',
   organizationName: 'sheinsight',
