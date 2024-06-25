@@ -39,14 +39,14 @@ export function useNow(options: UseNowOptions<boolean> = {}): UseNowReturns<bool
     ...useIntervalFnOptions
   } = options
 
-  const latestCallback = useLatest(callback)
+  const latest = useLatest({ callback })
   const [now, setNow] = useSafeState(() => new Date())
 
   const controls = useIntervalFn(
     () => {
       const now = new Date()
       setNow(now)
-      latestCallback.current?.(now)
+      latest.current.callback?.(now)
     },
     interval,
     useIntervalFnOptions,

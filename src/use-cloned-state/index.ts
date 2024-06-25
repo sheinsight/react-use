@@ -55,15 +55,15 @@ export function useClonedState<T>(source: T, options: UseClonedStateOptions = {}
   const { deep = true, manual = false, clone = defaultCloneFn } = options
 
   const [cloned, setCloned] = useSafeState(defaultCloneFn(source))
-  const latestState = useLatest({ manual, source, clone })
+  const latest = useLatest({ manual, source, clone })
 
   const syncCloned = useStableFn(() => {
-    const { clone, source } = latestState.current
+    const { clone, source } = latest.current
     setCloned(clone(source))
   })
 
-  useUpdateEffect(() => void (!latestState.current.manual && syncCloned()), deep ? [] : [source])
-  useUpdateDeepCompareEffect(() => void (!latestState.current.manual && syncCloned()), deep ? [source] : [])
+  useUpdateEffect(() => void (!latest.current.manual && syncCloned()), deep ? [] : [source])
+  useUpdateDeepCompareEffect(() => void (!latest.current.manual && syncCloned()), deep ? [source] : [])
 
   return [cloned, setCloned, syncCloned] as const
 }

@@ -46,6 +46,9 @@ export function useRafLoop(callback: UseRafLoopCallback, options: UseRafLoopOpti
   const { immediate = true, immediateCallback = false, fpsLimit = undefined } = options
   const limit = fpsLimit ? 1000 / fpsLimit : null
 
+  const rafIdRef = useRef<number | null>(null)
+  const lastTsRef = useRef(0) // timestamp of the last frame
+
   function clearRafIfActive() {
     if (rafIdRef.current !== null) {
       window.cancelAnimationFrame(rafIdRef.current)
@@ -53,22 +56,20 @@ export function useRafLoop(callback: UseRafLoopCallback, options: UseRafLoopOpti
     }
   }
 
+  const latest = useLatest({ callback, clearRafIfActive, immediateCallback, immediate, limit })
+
   const pausable = usePausable(false, clearRafIfActive, () => {
-    const { clearRafIfActive, immediateCallback, callback } = latest.current
-    clearRafIfActive()
+    latest.current.clearRafIfActive()
     lastTsRef.current = 0
+    const { immediateCallback, callback } = latest.current
     immediateCallback && callback({ timestamp: 0, delta: 0 })
     rafIdRef.current = window.requestAnimationFrame(raf)
   })
 
-  const rafIdRef = useRef<number | null>(null)
-  const lastTsRef = useRef(0) // timestamp of the last frame
-  const latest = useLatest({ callback, clearRafIfActive, immediateCallback, immediate, limit })
-
   const raf = useStableFn((timestamp: DOMHighResTimeStamp) => {
     if (!pausable.isActive()) return
 
-    const { limit, callback } = latest.current
+    const { limit } = latest.current
     if (!lastTsRef.current) lastTsRef.current = timestamp
     const delta = timestamp - lastTsRef.current
 
@@ -78,7 +79,7 @@ export function useRafLoop(callback: UseRafLoopCallback, options: UseRafLoopOpti
     }
 
     lastTsRef.current = timestamp
-    callback({ delta, timestamp })
+    latest.current.callback({ delta, timestamp })
     rafIdRef.current = window.requestAnimationFrame(raf)
   })
 

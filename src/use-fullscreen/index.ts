@@ -62,7 +62,7 @@ export function useFullscreen(
   const isSupported = useSupported(() => {
     const attrs = getCompatibleAttr(el.current)
     return Object.values(attrs).every(isDefined)
-  })
+  }, [el.current])
 
   const latest = useLatest({ isFullscreen, isSupported })
 

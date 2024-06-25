@@ -67,7 +67,7 @@ export function useUserIdle(timeout: number = oneMinute, options: UseUserIdleOpt
 
   const lastActiveRef = useRef(Date.now())
   const timer = useRef<SetTimeoutReturn | null>(null)
-  const latestTimeout = useLatest(timeout)
+  const latest = useLatest({ timeout })
   const [isIdle, setIsIdle] = useSafeState(initialState)
 
   const pausable = usePausable(
@@ -84,7 +84,7 @@ export function useUserIdle(timeout: number = oneMinute, options: UseUserIdleOpt
     timer.current !== null && clearTimeout(timer.current)
 
     if (restart) {
-      timer.current = setTimeout(() => setIsIdle(true), latestTimeout.current)
+      timer.current = setTimeout(() => setIsIdle(true), latest.current.timeout)
     }
   })
 

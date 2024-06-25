@@ -51,7 +51,7 @@ export function useIntervalFn(
     return intervalPausable.pause
   }, [immediate, isRaf])
 
-  const rafControl = useRafLoop(callback, {
+  const rafControl = useRafLoop(() => latest.current.callback(), {
     immediate: isRaf ? immediate : false,
     immediateCallback: isRaf ? immediateCallback : false,
   })

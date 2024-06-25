@@ -66,42 +66,38 @@ export type UseMultiSelectReturns<T> = readonly [
  */
 export function useMultiSelect<T>(items: T[], defaultSelected: T[] = []): UseMultiSelectReturns<T> {
   const [selected, setSelected] = useSafeState<T[]>(defaultSelected)
-  const selectedSet = useCreation(() => new Set(selected), [selected])
-  const latestSet = useLatest(selectedSet)
+  const set = useCreation(() => new Set(selected), [selected])
+  const latest = useLatest({ set })
 
-  const isNoneSelected = useMemo(() => items.every((o) => !selectedSet.has(o)), [items, selectedSet])
-
-  const isAllSelected = useMemo(
-    () => items.every((o) => selectedSet.has(o)) && !isNoneSelected,
-    [items, selectedSet, isNoneSelected],
-  )
+  const isNoneSelected = useMemo(() => items.every((o) => !set.has(o)), [items, set])
+  const isAllSelected = useMemo(() => items.every((o) => set.has(o)) && !isNoneSelected, [items, set, isNoneSelected])
 
   const isPartiallySelected = useMemo(() => {
     return !isNoneSelected && !isAllSelected
   }, [isNoneSelected, isAllSelected])
 
   const select = useStableFn((item: T) => {
-    latestSet.current.add(item)
-    setSelected(Array.from(latestSet.current))
+    latest.current.set.add(item)
+    setSelected(Array.from(latest.current.set))
   })
 
   const unSelect = useStableFn((item: T) => {
-    latestSet.current.delete(item)
-    setSelected(Array.from(latestSet.current))
+    latest.current.set.delete(item)
+    setSelected(Array.from(latest.current.set))
   })
 
   const selectAll = useStableFn(() => {
     for (const item of items) {
-      latestSet.current.add(item)
+      latest.current.set.add(item)
     }
-    setSelected(Array.from(latestSet.current))
+    setSelected(Array.from(latest.current.set))
   })
 
   const unSelectAll = useStableFn(() => {
     for (const item of items) {
-      latestSet.current.delete(item)
+      latest.current.set.delete(item)
     }
-    setSelected(Array.from(latestSet.current))
+    setSelected(Array.from(latest.current.set))
   })
 
   const toggleAll = useStableFn(() => {
@@ -111,8 +107,7 @@ export function useMultiSelect<T>(items: T[], defaultSelected: T[] = []): UseMul
   })
 
   const toggle = useStableFn((item: T) => (isItemSelected(item) ? unSelect(item) : select(item)))
-
-  const isItemSelected = useStableFn((item: T) => latestSet.current.has(item))
+  const isItemSelected = useStableFn((item: T) => latest.current.set.has(item))
 
   const state = {
     selected,

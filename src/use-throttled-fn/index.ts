@@ -14,10 +14,10 @@ export function useThrottledFn<T extends AnyFunc, P extends Parameters<T>>(
   fn: T,
   options: UseThrottledFnOptions = {},
 ): T & { clear(): void } {
-  const latestFn = useLatest(fn)
+  const latest = useLatest({ fn })
 
   return useCreation(() => {
-    const fnWrapper = ((...args: P) => latestFn.current(...args)) as T
+    const fnWrapper = ((...args: P) => latest.current.fn(...args)) as T
     return createThrottledFn(fnWrapper, options)
   }, [options])
 }

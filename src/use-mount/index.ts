@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { useEffectOnce } from '../use-effect-once'
 import { useLatest } from '../use-latest'
 
-import type { AnyFunc } from '../utils/basic'
+import { type AnyFunc, isFunction } from '../utils/basic'
 
 /**
  * A React Hook that runs a function only once when the component mounts.
@@ -10,16 +10,16 @@ import type { AnyFunc } from '../utils/basic'
  * **Strict Once** option is **NOT** recommended as it [damages](https://react.dev/learn/synchronizing-with-effects#dont-use-refs-to-prevent-effects-from-firing) the original intention of React 18's strict mode.
  *
  * @param callback The callback to run when the component is mounted.
- * @param strictOnce If `true`, the callback will only be executed once.
+ * @param strictOnce If `true`, the callback will only be executed once. NOTE: **NOT** recommended.
  * @returns {void} `void`
  *
  */
 export function useMount(callback?: AnyFunc | null | undefined | false, strictOnce = false): void {
   const isMountedOnceRef = useRef(false)
-  const latestCallback = useLatest(callback)
+  const latest = useLatest({ callback })
 
   useEffectOnce(() => {
-    if (!latestCallback.current) return
+    if (!latest.current) return
 
     if (strictOnce) {
       /**
@@ -29,10 +29,15 @@ export function useMount(callback?: AnyFunc | null | undefined | false, strictOn
        */
       if (!isMountedOnceRef.current) {
         isMountedOnceRef.current = true
-        latestCallback.current?.()
+
+        if (isFunction(latest.current.callback)) {
+          latest.current.callback()
+        }
       }
     } else {
-      latestCallback.current?.()
+      if (isFunction(latest.current.callback)) {
+        latest.current.callback()
+      }
     }
   })
 }
