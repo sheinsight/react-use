@@ -1,0 +1,90 @@
+# useSpringValue
+
+import { HooksType } from '@/components'
+
+<HooksType category="Animation" pausable />
+
+A React Hook that returns a **spring value**.
+
+> Spring Value: A dynamic value that simulate a spring physics changed with time.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const spring = useSpringValue(start, end, options)
+```
+
+### Start
+
+`number`, The start value of the spring.
+
+### End
+
+`number`, The end value of the spring.
+
+### Options
+
+```tsx
+export type UseSpringValueConfig = {
+  /**
+   * The stiffness of the spring.
+   */
+  stiffness?: number
+  /**
+   * The damping of the spring.
+   */
+  damping?: number
+  /**
+   * The mass of the spring.
+   */
+  mass?: number
+  /**
+   * The precision of the spring.
+   */
+  immediate?: boolean
+  /**
+   * The precision of the spring.
+   */
+  precision?: number
+}
+```
+
+### Returns
+
+```tsx
+export type Pausable<PauseArgs extends unknown[] = [], ResumeArgs extends unknown[] = []> = {
+  isActive(): boolean
+  pause: (...args: PauseArgs) => void
+  resume: (...args: ResumeArgs) => void
+}
+
+export type UseSpringValueReturns = Pausable & {
+  /**
+   * The current value of the spring.
+   */
+  value: number
+  /**
+   * Restart the spring.
+   */
+  restart(): void
+}
+```

@@ -1,0 +1,66 @@
+# useLoremIpsum
+
+import { HooksType } from '@/components'
+
+<HooksType category="Utilities" devOnly />
+
+A React Hook that helps to generate [Lorem Ipsum](https://www.lipsum.com/) text. Useful for testing and placeholder text.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const text = useLoremIpsum(length) // 1 sentence by default
+const text = useLoremIpsum(options)
+```
+
+### Length
+
+A `number` that represents the number of sentences to generate.
+
+### Options
+
+```tsx
+export interface UseLoremIpsumOptions {
+  /**
+   * The length of the generated text sentence.
+   *
+   * @defaultValue 1
+   */
+  length?: number
+  /**
+   * The minimum number of words in a sentence.
+   *
+   * @defaultValue ['.', '!', '?']
+   */
+  sentenceEnds?: string[]
+  /**
+   * Whether to keep the same value between renders.
+   *
+   * @defaultValue true
+   */
+  stable?: boolean
+}
+```
+
+### Returns
+
+A `string` that represents the generated text.

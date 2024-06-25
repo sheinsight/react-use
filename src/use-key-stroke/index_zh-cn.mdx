@@ -1,0 +1,93 @@
+# useKeyStroke
+
+import { HooksType } from '@/components'
+
+<HooksType category="Sensors" />
+
+A React Hook that helps to handle key strokes.
+
+## Demo
+
+Try to (long) press `-`/`=` to increase/decrease the counter, `-` will ignore repeated events (set `dedupe` to true).
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+// catch all key strokes
+const stop = useKeyStroke(handler, options)
+
+// catch specific key strokes
+const stop = useKeyStroke(keyFilter, handler, options)
+```
+
+### KeyFilter
+
+For all keys for keyboard events see [MDN](https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_key_values).
+
+```tsx
+export type KeyFilter = true | string | string[] | KeyPredicate
+```
+
+### Handler
+
+```tsx
+export type UseKeyStrokeHandler = (event: KeyboardEvent) => void
+```
+
+### Options
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+```tsx
+export type KeyStrokeEventName = 'keydown' | 'keypress' | 'keyup'
+
+export type UseKeyStrokeOptions = {
+  /**
+   * The event name to listen for.
+   *
+   * @defaultValue 'keydown'
+   */
+  eventName?: KeyStrokeEventName
+  /**
+   * The target to add the event listener to.
+   *
+   * @defaultValue window
+   */
+  target?: ElementTarget
+  /**
+   * Set to `true` to use passive event listeners.
+   *
+   * @defaultValue false
+   */
+  passive?: boolean
+  /**
+   * Set to `true` to ignore repeated events when the key is being held down.
+   *
+   * @defaultValue false
+   */
+  dedupe?: boolean
+}
+```
+
+### Returns
+
+A `function` that can be called to stop listening for key strokes.

@@ -1,0 +1,48 @@
+# usePausableUpdateDeepCompareEffect
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" pausable lowLevel />
+
+A React Hook like [useUpdateDeepCompareEffect](/reference/use-update-deep-compare-effect), but pausable.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const pausable = usePausableUpdateDeepCompareEffect(callback, deps)
+```
+
+### Callback
+
+Same as [React.useEffect](https://react.dev/reference/react/useEffect).
+
+### Deps
+
+Same as [React.useEffect](https://react.dev/reference/react/useEffect).
+
+### Returns
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+A `Pausable` instance.

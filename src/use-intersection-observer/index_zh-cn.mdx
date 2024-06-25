@@ -1,0 +1,85 @@
+# useIntersectionObserver
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" pausable isSupported lowLevel />
+
+A React Hook that uses the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) with ease.
+
+## Demo
+
+Try to scroll down to see the effect.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const obsererReturn = useIntersectionObserver(elementTarget, options)
+```
+
+### ElementTarget
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### Options
+
+```tsx
+export interface UseWebObserverOptions {
+  /**
+   * Start the observer immediate after calling this function
+   *
+   * @defaultValue true
+   */
+  immediate?: boolean
+}
+
+/**
+ * DOM built-in IntersectionObserverInit
+ *
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/IntersectionObserver/IntersectionObserver#options
+ */
+interface IntersectionObserverInit {
+  root?: Element | Document | null
+  rootMargin?: string
+  threshold?: number | number[]
+}
+
+export type UseIntersectionObserverOptions = UseWebObserverOptions & IntersectionObserverInit
+```
+
+### Returns
+
+<Tip type="pausable" />
+
+```tsx
+export interface UseWebObserverReturns<Observer> extends Pausable {
+  /**
+   * ref that holds the observer instance
+   */
+  observerRef: React.MutableRefObject<Observer | null>
+  /**
+   * Check if the observer is supported in the current environment
+   */
+  isSupported: boolean
+}
+
+export type UseIntersectionObserverReturns = UseWebObserverReturns<IntersectionObserver>
+```

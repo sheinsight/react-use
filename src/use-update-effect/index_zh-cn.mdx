@@ -1,0 +1,40 @@
+# useUpdateEffect
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" />
+
+A React Hook like [React.useEffect](https://react.dev/reference/react/useEffect), but ignore the first invocation on mount.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+useUpdateEffect(callback, Deps)
+```
+
+### Callback
+
+Same as [React.useEffect](https://react.dev/reference/react/useEffect).
+
+### Deps
+
+Same as [React.useEffect](https://react.dev/reference/react/useEffect).

@@ -1,0 +1,68 @@
+# useToggle
+
+import { HooksType } from '@/components'
+
+<HooksType category="State" />
+
+A React Hook that helps to manage a togglable state.
+
+:::tip
+
+If you need to manage a state that alternates among several values, consider utilizing [useCircularList](/reference/use-circular-list) as an alternative.
+
+:::
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const [value, toggle, actions] = useToggle(bool)
+const [value, toggle, actions] = useToggle(one, theOther)
+```
+
+### Parameters
+
+It accepts one or two parameters:
+
+- `bool`: A `boolean`, the initial value of the state, will be toggled between `true` and `false`.
+
+- `one`, `theOther`: The two values that the state toggles between.
+
+### Returns
+
+```tsx
+export interface UseToggleReturnActions<O, T> {
+  /**
+   * Set the state to the left value.
+   */
+  setLeft(): void
+  /**
+   * Set the state to the right value.
+   */
+  setRight(): void
+  /**
+   * Set the state to a new value.
+   */
+  setState: ReactSetState<O | T>
+}
+
+export type UseToggleReturns<O, T> = [O | T, () => void, UseToggleReturnActions<O, T>]
+```

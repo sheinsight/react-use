@@ -6,3 +6,6 @@ plans
 graph.png
 
 .DS_Store
+
+**/docusaurus-plugin-content-docs/current
+**/docusaurus-plugin-content-docs-hooks/current

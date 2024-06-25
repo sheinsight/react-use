@@ -1,0 +1,75 @@
+# useBrowserMemory
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" isSupported />
+
+A React Hook that helps to get the memory info of the browser.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const memory = useBrowserMemory(options)
+```
+
+### Options
+
+```tsx
+export type UseBrowserMemoryOptions = UseIntervalFnOptions & {
+  interval?: number
+}
+```
+
+### Returns
+
+```tsx
+export type UseBrowserMemoryReturns = {
+  /**
+   * The timestamp when the memory info was last updated.
+   */
+  timestamp: number
+  /**
+   * The memory info.
+   */
+  memory: MemoryInfo | undefined
+  /**
+   * The maximum size of the heap, in bytes, that is available to the context.
+   */
+  jsHeapSizeLimit: number
+  /**
+   * The total allocated heap size, in bytes.
+   */
+  totalJSHeapSize: number
+  /**
+   * The used heap size, in bytes.
+   */
+  usedJSHeapSize: number
+  /**
+   *  Whether the browser supports the `Performance.memory` API.
+   */
+  isSupported: boolean
+  /**
+   * Update the memory info.
+   */
+  update(): void
+}
+```

@@ -1,0 +1,42 @@
+# useStableFn
+
+import { HooksType } from '@/components'
+
+<HooksType category="Utilities" lowLevel />
+
+A React Hook that returns a function whose memory address will never change.
+
+## Demo
+
+Try to increase the counter to update the component to trigger re-render, you will see that the function's memory address will never change, so the toast will never show up.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const stableFn = useStableFn(fn)
+```
+
+### Fn
+
+The function whose memory address will be stable.
+
+### Returns
+
+A same shape function, but its memory address will never change.

@@ -1,0 +1,61 @@
+# useLastUpdated
+
+import { HooksType } from '@/components'
+
+<HooksType category="Utilities" />
+
+A React Hook that record the last updated time of a state.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const lastUpdated = useLastUpdated(source, options)
+```
+
+### Source
+
+Any state that you want to record the last updated time.
+
+### Options
+
+```tsx
+export type UseLastChangedOptions = {
+  /**
+   * The initial value of the last updated timestamp.
+   *
+   * @defaultValue null
+   */
+  initialValue?: number | null
+  /**
+   * If `true`, deep compares the source object.
+   *
+   * @defaultValue false
+   */
+  deep?: boolean
+}
+```
+
+### Returns
+
+`number | null`.
+
+When the source is updated, the number will be updated to the current timestamp, otherwise it will be `null` (e.g. the source is **NOT** updated).

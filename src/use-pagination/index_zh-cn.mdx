@@ -1,0 +1,132 @@
+# usePagination
+
+import { HooksType } from '@/components'
+
+<HooksType category="ProUtilities" />
+
+A React Hook that manage pagination state.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const [pagination, pagiActions] = usePagination(options)
+```
+
+### Options
+
+```tsx
+export type UsePaginationOptions = {
+  /**
+   * Total number of items.
+   *
+   * @defaultValue Number.POSITIVE_INFINITY
+   */
+  total?: number
+  /**
+   * The number of items to display per page.
+   *
+   * @defaultValue 10
+   */
+  pageSize?: number
+  /**
+   * The current page number.
+   *
+   * @defaultValue 1
+   */
+  page?: number
+  /**
+   * Callback when the `page` change.
+   */
+  onPageChange?: (pagination: UsePaginationState) => void
+  /**
+   * Callback when the `pageSize` change.
+   */
+  onPageSizeChange?: (pagination: UsePaginationState) => void
+  /**
+   * Callback when the `pageCount` change.
+   */
+  onPageCountChange?: (pagination: UsePaginationState) => void
+}
+```
+
+### Returns
+
+```tsx
+export interface UsePaginationState {
+  /**
+   * Total number of items.
+   */
+  total: number
+  /**
+   * The current page number.
+   */
+  currentPage: number
+  /**
+   * The number of items to display per page.
+   */
+  currentPageSize: number
+  /**
+   * The total number of pages.
+   */
+  pageCount: number
+  /**
+   * Whether the current page is the first page.
+   */
+  isFirstPage: boolean
+  /**
+   * Whether the current page is the last page.
+   */
+  isLastPage: boolean
+}
+
+export type UsePaginationReturns = [
+  UsePaginationState,
+  {
+    /**
+     * Go to the previous page.
+     *
+     * @returns {void} `void`
+     */
+    prev(): void
+    /**
+     * Go to the next page.
+     *
+     * @returns {void} `void`
+     */
+    next(): void
+    /**
+     * Go to the specified page.
+     *
+     * @param {number} page - `number`, the page number
+     * @returns {void} `void`
+     */
+    go: (page: number) => void
+    /**
+     * Set the number of items to display per page.
+     *
+     * @param {number} size - `number`, the number of items to display per page
+     * @returns {void} `void`
+     */
+    setPageSize: (size: number) => void
+  },
+]
+```

@@ -1,0 +1,91 @@
+# useInterval
+
+import { HooksType } from '@/components'
+
+<HooksType category="Animation" pausable />
+
+A React Hook that create a interval counter.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+// without controls
+const count = useInterval(interval)
+
+// with controls in options
+const { count, reset, ...controls } = useInterval(interval, options)
+```
+
+### Interval
+
+A `number` that represents the interval in milliseconds.
+
+### Options
+
+```tsx
+export type UseIntervalOptions<Controls extends boolean> = {
+  /**
+   * Expose more controls
+   *
+   * @defaultValue false
+   */
+  controls?: Controls
+  /**
+   * Execute the update immediately on calling
+   *
+   * @defaultValue true
+   */
+  immediate?: boolean
+  /**
+   * Callback on every interval
+   */
+  callback?: (count: number) => void
+}
+```
+
+### Returns
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+```tsx
+export interface UseIntervalAction extends UseCounterReturnsAction, Pausable {
+  /**
+   * Reset the count
+   */
+  reset: (count?: number) => void
+}
+
+export type UseIntervalWithControlsReturns = [
+  /**
+   * Current count
+   */
+  count: number,
+  /**
+   * Counter Actions
+   */
+  UseIntervalAction,
+]
+
+export type UseIntervalReturns<Controls extends boolean> = Controls extends true ? UseIntervalWithControlsReturns : number
+```

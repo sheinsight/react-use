@@ -1,0 +1,48 @@
+# useDocumentVisibility
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" />
+
+A React Hook that returns `document.visibilityState`.
+
+## Demo
+
+Try to switch to another tab or minimize the window to see the title change.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const visibility = useDocumentVisibility(callback)
+```
+
+### Callback
+
+A callback function that will be called when the visibility state changes.
+
+```tsx
+export type UseDocumentVisibilityCallback = (state: DocumentVisibilityState, event: Event) => void
+```
+
+### Returns
+
+```tsx
+export type DocumentVisibilityState = 'hidden' | 'visible'
+```

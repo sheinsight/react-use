@@ -1,0 +1,44 @@
+# usePausable
+
+import { HooksType } from '@/components'
+
+<HooksType category="Utilities" pausable lowLevel />
+
+A React Hook that helps to create a [Pausable](/docs/features/pausable) instance.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { isActive, pause, resume } = usePausable(initialStatus)
+```
+
+### InitialStatus
+
+A `boolean` value of the initial internal `isActiveRef.current`, default to `false`.
+
+### Returns
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+A `Pausable` instance.

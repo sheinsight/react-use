@@ -57,10 +57,9 @@
     "postrelease": "pnpm run changelog",
     "test": "vitest",
     "test:ci": "pnpm run lint && vitest",
-    "docs:dev": "pnpm run docs:update && pnpm -C website run dev",
-    "docs:dev:zh-cn": "pnpm run docs:update && pnpm -C website run dev --locale zh-cn",
-    "docs:build": "pnpm run docs:update && pnpm -C website run build",
-    "docs:update": "esno ./scripts/update-hooks-data.ts",
+    "docs:dev": " pnpm -C website run dev",
+    "docs:dev:zh-cn": " pnpm -C website run dev --locale zh-cn",
+    "docs:build": " pnpm -C website run build",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "typecheck": "tsc --noEmit"
   },

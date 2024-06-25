@@ -1,0 +1,94 @@
+# useEventBus
+
+import { HooksType } from '@/components'
+
+<HooksType category="Utilities" />
+
+A React Hook that provides a simple event bus for your application.
+
+## Demo
+
+Scroll down on the dashed box to see the visibility status of the element.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { on, once, off, emit, reset } = useEventBus(identifier, options)
+```
+
+### Identifier
+
+```tsx
+export type EventBusIdentifier = symbol | string | number
+```
+
+### Options
+
+```tsx
+export type UseEventBusOptions = {
+  /**
+   * Whether to automatically clean up the listener when the component is unmounted.
+   *
+   * @defaultValue true
+   */
+  autoCleanup?: boolean
+}
+```
+
+### Returns
+
+```tsx
+export type UseEventBusReturns<T, P> = {
+  /**
+   * Subscribe to an event. When calling emit, the listeners will execute.
+   *
+   * @param listener watch listener.
+   * @returns a stop function to remove the current callback.
+   */
+  on: (listener: EventBusListener<T, P>) => AnyFunc
+  /**
+   * Similar to `on`, but only fires once
+   *
+   * @param listener watch listener.
+   * @returns a stop function to remove the current callback.
+   */
+  once: (listener: EventBusListener<T, P>) => AnyFunc
+  /**
+   * Emit an event, the corresponding event listeners will execute.
+   *
+   * @param event data sent.
+   */
+  emit: (event?: T, payload?: P) => void
+  /**
+   * Remove the corresponding listener.
+   *
+   * @param listener watch listener.
+   */
+  off: (listener: EventBusListener<T>) => void
+  /**
+   * Clear all events in global scope
+   */
+  reset(): void
+  /**
+   * Clear all listeners in the current component context
+   */
+  cleanup(): void
+}
+```

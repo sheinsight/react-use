@@ -1,0 +1,38 @@
+# useDocumentLeave
+
+import { HooksType } from '@/components'
+
+<HooksType category="Sensors" />
+
+A React Hook that tracks whether the user is leaving the document.
+
+## Demo
+
+Try to move your mouse outside the browser viewport to check.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const isDocumentLeave = useDocumentLeave()
+```
+
+### Returns
+
+A `boolean` value that indicates whether the user is leaving the document or not.

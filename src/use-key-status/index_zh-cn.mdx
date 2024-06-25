@@ -1,0 +1,60 @@
+# useKeyStatus
+
+import { HooksType } from '@/components'
+
+<HooksType category="Sensors" />
+
+A React Hook that helps to track the press status of a key.
+
+## Demo
+
+Try to press `-`/`=` to check the status of the key.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const isPressed = useKeyStatus(keyFilter, handler, options)
+```
+
+### KeyFilter
+
+import Link from '@docusaurus/Link'
+
+See <Link to="/reference/use-key-stroke/#keyfilter">KeyFilter</Link> of `useKeyStroke` for more details.
+
+### Handler
+
+```tsx
+export type UseKeyStatusHandler = UseKeyStrokeHandler
+```
+
+See <Link to="/reference/use-key-stroke/#handler">Handler</Link> of `useKeyStroke` for more details.
+
+### Options
+
+```tsx
+export type UseKeyStatusOptions = Omit<UseKeyStrokeOptions, 'eventName' | 'dedupe'>
+```
+
+See <Link to="/reference/use-key-stroke/#options">Options</Link> of `useKeyStroke` for more details.
+
+### Returns
+
+A `boolean` value that indicates the press status of the key.

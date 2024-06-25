@@ -1,0 +1,94 @@
+# useFavicon
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" />
+
+A React Hook that allows you to change the favicon of the page.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const [favicon, actions] = useFavicon(iconLink, options)
+```
+
+### IconLink
+
+`string | null | undefined`, the URL of the favicon (or path if `baseUrl` is set).
+
+### Options
+
+```tsx
+export type UseFaviconOptions = {
+  /**
+   * Base URL for the favicon
+   *
+   * @defaultValue ''
+   */
+  baseUrl?: string
+  /**
+   * The rel attribute of the favicon link element
+   *
+   * @defaultValue 'icon'
+   */
+  rel?: string
+  /**
+   * Sync the favicon in document `<link rel='icon' />` to hooks state on mount
+   *
+   * @defaultValue true
+   */
+  syncOnMount?: boolean
+  /**
+   * Restore the previous favicon on unmount
+   *
+   * @defaultValue false
+   */
+  restoreOnUnmount?: boolean
+}
+```
+
+### Returns
+
+```tsx
+export interface UseFaviconReturns {
+  /**
+   * The current favicon URL
+   */
+  href: string | null
+  /**
+   * Set the favicon URL
+   */
+  setFavicon: ReactSetState<string | null>
+  /**
+   * Sync the favicon in document `<link rel='icon' />` to hooks state
+   */
+  syncFavicon(): void
+  /**
+   * Set the favicon to an emoji
+   */
+  setEmojiFavicon: (emoji: string) => void
+  /**
+   * Set the favicon to the previous favicon
+   */
+  setPreviousFavicon(): void
+}
+```

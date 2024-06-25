@@ -1,0 +1,98 @@
+# useAdaptiveTextarea
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" />
+
+A React Hook that helps to create **adaptive** textarea that automatically adjust height based on its content.
+
+## Demo
+
+Input in the textarea, and see the height of the textarea automatically adjust.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { ref, height, resize } = useAdaptiveTextarea(options)
+```
+
+### Options
+
+```tsx
+export interface UseAdaptiveTextareaOptions<T extends HTMLElement = HTMLElement> {
+  /**
+   * a list of dependencies to trigger the resize
+   *
+   * @defaultValue []
+   */
+  watch?: DependencyList
+  /**
+   * a list of events to trigger the resize
+   *
+   * @defaultValue ['input']
+   */
+  events?: (keyof HTMLElementEventMap)[]
+  /**
+   * whether to automatically adjust the height of the `textarea` element
+   *
+   * @defaultValue true
+   */
+  autoHeight?: boolean
+  /**
+   * a target element to apply the height style
+   *
+   * @defaultValue undefined
+   */
+  styleTarget?: ElementTarget<T>
+  /**
+   * a style property to apply the height value
+   *
+   * @defaultValue 'height'
+   */
+  styleProp?: 'height' | 'minHeight'
+  /**
+   * a callback function to be called when the height of the `textarea` element changes
+   *
+   * @defaultValue undefined
+   */
+  onResize?: (height: number, prevHeight: number) => void
+}
+```
+
+### Returns
+
+```tsx
+export interface UseAdaptiveTextareaReturns {
+  /**
+   * a React ref that should be passed to the `textarea` element
+   */
+  ref: React.RefObject<HTMLTextAreaElement>
+  /**
+   * the current height of the `textarea` element
+   */
+  height: number
+  /**
+   * a function to manually resize the `textarea` element
+   *
+   * @returns {void} `void`
+   */
+  resize(): void
+}
+```

@@ -1,0 +1,128 @@
+# useDateFormat
+
+import { HooksType } from '@/components'
+
+<HooksType category='Utilities' />
+
+A dependency-free React Hook to format date using symbols, similar to the `format` function found in libraries such as [dayjs#format](https://day.js.org/docs/en/display/format), [momentjs#format](https://momentjs.com/docs/#/displaying/format/), or [date-fns#format](https://date-fns.org/docs/format).
+
+:::tip
+By default, the formatting behavior aligns with that of `dayjs`, `momentjs`, and `date-fns@^1`. You can set `unicodeSymbols` option to `true` to use [Unicde Standard Date Symbols](https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table), which is similar to `date-fns@^2` and subsequent versions.
+:::
+
+## Demo
+
+Try to edit the format template below and see the result.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Format Symbols
+
+| Convention | Unicode | Output                   | Description                                 | Same |
+| ---------- | ------- | ------------------------ | ------------------------------------------- | ---- |
+| `Yo`       | -       | 2024th                   | Ordinal formatted year                      | -    |
+| `YY`       | `yy`    | 24                       | Two-digit year                              | ❌   |
+| `YYYY`     | `yyyy`  | 2024                     | Four-digit year                             | ❌   |
+| `M`        | `M`     | 1-12                     | The month, beginning at 1                   | ✅   |
+| `Mo`       | -       | 1st, 2nd, ..., 12th      | The month, ordinal formatted                | -    |
+| `MM`       | `MM`    | 01-12                    | The month, 2-digits                         | ✅   |
+| `MMM`      | `MMM`   | Jan-Dec                  | The abbreviated month name                  | ✅   |
+| `MMMM`     | `MMMM`  | January-December         | The full month name                         | ✅   |
+| `D`        | `d`     | 1-31                     | The day of the month                        | ❌   |
+| `Do`       | -       | 1st, 2nd, ..., 31st      | The day of the month, ordinal formatted     | -    |
+| `DD`       | `dd`    | 01-31                    | The day of the month, 2-digits              | ❌   |
+| `H`        | `H`     | 0-23                     | The hour                                    | ✅   |
+| `Ho`       | -       | 0th, 1st, 2nd, ..., 23rd | The hour, ordinal formatted                 | -    |
+| `HH`       | `HH`    | 00-23                    | The hour, 2-digits                          | ✅   |
+| `h`        | `h`     | 1-12                     | The hour, 12-hour clock                     | ✅   |
+| `ho`       | -       | 1st, 2nd, ..., 12th      | The hour, 12-hour clock, ordinal formatted  | -    |
+| `hh`       | `hh`    | 01-12                    | The hour, 12-hour clock, 2-digits           | ✅   |
+| `m`        | `m`     | 0-59                     | The minute                                  | ✅   |
+| `mo`       | -       | 0th, 1st, ..., 59th      | The minute, ordinal formatted               | -    |
+| `mm`       | `mm`    | 00-59                    | The minute, 2-digits                        | ✅   |
+| `s`        | `s`     | 0-59                     | The second                                  | ✅   |
+| `so`       | -       | 0th, 1st, ..., 59th      | The second, ordinal formatted               | -    |
+| `ss`       | `ss`    | 00-59                    | The second, 2-digits                        | ✅   |
+| `S`        | `S`     | 0-9                      | The millisecond, 1-digits                   | ✅   |
+| `SS`       | `SS`    | 00-99                    | The millisecond, 2-digits                   | ✅   |
+| `SSS`      | `SSS`   | 000-999                  | The millisecond, 3-digits                   | ✅   |
+| `A`        | -       | AM PM                    | The meridiem                                | -    |
+| `AA`       | -       | A.M. P.M.                | The meridiem, periods                       | -    |
+| `a`        | `aaaa`  | am pm                    | The meridiem, lowercase                     | ❌   |
+| `aa`       | -       | a.m. p.m.                | The meridiem, lowercase and periods         | -    |
+| `d`        | -       | 0-6                      | The day of the week, with Sunday as 0       | -    |
+| `dd`       | `eeeee` | S-S                      | The min name of the local day of the week   | ❌   |
+| `ddd`      | `eee`   | Sun-Sat                  | The short name of the local day of the week | ❌   |
+| `dddd`     | `eeee`  | Sunday-Saturday          | The name of the local day of the week       | ❌   |
+
+> Meridiem can be customized by `customMeridiem` in `options`.
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const dateStr = useDateFormat(dateLike, format, options)
+```
+
+### DateLike
+
+```tsx
+export type DateLike = Date | number | string
+```
+
+### Format
+
+A `string` that represents the format of the output date string. `YYYY-MM-DD HH:mm:ss` by default.
+
+### Options
+
+```tsx
+export type FormatDateOptions = {
+  /**
+   * Whether to use Unicode date symbols.
+   *
+   * @see https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table
+   *
+   * @defaultValue false
+   */
+  unicodeSymbols?: boolean
+  /**
+   * The locales argument indicates the locale to use.
+   */
+  locales?: Intl.LocalesArgument
+  /**
+   * A custom function to format the meridiem.
+   */
+  customMeridiem?: (
+    hours: number,
+    minutes: number,
+    isLowercase?: boolean,
+    hasPeriod?: boolean
+  ) => string
+}
+
+export type UseDateFormatOptions = FormatDateOptions & {
+  /**
+   * fallback string when date is invalid
+   */
+  fallback?: string
+}
+```
+
+### Returns
+
+A `string` that represents the formatted date string.

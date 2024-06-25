@@ -1,0 +1,47 @@
+# useResetState
+
+import { HooksType } from '@/components'
+
+<HooksType category="State" />
+
+A React Hook like [React.useState](https://react.dev/reference/react/useState), but provide a `reset` function to reset the state to initial value.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const [state, setState, reset, init] = useResetState(initialState, options)
+```
+
+### InitialState
+
+The initial state of the state.
+
+### Options
+
+See [useSafeState#options](/reference/use-safe-state/#options) for more details.
+
+### Returns
+
+- `state`: The current state.
+- `setState`: The `function` to update the state.
+- `reset`: The `function` to reset the state to initial value.
+- `init`: The current initial state.

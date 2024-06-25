@@ -1,0 +1,40 @@
+# useCreation
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" lowLevel />
+
+A React Hook that creates a memoized value that only re-create when the dependencies change.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const value = useCreation(factoryFn, deps)
+```
+
+### FactoryFn
+
+A function that returns the value to memoize.
+
+### Deps
+
+An array of dependencies that trigger the re-creation of the memoized value.

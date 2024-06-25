@@ -1,0 +1,77 @@
+# useKeyModifier
+
+import { HooksType } from '@/components'
+
+<HooksType category="Sensors" />
+
+A React Hook that allows you to detect if a [key modifier](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/getModifierState) is pressed.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const isModifierPressed = useKeyModifier(keyModifier, options)
+```
+
+### KeyModifier
+
+```tsx
+export type KeyModifier =
+  | 'Alt'
+  | 'AltGraph'
+  | 'CapsLock'
+  | 'Control'
+  | 'Fn'
+  | 'FnLock'
+  | 'Meta'
+  | 'NumLock'
+  | 'ScrollLock'
+  | 'Shift'
+  | 'Symbol'
+  | 'SymbolLock'
+```
+
+### Options
+
+```tsx
+export type UseModifierOptions<Initial> = {
+  /**
+   * Event names that will prompt update to modifier states
+   *
+   * @defaultValue ['mousedown', 'mouseup', 'keydown', 'keyup']
+   */
+  events?: WindowEventName[]
+  /**
+   * Initial value of the returned ref
+   *
+   * @defaultValue null
+   */
+  initial?: Initial
+}
+```
+
+### Returns
+
+`boolean | null`, `boolean` indicates if the key modifier is pressed, `null` is means that the events not yet fired.
+
+```tsx
+export type UseKeyModifierReturns<Initial> = Initial extends boolean ? boolean : boolean | null
+```

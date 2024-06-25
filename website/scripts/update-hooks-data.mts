@@ -4,8 +4,8 @@ import url from 'node:url'
 
 // TODO: re-write use import.meta.dirname
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
-const srcDir = path.resolve(__dirname, '../src')
-const targetPath = path.resolve(__dirname, '../website/src/pages/components/search/hooks.json')
+const srcDir = path.resolve(__dirname, '../../src')
+const targetPath = path.resolve(__dirname, '../src/pages/components/search/hooks.json')
 
 const dirents = fs
   .readdirSync(srcDir, { withFileTypes: true })

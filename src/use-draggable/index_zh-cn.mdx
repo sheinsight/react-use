@@ -1,0 +1,148 @@
+# useDraggable
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" />
+
+A React Hook that helps to make element draggable.
+
+## Demo
+
+Try to drag the float element.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const draggable = useDraggable(elementTarget, options)
+```
+
+### ElementTarget
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### Options
+
+```tsx
+export type UseDraggableOptions = {
+  /**
+   * Whether to drag the element only when the pointer is exactly on the target element.
+   *
+   * @defaultValue false
+   */
+  exact?: boolean
+  /**
+   * Whether to prevent the default behavior of the pointer event.
+   *
+   * @defaultValue false
+   */
+  preventDefault?: boolean
+  /**
+   * Whether to stop the propagation of the pointer event.
+   *
+   * @defaultValue false
+   */
+  stopPropagation?: boolean
+  /**
+   * Whether to capture the pointer event.
+   *
+   * @defaultValue true
+   */
+  capture?: boolean
+  /**
+   * The element that should be dragged.
+   *
+   * @defaultValue target
+   */
+  handle?: ElementTarget
+  /**
+   * The element that should be dragged.
+   *
+   * @defaultValue window
+   */
+  draggingElement?: ElementTarget | GlobalTarget
+  /**
+   * The element that should contain the draggable element.
+   *
+   * @defaultValue undefined
+   */
+  containerElement?: ElementTarget
+  /**
+   * The types of pointer events that should be handled.
+   *
+   * @defaultValue ['mouse', 'touch', 'pen']
+   */
+  pointerTypes?: PointerType[]
+  /**
+   * The initial position of the draggable element.
+   *
+   * @defaultValue { x: 0; y: 0 }
+   */
+  initialValue?: Position
+  /**
+   * The callback that is called when the dragging starts.
+   */
+  onStart?: (position: Position, event: PointerEvent) => void | false
+  /**
+   * The callback that is called when the dragging moves.
+   */
+  onMove?: (position: Position, event: PointerEvent) => void
+  /**
+   * The callback that is called when the dragging ends.
+   */
+  onEnd?: (position: Position, event: PointerEvent) => void
+  /**
+   * @defaultValue 'both'
+   */
+  axis?: 'x' | 'y' | 'both'
+  /**
+   * @defaultValue false
+   */
+  disabled?: boolean
+}
+```
+
+### Returns
+
+```tsx
+export type UseDraggableReturns = {
+  /**
+   * The x-coordinate of the draggable element.
+   */
+  x: number
+  /**
+   * The y-coordinate of the draggable element.
+   */
+  y: number
+  /**
+   * The style that should be applied to the draggable element.
+   */
+  style: CSSProperties
+  /**
+   * The position of the draggable element.
+   */
+  position: Position
+  /**
+   * Whether the draggable element is being dragged.
+   */
+  isDragging: boolean
+}
+```

@@ -1,0 +1,57 @@
+# useSafeState
+
+import Admonition from '@theme/Admonition'
+import { HooksType } from '@/components'
+
+<HooksType category="State" />
+
+A React Hook similar to [React.useState](https://react.dev/reference/react/useState), including an optional deep comparison feature (`false` by default).
+
+For a detailed explanation on the advantages of `useSafeState`, please refer to the [Safe State](/docs/optimization/safe-state) documentation.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const [state, setState] = useSafeState(initialState, options)
+```
+
+### InitialState
+
+The initial state of the state.
+
+### Options
+
+```tsx
+export type UseSafeStateOptions = {
+  /**
+   * Deeply compare the new state with the old state before updating.
+   * If true, only update the state when the new state is different from the old state.
+   *
+   * @defaultValue false
+   */
+  deep?: boolean
+}
+```
+
+### Returns
+
+Same as [React.useState](https://react.dev/reference/react/useState).

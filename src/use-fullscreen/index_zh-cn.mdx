@@ -1,0 +1,82 @@
+# useFullscreen
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" isSupported />
+
+A React Hook that allows you to use the [requestFullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Element/requestFullscreen) with ease.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const fs = useFullscreen(elementTarget, options)
+```
+
+### ElementTarget
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### Options
+
+```tsx
+export type UseFullscreenOptions = {
+  /**
+   * Automatically exit fullscreen when component is unmounted
+   *
+   * @defaultValue false
+   */
+  autoExit?: boolean
+}
+```
+
+### Returns
+
+```tsx
+export interface UseFullscreenReturns {
+  /**
+   * Whether the browser supports fullscreen API
+   */
+  isSupported: boolean
+  /**
+   * Whether the element is in fullscreen mode
+   */
+  isFullscreen: boolean
+  /**
+   * Whether the element itself is in fullscreen mode
+   */
+  isSelfFullscreen: boolean
+  /**
+   * Enter fullscreen mode
+   */
+  enter(): Promise<void>
+  /**
+   * Exit fullscreen mode
+   */
+  exit(): Promise<void>
+  /**
+   * Toggle fullscreen mode
+   */
+  toggle(): Promise<void>
+}
+```

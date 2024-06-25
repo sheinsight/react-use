@@ -1,0 +1,42 @@
+# useUnmounted
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" />
+
+A React Hook that return a [Ref Getter](/docs/features/ref-getter) that returns `true` if the component is unmounted.
+
+## Demo
+
+Try to click `Start Timer`, and then click the "Toggle mount" button in one second to see the result.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const isUnmounted = useUnmounted()
+```
+
+### Returns
+
+import { Tip } from '@/components'
+
+<Tip type="ref-getter" name="isUnmounted" />
+
+A Ref Getter that returns `true` if the component is unmounted.

@@ -1,0 +1,122 @@
+# useScroll
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" pausable />
+
+A React Hook that track the scroll state of target element.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const scroll = useScroll(elementTarget, options)
+```
+
+### ElementTarget
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### Options
+
+```tsx
+export interface UseScrollOptions {
+  /**
+   * The throttle time (ms) to update the scroll position
+   */
+  throttle?: number
+  /**
+   * The idle time (ms) to determine the scroll is stopped
+   */
+  idle?: number
+  /**
+   * The offset to determine the scroll has arrived at the edge
+   */
+  offset?: UseScrollOptionsOffset
+  /**
+   * The scroll event handler
+   */
+  onScroll?: (event: Event) => void
+  /**
+   * The scroll stop event handler
+   */
+  onStop?: (event: Event) => void
+  /**
+   * The event listener options
+   */
+  eventListenerOptions?: boolean | AddEventListenerOptions
+  /**
+   * The scroll behavior
+   */
+  behavior?: ScrollBehavior
+  /**
+   *
+   */
+  immediate?: boolean
+}
+```
+
+### Returns
+
+<Tip type="pausable" />
+
+```tsx
+export interface UseScrollReturns extends Pausable {
+  /**
+   * scroll x position
+   */
+  x: number
+  /**
+   * scroll y position
+   */
+  y: number
+  /**
+   * The scroll position
+   */
+  position: { x: number; y: number }
+  /**
+   * The scroll directions
+   */
+  directions: Directions
+  /**
+   * Whether the scroll is scrolling
+   */
+  isScrolling: boolean
+  /**
+   * The arrived state
+   */
+  arrivedState: ArrivedState
+  /**
+   * Scroll to the specified position
+   */
+  scrollTo: (x: number, y: number) => void
+  /**
+   * Scroll to the end of the specified direction
+   */
+  scrollToEnd: (direction: 'x' | 'y') => void
+  /**
+   * Measure the scroll position
+   */
+  measure(): void
+}
+```

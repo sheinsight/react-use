@@ -1,0 +1,44 @@
+# usePrevious
+
+import { HooksType } from '@/components'
+
+<HooksType category="State" />
+
+A React Hook that keep the previous value of a state.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const previous = usePrevious(state, isEqual)
+```
+
+### State
+
+A state that you want to keep the previous value.
+
+### IsEqual
+
+A `function` that compares the previous value with the current value. The default value is `Object.is`.
+
+### Returns
+
+The previous value of the state.

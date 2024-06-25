@@ -1,0 +1,92 @@
+# useUserIdle
+
+import { HooksType } from '@/components'
+
+<HooksType category="Sensors" pausable />
+
+A React Hook that helps to detect whether the user is idle or not.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { lastActive, isIdle, reset } = useUserIdle(timeout, options)
+```
+
+### Timeout
+
+A `number` representing the time in milliseconds to consider the user as idle.
+
+### Options
+
+```tsx
+export interface UseUserIdleOptions {
+  /**
+   * Event names that listen to for detected user activity
+   *
+   * @defaultValue ['mousemove', 'mousedown', 'resize', 'keydown', 'touchstart', 'wheel']
+   */
+  events?: WindowEventName[]
+  /**
+   * Listen for document visibility change
+   *
+   * @defaultValue true
+   */
+  watchVisibility?: boolean
+  /**
+   * Initial state of the ref idle
+   *
+   * @defaultValue false
+   */
+  initialState?: boolean
+  /**
+   * Reset the idle state immediately
+   *
+   * @defaultValue true
+   */
+  immediate?: boolean
+}
+```
+
+### Returns
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+```tsx
+export interface UseUserIdleReturns extends Pausable<[reset?: boolean], [reset?: boolean]> {
+  /**
+   * Whether the user is idle
+   */
+  isIdle: boolean
+  /**
+   * The timestamp of the last user activity
+   */
+  lastActive: MutableRefObject<number>
+  /**
+   * Reset the idle state
+   *
+   * @param restart - Whether to restart the idle timer,`true` by default.
+   */
+  reset: (restart?: boolean) => void
+}
+```

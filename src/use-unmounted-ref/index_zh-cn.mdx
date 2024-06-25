@@ -1,0 +1,38 @@
+# useUnmountedRef
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" />
+
+A React Hook that helps to create a ref that can be checked if the component is unmounted.
+
+## Demo
+
+Try to click `Start Timer`, and then click the "Toggle mount" button in one second to see the result.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const unmountedRef = useUnmountedRef()
+```
+
+### Returns
+
+A React [Ref](https://react.dev/learn/referencing-values-with-refs) that can be checked if the component is unmounted.

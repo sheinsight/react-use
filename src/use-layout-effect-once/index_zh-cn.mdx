@@ -1,0 +1,39 @@
+# useLayoutEffectOnce
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" />
+
+import Link from '@docusaurus/Link'
+
+A React Hook that like <Link to="/reference/use-effect-once">`useEffectOnce`</Link> but use <Link to="/reference/use-isomorphic-layout-effect">`useIsomorphicLayoutEffect`</Link> under the hood.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+// alias to `useIsomorphicLayoutEffect(callback, [])` with more semantic name
+useLayoutEffectOnce(callback)
+```
+
+### Callback
+
+Same as [React.useLayoutEffect](https://react.dev/reference/react/useLayoutEffect).

@@ -1,0 +1,67 @@
+# useDebouncedFn
+
+import { HooksType } from '@/components'
+
+<HooksType category="Utilities" />
+
+A React Hook that create a debounced function.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const debouncedFn = useDebouncedFn(fn, options)
+```
+
+### Fn
+
+The `function` to debounce.
+
+### Options
+
+```tsx
+export type DebounceOptions = {
+  /**
+   * Time to wait before invoking the function
+   *
+   * @defaultValue 0
+   */
+  wait?: number
+  /**
+   * immediately invoke before the timeout
+   *
+   * @defaultValue false
+   */
+  leading?: boolean
+  /**
+   * invoke the function after the timeout
+   *
+   * @defaultValue true
+   */
+  trailing?: boolean
+}
+
+export type UseDebouncedFnOptions = DebounceOptions & {}
+```
+
+### Returns
+
+The debounced `function`, same as the input function.

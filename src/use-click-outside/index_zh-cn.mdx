@@ -1,0 +1,55 @@
+# useClickOutside
+
+import { HooksType } from '@/components'
+
+<HooksType category="Sensors" />
+
+A React Hook that allows you to detect clicks outside of a specified element.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+useClickOutside(elementTarget, callback, options)
+```
+
+### ElementTarget
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### Callback
+
+```tsx
+export type UseClickOutsideHandler = (evt: MouseEvent | PointerEvent) => void
+```
+
+### Options
+
+```tsx
+export type UseClickOutsideOptions = {
+  /**
+   * List of elements that should not trigger the event.
+   */
+  ignore?: ElementTarget[]
+}
+```

@@ -1,0 +1,69 @@
+# useHover
+
+import { HooksType } from '@/components'
+
+<HooksType category="Sensors" />
+
+A React Hook that helps to track the hover state of an element.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const isHovered = useHover(elementTarget, options)
+```
+
+### ElementTarget
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### Options
+
+```tsx
+export type UseHoverOptions = {
+  /**
+   * Delay in milliseconds before the `onEnter` event is triggered
+   */
+  delayEnter?: number
+  /**
+   * Delay in milliseconds before the `onLeave` event is triggered
+   */
+  delayLeave?: number
+  /**
+   * Event handler when the mouse enters the target element
+   */
+  onEnter?: (e: MouseEvent) => void
+  /**
+   * Event handler when the mouse leaves the target element
+   */
+  onLeave?: (e: MouseEvent) => void
+  /**
+   * Event handler when the mouse enters or leaves the target element
+   */
+  onChange?: (isHovered: boolean, e: MouseEvent) => void
+}
+```
+
+### Returns
+
+A `boolean` value that indicates whether the target element is hovered.

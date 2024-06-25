@@ -1,0 +1,77 @@
+# useReportingObserver
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" pausable isSupported lowLevel />
+
+A React Hook that helps to use [ReportingObserver API](https://developer.mozilla.org/en-US/docs/Web/API/ReportingObserver) to report errors and warnings with ease.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { observerRef, isSupported, ...controls } = useReportingObserver(callback, options)
+```
+
+### Callback
+
+`ReportingObserverCallback` function that will be called when the observer is triggered.
+
+### Options
+
+```tsx
+export type UseWebObserverOptions = {
+  /**
+   * Start the observer immediate after calling this function
+   *
+   * @defaultValue true
+   */
+  immediate?: boolean
+}
+
+interface ReportingObserverOptions {
+  buffered?: boolean
+  types?: string[]
+}
+
+export interface UseReportingObserverOptions extends UseWebObserverOptions, ReportingObserverOptions {}
+```
+
+### Returns
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+```tsx
+export type UseWebObserverReturns<Observer> = Pausable & {
+  /**
+   * ref that holds the observer instance
+   */
+  observerRef: React.MutableRefObject<Observer | null>
+  /**
+   * Check if the observer is supported in the current environment
+   */
+  isSupported: boolean
+}
+
+export interface UseReportingObserverReturns extends UseWebObserverReturns<ReportingObserver> {}
+```

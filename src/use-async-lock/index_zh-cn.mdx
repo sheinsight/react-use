@@ -1,0 +1,54 @@
+# useAsyncLock
+
+import { HooksType } from '@/components'
+
+<HooksType category="Utilities" />
+
+A React Hook to create a function that can be used to ensure that **only one is running at a time**, and provides an additional invalid operation callback function.
+
+## Demo
+
+Quickly and repeatedly click the button to check the effect.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const lockedFn = useAsyncLock(asyncFn, onMeetLock)
+```
+
+### AsyncFn
+
+A function that returns a promise.
+
+### OnMeetLock
+
+A function that will be called when the function is locked and is called again.
+
+### Returns
+
+A function that can be used to ensure that **only one is running at a time**, return a promise that resolves the return value of the async function or the return value of the invalid operation callback function.
+
+```tsx
+export type UseAsyncLockReturns<T extends AnyFunc, R extends AnyFunc> = (
+  ...args: Parameters<T>
+) => R extends undefined
+  ? Promise<Awaited<ReturnType<T>> | undefined>
+  : Promise<Awaited<ReturnType<T>> | Awaited<ReturnType<R>>>Promise<ReturnType<T>>
+```

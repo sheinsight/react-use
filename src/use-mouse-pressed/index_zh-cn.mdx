@@ -1,0 +1,92 @@
+# useMousePressed
+
+import { HooksType } from '@/components'
+
+<HooksType category="Sensors" />
+
+A React Hook that tracks mouse pressed state.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { pressed, sourceType } = useMousePressed(elementTarget, options)
+```
+
+### ElementTarget
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### Options
+
+```tsx
+export type MousePressedOptions = {
+  /**
+   * Whether to listen to touch events
+   *
+   * @defaultValue true
+   */
+  touch?: boolean
+  /**
+   * Whether to listen to drag events
+   *
+   * @defaultValue true
+   */
+  drag?: boolean
+  /**
+   * Whether to use event capturing
+   *
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#capture MDN - addEventListener#capture}
+   *
+   * @defaultValue false
+   */
+  capture?: boolean
+  /**
+   * The initial value of the mouse press
+   *
+   * @defaultValue false
+   */
+  initialValue?: boolean
+  /**
+   * The target element
+   *
+   * @defaultValue () => window
+   */
+  target?: ElementTarget
+}
+```
+
+### Returns
+
+```tsx
+export type UseMousePressedReturns = {
+  /**
+   * Whether the mouse is pressed
+   */
+  pressed: boolean
+  /**
+   * The source type of the mouse press
+   */
+  sourceType: UseMouseSourceType
+}
+```

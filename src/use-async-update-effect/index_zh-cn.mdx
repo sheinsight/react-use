@@ -1,0 +1,38 @@
+# useAsyncUpdateEffect
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" lowLevel />
+
+A React Hook which is like [useAsyncEffect](/reference/use-async-effect) but **ignore the execution at first mount**.
+
+:::note
+It should not return a cleanup function as it's `async` which cannot cleanup as expected.
+
+If you need to cleanup something, use `isCancelled` in `UseAsyncEffectCallback` instead to check effect status.
+:::
+
+## Demo
+
+It will **NOT** execute at first mount before you toggle the status to trigger the effect to start the interval.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+See [useAsyncEffect](/reference/use-async-effect/#api).

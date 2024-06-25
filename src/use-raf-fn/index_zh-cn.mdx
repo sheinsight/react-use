@@ -1,0 +1,46 @@
+# useRafFn
+
+import { HooksType } from '@/components'
+
+<HooksType category="Utilities" lowLevel />
+
+A React Hook that run a function only once on the next frame using [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame).
+
+## Demo
+
+Try to open DevTools to see the console log.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const rafFn = useRafFn(fn, autoClean)
+```
+
+### Fn
+
+A `funtion` that need to be run on the next frame.
+
+### AutoClean
+
+A `boolean` that will clean the raf when the component unmounts.
+
+### Returns
+
+A `function` that will run the `fn` on the next frame.

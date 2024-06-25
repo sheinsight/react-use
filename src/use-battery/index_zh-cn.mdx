@@ -1,0 +1,65 @@
+# useBattery
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" isSupported />
+
+A React Hook that get [Battery](https://developer.mozilla.org/zh-CN/docs/Web/API/Battery_Status_API) state with ease.
+
+## Demo
+
+Unplug or Insert your charger to observe the state change.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const battery = useBattery()
+```
+
+### Returns
+
+```tsx
+export interface UseBatteryReturns {
+  /**
+   * Whether the battery is charging
+   */
+  charging: boolean
+  /**
+   * The battery level as a floating point number between 0 and 1
+   */
+  level: number
+  /**
+   * The time remaining to charge the battery fully
+   */
+  chargingTime: number
+  /**
+   * The time remaining to discharge the battery fully
+   */
+  dischargingTime: number
+  /**
+   * Whether the battery API is supported
+   */
+  isSupported: boolean
+  /**
+   * Update the battery state
+   */
+  update(): void
+}
+```

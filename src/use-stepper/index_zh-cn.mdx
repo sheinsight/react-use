@@ -1,0 +1,119 @@
+# useStepper
+
+import { HooksType } from '@/components'
+
+<HooksType category="ProUtilities" />
+
+A React Hook that helps to create a stepper state.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const step = useStepper(steps, initialStepIdx)
+```
+
+### Steps
+
+An `array` of steps, a step can be any object with functions, strings, or numbers, etc.
+
+### InitialStepIdx
+
+A `number` that represents the initial step index.
+
+### Returns
+
+```tsx
+export interface UseStepperReturns<StepName, Steps, Step> {
+  /**
+   * List of steps.
+   */
+  steps: Readonly<Steps>
+  /**
+   * Index of the current step.
+   */
+  index: number
+  /**
+   * Current step.
+   */
+  current: Step
+  /**
+   * Next step, or undefined if the current step is the last one.
+   */
+  next: StepName | undefined
+  /**
+   * Previous step, or undefined if the current step is the first one.
+   */
+  previous: StepName | undefined
+  /**
+   * Whether the current step is the first one.
+   */
+  isFirst: boolean
+  /**
+   * Whether the current step is the last one.
+   */
+  isLast: boolean
+  /**
+   * Get the step at the specified index.
+   */
+  at: (index: number) => Step | undefined
+  /**
+   * Get a step by the specified name.
+   */
+  get: (step: StepName) => Step | undefined
+  /**
+   * Go to the specified step.
+   */
+  goTo: (step: StepName) => void
+  /**
+   * Go to the next step. Does nothing if the current step is the last one.
+   */
+  goToNext(): void
+  /**
+   * Go to the previous step. Does nothing if the current step is the previous one.
+   */
+  goToPrevious(): void
+  /**
+   * Go back to the given step, only if the current step is after.
+   */
+  goBackTo: (step: StepName) => void
+  /**
+   * Checks whether the given step is the next step.
+   */
+  isNext: (step: StepName) => boolean
+  /**
+   * Checks whether the given step is the previous step.
+   */
+  isPrevious: (step: StepName) => boolean
+  /**
+   * Checks whether the given step is the current step.
+   */
+  isCurrent: (step: StepName) => boolean
+  /**
+   * Checks if the current step is before the given step.
+   */
+  isBefore: (step: StepName) => boolean
+  /**
+   * Checks if the current step is after the given step.
+   */
+  isAfter: (step: StepName) => boolean
+}
+```

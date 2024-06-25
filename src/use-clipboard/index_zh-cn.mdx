@@ -1,0 +1,82 @@
+# useClipboard
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" isSupported />
+
+A React Hook that copy text with [Clipboard API](https://developer.mozilla.org/zh-CN/docs/Web/API/Clipboard_API) or fallback to `document.execCommand('copy')` if it's not available.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const clipboard = useClipboard(options)
+```
+
+### Options
+
+```tsx
+export type UseClipboardOptions<Source> = {
+  /**
+   * Enabled reading for clipboard, need to request permission
+   *
+   * @defaultValue false
+   */
+  read?: boolean
+  /**
+   * Copy source
+   */
+  source?: Source
+  /**
+   * Milliseconds to reset state of `copied` ref
+   *
+   * @defaultValue 1500
+   */
+  copiedDuration?: number
+}
+```
+
+### Returns
+
+```tsx
+export interface UseClipboardReturns<HasSource> {
+  /**
+   * Whether the clipboard is supported
+   */
+  isSupported: boolean
+  /**
+   * The text in the clipboard
+   */
+  text: string
+  /**
+   * A flag to indicate the text is copied, will be reset after `copiedDuration`
+   */
+  copied: boolean
+  /**
+   * Copy the text to the clipboard
+   */
+  copy: HasSource extends true ? (text?: string) => Promise<void> : (text: string) => Promise<void>
+  /**
+   * Clear the text in the clipboard
+   */
+  clear(): void
+}
+```

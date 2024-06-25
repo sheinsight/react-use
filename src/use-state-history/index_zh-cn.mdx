@@ -1,0 +1,50 @@
+# useStateHistory
+
+import { HooksType } from '@/components'
+
+<HooksType category="ProUtilities" pausable />
+
+A React Hook that track and manipulate the history of a state automatically.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+Almost the same as [useManualStateHistory](/reference/use-manual-state-history), but with an additional [Pausable](/docs/features/pausable) instance return.
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+```tsx
+const { ...history, ...pausable } = useStateHistory(state, options)
+```
+
+### State
+
+Same as [useManualStateHistory#state](/reference/use-manual-state-history/#state).
+
+### Options
+
+```tsx
+export interface UseStateHistoryOptions<Raw, Serialized = Raw> extends UseManualStateHistoryOptions<Raw, Serialized> {
+  deep?: boolean
+}
+```

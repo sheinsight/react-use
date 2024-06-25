@@ -1,0 +1,40 @@
+# useDeepCompareEffect
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" lowLevel />
+
+A React Hook like [React.useEffect](https://react.dev/reference/react/useEffect), but with [deep comparison](https://github.com/sheinsight/react-use/blob/main/src/utils/equal.ts#L29) of dependencies.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+useDeepCompareEffect(callback, deps)
+```
+
+### Callback
+
+Same as [React.useEffect](https://react.dev/reference/react/useEffect).
+
+### Deps
+
+Same as [React.useEffect](https://react.dev/reference/react/useEffect).

@@ -1,0 +1,57 @@
+# useMediaQuery
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" lowLevel />
+
+A React Hook that tracks the state of CSS media query/queries.
+
+## Demo
+
+Try to resize the window to see the effect.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const query = useMediaQuery(queryString, options)
+const [...queries] = useMediaQuery([...queryStrings], options)
+```
+
+### QueryString
+
+A media query `string`, or an array of media query `string`s.
+
+### Options
+
+`AddEventListenerOptions` is options of `useEventListener`, see [useEventListener#options](/reference/use-event-listener/#options) for more details.
+
+```tsx
+export type UseMediaQueryOptions = AddEventListenerOptions & {}
+```
+
+### Returns
+
+If `queryString` is a `string`, returns a `boolean` value that indicates whether the media query matches.
+
+If `queryString` is an array, returns an array of `boolean` values that indicate whether the media queries match.
+
+```tsx
+export type UseMediaQueryReturns<T, R> = R extends T[] ? boolean[] : boolean
+```

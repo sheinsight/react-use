@@ -1,0 +1,48 @@
+# usePausableUpdateEffect
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" pausable lowLevel />
+
+A React Hook like [useUpdateEffect](/reference/use-update-effect), but pausable.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const pausable = usePausableUpdateEffect(callback, deps)
+```
+
+### Callback
+
+Same as [React.useEffect](https://react.dev/reference/react/useEffect).
+
+### Deps
+
+Same as [React.useEffect](https://react.dev/reference/react/useEffect).
+
+### Returns
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+A `Pausable` instance.

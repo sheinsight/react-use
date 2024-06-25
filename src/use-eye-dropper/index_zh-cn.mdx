@@ -1,0 +1,78 @@
+# useEyeDropper
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" isSupported />
+
+A React Hook that allows you to use the eye dropper tool to get the color of a pixel on the screen.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { isSupported, sRGBHex, open } = useEyeDropper(options)
+```
+
+### Options
+
+```tsx
+export type UseEyeDropperOptions = {
+  /**
+   * Initial sRGBHex.
+   *
+   * @defaultValue ''
+   */
+  initialValue?: string
+  /**
+   * Whether to convert the sRGBHex to uppercase.
+   *
+   * @defaultValue true
+   */
+  upperCase?: boolean
+  /**
+   * Whether to keep the leading hash in the sRGBHex.
+   *
+   * @defaultValue true
+   */
+  keepLeadingHash?: boolean
+}
+```
+
+### Returns
+
+```tsx
+export type UseEyeDropperReturns = {
+  /**
+   * Whether the EyeDropper is supported.
+   */
+  isSupported: boolean
+  /**
+   * The sRGBHex color value.
+   */
+  sRGBHex: string
+  /**
+   * Open the EyeDropper.
+   *
+   * @param options - The open options.
+   */
+  open: (options?: EyeDropperOpenOptions) => Promise<string | null>
+}
+```

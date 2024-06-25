@@ -1,0 +1,44 @@
+# useSupported
+
+import { HooksType } from '@/components'
+
+<HooksType category="Utilities" isSupported lowLevel />
+
+A React Hook that helps to check if browser supports a feature in both client and Server-side Rendering (SSR).
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const isSupported = useSupported(callback, deps)
+```
+
+### Callback
+
+A `function` that returns a boolean value to check if the feature is supported.
+
+### Deps
+
+An array of dependencies to re-run the check when the value changes.
+
+### Returns
+
+A `boolean` value that indicates if the feature is supported.

@@ -1,0 +1,44 @@
+# useSetState
+
+import { HooksType } from '@/components'
+
+<HooksType category="State" />
+
+A React Hook that helps to use state like `this.setState` method of React's legacy class component.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const [state, setState] = useSetState(initialState, options)
+```
+
+### InitialState
+
+Same as [React.useState](https://react.dev/reference/react/useState).
+
+### Options
+
+See [useSafeState#options](/reference/use-safe-state/#options) for more details.
+
+### Returns
+
+Same as [React.useState](https://react.dev/reference/react/useState).

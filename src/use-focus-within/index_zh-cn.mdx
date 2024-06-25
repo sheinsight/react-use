@@ -1,0 +1,42 @@
+# useFocusWithin
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" />
+
+A React Hook that returns a boolean value indicating whether the component is focused or any of its children are focused.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const isFocusWithin = useFocusWithin(elementTarget)
+```
+
+### ElementTarget
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### Returns
+
+A `boolean` value indicating whether it's focused within the target.

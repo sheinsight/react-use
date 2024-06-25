@@ -1,0 +1,63 @@
+# useTargetElement
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" lowLevel />
+
+A React Hook that helps to get the target element via selector, ref, element and more.
+
+## Demo
+
+Open DevTools to see the log.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+export function useTargetElement<T extends GlobalTarget>(
+  target: Getterable<T>,
+  options?: UseTargetElementOptions,
+): RefObject<T>
+export function useTargetElement<T extends Element | null>(
+  target: Getterable<T>,
+  options?: UseTargetElementOptions,
+): RefObject<T>
+export function useTargetElement<T extends keyof HTMLElementTagNameMap>(
+  target: Getterable<T>,
+  options?: UseTargetElementOptions,
+): RefObject<HTMLElementTagNameMap[T]>
+export function useTargetElement<T extends keyof SVGElementTagNameMap>(
+  target: Getterable<T>,
+  options?: UseTargetElementOptions,
+): RefObject<SVGElementTagNameMap[T]>
+export function useTargetElement<A extends AtomBaseTarget, T extends ElementTarget<A> = ElementTarget<A>>(
+  target: Getterable<T>,
+  options?: UseTargetElementOptions,
+): RefObject<A>
+export function useTargetElement<
+  R extends GlobalTarget | Element,
+  T extends string | null | undefined | false | MutableRefObject<AtomBaseTarget | undefined> | R,
+>(target: Getterable<T>, options?: UseTargetElementOptions): RefObject<R>
+```
+
+### ElementTarget
+
+import { Tip } from '@/components'
+
+<Tip type="target" />

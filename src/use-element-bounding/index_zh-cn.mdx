@@ -1,0 +1,110 @@
+# useElementBounding
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" />
+
+A React Hook that returns the [bounding client rect](https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect) of an element.
+
+## Demo
+
+Try to scroll the page or resize the textarea to see the state changes.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { update, ...bounding } = useElementBounding(elementTarget, options)
+```
+
+### ElementTarget
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### Options
+
+```tsx
+export type UseElementBoundingOptions = {
+  /**
+   * Reset the bounding box when the element is not found
+   *
+   * @defaultValue true
+   */
+  reset?: boolean
+  /**
+   * Update the bounding box when the window is resized
+   *
+   * @defaultValue true
+   */
+  windowResize?: boolean
+  /**
+   * Update the bounding box when the window is scrolled
+   *
+   * @defaultValue true
+   */
+  windowScroll?: boolean
+}
+```
+
+### Returns
+
+```tsx
+export type UseElementBoundingReturns = [
+  {
+    /**
+     * The height of the element
+     */
+    height: number
+    /**
+     * The bottom position of the element
+     */
+    bottom: number
+    /**
+     * The left position of the element
+     */
+    left: number
+    /**
+     * The right position of the element
+     */
+    right: number
+    /**
+     * The top position of the element
+     */
+    top: number
+    /**
+     * The width of the element
+     */
+    width: number
+    /**
+     * The x position of the element
+     */
+    x: number
+    /**
+     * The y position of the element
+     */
+    y: number
+  },
+  /**
+   * Update the bounding box of the element
+   */
+  update: () => void,
+]
+```

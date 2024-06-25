@@ -1,0 +1,90 @@
+# useMutationObserver
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" pausable isSupported lowLevel />
+
+A React Hook that use [MutationObserver API](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) with ease.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { observerRef, isSupported, ...controls } = useMutationObserver(elementTarget, callback, options)
+```
+
+### ElementTarget
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### Callback
+
+`MutationCallback`, A function that will be called when the mutation occurs.
+
+```tsx
+type MutationCallback = (mutations: MutationRecord[], observer: MutationObserver) => void
+```
+
+### Options
+
+```tsx
+export interface UseWebObserverOptions {
+  /**
+   * Start the observer immediate after calling this function
+   *
+   * @defaultValue true
+   */
+  immediate?: boolean
+}
+
+type MutationObserverInit = {
+  childList?: boolean
+  attributes?: boolean
+  characterData?: boolean
+  subtree?: boolean
+  attributeOldValue?: boolean
+  characterDataOldValue?: boolean
+  attributeFilter?: string[]
+}
+
+export interface UseMutationObserverOptions extends UseWebObserverOptions, MutationObserverInit {}
+```
+
+### Returns
+
+<Tip type="pausable" />
+
+```tsx
+export type UseWebObserverReturns<Observer> = Pausable & {
+  /**
+   * ref that holds the observer instance
+   */
+  observerRef: React.MutableRefObject<Observer | null>
+  /**
+   * Check if the observer is supported in the current environment
+   */
+  isSupported: boolean
+}
+
+export type UseMutationObserverReturns = UseWebObserverReturns<MutationObserver>
+```

@@ -1,0 +1,46 @@
+# useParentElement
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" />
+
+A React Hook that track the parent element of an element.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const parentElement = useParentElement(elementTarget)
+```
+
+### ElementTarget
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### Returns
+
+An `HTMLElement` or `null`.
+
+```tsx
+export type UseParentElementReturns = HTMLElement | null
+```
