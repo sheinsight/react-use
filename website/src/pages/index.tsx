@@ -1,9 +1,9 @@
 import Link from '@docusaurus/Link'
+import Translate from '@docusaurus/Translate'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import Layout from '@theme/Layout'
 import { Button } from '../components'
 import { SearchHooks } from './components/search'
-import Translate from '@docusaurus/Translate'
 
 export default function Home() {
   const { siteConfig } = useDocusaurusContext()
