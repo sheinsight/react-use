@@ -7,7 +7,7 @@ import type { Config } from '@docusaurus/types'
 export default {
   title: '@shined/react-use',
   tagline: 'An SSR-friendly, comprehensive, and highly optimized React Hooks library.',
-  // favicon: 'img/favicon.ico',
+
   url: 'https://shined-hooks.vercel.app',
   baseUrl: '/react-use',
   organizationName: 'sheinsight',
@@ -16,15 +16,15 @@ export default {
   onBrokenMarkdownLinks: 'warn',
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
-    // locales: ['en', 'zh-cn'],
+
+    locales: ['en', 'zh-cn'],
     localeConfigs: {
       en: {
         label: 'English',
       },
-      // 'zh-cn': {
-      //   label: '简体中文',
-      // },
+      'zh-cn': {
+        label: '简体中文',
+      },
     },
   },
   plugins: [
@@ -89,6 +89,11 @@ export default {
     ],
   ],
   themeConfig: {
+    algolia: {
+      appId: 'W010WSW8YS',
+      apiKey: 'ca07062d4601255978e437c86e29fc74',
+      indexName: 'shined-react-use',
+    },
     navbar: {
       title: '@shined/react-use',
       items: [

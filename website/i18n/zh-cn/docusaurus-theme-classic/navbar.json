@@ -1,0 +1,34 @@
+{
+  "title": {
+    "message": "@shined/react-use",
+    "description": "The title in the navbar"
+  },
+  "item.label.Guide": {
+    "message": "指南",
+    "description": "Navbar item with label Guide"
+  },
+  "item.label.Reference": {
+    "message": "参考",
+    "description": "Navbar item with label Reference"
+  },
+  "item.label.Playground": {
+    "message": "在线尝试",
+    "description": "Navbar item with label Playground"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  },
+  "item.label.Releases": {
+    "message": "发布",
+    "description": "Navbar item with label Releases"
+  },
+  "item.label.Releases Notes": {
+    "message": "发布记录",
+    "description": "Navbar item with label Releases Notes"
+  },
+  "item.label.CHANGELOG.md": {
+    "message": "更新日志",
+    "description": "Navbar item with label CHANGELOG.md"
+  }
+}

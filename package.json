@@ -58,6 +58,7 @@
     "test": "vitest",
     "test:ci": "pnpm run lint && vitest",
     "docs:dev": "pnpm run docs:update && pnpm -C website run dev",
+    "docs:dev:zh-cn": "pnpm run docs:update && pnpm -C website run dev --locale zh-cn",
     "docs:build": "pnpm run docs:update && pnpm -C website run build",
     "docs:update": "esno ./scripts/update-hooks-data.ts",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
