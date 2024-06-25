@@ -1,6 +1,15 @@
+## [1.0.1](https://github.com/sheinsight/react-use/compare/v1.0.0...v1.0.1) (2024-06-25)
+
+
+### Bug Fixes
+
+* **useAsyncEffect:** fix `isCancelled` method in callback arguments. ([07d3aa4](https://github.com/sheinsight/react-use/commit/07d3aa4458bfc5c359850e84ad6737bda9b0e9e8))
+
+
+
 # [1.0.0](https://github.com/sheinsight/react-use/compare/v1.0.0-alpha.4...v1.0.0) (2024-06-25)
 
-- initial v1 release, see [documentation](https://sheinsight.github.io/react-use/)
+
 
 # [1.0.0-alpha.4](https://github.com/sheinsight/react-use/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2024-06-24)
 
