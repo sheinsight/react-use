@@ -19,13 +19,13 @@ export default function Home() {
                 alt="NPM Version"
                 src="https://img.shields.io/npm/v/%40shined%2Freact-use?style=flat&labelColor=%23ffffff&color=%232e8555"
               />
-              {/* <img src="https://pkg-size.dev/badge/bundle/108270" alt="Version Badge" /> */}
               <img
                 src="https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome"
                 alt="Biome Badge"
               />
+              <img src="https://pkg-size.dev/badge/bundle/108270" alt="Version Badge" />
             </div>
-            <p className="md:max-w-400px">{siteConfig.tagline}</p>
+            <p className="text-pretty text-center max-w-320px md:max-w-400px md:text-left">{siteConfig.tagline}</p>
             <div className="flex gap-4 items-center">
               <Link to="/docs/introduction">
                 <Button>Introduction</Button>
