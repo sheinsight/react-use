@@ -108,7 +108,7 @@ export function SearchHooks() {
           <div className="i-mdi:filter-remove-outline w-1rem h-1rem" />
           Clear Filters
         </div>
-        <span className="ml-2 text-gray">{filteredHooks.length} hooks found.</span>
+        <span className="ml-2 text-gray">{filteredHooks.length} hooks or utils found.</span>
       </div>
 
       <div className="overflow-y-scroll md:pt-2 md:h-46vh">

@@ -68,16 +68,6 @@ export default {
         include: ['**/*.{mdx,md}'],
       },
     ],
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'changelogs',
-        path: './changelog',
-        routeBasePath: '/changelog',
-        editUrl: 'https://github.com/sheinsight/react-use/tree/main/website/',
-        include: ['**/*.{mdx,md}'],
-      },
-    ],
   ],
   presets: [
     [
@@ -114,9 +104,12 @@ export default {
           position: 'left',
         },
         {
-          to: '/changelog',
+          href: 'https://github.com/sheinsight/react-use/blob/main/CHANGELOG.md',
           label: 'Changelog',
-          position: 'left',
+        },
+        {
+          href: 'https://github.com/sheinsight/react-use',
+          label: 'Releases',
         },
         {
           href: 'https://github.com/sheinsight/react-use',
