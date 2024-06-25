@@ -27,10 +27,10 @@ export default function Home() {
             </div>
             <p>{siteConfig.tagline}</p>
             <div className="flex gap-4 items-center">
-              <Link to="/docs/get-started">
-                <Button>Get Started</Button>
+              <Link to="/docs/introduction">
+                <Button>Introduction</Button>
               </Link>
-              <Link to="/docs/introduction">Introduction</Link>
+              <Link to="/docs/get-started">Get Started</Link>
               <Link to="/reference">Reference</Link>
             </div>
           </div>
