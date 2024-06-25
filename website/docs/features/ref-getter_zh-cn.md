@@ -4,63 +4,63 @@ sidebar_position: 3
 
 # Ref Getter
 
-A ref getter is a specialized function designed to access the current value of a React ref.
+Ref Getter 是一个专门设计用来访问 React ref 当前值的函数。
 
-## TL; DR
+## 简而言之
 
-- It can avoid issues related to stale closures effectively and simplify the reading of ref values.
-- It is useful in scenarios where ref is read frequently, such as custom Hooks or complex component logic.
-- Utilizing a ref getter does not trigger re-renders when the ref’s value is altered.
-- To achieve a re-render based on changes, consider using `useState` or `useReducer`.
+- 它能有效避免与陈旧闭包相关的问题，并简化 ref 值的读取。
+- 在频繁读取 ref 的场景下非常有用，例如自定义 Hooks 或复杂组件逻辑。
+- 使用 Ref Getter 修改 ref 的值时不会触发组件的重新渲染。
+- 如果需要基于变化触发重新渲染，可考虑使用 `useState` 或 `useReducer`。
 
-## Motivation
+## 动机
 
-In React, managing efficiently the access and update of values without re-rendering components is crucial for performance optimization.This is where a **ref getter** comes into play.
+在 React 中，高效地管理值的访问和更新而不触发组件重新渲染对性能优化至关重要。这就是 **Ref Getter** 发挥作用的地方。
 
-A ref getter is a specialized function designed to access the current value of a React ref, thereby circumventing the need to directly engage with `ref.current`. This utility shines in scenarios such as custom Hooks or complex component logic, where the value of a ref is needed frequently. It guarantees the retrieval of the ref’s most current value, effectively avoiding issues related to stale closures.
+Ref Getter 是一个专门设计用来访问 React ref 当前值的函数，从而绕过了直接操作 `ref.current` 的需求。这一工具在如自定义 Hooks 或复杂组件逻辑等场景中显得尤为重要，这些场合下频繁需要使用 ref 的值。它确保了能够获取 ref 最新的值，有效避免了与陈旧闭包相关的问题。
 
-It is important to note that utilizing a ref this way does **NOT** trigger re-renders when the ref’s value is altered. To achieve a re-render based on changes, employing `useState` or `useReducer` is advisable.
+值得注意的是，这样使用 ref **不会**在 ref 值改变时触发重新渲染。如果需要基于变化触发重新渲染，建议使用 `useState` 或 `useReducer`。
 
 :::tip
 
-Opting for a ref and its getter is fundamentally a performance trade-off, allowing developers to eschew unnecessary re-renders while effectively managing state. However, it's essential to utilize this pattern judiciously, as overuse or improper use may lead to complex code or unexpected behaviors in your React application.
+选择使用 ref 及其获取器从根本上是一种性能权衡，允许开发者在有效管理状态的同时避免不必要的重新渲染。然而，至关重要的是要谨慎使用这种模式，因为过度使用或不当使用可能导致 React 应用中的代码复杂或产生意外行为。
 
-This delicate balance ensures your application remains both performant and maintainable, catering to the dynamic needs without undermining React’s reactivity principles.
+这种微妙的平衡确保了您的应用在保持性能的同时，还能响应动态需求，不牺牲 React 的响应性原则。
 
 :::
 
 ## `useGetterRef`
 
-`useGetterRef` is a custom Hook crafted to streamline the creation of a ref getter function alongside a ref object. This setup allows you to effortlessly fetch the current value of the ref via the ref getter function, while also granting the ability to update the ref directly.
+`useGetterRef` 是一个自定义 Hook，旨在简化 ref getter 函数及对应 ref 对象的创建。这种设置让你可以通过 ref getter 函数轻松获取 ref 的当前值，同时还能直接更新 ref。
 
 ```tsx
 const [isActive, isActiveRef] = useGetterRef(false)
 
-// Access the current value of the ref
-console.log(isActive()) // Outputs: false
+// 访问 ref 的当前值
+console.log(isActive()) // 输出：false
 
-// Update the ref value
+// 更新 ref 值
 isActiveRef.current = true
 
-console.log(isActive) // Outputs: true
+console.log(isActive) // 输出：true
 ```
 
-## Ref Getters in This Library
+## 本库中的 Ref Getters
 
 ### `isActive` {#is-active}
 
-It is a ref getter created by `usePausable`, see [Pausable](/docs/features/pausable) for more details.
+这是由 `usePausable` 创建的一个 ref getter，详见 [Pausable](/docs/features/pausable) 获取更多详情。
 
 ### `isCancelled` {#is-cancelled}
 
-It is a ref getter params in `useAsyncEffect` callback, see [useAsyncEffect](/reference/use-async-effect) for more details.
+这是在 `useAsyncEffect` 回调中的一个 ref getter 参数，详见 [useAsyncEffect](/reference/use-async-effect) 获取更多详情。
 
 ### `isMounted` {#is-mounted}
 
-It is a ref getter created by `useMounted`, see [useMounted](/reference/use-mounted) for more details.
+这是由 `useMounted` 创建的一个 ref getter，详见 [useMounted](/reference/use-mounted) 获取更多详情。
 
 ### `isUnmounted` {#is-unmounted}
 
-It is a ref getter created by `useUnmounted`, see [useUnmounted](/reference/use-unmounted) for more details.
+这是由 `useUnmounted` 创建的一个 ref getter，详见 [useUnmounted](/reference/use-unmounted) 获取更多详情。
 
-... and more to come!
+... 更多内容即将到来！

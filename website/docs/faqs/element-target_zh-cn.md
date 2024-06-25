@@ -1,3 +1,3 @@
-# How to use ElementTarget
+# 如何使用 ElementTarget
 
-See [ElementTarget](/docs/features/element-target) for more information.
+更多信息请参阅 [ElementTarget](/docs/features/element-target)。

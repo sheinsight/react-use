@@ -1,42 +1,42 @@
-# Pausable
+# `Pausable`
 
-Using Hooks like `useIntervalFn` and `useMouse` makes managing different features easier and more dynamic. However, adding a way to pause and resume these Hooks could make them even more useful. This feature would give us more control and help avoid unnecessary updates, making the user experience better.
+利用像 `useIntervalFn` 和 `useMouse` 这样的 Hook 使得管理不同的功能变得更加简单和动态。然而，增加一种暂停和恢复这些 Hook 的方式可以使它们更加有用。这一特性会给我们更多的控制权，并帮助避免不必要的更新，从而改善用户体验。
 
-With this in mind, we introduce `Pausable` instance.
+基于这样的考虑，我们引入了 `Pausable` 实例。
 
-## `Pausable` Instance
+## `Pausable` 实例
 
-The `Pausable` is designed to encapsulate the ability to pause and resume functionality, along with providing access to the current active state, without directly triggering a component re-render. This approach maintains the original expected behavior while offering additional control.
+`Pausable` 旨在封装暂停和恢复功能的能力，并提供对当前活动状态的访问，而不直接触发组件重渲染。这种方法保持了原始预期的行为，同时提供了额外的控制。
 
-A `Pausable` instance is defined as follows:
+一个 `Pausable` 实例定义如下：
 
 ```tsx
 export type Pausable<PauseArgs extends unknown[] = [], ResumeArgs extends unknown[] = []> = {
   /**
-   * Whether the instance is active, it just a ref getter
+   * 实例是否处于活跃状态，它只是一个 ref getter
    */
   isActive(): boolean
   /**
-   * Pause the instances
+   * 暂停实例
    *
-   * @params update - Whether to trigger a re-render
+   * @params update - 是否触发重渲染
    */
   pause: (...args: [update?: boolean, ...PauseArgs]) => void
   /**
-   * Resume the instance
+   * 恢复实例
    *
-   * @params update - Whether to trigger a re-render
+   * @params update - 是否触发重渲染
    */
   resume: (...args: [update?: boolean, ...ResumeArgs]) => void
 }
 ```
 
-## Introducing `usePausable`
+## 引入 `usePausable`
 
-The `usePausable` Hook helps to create pausable instances. It use `useGetterRef` under the hood to provide a getter for the `isActive` property.
+`usePausable` Hook 帮助创建可暂停的实例。它在底层使用 `useGetterRef` 来提供 `isActive` 属性的 getter。
 
 ```tsx
 const pausable = usePausable(initialIsActive, pauseCallback, resumeCallback)
 ```
 
-In many internal Hooks, `usePausable` is used to create a `Pausable` instance, which can then be used to pause and resume the functionality as needed.
+在许多内部 Hook 中，`usePausable` 被用来创建一个 `Pausable` 实例，然后可以根据需要暂停和恢复功能。

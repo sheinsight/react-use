@@ -2,25 +2,25 @@
 sidebar_position: 3
 ---
 
-# Latest State
+# 最新状态
 
-## Overview
+## 概览
 
-To address common issues associated with closures capturing stale state or props, `@shined/react-use` automatically manages the latest state within its Hooks. This internal mechanism ensures that state updates or effect dependencies always reference the most current data, safeguarding against bugs that typically arise from asynchronous operations relying on outdated state.
+为了解决闭包捕获陈旧状态或属性的常见问题，`@shined/react-use` 自动管理其钩子中的最新状态。这一内部机制确保状态更新或效果依赖总是引用最新的数据，避免了因异步操作依赖过时状态而通常出现的错误。
 
-## Practical Implications
+## 实际意义
 
-This feature is particularly vital in scenarios involving delayed responses, such as in network requests or timeouts, where the state might change in the interim. By consistently providing the latest value, developers can avoid the complexity and potential errors of manually managing closures to capture updated state.
+在涉及延迟响应的场景中，这一特性尤其重要，例如在网络请求或超时中，状态可能在此期间发生变化。通过始终提供最新值，开发者可以避免手动管理闭包以捕获更新状态的复杂性和潜在错误。
 
-## Hooks States in `@shined/react-use`
+## `@shined/react-use` 中的 Hooks 状态
 
-`@shined/react-use` ensures that any stale data issues are internally managed, allowing developers to focus on broader application logic rather than the nuances of state management within asynchronous callbacks. ∑
+`@shined/react-use` 确保任何陈旧数据问题都在内部得到管理，允许开发者专注于更广泛的应用逻辑，而不是异步回调中状态管理的细节。∑
 
-## Ensure Latest State in Your Codebase
+## 在您的代码库中确保最新状态
 
-States in `@shined/react-use` is always the latest, but if you need to ensure the latest state in your codebase, you can use the following Hooks:
+在 `@shined/react-use` 中，状态总是最新的，但如果您需要确保代码库中的最新状态，您可以使用以下 Hooks：
 
-### use `useLatest` Hook
+### 使用 `useLatest` Hook
 
 ```tsx
 import { useLatest } from '@shined/react-use'
@@ -30,14 +30,14 @@ function App() {
 
   useMount(() => {
     setTimeout(() => {
-      // `latest.current` always references the latest value of `value`
+      // `latest.current` 总是引用 `value` 的最新值
       console.log(latest.current)
     }, 1000)
   })
 }
 ```
 
-### use `useSignalState` Hook
+### 使用 `useSignalState` Hook
 
 ```tsx
 import { useSignalState } from '@shined/react-use'
@@ -47,7 +47,7 @@ function App() {
 
   useMount(() => {
     setTimeout(() => {
-      // `state()` always references the latest value of the state
+      // `state()` 总是引用状态的最新值
       console.log(state())
     }, 1000)
   })
