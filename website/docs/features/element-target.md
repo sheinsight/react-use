@@ -13,7 +13,7 @@ sidebar_position: 2
 - To enhance Developer Experience (DX) and support for SSR, we introduce `useTargetElement`.
 - It's a SSR friendly React Hook that simplifies the process of targeting elements.
 
-If you are looking for `ElementTarget` types, please refer to [ElementTarget Types](#elementtarget-types).
+If you are looking for `ElementTarget` types, please refer to [ElementTarget Types](#element-target-types).
 
 ## Motivation
 
@@ -55,7 +55,7 @@ It accepts a getter function as input to avoid SSR-related errors and also suppo
 
 This Hook has found its place in numerous Hooks that require element targeting. It represents a best practice for developers needing to access elements within their Hooks.
 
-### ElementTarget Types
+### ElementTarget Types {#element-target-types}
 
 :::tip
 
@@ -68,7 +68,7 @@ A "🚥" prefix indicates that the target can be a `getter` function, which is p
 - 🚥 ⚛️ **Element Selector**: A CSS selector string, such as `#id`, `.class.subclass`, `tag`, etc.
 - 🚥 ⚛️ **null/undefined**: These indicate the absence of a target, simplifying error handling while ensuring smooth integration with TypeScript.
 
-### Valid Examples
+### Valid Examples {#valid-examples}
 
 ```tsx
 const ref = useRef<HTMLDivElement>(null) // <div ref={ref} />

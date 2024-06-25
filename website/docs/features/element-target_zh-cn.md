@@ -15,7 +15,7 @@ sidebar_position: 2
 - 为了提升开发者体验（DX）和对 SSR 的支持，我们引入了 `useTargetElement`。
 - 这是一个对 SSR 友好的 React Hook，简化了定位元素的过程。
 
-如果您正在寻找 `ElementTarget` 类型，请参考 [ElementTarget Types](#elementtarget-types)。
+如果您正在寻找 `ElementTarget` 类型，请参考 [ElementTarget Types](#element-target-types)。
 
 ## 动机
 
@@ -57,7 +57,7 @@ const targetRef = useTargetElement(elementTarget)
 
 这个 Hook 在许多需要元素定位的 Hooks 中找到了它的位置。它代表了需要在其 Hooks 内访问元素的开发者的最佳实践。
 
-### ElementTarget 类型
+### ElementTarget 类型 {#element-target-types}
 
 :::tip
 
@@ -70,7 +70,7 @@ const targetRef = useTargetElement(elementTarget)
 - 🚥 ⚛️ **Element Selector**：一个 CSS 选择器字符串，例如 `#id`、`.class.subclass`、`tag` 等。
 - 🚥 ⚛️ **null/undefined**：这些表示无目标，简化了错误处理，同时确保了与 TypeScript 的顺畅集成。
 
-### 有效示例
+### 有效示例 {#valid-examples}
 
 ```tsx
 const ref = useRef<HTMLDivElement>(null) // <div ref={ref} />

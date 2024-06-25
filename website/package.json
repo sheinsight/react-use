@@ -7,8 +7,8 @@
     "docs:update": "pnpm run docs:locale && esno ./scripts/update-hooks-data.mts",
     "dev": "pnpm run docs:update && docusaurus start",
     "start": "pnpm run dev",
-    "build": "pnpm run update:data && docusaurus build",
-    "serve": "pnpm run update:data && docusaurus serve",
+    "build": "pnpm run docs:update && docusaurus build",
+    "serve": "pnpm run docs:update && docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc"
