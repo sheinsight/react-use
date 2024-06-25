@@ -1,3 +1,7 @@
+# [1.0.0](https://github.com/sheinsight/react-use/compare/v1.0.0-alpha.4...v1.0.0) (2024-06-25)
+
+- initial v1 release, see [documentation](https://sheinsight.github.io/react-use/)
+
 # [1.0.0-alpha.4](https://github.com/sheinsight/react-use/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2024-06-24)
 
 
