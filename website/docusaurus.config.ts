@@ -16,7 +16,6 @@ export default {
   onBrokenMarkdownLinks: 'warn',
   i18n: {
     defaultLocale: 'en',
-
     locales: ['en', 'zh-cn'],
     localeConfigs: {
       en: {
