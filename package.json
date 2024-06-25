@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.0.0",
   "packageManager": "pnpm@9.4.0",
-  "description": "A simple yet powerful collection of React Hooks.",
+  "description": "An SSR-friendly, comprehensive, and highly optimized React Hooks library",
   "author": "Viki <hi@viki.moe> (https://github.com/vikiboss)",
   "license": "MIT",
   "main": "./dist/index.js",

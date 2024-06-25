@@ -13,7 +13,7 @@ export default function Home() {
         <div className="flex gap-2 w-full flex-col md:gap-12 md:flex-row md:max-w-78vw">
           <div className="flex flex-col items-center md:items-start gap-4 pt-20vh md:pt-12vh">
             <span className="text-3.6rem">🪝</span>
-            <h2 className="font-mono">{siteConfig.title}</h2>
+            <h1 className="font-mono">{siteConfig.title}</h1>
             <div className="flex gap-2">
               <img
                 alt="NPM Version"
@@ -25,7 +25,7 @@ export default function Home() {
                 alt="Biome Badge"
               />
             </div>
-            <p>{siteConfig.tagline}</p>
+            <p className="md:max-w-400px">{siteConfig.tagline}</p>
             <div className="flex gap-4 items-center">
               <Link to="/docs/introduction">
                 <Button>Introduction</Button>

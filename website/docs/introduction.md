@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Introduction
 
-`@shined/react-use` is an SSR-friendly and highly optimized React Hooks library that offers a variety of **useful**, **reusable** Hooks written in **TypeScript**.
+`@shined/react-use` is an **SSR-friendly**, **comprehensive**, and **highly optimized** React Hooks library that delivers flexible and efficient hook solutions. Fully developed with **TypeScript**, it comes equipped with an interactive documentation filled with rich examples 🔥.
 
 Primarily inspired by [VueUse](https://vueuse.org/), along with influences from [react-use](https://github.com/streamich/react-use), [ahooks](https://ahooks.js.org/), and many other excellent libraries within the community. Huge thanks to the Open Source community, especially the authors of the libraries mentioned above, for their great work and inspiration.
 
