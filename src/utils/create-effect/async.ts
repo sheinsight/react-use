@@ -1,4 +1,3 @@
-import { useGetterRef } from '../../use-getter-ref'
 import { useLatest } from '../../use-latest'
 
 import type { DependencyList } from 'react'
@@ -16,16 +15,15 @@ type UseAsyncEffect<T = unknown> = (callback: AsyncEffectCallback, deps?: Depend
 
 export function createAsyncEffect<T = unknown>(effect: ExtendedReactEffect<T>): UseAsyncEffect<T> {
   return (callback: AsyncEffectCallback, deps?: DependencyList, ...args: T[]): void => {
-    const [isCancelledRef, isCancelled] = useGetterRef(false)
     const latest = useLatest({ callback })
 
     effect(
       () => {
-        isCancelledRef.current = false
+        let cancelled = false
+        const isCancelled = () => cancelled
         latest.current.callback(isCancelled)
-
         return () => {
-          isCancelledRef.current = true
+          cancelled = true
         }
       },
       deps,
