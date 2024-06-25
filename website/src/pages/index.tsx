@@ -11,9 +11,20 @@ export default function Home() {
     <Layout>
       <div className="grid place-content-center">
         <div className="flex gap-2 w-full flex-col md:gap-12 md:flex-row md:max-w-78vw">
-          <div className="flex flex-col items-center md:items-start gap-4 pt-20vh md:pt-16vh">
+          <div className="flex flex-col items-center md:items-start gap-4 pt-20vh md:pt-12vh">
             <span className="text-3.6rem">🪝</span>
             <h2 className="font-mono">{siteConfig.title}</h2>
+            <div className="flex gap-2">
+              <img
+                alt="NPM Version"
+                src="https://img.shields.io/npm/v/%40shined%2Freact-use?style=flat&labelColor=%23ffffff&color=%232e8555"
+              />
+              {/* <img src="https://pkg-size.dev/badge/bundle/108270" alt="Version Badge" /> */}
+              <img
+                src="https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome"
+                alt="Biome Badge"
+              />
+            </div>
             <p>{siteConfig.tagline}</p>
             <div className="flex gap-4 items-center">
               <Link to="/docs/get-started">

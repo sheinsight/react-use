@@ -104,17 +104,28 @@ export default {
           position: 'left',
         },
         {
-          href: 'https://github.com/sheinsight/react-use/blob/main/CHANGELOG.md',
-          label: 'Changelog',
-        },
-        {
-          href: 'https://github.com/sheinsight/react-use',
-          label: 'Releases',
+          type: 'search',
+          position: 'right',
         },
         {
           href: 'https://github.com/sheinsight/react-use',
           label: 'GitHub',
           position: 'right',
+        },
+        {
+          type: 'dropdown',
+          label: 'Releases',
+          position: 'right',
+          items: [
+            {
+              href: 'https://github.com/sheinsight/react-use/releases',
+              label: 'Releases Notes',
+            },
+            {
+              href: 'https://github.com/sheinsight/react-use/blob/main/CHANGELOG.md',
+              label: 'CHANGELOG.md',
+            },
+          ],
         },
         {
           type: 'localeDropdown',
