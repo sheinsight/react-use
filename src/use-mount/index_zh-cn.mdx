@@ -4,22 +4,22 @@ import { HooksType } from '@/components'
 
 <HooksType category="Lifecycle" />
 
-A React Hook that runs a function only once when the component mounts.
+一个 React Hook，它只在组件挂载时运行一个函数一次。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
@@ -28,19 +28,28 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-useMount(handler, strictOnce)
+useMount(callback, strictOnce)
 ```
 
-### Handler
+### 回调函数 Callback \{#callback}
 
-A `function` that will be called when the component mounts, can be **async**.
+在组件挂载时调用的 `function`，支持异步函数。
 
-### StrictOnce
+### 严格一次 StrictOnce \{#strict-once}
+
+严格限制回调函数只执行一次，不推荐使用，默认值为 `false`。
 
 :::warning
 
-`strictOnce` option is **NOT** recommended as it [damages](https://react.dev/learn/synchronizing-with-effects#dont-use-refs-to-prevent-effects-from-firing) the original intention of React 18's strict mode.
+不推荐使用 `strictOnce` 选项，因为它 [破坏了](https://react.dev/learn/synchronizing-with-effects#dont-use-refs-to-prevent-effects-from-firing) React 18 严格模式的原始意图。
 
 :::
 
-A `boolean` that indicates whether the handler should be called only once in React 18's [Strict Mode](https://react.dev/reference/react/StrictMode). Default is `false`.
+一个 `boolean` 值，指示处理程序在 React 18 的 [Strict Mode](https://react.dev/reference/react/StrictMode) 中是否仅应调用一次。默认值为 false。
+
+
+
+
+
+
+

@@ -4,22 +4,22 @@ import { HooksType } from '@/components'
 
 <HooksType category="Lifecycle" />
 
-A React Hook like [React.useEffect](https://react.dev/reference/react/useEffect) but only run once, with more **semantic** name. It's merely an alias to `useEffect` with an empty dependency array.
+一个类似 [React.useEffect](https://react.dev/reference/react/useEffect) 的 React Hook，但只运行一次，名称更加**语义化**。实际上，它只是带有空依赖数组的 `useEffect` 的别名。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
@@ -32,6 +32,6 @@ import { Source } from '@/components'
 useEffectOnce(callback)
 ```
 
-### Callback
+### 回调函数 Callback \{#callback}
 
-Same as [React.useEffect](https://react.dev/reference/react/useEffect).
+与 [React.useEffect](https://react.dev/reference/react/useEffect) 相同。

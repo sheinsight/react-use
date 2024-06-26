@@ -63,7 +63,7 @@ export interface UseCycleListOptions<T, R extends T = T> {
 ### 返回值 Returns \{#returns}
 
 ```tsx
-export type UseCycleListActions<T> = {
+export type UseCycleListReturnsActions<T> = {
   /**
    * 移至下一个值
    *
@@ -95,7 +95,7 @@ export type UseCycleListReturns<T> = readonly [
   /**
    * 控制列表的操作
    */
-  UseCycleListActions<T>,
+  UseCycleListReturnsActions<T>,
   /**
    * 当前索引
    */

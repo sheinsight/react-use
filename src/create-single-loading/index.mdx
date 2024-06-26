@@ -4,7 +4,7 @@ import { HooksType } from '@/components'
 
 <HooksType category="ProUtilities" />
 
-A utility that provide a way to manage single (or global) loading state via multiple Hooks or simple JS/TS functions, using [Reactive](https://sheinsight.github.io/reactive/) under the hood.
+A utility that provide a way to manage single (or global) loading state via multiple Hooks or loading instance, using [Reactive](https://sheinsight.github.io/reactive/) under the hood.
 
 import { Installation } from '@/components'
 
@@ -89,20 +89,20 @@ export interface CreateSingleLoadingReturns {
    */
   useLoading(): boolean
   /**
-   * Set the loading state via store in JS/TS
+   * Set the loading state via store via instance
    *
    * @param {boolean} value - `boolean`, the value to set
    * @returns {void} `void`
    */
   set: (value: boolean) => void
   /**
-   * Get the loading state via store in JS/TS
+   * Get the loading state via store via instance
    *
    * @returns {boolean} `boolean`, the loading state
    */
   get(): boolean
   /**
-   * Bind the loading state to the async function in JS/TS
+   * Bind the loading state to the async function via instance
    *
    * @param {AnyFunc} asyncFn - `AnyFunc`, the async function to bind, see {@link AnyFunc}
    * @returns {AnyFunc} `AnyFunc`, same as `asyncFn` param, see {@link AnyFunc}

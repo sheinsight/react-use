@@ -4,22 +4,22 @@ import { HooksType } from '@/components'
 
 <HooksType category="Utilities" />
 
-A React Hook that helps to create a debounced function.
+一个帮助创建节流函数的 React Hook。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
@@ -31,28 +31,28 @@ import { Source } from '@/components'
 const throttledFn = useThrottledFn(fn, { wait: 1000 })
 ```
 
-### Fn
+### 目标函数 Fn \{#fn}
 
-The `function` to throttle.
+要节流的函数。
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type ThrottleOptions = {
   /**
-   * time frame for throttle
+   * 节流的时间间隔
    *
    * @defaultValue 0
    */
   wait?: number
   /**
-   * whether to invoke the function at the start of each period
+   * 是否在每个时间间隔的开始调用该函数
    *
    * @defaultValue true
    */
   leading?: boolean
   /**
-   * whether to invoke the function at the end of each period
+   * 是否在每个时间间隔的结束调用该函数
    *
    * @defaultValue true
    */
@@ -62,6 +62,6 @@ export type ThrottleOptions = {
 export interface UseThrottledFnOptions extends ThrottleOptions {}
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
-The debounced `function`, same as the input function.
+返回节流后的函数，类型与输入的函数相同。

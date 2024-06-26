@@ -33,11 +33,11 @@ const isSupported = useSupported(callback, deps)
 
 ### Callback
 
-A `function` that returns a boolean value to check if the feature is supported.
+A `function` whose return value is converted to a `Boolean` value to check whether the feature is supported.
 
 ### Deps
 
-An array of dependencies to re-run the check when the value changes.
+`React.DependencyList`, An array of dependencies to re-run the check when the value changes.
 
 ### Returns
 

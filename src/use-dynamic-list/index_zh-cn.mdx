@@ -4,22 +4,22 @@ import { HooksType } from '@/components'
 
 <HooksType category="ProUtilities" />
 
-A React Hook that helps to manage dynamic list of items.
+一个帮助管理动态列表项的 React Hook。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
@@ -31,71 +31,74 @@ import { Source } from '@/components'
 const [list, actions] = useDynamicLis(initialList)
 ```
 
-### InitialList
+### 初始列表 InitialList \{#initial-list}
 
-Any array of items, default to `[]` (`unknown[]`).
+任意的项目数组，默认为 `[]`（`unknown[]`）。
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
+export interface UseDynamicListReturnsActions<T> {
+  /**
+   * 在指定索引处插入项目
+   */
+  insert: (index: number, item: T) => void
+  /**
+   * 合并指定索引处的项目
+   */
+  merge: (index: number, items: T[]) => void
+  /**
+   * 替换指定索引处的项目
+   */
+  replace: (index: number, item: T) => void
+  /**
+   * 移除指定索引处的项目
+   */
+  remove: (index: number) => void
+  /**
+   * 获取指定索引处项目的键
+   */
+  getKey: (index: number) => number
+  /**
+   * 获取具有指定键的项目的索引
+   */
+  getIndex: (key: number) => number
+  /**
+   * 将项目从旧索引移至新索引
+   */
+  move: (oldIndex: number, newIndex: number) => void
+  /**
+   * 将项目添加到列表末尾
+   */
+  push: (item: T) => void
+  /**
+   * 从列表末尾弹出项目
+   */
+  pop(): void
+  /**
+   * 在列表开头添加项目
+   */
+  unshift: (item: T) => void
+  /**
+   * 从列表开头弹出项目
+   */
+  shift(): void
+  /**
+   * 根据指定结果对列表进行排序
+   */
+  sort: (result: T[]) => T[]
+  /**
+   * 重置列表
+   */
+  reset: (newList: T[]) => void
+}
+
 export type UseDynamicListReturns<T> = readonly [
   /**
-   * list of items
+   * 项目列表
    */
   list: T[],
-  {
-    /**
-     * insert an item at the specified index
-     */
-    insert: (index: number, item: T) => void
-    /**
-     * merge items at the specified index
-     */
-    merge: (index: number, items: T[]) => void
-    /**
-     * replace an item at the specified index
-     */
-    replace: (index: number, item: T) => void
-    /**
-     * remove an item at the specified index
-     */
-    remove: (index: number) => void
-    /**
-     * get the key of the item at the specified index
-     */
-    getKey: (index: number) => number
-    /**
-     * get the index of the item with the specified key
-     */
-    getIndex: (key: number) => number
-    /**
-     * move an item from the old index to the new index
-     */
-    move: (oldIndex: number, newIndex: number) => void
-    /**
-     * push an item to the end of the list
-     */
-    push: (item: T) => void
-    /**
-     * pop an item from the end of the list
-     */
-    pop(): void
-    /**
-     * unshift an item to the start of the list
-     */
-    unshift: (item: T) => void
-    /**
-     * shift an item from the start of the list
-     */
-    shift(): void
-    /**
-     * sort the list based on the specified result
-     */
-    sort: (result: T[]) => T[]
-    /**
-     * reset the list
-     */
-    reset: (newList: T[]) => void
-  },
+  UseDynamicListReturnsActions<T>,
 ]
+
 ```

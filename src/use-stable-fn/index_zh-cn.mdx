@@ -4,24 +4,24 @@ import { HooksType } from '@/components'
 
 <HooksType category="Utilities" lowLevel />
 
-A React Hook that returns a function whose memory address will never change.
+一个返回其内存地址永不改变的函数的 React Hook。
 
-## Demo
+## 演示 Demo \{#demo}
 
-Try to increase the counter to update the component to trigger re-render, you will see that the function's memory address will never change, so the toast will never show up.
+尝试增加计数器以更新组件并触发重新渲染，你会发现函数的内存地址永不改变，所以永远不会显示对应的提示。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
@@ -33,10 +33,14 @@ import { Source } from '@/components'
 const stableFn = useStableFn(fn)
 ```
 
-### Fn
+### 待处理函数 Fn \{#fn}
 
-The function whose memory address will be stable.
+其内存地址将保持稳定的函数。
 
-### Returns
+### 返回值 Returns \{#returns}
 
-A same shape function, but its memory address will never change.
+形状类型签名的函数，但其内存地址永不改变。
+
+
+
+

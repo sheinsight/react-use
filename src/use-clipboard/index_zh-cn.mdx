@@ -4,22 +4,22 @@ import { HooksType } from '@/components'
 
 <HooksType category="Browser" isSupported />
 
-A React Hook that copy text with [Clipboard API](https://developer.mozilla.org/zh-CN/docs/Web/API/Clipboard_API) or fallback to `document.execCommand('copy')` if it's not available.
+一个 React 钩子，用于使用 [Clipboard API](https://developer.mozilla.org/zh-CN/docs/Web/API/Clipboard_API) 复制文本，在 API 不可用时回退到 `document.execCommand('copy')`。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
@@ -31,51 +31,51 @@ import { Source } from '@/components'
 const clipboard = useClipboard(options)
 ```
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type UseClipboardOptions<Source> = {
   /**
-   * Enabled reading for clipboard, need to request permission
+   * 启用读取剪贴板，需要请求权限
    *
    * @defaultValue false
    */
   read?: boolean
   /**
-   * Copy source
+   * 目标复制值，直接调用 copy 方法不传任何参数时会默认复制这个最新状态值。
    */
   source?: Source
   /**
-   * Milliseconds to reset state of `copied` ref
+   * 重置 `copied` 变量状态的毫秒数
    *
-   * @defaultValue 1500
+   * @defaultValue 1_500
    */
   copiedDuration?: number
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export interface UseClipboardReturns<HasSource> {
   /**
-   * Whether the clipboard is supported
+   * 剪贴板 API 是否受支持
    */
   isSupported: boolean
   /**
-   * The text in the clipboard
+   * 剪贴板中的文本
    */
   text: string
   /**
-   * A flag to indicate the text is copied, will be reset after `copiedDuration`
+   * 表示文本是否已复制的标志，在 `copiedDuration` 后将重置
    */
   copied: boolean
   /**
-   * Copy the text to the clipboard
+   * 复制文本到剪贴板
    */
   copy: HasSource extends true ? (text?: string) => Promise<void> : (text: string) => Promise<void>
   /**
-   * Clear the text in the clipboard
+   * 复制文本到剪贴板
    */
   clear(): void
 }

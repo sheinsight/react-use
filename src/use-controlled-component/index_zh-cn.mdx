@@ -4,37 +4,38 @@ import { HooksType } from '@/components'
 
 <HooksType category="Utilities" />
 
-A React Hook that helps you to manage controlled components that receive `value` and `onChange` props meeting the following type.
+一个 React Hook，帮助你管理受控组件，这些组件接收满足以下类型的 `value` 和 `onChange` 属性。
+
 
 ```tsx
 export interface ControlledComponentProps<T> = {
   /**
-   * The value of the controlled component
+   * 受控组件的值
    */
   value: T
   /**
-   * The callback that is called when the value of the controlled component changes
+   * 当受控组件的值发生变化时调用的回调
    */
   onChange: (eventOrValue: T | { target: { value: T } }) => void
 }
 ```
 
-## Demo
+## 演示 Demo \{#demo}
 
-Try to clear the input and type something.
+尝试清除输入并输入一些内容。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
@@ -46,51 +47,51 @@ import { Source } from '@/components'
 const input = useControlledComponent(initialValue, options)
 ```
 
-### InitialValue
+### 初始值 InitialValue \{#initial-value}
 
-Initial value of the component, can be a `string`, `number`, `boolean`, `object`, `array` etc.
+组件的初始值，可以是 `string`、`number`、`boolean`、`object`、`array` 等。
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export interface UseControlledComponentOptions<T = string, P extends object = object> extends UseSafeStateOptions {
   /**
-   * The callback that is called when the value of the controlled component changes
+   * 当受控组件的值发生变化时调用的回调
    */
   onChange?: (value: T, preValue?: T) => void
   /**
-   * The callback that is called when the value of the controlled component is reset
+   * 当受控组件的值被重置时调用的回调
    */
   onReset?: (initialValue: T) => void
   /**
-   * The props of the controlled component
+   * 受控组件的 props
    */
   props?: P
   /**
-   * The fallback value of the controlled component
+   * 受控组件的备用值
    */
   fallbackValue?: T
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export interface UseControlledComponentReturns<T> {
   /**
-   * The value of the controlled component
+   * 受控组件的值
    */
   value: T
   /**
-   * The props that should be passed to the controlled component
+   * 应传递给受控组件的 props
    */
   props: ControlledComponentProps<T>
   /**
-   * Reset the value of the controlled component to the initial value
+   * 将受控组件的值重置为初始值
    */
   reset(): void
   /**
-   * Set the value of the controlled component
+   * 设置受控组件的值
    */
   setValue: (value: T) => void
 }

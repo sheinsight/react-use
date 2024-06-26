@@ -1,11 +1,11 @@
-import { Button, Card, KeyValue, Zone, wait as mockFetch } from '@/components'
+import { Button, Card, KeyValue, OTP, Zone, wait as mockFetch } from '@/components'
 import { createSingleLoading } from '@shined/react-use'
 
 const pageLoading = createSingleLoading()
 
-const fetchOutsideReact = pageLoading.bind(async (num: number) => {
+const fetchOutsideReact = pageLoading.bind(async (otp: string) => {
   await mockFetch()
-  console.log(`num is ${num}`)
+  console.log(`one time password is ${otp}`)
 })
 
 export function App() {
@@ -22,9 +22,7 @@ export function App() {
 
   return (
     <Card>
-      <Zone>
-        <KeyValue label="Loading">{loading}</KeyValue>
-      </Zone>
+      <KeyValue label="Loading">{loading}</KeyValue>
       <Zone>
         {/* biome-ignore format: for demo */}
         <Button disabled={loading} onClick={fetchUser.run}>fetchUser</Button>
@@ -37,7 +35,7 @@ export function App() {
       </Zone>
       <Zone>
         {/* biome-ignore format: for demo */}
-        <Button disabled={loading} onClick={() => fetchOutsideReact(1)}>Fetch outside React</Button>
+        <Button disabled={loading} onClick={() => fetchOutsideReact(OTP())}>Fetch outside React</Button>
         <Button onClick={() => fetchUser.setLoading(!loading)}>Toggle via Hook</Button>
         <Button onClick={() => pageLoading.set(!loading)}>Toggle via instance</Button>
       </Zone>

@@ -4,22 +4,22 @@ import { HooksType } from '@/components'
 
 <HooksType category="Lifecycle" />
 
-A React Hook that helps to run a callback when the component unmounts.
+一个 React Hook，用于在组件卸载时运行回调函数。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
@@ -28,9 +28,9 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-useUnmount(handler)
+useUnmount(callback)
 ```
 
-### Handler
+### 回调函数 Callback \{#callback}
 
-A `function` that will be called when the component unmounts, can be **async**.
+一个 `function`，它将在组件卸载时被调用，支持异步函数。

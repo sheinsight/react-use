@@ -4,22 +4,22 @@ import { HooksType } from '@/components'
 
 <HooksType category="Utilities" isSupported lowLevel />
 
-A React Hook that helps to check if browser supports a feature in both client and Server-side Rendering (SSR).
+一个 React Hook，用于检测浏览器在客户端和服务器端渲染（SSR）中是否支持某项功能。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
@@ -31,14 +31,14 @@ import { Source } from '@/components'
 const isSupported = useSupported(callback, deps)
 ```
 
-### Callback
+### 回调函数 Callback \{#callback}
 
-A `function` that returns a boolean value to check if the feature is supported.
+一个函数，其返回值会被转为布尔值用于检查是否支持该特性。
 
-### Deps
+### 依赖 Deps \{#deps}
 
-An array of dependencies to re-run the check when the value changes.
+`React.DependencyList`, 一个在值改变时重新运行检查的依赖项数组。
 
-### Returns
+### 返回值 Returns \{#returns}
 
-A `boolean` value that indicates if the feature is supported.
+一个指示特性是否受支持的 `boolean` 值。
