@@ -1,4 +1,16 @@
 {
+  "reference.demo.source":{
+    "message": "查看源码",
+    "description": "source"
+  },
+  "reference.usage.showLess":{
+    "message": "收起内容",
+    "description": "show less"
+  },
+  "reference.usage.showMore":{
+    "message": "展示更多",
+    "description": "show more"
+  },
   "reference.source.code":{
     "message": "🪝 Hook 实现",
     "description": "implementation"
@@ -14,6 +26,10 @@
   "reference.source.description":{
     "message": "点击下方链接前往 GitHub 查看对应源码。",
     "description": "description"
+  },
+  "homepage.filter.searchPlaceholder":{
+    "message": "搜索...",
+    "description": "searchPlaceholder"
   },
   "homepage.filter.clear":{
     "message": "清除筛选",

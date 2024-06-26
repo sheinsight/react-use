@@ -1,6 +1,7 @@
 import { useToggle } from '@site/../src'
 import CodeBlock from '@theme/CodeBlock'
 import { Button } from '../demo-related'
+import Translate from '@docusaurus/Translate'
 
 const ignores = ['prettier-ignore', 'biome-ignore']
 const threshold = 24
@@ -29,7 +30,13 @@ export function RawCode(
         <div
           className={`absolute w-full grid place-content-center h-4rem from-black/20 to-transparent dark:from-black/80 bottom-0 ${show ? '' : 'bg-gradient-to-t'}`}
         >
-          <Button onClick={toggleShow}>{show ? 'Show less' : 'Show more'}</Button>
+          <Button onClick={toggleShow}>
+            {show ? (
+              <Translate id="reference.usage.showLess">Show less</Translate>
+            ) : (
+              <Translate id="reference.usage.showMore">Show more</Translate>
+            )}
+          </Button>
         </div>
       )}
     </div>

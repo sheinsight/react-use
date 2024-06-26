@@ -23,7 +23,10 @@ export function SearchHooks() {
 
   const filteredHooks = useCreation(() => {
     return hooks.filter((hook) => {
-      const isNameMatch = hook.name.toLowerCase().includes(input.value.trim().toLowerCase())
+      const isNameMatch = [camelCase(hook.name).toLowerCase(), hook.name.toLowerCase()].some((e) =>
+        e.includes(input.value.trim().toLowerCase()),
+      )
+
       const isCategoryMatch = paramsMatch(params.category, hook.category)
 
       const isFeatureMatch =
@@ -50,7 +53,7 @@ export function SearchHooks() {
           {...input.props}
           type="text"
           className="w-full outline-0 py-2 px-4 rounded text-xl input-border bg-#AAAAAA/12"
-          placeholder="Search..."
+          placeholder={translate({ id: 'homepage.filter.searchPlaceholder', message: 'Search...' })}
         />
       </div>
       <div className="flex gap-2">
@@ -133,7 +136,7 @@ export function SearchHooks() {
               >
                 <div>
                   <Link to={`/reference/${hook.name}`}>
-                    <span className="text-primary dark:text-primary">{hook.name}</span>
+                    <span className="text-primary dark:text-primary">{camelCase(hook.name)}</span>
                   </Link>
                 </div>
                 <div>

@@ -1,5 +1,6 @@
 import { useLocation } from '@docusaurus/router'
 import { repoBase } from '../utils'
+import Translate from '@docusaurus/Translate'
 
 interface CardContentProps
   extends React.PropsWithChildren<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>> {}
@@ -27,7 +28,7 @@ export function Card(
     >
       {!isGetStarted && (
         <a href={sourceUrl} className="absolute right-2 top-2 text-xs underline">
-          Source
+          <Translate id="reference.demo.source">Source</Translate>
         </a>
       )}
       {children}
