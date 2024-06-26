@@ -7,7 +7,7 @@ import { unwrapArrayable } from '../utils/unwrap'
 
 import type { ReactSetState } from '../use-safe-state'
 
-export interface UseToggleReturnActions<O, T> {
+export interface UseToggleReturnsActions<O, T> {
   /**
    * Set the state to the left value.
    */
@@ -22,7 +22,7 @@ export interface UseToggleReturnActions<O, T> {
   setState: ReactSetState<O | T>
 }
 
-export type UseToggleReturns<O, T> = readonly [O | T, () => void, UseToggleReturnActions<O, T>]
+export type UseToggleReturns<O, T> = readonly [O | T, () => void, UseToggleReturnsActions<O, T>]
 
 /**
  * A React Hook that helps to manage a togglable state.

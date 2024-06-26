@@ -18,20 +18,20 @@ export interface UseClipboardOptions<Source> {
    */
   read?: boolean
   /**
-   * Copy source
+   * Copy source, which is copied by default when you call the copy method directly without passing any parameters
    */
   source?: Source
   /**
    * Milliseconds to reset state of `copied` ref
    *
-   * @defaultValue 1500
+   * @defaultValue 1_500
    */
   copiedDuration?: number
 }
 
 export interface UseClipboardReturns<HasSource> {
   /**
-   * Whether the clipboard is supported
+   * Whether the Clipboard API is supported
    */
   isSupported: boolean
   /**

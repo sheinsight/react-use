@@ -3,65 +3,67 @@ import { useCreation } from '../use-creation'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
 
+export interface UseDynamicListReturnsActions<T> {
+  /**
+   * insert an item at the specified index
+   */
+  insert: (index: number, item: T) => void
+  /**
+   * merge items at the specified index
+   */
+  merge: (index: number, items: T[]) => void
+  /**
+   * replace an item at the specified index
+   */
+  replace: (index: number, item: T) => void
+  /**
+   * remove an item at the specified index
+   */
+  remove: (index: number) => void
+  /**
+   * get the key of the item at the specified index
+   */
+  getKey: (index: number) => number
+  /**
+   * get the index of the item with the specified key
+   */
+  getIndex: (key: number) => number
+  /**
+   * move an item from the old index to the new index
+   */
+  move: (oldIndex: number, newIndex: number) => void
+  /**
+   * push an item to the end of the list
+   */
+  push: (item: T) => void
+  /**
+   * pop an item from the end of the list
+   */
+  pop(): void
+  /**
+   * unshift an item to the start of the list
+   */
+  unshift: (item: T) => void
+  /**
+   * shift an item from the start of the list
+   */
+  shift(): void
+  /**
+   * sort the list based on the specified result
+   */
+  sort: (result: T[]) => T[]
+  /**
+   * reset the list
+   */
+  reset: (newList: T[]) => void
+}
+
 export type UseDynamicListReturns<T> = readonly [
   /**
    * list of items
    */
   list: T[],
-  {
-    /**
-     * insert an item at the specified index
-     */
-    insert: (index: number, item: T) => void
-    /**
-     * merge items at the specified index
-     */
-    merge: (index: number, items: T[]) => void
-    /**
-     * replace an item at the specified index
-     */
-    replace: (index: number, item: T) => void
-    /**
-     * remove an item at the specified index
-     */
-    remove: (index: number) => void
-    /**
-     * get the key of the item at the specified index
-     */
-    getKey: (index: number) => number
-    /**
-     * get the index of the item with the specified key
-     */
-    getIndex: (key: number) => number
-    /**
-     * move an item from the old index to the new index
-     */
-    move: (oldIndex: number, newIndex: number) => void
-    /**
-     * push an item to the end of the list
-     */
-    push: (item: T) => void
-    /**
-     * pop an item from the end of the list
-     */
-    pop(): void
-    /**
-     * unshift an item to the start of the list
-     */
-    unshift: (item: T) => void
-    /**
-     * shift an item from the start of the list
-     */
-    shift(): void
-    /**
-     * sort the list based on the specified result
-     */
-    sort: (result: T[]) => T[]
-    /**
-     * reset the list
-     */
-    reset: (newList: T[]) => void
-  },
+  UseDynamicListReturnsActions<T>,
 ]
 
 /**

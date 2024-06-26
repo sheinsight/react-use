@@ -29,24 +29,24 @@ export interface UsePaginationOptions {
    * @param {PaginationInfo} pagination - `PaginationInfo`, the pagination info
    * @returns {void} `void`
    */
-  onPageChange?: (pagination: UsePaginationState) => void
+  onPageChange?: (pagination: UsePaginationReturnsState) => void
   /**
    * Callback when the `pageSize` change.
    *
    * @param {PaginationInfo} pagination - `PaginationInfo`, the pagination info
    * @returns {void} `void`
    */
-  onPageSizeChange?: (pagination: UsePaginationState) => void
+  onPageSizeChange?: (pagination: UsePaginationReturnsState) => void
   /**
    * Callback when the `pageCount` change.
    *
    * @param {PaginationInfo} pagination - `PaginationInfo`, the pagination info
    * @returns {void} `void`
    */
-  onPageCountChange?: (pagination: UsePaginationState) => void
+  onPageCountChange?: (pagination: UsePaginationReturnsState) => void
 }
 
-export interface UsePaginationState {
+export interface UsePaginationReturnsState {
   /**
    * Total number of items.
    */
@@ -73,37 +73,36 @@ export interface UsePaginationState {
   isLastPage: boolean
 }
 
-export type UsePaginationReturns = readonly [
-  UsePaginationState,
-  {
-    /**
-     * Go to the previous page.
-     *
-     * @returns {void} `void`
-     */
-    prev(): void
-    /**
-     * Go to the next page.
-     *
-     * @returns {void} `void`
-     */
-    next(): void
-    /**
-     * Go to the specified page.
-     *
-     * @param {number} page - `number`, the page number
-     * @returns {void} `void`
-     */
-    go: (page: number) => void
-    /**
-     * Set the number of items to display per page.
-     *
-     * @param {number} size - `number`, the number of items to display per page
-     * @returns {void} `void`
-     */
-    setPageSize: (size: number) => void
-  },
-]
+export interface UsePaginationReturnsActions {
+  /**
+   * Go to the previous page.
+   *
+   * @returns {void} `void`
+   */
+  prev(): void
+  /**
+   * Go to the next page.
+   *
+   * @returns {void} `void`
+   */
+  next(): void
+  /**
+   * Go to the specified page.
+   *
+   * @param {number} page - `number`, the page number
+   * @returns {void} `void`
+   */
+  go: (page: number) => void
+  /**
+   * Set the number of items to display per page.
+   *
+   * @param {number} size - `number`, the number of items to display per page
+   * @returns {void} `void`
+   */
+  setPageSize: (size: number) => void
+}
+
+export type UsePaginationReturns = readonly [UsePaginationReturnsState, UsePaginationReturnsActions]
 
 /**
  * A React Hook that manage pagination state.
