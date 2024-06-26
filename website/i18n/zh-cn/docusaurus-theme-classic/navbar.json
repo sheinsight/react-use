@@ -12,7 +12,7 @@
     "description": "Navbar item with label Reference"
   },
   "item.label.Playground": {
-    "message": "在线尝试",
+    "message": "演练场",
     "description": "Navbar item with label Playground"
   },
   "item.label.GitHub": {
