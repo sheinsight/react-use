@@ -1,49 +1,49 @@
-# useAsyncLock
+# useAsyncLock {#useasynclock}
 
 import { HooksType } from '@/components'
 
 <HooksType category="Utilities" />
 
-A React Hook to create a function that can be used to ensure that **only one is running at a time**, and provides an additional invalid operation callback function.
+一个 React 钩子（Hook），用于创建一个函数，以确保**每次只有一个在运行**，并且提供了一个额外的无效操作回调函数。
 
-## Demo
+## 演示 Demo {#demo}
 
-Quickly and repeatedly click the button to check the effect.
+快速并重复点击按钮以检查效果。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage {#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source {#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API {#api}
 
 ```tsx
 const lockedFn = useAsyncLock(asyncFn, onMeetLock)
 ```
 
-### AsyncFn
+### 异步函数 AsyncFn {#asyncfn}
 
-A function that returns a promise.
+一个返回 promise 的函数。
 
-### OnMeetLock
+### 遇到锁定时 OnMeetLock {#onmeetlock}
 
-A function that will be called when the function is locked and is called again.
+当函数被锁定并再次被调用时将调用的函数。
 
-### Returns
+### 返回值 Returns {#returns}
 
-A function that can be used to ensure that **only one is running at a time**, return a promise that resolves the return value of the async function or the return value of the invalid operation callback function.
+一个可以用来确保**每次只有一个在运行**，返回一个 promise，该 promise 解析异步函数的返回值或无效操作回调函数的返回值。
 
 ```tsx
 export type UseAsyncLockReturns<T extends AnyFunc, R extends AnyFunc> = (

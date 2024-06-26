@@ -1,7 +1,22 @@
 {
   "extends": "@docusaurus/tsconfig",
   "compilerOptions": {
-    "baseUrl": "."
+    "baseUrl": ".",
+    "lib": ["DOM", "ESNext"],
+    "target": "esnext",
+    "module": "esnext",
+    "downlevelIteration": true,
+    "types": [
+      "node",
+      "@docusaurus/module-type-aliases",
+      "@docusaurus/theme-classic",
+      "@types/web-bluetooth"
+    ],
+    "paths": {
+      "@site/*": ["./*"],
+      "@shined/react-use": ["../src"],
+      "@/components": ["./src/components"]
+    }
   },
-  "include": ["./src", "./i18n/zh-cn", "./docs", "./changelog"]
+  "include": ["./src", "./i18n", "./docs", "./changelog", "../src/**/*.demo.tsx"]
 }

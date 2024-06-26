@@ -1,48 +1,48 @@
-# useAsyncFn
+# useAsyncFn {#useasyncfn}
 
 import { HooksType } from '@/components'
 
 <HooksType category="Utilities" />
 
-A React Hook to run **async** functions with extra **loading** state that indicates whether the promise is pending.
+一个 React 钩子（Hook），用于执行 **异步** 函数，附带额外的 **加载中** 状态，该状态指示 promise 是否处于等待中。
 
-## Demo
+## 演示 Demo {#demo}
 
-Click to mock fetch, and check the loading state.
+点击模拟获取数据，并检查加载状态。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage {#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source {#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API {#api}
 
 ```tsx
 const { run, loading, value, error } = useAsyncFn(asyncFn, options)
 ```
 
-### AsyncFn
+### 异步函数 AsyncFn {#asyncfn}
 
-A function that returns a promise.
+一个返回 promise 的函数。
 
-### Options
+### 选项 Options {#options}
 
 ```tsx
 export type UseAsyncFnOptions = {
   /**
-   * whether to clear the value before running the function
+   * 是否在运行函数之前清除值
    *
    * @defaultValue false
    */
@@ -50,24 +50,24 @@ export type UseAsyncFnOptions = {
 }
 ```
 
-### Returns
+### 返回值 Returns {#returns}
 
 ```tsx
 export type UseAsyncFnReturns<T extends AnyFunc> = {
   /**
-   * a function to run the async function
+   * 用于执行异步函数的函数
    */
   run: T
   /**
-   * whether the async function is loading
+   * 异步函数是否正在加载中
    */
   loading: boolean
   /**
-   * the error thrown by the async function
+   * 异步函数抛出的错误
    */
   error: unknown | null
   /**
-   * the value returned by the async function
+   * 异步函数返回的值
    */
   value: Awaited<ReturnType<T>> | undefined
 }

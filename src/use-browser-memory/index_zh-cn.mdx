@@ -1,37 +1,37 @@
-# useBrowserMemory
+# useBrowserMemory {#use-browser-memory}
 
 import { HooksType } from '@/components'
 
 <HooksType category="Browser" isSupported />
 
-A React Hook that helps to get the memory info of the browser.
+这是一个用于获取浏览器内存信息的 React 钩子。
 
-## Demo
+## 演示 Demo {#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage {#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source {#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API {#api}
 
 ```tsx
 const memory = useBrowserMemory(options)
 ```
 
-### Options
+### 选项 Options {#options}
 
 ```tsx
 export type UseBrowserMemoryOptions = UseIntervalFnOptions & {
@@ -39,36 +39,36 @@ export type UseBrowserMemoryOptions = UseIntervalFnOptions & {
 }
 ```
 
-### Returns
+### 返回值 Returns {#returns}
 
 ```tsx
 export type UseBrowserMemoryReturns = {
   /**
-   * The timestamp when the memory info was last updated.
+   * 最后一次更新内存信息的时间戳。
    */
   timestamp: number
   /**
-   * The memory info.
+   * 内存信息。
    */
   memory: MemoryInfo | undefined
   /**
-   * The maximum size of the heap, in bytes, that is available to the context.
+   * 可以提供给上下文的堆的最大大小，以字节为单位。
    */
   jsHeapSizeLimit: number
   /**
-   * The total allocated heap size, in bytes.
+   * 总分配堆大小，以字节为单位。
    */
   totalJSHeapSize: number
   /**
-   * The used heap size, in bytes.
+   * 已使用堆大小，以字节为单位。
    */
   usedJSHeapSize: number
   /**
-   *  Whether the browser supports the `Performance.memory` API.
+   * 浏览器是否支持 `Performance.memory` API。
    */
   isSupported: boolean
   /**
-   * Update the memory info.
+   * 更新内存信息。
    */
   update(): void
 }

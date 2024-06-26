@@ -1,50 +1,50 @@
-# useBluetooth
+# useBluetooth {#use-bluetooth}
 
 import { HooksType } from '@/components'
 
 <HooksType category="Browser" isSupported />
 
-A React Hook that provides a simple API to interact with the Web [Bluetooth API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API).
+一个用于与 Web [蓝牙 API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API) 交互的简单 API 的 React 钩子。
 
-## Demo
+## 演示 Demo {#demo}
 
-Click `requestDevice` to choose a Bluetooth device, and then click `connect` to connect to the device.
+点击 `requestDevice` 以选择一个蓝牙设备，然后点击 `connect` 来连接该设备。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage {#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source {#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API {#api}
 
 ```tsx
 const bluetooth = useBlueTooth(options)
 ```
 
-### Options
+### 选项 Options {#options}
 
 ```tsx
 export interface BluetoothRequestDeviceOptions {
   /**
-   * An array of filter objects indicating the properties of devices that will be matched.
+   * 一个过滤对象的数组，指示将匹配的设备的属性。
    *
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Bluetooth/requestDevice#filters | requestDevice#filters - MDN}
    */
   filters?: BluetoothLEScanFilter[] | undefined
   /**
-   * A list of services that the application wishes to access on the remote device.
+   * 应用程序希望在远程设备上访问的服务列表。
    *
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/BluetoothRemoteGATTService/uuid | BluetoothRemoteGATTService/uuid - MDN}
    */
@@ -53,14 +53,14 @@ export interface BluetoothRequestDeviceOptions {
 
 export interface UseBluetoothOptions extends BluetoothRequestDeviceOptions {
   /**
-   * Whether to accept all devices
+   * 是否接受所有设备
    *
    * @defaultValue false
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Bluetooth/requestDevice#acceptAllDevices | requestDevice#acceptAllDevices - MDN}
    */
   acceptAllDevices?: boolean
   /**
-   * Whether to connect immediately
+   * 是否立即连接
    *
    * @defaultValue true
    */
@@ -68,52 +68,52 @@ export interface UseBluetoothOptions extends BluetoothRequestDeviceOptions {
 }
 ```
 
-### Returns
+### 返回值 Returns {#returns}
 
 ```tsx
 export interface UseBlueToothReturns {
   /**
-   * Whether the device is connected
+   * 设备是否已连接
    */
   isConnected: boolean
   /**
-   * Whether the device is connecting
+   * 设备是否正在连接
    */
   isConnecting: boolean
   /**
-   * The error that occurred while connecting
+   * 连接时发生的错误
    */
   error: unknown | null
   /**
-   * The GATT server
+   * GATT 服务器
    */
   server: BluetoothRemoteGATTServer | undefined
   /**
-   * The device
+   * 设备
    */
   device: BluetoothDevice | undefined
   /**
-   * Connect to the Bluetooth GATT server
+   * 连接到蓝牙 GATT 服务器
    *
-   * @returns {Promise<BluetoothRemoteGATTServer | undefined>} The GATT server, see {@link BluetoothRemoteGATTServer}
+   * @returns {Promise<BluetoothRemoteGATTServer | undefined>} GATT 服务器，参见 {@link BluetoothRemoteGATTServer}
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/BluetoothRemoteGATTServer | BluetoothRemoteGATTServer - MDN}
    */
   connect(): Promise<BluetoothRemoteGATTServer | undefined>
   /**
-   * Disconnect from the Bluetooth GATT server
+   * 断开与蓝牙 GATT 服务器的连接
    *
    * @returns {void} `void`
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/BluetoothRemoteGATTServer/disconnect | BluetoothRemoteGATTServer.disconnect - MDN}
    */
   disconnect(): void
   /**
-   * Whether the browser supports the Web Bluetooth API
+   * 浏览器是否支持 Web 蓝牙 API
    */
   isSupported: boolean
   /**
-   * Request a Bluetooth device
+   * 请求一个蓝牙设备
    *
-   * @returns {Promise<BluetoothDevice | undefined>} The Bluetooth device, see {@link BluetoothDevice}
+   * @returns {Promise<BluetoothDevice | undefined>} 蓝牙设备，参见 {@link BluetoothDevice}
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Bluetooth/requestDevice | Bluetooth.requestDevice - MDN}
    */
   requestDevice(): Promise<BluetoothDevice | undefined>

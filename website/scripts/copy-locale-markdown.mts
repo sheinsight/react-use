@@ -13,7 +13,7 @@ if (!fs.existsSync(hooksTargetBaseDir)) {
   fs.mkdirSync(hooksTargetBaseDir, { recursive: true })
 }
 
-const filePatterns = ['use-*/*_zh-cn.mdx', 'use-*/demo.tsx', 'create-*/*_zh-cn.mdx', 'create-*/demo.tsx']
+const filePatterns = ['{use,create}-*/*_zh-cn.mdx', '{use,create}-*/demo.tsx']
 const files = await globby(filePatterns, { cwd: hooksBaseDir })
 
 for (const file of files) {

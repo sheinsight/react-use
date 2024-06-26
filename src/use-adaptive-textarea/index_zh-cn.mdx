@@ -1,74 +1,74 @@
-# useAdaptiveTextarea
+# useAdaptiveTextarea {#use-adaptive-textarea}
 
 import { HooksType } from '@/components'
 
 <HooksType category="Element" />
 
-A React Hook that helps to create **adaptive** textarea that automatically adjust height based on its content.
+一个 React 钩子 (Hook)，用于创建**自适应**的文本域 (textarea)，能够基于其内容自动调整高度。
 
-## Demo
+## 演示 Demo {#demo}
 
-Input in the textarea, and see the height of the textarea automatically adjust.
+在文本域中输入内容，然后看文本域的高度如何自动调整。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage {#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source {#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API {#api}
 
 ```tsx
 const { ref, height, resize } = useAdaptiveTextarea(options)
 ```
 
-### Options
+### 选项 Options {#options}
 
 ```tsx
 export interface UseAdaptiveTextareaOptions<T extends HTMLElement = HTMLElement> {
   /**
-   * a list of dependencies to trigger the resize
+   * 触发调整大小的依赖列表
    *
    * @defaultValue []
    */
   watch?: DependencyList
   /**
-   * a list of events to trigger the resize
+   * 触发调整大小的事件列表
    *
    * @defaultValue ['input']
    */
   events?: (keyof HTMLElementEventMap)[]
   /**
-   * whether to automatically adjust the height of the `textarea` element
+   * 是否自动调整 `textarea` 元素的高度
    *
    * @defaultValue true
    */
   autoHeight?: boolean
   /**
-   * a target element to apply the height style
+   * 应用高度样式的目标元素
    *
    * @defaultValue undefined
    */
   styleTarget?: ElementTarget<T>
   /**
-   * a style property to apply the height value
+   * 应用高度值的样式属性
    *
    * @defaultValue 'height'
    */
   styleProp?: 'height' | 'minHeight'
   /**
-   * a callback function to be called when the height of the `textarea` element changes
+   * `textarea` 元素高度变化时调用的回调函数
    *
    * @defaultValue undefined
    */
@@ -76,20 +76,20 @@ export interface UseAdaptiveTextareaOptions<T extends HTMLElement = HTMLElement>
 }
 ```
 
-### Returns
+### 返回值 Returns {#returns}
 
 ```tsx
 export interface UseAdaptiveTextareaReturns {
   /**
-   * a React ref that should be passed to the `textarea` element
+   * 应传递给 `textarea` 元素的 React 引用
    */
   ref: React.RefObject<HTMLTextAreaElement>
   /**
-   * the current height of the `textarea` element
+   * `textarea` 元素当前的高度
    */
   height: number
   /**
-   * a function to manually resize the `textarea` element
+   * 手动调整 `textarea` 元素大小的函数
    *
    * @returns {void} `void`
    */

@@ -1,103 +1,103 @@
-# useCircularList
+# useCircularList {#use-circular-list}
 
 import { HooksType } from '@/components'
 
 <HooksType category="ProUtilities" />
 
-A React Hook that helps to create a circular list that can cycle through the list.
+一个帮助创建可以循环遍历列表的 React 钩子。
 
 :::tip
 
-If you need to manage a state that toggle between two stable values, consider utilizing [useToggle](/reference/use-toggle) as an alternative.
+如果您需要管理在两个稳定值之间切换的状态，考虑使用 [useToggle](/reference/use-toggle) 作为替代方案。
 
 :::
 
-## Demo
+## 演示 Demo {#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage {#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source {#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API {#api}
 
 ```tsx
-const [value, index, actions] = useCircularList<T>(initialList: T[], options)
+const [value, index, actions] = useCircularList<T>(initialList: T[], options 选项 Options {#options})
 ```
 
-### Options
+### 选项 Options {#options}
 
 ```tsx
 export interface UseCycleListOptions<T, R extends T = T> {
   /**
-   * Initial value
+   * 初始值
    */
   initialValue?: R
   /**
-   * Fallback index when the value is not found
+   * 当值未找到时的回退索引
    */
   fallbackIndex?: number
   /**
-   * Custom function to get the index of the value
+   * 自定义函数来获取值的索引
    *
-   * @param {T} value - `T`, the value to find
-   * @param {T[]} list - `T[]`, the list to search
-   * @returns {number} `number`, the index of the value
+   * @param {T} value - `T`，要查找的值
+   * @param {T[]} list - `T[]`，要搜索的列表
+   * @returns {number} `number`，值的索引
    */
   getIndexOf?: (value: T, list: T[]) => number
 }
 ```
 
-### Returns
+### 返回值 Returns {#returns}
 
 ```tsx
 export type UseCycleListActions<T> = {
   /**
-   * Move to the next value
+   * 移至下一个值
    *
-   * @param {number} [step] - `number`, the step to move
-   * @returns {T} `T`, the next value
+   * @param {number} [step] - `number`，移动的步数
+   * @returns {T} `T`，下一个值
    */
   next: (step?: number) => T
   /**
-   * Move to the previous value
+   * 移至上一个值
    *
-   * @param {number} [step] - `number`, the step to move
-   * @returns {T} `T`, the previous value
+   * @param {number} [step] - `number`，移动的步数
+   * @returns {T} `T`，上一个值
    */
   prev: (step?: number) => T
   /**
-   * Move to the value at the specified index
+   * 移至指定索引处的值
    *
-   * @param {number} index - `number`, the index to move
-   * @returns {T} `T`, the value at the specified index
+   * @param {number} index - `number`，要移动的索引
+   * @returns {T} `T`，指定索引处的值
    */
   go: (index: number) => T
 }
 
 export type UseCycleListReturns<T> = readonly [
   /**
-   * Current value
+   * 当前值
    */
   state: T,
   /**
-   * Actions to control the list
+   * 控制列表的操作
    */
   UseCycleListActions<T>,
   /**
-   * Current index
+   * 当前索引
    */
   index: number,
 ]

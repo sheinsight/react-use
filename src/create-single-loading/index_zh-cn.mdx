@@ -4,71 +4,71 @@ import { HooksType } from '@/components'
 
 <HooksType category="ProUtilities" />
 
-A utility that provide a way to manage single (or global) loading state via multiple Hooks or simple JS/TS functions, using [Reactive](https://sheinsight.github.io/reactive/) under the hood.
+这是一个 Util，提供一种通过多个 Hooks 或简单的 JS/TS 函数管理单个（或全局）加载状态的方法，底层使用了 [Reactive](https://sheinsight.github.io/reactive/)。
 
 import { Installation } from '@/components'
 
 :::tip
 
-You need to install `@shined/reactive` to use this utility.
+使用此 Util 需要安装 `@shined/reactive`。
 
 <Installation npmName='@shined/reactive' />
 
 :::
 
-## Demo
+## 演示 Demo {#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage {#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source {#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API {#api}
 
 ```tsx
 const pageLoading = createSingleLoading(options)
-const { set, get, bind, useLoding, useAsyncFn } = pageLoading
+const { set, get, bind, useLoading, useAsyncFn } = pageLoading
 ```
 
-### Options
+### 选项 Options {#options}
 
 ```tsx
 export interface CreateSingleLoadingOptions {
   /**
-   * Whether set to false on error
+   * 是否在错误时设置为 false
    *
-   * @defaultValue true
+   * @defaultValue true 默认值为 true
    */
   resetOnError?: boolean
   /**
-   * Initial loading state
+   * 初始加载状态
    *
-   * @defaultValue false
+   * @defaultValue false 默认值为 false
    */
   initialState?: boolean
 }
 ```
 
-### Returns
+### 返回值 Returns {#returns}
 
 ```tsx
 export interface UseAsyncFnExtendReturns<T extends AnyFunc> extends UseAsyncFnReturns<T> {
   /**
-   * Set the loading state
+   * 设置加载状态
    *
-   * @param {boolean} value - `boolean`, the loading value to set
+   * @param {boolean} value - `boolean`, 要设置的加载值
    * @returns {void} `void`
    */
   setLoading: (value: boolean) => void
@@ -76,36 +76,36 @@ export interface UseAsyncFnExtendReturns<T extends AnyFunc> extends UseAsyncFnRe
 
 export interface CreateSingleLoadingReturns {
   /**
-   * A Hook in React to use bound async function with loading state
+   * 一个在 React 中使用的 Hook，用于绑定具有加载状态的异步函数
    *
-   * @param {AnyFunc} asyncFn - `AnyFunc`, the async function to bind, see {@link AnyFunc}
-   * @returns {UseAsyncFnExtendReturns} see {@link UseAsyncFnExtendReturns}
+   * @param {AnyFunc} asyncFn - `AnyFunc`, 要绑定的异步函数，见 {@link AnyFunc}
+   * @returns {UseAsyncFnExtendReturns} 见 {@link UseAsyncFnExtendReturns}
    */
   useAsyncFn: <T extends AnyFunc>(asyncFn: T) => UseAsyncFnExtendReturns<T>
   /**
-   * A Hook in React to use loading state
+   * 一个在 React 中使用的 Hook，用于使用加载状态
    *
-   * @returns {boolean} `boolean`, the loading state
+   * @returns {boolean} `boolean`, 加载状态
    */
   useLoading(): boolean
   /**
-   * Set the loading state via store in JS/TS
+   * 通过在 JS/TS 中的 store 设置加载状态
    *
-   * @param {boolean} value - `boolean`, the value to set
+   * @param {boolean} value - `boolean`, 要设置的值
    * @returns {void} `void`
    */
   set: (value: boolean) => void
   /**
-   * Get the loading state via store in JS/TS
+   * 通过在 JS/TS 中的 store 获取加载状态
    *
-   * @returns {boolean} `boolean`, the loading state
+   * @returns {boolean} `boolean`, 加载状态
    */
   get(): boolean
   /**
-   * Bind the loading state to the async function in JS/TS
+   * 将加载状态绑定到 JS/TS 中的异步函数
    *
-   * @param {AnyFunc} asyncFn - `AnyFunc`, the async function to bind, see {@link AnyFunc}
-   * @returns {AnyFunc} `AnyFunc`, same as `asyncFn` param, see {@link AnyFunc}
+   * @param {AnyFunc} asyncFn - `AnyFunc`, 要绑定的异步函数，见 {@link AnyFunc}
+   * @returns {AnyFunc} `AnyFunc`, 与 `asyncFn` 参数相同，见 {@link AnyFunc}
    */
   bind: <T extends AnyFunc>(asyncFn: T) => T
 }

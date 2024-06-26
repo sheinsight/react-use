@@ -1,56 +1,56 @@
-# useBreakpoints
+# useBreakpoints {#use-break-points}
 
 import { HooksType } from '@/components'
 
 <HooksType category="Browser" />
 
-A React Hook that provides a simple API to interact with the viewport breakpoints.
+一个 React 钩子（Hook），提供了一个简单的 API，用于与视口断点进行交互。
 
-## Demo
+## 演示 Demo {#demo}
 
-Resize the window to see the effect.
+调整窗口大小以查看效果。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage {#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source {#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API {#api}
 
 ```tsx
 const bps = useBreakpoints(breakpoints, options)
 ```
 
-### Breakpoints
+### 断点 Breakpoints {#breakpoints}
 
 ```tsx
 /**
- * A object that contains different breakpoints
+ * 一个包含不同断点的对象
  */
 export type Breakpoints<K extends string = string> = Record<K, number | string>
 ```
 
-### Options
+### 选项 Options {#options}
 
 ```tsx
 export interface UseBreakpointsOptions {
   /**
-   * The query strategy to use for the generated shortcut methods like `.lg`
+   * 用于生成快捷方法（如 `.lg`）的查询策略
    *
-   * 'min-width' - .lg will be true when the viewport is greater than or equal to the lg breakpoint (mobile-first)
-   * 'max-width' - .lg will be true when the viewport is smaller than the xl breakpoint (desktop-first)
+   * 'min-width' - 当视口大于或等于 lg 断点时，`.lg` 将为 true （移动端优先）
+   * 'max-width' - 当视口小于 xl 断点时，`.lg` 将为 true （桌面端优先）
    *
    * @defaultValue "min-width"
    */
@@ -58,52 +58,52 @@ export interface UseBreakpointsOptions {
 }
 ```
 
-### Returns
+### 返回值 Returns {#returns}
 
 ```tsx
 export type UseBreakpointsReturns<K extends string> = Record<K, boolean> & {
   /**
-   * The current breakpoints states
+   * 当前断点状态
    */
   breakpoints: Record<K, boolean>
   /**
-   * Check if the viewport is greater than the given breakpoint
+   * 检查视口是否大于给定断点
    *
-   * @param {K} k - `K`, the breakpoint key
-   * @returns {boolean} `boolean`, whether the viewport is greater than the given breakpoint
+   * @param {K} k - `K`，断点键
+   * @returns {boolean} `boolean`，视口是否大于给定断点
    */
   isGreater: (k: K) => boolean
   /**
-   * Check if the viewport is greater or equal to the given breakpoint
+   * 检查视口是否大于或等于给定断点
    *
-   * @param {K} k - `K`, the breakpoint key
-   * @returns {boolean} `boolean`, whether the viewport is greater or equal to the given breakpoint
+   * @param {K} k - `K`，断点键
+   * @returns {boolean} `boolean`，视口是否大于或等于给定断点
    */
   isGreaterOrEqual: (k: K) => boolean
   /**
-   * Check if the viewport is smaller than the given breakpoint
+   * 检查视口是否小于给定断点
    *
-   * @param {K} k - `K`, the breakpoint key
-   * @returns {boolean} `boolean`, whether the viewport is smaller than the given breakpoint
+   * @param {K} k - `K`，断点键
+   * @returns {boolean} `boolean`，视口是否小于给定断点
    */
   isSmaller: (k: K) => boolean
   /**
-   * Check if the viewport is smaller or equal to the given breakpoint
+   * 检查视口是否小于或等于给定断点
    *
-   * @param {K} k - `K`, the breakpoint key
-   * @returns {boolean} `boolean`, whether the viewport is smaller or equal to the given breakpoint
+   * @param {K} k - `K`，断点键
+   * @returns {boolean} `boolean`，视口是否小于或等于给定断点
    */
   isSmallerOrEqual: (k: K) => boolean
   /**
-   * Check if the viewport is between the given breakpoints
+   * 检查视口是否处于给定的两个断点之间
    *
-   * @param {K} a - `K`, the breakpoint key
-   * @param {K} b - `K`, the breakpoint key
-   * @returns {boolean} `boolean`, whether the viewport is between the given breakpoints
+   * @param {K} a - `K`，断点键
+   * @param {K} b - `K`，断点键
+   * @returns {boolean} `boolean`，视口是否处于两个断点之间
    */
   isInBetween: (a: K, b: K) => boolean
   /**
-   * The current matched breakpoints
+   * 当前匹配的断点
    */
   currents: K[]
 }

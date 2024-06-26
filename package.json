@@ -61,7 +61,7 @@
     "docs:dev:zh-cn": " pnpm -C website run dev --locale zh-cn",
     "docs:build": " pnpm -C website run build",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc"
   },
   "publishConfig": {
     "access": "public",

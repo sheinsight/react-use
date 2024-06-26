@@ -1,64 +1,64 @@
-# useBattery
+# useBattery {#usebattery}
 
 import { HooksType } from '@/components'
 
 <HooksType category="Browser" isSupported />
 
-A React Hook that get [Battery](https://developer.mozilla.org/zh-CN/docs/Web/API/Battery_Status_API) state with ease.
+一个方便获取 [电池](https://developer.mozilla.org/zh-CN/docs/Web/API/Battery_Status_API) 状态的 React 钩子。
 
-## Demo
+## 演示 {#demo}
 
-Unplug or Insert your charger to observe the state change.
+拔下或插入您的充电器以观察状态变化。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 {#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 {#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API {#api}
 
 ```tsx
 const battery = useBattery()
 ```
 
-### Returns
+### 返回值 Returns {#returns}
 
 ```tsx
 export interface UseBatteryReturns {
   /**
-   * Whether the battery is charging
+   * 是否正在充电
    */
   charging: boolean
   /**
-   * The battery level as a floating point number between 0 and 1
+   * 电池电量，0 到 1 之间的浮点数
    */
   level: number
   /**
-   * The time remaining to charge the battery fully
+   * 完全充电所剩余的时间
    */
   chargingTime: number
   /**
-   * The time remaining to discharge the battery fully
+   * 完全放电所剩余的时间
    */
   dischargingTime: number
   /**
-   * Whether the battery API is supported
+   * 是否支持电池 API
    */
   isSupported: boolean
   /**
-   * Update the battery state
+   * 更新电池状态
    */
   update(): void
 }

@@ -4,55 +4,55 @@ import { HooksType } from '@/components'
 
 <HooksType category="Browser" />
 
-A React Hook to perform actions **before the page is unloaded** (e.g., closing, refreshing the page) and optionally trigger a browser-native confirmation dialog. set `preventDefault` to `true` to show the confirm leave dialog.
+一种 React 钩子（Hook），用于在页面卸载前执行操作（例如，关闭、刷新页面），并可选择性地触发浏览器原生确认对话框。将 `preventDefault` 设置为 `true`，以显示确认离开对话框。
 
-## Demo
+## 演示 Demo {#demo}
 
-Try to close/refresh this page with different status and see what happens!
+尝试以不同状态关闭/刷新此页面，看看会发生什么！
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage {#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source {#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API {#api}
 
 ```tsx
 useBeforeUnload(callback, options)
 ```
 
-### Callback
+### 回调 Callback {#callback}
 
-A function that will be called right before the page is potentially unloaded.
+一个在页面可能卸载之前被调用的函数。
 
 ```tsx
 /**
- * A callback function to run before the page is unloaded
+ * 页面卸载前运行的回调函数
  *
- * @param {BeforeUnloadEvent} event - `BeforeUnloadEvent`, the event object
+ * @param {BeforeUnloadEvent} event - `BeforeUnloadEvent`，事件对象
  * @returns {void} `void`
  */
 export type UseBeforeUnloadCallback = (event: BeforeUnloadEvent) => void
 ```
 
-### Options
+### 选项 Options {#options}
 
 ```tsx
 export interface UseBeforeUnloadOptions {
   /**
-   * Whether to prevent the default behavior of the event, which leads to showing a browser-native message
+   * 是否阻止事件的默认行为，这将导致显示浏览器原生的信息提示
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
    *
@@ -62,6 +62,6 @@ export interface UseBeforeUnloadOptions {
 }
 ```
 
-### Returns
+### 返回值 Returns {#returns}
 
-A clear function to remove the event listener.
+一个清除事件监听器的清除函数。
