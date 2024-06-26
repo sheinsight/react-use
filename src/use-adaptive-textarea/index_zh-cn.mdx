@@ -1,4 +1,4 @@
-# useAdaptiveTextarea {#use-adaptive-textarea}
+# useAdaptiveTextarea
 
 import { HooksType } from '@/components'
 
@@ -6,7 +6,7 @@ import { HooksType } from '@/components'
 
 一个 React 钩子 (Hook)，用于创建**自适应**的文本域 (textarea)，能够基于其内容自动调整高度。
 
-## 演示 Demo {#demo}
+## 演示 Demo \{#demo}
 
 在文本域中输入内容，然后看文本域的高度如何自动调整。
 
@@ -14,26 +14,26 @@ import { App } from './demo'
 
 <App />
 
-## 用法 Usage {#usage}
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## 源码 Source {#source}
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API {#api}
+## API
 
 ```tsx
 const { ref, height, resize } = useAdaptiveTextarea(options)
 ```
 
-### 选项 Options {#options}
+### 选项 Options \{#options}
 
 ```tsx
 export interface UseAdaptiveTextareaOptions<T extends HTMLElement = HTMLElement> {
@@ -76,7 +76,7 @@ export interface UseAdaptiveTextareaOptions<T extends HTMLElement = HTMLElement>
 }
 ```
 
-### 返回值 Returns {#returns}
+### 返回值 Returns \{#returns}
 
 ```tsx
 export interface UseAdaptiveTextareaReturns {

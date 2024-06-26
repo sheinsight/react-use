@@ -1,4 +1,4 @@
-# useBrowserMemory {#use-browser-memory}
+# useBrowserMemory
 
 import { HooksType } from '@/components'
 
@@ -6,32 +6,32 @@ import { HooksType } from '@/components'
 
 这是一个用于获取浏览器内存信息的 React 钩子。
 
-## 演示 Demo {#demo}
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## 用法 Usage {#usage}
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## 源码 Source {#source}
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API {#api}
+## API
 
 ```tsx
 const memory = useBrowserMemory(options)
 ```
 
-### 选项 Options {#options}
+### 选项 Options \{#options}
 
 ```tsx
 export type UseBrowserMemoryOptions = UseIntervalFnOptions & {
@@ -39,7 +39,7 @@ export type UseBrowserMemoryOptions = UseIntervalFnOptions & {
 }
 ```
 
-### 返回值 Returns {#returns}
+### 返回值 Returns \{#returns}
 
 ```tsx
 export type UseBrowserMemoryReturns = {

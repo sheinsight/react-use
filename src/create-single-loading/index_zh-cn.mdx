@@ -16,33 +16,33 @@ import { Installation } from '@/components'
 
 :::
 
-## 演示 Demo {#demo}
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## 用法 Usage {#usage}
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## 源码 Source {#source}
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API {#api}
+## API
 
 ```tsx
 const pageLoading = createSingleLoading(options)
 const { set, get, bind, useLoading, useAsyncFn } = pageLoading
 ```
 
-### 选项 Options {#options}
+### 选项 Options \{#options}
 
 ```tsx
 export interface CreateSingleLoadingOptions {
@@ -61,7 +61,7 @@ export interface CreateSingleLoadingOptions {
 }
 ```
 
-### 返回值 Returns {#returns}
+### 返回值 Returns \{#returns}
 
 ```tsx
 export interface UseAsyncFnExtendReturns<T extends AnyFunc> extends UseAsyncFnReturns<T> {

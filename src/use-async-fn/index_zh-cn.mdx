@@ -1,4 +1,4 @@
-# useAsyncFn {#useasyncfn}
+# useAsyncFn
 
 import { HooksType } from '@/components'
 
@@ -6,7 +6,7 @@ import { HooksType } from '@/components'
 
 一个 React 钩子（Hook），用于执行 **异步** 函数，附带额外的 **加载中** 状态，该状态指示 promise 是否处于等待中。
 
-## 演示 Demo {#demo}
+## 演示 Demo \{#demo}
 
 点击模拟获取数据，并检查加载状态。
 
@@ -14,30 +14,30 @@ import { App } from './demo'
 
 <App />
 
-## 用法 Usage {#usage}
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## 源码 Source {#source}
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API {#api}
+## API
 
 ```tsx
 const { run, loading, value, error } = useAsyncFn(asyncFn, options)
 ```
 
-### 异步函数 AsyncFn {#asyncfn}
+### 异步函数 AsyncFn \{#async-fn}
 
 一个返回 promise 的函数。
 
-### 选项 Options {#options}
+### 选项 Options \{#options}
 
 ```tsx
 export type UseAsyncFnOptions = {
@@ -50,7 +50,7 @@ export type UseAsyncFnOptions = {
 }
 ```
 
-### 返回值 Returns {#returns}
+### 返回值 Returns \{#returns}
 
 ```tsx
 export type UseAsyncFnReturns<T extends AnyFunc> = {

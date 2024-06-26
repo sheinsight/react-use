@@ -1,4 +1,4 @@
-# useCircularList {#use-circular-list}
+# useCircularList \{#use-circular-list}
 
 import { HooksType } from '@/components'
 
@@ -12,32 +12,32 @@ import { HooksType } from '@/components'
 
 :::
 
-## 演示 Demo {#demo}
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## 用法 Usage {#usage}
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## 源码 Source {#source}
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API {#api}
+## API
 
 ```tsx
-const [value, index, actions] = useCircularList<T>(initialList: T[], options 选项 Options {#options})
+const [value, index, actions] = useCircularList<T>(initialList: T[], options 选项 Options \{#options})
 ```
 
-### 选项 Options {#options}
+### 选项 Options \{#options}
 
 ```tsx
 export interface UseCycleListOptions<T, R extends T = T> {
@@ -60,7 +60,7 @@ export interface UseCycleListOptions<T, R extends T = T> {
 }
 ```
 
-### 返回值 Returns {#returns}
+### 返回值 Returns \{#returns}
 
 ```tsx
 export type UseCycleListActions<T> = {

@@ -1,4 +1,4 @@
-# useBreakpoints {#use-break-points}
+# useBreakpoints
 
 import { HooksType } from '@/components'
 
@@ -6,7 +6,7 @@ import { HooksType } from '@/components'
 
 一个 React 钩子（Hook），提供了一个简单的 API，用于与视口断点进行交互。
 
-## 演示 Demo {#demo}
+## 演示 Demo \{#demo}
 
 调整窗口大小以查看效果。
 
@@ -14,26 +14,26 @@ import { App } from './demo'
 
 <App />
 
-## 用法 Usage {#usage}
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## 源码 Source {#source}
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API {#api}
+## API
 
 ```tsx
 const bps = useBreakpoints(breakpoints, options)
 ```
 
-### 断点 Breakpoints {#breakpoints}
+### 断点 Breakpoints \{#breakpoints}
 
 ```tsx
 /**
@@ -42,7 +42,7 @@ const bps = useBreakpoints(breakpoints, options)
 export type Breakpoints<K extends string = string> = Record<K, number | string>
 ```
 
-### 选项 Options {#options}
+### 选项 Options \{#options}
 
 ```tsx
 export interface UseBreakpointsOptions {
@@ -58,7 +58,7 @@ export interface UseBreakpointsOptions {
 }
 ```
 
-### 返回值 Returns {#returns}
+### 返回值 Returns \{#returns}
 
 ```tsx
 export type UseBreakpointsReturns<K extends string> = Record<K, boolean> & {
