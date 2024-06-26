@@ -58,7 +58,7 @@ export function SearchHooks() {
       </div>
       <div className="flex gap-2">
         <div className="w-80px text-right mr-1">
-          <Translate id="homepage.filter.category">Feature</Translate>
+          <Translate id="homepage.filter.category">Category</Translate>
         </div>
         <div className="flex-1 flex flex-wrap gap-2">
           <div
