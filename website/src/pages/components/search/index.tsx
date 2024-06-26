@@ -1,8 +1,8 @@
 import Link from '@docusaurus/Link'
+import Translate, { translate } from '@docusaurus/Translate'
 import { useControlledComponent, useCreation, useUrlSearchParams } from '@site/../src'
 import { Labels, iconMap } from '@site/src/components'
 import { camelCase } from 'change-case'
-
 import hooks from './hooks.json'
 
 const filterLabelCls =
@@ -40,6 +40,8 @@ export function SearchHooks() {
     if (!set.size) return setParams({ [paramName]: [] })
     setParams({ [paramName]: Array.from(set) })
   }
+
+  const hasFilter = params.category.length || params.feature.length
 
   return (
     <div className="flex flex-col gap-4 mt-12 p-4 w-full md:w-640px">
@@ -103,12 +105,17 @@ export function SearchHooks() {
         <div
           onClick={clearParams}
           onKeyDown={clearParams}
-          className={`${filterLabelCls} bg-amber/20 flex items-center gap-1 hover:bg-amber/32`}
+          className={`${filterLabelCls} flex items-center gap-1 ${hasFilter ? 'bg-amber/20 hover:bg-amber/32' : 'cursor-not-allowed'}`}
         >
           <div className="i-mdi:filter-remove-outline w-1rem h-1rem" />
-          Clear Filters
+          <Translate id="homepage.filter.clear">Clear Filters</Translate>
         </div>
-        <span className="ml-2 text-gray">{filteredHooks.length} hooks or utils found.</span>
+        <span className="ml-2 text-gray">
+          {translate(
+            { id: 'homepage.filter.summary', message: '{hooksCount} Hooks or utils found.' },
+            { hooksCount: filteredHooks.length },
+          )}
+        </span>
       </div>
 
       <div className="overflow-y-scroll md:pt-2 md:h-46vh">

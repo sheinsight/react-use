@@ -1,3 +1,4 @@
+import Translate, { translate } from '@docusaurus/Translate'
 import { useLocation } from '@docusaurus/router'
 import { repoBase } from '../utils'
 
@@ -13,14 +14,16 @@ export function Source({ name, tsx }: SourceProps) {
   const url = `${repoBase}/${(name ?? slug) || ''}`
 
   const list = [
-    { name: '🪝 Hook', path: tsx ? 'index.tsx' : 'index.ts' },
-    { name: '🎨 Demo', path: 'demo.tsx' },
-    { name: '📄 Document', path: 'index.mdx' },
+    { name: translate({ id: 'reference.source.code', message: '🪝 Hook' }), path: tsx ? 'index.tsx' : 'index.ts' },
+    { name: translate({ id: 'reference.source.demo', message: '🎨 Demo' }), path: 'demo.tsx' },
+    { name: translate({ id: 'reference.source.doc', message: '📄 Document' }), path: 'index.mdx' },
   ].map((item) => ({ ...item, url: `${url}/${item.path}` }))
 
   return (
     <div>
-      <p>Click links below to view source on GitHub.</p>
+      <p>
+        <Translate id="reference.source.description">Click links below to view source on GitHub.</Translate>
+      </p>
       <div className="flex gap-4">
         {list.map((item) => (
           <a
