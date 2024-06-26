@@ -1,7 +1,7 @@
+import Translate from '@docusaurus/Translate'
 import { useToggle } from '@site/../src'
 import CodeBlock from '@theme/CodeBlock'
 import { Button } from '../demo-related'
-import Translate from '@docusaurus/Translate'
 
 const ignores = ['prettier-ignore', 'biome-ignore']
 const threshold = 24
