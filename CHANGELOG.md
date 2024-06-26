@@ -1,3 +1,18 @@
+## [1.0.2](https://github.com/sheinsight/react-use/compare/v1.0.1...v1.0.2) (2024-06-26)
+
+
+### Bug Fixes
+
+* use union TS type name ([8ac5221](https://github.com/sheinsight/react-use/commit/8ac5221a7557a48c26794308ec6dfb8e7479e0a7))
+* **useCircularList:** use uniform type name ([777f851](https://github.com/sheinsight/react-use/commit/777f851217fb330d72496fc32229bfe201e0db5c))
+
+
+### Performance Improvements
+
+* make TS type more strict (add `readonly` to tuple returns) ([d5dda51](https://github.com/sheinsight/react-use/commit/d5dda51b5d24a07130912f4ba26cda8be032dfb7))
+
+
+
 ## [1.0.1](https://github.com/sheinsight/react-use/compare/v1.0.0...v1.0.1) (2024-06-25)
 
 
