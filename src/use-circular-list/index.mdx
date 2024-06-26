@@ -63,7 +63,7 @@ export interface UseCycleListOptions<T, R extends T = T> {
 ### Returns
 
 ```tsx
-export type UseCycleListActions<T> = {
+export type UseCycleListReturnsActions<T> = {
   /**
    * Move to the next value
    *
@@ -95,7 +95,7 @@ export type UseCycleListReturns<T> = readonly [
   /**
    * Actions to control the list
    */
-  UseCycleListActions<T>,
+  UseCycleListReturnsActions<T>,
   /**
    * Current index
    */

@@ -23,7 +23,7 @@ export interface UseCycleListOptions<T, R extends T = T> {
   getIndexOf?: (value: T, list: T[]) => number
 }
 
-export type UseCycleListActions<T> = {
+export type UseCycleListReturnsActions<T> = {
   /**
    * Move to the next value
    *
@@ -55,7 +55,7 @@ export type UseCycleListReturns<T> = readonly [
   /**
    * Actions to control the list
    */
-  UseCycleListActions<T>,
+  UseCycleListReturnsActions<T>,
   /**
    * Current index
    */
@@ -69,7 +69,7 @@ export type UseCycleListReturns<T> = readonly [
  *
  * @param {T[]} list - `T[]`, the list to cycle
  * @param {UseCycleListOptions} [options] - `UseCycleListOptions`, see {@link UseCycleListOptions}
- * @returns {UseCycleListReturns} `UseCycleListReturns`, see {@link UseCycleListReturns} and {@link UseCycleListActions}
+ * @returns {UseCycleListReturns} `UseCycleListReturns`, see {@link UseCycleListReturns} and {@link UseCycleListReturnsActions}
  */
 export function useCircularList<T, R extends T = T>(
   list: T[],
