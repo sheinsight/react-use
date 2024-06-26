@@ -142,7 +142,7 @@ export default {
       ],
     },
     footer: {
-      copyright: `Copyright © 2024-${new Date().getFullYear()} @shined. Documentation is Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} @shined. Documentation is Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.oneLight,
