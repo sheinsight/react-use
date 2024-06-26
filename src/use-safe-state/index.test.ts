@@ -1,6 +1,6 @@
-import { renderHook, act } from '@/test'
-import { useSafeState } from './index'
+import { act, renderHook } from '@/test'
 import { describe, expect, test } from 'vitest'
+import { useSafeState } from './index'
 
 describe('useSafeState', () => {
   test('should initialize state with the provided initial value', () => {

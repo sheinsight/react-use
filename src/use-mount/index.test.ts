@@ -1,6 +1,6 @@
 import { renderHook, renderHookServer } from '@/test'
-import { useMount } from './index'
 import { describe, expect, test, vi } from 'vitest'
+import { useMount } from './index'
 
 describe('useMount', () => {
   test('should not call the callback function in SSR', () => {

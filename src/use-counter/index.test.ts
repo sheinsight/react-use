@@ -1,6 +1,6 @@
-import { renderHook, act } from '@/test'
-import { useCounter } from './index'
+import { act, renderHook } from '@/test'
 import { describe, expect, test } from 'vitest'
+import { useCounter } from './index'
 
 describe('useCounter', () => {
   test('should initialize with default count', () => {
