@@ -4,7 +4,7 @@
     "description": "The title in the navbar"
   },
   "item.label.Guide": {
-    "message": "指南",
+    "message": "上手指南",
     "description": "Navbar item with label Guide"
   },
   "item.label.Reference": {
@@ -20,7 +20,7 @@
     "description": "Navbar item with label GitHub"
   },
   "item.label.Releases": {
-    "message": "发布",
+    "message": "版本发布",
     "description": "Navbar item with label Releases"
   },
   "item.label.Releases Notes": {
