@@ -13,11 +13,10 @@
     "include": [
       "src/**/*.ts",
       "src/**/*.tsx",
-      "./scripts/**/*.ts",
-      "./website/**/*.ts",
-      "./website/**/*.tsx",
-      "./testing/**/*.ts",
-      "./testing/**/*.tsx"
+      "website/**/*.ts",
+      "website/**/*.tsx",
+      "testing/**/*.ts",
+      "testing/**/*.tsx"
     ],
     "ignore": ["./src/utils/react-fast-compare.ts"],
     "ignoreUnknown": true
