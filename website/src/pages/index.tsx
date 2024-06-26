@@ -31,9 +31,9 @@ export default function Home() {
                 An SSR-friendly, comprehensive, and highly optimized React Hooks library.
               </Translate>
             </p>
-            <div className="flex gap-4 items-center">
+            <div className="flex gap-4 md:gap-6 items-center">
               <Link to="/docs/introduction">
-                <Button>
+                <Button className="md:w-120px">
                   <Translate id="homepage.button.introduction">Introduction</Translate>
                 </Button>
               </Link>
