@@ -35,6 +35,14 @@
     "message": "清除筛选",
     "description": "clear filter"
   },
+  "homepage.filter.category":{
+    "message": "分类集合",
+    "description": "category"
+  },
+  "homepage.filter.feature":{
+    "message": "功能特性",
+    "description": "feature"
+  },
   "homepage.filter.summary":{
     "message": "共找到 {hooksCount} 个 Hook 和 Util。",
     "description": "filter tip"
