@@ -22,7 +22,7 @@ export interface UseToggleReturnActions<O, T> {
   setState: ReactSetState<O | T>
 }
 
-export type UseToggleReturns<O, T> = [O | T, () => void, UseToggleReturnActions<O, T>]
+export type UseToggleReturns<O, T> = readonly [O | T, () => void, UseToggleReturnActions<O, T>]
 
 /**
  * A React Hook that helps to manage a togglable state.
@@ -32,8 +32,8 @@ export type UseToggleReturns<O, T> = [O | T, () => void, UseToggleReturnActions<
 export function useToggle(one: true): UseToggleReturns<true, false>
 export function useToggle(one: false): UseToggleReturns<false, true>
 export function useToggle(one: boolean, theOther?: boolean): UseToggleReturns<boolean, boolean>
-export function useToggle<O, T>(maybeTuple: [one: O, theOther: T]): UseToggleReturns<O, T>
-export function useToggle<O, T>(maybeTuple: O | T | [one: O, theOther: T]): UseToggleReturns<O, T> {
+export function useToggle<O, T>(maybeTuple: readonly [one: O, theOther: T]): UseToggleReturns<O, T>
+export function useToggle<O, T>(maybeTuple: O | T | readonly [one: O, theOther: T]): UseToggleReturns<O, T> {
   const [one, theOther] = unwrapArrayable(maybeTuple) as [O, T]
   const [state, setState] = useSafeState<O | T>(one)
   const latest = useLatest({ one, theOther: isDefined(theOther) ? theOther : (!one as T) })

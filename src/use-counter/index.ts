@@ -42,7 +42,7 @@ export interface UseCounterReturnsAction {
   reset: (n?: number) => void
 }
 
-export type UseCounterReturns = [
+export type UseCounterReturns = readonly [
   /**
    * The count state of the counter
    */

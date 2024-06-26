@@ -101,7 +101,7 @@ export function useFavicon(newIcon: FaviconType = null, options: UseFaviconOptio
       link.type = iconType
       document.head.append(link)
     } else {
-      for (const el of elements) {
+      for (const el of Array.from(elements)) {
         el.href = iconHref
         el.type = iconType
       }

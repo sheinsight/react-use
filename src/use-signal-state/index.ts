@@ -7,7 +7,7 @@ import type { Gettable } from '../utils/basic'
 
 export interface UseSignalStateOptions extends UseSafeStateOptions {}
 
-export type UseSignalStateReturns<T> = [() => T, ReactSetState<T>]
+export type UseSignalStateReturns<T> = readonly [() => T, ReactSetState<T>]
 
 /**
  * A React Hook that use state like `createSignal` of [Solid](https://www.solidjs.com), **without closure issues**.

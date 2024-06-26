@@ -11,13 +11,15 @@ export type UseSetStateSetMergedState<T extends PureObject> = <K extends keyof T
 
 export interface UseSetStateOptions extends UseSafeStateOptions {}
 
+export type UseSetStateReturns<T extends PureObject> = readonly [T, UseSetStateSetMergedState<T>]
+
 /**
  * A React Hook that helps to use state like `this.setState` method of React's legacy class component.
  */
 export function useSetState<T extends PureObject>(
   initialState: Gettable<T>,
   options: UseSetStateOptions = {},
-): [T, UseSetStateSetMergedState<T>] {
+): UseSetStateReturns<T> {
   const [state, _setState] = useSafeState<T>(initialState, options)
 
   const setState: UseSetStateSetMergedState<T> = useStableFn((patch) => {

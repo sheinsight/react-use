@@ -73,7 +73,7 @@ export interface UsePaginationState {
   isLastPage: boolean
 }
 
-export type UsePaginationReturns = [
+export type UsePaginationReturns = readonly [
   UsePaginationState,
   {
     /**

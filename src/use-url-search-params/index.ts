@@ -39,11 +39,8 @@ export interface UseUrlSearchParamsOptions<T> {
   write?: boolean
 }
 
-export type UseUrlSearchParamsReturns<T extends Record<string, Arrayable<string | number | boolean | undefined>>> = [
-  T,
-  UseSetStateSetMergedState<T>,
-  Noop,
-]
+export type UseUrlSearchParamsReturns<T extends Record<string, Arrayable<string | number | boolean | undefined>>> =
+  readonly [T, UseSetStateSetMergedState<T>, Noop]
 
 /**
  * A React Hook that helps to manage the URL search params.

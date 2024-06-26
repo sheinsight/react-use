@@ -59,8 +59,8 @@ export function useElementByPoint<
       if (!isSupported) return
       const { x, y, multiple } = latest.current
       const result = document?.[multiple ? 'elementsFromPoint' : 'elementFromPoint'](x, y)
-      const element = (Array.isArray(result) ? result.filter(notNullish) : result) as E
-      setElement(element ?? (multiple ? [] : null))
+      const element = Array.isArray(result) ? result.filter(notNullish) : result
+      setElement((element ?? (multiple ? [] : null)) as E | null)
     },
     interval,
     { immediate },

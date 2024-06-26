@@ -10,12 +10,15 @@ interface SnapshotOptions<StateSlice> {
 /**
  * A React Hook that helps to use [Reactive](https://sheinsight.github.io/reactive) in React with ease.
  */
-export function useReactive<State extends object>(initialState: State): [State, State]
-export function useReactive<State extends object>(initialState: State, options?: SnapshotOptions<State>): [State, State]
+export function useReactive<State extends object>(initialState: State): readonly [State, State]
+export function useReactive<State extends object>(
+  initialState: State,
+  options?: SnapshotOptions<State>,
+): readonly [State, State]
 export function useReactive<State extends object>(
   initialState: State,
   options: SnapshotOptions<State> = {},
-): [State, State] {
+): readonly [State, State] {
   const store = useCreation(() => create(initialState))
   return [store.useSnapshot(options), store.mutate] as const
 }

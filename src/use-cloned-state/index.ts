@@ -27,7 +27,7 @@ export interface UseClonedStateOptions {
   deep?: boolean
 }
 
-export type UseClonedStateReturns<T> = [
+export type UseClonedStateReturns<T> = readonly [
   /**
    * Cloned state
    */
