@@ -13,13 +13,13 @@ import type { Gettable } from '../utils/basic'
 
 export interface UseCssVarOptions {
   /**
-   * default value of the css variable
+   * default value of the CSS variable
    *
    * @defaultValue ''
    */
   defaultValue?: string
   /**
-   * whether to observe the changes of the css variable
+   * whether to observe the changes of the CSS variable
    *
    * @defaultValue false
    */

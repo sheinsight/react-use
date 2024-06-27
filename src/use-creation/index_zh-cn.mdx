@@ -4,22 +4,22 @@ import { HooksType } from '@/components'
 
 <HooksType category="Lifecycle" lowLevel />
 
-A React Hook that creates a memoized value that only re-create when the dependencies change.
+一个 React Hook，创建一个记忆化的值，只有在依赖项更改时才会重新执行创建。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
@@ -31,10 +31,10 @@ import { Source } from '@/components'
 const value = useCreation(factoryFn, deps)
 ```
 
-### FactoryFn
+### 工厂函数 FactoryFn \{#factory-fn}
 
-A function that returns the value to memoize.
+返回要进行记忆化的值的函数。
 
-### Deps
+### 依赖项 Deps \{#deps}
 
-An array of dependencies that trigger the re-creation of the memoized value.
+触发重新创建记忆化值的依赖项数组。

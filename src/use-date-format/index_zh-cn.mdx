@@ -4,69 +4,69 @@ import { HooksType } from '@/components'
 
 <HooksType category='Utilities' />
 
-A dependency-free React Hook to format date using symbols, similar to the `format` function found in libraries such as [dayjs#format](https://day.js.org/docs/en/display/format), [momentjs#format](https://momentjs.com/docs/#/displaying/format/), or [date-fns#format](https://date-fns.org/docs/format).
+一个无依赖的 React Hook，用于使用符号格式化日期，类似于诸如 [dayjs#format](https://day.js.org/docs/en/display/format)、[momentjs#format](https://momentjs.com/docs/#/displaying/format/) 或 [date-fns#format](https://date-fns.org/docs/format) 等库中的 `format` 函数。
 
 :::tip
-By default, the formatting behavior aligns with that of `dayjs`, `momentjs`, and `date-fns@^1`. You can set `unicodeSymbols` option to `true` to use [Unicde Standard Date Symbols](https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table), which is similar to `date-fns@^2` and subsequent versions.
+默认情况下，格式化行为与 `dayjs`、`momentjs` 和 `date-fns@^1` 一致。您可以将 `unicodeSymbols` 选项设置为 `true` 以使用[Unicode 标准日期符号](https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table)，这类似于 `date-fns@^2` 及以后版本。
 :::
 
-## Demo
+## 演示 Demo \{#demo}
 
-Try to edit the format template below and see the result.
+尝试编辑下面的格式模板，查看结果。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Format Symbols
+## 格式化符号 Format Symbols \{#format-symbols}
 
-| Convention | Unicode | Output                   | Description                                 | Same |
-| ---------- | ------- | ------------------------ | ------------------------------------------- | ---- |
-| `Yo`       | -       | 2024th                   | Ordinal formatted year                      | -    |
-| `YY`       | `yy`    | 24                       | Two-digit year                              | ❌   |
-| `YYYY`     | `yyyy`  | 2024                     | Four-digit year                             | ❌   |
-| `M`        | `M`     | 1-12                     | The month, beginning at 1                   | ✅   |
-| `Mo`       | -       | 1st, 2nd, ..., 12th      | The month, ordinal formatted                | -    |
-| `MM`       | `MM`    | 01-12                    | The month, 2-digits                         | ✅   |
-| `MMM`      | `MMM`   | Jan-Dec                  | The abbreviated month name                  | ✅   |
-| `MMMM`     | `MMMM`  | January-December         | The full month name                         | ✅   |
-| `D`        | `d`     | 1-31                     | The day of the month                        | ❌   |
-| `Do`       | -       | 1st, 2nd, ..., 31st      | The day of the month, ordinal formatted     | -    |
-| `DD`       | `dd`    | 01-31                    | The day of the month, 2-digits              | ❌   |
-| `H`        | `H`     | 0-23                     | The hour                                    | ✅   |
-| `Ho`       | -       | 0th, 1st, 2nd, ..., 23rd | The hour, ordinal formatted                 | -    |
-| `HH`       | `HH`    | 00-23                    | The hour, 2-digits                          | ✅   |
-| `h`        | `h`     | 1-12                     | The hour, 12-hour clock                     | ✅   |
-| `ho`       | -       | 1st, 2nd, ..., 12th      | The hour, 12-hour clock, ordinal formatted  | -    |
-| `hh`       | `hh`    | 01-12                    | The hour, 12-hour clock, 2-digits           | ✅   |
-| `m`        | `m`     | 0-59                     | The minute                                  | ✅   |
-| `mo`       | -       | 0th, 1st, ..., 59th      | The minute, ordinal formatted               | -    |
-| `mm`       | `mm`    | 00-59                    | The minute, 2-digits                        | ✅   |
-| `s`        | `s`     | 0-59                     | The second                                  | ✅   |
-| `so`       | -       | 0th, 1st, ..., 59th      | The second, ordinal formatted               | -    |
-| `ss`       | `ss`    | 00-59                    | The second, 2-digits                        | ✅   |
-| `S`        | `S`     | 0-9                      | The millisecond, 1-digits                   | ✅   |
-| `SS`       | `SS`    | 00-99                    | The millisecond, 2-digits                   | ✅   |
-| `SSS`      | `SSS`   | 000-999                  | The millisecond, 3-digits                   | ✅   |
-| `A`        | -       | AM PM                    | The meridiem                                | -    |
-| `AA`       | -       | A.M. P.M.                | The meridiem, periods                       | -    |
-| `a`        | `aaaa`  | am pm                    | The meridiem, lowercase                     | ❌   |
-| `aa`       | -       | a.m. p.m.                | The meridiem, lowercase and periods         | -    |
-| `d`        | -       | 0-6                      | The day of the week, with Sunday as 0       | -    |
-| `dd`       | `eeeee` | S-S                      | The min name of the local day of the week   | ❌   |
-| `ddd`      | `eee`   | Sun-Sat                  | The short name of the local day of the week | ❌   |
-| `dddd`     | `eeee`  | Sunday-Saturday          | The name of the local day of the week       | ❌   |
+| 约定式 | Unicode | 输出                     | 描述                    | 是否相同 |
+| ------ | ------- | ------------------------ | ----------------------- | -------- |
+| `Yo`   | -       | 2024th                   | 序数格式年份            | -        |
+| `YY`   | `yy`    | 24                       | 两位数年份              | ❌       |
+| `YYYY` | `yyyy`  | 2024                     | 四位数年份              | ❌       |
+| `M`    | `M`     | 1-12                     | 月份，从 1 开始         | ✅       |
+| `Mo`   | -       | 1st, 2nd, ..., 12th      | 月份，序数格式          | -        |
+| `MM`   | `MM`    | 01-12                    | 月份，两位数            | ✅       |
+| `MMM`  | `MMM`   | Jan-Dec                  | 缩写月份名              | ✅       |
+| `MMMM` | `MMMM`  | January-December         | 完整月份名              | ✅       |
+| `D`    | `d`     | 1-31                     | 月份中的日期            | ❌       |
+| `Do`   | -       | 1st, 2nd, ..., 31st      | 月份中的日期，序数格式  | -        |
+| `DD`   | `dd`    | 01-31                    | 月份中的日期，两位数    | ❌       |
+| `H`    | `H`     | 0-23                     | 小时                    | ✅       |
+| `Ho`   | -       | 0th, 1st, 2nd, ..., 23rd | 小时，序数格式          | -        |
+| `HH`   | `HH`    | 00-23                    | 小时，两位数            | ✅       |
+| `h`    | `h`     | 1-12                     | 12 小时制小时           | ✅       |
+| `ho`   | -       | 1st, 2nd, ..., 12th      | 12 小时制小时，序数格式 | -        |
+| `hh`   | `hh`    | 01-12                    | 12 小时制小时，两位数   | ✅       |
+| `m`    | `m`     | 0-59                     | 分钟                    | ✅       |
+| `mo`   | -       | 0th, 1st, ..., 59th      | 分钟，序数格式          | -        |
+| `mm`   | `mm`    | 00-59                    | 分钟，两位数            | ✅       |
+| `s`    | `s`     | 0-59                     | 秒数                    | ✅       |
+| `so`   | -       | 0th, 1st, ..., 59th      | 秒数，序数格式          | -        |
+| `ss`   | `ss`    | 00-59                    | 秒数，两位数            | ✅       |
+| `S`    | `S`     | 0-9                      | 毫秒，1 位数            | ✅       |
+| `SS`   | `SS`    | 00-99                    | 毫秒，两位数            | ✅       |
+| `SSS`  | `SSS`   | 000-999                  | 毫秒，三位数            | ✅       |
+| `A`    | -       | AM PM                    | 上下午                  | -        |
+| `AA`   | -       | A.M. P.M.                | 上下午，带点            | -        |
+| `a`    | `aaaa`  | am pm                    | 上下午，小写            | ❌       |
+| `aa`   | -       | a.m. p.m.                | 上下午，小写，带点      | -        |
+| `d`    | -       | 0-6                      | 星期几，以星期日为 0    | -        |
+| `dd`   | `eeeee` | S-S                      | 当地星期几的缩写名      | ❌       |
+| `ddd`  | `eee`   | Sun-Sat                  | 当地星期几的短名字      | ❌       |
+| `dddd` | `eeee`  | Sunday-Saturday          | 当地星期几的名称        | ❌       |
 
-> Meridiem can be customized by `customMeridiem` in `options`.
+> 可通过 `options` 中的 `customMeridiem` 自定义上下午。
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
@@ -78,22 +78,22 @@ import { Source } from '@/components'
 const dateStr = useDateFormat(dateLike, format, options)
 ```
 
-### DateLike
+### 类日期 DateLike \{#datelike}
 
 ```tsx
 export type DateLike = Date | number | string
 ```
 
-### Format
+### 格式模版 Format \{#format}
 
-A `string` that represents the format of the output date string. `YYYY-MM-DD HH:mm:ss` by default.
+表示输出日期字符串格式的 `string`。默认为 `YYYY-MM-DD HH:mm:ss`。
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type FormatDateOptions = {
   /**
-   * Whether to use Unicode date symbols.
+   * 是否使用 Unicode 日期符号。
    *
    * @see https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table
    *
@@ -101,11 +101,11 @@ export type FormatDateOptions = {
    */
   unicodeSymbols?: boolean
   /**
-   * The locales argument indicates the locale to use.
+   * locales 参数表示要使用的语言环境。
    */
   locales?: Intl.LocalesArgument
   /**
-   * A custom function to format the meridiem.
+   * 格式化上下午的自定义函数。
    */
   customMeridiem?: (
     hours: number,
@@ -117,12 +117,12 @@ export type FormatDateOptions = {
 
 export type UseDateFormatOptions = FormatDateOptions & {
   /**
-   * fallback string when date is invalid
+   * 当日期无效时的默认字符串。
    */
   fallback?: string
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
-A `string` that represents the formatted date string.
+表示格式化日期字符串的 `string`。
