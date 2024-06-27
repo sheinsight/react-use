@@ -16,16 +16,6 @@ export interface InferEventTarget<Events> {
 
 export type GeneralEventListener<E = Event> = (evt: E) => void
 
-function addListener(
-  target: EventTarget,
-  event: string,
-  listener: Noop,
-  options: boolean | AddEventListenerOptions | undefined,
-): Noop {
-  target.addEventListener(event, listener, options)
-  return () => target.removeEventListener(event, listener, options)
-}
-
 /**
  * A React Hook that use `EventListener` with ease.
  *
@@ -86,7 +76,8 @@ export function useEventListener(...args: any[]) {
     ;[target, events, listener, options] = args
   }
 
-  events = unwrapArrayable(events)
+  const refTarget = unwrapReffable(target)
+  const actualEvents = unwrapArrayable(events)
 
   const cleanups = useRef<Noop[]>([])
   const latest = useLatest({ listener })
@@ -96,18 +87,33 @@ export function useEventListener(...args: any[]) {
     cleanups.current.length = 0
   })
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: need to detect ref.current change
   useDeepCompareEffect(() => {
     const actualTarget = unwrapReffable(unwrapGettable(target))
 
-    if (!actualTarget || !events.length) return
+    if (!actualTarget || !actualEvents.length) return
 
     cleanups.current.push(
-      ...events.flatMap((e) => {
+      ...actualEvents.flatMap((e) => {
         return addListener(actualTarget, e, (...args) => latest.current.listener(...args), options)
       }),
     )
+
     return cleanup
-  }, [target, events, options])
+  }, [target, refTarget, actualEvents, options])
 
   return cleanup
+}
+
+function addListener(
+  target: EventTarget,
+  event: string,
+  listener: Noop,
+  options: boolean | AddEventListenerOptions | undefined,
+): Noop {
+  target.addEventListener(event, listener, options)
+
+  return () => {
+    target.removeEventListener(event, listener, options)
+  }
 }
