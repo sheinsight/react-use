@@ -3,7 +3,7 @@ import { describe, expect, test } from 'vitest'
 import { useCounter } from './index'
 
 describe('useCounter', () => {
-  test('should initialize with default count', () => {
+  test('should initialize with default count 0', () => {
     const { result } = renderHook(() => useCounter())
     const [count] = result.current
     expect(count).toBe(0)
@@ -11,8 +11,9 @@ describe('useCounter', () => {
 
   test('should initialize with provided initial count', () => {
     const { result } = renderHook(() => useCounter(10))
-    const [count] = result.current
+    const [count, _, { initialCount }] = result.current
     expect(count).toBe(10)
+    expect(initialCount).toBe(10)
   })
 
   test('should increment count by 1', () => {
@@ -65,10 +66,12 @@ describe('useCounter', () => {
 
   test('should reset count to provided value', () => {
     const { result } = renderHook(() => useCounter(10))
-    const [, { reset }] = result.current
+    const [, { reset }, { initialCount }] = result.current
+    expect(initialCount).toBe(10)
     act(() => reset(5))
-    const [count] = result.current
+    const [count, _, { initialCount: _initialCount }] = result.current
     expect(count).toBe(5)
+    expect(_initialCount).toBe(5)
   })
 
   test('should not increment count beyond max', () => {
