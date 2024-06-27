@@ -71,6 +71,9 @@ export default {
     [
       'classic',
       {
+        gtag: {
+          trackingID: 'G-M3K3LXN4J9',
+        },
         docs: {
           sidebarPath: './sidebars.ts',
           sidebarCollapsed: true,
