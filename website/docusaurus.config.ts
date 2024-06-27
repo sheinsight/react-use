@@ -88,9 +88,9 @@ export default {
   ],
   themeConfig: {
     algolia: {
-      appId: 'W010WSW8YS',
-      apiKey: 'ca07062d4601255978e437c86e29fc74',
-      indexName: 'shined-react-use',
+      appId: 'Q2W3CLT9WV',
+      apiKey: '42a02a23577a58645849ff11cf268127',
+      indexName: 'sheinsightio',
     },
     navbar: {
       title: '@shined/react-use',
