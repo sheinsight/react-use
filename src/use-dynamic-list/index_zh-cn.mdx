@@ -91,6 +91,10 @@ export interface UseDynamicListReturnsActions<T> {
    * 重置列表
    */
   reset: (newList: T[]) => void
+  /**
+   * 设置新列表
+   */
+  setList: ReactSetState<T[]>
 }
 
 export type UseDynamicListReturns<T> = readonly [

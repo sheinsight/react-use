@@ -3,6 +3,8 @@ import { useCreation } from '../use-creation'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
 
+import type { ReactSetState } from '../use-safe-state'
+
 export interface UseDynamicListReturnsActions<T> {
   /**
    * insert an item at the specified index
@@ -56,6 +58,10 @@ export interface UseDynamicListReturnsActions<T> {
    * reset the list
    */
   reset: (newList: T[]) => void
+  /**
+   * set the list
+   */
+  setList: ReactSetState<T[]>
 }
 
 export type UseDynamicListReturns<T> = readonly [
@@ -186,9 +192,9 @@ export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturns<
 
   const sort = useStableFn((result: T[]) =>
     result
+      .filter(Boolean)
       .map((item, index) => ({ key: index, item }))
       .sort((a, b) => getIndex(a.key) - getIndex(b.key))
-      .filter((item) => !!item.item)
       .map((item) => item.item),
   )
 
@@ -206,6 +212,7 @@ export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturns<
     shift,
     sort,
     reset,
+    setList,
   }))
 
   return [list, actions] as const
