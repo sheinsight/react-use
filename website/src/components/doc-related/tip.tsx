@@ -1,7 +1,7 @@
-import Link from '@docusaurus/Link'
-import Admonition from '@theme/Admonition'
 import Interpolate from '@docusaurus/Interpolate'
+import Link from '@docusaurus/Link'
 import { translate } from '@docusaurus/Translate'
+import Admonition from '@theme/Admonition'
 
 interface TipProps {
   name?: string
