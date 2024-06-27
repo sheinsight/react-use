@@ -1,8 +1,16 @@
-import { renderHook, act } from '@/test'
+import { act, renderHook } from '@/test'
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 import { useCountdown } from './index'
-import { describe, expect, test, vi } from 'vitest'
 
 describe('useCountdown', () => {
+  beforeEach(() => {
+    vi.useFakeTimers()
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
   test('should start the countdown immediately by default', () => {
     const { result } = renderHook(() => useCountdown(Date.now() + 1_000))
     expect(result.current).toBeGreaterThan(0)
@@ -16,8 +24,7 @@ describe('useCountdown', () => {
   test('should not start the countdown immediately when immediate option is false', () => {
     const { result } = renderHook(() => useCountdown(Date.now() + 1_000, { immediate: false }))
     expect(result.current).toBe(1000)
-    const util = vi.useFakeTimers()
-    act(() => util.advanceTimersByTime(1000))
+    act(() => vi.advanceTimersByTime(1000))
     expect(result.current).toBe(1000)
   })
 
@@ -26,8 +33,7 @@ describe('useCountdown', () => {
       initialProps: { date: Date.now() + 1_000 },
     })
     const initialCountdown = result.current
-    const util = vi.useFakeTimers()
-    act(() => util.advanceTimersByTime(100))
+    act(() => vi.advanceTimersByTime(100))
     expect(result.current).toBeLessThan(initialCountdown)
   })
 

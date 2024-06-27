@@ -1,6 +1,6 @@
 import { renderHook } from '@/test'
-import { useCreation } from './index'
 import { describe, expect, test } from 'vitest'
+import { useCreation } from './index'
 
 describe('useCreation', () => {
   test('useCreation should return the same value when dependencies do not change', () => {
