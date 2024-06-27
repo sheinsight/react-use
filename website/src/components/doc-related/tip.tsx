@@ -1,5 +1,7 @@
 import Link from '@docusaurus/Link'
 import Admonition from '@theme/Admonition'
+import Interpolate from '@docusaurus/Interpolate'
+import { translate } from '@docusaurus/Translate'
 
 interface TipProps {
   name?: string
@@ -14,16 +16,34 @@ export function Tip(props: TipProps) {
     case 'target':
       return (
         <p>
-          <code>ElementTarget</code>, see <Link to="/docs/features/element-target">ElementTarget</Link> for more
-          details.
+          <Interpolate
+            values={{
+              code: <code>ElementTarget</code>,
+              link: <Link to="/docs/features/element-target">ElementTarget</Link>,
+            }}
+          >
+            {translate({
+              id: 'reference.doc.elementTarget',
+              message: '{code}, see {link} for more details.',
+            })}
+          </Interpolate>
         </p>
       )
     case 'ref-getter':
       return (
         <Admonition type="tip">
           <p>
-            <code>{name}</code> is merely a <Link to="/docs/features/ref-getter">Ref Getter</Link>, whose changes will
-            not trigger components to re-render.
+            <Interpolate
+              values={{
+                code: <code>{name}</code>,
+                link: <Link to="/docs/features/ref-getter">Ref Getter</Link>,
+              }}
+            >
+              {translate({
+                id: 'reference.doc.refGetter',
+                message: '{code} is merely a {link}, whose changes will not trigger components to re-render.',
+              })}
+            </Interpolate>
           </p>
         </Admonition>
       )
@@ -31,8 +51,16 @@ export function Tip(props: TipProps) {
       return (
         <Admonition type="tip">
           <p>
-            Returns include <Link to="/docs/features/pausable">Pausable</Link> instance, which can be paused and
-            resumed.
+            <Interpolate
+              values={{
+                link: <Link to="/docs/features/pausable">Pausable</Link>,
+              }}
+            >
+              {translate({
+                id: 'reference.doc.pausable',
+                message: 'Returns include {link} instance, which can be paused and resumed.',
+              })}
+            </Interpolate>
           </p>
         </Admonition>
       )

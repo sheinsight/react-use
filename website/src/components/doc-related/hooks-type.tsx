@@ -1,4 +1,5 @@
 import Link from '@docusaurus/Link'
+import Translate from '@docusaurus/Translate'
 
 interface HooksTypeProps {
   category?: string
@@ -29,7 +30,9 @@ export const iconMap = {
 export function HooksType(props: HooksTypeProps) {
   return (
     <div className="flex items-center gap-2 mb-4">
-      <span>Tags:</span>
+      <span>
+        <Translate id="reference.tags.tag">Tags</Translate>:
+      </span>
       <Labels {...props} />
     </div>
   )

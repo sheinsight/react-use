@@ -1,4 +1,20 @@
 {
+  "reference.doc.pausable":{
+    "message": "返回值包含 {link} 实例，可以暂停和重放 Hook 行为，以减少不必要的渲染。",
+    "description": "pausable"
+  },
+  "reference.doc.refGetter":{
+    "message": "{code} 仅仅只是一个 {link}, 它的变更不会触发组件重新渲染。",
+    "description": "refGetter"
+  },
+  "reference.doc.elementTarget":{
+    "message": "{code}, 前往 {link} 了解更多。",
+    "description": "elementTarget"
+  },
+  "reference.tags.tag":{
+    "message": "标签",
+    "description": "tag"
+  },
   "reference.demo.source":{
     "message": "查看源码",
     "description": "source"
@@ -14,6 +30,10 @@
   "reference.source.code":{
     "message": "🪝 Hook 实现",
     "description": "implementation"
+  },
+  "reference.source.docFileName":{
+    "message": "index_zh-cn.mdx",
+    "description": "docFileName"
   },
   "reference.source.demo":{
     "message": "🎨 Demo 演示",

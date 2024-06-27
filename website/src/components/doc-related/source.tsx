@@ -16,7 +16,10 @@ export function Source({ name, tsx }: SourceProps) {
   const list = [
     { name: translate({ id: 'reference.source.code', message: '🪝 Hook' }), path: tsx ? 'index.tsx' : 'index.ts' },
     { name: translate({ id: 'reference.source.demo', message: '🎨 Demo' }), path: 'demo.tsx' },
-    { name: translate({ id: 'reference.source.doc', message: '📄 Document' }), path: 'index.mdx' },
+    {
+      name: translate({ id: 'reference.source.doc', message: '📄 Document' }),
+      path: translate({ id: 'reference.source.docFileName', message: 'index.mdx' }),
+    },
   ].map((item) => ({ ...item, url: `${url}/${item.path}` }))
 
   return (

@@ -1,13 +1,11 @@
 import { Button, Card, KeyValue, OTP, Zone, wait as mockFetch } from '@/components'
-import { useAsyncFn, useAsyncLock, useCounter, useSafeState } from '@shined/react-use'
+import { useAsyncFn, useAsyncLock, useCounter } from '@shined/react-use'
 
 export function App() {
-  const [data, setData] = useSafeState<string>('none')
   const [invalidCount, countActions] = useCounter(0)
 
   const fetchData = useAsyncFn(async () => {
     await mockFetch(300)
-    setData(OTP())
     return OTP()
   })
 
@@ -15,7 +13,7 @@ export function App() {
 
   return (
     <Card>
-      <KeyValue label="Fetched data" value={data} />
+      <KeyValue label="Fetched data" value={fetchData.value} />
       <KeyValue label="Locked status" value={fetchData.loading} />
       <KeyValue label="Invalid fetch times" value={invalidCount} />
 
