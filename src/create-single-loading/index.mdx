@@ -38,7 +38,8 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const pageLoading = createSingleLoading(options)
+import { create } from '@shined/reactive'
+const pageLoading = createSingleLoading({ create })
 const { set, get, bind, useLoding, useAsyncFn } = pageLoading
 ```
 

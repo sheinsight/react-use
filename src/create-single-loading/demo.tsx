@@ -1,7 +1,8 @@
 import { Button, Card, KeyValue, OTP, Zone, wait as mockFetch } from '@/components'
 import { createSingleLoading } from '@shined/react-use'
+import { create } from '@shined/reactive'
 
-const pageLoading = createSingleLoading()
+const pageLoading = createSingleLoading({ create })
 
 const fetchOutsideReact = pageLoading.bind(async (otp: string) => {
   await mockFetch()

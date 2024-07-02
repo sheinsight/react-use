@@ -1,4 +1,5 @@
 import { useAsyncFn as useAsyncFnOrigin } from '../use-async-fn'
+import { isFunction } from '../utils/basic'
 
 import type { create } from '@shined/reactive'
 import type { UseAsyncFnReturns } from '../use-async-fn'
@@ -52,6 +53,10 @@ export interface CreateSingleLoadingReturns {
 
 export interface CreateSingleLoadingOptions {
   /**
+   * `Create` function of Reactive
+   */
+  create: typeof create
+  /**
    * Whether set to false on error
    *
    * @defaultValue true
@@ -75,11 +80,14 @@ export interface CreateSingleLoadingOptions {
  *
  * @see {@link https://sheinsight.github.io/reactive/ | Reactive - Documentation}
  */
-export function createSingleLoading(options: CreateSingleLoadingOptions = {}): CreateSingleLoadingReturns {
-  const { resetOnError = true, initialState = false } = options
+export function createSingleLoading(options: CreateSingleLoadingOptions): CreateSingleLoadingReturns {
+  const { resetOnError = true, create, initialState = false } = options
 
-  const createStore = require('@shined/reactive').create as typeof create
-  const store = createStore({ loading: initialState })
+  if (!isFunction(create)) {
+    throw new Error('Please provide the `create` function from `@shined/reactive`')
+  }
+
+  const store = create({ loading: initialState })
 
   function bind<T extends AnyFunc>(func: T): T {
     return (async (...args: Parameters<T>) => {

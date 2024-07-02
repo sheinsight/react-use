@@ -37,7 +37,8 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const [state, mutate] = useReactive(initialState, options)
+import { create } from '@shined/reactive';
+const [state, mutate] = useReactive(initialState, { create })
 ```
 
 ### InitialState

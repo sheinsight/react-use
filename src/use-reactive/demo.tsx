@@ -1,12 +1,16 @@
 import { Button, Card, KeyValue, OTP, Zone } from '@/components'
 import { useReactive } from '@shined/react-use'
+import { create } from '@shined/reactive'
 
 export function App() {
-  const [state, mutate] = useReactive({
-    name: 'Bob',
-    age: 20,
-    hobbies: ['running', 'coding'],
-  })
+  const [state, mutate] = useReactive(
+    {
+      name: 'Bob',
+      age: 20,
+      hobbies: ['running', 'coding'],
+    },
+    { create },
+  )
 
   return (
     <Card>

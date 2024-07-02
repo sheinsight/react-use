@@ -1,4 +1,5 @@
 import { useCreation } from '../use-creation'
+import { isFunction } from '../utils/basic'
 
 import type { create } from '@shined/reactive'
 
@@ -11,19 +12,23 @@ interface SnapshotOptions<StateSlice> {
 /**
  * A React Hook that helps to use [Reactive](https://sheinsight.github.io/reactive) in React with ease.
  */
-export function useReactive<State extends object>(initialState: State): readonly [State, State]
 export function useReactive<State extends object>(
   initialState: State,
-  options?: SnapshotOptions<State>,
-): readonly [State, State]
-export function useReactive<State extends object>(
-  initialState: State,
-  options: SnapshotOptions<State> = {},
+  options: SnapshotOptions<State> & { create: typeof create },
 ): readonly [State, State] {
   const store = useCreation(() => {
-    const createStore = require('@shined/reactive').create as typeof create
-    return createStore(initialState)
+    if (!isFunction(options.create)) {
+      throw new Error('Please provide the `create` function from `@shined/reactive`')
+    }
+
+    return options.create(initialState)
   })
 
-  return [store.useSnapshot(options), store.mutate] as const
+  return [
+    store.useSnapshot({
+      sync: options.sync,
+      isEqual: options.isEqual,
+    }),
+    store.mutate,
+  ] as const
 }
