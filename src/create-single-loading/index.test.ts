@@ -1,7 +1,7 @@
 import { renderHook } from '@/test'
+import { create } from '@shined/reactive'
 import { describe, expect, it, vi } from 'vitest'
 import { createSingleLoading } from './index'
-import { create } from '@shined/reactive'
 
 describe('createSingleLoading', () => {
   it('should return an object with the correct shape', () => {
