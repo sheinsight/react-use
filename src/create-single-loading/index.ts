@@ -1,6 +1,6 @@
-import { create } from '@shined/reactive'
 import { useAsyncFn as useAsyncFnOrigin } from '../use-async-fn'
 
+import type { create } from '@shined/reactive'
 import type { UseAsyncFnReturns } from '../use-async-fn'
 import type { AnyFunc } from '../utils/basic'
 
@@ -77,7 +77,9 @@ export interface CreateSingleLoadingOptions {
  */
 export function createSingleLoading(options: CreateSingleLoadingOptions = {}): CreateSingleLoadingReturns {
   const { resetOnError = true, initialState = false } = options
-  const store = create({ loading: initialState })
+
+  const createStore = require('@shined/reactive').create as typeof create
+  const store = createStore({ loading: initialState })
 
   function bind<T extends AnyFunc>(func: T): T {
     return (async (...args: Parameters<T>) => {

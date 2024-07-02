@@ -1,5 +1,6 @@
-import { create } from '@shined/reactive'
 import { useCreation } from '../use-creation'
+
+import type { create } from '@shined/reactive'
 
 // TODO: export from @shined/reactive
 interface SnapshotOptions<StateSlice> {
@@ -19,6 +20,10 @@ export function useReactive<State extends object>(
   initialState: State,
   options: SnapshotOptions<State> = {},
 ): readonly [State, State] {
-  const store = useCreation(() => create(initialState))
+  const store = useCreation(() => {
+    const createStore = require('@shined/reactive').create as typeof create
+    return createStore(initialState)
+  })
+
   return [store.useSnapshot(options), store.mutate] as const
 }
