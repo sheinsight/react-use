@@ -1,7 +1,9 @@
 import { Card, KeyValue, Zone, wait as mockFetch } from '@/components'
 import { generateLoremIpsum, useInfiniteScroll, useSafeState } from '@shined/react-use'
+import { useRef } from 'react'
 
 export function App() {
+  const ref = useRef<HTMLDivElement>(null)
   const [list, setList] = useSafeState<{ idx: number; text: string }[]>([])
 
   const fetchData = async () => {
@@ -17,8 +19,10 @@ export function App() {
     return newData
   }
 
-  const scroll = useInfiniteScroll('#el-infinite-scroll', fetchData, {
-    canLoadMore: (pre) => (!pre ? true : pre[pre.length - 1].idx <= 100),
+  const scroll = useInfiniteScroll(ref, fetchData, {
+    canLoadMore: (pre) => {
+      return pre ? pre[pre.length - 1].idx <= 100 : true
+    },
   })
 
   return (
@@ -27,7 +31,7 @@ export function App() {
         <KeyValue label="isLoading" value={scroll.isLoading} />
         <KeyValue label="isLoadDone" value={scroll.isLoadDone} />
       </Zone>
-      <div id="el-infinite-scroll" className="w-full h-80 bg-#666666/20 rounded overflow-scroll p-4">
+      <div ref={ref} className="w-full h-80 bg-#666666/20 rounded overflow-scroll p-4">
         {list.map((item) => (
           <div key={item.idx} className="my-2 p-2 bg-primary/40 dark:text-white rounded">
             {item.text}

@@ -52,7 +52,7 @@ export interface UseScrollOptions {
    */
   behavior?: ScrollBehavior
   /**
-   *
+   * Whether to trigger the first load immediately
    */
   immediate?: boolean
 }

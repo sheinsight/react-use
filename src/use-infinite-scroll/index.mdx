@@ -41,10 +41,12 @@ import { Tip } from '@/components'
 
 import Link from '@docusaurus/Link'
 
-`UseScrollOptions` is options of `useScroll`, see [useScroll#options](/reference/use-scroll/#options) for more details.
-
 ```tsx
-export type UseInfiniteScrollOptions<T extends HTMLElement = HTMLElement> = UseScrollOptions & {
+export type UseInfiniteScrollOptions<T extends HTMLElement = HTMLElement> = {
+  /**
+   * scroll event callback
+   */
+  onScroll?: (event: Event) => void
   /**
    * distance from the bottom of the scroll container
    *

@@ -6,10 +6,13 @@ import { useRafState } from '../use-raf-state'
 import { useStableFn } from '../use-stable-fn'
 import { useTargetElement } from '../use-target-element'
 
-import type { UseScrollOptions } from '../use-scroll'
 import type { ElementTarget } from '../use-target-element'
 
-export interface UseInfiniteScrollOptions<R> extends UseScrollOptions {
+export interface UseInfiniteScrollOptions<R> {
+  /**
+   * scroll event callback
+   */
+  onScroll?: (event: Event) => void
   /**
    * Whether to trigger the first load immediately
    *
@@ -52,7 +55,7 @@ export interface UseInfiniteScrollReturns {
   /**
    * calculate the current scroll position to determine whether to load more
    */
-  calculate(): void
+  calculate(event: Event): void
 }
 
 /**
@@ -64,15 +67,24 @@ export function useInfiniteScroll<R = any, T extends HTMLElement = HTMLElement>(
   onLoadMore: (previousReturn: R | undefined) => R | Promise<R>,
   options: UseInfiniteScrollOptions<R> = {},
 ): UseInfiniteScrollReturns {
-  const { direction = 'bottom', immediate = true, interval = 100, canLoadMore = () => true, distance = 100 } = options
+  const {
+    immediate = true,
+    distance = 100,
+    direction = 'bottom',
+    interval = 100,
+    canLoadMore = () => true,
+    onScroll,
+  } = options
 
   const el = useTargetElement<T>(target)
   const previousReturn = useRef<R | undefined>(undefined)
   const [state, setState] = useRafState({ isLoading: false, isLoadDone: false }, { deep: true })
-  const latest = useLatest({ state, direction, onLoadMore, interval })
+  const latest = useLatest({ state, direction, onScroll, onLoadMore, interval })
 
-  const calculate = useStableFn(async () => {
-    const { state, direction, onLoadMore, interval } = latest.current
+  const calculate = useStableFn(async (event: Event) => {
+    const { state, direction, onLoadMore, interval, onScroll } = latest.current
+
+    onScroll?.(event)
 
     if (!canLoadMore(previousReturn.current)) {
       return setState({ ...state, isLoadDone: true })
