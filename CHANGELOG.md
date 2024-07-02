@@ -1,3 +1,12 @@
+## [1.1.1](https://github.com/sheinsight/react-use/compare/v1.1.0...v1.1.1) (2024-07-02)
+
+
+### Bug Fixes
+
+* **useReactive, createSingleLoading:** use require to dynamic import to avoid no dep error ([fc9d1ee](https://github.com/sheinsight/react-use/commit/fc9d1ee42057a924b618a69bfaa337c7662f3dd8))
+
+
+
 # [1.1.0](https://github.com/sheinsight/react-use/compare/v1.0.2...v1.1.0) (2024-07-02)
 
 
