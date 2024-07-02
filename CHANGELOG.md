@@ -1,3 +1,12 @@
+## [1.1.2](https://github.com/sheinsight/react-use/compare/v1.1.1...v1.1.2) (2024-07-02)
+
+
+### Bug Fixes
+
+* **createSingleLoading, useReactive:** use `create` option to avoid import and ESM require error ([2b8548c](https://github.com/sheinsight/react-use/commit/2b8548cab08faef45a3c9bcc2cad537c2f9dd090))
+
+
+
 ## [1.1.1](https://github.com/sheinsight/react-use/compare/v1.1.0...v1.1.1) (2024-07-02)
 
 
