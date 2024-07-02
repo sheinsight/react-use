@@ -1,10 +1,11 @@
 import { renderHook } from '@/test'
 import { describe, expect, it, vi } from 'vitest'
 import { createSingleLoading } from './index'
+import { create } from '@shined/reactive'
 
 describe('createSingleLoading', () => {
   it('should return an object with the correct shape', () => {
-    const loading = createSingleLoading()
+    const loading = createSingleLoading({ create })
     expect(loading).toEqual(
       expect.objectContaining({
         useAsyncFn: expect.any(Function),
@@ -17,7 +18,7 @@ describe('createSingleLoading', () => {
   })
 
   it('should set the loading state correctly', () => {
-    const loading = createSingleLoading()
+    const loading = createSingleLoading({ create })
 
     const { result, rerender } = renderHook(() => loading.useLoading())
     expect(result.current).toBe(false)
@@ -32,7 +33,7 @@ describe('createSingleLoading', () => {
   })
 
   it('should bind the loading state to an async function correctly', () => {
-    const loading = createSingleLoading()
+    const loading = createSingleLoading({ create })
     const asyncFn = vi.fn()
     const boundFn = loading.bind(asyncFn)
     expect(boundFn).not.toBe(asyncFn)
@@ -42,7 +43,7 @@ describe('createSingleLoading', () => {
   })
 
   it('should return the loading state correctly', () => {
-    const loading = createSingleLoading()
+    const loading = createSingleLoading({ create })
     expect(loading.get()).toBe(false)
     loading.set(true)
     expect(loading.get()).toBe(true)
@@ -51,7 +52,7 @@ describe('createSingleLoading', () => {
   })
 
   it('should reset the loading state on error if resetOnError option is true', async () => {
-    const loading = createSingleLoading({ resetOnError: true })
+    const loading = createSingleLoading({ create, resetOnError: true })
     expect(loading.get()).toBe(false)
     loading.set(true)
     expect(loading.get()).toBe(true)
@@ -67,7 +68,7 @@ describe('createSingleLoading', () => {
   })
 
   it('should not reset the loading state on error if resetOnError option is false', async () => {
-    const loading = createSingleLoading({ resetOnError: false })
+    const loading = createSingleLoading({ create, resetOnError: false })
     expect(loading.get()).toBe(false)
     loading.set(true)
     expect(loading.get()).toBe(true)
@@ -83,12 +84,12 @@ describe('createSingleLoading', () => {
   })
 
   it('should initialize the loading state correctly', () => {
-    const loading = createSingleLoading({ initialState: true })
+    const loading = createSingleLoading({ create, initialState: true })
     expect(loading.get()).toBe(true)
   })
 
   it('should useAsyncFn correctly', async () => {
-    const loading = createSingleLoading()
+    const loading = createSingleLoading({ create })
     const asyncFn = vi.fn()
     const { result, rerender } = renderHook(() => loading.useAsyncFn(asyncFn))
 
