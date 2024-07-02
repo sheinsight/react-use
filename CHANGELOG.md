@@ -1,3 +1,18 @@
+# [1.1.0](https://github.com/sheinsight/react-use/compare/v1.0.2...v1.1.0) (2024-07-02)
+
+
+### Bug Fixes
+
+* **useEventListener:** should re-add-and-remove event when `ref.current` changed ([6ffdc9d](https://github.com/sheinsight/react-use/commit/6ffdc9d9549aa4266b10b38b317742af672291e1))
+* **useUrlSearchParams:** fix type import ([2fc0366](https://github.com/sheinsight/react-use/commit/2fc0366e0ffab593a13f300a21faa20d156249cc))
+
+
+### Features
+
+* **useDynamicList:** add `setList` method in return actions ([0eff4b4](https://github.com/sheinsight/react-use/commit/0eff4b4a4743909ba444a653f093c16ad2e913db))
+
+
+
 ## [1.0.2](https://github.com/sheinsight/react-use/compare/v1.0.1...v1.0.2) (2024-06-26)
 
 
