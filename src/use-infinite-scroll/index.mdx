@@ -44,10 +44,6 @@ import Link from '@docusaurus/Link'
 ```tsx
 export type UseInfiniteScrollOptions<T extends HTMLElement = HTMLElement> = {
   /**
-   * scroll event callback
-   */
-  onScroll?: (event: Event) => void
-  /**
    * distance from the bottom of the scroll container
    *
    * @defaultValue 0
@@ -69,6 +65,10 @@ export type UseInfiniteScrollOptions<T extends HTMLElement = HTMLElement> = {
    * check if can load more
    */
   canLoadMore?: (el: T) => boolean
+  /**
+   * scroll event callback
+   */
+  onScroll?: (event: Event) => void
 }
 ```
 

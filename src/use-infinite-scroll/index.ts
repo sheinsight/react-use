@@ -10,10 +10,6 @@ import type { ElementTarget } from '../use-target-element'
 
 export interface UseInfiniteScrollOptions<R> {
   /**
-   * scroll event callback
-   */
-  onScroll?: (event: Event) => void
-  /**
    * Whether to trigger the first load immediately
    *
    * @defaultValue true
@@ -41,6 +37,10 @@ export interface UseInfiniteScrollOptions<R> {
    * check if can load more
    */
   canLoadMore?: (previousReturn: R | undefined) => boolean
+  /**
+   * scroll event callback
+   */
+  onScroll?: (event: Event) => void
 }
 
 export interface UseInfiniteScrollReturns {
