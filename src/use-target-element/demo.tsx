@@ -7,7 +7,7 @@ export function App() {
   const el1 = useTargetElement(ref) // Recommended, specific element, SSR-friendly
 
   const id = useId() // Recommended, if you prefer to target element by id
-  const el2 = useTargetElement(`#${CSS.escape(id)}-div`)
+  const el2 = useTargetElement(() => `#${CSS.escape(id)}-div`)
 
   const el3 = useTargetElement(() => window)
   const el4 = useTargetElement(() => document.documentElement)
@@ -15,11 +15,11 @@ export function App() {
   const el6 = useTargetElement('button.green-btn')
   const el7 = useTargetElement('#el-id')
   const el8 = useTargetElement('div.blue-bg')
-  const el9 = useTargetElement(document.body) // NOT recommended, it's not SSR-friendly
+  // const el9 = useTargetElement(document.body) // NOT recommended, it's not SSR-friendly
 
   useIntervalFn(() => {
     // biome-ignore format: no wrap
-    console.log([el1.current, el2.current, el3.current, el4.current, el5.current, el6.current, el7.current, el8.current, el9.current])
+    console.log([el1.current, el2.current, el3.current, el4.current, el5.current, el6.current, el7.current, el8.current])
   }, 1000)
 
   return (
