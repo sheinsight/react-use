@@ -12,7 +12,7 @@ import type { Gettable } from '../utils/basic'
 /**
  * `%s` will be replaced by the title if the template is a `string`
  */
-export type UseTitleTemplate = string | ((title: string) => string)
+export type UseTitleOptionsTemplate = string | ((title: string) => string)
 
 export type UseTitleOptions = {
   /**
@@ -26,7 +26,7 @@ export type UseTitleOptions = {
    *
    * @defaultValue '%s'
    */
-  template?: UseTitleTemplate
+  template?: UseTitleOptionsTemplate
 }
 
 /**
@@ -60,6 +60,6 @@ export function useTitle(newTitle: Gettable<string>, options: UseTitleOptions = 
   return restore
 }
 
-function format(text: string, template: UseTitleTemplate) {
+function format(text: string, template: UseTitleOptionsTemplate) {
   return isFunction(template) ? template(text) : template.replace(/%s/g, text)
 }
