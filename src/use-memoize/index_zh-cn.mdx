@@ -4,40 +4,40 @@ import { HooksType } from '@/components'
 
 <HooksType category="Utilities" />
 
-A React Hook that return a function that memoize value (return same memoized value for same arguments).
+一个 React 钩子，其返回一个函数，该函数对值进行缓存（对于相同的参数返回相同的缓存值）。
 
-## Demo
+## 演示 Demo \{#demo}
 
-Try to click multiple times to fetch, you will see that the first fetch will actually fetch data, but the rest will return the memoized value.
+尝试多次点击以获取数据，您将看到第一次获取将实际获取数据，但其余的将返回缓存值。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const cachedFn = useMemoize(fnToBeCached, options)
 ```
 
-### FnToBeCached
+### 被缓存函数 FnToBeCached \{#fn-to-be-cached}
 
-The function that will be memoized.
+将要被缓存的函数。
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type UseMemoizeCache<Key, Value> = {
@@ -50,13 +50,13 @@ export type UseMemoizeCache<Key, Value> = {
 
 export type UseMemoizeOptions<Result, Args extends unknown[]> = {
   /**
-   * Custom cache key generator
+   * 自定义缓存键生成器
    *
    * @defaultValue JSON.stringify(args)
    */
   getKey?: (...args: Args) => string | number
   /**
-   * Custom cache, can be a Map or other object that implements the cache interface
+   * 自定义缓存，可以是 Map 或其他实现了缓存接口的对象
    *
    * @defaultValue new Map()
    */
@@ -64,32 +64,32 @@ export type UseMemoizeOptions<Result, Args extends unknown[]> = {
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export type UseMemoizeReturns<Result, Args extends unknown[]> = {
   /**
-   * Memoized function
+   * 记忆化函数
    */
   (...args: Args): Result
   /**
-   * Load data and replace the cache with the new value
+   * 加载数据并用新值替换缓存
    */
   load: (...args: Args) => Result
   /**
-   * Delete cache by args
+   * 通过参数删除缓存
    */
   delete: (...args: Args) => void
   /**
-   * Clear all cache
+   * 清除所有缓存
    */
   clear(): void
   /**
-   * Get cache key by args
+   * 通过参数获取缓存键
    */
   getKey: (...args: Args) => CacheKey
   /**
-   * A map-like cache object, you can use it to manipulate the cache directly
+   * 类似于 Map 的缓存对象，您可以直接操作缓存
    */
   cache: UseMemoizeCache<CacheKey, Result>
 }

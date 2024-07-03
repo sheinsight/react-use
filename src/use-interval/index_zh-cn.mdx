@@ -4,22 +4,22 @@ import { HooksType } from '@/components'
 
 <HooksType category="Animation" pausable />
 
-A React Hook that create a interval counter.
+一个 React Hook，用于创建一个间隔计时器。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
@@ -28,41 +28,38 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-// without controls
 const count = useInterval(interval)
-
-// with controls in options
-const { count, reset, ...controls } = useInterval(interval, options)
+const { count, reset, ...controls } = useInterval(interval, { controls: true })
 ```
 
-### Interval
+### 间隔 Interval \{#interval}
 
-A `number` that represents the interval in milliseconds.
+一个 `number` 类型，代表以毫秒为单位的间隔时间。
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type UseIntervalOptions<Controls extends boolean> = {
   /**
-   * Expose more controls
+   * 暴露更多控制功能
    *
    * @defaultValue false
    */
   controls?: Controls
   /**
-   * Execute the update immediately on calling
+   * 调用时立即执行更新
    *
    * @defaultValue true
    */
   immediate?: boolean
   /**
-   * Callback on every interval
+   * 每个间隔执行的回调
    */
   callback?: (count: number) => void
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 import { Tip } from '@/components'
 
@@ -71,18 +68,18 @@ import { Tip } from '@/components'
 ```tsx
 export interface UseIntervalAction extends UseCounterReturnsAction, Pausable {
   /**
-   * Reset the count
+   * 重置计数器
    */
   reset: (count?: number) => void
 }
 
 export type UseIntervalWithControlsReturns = [
   /**
-   * Current count
+   * 当前计数
    */
   count: number,
   /**
-   * Counter Actions
+   * 计数器操作
    */
   UseIntervalAction,
 ]

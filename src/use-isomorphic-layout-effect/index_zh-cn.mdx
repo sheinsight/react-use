@@ -4,29 +4,29 @@ import { HooksType } from '@/components'
 
 <HooksType category="Lifecycle" />
 
-A React Hook that will automatically use [React.useLayoutEffect](https://react.dev/reference/react/useLayoutEffect) in client side and [React.useEffect](https://react.dev/reference/react/useEffect) in server side to avoid the warning of `useLayoutEffect` in Server-side Rendering (SSR).
+一种 React 钩子（Hook），它会在客户端自动使用 [React.useLayoutEffect](https://react.dev/reference/react/useLayoutEffect)，在服务器端使用 [React.useEffect](https://react.dev/reference/react/useEffect)，以避免在服务器端渲染（SSR）中对 `useLayoutEffect` 的警告。
 
-## Demo
+## 演示 Demo \{#demo}
 
-Try to change count and then open DevTools to see the effect.
+尝试改变计数值，然后打开开发者工具（DevTools）查看效果。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
-Same as [React.useLayoutEffect](https://react.dev/reference/react/useLayoutEffect).
+与 [React.useLayoutEffect](https://react.dev/reference/react/useLayoutEffect) 相同。

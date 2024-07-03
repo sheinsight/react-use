@@ -4,124 +4,124 @@ import { HooksType } from '@/components'
 
 <HooksType category="ProUtilities" />
 
-A React Hook that manage pagination state.
+一个 React Hook，用于管理分页状态。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const [pagination, pagiActions] = usePagination(options)
 ```
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type UsePaginationOptions = {
   /**
-   * Total number of items.
+   * 总项目数。
    *
    * @defaultValue Number.POSITIVE_INFINITY
    */
   total?: number
   /**
-   * The number of items to display per page.
+   * 每页展示的项目数。
    *
    * @defaultValue 10
    */
   pageSize?: number
   /**
-   * The current page number.
+   * 当前页码。
    *
    * @defaultValue 1
    */
   page?: number
   /**
-   * Callback when the `page` change.
+   * 当 `page` 发生变化时的回调。
    */
   onPageChange?: (pagination: UsePaginationReturnsState) => void
   /**
-   * Callback when the `pageSize` change.
+   * 当 `pageSize` 发生变化时的回调。
    */
   onPageSizeChange?: (pagination: UsePaginationReturnsState) => void
   /**
-   * Callback when the `pageCount` change.
+   * 当 `pageCount` 发生变化时的回调。
    */
   onPageCountChange?: (pagination: UsePaginationReturnsState) => void
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export interface UsePaginationReturnsState {
   /**
-   * Total number of items.
+   * 总项目数。
    */
   total: number
   /**
-   * The current page number.
+   * 当前页码。
    */
   currentPage: number
   /**
-   * The number of items to display per page.
+   * 每页展示的项目数。
    */
   currentPageSize: number
   /**
-   * The total number of pages.
+   * 总页数。
    */
   pageCount: number
   /**
-   * Whether the current page is the first page.
+   * 是否为第一页。
    */
   isFirstPage: boolean
   /**
-   * Whether the current page is the last page.
+   * 是否为最后一页。
    */
   isLastPage: boolean
 }
 
 export interface UsePaginationReturnsActions {
   /**
-   * Go to the previous page.
+   * 前往上一页。
    *
    * @returns {void} `void`
    */
   prev(): void
   /**
-   * Go to the next page.
+   * 前往下一页。
    *
    * @returns {void} `void`
    */
   next(): void
   /**
-   * Go to the specified page.
+   * 前往指定页码。
    *
-   * @param {number} page - `number`, the page number
+   * @param {number} page - `number`，页码
    * @returns {void} `void`
    */
   go: (page: number) => void
   /**
-   * Set the number of items to display per page.
+   * 设置每页展示的项目数。
    *
-   * @param {number} size - `number`, the number of items to display per page
+   * @param {number} size - `number`，每页展示的项目数
    * @returns {void} `void`
    */
   setPageSize: (size: number) => void

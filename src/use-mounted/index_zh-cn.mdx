@@ -1,33 +1,33 @@
-# useMounted
+# useMounted 使用
 
 import { HooksType } from '@/components'
 
 <HooksType category="Lifecycle" />
 
-A React Hook that returns a [Ref Getter](/docs/features/ref-getter) that indicates whether the component is mounted or not.
+一个 React 钩子（Hook），返回一个 [Ref Getter](/docs/features/ref-getter)，用于指示组件是否已挂载。
 
-## Demo
+## 演示 Demo \{#demo}
 
-Try to click `Start Timer`, and then click the "Toggle mount" button in one second to see the result.
+尝试点击 `Start Timer`，然后在一秒内点击 "Toggle mount" 按钮查看结果。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const isMounted = useMounted()
@@ -37,6 +37,6 @@ import { Tip } from '@/components'
 
 <Tip type="ref-getter" name="isUnmounted" />
 
-### Returns
+### 返回值 Returns \{#returns}
 
-A Ref Getter that return a boolean value that indicates whether the component is mounted or not.
+一个 Ref Getter，返回一个布尔值，用于指示组件是否已挂载。

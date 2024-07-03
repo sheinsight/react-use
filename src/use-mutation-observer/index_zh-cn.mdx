@@ -4,53 +4,53 @@ import { HooksType } from '@/components'
 
 <HooksType category="Element" pausable isSupported lowLevel />
 
-A React Hook that use [MutationObserver API](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) with ease.
+一个方便使用 [MutationObserver API](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) 的 React 钩子。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const { observerRef, isSupported, ...controls } = useMutationObserver(elementTarget, callback, options)
 ```
 
-### ElementTarget
+### 元素目标 ElementTarget \{#element-target}
 
 import { Tip } from '@/components'
 
 <Tip type="target" />
 
-### Callback
+### 回调 Callback \{#callback}
 
-`MutationCallback`, A function that will be called when the mutation occurs.
+`MutationCallback`，当变化发生时将被调用的函数。
 
 ```tsx
 type MutationCallback = (mutations: MutationRecord[], observer: MutationObserver) => void
 ```
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export interface UseWebObserverOptions {
   /**
-   * Start the observer immediate after calling this function
+   * 调用此函数后立即开始观察
    *
    * @defaultValue true
    */
@@ -70,18 +70,18 @@ type MutationObserverInit = {
 export interface UseMutationObserverOptions extends UseWebObserverOptions, MutationObserverInit {}
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 <Tip type="pausable" />
 
 ```tsx
 export type UseWebObserverReturns<Observer> = Pausable & {
   /**
-   * ref that holds the observer instance
+   * 持有观察者实例的 ref
    */
   observerRef: React.MutableRefObject<Observer | null>
   /**
-   * Check if the observer is supported in the current environment
+   * 检查当前环境中是否支持观察者
    */
   isSupported: boolean
 }

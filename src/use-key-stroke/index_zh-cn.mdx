@@ -4,54 +4,54 @@ import { HooksType } from '@/components'
 
 <HooksType category="Sensors" />
 
-A React Hook that helps to handle key strokes.
+一个用于处理键盘按键操作的 React 钩子。
 
-## Demo
+## 演示 Demo \{#demo}
 
-Try to (long) press `-`/`=` to increase/decrease the counter, `-` will ignore repeated events (set `dedupe` to true).
+尝试（长按）`-`/`=` 来增加/减少计数器，`-` 会忽略重复事件（将 `dedupe` 设置为 true）。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
-// catch all key strokes
+// 捕获所有按键操作
 const stop = useKeyStroke(handler, options)
 
-// catch specific key strokes
+// 捕获特定按键操作
 const stop = useKeyStroke(keyFilter, handler, options)
 ```
 
-### KeyFilter
+### 键过滤器 KeyFilter \{#key-filter}
 
-For all keys for keyboard events see [MDN](https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_key_values).
+查看所有键盘事件的键，请参阅 [MDN](https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_key_values)。
 
 ```tsx
 export type KeyFilter = true | string | string[] | KeyPredicate
 ```
 
-### Handler
+### 处理器 Handler \{#handler}
 
 ```tsx
 export type UseKeyStrokeHandler = (event: KeyboardEvent) => void
 ```
 
-### Options
+### 选项 Options \{#options}
 
 import { Tip } from '@/components'
 
@@ -62,32 +62,32 @@ export type KeyStrokeEventName = 'keydown' | 'keypress' | 'keyup'
 
 export type UseKeyStrokeOptions = {
   /**
-   * The event name to listen for.
-   *
+   * 要监听的事件名称。
+   * 
    * @defaultValue 'keydown'
    */
   eventName?: KeyStrokeEventName
   /**
-   * The target to add the event listener to.
-   *
+   * 添加事件监听器的目标。
+   * 
    * @defaultValue window
    */
   target?: ElementTarget
   /**
-   * Set to `true` to use passive event listeners.
-   *
+   * 设置为 `true` 以使用被动事件监听器。
+   * 
    * @defaultValue false
    */
   passive?: boolean
   /**
-   * Set to `true` to ignore repeated events when the key is being held down.
-   *
+   * 设置为 `true` 以忽略按键长按时的重复事件。
+   * 
    * @defaultValue false
    */
   dedupe?: boolean
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
-A `function` that can be called to stop listening for key strokes.
+一个可以被调用以停止监听按键操作的 `function`。

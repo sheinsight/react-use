@@ -4,66 +4,66 @@ import { HooksType } from '@/components'
 
 <HooksType category="Sensors" />
 
-A React Hook that helps to track the hover state of an element.
+一个用于追踪元素悬停状态的 React 钩子。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const isHovered = useHover(elementTarget, options)
 ```
 
-### ElementTarget
+### 元素目标 ElementTarget \{#element-target}
 
 import { Tip } from '@/components'
 
 <Tip type="target" />
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type UseHoverOptions = {
   /**
-   * Delay in milliseconds before the `onEnter` event is triggered
+   * 触发 `onEnter` 事件前的延迟时间（毫秒）
    */
   delayEnter?: number
   /**
-   * Delay in milliseconds before the `onLeave` event is triggered
+   * 触发 `onLeave` 事件前的延迟时间（毫秒）
    */
   delayLeave?: number
   /**
-   * Event handler when the mouse enters the target element
+   * 鼠标进入目标元素时的事件处理器
    */
   onEnter?: (e: MouseEvent) => void
   /**
-   * Event handler when the mouse leaves the target element
+   * 鼠标离开目标元素时的事件处理器
    */
   onLeave?: (e: MouseEvent) => void
   /**
-   * Event handler when the mouse enters or leaves the target element
+   * 鼠标进入或离开目标元素时的事件处理器
    */
   onChange?: (isHovered: boolean, e: MouseEvent) => void
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
-A `boolean` value that indicates whether the target element is hovered.
+一个用于指示目标元素是否被悬停的 `boolean` 值。

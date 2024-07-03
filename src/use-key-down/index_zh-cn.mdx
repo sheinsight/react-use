@@ -4,36 +4,36 @@ import { HooksType } from '@/components'
 
 <HooksType category="Sensors" />
 
-A React Hook that helps to handle `keydown` event.
+一个 React Hook，用于处理 `keydown` 事件。
 
-## Demo
+## 演示 Demo \{#demo}
 
-Try to (long) press `Enter` to increase the counter.
+尝试（长）按 `Enter` 键以增加计数器。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 import Link from '@docusaurus/Link'
 
-It's derivated from `useKeyStroke`, see <Link to="/reference/use-key-stroke">`useKeyStroke`</Link> for more details.
+它是从 `useKeyStroke` 派生的，更多详情请见 <Link to="/reference/use-key-stroke">`useKeyStroke`</Link>。
 
 ```tsx
-// same as `useKeyStroke(keyFilter, handler, {...options, eventName: 'keydown'})`
+// 与 `useKeyStroke(keyFilter, handler, {...options, eventName: 'keydown'})` 相同
 const stop = useKeyDown(keyFilter, handler, options)
 ```

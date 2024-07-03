@@ -4,49 +4,49 @@ import { HooksType } from '@/components'
 
 <HooksType category="Utilities" />
 
-A React Hook that record the last updated time of a state.
+一个 React 钩子（Hook），用于记录状态的最后更新时间。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const lastUpdated = useLastUpdated(source, options)
 ```
 
-### Source
+### 源码 Source \{#source}
 
-Any state that you want to record the last updated time.
+你想要记录最后更新时间的任何状态。
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type UseLastChangedOptions = {
   /**
-   * The initial value of the last updated timestamp.
+   * 最后更新时间戳的初始值。
    *
    * @defaultValue null
    */
   initialValue?: number | null
   /**
-   * If `true`, deep compares the source object.
+   * 如果为 `true`，则深度比较源对象。
    *
    * @defaultValue false
    */
@@ -54,8 +54,8 @@ export type UseLastChangedOptions = {
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
-`number | null`.
+`number | null`。
 
-When the source is updated, the number will be updated to the current timestamp, otherwise it will be `null` (e.g. the source is **NOT** updated).
+当源被更新时，数字将更新为当前的时间戳，否则它将是 `null`（例如，源 **未** 被更新）。

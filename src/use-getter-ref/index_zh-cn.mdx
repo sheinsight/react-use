@@ -4,51 +4,51 @@ import { HooksType } from '@/components'
 
 <HooksType category="Lifecycle" lowLevel />
 
-A React Hook that create a gettable ref, a function way to get the latest value of a ref.
+一个创建可获取 ref 的 React 钩子，一种获取 ref 最新值的函数方式，常用来避免过期闭包问题，同时 ref 不带来额外渲染。
 
-## Demo
+## 演示 Demo \{#demo}
 
-Try to increase the counter and then toast the latest ref value.
+尝试增加计数器，然后弹出最新的 ref 值。
 
-> NOTE: Changes in the ref value will not trigger a re-render, you should call `render` to update the UI.
+> 注意：ref 值的更改不会触发重新渲染，您应该调用 `render` 来更新 UI。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const [ref, getter] = useGetterRef(initialValue)
 ```
 
-### InitialValue
+### 初始值 InitialValue \{#initial-value}
 
-Initial value of the ref.
+ref 的初始值。
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export type UseGetterRefReturns<T> = [
   /**
-   * A mutable ref object that can be used to store a value.
+   * 一个可变的 ref 对象，可用于存储值。
    */
   ref: React.MutableRefObject<T>,
   /**
-   * A getter function that returns the current value of the ref.
+   * 一个 getter 函数，返回 ref 的当前值。
    */
   getter: () => T,
 ]

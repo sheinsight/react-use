@@ -4,99 +4,96 @@ import { HooksType } from '@/components'
 
 <HooksType category="ProUtilities" />
 
-A React Hook that manages multi-select state.
+一个管理多选状态的 React 钩子。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
-const multiSelect = useMultiSelect(list, defaultSelected)
+const [state, actions] = useMultiSelect(list, defaultSelected)
 ```
 
-### List
+### 列表 List \{#list}
 
-A list of items to manage multi-select state.
+要管理多选状态的项目列表。
 
-### DefaultSelected
+### 默认选中 DefaultSelected \{#default-selected}
 
-A list of items that are selected by default.
+默认选中的项目列表。
 
-### Returns
+### 返回值 Returns \{#returns}
 
-<details>
-<summary>Show Type Definitions</summary>
 ```tsx
 export type UseMultiSelectReturns<T> = readonly [
   {
     /**
-     * The selected items
+     * 被选中的项目
      */
     selected: T[]
     /**
-     * Whether none of the items are selected
+     * 没有项目被选中
      */
     isNoneSelected: boolean
     /**
-     * Whether all of the items are selected
+     * 所有项目都被选中
      */
     isAllSelected: boolean
     /**
-     * Whether some of the items are selected
+     * 一些项目被选中
      */
     isPartiallySelected: boolean
   },
   {
     /**
-     * Whether the item is selected
+     * 项目是否被选中
      */
     isItemSelected: (item: T) => boolean
     /**
-     * Set the selected items
+     * 设置被选中的项目
      */
     setSelected: ReactSetState<T[]>
     /**
-     * Select the item
+     * 选中项目
      */
     select: (item: T) => void
     /**
-     * Select all items
+     * 选中所有项目
      */
     selectAll(): void
     /**
-     * Unselect the item
+     * 取消选中项目
      */
     unSelect: (item: T) => void
     /**
-     * Unselect all items
+     * 取消选中所有项目
      */
     unSelectAll(): void
     /**
-     * Toggle the item
+     * 切换项目的选中状态
      */
     toggle: (item: T) => void
     /**
-     * Toggle all items
+     * 切换所有项目的选中状态
      */
     toggleAll(): void
   },
 ]
 ```
-</details>

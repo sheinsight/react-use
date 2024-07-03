@@ -4,64 +4,64 @@ import { HooksType } from '@/components'
 
 <HooksType category="Utilities" pausable />
 
-A React Hook that tracks the current date.
+一个 React 钩子，用于跟踪当前日期。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#API}
 
 ```tsx
 const now = useNow(options)
 const { now, ...controls } = useNow({ controls: true, ...otherOptions })
 ```
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type UseNowOptions<Controls extends boolean> = UseIntervalFnOptions & {
   /**
-   * Expose more controls
+   * 暴露控制器
    *
    * @defaultValue false
    */
   controls?: Controls
   /**
-   * Update interval in milliseconds, or use requestAnimationFrame
+   * 更新间隔（毫秒），或使用 requestAnimationFrame
    *
    * @defaultValue requestAnimationFrame
    */
   interval?: UseIntervalFnInterval
   /**
-   * Callback on each update
+   * 每次更新时的回调函数
    */
   callback?: (now: Date) => void
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 import { Tip } from '@/components'
 
 <Tip type="pausable" />
 
-If `controls` is `true`, returns an object with `now` and `Pausable` Instance, else returns the current `Date` instance.
+如果 `controls` 为 `true`，则返回包含 `now` 和 `Pausable` 实例的对象，否则返回当前的 `Date` 实例。
 
 ```tsx
 export type UseNowReturns<Controls extends boolean> = Controls extends true ? { now: Date } & Pausable : Date

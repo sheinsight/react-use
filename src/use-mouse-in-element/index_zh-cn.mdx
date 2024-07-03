@@ -4,85 +4,85 @@ import { HooksType } from '@/components'
 
 <HooksType category="Sensors" pausable />
 
-A React Hook that tracks mouse position in an element.
+一个用于追踪鼠标在元素中位置的 React Hook。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const { isOutside, elementX, elementY, ...rest } = useMouseInElement(elementTarget, options)
 ```
 
-### ElementTarget
+### 元素目标 ElementTarget \{#element-target}
 
 import { Tip } from '@/components'
 
 <Tip type="target" />
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type MouseInElementOptions = UseMouseOptions & { handleOutside?: boolean }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 <Tip type="pausable" />
 
 ```tsx
 export type UseMouseInElementReturns = Pausable & {
   /**
-   * Whether the mouse is outside the element
+   * 鼠标是否在元素之外
    */
   isOutside: boolean
   /**
-   * The x position of the mouse relative to the element
+   * 鼠标相对于元素的 x 位置
    */
   elementX: number
   /**
-   * The y position of the mouse relative to the element
+   * 鼠标相对于元素的 y 位置
    */
   elementY: number
   /**
-   * The x position of the element
+   * 元素的 x 位置
    */
   elementPositionX: number
   /**
-   * The y position of the element
+   * 元素的 y 位置
    */
   elementPositionY: number
   /**
-   * The height of the element
+   * 元素的高度
    */
   elementHeight: number
   /**
-   * The width of the element
+   * 元素的宽度
    */
   elementWidth: number
   /**
-   * The mouse state
+   * 鼠标状态
    */
   stop(): void
   /**
-   * The mouse state
+   * 鼠标状态
    */
   mouse: UseMouseReturns
 }

@@ -4,47 +4,47 @@ import { HooksType } from '@/components'
 
 <HooksType category="Element" pausable isSupported lowLevel />
 
-A React Hook that uses the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) with ease.
+一个简易使用 [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) 的 React 钩子。
 
-## Demo
+## 演示 Demo \{#demo}
 
-Try to scroll down to see the effect.
+尝试向下滚动查看效果。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const obsererReturn = useIntersectionObserver(elementTarget, options)
 ```
 
-### ElementTarget
+### 元素目标 ElementTarget \{#element-target}
 
 import { Tip } from '@/components'
 
 <Tip type="target" />
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export interface UseWebObserverOptions {
   /**
-   * Start the observer immediate after calling this function
+   * 调用此函数后立即开始观察
    *
    * @defaultValue true
    */
@@ -52,7 +52,7 @@ export interface UseWebObserverOptions {
 }
 
 /**
- * DOM built-in IntersectionObserverInit
+ * DOM 内建的 IntersectionObserverInit
  *
  * @see https://developer.mozilla.org/zh-CN/docs/Web/API/IntersectionObserver/IntersectionObserver#options
  */
@@ -65,18 +65,18 @@ interface IntersectionObserverInit {
 export type UseIntersectionObserverOptions = UseWebObserverOptions & IntersectionObserverInit
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 <Tip type="pausable" />
 
 ```tsx
 export interface UseWebObserverReturns<Observer> extends Pausable {
   /**
-   * ref that holds the observer instance
+   * 持有观察者实例的 ref
    */
   observerRef: React.MutableRefObject<Observer | null>
   /**
-   * Check if the observer is supported in the current environment
+   * 检查当前环境是否支持观察者
    */
   isSupported: boolean
 }

@@ -4,39 +4,39 @@ import { HooksType } from '@/components'
 
 <HooksType category="Sensors" pausable />
 
-A React Hook that returns the current frames per second (FPS) of the browser.
+一个 React 钩子，用于返回浏览器当前的每秒帧数（Frames Per Second，FPS）。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const { fps, ...controls } = useFps(options)
 ```
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type UseFpsOptions = {
   /**
-   * Calculate the FPS on every x frames.
+   * 每 x 帧计算一次 FPS。
    *
    * @defaultValue 10
    */
@@ -44,7 +44,7 @@ export type UseFpsOptions = {
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 import { Tip } from '@/components'
 
@@ -53,7 +53,7 @@ import { Tip } from '@/components'
 ```tsx
 export type UseFpsReturns = Pausable & {
   /**
-   * Current FPS
+   * 当前 FPS
    */
   fps: number
 }

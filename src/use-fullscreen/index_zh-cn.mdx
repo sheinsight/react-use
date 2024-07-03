@@ -4,45 +4,45 @@ import { HooksType } from '@/components'
 
 <HooksType category="Browser" isSupported />
 
-A React Hook that allows you to use the [requestFullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Element/requestFullscreen) with ease.
+一个可以让你轻松使用 [requestFullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Element/requestFullscreen) 的 React Hook。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const fs = useFullscreen(elementTarget, options)
 ```
 
-### ElementTarget
+### 元素目标 ElementTarget \{#element-target}
 
 import { Tip } from '@/components'
 
 <Tip type="target" />
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type UseFullscreenOptions = {
   /**
-   * Automatically exit fullscreen when component is unmounted
+   * 组件被卸载时自动退出全屏模式
    *
    * @defaultValue false
    */
@@ -50,32 +50,32 @@ export type UseFullscreenOptions = {
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export interface UseFullscreenReturns {
   /**
-   * Whether the browser supports fullscreen API
+   * 浏览器是否支持全屏 API
    */
   isSupported: boolean
   /**
-   * Whether the element is in fullscreen mode
+   * 元素是否处于全屏模式
    */
   isFullscreen: boolean
   /**
-   * Whether the element itself is in fullscreen mode
+   * 元素本身是否处于全屏模式
    */
   isSelfFullscreen: boolean
   /**
-   * Enter fullscreen mode
+   * 进入全屏模式
    */
   enter(): Promise<void>
   /**
-   * Exit fullscreen mode
+   * 退出全屏模式
    */
   exit(): Promise<void>
   /**
-   * Toggle fullscreen mode
+   * 切换全屏模式
    */
   toggle(): Promise<void>
 }

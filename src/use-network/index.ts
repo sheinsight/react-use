@@ -10,11 +10,11 @@ export type NetworkEffectiveType = 'slow-2g' | '2g' | '3g' | '4g' | undefined
 
 export interface UseNetworkReturns {
   /**
-   * A Ref Getter to check if the browser supports the Network Information API.
+   * Whether the browser supports the Network Information API.
    */
   isSupported: boolean
   /**
-   * If the user is currently connected.
+   * Whether the user is currently connected.
    */
   isOnline: boolean
   /**

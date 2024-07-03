@@ -4,85 +4,84 @@ import { HooksType } from '@/components'
 
 <HooksType category="Sensors" />
 
-A React Hook that helps to handle long press events.
+一个 React 钩子（Hook），用于处理长按事件。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#API}
 
 ```tsx
 const lp = useLongPress(elementTarget, handler, options)
 ```
 
-### ElementTarget
+### 元素目标 ElementTarget \{#element-target}
 
 import { Tip } from '@/components'
 
 <Tip type="target" />
 
-### Handler
+### 处理函数 Handler \{#handler}
 
 ```tsx
 export type UseLongPressHandler = (evt: PointerEvent) => void
 ```
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type UseLongPressModifiers = {
   /**
-   * Whether to prevent the default behavior of the event
+   * 是否阻止事件的默认行为
    */
   preventDefault?: boolean
   /**
-   * Whether to stop the propagation of the event
+   * 是否停止事件的传播
    */
   stopPropagation?: boolean
   /**
-   * Whether to only trigger the event once
+   * 是否只触发一次事件
    */
   once?: boolean
   /**
-   * Whether to capture the event
+   * 是否捕获事件
    */
   capture?: boolean
   /**
-   * Whether to only trigger the event on the target element itself
+   * 是否只在目标元素本身上触发事件
    */
   self?: boolean
 }
 
 export interface UseLongPressOptions {
   /**
-   * Time in ms till `longpress` gets called
+   * 触发 `longpress` 前的时间（毫秒）
    *
    * @defaultValue 500
    */
   delay?: number
   /**
-   * Event modifiers
+   * 事件修饰符
    */
   modifiers?: UseLongPressModifiers
   /**
-   * Allowance of moving distance in pixels,
-   * The action will get canceled When moving too far from the pointerdown position.
+   * 允许的移动距离（像素），从 pointerdown 位置移动太远时将取消操作。
    *
    * @defaultValue 10
    */
@@ -90,24 +89,24 @@ export interface UseLongPressOptions {
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export type UseLongPressReturns = {
   /**
-   * Whether the element is pressed
+   * 元素是否被按下
    */
   isPressed: boolean
   /**
-   * Whether the element is long pressed
+   * 元素是否被长按
    */
   isLongPressed: boolean
   /**
-   * Whether the element is meet the threshold
+   * 元素是否满足阈值
    */
   isMeetThreshold: boolean
   /**
-   * Stop the long press event
+   * 停止长按事件
    */
   stop(): void
 }

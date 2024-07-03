@@ -4,77 +4,77 @@ import { HooksType } from '@/components'
 
 <HooksType category="Sensors" pausable />
 
-A React Hook that tracks mouse position.
+用于跟踪鼠标位置的 React Hook。
 
-## Demo
+## 演示 Demo \{#demo}
 
-Try to scroll the page or move your mouse around to see the difference between various types.
+尝试滚动页面或移动您的鼠标来观察不同类型之间的差异。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 使用方法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const { x, y, position, sourceType, stop } = useMouse(options)
 ```
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type UseMouseOptions = {
   /**
-   * Type of coordinates to extract from the event.
+   * 用于从事件中提取的坐标类型。
    *
    * @defaultValue 'page'
    */
   type?: UseMouseCoordType | UseMouseEventExtractor
   /**
-   * Target element to attach the event listeners.
+   * 目标元素以便附加事件监听器。
    *
    * @defaultValue window
    */
   target?: Window | EventTarget | null | undefined
   /**
-   * Whether to enable touch events.
+   * 是否启用触摸事件。
    *
    * @defaultValue true
    */
   touch?: boolean
   /**
-   * Whether to enable scroll events.
+   * 是否启用滚动事件。
    *
    * @defaultValue true
    */
   scroll?: boolean
   /**
-   * Whether to reset the position when touch ends.
+   * 触摸结束时是否重置位置。
    *
    * @defaultValue false
    */
   resetOnTouchEnds?: boolean
   /**
-   * Initial position.
+   * 初始位置。
    *
    * @defaultValue { x: 0, y: 0 }
    */
   initialValue?: Position
   /**
-   * Whether to start to update position immediately.
+   * 是否立即开始更新位置。
    *
    * @defaultValue false
    */
@@ -82,7 +82,7 @@ export type UseMouseOptions = {
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 import { Tip } from '@/components'
 
@@ -91,11 +91,11 @@ import { Tip } from '@/components'
 ```tsx
 export type Position = {
   /**
-   * X coordinate
+   * X 坐标
    */
   x: number
   /**
-   * Y coordinate
+   * Y 坐标
    */
   y: number
 }
@@ -103,15 +103,15 @@ export type Position = {
 export type UseMouseReturns = Position &
   Pausable & {
     /**
-     * mouse event position.
+     * 鼠标事件的位置。
      */
     position: Position
     /**
-     * Source type of the event.
+     * 事件的来源类型。
      */
     sourceType: UseMouseSourceType
     /**
-     * stop the mouse event listener immediately.
+     * 立即停止鼠标事件监听器。
      */
     stop(): void
   }

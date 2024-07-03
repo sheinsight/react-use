@@ -4,22 +4,22 @@ import { HooksType } from '@/components'
 
 <HooksType category="Sensors" />
 
-A React Hook that tracks mouse pressed state.
+一个用于跟踪鼠标按压状态的 React Hook。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
@@ -31,30 +31,30 @@ import { Source } from '@/components'
 const { pressed, sourceType } = useMousePressed(elementTarget, options)
 ```
 
-### ElementTarget
+### 元素目标 ElementTarget \{#element-target}
 
 import { Tip } from '@/components'
 
 <Tip type="target" />
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type MousePressedOptions = {
   /**
-   * Whether to listen to touch events
+   * 是否监听触摸事件
    *
    * @defaultValue true
    */
   touch?: boolean
   /**
-   * Whether to listen to drag events
+   * 是否监听拖拽事件
    *
    * @defaultValue true
    */
   drag?: boolean
   /**
-   * Whether to use event capturing
+   * 是否使用事件捕获
    *
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#capture MDN - addEventListener#capture}
    *
@@ -62,13 +62,13 @@ export type MousePressedOptions = {
    */
   capture?: boolean
   /**
-   * The initial value of the mouse press
+   * 鼠标按压的初始值
    *
    * @defaultValue false
    */
   initialValue?: boolean
   /**
-   * The target element
+   * 目标元素
    *
    * @defaultValue () => window
    */
@@ -76,16 +76,16 @@ export type MousePressedOptions = {
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export type UseMousePressedReturns = {
   /**
-   * Whether the mouse is pressed
+   * 鼠标是否被按压
    */
   pressed: boolean
   /**
-   * The source type of the mouse press
+   * 鼠标按压的来源类型
    */
   sourceType: UseMouseSourceType
 }

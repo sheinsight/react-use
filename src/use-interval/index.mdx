@@ -28,11 +28,8 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-// without controls
 const count = useInterval(interval)
-
-// with controls in options
-const { count, reset, ...controls } = useInterval(interval, options)
+const { count, reset, ...controls } = useInterval(interval, { controls: true })
 ```
 
 ### Interval

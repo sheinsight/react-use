@@ -4,39 +4,39 @@ import { HooksType } from '@/components'
 
 <HooksType category="Element" />
 
-A React Hook that returns a boolean value indicating whether the component is focused or any of its children are focused.
+一个 React 钩子（Hook），用于返回一个布尔值，该值表示组件是否获得焦点或其任何子元素是否获得焦点。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const isFocusWithin = useFocusWithin(elementTarget)
 ```
 
-### ElementTarget
+### 元素目标 ElementTarget \{#element-target}
 
 import { Tip } from '@/components'
 
 <Tip type="target" />
 
-### Returns
+### 返回值 Returns \{#returns}
 
-A `boolean` value indicating whether it's focused within the target.
+表示是否在目标元素内获得焦点的 `boolean` 值。

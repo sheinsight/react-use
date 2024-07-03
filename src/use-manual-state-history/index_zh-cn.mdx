@@ -4,75 +4,75 @@ import { HooksType } from '@/components'
 
 <HooksType category="ProUtilities" />
 
-A React Hook that allows you to manage the state history manually.
+一个 React 钩子 (Hook)，允许您手动管理状态的历史记录。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API  \{#api}
 
 ```tsx
 const history = useManualStateHistory(state, options)
 ```
 
-### State
+### 状态 State \{#state}
 
-Any serializable source state value to be record in the history.
+任何可序列化的源状态值，用于记录在历史中。
 
-### Options
+### 选项 Options \{#options}
 
 import Link from '@docusaurus/Link'
 
 ```tsx
 export type UseManualStateHistoryOptions<Raw, Serialized = Raw> = {
   /**
-   * The capacity of the history records
+   * 历史记录的容量
    *
    * @defaultValue Number.POSITIVE_INFINITY
    */
   capacity?: number
   /**
-   * Whether to clone the source state
+   * 是否克隆源状态
    *
    * @defaultValue false
    */
   clone?: boolean | CloneFn<Raw>
   /**
-   * The throttle options
+   * 节流选项
    *
    * @defaultValue undefined
    */
   throttle?: number | UseThrottledFnOptions
   /**
-   * The debounce options
+   * 防抖选项
    *
    * @defaultValue undefined
    */
   debounce?: number | UseDebouncedFnOptions
   /**
-   * The dump function to serialize the source state
+   * 序列化源状态的转储函数
    *
    * @defaultValue (v) => v
    */
   dump?: (v: Raw) => Serialized
   /**
-   * The parse function to deserialize the serialized state
+   * 反序列化序列化状态的解析函数
    *
    * @defaultValue (v) => v
    */
@@ -80,67 +80,67 @@ export type UseManualStateHistoryOptions<Raw, Serialized = Raw> = {
 }
 ```
 
-`UseThrottledFnOptions` is th options of `useThrottledFn`, see <Link to="/reference/use-throttled-fn/#options">useThrottledFn</Link>.
+`UseThrottledFnOptions` 是 `useThrottledFn` 的选项，参见 <Link to="/reference/use-throttled-fn/#options">useThrottledFn</Link>。
 
-`UseDebouncedFnOptions` is th options of `useDebouncedFn`, see <Link to="/reference/use-debounced-fn/#options">useDebouncedFn</Link>.
+`UseDebouncedFnOptions` 是 `useDebouncedFn` 的选项，参见 <Link to="/reference/use-debounced-fn/#options">useDebouncedFn</Link>。
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export type UseRefHistoryRecord<T> = {
   /**
-   * The serialized snapshot
+   * 序列化快照
    */
   snapshot: T
   /**
-   * The timestamp
+   * 时间戳
    */
   timestamp: number
 }
 
 export type UseManualStateHistoryReturns<Raw, Serialized> = {
   /**
-   * The source state
+   * 源状态
    */
   source: Raw
   /**
-   * The history records
+   * 历史记录
    */
   history: UseRefHistoryRecord<Serialized>[]
   /**
-   * The last history record
+   * 最后的历史记录
    */
   last: UseRefHistoryRecord<Serialized>
   /**
-   * The undo stack
+   * 可撤销的栈
    */
   undoStack: UseRefHistoryRecord<Serialized>[]
   /**
-   * The redo stack
+   * 可重做的栈
    */
   redoStack: UseRefHistoryRecord<Serialized>[]
   /**
-   * Whether can undo or redo
+   * 是否能撤销或重做
    */
   canUndo: boolean
   /**
-   * Whether can redo or undo
+   * 是否能重做或撤销
    */
   canRedo: boolean
   /**
-   * Undo the last change
+   * 撤销最后的变更
    */
   undo(): void
   /**
-   * Redo the last change
+   * 重做最后的变更
    */
   redo(): void
   /**
-   * Clear all history records
+   * 清除所有历史记录
    */
   clear(): void
   /**
-   * Commit the current source state to history
+   * 将当前源状态提交到历史记录中
    */
   commit(): void
 }

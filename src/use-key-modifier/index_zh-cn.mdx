@@ -4,34 +4,34 @@ import { HooksType } from '@/components'
 
 <HooksType category="Sensors" />
 
-A React Hook that allows you to detect if a [key modifier](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/getModifierState) is pressed.
+一个 React 钩子，允许你检测是否按下了 [键修饰符](https://developer.mozilla.org/zh-CN/docs/Web/API/KeyboardEvent/getModifierState)。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const isModifierPressed = useKeyModifier(keyModifier, options)
 ```
 
-### KeyModifier
+### 键修饰符 KeyModifier \{#key-modifier}
 
 ```tsx
 export type KeyModifier =
@@ -49,18 +49,18 @@ export type KeyModifier =
   | 'SymbolLock'
 ```
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type UseModifierOptions<Initial> = {
   /**
-   * Event names that will prompt update to modifier states
+   * 将提示修改器状态更新的事件名称
    *
    * @defaultValue ['mousedown', 'mouseup', 'keydown', 'keyup']
    */
   events?: WindowEventName[]
   /**
-   * Initial value of the returned ref
+   * 返回的 ref 的初始值
    *
    * @defaultValue null
    */
@@ -68,9 +68,9 @@ export type UseModifierOptions<Initial> = {
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
-`boolean | null`, `boolean` indicates if the key modifier is pressed, `null` is means that the events not yet fired.
+`boolean | null`, `boolean` 表示键修饰符是否被按下，`null` 表示事件尚未触发。
 
 ```tsx
 export type UseKeyModifierReturns<Initial> = Initial extends boolean ? boolean : boolean | null

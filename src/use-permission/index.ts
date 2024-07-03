@@ -50,7 +50,7 @@ export interface UsePermissionOptions<Controls extends boolean> {
 export type UsePermissionReturns<Controls extends boolean> = Controls extends true
   ? {
       /**
-       * A Ref Getter to check if the permission is supported
+       * if the permission is supported
        */
       isSupported: boolean
       /**

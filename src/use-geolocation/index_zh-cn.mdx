@@ -4,50 +4,50 @@ import { HooksType } from '@/components'
 
 <HooksType category="Sensors" pausable isSupported />
 
-A React Hook that provides a simple way to get the user's [geolocation](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation).
+一个 React 钩子（Hook），提供了一种简单的方法来获取用户的 [地理位置](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation)。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const geo = useGeolocation(options)
 ```
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 /**
- * DOM built-in Geolocation API options
+ * DOM 内置的地理位置 API 选项
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition#options
  */
 interface PositionOptions {
-  enableHighAccuracy?: boolean
-  maximumAge?: number
-  timeout?: number
+  enableHighAccuracy?: boolean  // 是否启用高精度
+  maximumAge?: number  // 位置信息的最大缓存时间
+  timeout?: number  // 获取位置信息的超时时间
 }
 
 export type UseGeolocationOptions = PositionOptions & {
   /**
-   * Whether to start watching the geolocation immediately.
+   * 是否立即开始观察地理位置。
    *
    * @defaultValue true
    */
@@ -55,36 +55,36 @@ export type UseGeolocationOptions = PositionOptions & {
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export type UseGeolocationReturns = Pausable & {
   /**
-   * Whether the geolocation API is supported.
+   * 是否支持地理位置 API。
    */
   isSupported: boolean
   /**
-   * The current latitude.
+   * 当前的纬度。
    */
   latitude: number
   /**
-   * The current longitude.
+   * 当前的经度。
    */
   longitude: number
   /**
-   * The current geolocation state.
+   * 当前地理位置状态。
    */
   isLocating: boolean
   /**
-   * The timestamp when the geolocation was last updated.
+   * 地理位置最后更新的时间戳。
    */
   locatedAt: number | null
   /**
-   * The error object if any.
+   * 若有的话，错误对象。
    */
   error: GeolocationPositionError | null
   /**
-   * The current geolocation coordinates.
+   * 当前地理位置坐标。
    */
   coords: GeolocationPosition['coords']
 }

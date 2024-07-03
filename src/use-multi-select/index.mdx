@@ -28,7 +28,7 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const multiSelect = useMultiSelect(list, defaultSelected)
+const [state, actions] = useMultiSelect(list, defaultSelected)
 ```
 
 ### List
@@ -41,8 +41,6 @@ A list of items that are selected by default.
 
 ### Returns
 
-<details>
-<summary>Show Type Definitions</summary>
 ```tsx
 export type UseMultiSelectReturns<T> = readonly [
   {
@@ -99,4 +97,3 @@ export type UseMultiSelectReturns<T> = readonly [
   },
 ]
 ```
-</details>

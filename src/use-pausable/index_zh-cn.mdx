@@ -4,41 +4,41 @@ import { HooksType } from '@/components'
 
 <HooksType category="Utilities" pausable lowLevel />
 
-A React Hook that helps to create a [Pausable](/docs/features/pausable) instance.
+一个帮助创建 [可暂停实例 Pausable](/docs/features/pausable) 的 React Hook。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const { isActive, pause, resume } = usePausable(initialStatus)
 ```
 
-### InitialStatus
+### 初始状态 InitialStatus \{#initial-status}
 
-A `boolean` value of the initial internal `isActiveRef.current`, default to `false`.
+`isActiveRef.current` 的初始值，一个 `boolean` 类型，默认为 `false`。
 
-### Returns
+### 返回值 Returns \{#returns}
 
 import { Tip } from '@/components'
 
 <Tip type="pausable" />
 
-A `Pausable` instance.
+一个 `Pausable` 实例。
