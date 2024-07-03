@@ -4,22 +4,22 @@ import { HooksType } from '@/components'
 
 <HooksType category="State" />
 
-A React Hook that keep the previous value of a state.
+React Hook 用于保留状态的前一个值。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
@@ -31,14 +31,14 @@ import { Source } from '@/components'
 const previous = usePrevious(state, isEqual)
 ```
 
-### State
+### 状态 State \{#state}
 
-A state that you want to keep the previous value.
+你希望保持前一个值的状态。
 
-### IsEqual
+### 相等性判断 IsEqual \{#is-equal}
 
-A `function` that compares the previous value with the current value. The default value is `Object.is`.
+一个 `function`，用于比较前一个值与当前值。默认值是 `Object.is`。
 
-### Returns
+### 返回值 Returns \{#returns}
 
-The previous value of the state.
+状态的前一个值。

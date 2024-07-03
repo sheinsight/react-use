@@ -4,59 +4,59 @@ import { HooksType } from '@/components'
 
 <HooksType category="Browser" />
 
-A React Hook that helps to track window height and innerWidth, and optionnally listen orientation media query.
+一个 React Hook，用于追踪窗口的高度和内部宽度，并且可选地监听方向媒体查询。
 
-## Demo
+## 演示 Demo \{#demo}
 
-Try to resize the window to see the effect.
+尝试调整窗口大小以查看效果。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const size = useWindowSize(options)
 ```
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export interface UseWindowSizeOptions {
   /**
-   * The initial width of the window.
+   * 窗口的初始宽度。
    *
    * @defaultValue Number.POSITIVE_INFINITY
    */
   initialWidth?: number
   /**
-   * The initial height of the window.
+   * 窗口的初始高度。
    *
    * @defaultValue Number.POSITIVE_INFINITY
    */
   initialHeight?: number
   /**
-   * Whether to listen to orientation changes.
+   * 是否监听方向变化。
    *
    * @defaultValue true
    */
   listenOrientation?: boolean
   /**
-   * Whether to include the scrollbar width.
+   * 是否包括滚动条宽度。
    *
    * @defaultValue true
    */
@@ -64,7 +64,7 @@ export interface UseWindowSizeOptions {
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export interface WindowSize {
@@ -74,7 +74,7 @@ export interface WindowSize {
 
 export interface UseWindowSizeReturns extends Size {
   /**
-   * Update the window size.
+   * 更新窗口大小。
    */
   update(): void
 }

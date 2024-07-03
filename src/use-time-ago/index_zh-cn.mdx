@@ -4,73 +4,73 @@ import { HooksType } from '@/components'
 
 <HooksType category="Utilities" pausable />
 
-A React Hook that helps to format a date to a human-readable time ago string. It will automatically update the time ago string every 30 seconds by default.
+一个 React Hook，可帮助将日期格式化为易读的多久之前字符串。默认情况下，它会每 30 秒自动更新一次这个多久之前的字符串。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const timeAgo = useTimeAgo(dateLike, options)
 const { timeAgo, ...pausable } = useTimeAgo(dateLike, { controls: true, ...otherOptions })
 ```
 
-### DateLike
+### 元素目标 ElementTarget \{#element-target}
 
 ```tsx
-// like '2021-01-01', 1612137600000, new Date(), undefined, null
+// 类似于 new Date(), 1_612_137_600_000, '2021-01-01', undefined, null
 export type DateLike = Date | number | string | undefined | null
 ```
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type FormatTimeAgoOptions<UnitNames extends string = TimeAgoUnitNamesDefault> = {
   /**
-   * Maximum unit (of diff in milliseconds) to display the full date instead of relative
+   * 最大单位（毫秒差异），超过则显示完整日期而非相对时间
    *
    * @defaultValue undefined
    */
   max?: UnitNames | number
   /**
-   * Formatter for full date
+   * 完整日期的格式化器
    */
   fullDateFormatter?: TimeAgeFullDateFormatter
   /**
-   * Messages for formatting the string
+   * 格式化字符串的消息
    */
   messages?: TimeAgoMessages<UnitNames>
   /**
-   * Minimum display time unit (default is minute)
+   * 最小显示时间单位（默认是分钟）
    *
    * @defaultValue false
    */
   showSecond?: boolean
   /**
-   * Rounding method to apply.
+   * 应用的舍入方法。
    *
    * @defaultValue 'round'
    */
   rounding?: 'round' | 'ceil' | 'floor' | number
   /**
-   * Custom units
+   * 自定义单位
    */
   units?: TimeAgoUnit<UnitNames>[]
 }
@@ -78,13 +78,13 @@ export type FormatTimeAgoOptions<UnitNames extends string = TimeAgoUnitNamesDefa
 export interface UseTimeAgoOptions<Controls extends boolean, UnitNames extends string = TimeAgoUnitNamesDefault>
   extends FormatTimeAgoOptions<UnitNames> {
   /**
-   * Expose more controls
+   * 公开更多控制项
    *
    * @defaultValue false
    */
   controls?: Controls
   /**
-   * Intervals to update, set 0 to disable auto update
+   * 更新间隔，设为 0 禁用自动更新
    *
    * @defaultValue 30_000
    */
@@ -92,7 +92,7 @@ export interface UseTimeAgoOptions<Controls extends boolean, UnitNames extends s
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 import { Tip } from '@/components'
 

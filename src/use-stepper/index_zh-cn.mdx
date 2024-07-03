@@ -4,115 +4,115 @@ import { HooksType } from '@/components'
 
 <HooksType category="ProUtilities" />
 
-A React Hook that helps to create a stepper state.
+一个帮助创建步骤器状态的 React 钩子。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const step = useStepper(steps, initialStepIdx)
 ```
 
-### Steps
+### 步骤 Steps \{#steps}
 
-An `array` of steps, a step can be any object with functions, strings, or numbers, etc.
+一个`array`类型的步骤数组，步骤可以是包含函数、字符串或数字等任何对象。
 
-### InitialStepIdx
+### 初始步骤索引 InitialStepIdx \{#initial-step-idx}
 
-A `number` that represents the initial step index.
+一个代表初始步骤索引的`number`类型。
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export interface UseStepperReturns<StepName, Steps, Step> {
   /**
-   * List of steps.
+   * 步骤列表。
    */
   steps: Readonly<Steps>
   /**
-   * Index of the current step.
+   * 当前步骤的索引。
    */
   index: number
   /**
-   * Current step.
+   * 当前步骤。
    */
   current: Step
   /**
-   * Next step, or undefined if the current step is the last one.
+   * 下一个步骤，如果当前步骤是最后一个则为 undefined。
    */
   next: StepName | undefined
   /**
-   * Previous step, or undefined if the current step is the first one.
+   * 前一个步骤，如果当前步骤是第一个则为 undefined。
    */
   previous: StepName | undefined
   /**
-   * Whether the current step is the first one.
+   * 当前步骤是否为第一个。
    */
   isFirst: boolean
   /**
-   * Whether the current step is the last one.
+   * 当前步骤是否为最后一个。
    */
   isLast: boolean
   /**
-   * Get the step at the specified index.
+   * 获取指定索引的步骤。
    */
   at: (index: number) => Step | undefined
   /**
-   * Get a step by the specified name.
+   * 通过指定名称获取步骤。
    */
   get: (step: StepName) => Step | undefined
   /**
-   * Go to the specified step.
+   * 跳转到指定的步骤。
    */
   goTo: (step: StepName) => void
   /**
-   * Go to the next step. Does nothing if the current step is the last one.
+   * 跳转到下一个步骤。如果当前步骤是最后一个，则不做任何操作。
    */
   goToNext(): void
   /**
-   * Go to the previous step. Does nothing if the current step is the previous one.
+   * 跳转到前一个步骤。如果当前步骤是第一个，则不做任何操作。
    */
   goToPrevious(): void
   /**
-   * Go back to the given step, only if the current step is after.
+   * 回到给定步骤，仅当当前步骤是之后的步骤时。
    */
   goBackTo: (step: StepName) => void
   /**
-   * Checks whether the given step is the next step.
+   * 检查给定步骤是否为下一个步骤。
    */
   isNext: (step: StepName) => boolean
   /**
-   * Checks whether the given step is the previous step.
+   * 检查给定步骤是否为之前的步骤。
    */
   isPrevious: (step: StepName) => boolean
   /**
-   * Checks whether the given step is the current step.
+   * 检查给定步骤是否为当前步骤。
    */
   isCurrent: (step: StepName) => boolean
   /**
-   * Checks if the current step is before the given step.
+   * 检查当前步骤是否在给定步骤之前。
    */
   isBefore: (step: StepName) => boolean
   /**
-   * Checks if the current step is after the given step.
+   * 检查当前步骤是否在给定步骤之后。
    */
   isAfter: (step: StepName) => boolean
 }

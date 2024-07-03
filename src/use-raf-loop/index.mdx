@@ -30,3 +30,47 @@ import { Source } from '@/components'
 ```tsx
 const controls = useRaf(callback, options)
 ```
+
+### Callback
+
+A function that will be called on every frame.
+
+```tsx
+export interface UseRafLoopCallbackArgs {
+  /**
+   * The time elapsed since the last frame
+   */
+  delta: number
+  /**
+   * The timestamp of the current frame
+   */
+  timestamp: DOMHighResTimeStamp
+}
+
+export type UseRafLoopCallback = (args: UseRafLoopCallbackArgs) => void
+```
+
+### Options
+
+```tsx
+export interface UseRafLoopOptions {
+  /**
+   * The maximum fps limit
+   *
+   * @defaultValue undefined
+   */
+  fpsLimit?: number
+  /**
+   * Whether to start the interval immediately on mounted
+   *
+   * @defaultValue true
+   */
+  immediate?: boolean
+  /**
+   * Whether to execute the callback immediately before the interval starts
+   *
+   * @defaultValue false
+   */
+  immediateCallback?: boolean
+}
+```

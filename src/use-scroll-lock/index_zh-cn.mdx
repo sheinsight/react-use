@@ -4,68 +4,73 @@ import { HooksType } from '@/components'
 
 <HooksType category="Element" />
 
-A React Hook that helps to lock/unlock the scroll behavior of an element.
+一个 React Hook，用于帮助锁定或解锁一个元素的滚动行为。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const [isLocked, setLocked, actions] = useScrollLock(elementTarget, initialState)
 ```
 
-### ElementTarget
+### 元素目标 ElementTarget \{#element-target}
 
 import { Tip } from '@/components'
 
 <Tip type="target" />
 
-### InitialState
+### 初始状态 InitialState \{#initial-state}
 
-A `boolean` value to determine the initial state of the scroll lock.
+一个 `boolean` 值，用以确定滚动锁定的初始状态。
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
+export type UseScrollLockReturnsActions = {
+  /**
+   * 锁定滚动
+   */
+  lock(): void
+  /**
+   * 解锁滚动
+   */
+  unlock(): void
+  /**
+   * 切换滚动锁定状态
+   */
+  toggle(): void
+}
+
 export type UseScrollLockReturns = [
   /**
-   * Whether the scroll is locked
+   * 滚动是否被锁定
    */
   isLocked: boolean,
   /**
-   * Set the scroll lock
+   * 设置滚动锁定状态
    */
-  setLock: ReactSetState<boolean>,
-  {
-    /**
-     * Lock the scroll
-     */
-    lock(): void
-    /**
-     * Unlock the scroll
-     */
-    unlock(): void
-    /**
-     * Toggle the scroll lock
-     */
-    toggle(): void
-  },
+  setLocked: ReactSetState<boolean>,
+  /**
+   * 锁定/解锁滚动的操作
+   */
+  UseScrollLockReturnsActions,
 ]
 ```

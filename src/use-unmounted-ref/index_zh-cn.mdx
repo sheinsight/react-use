@@ -4,24 +4,24 @@ import { HooksType } from '@/components'
 
 <HooksType category="Lifecycle" />
 
-A React Hook that helps to create a ref that can be checked if the component is unmounted.
+使用该 React Hook 可以创建一个 ref，通过它可以检查组件是否已卸载。推荐使用 [useUnmounted](/reference/use-unmounted) ([Ref Getter](/docs/features/ref-getter)) 来获取组件卸载状态。
 
-## Demo
+## 演示
 
-Try to click `Start Timer`, and then click the "Toggle mount" button in one second to see the result.
+尝试点击 `Start Timer`，然后在一秒内点击 “Toggle mount” 按钮，以查看结果。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码
 
 import { Source } from '@/components'
 
@@ -33,6 +33,6 @@ import { Source } from '@/components'
 const unmountedRef = useUnmountedRef()
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
-A React [Ref](https://react.dev/learn/referencing-values-with-refs) that can be checked if the component is unmounted.
+一个 React [Ref](https://react.dev/learn/referencing-values-with-refs)，可以通过它检查组件是否已卸载。

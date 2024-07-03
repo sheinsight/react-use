@@ -41,7 +41,7 @@ A `string` that represents the new title of the document.
 /**
  * `%s` will be replaced by the title if the template is a `string`
  */
-export type UseTitleTemplate = string | ((title: string) => string)
+export type UseTitleOptionsTemplate = string | ((title: string) => string)
 
 export type UseTitleOptions = {
   /**
@@ -55,7 +55,7 @@ export type UseTitleOptions = {
    *
    * @defaultValue '%s'
    */
-  template?: UseTitleTemplate
+  template?: UseTitleOptionsTemplate
 }
 ```
 

@@ -33,5 +33,5 @@ export function useResetState<T>(initialState?: Gettable<T>, options?: UseResetS
 
   useEffect(() => setInit(initialState), [initialState])
 
-  return [state, setState, reset, init] as const
+  return [state, setState, reset, initialState] as const
 }

@@ -4,44 +4,44 @@ import { HooksType } from '@/components'
 
 <HooksType category="State" />
 
-A React Hook that use state like `createSignal` of [Solid](https://www.solidjs.com), **without closure issues**.
+一个类似于 [Solid](https://www.solidjs.com) 中 `createSignal` 的 React 钩子，**没有闭包问题**。
 
-## Demo
+## 演示 Demo \{#demo}
 
-Try to change the two type of state below quickly, and then see the log in DevTools.
+尝试快速改变下面两种类型的状态，然后在 DevTools 中查看日志。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const [state, setState] = useSignalState(initialState)
 ```
 
-### InitialState
+### 初始状态 InitialState \{#initial-state}
 
-Same as [React.useState](https://react.dev/reference/react/useState).
+与 [React.useState](https://react.dev/reference/react/useState) 相同。
 
-### Options
+### 选项 Options \{#options}
 
-See [useSafeState#options](/reference/use-safe-state/#options) for more details.
+更多详情见 [useSafeState#options](/reference/use-safe-state/#options)。
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export type UseSignalStateReturns = [() => T, ReactSetState<T>]

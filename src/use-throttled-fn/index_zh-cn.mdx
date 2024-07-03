@@ -40,21 +40,21 @@ const throttledFn = useThrottledFn(fn, { wait: 1000 })
 ```tsx
 export type ThrottleOptions = {
   /**
-   * 节流的时间间隔
+   * 节流的时间间隔，单位为毫秒
    *
-   * @defaultValue 0
+   * @defaultValue 默认值为 0
    */
   wait?: number
   /**
    * 是否在每个时间间隔的开始调用该函数
    *
-   * @defaultValue true
+   * @defaultValue 默认值为 true
    */
   leading?: boolean
   /**
    * 是否在每个时间间隔的结束调用该函数
    *
-   * @defaultValue true
+   * @defaultValue 默认值为 true
    */
   trailing?: boolean
 }

@@ -4,37 +4,37 @@ import { HooksType } from '@/components'
 
 <HooksType category="Lifecycle" lowLevel />
 
-A React Hook like [useDeepCompareEffect](/reference/use-deep-compare-effect), but ignore the first invocation on mount.
+一个类似于 [useDeepCompareEffect](/reference/use-deep-compare-effect) 的 React Hook，但在挂载时忽略第一次调用。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 useUpdateDeepCompareEffect(callback, Deps)
 ```
 
-### Callback
+### 回调函数 Callback \{#callback}
 
-Same as [React.useEffect](https://react.dev/reference/react/useEffect).
+与 [React.useEffect](https://react.dev/reference/react/useEffect) 相同。
 
-### Deps
+### 依赖项 Deps \{#deps}
 
-Same as [React.useEffect](https://react.dev/reference/react/useEffect).
+与 [React.useEffect](https://react.dev/reference/react/useEffect) 相同。

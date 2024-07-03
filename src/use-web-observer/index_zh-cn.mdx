@@ -4,7 +4,7 @@ import { HooksType } from '@/components'
 
 <HooksType category="Browser" pausable isSupported lowLevel />
 
-A low level React Hooks that helps to use Observer with ease. Available Observer:
+这是一个低阶的 React 钩子，旨在简化观察者（Observer）的使用。可选的观察者包括：
 
 ```tsx
 export type WebObserverType =
@@ -15,39 +15,39 @@ export type WebObserverType =
   | 'ReportingObserver'
 ```
 
-You should **NOT** use this Hook directly, use the high level Hooks below instead:
+你**不应该**直接使用这个钩子，而是使用下面的高阶钩子：
 
-- [useIntersectionObserver](/reference/use-intersection-observer)
-- [useMutationObserver](/reference/use-mutation-observer)
-- [useResizeObserver](/reference/use-resize-observer)
-- [usePerformanceObserver](/reference/use-performance-observer)
-- [useReportingObserver](/reference/use-reporting-observer)
+- [交叉观察者 useIntersectionObserver](/reference/use-intersection-observer)
+- [变动观察者 useMutationObserver](/reference/use-mutation-observer)
+- [尺寸观察者 useResizeObserver](/reference/use-resize-observer)
+- [性能观察者 usePerformanceObserver](/reference/use-performance-observer)
+- [报告观察者 useReportingObserver](/reference/use-reporting-observer)
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 export interface UseWebObserverOptions {
   /**
-   * Start the observer immediate after calling this function
+   * 调用此函数后立即开始观察
    *
    * @defaultValue true
    */
@@ -56,11 +56,11 @@ export interface UseWebObserverOptions {
 
 export interface UseWebObserverReturns<Observer> extends Pausable {
   /**
-   * ref that holds the observer instance
+   * 保存观察者实例的 ref
    */
   observerRef: React.MutableRefObject<Observer | null>
   /**
-   * Check if the observer is supported in the current environment
+   * 检查当前环境是否支持观察者
    */
   isSupported: boolean
 }

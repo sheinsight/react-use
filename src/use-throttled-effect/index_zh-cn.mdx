@@ -4,43 +4,43 @@ import { HooksType } from '@/components'
 
 <HooksType category="Lifecycle" lowLevel />
 
-A React Hook like [React.useEffect](https://react.dev/reference/react/useEffect), but throttled.
+一个像 [React.useEffect](https://react.dev/reference/react/useEffect) 的 React 钩子，但是进行了节流。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
-useThrottledEffect(calback, deps, options)
+useThrottledEffect(callback, deps, options)
 ```
 
-### Callback
+### 回调函数 Callback \{#callback}
 
-Same as [React.useEffect](https://react.dev/reference/react/useEffect).
+与 [React.useEffect](https://react.dev/reference/react/useEffect) 相同。
 
-### Deps
+### 依赖项 Deps \{#deps}
 
-Same as [React.useEffect](https://react.dev/reference/react/useEffect).
+与 [React.useEffect](https://react.dev/reference/react/useEffect) 相同。
 
-### Options
+### 选项 Options \{#options}
 
 import Link from '@docusaurus/Link'
 
-See <Link to="/reference/use-throttled-fn/#options">Options of `useThrottledFn`</Link>.
+参见 <Link to="/reference/use-throttled-fn/#options">`useThrottledFn` 的选项</Link>。

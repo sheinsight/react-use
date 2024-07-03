@@ -4,29 +4,73 @@ import { HooksType } from '@/components'
 
 <HooksType category="Animation" pausable />
 
-A React Hook that helps to run a function on every frame using [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame).
+一个 React Hook，帮助在每一帧使用 [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) 运行一个函数。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const controls = useRaf(callback, options)
+```
+
+### 回调函数 Callback \{#callback}
+
+一个将在每一帧被调用的函数。
+
+```tsx
+export interface UseRafLoopCallbackArgs {
+  /**
+   * 自上一帧以来所经过的时间
+   */
+  delta: number
+  /**
+   * 当前帧的时间戳
+   */
+  timestamp: DOMHighResTimeStamp
+}
+
+export type UseRafLoopCallback = (args: UseRafLoopCallbackArgs) => void
+```
+
+### 选项 Options \{#options}
+
+```tsx
+export interface UseRafLoopOptions {
+  /**
+   * 最大的 fps 限制
+   *
+   * @defaultValue undefined
+   */
+  fpsLimit?: number
+  /**
+   * 是否在挂载时立即开始间隔
+   *
+   * @defaultValue true
+   */
+  immediate?: boolean
+  /**
+   * 是否在间隔开始前立即执行回调
+   *
+   * @defaultValue false
+   */
+  immediateCallback?: boolean
+}
 ```

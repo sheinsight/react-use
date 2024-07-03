@@ -4,43 +4,43 @@ import { HooksType } from '@/components'
 
 <HooksType category="Browser" pausable isSupported lowLevel />
 
-A React Hook that helps to use [ReportingObserver API](https://developer.mozilla.org/en-US/docs/Web/API/ReportingObserver) to report errors and warnings with ease.
+一个 React 钩子（Hook），帮助您方便地使用 [ReportingObserver API](https://developer.mozilla.org/en-US/docs/Web/API/ReportingObserver) 报告错误和警告。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const { observerRef, isSupported, ...controls } = useReportingObserver(callback, options)
 ```
 
-### Callback
+### 回调函数 Callback \{#callback}
 
-`ReportingObserverCallback` function that will be called when the observer is triggered.
+`ReportingObserverCallback` 函数，当观测器被触发时会调用此函数。
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type UseWebObserverOptions = {
   /**
-   * Start the observer immediate after calling this function
+   * 调用此函数后立即启动观测器
    *
    * @defaultValue true
    */
@@ -55,7 +55,7 @@ interface ReportingObserverOptions {
 export interface UseReportingObserverOptions extends UseWebObserverOptions, ReportingObserverOptions {}
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 import { Tip } from '@/components'
 
@@ -64,11 +64,11 @@ import { Tip } from '@/components'
 ```tsx
 export type UseWebObserverReturns<Observer> = Pausable & {
   /**
-   * ref that holds the observer instance
+   * 保存观测器实例的 ref
    */
   observerRef: React.MutableRefObject<Observer | null>
   /**
-   * Check if the observer is supported in the current environment
+   * 检查当前环境是否支持观测器
    */
   isSupported: boolean
 }

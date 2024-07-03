@@ -4,43 +4,43 @@ import { HooksType } from '@/components'
 
 <HooksType category="Utilities" lowLevel />
 
-A React Hook that run a function only once on the next frame using [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame).
+通过使用 [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) 在下一个帧上只运行一次函数的 React 钩子。
 
-## Demo
+## 演示 Demo \{#demo}
 
-Try to open DevTools to see the console log.
+尝试打开 DevTools 查看控制台日志。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const rafFn = useRafFn(fn, autoClean)
 ```
 
-### Fn
+### 功能函数 Fn \{#fn}
 
-A `funtion` that need to be run on the next frame.
+需要在下一个帧上运行的 `function` 函数。
 
-### AutoClean
+### 自动清理 AutoClean \{#auto-clean}
 
-A `boolean` that will clean the raf when the component unmounts.
+一个 `boolean` 布尔值，当组件卸载时将清理 raf。
 
-### Returns
+### 返回值 Returns \{#returns}
 
-A `function` that will run the `fn` on the next frame.
+一个 `function` 函数，将在下一个帧上运行 `fn` 函数。

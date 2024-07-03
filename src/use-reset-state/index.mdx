@@ -28,7 +28,7 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const [state, setState, reset, init] = useResetState(initialState, options)
+const [state, setState, reset, initialState] = useResetState(initialState, options)
 ```
 
 ### InitialState
@@ -41,7 +41,9 @@ See [useSafeState#options](/reference/use-safe-state/#options) for more details.
 
 ### Returns
 
-- `state`: The current state.
-- `setState`: The `function` to update the state.
-- `reset`: The `function` to reset the state to initial value.
-- `init`: The current initial state.
+```tsx
+export function useResetState<T>(
+  initialState: Gettable<T>,
+  options?: UseResetStateOptions,
+): [T, ReactSetState<T>, (initialState?: T) => void, T]
+```

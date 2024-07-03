@@ -16,6 +16,8 @@ export interface UseRafLoopCallbackArgs {
   timestamp: DOMHighResTimeStamp
 }
 
+export type UseRafLoopCallback = (args: UseRafLoopCallbackArgs) => void
+
 export interface UseRafLoopOptions {
   /**
    * The maximum fps limit
@@ -36,8 +38,6 @@ export interface UseRafLoopOptions {
    */
   immediateCallback?: boolean
 }
-
-export type UseRafLoopCallback = (args: UseRafLoopCallbackArgs) => void
 
 /**
  * A React Hook that helps to run a function on every frame using [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame).

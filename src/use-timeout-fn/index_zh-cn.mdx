@@ -4,55 +4,55 @@ import { HooksType } from '@/components'
 
 <HooksType category="Animation" pausable />
 
-A React Hook that helps to create a timeout function.
+一个 React Hook，用于创建定时函数。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const pausable = useTimeoutFn(handler, interval, options)
 ```
 
-### Handler
+### 函数 Handler \{#handler}
 
-A `function` to call when the timeout expires.
+定时器到期时调用的 `function`。
 
-### Interval
+### 间隔 Interval \{#interval}
 
-A `number` interval for the timeout in ms.
+定时器的间隔时间（以毫秒为单位）。
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export interface UseTimeoutFnOptions {
   /**
-   * Start the timer immediate after calling this function
+   * 调用此函数后立即开始计时器
    *
    * @defaultValue true
    */
   immediate?: boolean
   /**
-   * Render the component immediately when the timer ends
+   * 计时器结束时立即渲染组件
    *
-   * When you need `isActive` ref to be updated immediately after the timer ends, set this to `true`
+   * 当你需要 `isActive` ref 在计时器结束后立即更新时，将此设置为 `true`
    *
    * @defaultValue false
    */
@@ -60,10 +60,10 @@ export interface UseTimeoutFnOptions {
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 import { Tip } from '@/components'
 
 <Tip type="pausable" />
 
-A `Pausable` instance.
+一个可暂停实例 `Pausable`。

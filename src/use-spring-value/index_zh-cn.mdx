@@ -4,86 +4,84 @@ import { HooksType } from '@/components'
 
 <HooksType category="Animation" pausable />
 
-A React Hook that returns a **spring value**.
+一个返回 **spring 值** 的 React 钩子。
 
-> Spring Value: A dynamic value that simulate a spring physics changed with time.
+> Spring 值：随时间变化模拟弹簧物理特性的动态值。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const spring = useSpringValue(start, end, options)
 ```
 
-### Start
+### 起始值 Start \{#start}
 
-`number`, The start value of the spring.
+`number`, 弹簧的起始值。
 
-### End
+### 终止值 End \{#end}
 
-`number`, The end value of the spring.
+`number`, 弹簧的终止值。
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type UseSpringValueConfig = {
   /**
-   * The stiffness of the spring.
+   * 弹簧的刚度。
    */
   stiffness?: number
   /**
-   * The damping of the spring.
+   * 弹簧的阻尼。
    */
   damping?: number
   /**
-   * The mass of the spring.
+   * 弹簧的质量。
    */
   mass?: number
   /**
-   * The precision of the spring.
+   * 是否立即触发。
    */
   immediate?: boolean
   /**
-   * The precision of the spring.
+   * 弹簧动画的精度。
    */
   precision?: number
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
 
 ```tsx
-export type Pausable<PauseArgs extends unknown[] = [], ResumeArgs extends unknown[] = []> = {
-  isActive(): boolean
-  pause: (...args: PauseArgs) => void
-  resume: (...args: ResumeArgs) => void
-}
-
 export type UseSpringValueReturns = Pausable & {
   /**
-   * The current value of the spring.
+   * 弹簧的当前值。
    */
   value: number
   /**
-   * Restart the spring.
+   * 重启弹簧。
    */
   restart(): void
 }

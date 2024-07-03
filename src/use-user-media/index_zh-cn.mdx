@@ -4,54 +4,54 @@ import { HooksType } from '@/components'
 
 <HooksType category="Sensors" isSupported />
 
-A React Hook that helps to manage the user media.
+一个用于管理用户媒体的 React 钩子。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const { stream, isSupported } = useUserMedia(options)
 ```
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export interface UseUserMediaOptions {
   /**
-   * Callback when MediaStream is ready
+   * 当 MediaStream 准备就绪时的回调
    */
   onStart?: (stream: MediaStream) => void
   /**
-   * Callback when MediaStream is stopped
+   * 当 MediaStream 停止时的回调
    */
   onStop?(): void
   /**
-   * Recreate stream when deviceIds or constraints changed
+   * 当 deviceIds 或 constraints 改变时重新创建流
    *
    * @defaultValue true
    */
   autoSwitch?: boolean
   /**
-   * MediaStreamConstraints to be applied to the requested MediaStream
-   * If provided, the constraints will override videoDeviceId and audioDeviceId
+   * 将应用于请求的 MediaStream 的 MediaStreamConstraints
+   * 如果提供，constraints 会覆盖 videoDeviceId 和 audioDeviceId
    *
    * @defaultValue {}
    */
@@ -59,16 +59,16 @@ export interface UseUserMediaOptions {
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export interface UseUserMediaReturns extends Pausable {
   /**
-   * The current MediaStream
+   * 当前的 MediaStream
    */
   stream: MutableRefObject<MediaStream | null>
   /**
-   * Whether the browser supports getUserMedia
+   * 浏览器是否支持 getUserMedia
    */
   isSupported: boolean
 }

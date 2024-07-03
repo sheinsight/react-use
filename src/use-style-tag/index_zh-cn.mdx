@@ -4,98 +4,98 @@ import { HooksType } from '@/components'
 
 <HooksType category="Element" />
 
-A React Hook that helps to apply a style tag to the document with ease in React.
+在 React 中，一个便于将样式标签应用到文档的 React Hook。
 
-## Demo
+## 演示 Demo \{#demo}
 
-Try to click to load css, and then edit the style (such as `* { color: red; }`) in the input box below and see the style applied to the document.
+尝试点击加载 CSS，然后在下方输入框中编辑样式（如 `* { color: red; }`），并查看样式应用到文档上的效果。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const styleTag = useStyleTag(initialCss, options)
 ```
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export interface UseStyleTagOptions {
   /**
-   * Media query for styles to apply
+   * 应用样式的媒体查询
    */
   media?: string
   /**
-   * Whether to load the style tag immediately
+   * 是否立即加载样式标签
    *
    * @defaultValue true
    */
   immediate?: boolean
   /**
-   * Whether to manually load the style tag
+   * 是否手动加载样式标签
    *
    * @defaultValue false
    */
   manual?: boolean
   /**
-   * Unique identifier of the style tag
+   * 样式标签的唯一标识符
    *
-   * @defaultValue auto-incremented
+   * @defaultValue 自动增长
    */
   id?: string
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export interface UseStyleTagReturns {
   /**
-   * Unique identifier of the style tag
+   * 样式标签的唯一标识符
    */
   id: string
   /**
-   * CSS content
+   * CSS 内容
    */
   css: string
   /**
-   * Set CSS content
+   * 设置 CSS 内容
    */
   setCss: (newCss: string) => void
   /**
-   * Reset CSS content to initial value
+   * 将 CSS 内容重置为初始值
    */
   resetCss(): void
   /**
-   * Load the style tag
+   * 加载样式标签
    */
   load(): void
   /**
-   * Unload the style tag
+   * 卸载样式标签
    */
   unload(): void
   /**
-   * A ref that holds the style tag element
+   * 持有样式标签元素的 ref
    */
   styleTag: MutableRefObject<HTMLStyleElement | null>
   /**
-   * A ref that holds the loading state of the style tag
+   * 持有样式标签加载状态的 ref
    */
   isLoaded: MutableRefObject<boolean>
 }

@@ -4,42 +4,42 @@ import { HooksType } from '@/components'
 
 <HooksType category="Element" />
 
-A React Hook that helps to apply a script tag to the document with ease in React.
+一个方便在 React 中向文档添加 script 标签的 React Hook。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const { scriptTag, load, unload } = useScriptTag(src, onLoaded, options)
 ```
 
-### Src
+### 源地址 Src \{#src}
 
-A `string` that represents the URL of the script to be loaded.
+一个表示要加载的脚本 URL 的 `string` 类型。
 
-### OnLoaded
+### 载入完成 OnLoaded \{#on-loaded}
 
-A `function` that will be called when the script is loaded.
+当脚本被加载时将会调用的一个 `function` 。
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type ReferrerPolicy =
@@ -54,55 +54,55 @@ export type ReferrerPolicy =
 
 export interface UseScriptTagOptions {
   /**
-   * Whether load script immediately at mount
+   * 装载时是否立即加载脚本
    *
    * @defaultValue true
    */
   immediate?: boolean
   /**
-   * Whether the script is loaded asynchronously
+   * 脚本是否以异步方式加载
    *
    * @defaultValue true
    */
   async?: boolean
   /**
-   * The type of the script
+   * 脚本的类型
    *
    * @defaultValue 'text/javascript'
    */
   type?: string
   /**
-   * Whether to control the loading of the script manually
+   * 是否手动控制脚本的加载
    *
    * @defaultValue false
    */
   manual?: boolean
   /**
-   * The value of the `crossorigin` attribute
+   * `crossorigin` 属性的值
    *
    * @defaultValue undefined
    */
   crossOrigin?: 'anonymous' | 'use-credentials'
   /**
-   * The value of the `referrerpolicy` attribute
+   * `referrerpolicy` 属性的值
    *
    * @defaultValue undefined
    */
   referrerPolicy?: ReferrerPolicy
   /**
-   * Whether the script is a module script
+   * 脚本是否为模块脚本
    *
    * @defaultValue undefined
    */
   noModule?: boolean
   /**
-   * Whether the script is deferred
+   * 脚本是否延迟加载
    *
    * @defaultValue false
    */
   defer?: boolean
   /**
-   * Additional attributes to be set on the script element
+   * 设置在脚本元素上的额外属性
    *
    * @defaultValue {}
    */
@@ -110,22 +110,22 @@ export interface UseScriptTagOptions {
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export type UseScriptTagReturns = {
   /**
-   * The script element Ref
+   * 脚本元素的 Ref
    */
   scriptTag: MutableRefObject<HTMLScriptElement | null>
   /**
-   * Load the script
+   * 加载脚本
    *
-   * @param waitForScriptLoad Whether to wait for the script to be loaded, `true` by default
+   * 如果等待脚本加载完成，则默认为 `true`
    */
   load: (waitForScriptLoad?: boolean) => Promise<HTMLScriptElement | boolean>
   /**
-   * Unload the script
+   * 卸载脚本
    */
   unload(): void
 }

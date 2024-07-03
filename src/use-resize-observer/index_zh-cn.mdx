@@ -4,43 +4,43 @@ import { HooksType } from '@/components'
 
 <HooksType category="Element" lowLevel />
 
-A React Hook that helps to use [ResizeObserver API](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver) to observe the size changes of an element.
+一个 React 钩子（Hook），用来利用 [ResizeObserver API](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver) 观察元素大小的变化。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const { observerRef, isSupported, ...controls } = useResizeObserver(callback, options)
 ```
 
-### Callback
+### 回调函数 Callback \{#callback}
 
-`ResizeObserverCallback` function that will be called when the observer is triggered.
+`ResizeObserverCallback` 函数，当观察者被触发时将被调用。
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export interface UseWebObserverOptions {
   /**
-   * Start the observer immediate after calling this function
+   * 在调用此函数后立即开始观察
    *
    * @defaultValue true
    */
@@ -57,7 +57,7 @@ export interface UseResizeObserverOptions extends UseWebObserverOptions, ResizeO
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 import { Tip } from '@/components'
 
@@ -66,11 +66,11 @@ import { Tip } from '@/components'
 ```tsx
 export type UseWebObserverReturns<Observer> = Pausable & {
   /**
-   * ref that holds the observer instance
+   * 保存观察者实例的 ref
    */
   observerRef: React.MutableRefObject<Observer | null>
   /**
-   * Check if the observer is supported in the current environment
+   * 检查当前环境是否支持观察者
    */
   isSupported: boolean
 }

@@ -4,62 +4,62 @@ import { HooksType } from '@/components'
 
 <HooksType category="State" />
 
-A React Hook that helps to manage a togglable state.
+一个 React 钩子（Hook），用于管理一个可切换的状态。
 
 :::tip
 
-If you need to manage a state that alternates among several values, consider utilizing [useCircularList](/reference/use-circular-list) as an alternative.
+如果您需要管理一个在几个值之间切换的状态，可以考虑使用 [useCircularList](/reference/use-circular-list) 作为替代方案。
 
 :::
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const [value, toggle, actions] = useToggle(bool)
 const [value, toggle, actions] = useToggle(one, theOther)
 ```
 
-### Parameters
+### 参数 Parameters \{#parameters}
 
-It accepts one or two parameters:
+它接受一个或两个参数：
 
-- `bool`: A `boolean`, the initial value of the state, will be toggled between `true` and `false`.
+- `bool`：一个 `boolean` 值，是状态的初始值，将在 `true` 和 `false` 之间切换。
 
-- `one`, `theOther`: The two values that the state toggles between.
+- `one`, `theOther`：状态切换的两个值。
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export interface UseToggleReturnsActions<O, T> {
   /**
-   * Set the state to the left value.
+   * 设置状态为左值。
    */
   setLeft(): void
   /**
-   * Set the state to the right value.
+   * 设置状态为右值。
    */
   setRight(): void
   /**
-   * Set the state to a new value.
+   * 设置状态为一个新值。
    */
   setState: ReactSetState<O | T>
 }

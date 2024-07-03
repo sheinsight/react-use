@@ -4,45 +4,45 @@ import { HooksType } from '@/components'
 
 <HooksType category="Element" />
 
-A React Hook that helps to get/set the text direction of an element.
+一个 React 钩子（Hook），帮助获取/设置元素的文本方向。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const [dir, setDir] = useTextDirection(options)
 ```
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export interface UseTextDirectionOptions {
   /**
-   * The target element to set the text direction attribute.
+   * 用于设置文本方向属性的目标元素。
    *
    * @defaultValue 'html'
    */
   target?: ElementTarget
   /**
-   * The initial text direction value.
+   * 初始的文本方向值。
    *
    * @defaultValue 'ltr'
    */
@@ -50,16 +50,16 @@ export interface UseTextDirectionOptions {
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export type UseTextDirectionReturns = [
   /**
-   * The current text direction value.
+   * 当前的文本方向值。
    */
   dir: UseTextDirectionValue,
   /**
-   * Sets the text direction value.
+   * 设置文本方向值。
    */
   setDir: ReactSetState<UseTextDirectionValue>,
 ]

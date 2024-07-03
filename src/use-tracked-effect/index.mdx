@@ -4,7 +4,7 @@ import { HooksType } from '@/components'
 
 <HooksType category="Lifecycle" devOnly />
 
-A React Hook for detecting dependencies that have **actually changed** between renders, only run in development mode.
+A React Hook for detecting dependencies that have **actually changed** between renders.
 
 ## Demo
 
@@ -15,8 +15,6 @@ import { App } from './demo'
 <App />
 
 ## Usage
-
-Try to open DevTools to see the logs.
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
@@ -32,10 +30,10 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-useTrackedEffect(handler, deps)
+useTrackedEffect(callback, deps)
 ```
 
-### Handler
+### Callback
 
 ```tsx
 export type TrackedEffectCallback = (changedDepIndexes: number[], previousDeps?: Deps, currentDeps?: Deps) => void

@@ -4,61 +4,61 @@ import { HooksType } from '@/components'
 
 <HooksType category="Sensors" pausable />
 
-A React Hook that helps to detect whether the user is idle or not.
+一个用于帮助检测用户是否处于空闲状态的 React Hook。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const { lastActive, isIdle, reset } = useUserIdle(timeout, options)
 ```
 
-### Timeout
+### 超时 Timeout \{#timeout}
 
-A `number` representing the time in milliseconds to consider the user as idle.
+一个 `number` 类型的值，表示将用户视为闲置状态之前的毫秒数。
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export interface UseUserIdleOptions {
   /**
-   * Event names that listen to for detected user activity
+   * 监听以便检测用户活动的事件名称
    *
    * @defaultValue ['mousemove', 'mousedown', 'resize', 'keydown', 'touchstart', 'wheel']
    */
   events?: WindowEventName[]
   /**
-   * Listen for document visibility change
+   * 监听文档可见性变化
    *
    * @defaultValue true
    */
   watchVisibility?: boolean
   /**
-   * Initial state of the ref idle
+   * 初始状态的 ref 是否空闲
    *
    * @defaultValue false
    */
   initialState?: boolean
   /**
-   * Reset the idle state immediately
+   * 立即重置空闲状态
    *
    * @defaultValue true
    */
@@ -66,7 +66,7 @@ export interface UseUserIdleOptions {
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 import { Tip } from '@/components'
 
@@ -75,17 +75,17 @@ import { Tip } from '@/components'
 ```tsx
 export interface UseUserIdleReturns extends Pausable<[reset?: boolean], [reset?: boolean]> {
   /**
-   * Whether the user is idle
+   * 用户是否空闲
    */
   isIdle: boolean
   /**
-   * The timestamp of the last user activity
+   * 最后一次用户活动的时间戳
    */
   lastActive: MutableRefObject<number>
   /**
-   * Reset the idle state
+   * 重置空闲状态
    *
-   * @param restart - Whether to restart the idle timer,`true` by default.
+   * @param restart - 是否重新启动空闲计时器，默认为 `true`。
    */
   reset: (restart?: boolean) => void
 }

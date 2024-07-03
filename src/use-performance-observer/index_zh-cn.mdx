@@ -4,45 +4,45 @@ import { HooksType } from '@/components'
 
 <HooksType category="Browser" pausable isSupported lowLevel />
 
-A React Hook that helps to use [PerformanceObserver API](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver) with ease.
+一个 React Hook，帮助您轻松使用 [PerformanceObserver API](https://developer.mozilla.org/zh-CN/docs/Web/API/PerformanceObserver)。
 
-## Demo
+## 演示 Demo \{#demo}
 
-Try to open DevTools to see the performance observer logs.
+尝试打开 DevTools 以查看性能观察器日志。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const { observerRef, isSupported, ...controls } = usePerformanceObserver(callback, options)
 ```
 
-### Callback
+### 回调函数 Callback \{#callback}
 
-`PerformanceObserverCallback` function that will be called when the observer is triggered.
+当观察器被触发时将会调用的 `PerformanceObserverCallback` 函数。
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type UseWebObserverOptions = {
   /**
-   * Start the observer immediate after calling this function
+   * 在调用此函数后立即开始观察器
    *
    * @defaultValue true
    */
@@ -58,7 +58,7 @@ interface PerformanceObserverInit {
 export type UsePerformanceObserverOptions = UseWebObserverOptions & PerformanceObserverInit
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 import { Tip } from '@/components'
 
@@ -67,11 +67,11 @@ import { Tip } from '@/components'
 ```tsx
 export type UseWebObserverReturns<Observer> = Pausable & {
   /**
-   * ref that holds the observer instance
+   * 保持观察器实例的 ref
    */
   observerRef: React.MutableRefObject<Observer | null>
   /**
-   * Check if the observer is supported in the current environment
+   * 检查当前环境是否支持观察器
    */
   isSupported: boolean
 }

@@ -4,61 +4,61 @@ import { HooksType } from '@/components'
 
 <HooksType category="Browser" />
 
-A React Hook that helps to manage the title of the document.
+一个 React Hook，用于管理文档的标题。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const restore = useTitle(newTitle, options)
 ```
 
-### NewTitle
+### 新标题 NewTitle \{#new-title}
 
-A `string` that represents the new title of the document.
+一个 `string` 类型，代表文档的新标题。
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 /**
- * `%s` will be replaced by the title if the template is a `string`
+ * 如果模板是一个 `string`，`%s` 将被替换为标题
  */
-export type UseTitleTemplate = string | ((title: string) => string)
+export type UseTitleOptionsTemplate = string | ((title: string) => string)
 
 export type UseTitleOptions = {
   /**
-   * Restore the original title when unmounted
+   * 卸载时恢复原始标题
    *
    * @defaultValue false
    */
   restoreOnUnmount?: boolean
   /**
-   * A template to format the title
+   * 用于格式化标题的模板
    *
    * @defaultValue '%s'
    */
-  template?: UseTitleTemplate
+  template?: UseTitleOptionsTemplate
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
-A function to restore to the original title.
+一个函数，用于恢复到原始标题。

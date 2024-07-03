@@ -4,41 +4,41 @@ import { HooksType } from '@/components'
 
 <HooksType category="State" />
 
-A React Hook that helps to use state like `this.setState` method of React's legacy class component.
+一个帮助如同 React 传统类组件的 `this.setState` 的方式来使用 state 的 React 钩子。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const [state, setState] = useSetState(initialState, options)
 ```
 
-### InitialState
+### 初始状态 InitialState \{#initial-state}
 
-Same as [React.useState](https://react.dev/reference/react/useState).
+与 [React.useState](https://react.dev/reference/react/useState) 相同。
 
-### Options
+### 选项 Options \{#options}
 
-See [useSafeState#options](/reference/use-safe-state/#options) for more details.
+更多详情参见 [useSafeState#options](/reference/use-safe-state/#options)。
 
-### Returns
+### 返回值 Returns \{#returns}
 
-Same as [React.useState](https://react.dev/reference/react/useState).
+与 [React.useState](https://react.dev/reference/react/useState) 相同。

@@ -5,7 +5,7 @@ import { HooksType } from '@/components'
 
 <HooksType category="State" />
 
-一个类似于 [React.useState](https://react.dev/reference/react/useState) 的 React Hook，包括一个可选的深比较功能（默认为 `false`）。
+一个类似于 [React.useState](https://react.dev/reference/react/useState) 的 React Hook，它包含一个可选的深度比较功能（默认值为 `false`）。
 
 有关 `useSafeState` 优势的详细解释，请参阅 [安全状态](/docs/optimization/safe-state) 文档。
 
@@ -34,17 +34,17 @@ import { Source } from '@/components'
 const [state, setState] = useSafeState(initialState, options)
 ```
 
-### 初始状态 InitialState \{#initial-state}
+### 初始状态 Initial-State \{#initial-state}
 
-The initial state of the state.
+状态的初始值。
 
 ### 选项 Options \{#options}
 
 ```tsx
 export type UseSafeStateOptions = {
   /**
-   * Deeply compare the new state with the old state before updating.
-   * If true, only update the state when the new state is different from the old state.
+   * 在更新前，深度比较新旧状态。
+   * 如果为 true，只有当新状态与旧状态不同时，才更新状态。
    *
    * @defaultValue false
    */
@@ -54,4 +54,4 @@ export type UseSafeStateOptions = {
 
 ### 返回值 Returns \{#returns}
 
-Same as [React.useState](https://react.dev/reference/react/useState).
+与 [React.useState](https://react.dev/reference/react/useState) 相同。

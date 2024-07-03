@@ -4,28 +4,28 @@ import { HooksType } from '@/components'
 
 <HooksType category="Browser" />
 
-A React Hook that helps to manage the URL search params.
+一个 React 钩子（Hook），用于管理 URL 的搜索参数。
 
-There three mode in `useUrlSearchParams`:
+`useUrlSearchParams` 有三种模式：
 
-- **history**: like `/path/to/page?a=1&b=2`
-- **hash**: like `/path/to/page#heading?a=1&b=2` (with `?` in hash)
-- **hash-params**: like `/path/to/page#/a=1&b=2` (without `?` in hash)
+- **history**：如 `/path/to/page?a=1&b=2`
+- **hash**：如 `/path/to/page#heading?a=1&b=2` （在 hash 中包含 `?`）
+- **hash-params**：如 `/path/to/page#/a=1&b=2` （在 hash 中不包含 `?`）
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
@@ -37,36 +37,36 @@ import { Source } from '@/components'
 const [usp, setUsp, clearUsp] = useUrlSearchParams(mode, options)
 ```
 
-### Mode
+### 模式 Mode \{#mode}
 
 ```tsx
 export type UseUrlSearchParamsMode = 'history' | 'hash' | 'hash-params'
 ```
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export interface UseUrlSearchParamsOptions<T> {
   /**
-   * Remove nullish values from the URLSearchParams
+   * 从 URLSearchParams 中移除空值
    *
    * @defaultValue true
    */
   removeNullishValues?: boolean
   /**
-   * Remove falsy values from the URLSearchParams
+   * 从 URLSearchParams 中移除假值
    *
    * @defaultValue false
    */
   removeFalsyValues?: boolean
   /**
-   * Initial value for the URLSearchParams
+   * URLSearchParams 的初始值
    *
    * @defaultValue {}
    */
   initialValue?: T & Record<any, any>
   /**
-   * Write back to `window.history` automatically
+   * 自动写回 `window.history`
    *
    * @defaultValue true
    */
@@ -74,7 +74,7 @@ export interface UseUrlSearchParamsOptions<T> {
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export type UseUrlSearchParamsReturns<T extends Record<string, any>> = [T, UseSetStateSetMergedState<T>, Noop]

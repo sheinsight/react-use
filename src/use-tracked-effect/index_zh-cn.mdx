@@ -4,43 +4,41 @@ import { HooksType } from '@/components'
 
 <HooksType category="Lifecycle" devOnly />
 
-A React Hook for detecting dependencies that have **actually changed** between renders, only run in development mode.
+一个用于检测在渲染之间**实际更改**的依赖项的 React Hook。
 
-## Demo
+## 演示 Demo \{#demo}
 
-Try to open DevTools to see the logs.
+尝试打开 DevTools 查看日志。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
-
-Try to open DevTools to see the logs.
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
-useTrackedEffect(handler, deps)
+useTrackedEffect(callback, deps)
 ```
 
-### Handler
+### 处理函数 Callback \{#callback}
 
 ```tsx
 export type TrackedEffectCallback = (changedDepIndexes: number[], previousDeps?: Deps, currentDeps?: Deps) => void
 ```
 
-### Deps
+### 依赖项 Deps \{#deps}
 
-Same as [React.useLayoutEffect](https://react.dev/reference/react/useLayoutEffect).
+与 [React.useLayoutEffect](https://react.dev/reference/react/useLayoutEffect) 相同。

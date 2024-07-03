@@ -9,6 +9,21 @@ import { useUnmount } from '../use-unmount'
 import type { ReactSetState } from '../use-safe-state'
 import type { ElementTarget } from '../use-target-element'
 
+export type UseScrollLockReturnsActions = {
+  /**
+   * Lock the scroll
+   */
+  lock(): void
+  /**
+   * Unlock the scroll
+   */
+  unlock(): void
+  /**
+   * Toggle the scroll lock
+   */
+  toggle(): void
+}
+
 export type UseScrollLockReturns = [
   /**
    * Whether the scroll is locked
@@ -18,23 +33,13 @@ export type UseScrollLockReturns = [
    * Set the scroll lock
    */
   setLocked: ReactSetState<boolean>,
-  {
-    /**
-     * Lock the scroll
-     */
-    lock(): void
-    /**
-     * Unlock the scroll
-     */
-    unlock(): void
-    /**
-     * Toggle the scroll lock
-     */
-    toggle(): void
-  },
+  /**
+   * Actions to lock/unlock the scroll
+   */
+  UseScrollLockReturnsActions,
 ]
 
-const globalOverflowCache = new WeakMap<Element, CSSStyleDeclaration['overflow']>()
+const globalOverflowCache = /* #__PURE__ */ new WeakMap<Element, CSSStyleDeclaration['overflow']>()
 
 /**
  * A React Hook that helps to lock/unlock the scroll behavior of an element.

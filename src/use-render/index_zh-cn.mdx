@@ -4,29 +4,33 @@ import { HooksType } from '@/components'
 
 <HooksType category="Lifecycle" lowLevel />
 
-A React Hook that return a function to re-render component. Helpful when you need to re-render a component without changing the state.
+一个 React 钩子，它返回一个函数，用于重新渲染组件。当你需要重新渲染一个组件而不改变其状态时，这个钩子非常有帮助。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const render = useRender()
 ```
+
+### Returns
+
+一个 `function`，用于重新渲染组件。

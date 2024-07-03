@@ -4,44 +4,46 @@ import { HooksType } from '@/components'
 
 <HooksType category="State" />
 
-A React Hook like [React.useState](https://react.dev/reference/react/useState), but provide a `reset` function to reset the state to initial value.
+类似于 [React.useState](https://react.dev/reference/react/useState) 的一个 React 钩子（Hook），但提供了一个 `reset` 函数，用来将状态重置为初始值。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
-const [state, setState, reset, init] = useResetState(initialState, options)
+const [state, setState, reset, initialState] = useResetState(initialState, options)
 ```
 
-### InitialState
+### 初始状态 InitialState \{#initial-state}
 
-The initial state of the state.
+状态的初始值。
 
-### Options
+### 选项 Options \{#options}
 
-See [useSafeState#options](/reference/use-safe-state/#options) for more details.
+有关更多详情，请参见 [useSafeState#options](/reference/use-safe-state/#options)。
 
-### Returns
+### 返回值 Returns \{#returns}
 
-- `state`: The current state.
-- `setState`: The `function` to update the state.
-- `reset`: The `function` to reset the state to initial value.
-- `init`: The current initial state.
+```tsx
+export function useResetState<T>(
+  initialState: Gettable<T>,
+  options?: UseResetStateOptions,
+): [T, ReactSetState<T>, (initialState?: T) => void, T]
+```

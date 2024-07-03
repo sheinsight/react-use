@@ -4,41 +4,41 @@ import { HooksType } from '@/components'
 
 <HooksType category="State" />
 
-A React Hook like [React.useState](https://react.dev/reference/react/useState), but the state will only update on the next frame using [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) for better performance.
+用于在下一帧使用 [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) 更新状态，以获得更好性能的 React Hook，类似于 [React.useState](https://react.dev/reference/react/useState)。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const [state, setState] = useRafState(initialState, options)
 ```
 
-### InitialState
+### 初始状态 InitialState \{#initial-state}
 
-Same as [React.useState](https://react.dev/reference/react/useState).
+与 [React.useState](https://react.dev/reference/react/useState) 相同。
 
-### Options
+### 选项 Options \{#options}
 
-See [useSafeState#options](/reference/use-safe-state/#options) for more details.
+更多详情参见 [useSafeState#options](/reference/use-safe-state/#options)。
 
-### Returns
+### 返回值 Returns \{#returns}
 
-Same as [React.useState](https://react.dev/reference/react/useState).
+与 [React.useState](https://react.dev/reference/react/useState) 相同。
