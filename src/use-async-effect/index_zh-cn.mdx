@@ -9,12 +9,12 @@ import { HooksType } from '@/components'
 :::note
 它不应该返回一个清理函数，因为作为 `async` 的它不能按预期进行清理。
 
-如果你需要清理一些东西，请在 `UseAsyncEffectCallback` 中使用 `isCancelled` 来检查效果的状态。
+如果你需要清理一些东西，请在 `UseAsyncEffectCallback` 中使用 `isCancelled` 来检查 Effect 的状态。
 :::
 
 ## 演示 Demo \{#demo}
 
-多次切换状态，你会发现所有 **过时** 的计时器都如预期地被删除，尽管我们在效果中没有返回清理函数。
+多次切换状态，你会发现所有 **过时** 的计时器都如预期地被删除，尽管我们在 Effect 中没有返回清理函数。
 
 import { App } from './demo'
 
@@ -41,7 +41,7 @@ useAsyncEffect(asyncCallback, deps)
 
 ### 异步回调 AsyncCallback \{#async-callback}
 
-一个效果回调，支持 **异步** 函数。
+一个 Effect 回调，支持 **异步** 函数。
 
 ```tsx
 export type AsyncEffectCallback = (isCancelled: () => boolean) => void

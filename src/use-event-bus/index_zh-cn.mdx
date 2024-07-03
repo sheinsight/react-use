@@ -4,24 +4,22 @@ import { HooksType } from '@/components'
 
 <HooksType category="Utilities" />
 
-A React Hook that provides a simple event bus for your application.
+一个提供简单事件总线的 React Hook。
 
-## Demo
-
-Scroll down on the dashed box to see the visibility status of the element.
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
@@ -33,18 +31,18 @@ import { Source } from '@/components'
 const { on, once, off, emit, reset } = useEventBus(identifier, options)
 ```
 
-### Identifier
+### 标识符 Identifier \{#identifier}
 
 ```tsx
 export type EventBusIdentifier = symbol | string | number
 ```
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type UseEventBusOptions = {
   /**
-   * Whether to automatically clean up the listener when the component is unmounted.
+   * 是否在组件卸载时自动清理监听器。
    *
    * @defaultValue true
    */
@@ -52,42 +50,42 @@ export type UseEventBusOptions = {
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export type UseEventBusReturns<T, P> = {
   /**
-   * Subscribe to an event. When calling emit, the listeners will execute.
+   * 订阅一个事件。调用 emit 时，监听器会执行。
    *
-   * @param listener watch listener.
-   * @returns a stop function to remove the current callback.
+   * @param listener 观察监听器。
+   * @returns 一个停止函数用于移除当前的回调。
    */
   on: (listener: EventBusListener<T, P>) => AnyFunc
   /**
-   * Similar to `on`, but only fires once
+   * 类似于 `on`，但只触发一次
    *
-   * @param listener watch listener.
-   * @returns a stop function to remove the current callback.
+   * @param listener 观察监听器。
+   * @returns 一个停止函数用于移除当前的回调。
    */
   once: (listener: EventBusListener<T, P>) => AnyFunc
   /**
-   * Emit an event, the corresponding event listeners will execute.
+   * 发出一个事件，对应的事件监听器会执行。
    *
-   * @param event data sent.
+   * @param event 发送的数据。
    */
   emit: (event?: T, payload?: P) => void
   /**
-   * Remove the corresponding listener.
+   * 移除对应的监听器。
    *
-   * @param listener watch listener.
+   * @param listener 观察监听器。
    */
   off: (listener: EventBusListener<T>) => void
   /**
-   * Clear all events in global scope
+   * 在全局范围内清除所有事件
    */
   reset(): void
   /**
-   * Clear all listeners in the current component context
+   * 清除当前组件上下文中的所有监听器
    */
   cleanup(): void
 }

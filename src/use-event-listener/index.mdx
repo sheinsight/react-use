@@ -4,24 +4,24 @@ import { HooksType } from '@/components'
 
 <HooksType category="Browser" />
 
-A React Hook that use `EventListener` with ease.
+一个轻松使用 `EventListener` 的 React Hook。
 
-Register using `addEventListener` on mounted, and `removeEventListener` automatically on unmounted.
+在装载时使用 `addEventListener` 注册，卸载时自动使用 `removeEventListener` 移除。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
@@ -30,44 +30,44 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-// target is `window` by default
+// 默认的 target 为 `window`
 useEventListener(eventName, handler, options)
 
-// specify tagret explicitly
+// 显式指定 target
 useEventListener(eventTarget, eventName, handler, options)
 ```
 
-### EventTarget
+### 元素目标 ElementTarget \{#element-target}
 
-Target can be:
+目标可以是：
 
-> A "⚛️" prefix is means that it can also be a [React Ref](https://react.dev/learn/referencing-values-with-refs) that contains it.
+> "⚛️" 前缀表示它还可以是包含此目标的 [React Ref](https://react.dev/learn/referencing-values-with-refs)。
 
-- `window` (default)
+- `window`（默认）
 - `document`
-- ⚛️ native [EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget)
-- ⚛️ DOM Element
-- ⚛️ Object that implements `EventTarget` interface (`addEventListener` and `removeEventListener`)
-- ⚛️ `null` or `undefined`
+- ⚛️ 原生 [EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget)
+- ⚛️ DOM 元素
+- ⚛️ 实现 `EventTarget` 接口 (`addEventListener` 和 `removeEventListener`) 的对象
+- ⚛️ `null` 或 `undefined`
 
-### EventName
+### 事件名称 EventName \{#event-name}
 
-`string | string[]`, a `string` or `strings` representing the event types to listen for. It will be automatically inferred from the `EventTarget` type.
+`string | string[]`，一个 `string` 或 `string` 列表，代表要监听的事件类型。它将会从 `EventTarget` 类型自动推断出来。
 
-### Handler
+### 处理函数 Handler \{#handler}
 
-`Function | Funtions[]`, a `function` or `funcitons` that receives a notification when an event of the specified type occurs. `Event` will also be automatically.
+`Function | Functions[]`，一个 `function` 或 `functions` 列表，在指定类型的事件发生时接收通知。`Event` 也会自动推断。
 
-### Options
+### 选项 Options \{#options}
 
-Options that will be passed to `addEventListener` and `removeEventListener`.
+将会传递给 `addEventListener` 和 `removeEventListener` 的选项。
 
 ```tsx
 export type Options = boolean | AddEventListenerOptions | undefined
 ```
 
-For more details options, see [EventTarget.addEventListener#options](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#options)
+更多详细选项，请参见 [EventTarget.addEventListener#options](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#options)
 
-### Returns
+### 返回值 Returns \{#returns}
 
-A `function` that **removes** the event listener.
+一个 **移除** 事件监听器的 `function`。

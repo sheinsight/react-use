@@ -4,24 +4,24 @@ import { HooksType } from '@/components'
 
 <HooksType category="Browser" isSupported />
 
-A React Hook that returns a list of devices that are currently connected.
+一个返回当前连接的设备列表的 React 钩子。
 
-## Demo
+## 演示 Demo \{#demo}
 
-Grant permission to access the devices.
+授予访问设备的权限。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
@@ -33,20 +33,20 @@ import { Source } from '@/components'
 const device = useDeviceList(options)
 ```
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type UseDeviceListOptions = {
   onUpdated?: (devices: MediaDeviceInfo[]) => void
   /**
-   * Request for permissions immediately if it's not granted,
-   * otherwise label and deviceIds could be empty
+   * 如未获得权限，则立即请求权限，
+   * 否则标签和 deviceIds 可能为空
    *
    * @defaultValue false
    */
   requestPermissions?: boolean
   /**
-   * Request for types of media permissions
+   * 请求媒体权限的类型
    *
    * @defaultValue { audio: true, video: true }
    */
@@ -54,40 +54,40 @@ export type UseDeviceListOptions = {
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export type UseDeviceListReturns = {
   /**
-   * List of all devices
+   * 所有设备的列表
    */
   devices: MediaDeviceInfo[]
   /**
-   * a getter to get all video inputs
+   * 获取所有视频输入的 getter
    */
   videoInputs(): MediaDeviceInfo[]
   /**
-   * a getter to get all audio inputs
+   * 获取所有音频输入的 getter
    */
   audioInputs(): MediaDeviceInfo[]
   /**
-   * a getter to get all audio outputs
+   * 获取所有音频输出的 getter
    */
   audioOutputs(): MediaDeviceInfo[]
   /**
-   * a boolean to check if permission is granted
+   * 检查是否已授予权限的布尔值
    */
   isPermissionGranted: boolean
   /**
-   * a function to check if the browser supports the API
+   * 检查浏览器是否支持 API 的函数
    */
   isSupported: boolean
   /**
-   * a function to request for permissions to access the media devices
+   * 请求访问媒体设备的权限的函数
    */
   ensurePermission(): Promise<boolean>
   /**
-   * a function to update the list of devices
+   * 更新设备列表的函数
    */
   update(): Promise<void>
 }

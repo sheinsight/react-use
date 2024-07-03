@@ -75,10 +75,14 @@ export interface UseDraggableOptions {
    */
   onEnd?: (position: Position, event: PointerEvent) => void
   /**
+   * The axis that the draggable element can be moved along.
+   *
    * @defaultValue 'both'
    */
   axis?: 'x' | 'y' | 'both'
   /**
+   * Whether the draggable element is disabled.
+   *
    * @defaultValue false
    */
   disabled?: boolean

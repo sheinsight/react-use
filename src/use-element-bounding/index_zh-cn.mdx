@@ -4,24 +4,24 @@ import { HooksType } from '@/components'
 
 <HooksType category="Element" />
 
-A React Hook that returns the [bounding client rect](https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect) of an element.
+`useElementBounding` 是一个 React 钩子（Hook），它返回一个元素的 [边界客户端矩形（bounding client rect）](https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect)。
 
-## Demo
+## 演示 Demo \{#demo}
 
-Try to scroll the page or resize the textarea to see the state changes.
+尝试滚动页面或调整 textarea 的大小，以查看状态的变化。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
@@ -33,30 +33,30 @@ import { Source } from '@/components'
 const { update, ...bounding } = useElementBounding(elementTarget, options)
 ```
 
-### ElementTarget
+### 元素目标 ElementTarget \{#element-target}
 
 import { Tip } from '@/components'
 
 <Tip type="target" />
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type UseElementBoundingOptions = {
   /**
-   * Reset the bounding box when the element is not found
+   * 当找不到元素时重置边界框
    *
    * @defaultValue true
    */
   reset?: boolean
   /**
-   * Update the bounding box when the window is resized
+   * 当窗口大小调整时更新边界框
    *
    * @defaultValue true
    */
   windowResize?: boolean
   /**
-   * Update the bounding box when the window is scrolled
+   * 当窗口滚动时更新边界框
    *
    * @defaultValue true
    */
@@ -64,46 +64,46 @@ export type UseElementBoundingOptions = {
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export type UseElementBoundingReturns = [
   {
     /**
-     * The height of the element
+     * 元素的高度
      */
     height: number
     /**
-     * The bottom position of the element
+     * 元素的底部位置
      */
     bottom: number
     /**
-     * The left position of the element
+     * 元素的左侧位置
      */
     left: number
     /**
-     * The right position of the element
+     * 元素的右侧位置
      */
     right: number
     /**
-     * The top position of the element
+     * 元素的顶部位置
      */
     top: number
     /**
-     * The width of the element
+     * 元素的宽度
      */
     width: number
     /**
-     * The x position of the element
+     * 元素的 x 位置
      */
     x: number
     /**
-     * The y position of the element
+     * 元素的 y 位置
      */
     y: number
   },
   /**
-   * Update the bounding box of the element
+   * 更新元素的边界框
    */
   update: () => void,
 ]

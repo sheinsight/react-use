@@ -4,51 +4,51 @@ import { HooksType } from '@/components'
 
 <HooksType category="Element" isSupported />
 
-A React Hook that returns the element at a given point.
+一个用于返回给定点位置上元素的 React Hook。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const { isSupported, element, ...controls } = useElementByPoint(options)
 ```
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type UseElementByPointOptions<M extends boolean = false> = Position & {
   /**
-   * Whether to return multiple elements
+   * 是否返回多个元素
    *
    * @defaultValue false
    */
   multiple?: M
   /**
-   * Whether to execute immediately
+   * 是否立即执行
    *
    * @defaultValue true
    */
   immediate?: boolean
   /**
-   * The interval to execute
+   * 执行的间隔
    *
    * @defaultValue 'requestAnimationFrame'
    */
@@ -56,7 +56,7 @@ export type UseElementByPointOptions<M extends boolean = false> = Position & {
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 import { Tip } from '@/components'
 
@@ -65,11 +65,11 @@ import { Tip } from '@/components'
 ```tsx
 export type UseElementByPointReturns<E extends Element | null | Element[]> = Pausable & {
   /**
-   * Whether the browser supports the API
+   * 浏览器是否支持该 API
    */
   isSupported: boolean
   /**
-   * The element at the specified position
+   * 指定位置上的元素
    */
   element: E
 }

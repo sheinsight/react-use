@@ -4,22 +4,22 @@ import { HooksType } from '@/components'
 
 <HooksType category="Browser" />
 
-A React Hook that allows you to change the favicon of the page.
+一个用于改变页面 favicon 的 React Hook。
 
-## Demo
+## 演示 Demo \{#deno}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
@@ -31,34 +31,34 @@ import { Source } from '@/components'
 const [favicon, actions] = useFavicon(iconLink, options)
 ```
 
-### IconLink
+### 图标链接 IconLink \{#icon-link}
 
-`string | null | undefined`, the URL of the favicon (or path if `baseUrl` is set).
+`string | null | undefined`，favicon 的 URL （如果设置了 `baseUrl`，则为路径）。
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type UseFaviconOptions = {
   /**
-   * Base URL for the favicon
+   * favicon 的基础 URL
    *
    * @defaultValue ''
    */
   baseUrl?: string
   /**
-   * The rel attribute of the favicon link element
+   * favicon 链接元素的 rel 属性
    *
    * @defaultValue 'icon'
    */
   rel?: string
   /**
-   * Sync the favicon in document `<link rel='icon' />` to hooks state on mount
+   * 在挂载时同步 document `<link rel='icon' />` 中的 favicon 到 hooks 状态
    *
    * @defaultValue true
    */
   syncOnMount?: boolean
   /**
-   * Restore the previous favicon on unmount
+   * 在卸载时恢复到之前的 favicon
    *
    * @defaultValue false
    */
@@ -66,28 +66,28 @@ export type UseFaviconOptions = {
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export interface UseFaviconReturns {
   /**
-   * The current favicon URL
+   * 当前 favicon 的 URL
    */
   href: string | null
   /**
-   * Set the favicon URL
+   * 设置 favicon 的 URL
    */
   setFavicon: ReactSetState<string | null>
   /**
-   * Sync the favicon in document `<link rel='icon' />` to hooks state
+   * 同步 document 中的 `<link rel='icon' />` 到 hooks 状态中的 favicon
    */
   syncFavicon(): void
   /**
-   * Set the favicon to an emoji
+   * 将 favicon 设置为一个 emoji
    */
   setEmojiFavicon: (emoji: string) => void
   /**
-   * Set the favicon to the previous favicon
+   * 将 favicon 设置回之前的 favicon
    */
   setPreviousFavicon(): void
 }

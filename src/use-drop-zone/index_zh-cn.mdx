@@ -4,24 +4,24 @@ import { HooksType } from '@/components'
 
 <HooksType category="Element" />
 
-A React Hook that allows you to create a dropzone.
+一个 React Hook，允许您创建一个拖放区。
 
-## Demo
+## 演示 Demo \{#demo}
 
-Try to drop a PNG file from your computer, or just test the over state via image below.
+尝试从您的电脑拖放一个 PNG 文件，或者通过下方的图像测试 over 状态。
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
@@ -33,49 +33,49 @@ import { Source } from '@/components'
 const { isOverDropZone, files } = useDropZone(elementTarget, options)
 ```
 
-### ElementTarget
+### 元素目标 ElementTarget \{#element-target}
 
 import { Tip } from '@/components'
 
 <Tip type="target" />
 
-### Options
+### 选项 Options \{#options}
 
 ```tsx
 export type UseDropZoneOptions = {
   /**
-   * The file types that are accepted by the drop zone.
+   * 被拖放区域接受的文件类型。
    */
   dataTypes?: string[] | ((types: readonly string[]) => boolean)
   /**
-   * A callback that is called when the user drops files in the drop zone.
+   * 当用户在拖放区域放下文件时调用的回调函数。
    */
   onDrop?: (files: File[] | null, event: DragEvent) => void
   /**
-   * A callback that is called when the user drags files over the drop zone.
+   * 当用户将文件拖到拖放区域上方时调用的回调函数。
    */
   onEnter?: (files: File[] | null, event: DragEvent) => void
   /**
-   * A callback that is called when the user drags files out of the drop zone.
+   * 当用户将文件从拖放区域拖出时调用的回调函数。
    */
   onLeave?: (files: File[] | null, event: DragEvent) => void
   /**
-   * A callback that is called when the user drags files over the drop zone.
+   * 当用户在拖放区域上方拖动文件时调用的回调函数。
    */
   onOver?: (files: File[] | null, event: DragEvent) => void
 }
 ```
 
-### Returns
+### 返回值 Returns \{#returns}
 
 ```tsx
 export type UseDropZoneReturns = {
   /**
-   * The files that were dropped in the drop zone.
+   * 在拖放区域中放下的文件。
    */
   files: File[] | null
   /**
-   * Whether the user is currently dragging files over the drop zone.
+   * 用户当前是否正在拖动文件到拖放区域上方。
    */
   isOverDropZone: boolean
 }
