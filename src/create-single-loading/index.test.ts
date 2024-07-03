@@ -1,4 +1,4 @@
-import { renderHook } from '@/test'
+import { act, renderHook } from '@/test'
 import { create } from '@shined/reactive'
 import { describe, expect, it, vi } from 'vitest'
 import { createSingleLoading } from './index'
@@ -17,18 +17,16 @@ describe('createSingleLoading', () => {
     )
   })
 
-  it('should set the loading state correctly', () => {
+  it('should set the loading state correctly', async () => {
     const loading = createSingleLoading({ create })
 
-    const { result, rerender } = renderHook(() => loading.useLoading())
+    const { result } = renderHook(() => loading.useLoading())
     expect(result.current).toBe(false)
 
-    loading.set(true)
-    rerender()
+    await act(async () => loading.set(true))
     expect(result.current).toBe(true)
 
-    loading.set(false)
-    rerender()
+    await act(async () => loading.set(false))
     expect(result.current).toBe(false)
   })
 
@@ -91,7 +89,7 @@ describe('createSingleLoading', () => {
   it('should useAsyncFn correctly', async () => {
     const loading = createSingleLoading({ create })
     const asyncFn = vi.fn()
-    const { result, rerender } = renderHook(() => loading.useAsyncFn(asyncFn))
+    const { result } = renderHook(() => loading.useAsyncFn(asyncFn))
 
     expect(result.current.loading).toBe(false)
     expect(result.current.error).toBe(null)
@@ -99,9 +97,9 @@ describe('createSingleLoading', () => {
 
     asyncFn.mockResolvedValue('mock value')
 
-    await result.current.run()
-
-    rerender()
+    await act(async () => {
+      await result.current.run()
+    })
 
     expect(result.current.loading).toBe(false)
     expect(result.current.error).toBe(null)
@@ -109,11 +107,11 @@ describe('createSingleLoading', () => {
 
     asyncFn.mockRejectedValue(new Error('mock error'))
 
-    try {
-      await result.current.run()
-    } catch {}
-
-    rerender()
+    await act(async () => {
+      try {
+        await result.current.run()
+      } catch {}
+    })
 
     expect(result.current.loading).toBe(false)
     expect(result.current.error).toEqual(new Error('mock error'))
