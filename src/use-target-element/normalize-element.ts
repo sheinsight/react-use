@@ -25,19 +25,23 @@ export function normalizeElement<
   T extends ElementTarget<A> = ElementTarget<A>,
 >(target: T): A | null
 export function normalizeElement(target: unknown) {
-  if (isFunction(target)) return normalizeElement(unwrapGettable(target))
-
-  if ([window, document].some((e) => e === target)) {
-    return target
+  if (isFunction(target)) {
+    return normalizeElement(unwrapGettable(target))
   }
 
-  if (isString(target)) {
-    return document.querySelector(target) || null
+  const unrefValue = unwrapReffable(target)
+
+  if ([window, document].some((e) => e === unrefValue)) {
+    return unrefValue
   }
 
-  if (target instanceof HTMLElement || target instanceof SVGElement) {
-    return target
+  if (isString(unrefValue)) {
+    return document.querySelector(unrefValue) || null
   }
 
-  return unwrapReffable(target) || null
+  if (unrefValue instanceof HTMLElement || unrefValue instanceof SVGElement) {
+    return unrefValue
+  }
+
+  return unrefValue || null
 }
