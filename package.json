@@ -50,7 +50,7 @@
     "dev": "tsup --watch",
     "build": "tsup",
     "lint": "biome check && oxlint && pnpm run typecheck",
-    "lint:fix": "biome check --fix --unsafe && oxlint --fix",
+    "lint:fix": "biome check --write --unsafe && oxlint --fix",
     "prepack": "clean-pkg-json",
     "prerelease": "pnpm run lint",
     "release": "bumpp",
@@ -61,7 +61,13 @@
     "docs:dev:zh-cn": " pnpm -C website run dev --locale zh-cn",
     "docs:build": " pnpm -C website run build",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "prepare": "is-ci || husky"
+  },
+  "lint-staged": {
+    "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
+      "biome check --write --unsafe --no-errors-on-unmatched"
+    ]
   },
   "publishConfig": {
     "access": "public",
@@ -110,7 +116,10 @@
     "clean-pkg-json": "^1.2.0",
     "conventional-changelog-cli": "^5.0.0",
     "esno": "^4.7.0",
+    "husky": "^9.0.11",
+    "is-ci": "^3.0.1",
     "jsdom": "^24.1.0",
+    "lint-staged": "^15.2.7",
     "oxlint": "^0.4.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
