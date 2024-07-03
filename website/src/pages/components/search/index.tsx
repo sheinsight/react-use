@@ -16,8 +16,8 @@ export function SearchHooks() {
 
   const [params, setParams, clearParams] = useUrlSearchParams('history', {
     initialValue: {
-      category: [] as string[],
-      feature: [] as string[],
+      category: undefined as undefined | string,
+      feature: undefined as undefined | string,
     },
   })
 
@@ -27,24 +27,20 @@ export function SearchHooks() {
         e.includes(input.value.trim().toLowerCase()),
       )
 
-      const isCategoryMatch = paramsMatch(params.category, hook.category)
+      const feature = (params.feature ?? '').toLowerCase()
 
-      const isFeatureMatch =
-        !params.feature.length || hook.features.some((e) => e.value && paramsMatch(params.feature, e.name))
+      const isCategoryMatch = !params.category || params.category.toLowerCase() === hook.category.toLowerCase()
+      const isFeatureMatch = !params.feature || hook.features.some((e) => e.name.toLowerCase() === feature && e.value)
 
       return isNameMatch && isCategoryMatch && isFeatureMatch
     })
   }, [params, input.value])
 
-  const handleFilterClick = (paramName: string, value: string | undefined = undefined) => {
-    if (!value || !params[paramName]) return setParams({ [paramName]: [] })
-    const set = new Set(Array.isArray(params[paramName]) ? params[paramName] : [params[paramName]])
-    set.has(value) ? set.delete(value) : set.add(value)
-    if (!set.size) return setParams({ [paramName]: [] })
-    setParams({ [paramName]: Array.from(set) })
+  const handleFilterClick = (paramName: string, value?: string | undefined) => {
+    setParams({ [paramName]: value === 'all' ? undefined : value })
   }
 
-  const hasFilter = params.category.length || params.feature.length
+  const hasFilter = params.category || params.feature
 
   return (
     <div className="flex flex-col gap-4 mt-12 p-4 w-full md:w-640px">
@@ -64,7 +60,7 @@ export function SearchHooks() {
           <div
             onClick={() => handleFilterClick('category')}
             onKeyDown={() => handleFilterClick('category')}
-            className={`${getBgColor(!params.category.length)} ${filterLabelCls}`}
+            className={`${getBgColor(!params.category)} ${filterLabelCls}`}
           >
             {iconMap.SelectAll}
             All
@@ -76,7 +72,7 @@ export function SearchHooks() {
               onKeyDown={() => handleFilterClick('category', e)}
               className={`${getBgColor(paramsMatch(params.category, e, false))} ${filterLabelCls}`}
             >
-              {iconMap[e] || ''}
+              {iconMap[e as keyof typeof iconMap] || ''}
               {e}
             </div>
           ))}
@@ -90,7 +86,7 @@ export function SearchHooks() {
           <div
             onClick={() => handleFilterClick('feature')}
             onKeyDown={() => handleFilterClick('feature')}
-            className={`${getBgColor(!params.feature.length)} ${filterLabelCls}`}
+            className={`${getBgColor(!params.feature)} ${filterLabelCls}`}
           >
             {iconMap.SelectAll}
             All
@@ -102,7 +98,7 @@ export function SearchHooks() {
               onKeyDown={() => handleFilterClick('feature', e)}
               className={`${getBgColor(paramsMatch(params.feature, e, false))} ${filterLabelCls}`}
             >
-              {iconMap[e] || ''}
+              {iconMap[e as keyof typeof iconMap] || ''}
               {e}
             </div>
           ))}
@@ -163,7 +159,10 @@ function getBgColor(active = false) {
     : 'hover:bg-#000/6 dark:hover:bg-white/6'
 }
 
-function paramsMatch(array?: string[], value?: string, nullishIsTrue = true) {
-  if ((!array || !array.length) && nullishIsTrue) return true
-  return array.some((e) => e === value)
+function paramsMatch(array?: string, value?: string, nullishIsTrue = true) {
+  if ((!array || !array.length) && nullishIsTrue) {
+    return true
+  }
+
+  return array === value
 }

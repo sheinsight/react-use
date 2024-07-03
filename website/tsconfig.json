@@ -12,6 +12,7 @@
       "@docusaurus/theme-classic",
       "@types/web-bluetooth"
     ],
+    "strict": true,
     "paths": {
       "@site/*": ["./*"],
       "@shined/react-use": ["../src"],
