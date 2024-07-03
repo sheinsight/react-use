@@ -1,3 +1,15 @@
+## [1.1.3](https://github.com/sheinsight/react-use/compare/v1.1.2...v1.1.3) (2024-07-03)
+
+
+### Bug Fixes
+
+* **useInfiniteScroll:** fix `onScroll` event not being triggered when target scroll ([73a9c98](https://github.com/sheinsight/react-use/commit/73a9c98ac87caf52e092ca09a9b239f578de5572))
+* **useParallax:** remove unused options. ([10f6b77](https://github.com/sheinsight/react-use/commit/10f6b77f62933213396e3368e361af16136ba576))
+* **useTargetElement:** advance the reffable value resolve time in target element ([e376649](https://github.com/sheinsight/react-use/commit/e376649a580ee39dd25f29566e3897f315e7dd70))
+* **useTitle:** correct unify type name ([19338b9](https://github.com/sheinsight/react-use/commit/19338b9324b8b5851d0d20ae0dd3c5515985e80f))
+
+
+
 ## [1.1.2](https://github.com/sheinsight/react-use/compare/v1.1.1...v1.1.2) (2024-07-02)
 
 
