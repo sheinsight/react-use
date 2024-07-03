@@ -8,14 +8,6 @@ import type { ElementTarget } from '../use-target-element'
 
 export interface UseParallaxOptions {
   /**
-   * Adjust the tilt value from device orientation sensor
-   */
-  deviceOrientationTiltAdjust?: (i: number) => number
-  /**
-   * Adjust the roll value from device orientation sensor
-   */
-  deviceOrientationRollAdjust?: (i: number) => number
-  /**
    * Adjust the tilt value from mouse sensor
    */
   mouseTiltAdjust?: (i: number) => number
@@ -49,8 +41,6 @@ export interface UseParallaxReturns extends Pausable {
  */
 export function useParallax(target: ElementTarget, options: UseParallaxOptions = {}): UseParallaxReturns {
   const latest = useLatest({
-    deviceOrientationTiltAdjust: (e) => e,
-    deviceOrientationRollAdjust: (e) => e,
     mouseTiltAdjust: (e) => e,
     mouseRollAdjust: (e) => e,
     ...options,
