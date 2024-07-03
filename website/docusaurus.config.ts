@@ -90,6 +90,25 @@ export default {
     ],
   ],
   themeConfig: {
+    metadata: [
+      {
+        name: 'description',
+        content: 'A SSR-friendly, comprehensive, and highly optimized React Hooks library.',
+      },
+      {
+        name: 'keywords',
+        content:
+          'react, hooks, react hooks, react-use, react-use-hooks, react hooks library, react hooks tutorial, react hooks examples',
+      },
+      {
+        name: 'og:title',
+        content: '@shined/react-use',
+      },
+      {
+        name: 'og:description',
+        content: 'A SSR-friendly, comprehensive, and highly optimized React Hooks library.',
+      },
+    ],
     algolia: {
       appId: 'Q2W3CLT9WV',
       apiKey: '42a02a23577a58645849ff11cf268127',
