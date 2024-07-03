@@ -28,7 +28,7 @@ export default function Home() {
             </div>
             <p className="text-pretty text-center max-w-320px md:max-w-400px md:text-left">
               <Translate id="homepage.tagline">
-                An SSR-friendly, comprehensive, and highly optimized React Hooks library.
+                A SSR-friendly, comprehensive, and highly optimized React Hooks library.
               </Translate>
             </p>
             <div className="flex gap-4 md:gap-6 items-center">
