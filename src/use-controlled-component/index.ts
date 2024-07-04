@@ -35,7 +35,7 @@ export interface ControlledComponentProps<T> {
   onChange: (eventOrValue?: T | { target: { value: T } }) => void
 }
 
-export interface UseControlledComponentReturns<T> {
+export interface UseControlledComponentReturns<T, P> {
   /**
    * The value of the controlled component
    */
@@ -43,7 +43,7 @@ export interface UseControlledComponentReturns<T> {
   /**
    * The props that should be passed to the controlled component
    */
-  props: ControlledComponentProps<T>
+  props: ControlledComponentProps<T> & P
   /**
    * Reset the value of the controlled component to the initial value
    */
@@ -60,7 +60,7 @@ export interface UseControlledComponentReturns<T> {
 export function useControlledComponent<T = string, P extends object = object>(
   initialValue: T = '' as T,
   options: UseControlledComponentOptions<T, P> = {},
-): UseControlledComponentReturns<T> {
+): UseControlledComponentReturns<T, P> {
   const { fallbackValue, onReset, props, onChange, ...stateOptions } = options
 
   const [value, setValue] = useSafeState(initialValue as T, stateOptions)
@@ -85,7 +85,7 @@ export function useControlledComponent<T = string, P extends object = object>(
     latest.current.onReset?.(initialValue)
   })
 
-  const comProps = isFunction(props) ? props(value) : props ?? {}
+  const comProps = (isFunction(props) ? props(value) : props ?? {}) as P
 
   return {
     value,
