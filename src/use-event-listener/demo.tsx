@@ -21,11 +21,10 @@ export function App() {
   useUnmount(() => toast.remove())
 
   return (
-    <Card>
-      <p className="my-2">Double click anywhere on the window to see the toast</p>
-      <Zone border="amber">
+    <Card className="select-none">
+      <Zone border="amber" className="bg-primary/20">
         <div ref={divRef} className="size-full">
-          <p className="my-2">Click inside the dashed box to see the toast</p>
+          <p className="my-2">Click inside this dashed box to see the toast</p>
         </div>
       </Zone>
       <Toaster />

@@ -1,34 +1,31 @@
-import { Card, KeyValue } from '@/components'
-import { useClickOutside, useCounter } from '@shined/react-use'
+import { Button, Card, Zone } from '@/components'
+import { useClickOutside, useToggle } from '@shined/react-use'
 import { useRef } from 'react'
 
-const cls =
-  'px-4 size-[72px] rounded-2 text-white flex items-center justify-center cursor-pointer select-none hover:opacity-96 active:opacity-80 transition'
-
 export function App() {
-  const [count, actions] = useCounter(0)
+  const [show, toggleShow, showActions] = useToggle(false)
 
   const ref = useRef<HTMLDivElement | null>(null)
-  useClickOutside(ref, () => actions.inc(), { ignore: ['#ignored-div'] })
+
+  console.log(show)
+
+  useClickOutside(ref, () => showActions.setState(false), { ignore: ['#btn-ignored'] })
+
+  console.log(ref.current, show)
 
   return (
     <Card>
-      <KeyValue label="Outside of target click times" value={count} />
+      <Zone>
+        <Button onClick={toggleShow}>Toggle Modal</Button>
+        <Button variant="warning">Outer Element</Button>
+        <Button variant="secondary" id="btn-ignored">
+          Ignored Element
+        </Button>
+      </Zone>
 
-      <div className="flex gap-4">
-        <div ref={ref} className={`${cls} bg-orange/80`}>
-          Target
-        </div>
-        <div className={`${cls} bg-blue/80`}>Other</div>
-        <div className={`${cls} bg-blue/80`}>Other</div>
-      </div>
-
-      <div className="flex gap-4">
-        <div className={`${cls} bg-blue/80`}>Other</div>
-        <div id="ignored-div" className={`${cls} bg-gray/80`}>
-          Ignored
-        </div>
-        <div className={`${cls} bg-blue/80`}>Other</div>
+      <div ref={ref} className={`m-2 p-2 w-[200px] rounded-2 absolute bg-amber/60 ${show ? '' : 'hidden'}`}>
+        <h3>This is a Modal</h3>
+        <p>Click outside to close</p>
       </div>
     </Card>
   )

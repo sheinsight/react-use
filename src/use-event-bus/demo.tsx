@@ -1,6 +1,6 @@
-import { Button, Card, Zone } from '@/components'
-import { useEffectOnce, useEventBus, useUnmount } from '@shined/react-use'
-import { Toaster, toast } from 'react-hot-toast'
+import { Button, Card, KeyValue, Zone } from '@/components'
+import { useEventBus, useMount, useReactive } from '@shined/react-use'
+import { create } from '@shined/reactive'
 
 type EventType = 'eventA' | 'eventB' | 'eventC'
 
@@ -9,14 +9,12 @@ const busIdentifier = Symbol('demo-bus') // or simple string 'demo-bus'
 export function App() {
   const bus = useEventBus<EventType>(busIdentifier)
 
-  useUnmount(() => toast.remove())
-
   return (
     <Card>
       <Zone>
-        <Button onClick={() => bus.emit('eventA', 'hi!')}>Emit 'eventA'</Button>
-        <Button onClick={() => bus.emit('eventB', 'hello')}>Emit 'eventB'</Button>
-        <Button onClick={() => bus.emit('eventC', 'world')}>Emit 'eventC'</Button>
+        <Button onClick={() => bus.emit('eventA', 1)}>Emit 'eventA': child.a++</Button>
+        <Button onClick={() => bus.emit('eventB', 2)}>Emit 'eventB': child.b + 2</Button>
+        <Button onClick={() => bus.emit('eventC', 3)}>Emit 'eventC': child.c + 3</Button>
       </Zone>
       <Child />
     </Card>
@@ -24,26 +22,34 @@ export function App() {
 }
 
 function Child() {
+  const [{ a, b, c }, mutate] = useReactive({ a: 0, b: 0, c: 0 }, { create })
   const bus = useEventBus<EventType>(busIdentifier)
 
-  useEffectOnce(() => {
-    bus.on((event: EventType, payload: string) => {
+  useMount(() => {
+    bus.on((event: EventType, payload: number) => {
       switch (event) {
         case 'eventA':
-          return toast.success(`Child: received Event A, ${payload}`)
+          mutate.a += payload
+          return
         case 'eventB':
-          return toast.success(`Child: received Event B, ${payload}`)
+          mutate.b += payload
+          return
         case 'eventC':
-          return toast.success(`Child: received Event C, ${payload}`)
+          mutate.c += payload
+          return
       }
     })
   })
 
   return (
     <Zone border="amber" row={false}>
-      <h4>Child Component</h4>
+      <div className="font-bold">Child Component</div>
       <div>I will catch all the event emitted by parent</div>
-      <Toaster />
+      <Zone>
+        <KeyValue label="A" value={a} />
+        <KeyValue label="B" value={b} />
+        <KeyValue label="C" value={c} />
+      </Zone>
     </Zone>
   )
 }

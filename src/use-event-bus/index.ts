@@ -62,6 +62,8 @@ export const events = /* #__PURE__ */ new Map<EventBusIdentifier, EventBusEvents
 
 /**
  * A React Hook that provides a simple event bus for your application.
+ *
+ * TODO: add a hooks to consume event (auto release when unmount)
  */
 // biome-ignore lint/suspicious/noExplicitAny: need any
 export function useEventBus<T = any, P = any>(

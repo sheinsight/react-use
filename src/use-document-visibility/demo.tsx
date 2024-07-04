@@ -6,7 +6,7 @@ export function App() {
 
   const isHidden = visibility === 'hidden'
 
-  useTitle(isHidden ? 'おかえりなさい！(≧◡≦) ♡' : 'またね！ヾ(＾-＾)ノ')
+  useTitle(isHidden ? 'またね！ヾ(＾-＾)ノ' : 'おかえりなさい！(≧◡≦) ♡')
 
   return (
     <Card>
