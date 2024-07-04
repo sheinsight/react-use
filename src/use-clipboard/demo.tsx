@@ -13,7 +13,7 @@ export function App() {
 
       <div className="flex gap-2">
         <Input {...input.props} />
-        <Button onClick={() => !clipboard.copied && clipboard.copy(input.value)}>
+        <Button disabled={clipboard.copied} onClick={() => !clipboard.copied && clipboard.copy(input.value)}>
           {clipboard.copied ? 'Copied!' : 'Copy text'}
         </Button>
       </div>

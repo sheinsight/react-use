@@ -15,7 +15,7 @@ export function App() {
       <KeyValue label="Show confirm dialog" value={show} />
       <Zone>
         <Button onClick={() => location.reload()}>Reload this page</Button>
-        <Button onClick={toggle}>Toggle show status</Button>
+        <Button onClick={toggle}>Toggle confirm dialog</Button>
       </Zone>
     </Card>
   )

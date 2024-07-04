@@ -6,6 +6,10 @@ export function App() {
 
   return (
     <Card>
+      <div className="rounded transition-all p-1 bg-primary/36 box-content" style={{ width: max * 20 }}>
+        <div className="rounded transition-all h-[20px] bg-primary/80" style={{ width: count * 20 }} />
+      </div>
+
       <Zone>
         <KeyValue label="Count" value={count} />
         <KeyValue label="Min" value={min} />

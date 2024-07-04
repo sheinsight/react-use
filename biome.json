@@ -37,6 +37,7 @@
               { "name": "useSetState", "stableResult": [1] },
               { "name": "useSignalState", "stableResult": [1] },
               { "name": "useCounter", "stableResult": [1] },
+              { "name": "useCssVar", "stableResult": [1] },
               { "name": "useToggle", "stableResult": [1] },
               { "name": "useTextDirection", "stableResult": [1] },
               { "name": "usePausable", "stableResult": true },

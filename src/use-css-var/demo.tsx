@@ -1,24 +1,28 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
-import { useCssVar, useLoremIpsum } from '@shined/react-use'
+import { Card, KeyValue, Zone } from '@/components'
+import { useCircularList, useCssVar, useIntervalFn, useLoremIpsum, useUpdateEffect } from '@shined/react-use'
 
-const random256 = () => Math.floor(Math.random() * 256)
-const randomColor = () => `rgb(${random256()}, ${random256()}, ${random256()})`
+// biome-ignore format: no wrap
+const rainbow = [['#00a98e', '#4ad1b4', '#78fadc', '#008269', '#005d47', '#009ff7'], ['#00a996', '#4bd1bd', '#79fbe5', '#008371', '#005e4f', '#009dfa'], ['#00a99f', '#4cd1c6', '#7afbee', '#00837a', '#005e56', '#009bfc'], ['#00a9a7', '#4dd1cf', '#7bfbf8', '#008382', '#005e5e', '#0098fd'], ['#00a9b0', '#4ed1d7', '#7dfaff', '#00838a', '#005e65', '#0096fd'], ['#00a9b8', '#4fd1e0', '#7efaff', '#008391', '#005e6d', '#0093fd'], ['#00a9c0', '#50d0e8', '#7ffaff', '#008399', '#005e74', '#2e90fc'], ['#00a8c7', '#51d0f0', '#81f9ff', '#0082a0', '#005e7b', '#4d8dfa'], ['#00a8cf', '#52cff7', '#82f8ff', '#0082a7', '#005e81', '#638af8'], ['#00a7d5', '#53cfff', '#84f8ff', '#0081ae', '#005d87', '#7587f5'], ['#00a6dc', '#55ceff', '#85f7ff', '#0081b4', '#005d8d', '#8583f1'], ['#00a6e2', '#56cdff', '#87f6ff', '#0080b9', '#005c93', '#9280ed'], ['#00a4e7', '#57ccff', '#88f4ff', '#007fbf', '#005b98', '#9f7ce9'], ['#00a3ec', '#58caff', '#89f3ff', '#007ec3', '#005b9c', '#aa78e3'], ['#00a2f1', '#58c9ff', '#8af1ff', '#007dc8', '#0059a0', '#b574dd'], ['#00a0f4', '#59c7ff', '#8bf0ff', '#007bcb', '#0058a3', '#be71d7'], ['#009ff7', '#5ac5ff', '#8ceeff', '#007ace', '#0057a6', '#c76dd1'], ['#009dfa', '#5ac3ff', '#8decff', '#0078d0', '#0055a8', '#cf69c9'], ['#009bfc', '#5bc1ff', '#8de9ff', '#0076d2', '#0053aa', '#d566c2'], ['#0098fd', '#5bbfff', '#8ee7ff', '#0074d3', '#0051ab', '#dc63ba'], ['#0096fd', '#5bbcff', '#8ee4ff', '#0071d4', '#004fab', '#e160b3'], ['#0093fd', '#5bb9ff', '#8ee1ff', '#006fd3', '#004dab', '#e65eab'], ['#2e90fc', '#69b6ff', '#99deff', '#006cd2', '#004baa', '#e95ca2'], ['#4d8dfa', '#7eb3ff', '#abdbff', '#0069d1', '#0048a9', '#ed5a9a'], ['#638af8', '#8fb0ff', '#bbd7ff', '#3066cf', '#0045a7', '#ef5992'], ['#7587f5', '#9fadff', '#cad4ff', '#4963cc', '#0941a4', '#f15989'], ['#8583f1', '#aea9ff', '#d8d1ff', '#5b5fc8', '#2e3ea1', '#f25981'], ['#9280ed', '#bca6ff', '#e6cdff', '#6a5cc4', '#413a9d', '#f25a79'], ['#9f7ce9', '#c8a2ff', '#f2c9ff', '#7758c0', '#503598', '#f25c71'], ['#aa78e3', '#d39eff', '#fec6ff', '#8354bb', '#5c3193', '#f15e69'], ['#b574dd', '#de9bff', '#ffc2ff', '#8d50b5', '#662c8e', '#ef6061'], ['#be71d7', '#e897ff', '#ffbfff', '#964baf', '#6f2688', '#ed635a'], ['#c76dd1', '#f194fa', '#ffbcff', '#9e47a9', '#772082', '#eb6552'], ['#cf69c9', '#f991f2', '#ffb9ff', '#a643a2', '#7e197c', '#e8694b'], ['#d566c2', '#ff8deb', '#ffb6ff', '#ac3f9b', '#841075', '#e46c44'], ['#dc63ba', '#ff8be3', '#ffb3ff', '#b23b94', '#89046f', '#e06f3d'], ['#e160b3', '#ff88db', '#ffb1ff', '#b7378c', '#8d0068', '#db7336'], ['#e65eab', '#ff86d2', '#ffaffb', '#bb3485', '#910060', '#d77630'], ['#e95ca2', '#ff84ca', '#ffadf2', '#be317d', '#940059', '#d17a2a'], ['#ed5a9a', '#ff83c1', '#fface9', '#c12f75', '#970052', '#cc7d24'], ['#ef5992', '#ff82b8', '#ffabe0', '#c32d6d', '#98004b', '#c6811e'], ['#f15989', '#ff82af', '#ffabd7', '#c52d65', '#9a0043', '#bf8418'], ['#f25981', '#ff82a7', '#ffabce', '#c52e5e', '#9a003c', '#b98713'], ['#f25a79', '#ff839e', '#ffacc5', '#c62f56', '#9a0035', '#b28a0f'], ['#f25c71', '#ff8496', '#ffadbc', '#c5314e', '#99002e', '#ab8d0c'], ['#f15e69', '#ff868d', '#ffaeb4', '#c43447', '#980027', '#a3900b'], ['#ef6061', '#ff8885', '#ffb0ab', '#c3373f', '#970020', '#9c920d'], ['#ed635a', '#ff8a7d', '#ffb2a3', '#c13b38', '#940619', '#949510'], ['#eb6552', '#ff8d76', '#ffb59b', '#be3e31', '#921111', '#8b9715'], ['#e8694b', '#ff8f6e', '#ffb794', '#bb4229', '#8f1908', '#83991b'], ['#e46c44', '#ff9367', '#ffba8c', '#b74622', '#8c1f00', '#7a9b21'], ['#e06f3d', '#ff9661', '#ffbd86', '#b44a1a', '#882500', '#719d27'], ['#db7336', '#ff995a', '#ffc17f', '#af4e11', '#842a00', '#679e2e'], ['#d77630', '#ff9c54', '#ffc47a', '#ab5206', '#802f00', '#5da035'], ['#d17a2a', '#fea04f', '#ffc774', '#a55600', '#7b3300', '#51a13c'], ['#cc7d24', '#f8a34a', '#ffca70', '#a05900', '#773700', '#44a244'], ['#c6811e', '#f2a646', '#ffce6c', '#9b5d00', '#713b00', '#34a44b'], ['#bf8418', '#ebaa42', '#ffd168', '#956000', '#6c3e00', '#1ba553'], ['#b98713', '#e4ad3f', '#ffd466', '#8e6300', '#674100', '#00a65b'], ['#b28a0f', '#ddb03d', '#ffd764', '#886600', '#614400', '#00a663'], ['#ab8d0c', '#d5b33c', '#ffda63', '#816900', '#5b4700', '#00a76c'], ['#a3900b', '#cdb63c', '#f8dd63', '#7a6b00', '#554900', '#00a874'], ['#9c920d', '#c5b83d', '#f0e064', '#736e00', '#4e4b00', '#00a87d'], ['#949510', '#bdbb3e', '#e7e366', '#6c7000', '#474d00', '#00a985'], ['#8b9715', '#b4bd41', '#dee668', '#647200', '#404f00', '#00a98e'], ['#83991b', '#abc045', '#d4e86c', '#5c7400', '#385100', '#00a996'], ['#7a9b21', '#a2c249', '#cbea70', '#537600', '#2f5200', '#00a99f'], ['#719d27', '#98c44e', '#c1ec75', '#4a7700', '#255300', '#00a9a7'], ['#679e2e', '#8ec654', '#b7ee7a', '#407900', '#185500', '#00a9b0'], ['#5da035', '#84c75a', '#acf080', '#357a0a', '#015600', '#00a9b8'], ['#51a13c', '#79c961', '#a1f287', '#277b16', '#005700', '#00a9c0'], ['#44a244', '#6dca68', '#96f48e', '#117c1f', '#005700', '#00a8c7'], ['#34a44b', '#60cc70', '#89f595', '#007d28', '#005801', '#00a8cf'], ['#1ba553', '#51cd77', '#7cf69d', '#007e30', '#00590d', '#00a7d5'], ['#00a65b', '#48ce80', '#75f7a6', '#007f38', '#005917', '#00a6dc'], ['#00a663', '#48cf88', '#75f8ae', '#008040', '#005a20', '#00a6e2'], ['#00a76c', '#49cf91', '#76f9b7', '#008049', '#005b28', '#00a4e7'], ['#00a874', '#49d099', '#76f9c0', '#008151', '#005c30', '#00a3ec'], ['#00a87d', '#49d0a2', '#77fac9', '#008159', '#005c37', '#00a2f1'], ['#00a985', '#4ad1ab', '#77fad3', '#008261', '#005d3f', '#00a0f4'], ['#00a98e', '#4ad1b4', '#78fadc', '#008269', '#005d47', '#009ff7']]
 
 export function App() {
   const lorem = useLoremIpsum()
+  const [list, actions] = useCircularList(rainbow)
 
   const [value, _setValue] = useCssVar('--ifm-background-color', { observe: true })
   const [variable, setVariable] = useCssVar('--color', { defaultValue: 'skyblue' })
 
+  useIntervalFn(actions.next, 36)
+
+  useUpdateEffect(() => setVariable(list[1]), [list])
+
   return (
     <Card>
-      <KeyValue label="`--ifm-background-color`" value={value} />
+      <KeyValue label="`--ifm-background-color` in this doc" value={value} />
       <Zone border="primary" row={false}>
         <KeyValue label="`--color` of `<html>`" value={variable} />
-        <div style={{ color: 'var(--color)' }}>{lorem}</div>
-        <Zone>
-          <Button onClick={() => setVariable(randomColor())}>Set random color</Button>
-        </Zone>
+        <div className="transition-all font-bold" style={{ color: 'var(--color' }}>
+          {lorem}
+        </div>
       </Zone>
     </Card>
   )
