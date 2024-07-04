@@ -4,7 +4,9 @@ import { useDocumentVisibility, useTitle } from '@shined/react-use'
 export function App() {
   const visibility = useDocumentVisibility()
 
-  useTitle(visibility === 'visible' ? 'おかえりなさい！(≧◡≦) ♡' : 'またね！ヾ(＾-＾)ノ')
+  const isHidden = visibility === 'hidden'
+
+  useTitle(isHidden ? 'おかえりなさい！(≧◡≦) ♡' : 'またね！ヾ(＾-＾)ノ')
 
   return (
     <Card>

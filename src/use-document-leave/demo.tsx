@@ -6,6 +6,8 @@ export function App() {
 
   return (
     <Card>
+      <KeyValue label="Is user leave page">{isLeave}</KeyValue>
+
       <div className={isLeave ? 'text-amber/80' : 'text-primary/80'}>
         {isLeave ? '再见了～！再见！ヾ(＾-＾)ノ' : '欢迎回来！(≧◡≦) ♡'}
       </div>

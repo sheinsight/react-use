@@ -16,7 +16,10 @@ export function App() {
           {isOverDropZone ? 'Release to drop' : 'Drop files here'}
         </div>
         <img alt="img" src="https://picsum.photos/200/200.jpg" className="size-32 rounded" />
-        <span>(It's merely a image, NOT a file. You need to drop files to see files list)</span>
+        <p>
+          (The photo below is merely a image, NOT a file. You need to drop files here from your explorer to see files
+          list)
+        </p>
       </Zone>
 
       <Zone>
