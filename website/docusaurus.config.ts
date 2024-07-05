@@ -8,7 +8,7 @@ export default {
   title: '@shined/react-use',
   tagline: 'A SSR-friendly, comprehensive, and highly optimized React Hooks library.',
   url: 'https://sheinsight.github.io/react-use/',
-  baseUrl: '/react-use',
+  baseUrl: '/react-use/',
   organizationName: 'sheinsight',
   projectName: '@shined/react-use',
   onBrokenLinks: 'throw',
