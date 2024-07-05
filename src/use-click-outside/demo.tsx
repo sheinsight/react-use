@@ -7,11 +7,7 @@ export function App() {
 
   const ref = useRef<HTMLDivElement | null>(null)
 
-  console.log(show)
-
   useClickOutside(ref, () => showActions.setState(false), { ignore: ['#btn-ignored'] })
-
-  console.log(ref.current, show)
 
   return (
     <Card>
