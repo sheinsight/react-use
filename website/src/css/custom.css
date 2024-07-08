@@ -35,3 +35,8 @@ a:active {
 textarea:disabled {
   background-color: #ffffff99;
 }
+
+pre.shiki {
+  margin: 0;
+  padding: 0.6rem 1.2rem;
+}

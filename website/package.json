@@ -18,11 +18,14 @@
     "@docusaurus/preset-classic": "3.4.0",
     "@formkit/auto-animate": "^0.8.2",
     "@mdx-js/react": "^3.0.1",
+    "@unocss/reset": "^0.61.3",
     "change-case": "^5.4.4",
+    "classnames": "^2.5.1",
     "clsx": "^2.1.1",
     "prism-react-renderer": "^2.3.1",
     "raw-loader": "^4.0.2",
-    "react-hot-toast": "^2.4.1"
+    "react-hot-toast": "^2.4.1",
+    "shiki": "^1.10.3"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.4.0",

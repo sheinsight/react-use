@@ -1,6 +1,6 @@
 import Translate, { translate } from '@docusaurus/Translate'
 import { useLocation } from '@docusaurus/router'
-import { repoBase } from '../utils'
+import { repoBase } from '@site/src/utils'
 
 interface SourceProps {
   name?: string

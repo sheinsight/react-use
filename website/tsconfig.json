@@ -10,6 +10,7 @@
       "node",
       "@docusaurus/module-type-aliases",
       "@docusaurus/theme-classic",
+      "@docusaurus/theme-common",
       "@types/web-bluetooth"
     ],
     "strict": true,
