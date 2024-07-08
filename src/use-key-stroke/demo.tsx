@@ -7,15 +7,15 @@ export function App() {
   useKeyStroke(['=', 'ArrowUp'], () => actions.inc())
   useKeyStroke(['-', 'ArrowDown'], () => actions.dec(), { dedupe: true })
 
-  const isPlusPressed = useKeyStatus(['=', 'ArrowUp'])
-  const isEqualPressed = useKeyStatus(['-', 'ArrowDown'])
+  const isEqualPressed = useKeyStatus(['=', 'ArrowUp'])
+  const isPlusPressed = useKeyStatus(['-', 'ArrowDown'])
 
   return (
     <Card>
       <KeyValue label="Count" value={count} />
       <Zone>
-        <Key name="-/↓" isPressed={isPlusPressed} />
-        <Key name="=/↑" isPressed={isEqualPressed} />
+        <Key size="md" name="↓ / -" isPressed={isPlusPressed} />
+        <Key size="md" name="↑ / =" isPressed={isEqualPressed} />
       </Zone>
     </Card>
   )
