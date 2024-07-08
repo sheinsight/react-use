@@ -1,6 +1,6 @@
-import { useClipboard } from '@shined/react-use'
+import { useAsyncEffect, useClipboard } from '@shined/react-use'
 import { cn } from '@site/src/utils'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { codeToHtml } from 'shiki'
 
 import type { BundledLanguage, BundledTheme } from 'shiki'
@@ -20,17 +20,18 @@ export function CodeBlock(props: Props) {
   const code = content || children || ''
   const clipboard = useClipboard({ source: code })
 
-  useEffect(() => {
-    ;(async () => {
+  useAsyncEffect(
+    async (isCancelled) => {
       const html = await codeToHtml(code, {
         lang: lang ?? 'json',
         theme: theme ?? 'one-dark-pro',
         transformers: [],
       })
 
-      setHtml(html)
-    })()
-  }, [code, lang, theme])
+      if (!isCancelled()) setHtml(html)
+    },
+    [code, lang, theme],
+  )
 
   return (
     <div className={cn('group w-9/10 md:w-full relative', className)}>
