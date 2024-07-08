@@ -19,13 +19,13 @@
     "message": "GitHub",
     "description": "Navbar item with label GitHub"
   },
-  "item.label.Releases": {
+  "item.label.Release": {
     "message": "版本发布",
-    "description": "Navbar item with label Releases"
+    "description": "Navbar item with label Release"
   },
-  "item.label.Releases Notes": {
+  "item.label.Release Notes": {
     "message": "发布记录",
-    "description": "Navbar item with label Releases Notes"
+    "description": "Navbar item with label Release Notes"
   },
   "item.label.CHANGELOG.md": {
     "message": "更新日志",

@@ -147,12 +147,12 @@ export default {
         },
         {
           type: 'dropdown',
-          label: 'Releases',
+          label: 'Release',
           position: 'right',
           items: [
             {
               href: 'https://github.com/sheinsight/react-use/releases',
-              label: 'Releases Notes',
+              label: 'Release Notes',
             },
             {
               href: 'https://github.com/sheinsight/react-use/blob/main/CHANGELOG.md',
