@@ -6,6 +6,7 @@ import type { Config } from '@docusaurus/types'
 
 export default {
   title: '@shined/react-use',
+  favicon: '/logo.svg',
   tagline: 'A SSR-friendly, comprehensive, and highly optimized React Hooks library.',
   url: 'https://sheinsight.github.io',
   baseUrl: '/react-use/',

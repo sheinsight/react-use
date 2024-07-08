@@ -3,6 +3,7 @@ import Translate from '@docusaurus/Translate'
 import { useColorMode } from '@docusaurus/theme-common'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import { Button } from '@site/src/components'
+import Logo from '@site/static/logo.svg'
 import { CodeBlock } from './code-block'
 
 export function Main() {
@@ -11,7 +12,7 @@ export function Main() {
 
   return (
     <div className="flex flex-col items-center md:items-start gap-4 pt-20vh md:pt-12vh">
-      <span className="text-3.6rem">🪝</span>
+      <Logo className="size-32" />
       <h1 className="font-mono">{siteConfig.title}</h1>
       <div className="flex gap-2">
         <img
