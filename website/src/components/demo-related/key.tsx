@@ -1,3 +1,5 @@
+import { cn } from '@site/src/utils'
+
 const keyCls = 'grid place-items-center shadow-md p-2px font-bold rounded-md text-white'
 
 export interface KeyProps {
@@ -13,7 +15,7 @@ export function Key(props: KeyProps) {
   const bgColor = isPressed ? 'bg-primary/80' : 'bg-#888888/60'
 
   return (
-    <div className={`${className} ${bgColor} ${sizeCls} ${keyCls}`}>
+    <div className={cn(className, bgColor, sizeCls, keyCls)}>
       <div className="border rounded border-solid border-#DDDDDD/60 grid place-content-center w-full h-full">
         {name}
       </div>

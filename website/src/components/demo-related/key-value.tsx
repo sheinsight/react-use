@@ -1,3 +1,5 @@
+import { cn } from '@site/src/utils'
+
 interface KeyValueProps {
   label?: string
   labelWidth?: string
@@ -27,7 +29,7 @@ export function KeyValue(props: KeyValueProps) {
         {props.label ?? 'Value'}:{' '}
       </span>
       <div className="flex-1">
-        <span className={`font-bold ${colors[props.color ?? color] || ''}`}>{`${value}`}</span>
+        <span className={cn('font-bold', colors[props.color ?? color] || '')}>{`${value}`}</span>
         <span>{props.suffix}</span>
       </div>
     </div>

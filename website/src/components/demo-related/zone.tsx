@@ -1,3 +1,5 @@
+import { cn } from '../utils'
+
 const colors = {
   red: 'border-red-5/60',
   amber: 'border-amber-5/60',
@@ -43,7 +45,16 @@ export function Zone(props: Props) {
   return (
     <div
       id={id}
-      className={`rounded flex-wrap ${widthCls} ${padding} ${borderTypes[borderType]} ${colors[border]} ${flex} ${centerCls} ${className}`}
+      className={cn(
+        'rounded flex-wrap',
+        widthCls,
+        padding,
+        borderTypes[borderType],
+        colors[border],
+        flex,
+        centerCls,
+        className,
+      )}
       style={{ minWidth: width }}
     >
       {props.children}

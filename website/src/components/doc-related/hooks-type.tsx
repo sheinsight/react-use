@@ -1,5 +1,6 @@
 import Link from '@docusaurus/Link'
 import Translate from '@docusaurus/Translate'
+import { cn } from '@site/src/utils'
 
 interface HooksTypeProps {
   category?: string
@@ -112,7 +113,7 @@ export function Label(props: LabelProps) {
 
   return (
     <Link to={to}>
-      <div className={`${color} inline-flex items-center gap-1 transition-all rounded text-white px-2 py-1 text-sm`}>
+      <div className={cn(color, 'inline-flex items-center gap-1 transition-all rounded text-white px-2 py-1 text-sm')}>
         {children}
       </div>
     </Link>

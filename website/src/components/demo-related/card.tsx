@@ -1,6 +1,6 @@
 import Translate from '@docusaurus/Translate'
 import { useLocation } from '@docusaurus/router'
-import { repoBase } from '@site/src/utils'
+import { cn, repoBase } from '@site/src/utils'
 
 interface CardContentProps
   extends React.PropsWithChildren<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>> {}
@@ -23,7 +23,11 @@ export function Card(
   return (
     <div
       id={id}
-      className={`relative outline-primary/80 gap-4 bg-#AAAAAA/20 dark:bg-#888888/20 rounded-2 p-6 my-2 ${direction} ${className}`}
+      className={cn(
+        'relative outline-primary/80 gap-4 bg-#AAAAAA/20 dark:bg-#888888/20 rounded-2 p-6 my-2',
+        direction,
+        className,
+      )}
       {...rest}
     >
       {!isGetStarted && (

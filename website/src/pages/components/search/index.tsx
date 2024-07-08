@@ -1,7 +1,7 @@
 import Link from '@docusaurus/Link'
 import Translate, { translate } from '@docusaurus/Translate'
 import { useControlledComponent, useCreation, useUrlSearchParams } from '@site/../src'
-import { Labels, iconMap } from '@site/src/components'
+import { Labels, cn, iconMap } from '@site/src/components'
 import { camelCase } from 'change-case'
 import hooks from './hooks.json'
 
@@ -60,7 +60,7 @@ export function SearchHooks() {
           <div
             onClick={() => handleFilterClick('category')}
             onKeyDown={() => handleFilterClick('category')}
-            className={`${getBgColor(!params.category)} ${filterLabelCls}`}
+            className={cn(getBgColor(!params.category), filterLabelCls)}
           >
             {iconMap.SelectAll}
             All
@@ -70,7 +70,7 @@ export function SearchHooks() {
               key={e}
               onClick={() => handleFilterClick('category', e)}
               onKeyDown={() => handleFilterClick('category', e)}
-              className={`${getBgColor(paramsMatch(params.category, e, false))} ${filterLabelCls}`}
+              className={cn(getBgColor(paramsMatch(params.category, e, false)), filterLabelCls)}
             >
               {iconMap[e as keyof typeof iconMap] || ''}
               {e}
@@ -86,7 +86,7 @@ export function SearchHooks() {
           <div
             onClick={() => handleFilterClick('feature')}
             onKeyDown={() => handleFilterClick('feature')}
-            className={`${getBgColor(!params.feature)} ${filterLabelCls}`}
+            className={cn(getBgColor(!params.feature), filterLabelCls)}
           >
             {iconMap.SelectAll}
             All
@@ -96,7 +96,7 @@ export function SearchHooks() {
               key={e}
               onClick={() => handleFilterClick('feature', e)}
               onKeyDown={() => handleFilterClick('feature', e)}
-              className={`${getBgColor(paramsMatch(params.feature, e, false))} ${filterLabelCls}`}
+              className={cn(getBgColor(paramsMatch(params.feature, e, false)), filterLabelCls)}
             >
               {iconMap[e as keyof typeof iconMap] || ''}
               {e}
@@ -108,7 +108,11 @@ export function SearchHooks() {
         <div
           onClick={clearParams}
           onKeyDown={clearParams}
-          className={`${filterLabelCls} flex items-center gap-1 ${hasFilter ? 'bg-amber/20 hover:bg-amber/32' : 'cursor-not-allowed'}`}
+          className={cn(
+            filterLabelCls,
+            'flex items-center gap-1',
+            hasFilter ? 'bg-amber/20 hover:bg-amber/32' : 'cursor-not-allowed',
+          )}
         >
           <div className="i-mdi:filter-remove-outline w-1rem h-1rem" />
           <Translate id="homepage.filter.clear">Clear Filters</Translate>
