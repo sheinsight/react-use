@@ -54,7 +54,7 @@
     "prepack": "clean-pkg-json",
     "prerelease": "pnpm run lint",
     "release": "bumpp",
-    "postrelease": "pnpm run changelog",
+    "postrelease": "pnpm run changelog && git add CHANGELOG.md && git commit -m 'chore: update changelog' && git push",
     "test": "vitest",
     "test:ci": "pnpm run lint && vitest",
     "docs:dev": " pnpm -C website run dev",
