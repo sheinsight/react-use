@@ -33,6 +33,8 @@ A SSR-friendly, comprehensive, standardized and highly optimized React Hooks lib
 - **First-class TypeScript Support**: Written in [TypeScript](https://www.typescriptlang.org/) with well-named type definitions and [JSDoc](https://jsdoc.app/) Comment.
 - **~~Comprehensive Testing~~**: (Coming soon...)
 
+Primarily inspired by [VueUse](https://vueuse.org/), along with influences from [react-use](https://github.com/streamich/react-use), [ahooks](https://ahooks.js.org/), and many other excellent libraries within the community. Huge thanks to the Open Source community, especially the authors of the libraries mentioned above, for their great work and inspiration.
+
 Visit the [Get Started](https://sheinsight.github.io/react-use/docs/get-started) section to explore how it can be integrated into your project.
 
 ## ⚡️ Optimizations
