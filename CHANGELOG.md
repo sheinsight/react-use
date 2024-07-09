@@ -1,3 +1,12 @@
+## [1.1.4](https://github.com/sheinsight/react-use/compare/v1.1.3...v1.1.4) (2024-07-09)
+
+
+### Bug Fixes
+
+* **useControlledComponent:** fix  TS generic type error ([7292a1b](https://github.com/sheinsight/react-use/commit/7292a1b4feedf7656a0192b86f6c92b8925f5201))
+
+
+
 ## [1.1.3](https://github.com/sheinsight/react-use/compare/v1.1.2...v1.1.3) (2024-07-03)
 
 
