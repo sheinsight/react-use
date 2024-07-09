@@ -28,8 +28,10 @@ export function Main() {
         </Translate>
       </p>
       <CodeBlock
-        content="npm i @shined/react-use --save"
         lang="sh"
+        className="overflow-hidden"
+        codeClassName="overflow-hidden"
+        content="npm i @shined/react-use --save"
         theme={isDarkTheme ? 'one-dark-pro' : 'one-light'}
       />
       <div className="flex gap-4 md:gap-6 items-center">

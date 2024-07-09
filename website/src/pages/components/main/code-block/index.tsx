@@ -8,6 +8,7 @@ import type { BundledLanguage, BundledTheme } from 'shiki'
 interface Props {
   children?: string
   className?: string
+  codeClassName?: string
   content?: string
   lang?: BundledLanguage | 'text'
   theme?: BundledTheme
@@ -15,7 +16,7 @@ interface Props {
 
 export function CodeBlock(props: Props) {
   const [html, setHtml] = useState('')
-  const { content, className = '', lang, theme, children } = props
+  const { content, codeClassName = '', className = '', lang, theme, children } = props
 
   const code = content || children || ''
   const clipboard = useClipboard({ source: code })
@@ -47,7 +48,7 @@ export function CodeBlock(props: Props) {
         <div className="p-1 text-gray-5! dark:text-white!">{clipboard.copied ? 'Copied' : 'Copy'}</div>
       </button>
       {/* biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
-      <div className="m-0 overflow-scroll" dangerouslySetInnerHTML={{ __html: html }} />
+      <div className={cn('m-0 overflow-scroll', codeClassName)} dangerouslySetInnerHTML={{ __html: html }} />
     </div>
   )
 }
