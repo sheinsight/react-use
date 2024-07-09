@@ -68,7 +68,7 @@
     "description": "filter tip"
   },
   "homepage.tagline":{
-    "message": "一个 SSR 友好、覆盖面广、标准化和高度优化的 React Hooks 库。",
+    "message": "一个 SSR 友好、全面、标准化和高度优化的 React Hooks 库。",
     "description": "tagline"
   },
   "homepage.button.introduction":{

@@ -24,7 +24,7 @@ export function Main() {
       </div>
       <p className="text-pretty text-center max-w-320px md:max-w-400px md:text-left mb-0">
         <Translate id="homepage.tagline">
-          A SSR-friendly, comprehensive, and highly optimized React Hooks library.
+          A SSR-friendly, comprehensive, standardized and highly optimized React Hooks library.
         </Translate>
       </p>
       <CodeBlock
