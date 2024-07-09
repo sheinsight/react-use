@@ -14,8 +14,8 @@ export function App() {
     <Card>
       <KeyValue label="Count" value={count} />
       <Zone>
-        <Key size="md" name="↓ / -" isPressed={isPlusPressed} />
-        <Key size="md" name="↑ / =" isPressed={isEqualPressed} />
+        <Key className="w-14!" name="↓ / -" isPressed={isPlusPressed} />
+        <Key className="w-14!" name="↑ / =" isPressed={isEqualPressed} />
       </Zone>
     </Card>
   )
