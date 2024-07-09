@@ -1,8 +1,8 @@
 {
   "position": 3,
   "label": "Features",
-  "collapsed": true,
   "collapsible": true,
+  "collapsed": false,
   "link": {
     "type": "generated-index",
     "title": "Features in Hooks"
