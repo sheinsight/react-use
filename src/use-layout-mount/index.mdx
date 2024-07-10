@@ -8,11 +8,7 @@ import Link from '@docusaurus/Link'
 
 A React Hooks that is similar to <Link to="/reference/use-mount">`useMount`</Link> but use <Link to="/reference/use-isomorphic-layout-effect">`useIsomorphicLayoutEffect`</Link> under the hood.
 
-Usually, you should use `useLayoutMount` instead of `useMount` if you want to run some code that may affect the layout in the next frame.
-
 ## Demo
-
-Try to click refresh multiple times, and you will see a layout jitter in the following `useMount` demo.
 
 import { App } from './demo'
 
@@ -26,6 +22,8 @@ import source from '!!raw-loader!./demo'
 <RawCode>{source}</RawCode>
 
 ## Source
+
+Open DevTools to see the logs.
 
 import { Source } from '@/components'
 
