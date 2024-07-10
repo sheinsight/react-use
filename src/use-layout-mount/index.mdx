@@ -1,0 +1,53 @@
+# useLayoutMount
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" />
+
+import Link from '@docusaurus/Link'
+
+A React Hooks that is similar to <Link to="/reference/use-mount">`useMount`</Link> but use <Link to="/reference/use-isomorphic-layout-effect">`useIsomorphicLayoutEffect`</Link> under the hood.
+
+Usually, you should use `useLayoutMount` instead of `useMount` if you want to run some code that may affect the layout in the next frame.
+
+## Demo
+
+Try to click refresh multiple times, and you will see a layout jitter in the following `useMount` demo.
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+
+```tsx
+useLayoutMount(callback, strictOnce)
+```
+
+### Callback
+
+A `function` that will be called when the component mounts (useLayoutEffect), can be **async**.
+
+### StrictOnce
+
+:::warning
+
+`strictOnce` option is **NOT** recommended as it [damages](https://react.dev/learn/synchronizing-with-effects#dont-use-refs-to-prevent-effects-from-firing) the original intention of React 18's strict mode.
+
+:::
+
+A `boolean` that indicates whether the handler should be called only once in React 18's [Strict Mode](https://react.dev/reference/react/StrictMode). Default is `false`.

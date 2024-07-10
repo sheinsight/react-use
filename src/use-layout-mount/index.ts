@@ -1,25 +1,27 @@
 import { useRef } from 'react'
-import { useEffectOnce } from '../use-effect-once'
 import { useLatest } from '../use-latest'
+import { useLayoutEffectOnce } from '../use-layout-effect-once'
 import { isFunction } from '../utils/basic'
 
 import type { AnyFunc } from '../utils/basic'
 
 /**
- * A React Hook that runs a function only once when the component mounts.
+ * A React Hooks that is similar to <Link to="/reference/use-mount">`useMount`</Link> but use <Link to="/reference/use-isomorphic-layout-effect">`useIsomorphicLayoutEffect`</Link> under the hood.
+ *
+ * Usually, you should use `useLayoutMount` instead of `useMount` if you want to run some code that may affect the layout in the next frame.
  *
  * **Strict Once** option is **NOT** recommended as it [damages](https://react.dev/learn/synchronizing-with-effects#dont-use-refs-to-prevent-effects-from-firing) the original intention of React 18's strict mode.
  *
- * @param callback The callback to run when the component is mounted.
+ * @param callback The callback to run when the component is mounted (useLayoutEffect).
  * @param strictOnce If `true`, the callback will only be executed once. NOTE: **NOT** recommended.
  * @returns {void} `void`
  *
  */
-export function useMount(callback?: AnyFunc | null | undefined | false, strictOnce = false): void {
+export function useLayoutMount(callback?: AnyFunc | null | undefined | false, strictOnce = false): void {
   const isMountedOnceRef = useRef(false)
   const latest = useLatest({ callback })
 
-  useEffectOnce(() => {
+  useLayoutEffectOnce(() => {
     if (!latest.current) return
 
     if (strictOnce) {
