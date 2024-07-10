@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { useEventListener } from '../use-event-listener'
+import { useIsomorphicLayoutEffect } from '../use-isomorphic-layout-effect'
 import { useSetState } from '../use-set-state'
 import { useStableFn } from '../use-stable-fn'
 import { useSupported } from '../use-supported'
@@ -88,11 +89,9 @@ export function useNetwork(): UseNetworkReturns {
 
   const updateNetworkInformation = useStableFn(() => setState(getNetwork()))
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!isSupported) return
-
     connectionRef.current = (navigator as ExtendedNavigator)?.connection
-
     updateNetworkInformation()
   }, [isSupported])
 
