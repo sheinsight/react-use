@@ -1,7 +1,7 @@
 {
   "name": "@shined/react-use",
   "type": "module",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "packageManager": "pnpm@9.5.0",
   "description": "A SSR-friendly, comprehensive, standardized and highly optimized React Hooks library.",
   "author": "Viki <hi@viki.moe> (https://github.com/vikiboss)",
