@@ -1,6 +1,6 @@
 import { useEventListener } from '../use-event-listener'
 import { useLatest } from '../use-latest'
-import { useMount } from '../use-mount'
+import { useLayoutMount } from '../use-layout-mount'
 import { useMutationObserver } from '../use-mutation-observer'
 import { useSetState } from '../use-set-state'
 import { useStableFn } from '../use-stable-fn'
@@ -66,7 +66,7 @@ export function useWindowScroll(options: UseWindowScrollOptions = {}): UseWindow
     setState(getPositionState())
   }
 
-  useMount(updateState)
+  useLayoutMount(updateState)
 
   useMutationObserver(() => document.documentElement, updateState, {
     subtree: true,
