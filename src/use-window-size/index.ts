@@ -1,6 +1,6 @@
 import { useEventListener } from '../use-event-listener'
+import { useLayoutMount } from '../use-layout-mount'
 import { useMediaQuery } from '../use-media-query'
-import { useMount } from '../use-mount'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
 import { useUpdateEffect } from '../use-update-effect'
@@ -55,7 +55,7 @@ export function useWindowSize(options: UseWindowSizeOptions = {}): UseWindowSize
   const [size, setSize] = useSafeState<Size>({ width: initialWidth, height: initialHeight }, { deep: true })
   const update = useStableFn(() => setSize(getWindowSize(includeScrollbar)))
 
-  useMount(update)
+  useLayoutMount(update)
 
   useEventListener(() => window, 'resize', update, { passive: true })
 
