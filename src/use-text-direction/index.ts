@@ -1,4 +1,4 @@
-import { useLayoutMount } from '../use-layout-mount'
+import { useMount } from '../use-mount'
 import { useSafeState } from '../use-safe-state'
 import { normalizeElement, useTargetElement } from '../use-target-element'
 import { useUpdateEffect } from '../use-update-effect'
@@ -43,7 +43,7 @@ export function useTextDirection(options: UseTextDirectionOptions = {}): UseText
   const el = useTargetElement(target)
   const [dir, setDir] = useSafeState(initialValue)
 
-  useLayoutMount(() => setDir(getDirAttribute(el.current, initialValue)))
+  useMount(() => setDir(getDirAttribute(el.current, initialValue)))
 
   useUpdateEffect(() => {
     if (!el.current) return

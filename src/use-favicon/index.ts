@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useGetterRef } from '../use-getter-ref'
 import { useLatest } from '../use-latest'
-import { useLayoutMount } from '../use-layout-mount'
+import { useMount } from '../use-mount'
 import { usePrevious } from '../use-previous'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
@@ -120,7 +120,7 @@ export function useFavicon(newIcon: FaviconType = null, options: UseFaviconOptio
     }
   })
 
-  useLayoutMount(() => !faviconHref && syncOnMount && syncFavicon(true))
+  useMount(() => !faviconHref && syncOnMount && syncFavicon(true))
 
   useEffect(() => {
     const isUpdatedIcon = isString(faviconHref) && faviconHref !== latest.current.previousFavicon

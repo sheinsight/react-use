@@ -1,5 +1,5 @@
 import { useLatest } from '../use-latest'
-import { useLayoutMount } from '../use-layout-mount'
+import { useMount } from '../use-mount'
 import { useMutationObserver } from '../use-mutation-observer'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
@@ -63,7 +63,7 @@ export function useCssVar<T extends HTMLElement = HTMLElement>(
     _setVariable(value)
   })
 
-  useLayoutMount(() => void getPropertyValue())
+  useMount(() => void getPropertyValue())
 
   useMutationObserver(observe ? el : null, getPropertyValue, { attributes: true })
 

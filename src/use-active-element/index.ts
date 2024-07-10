@@ -1,5 +1,5 @@
 import { useEventListener } from '../use-event-listener'
-import { useLayoutMount } from '../use-layout-mount'
+import { useMount } from '../use-mount'
 import { useSafeState } from '../use-safe-state'
 
 export interface UseActiveElementOptions {
@@ -30,7 +30,7 @@ export function useActiveElement(options: UseActiveElementOptions = {}): Element
     }
   }
 
-  useLayoutMount(updateElement)
+  useMount(updateElement)
 
   useEventListener(() => window, 'focus', updateElement, true)
   useEventListener(() => window, 'blur', blurHandler, true)
