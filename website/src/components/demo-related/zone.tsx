@@ -1,4 +1,4 @@
-import { cn } from '../utils'
+import { cn } from '@site/src/utils'
 
 const colors = {
   red: 'border-red-5/60',
