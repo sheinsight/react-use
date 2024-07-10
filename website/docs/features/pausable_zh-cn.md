@@ -13,7 +13,7 @@
 ```tsx
 export type Pausable<PauseArgs extends unknown[] = [], ResumeArgs extends unknown[] = []> = {
   /**
-   * 实例是否处于活跃状态，它只是一个 ref getter
+   * 实例是否处于活跃状态，它只是一个 Ref Getter
    */
   isActive(): boolean
   /**

@@ -31,7 +31,7 @@ Ref Getter 是一个专门设计用来访问 React ref 当前值的函数，从�
 
 ## `useGetterRef`
 
-`useGetterRef` 是一个自定义 Hook，旨在简化 ref getter 函数及对应 ref 对象的创建。这种设置让你可以通过 ref getter 函数轻松获取 ref 的当前值，同时还能直接更新 ref。
+`useGetterRef` 是一个自定义 Hook，旨在简化 Ref Getter 函数及对应 ref 对象的创建。这种设置让你可以通过 Ref Getter 函数轻松获取 ref 的当前值，同时还能直接更新 ref。
 
 ```tsx
 const [isActive, isActiveRef] = useGetterRef(false)
@@ -49,15 +49,15 @@ console.log(isActive) // 输出：true
 
 ### `isActive` {#is-active}
 
-这是由 `usePausable` 创建的一个 ref getter，详见 [Pausable](/docs/features/pausable) 获取更多详情。
+这是由 `usePausable` 创建的一个 Ref Getter，详见 [Pausable](/docs/features/pausable) 获取更多详情。
 
 ### `isMounted` {#is-mounted}
 
-这是由 `useMounted` 创建的一个 ref getter，详见 [useMounted](/reference/use-mounted) 获取更多详情。
+这是由 `useMounted` 创建的一个 Ref Getter，详见 [useMounted](/reference/use-mounted) 获取更多详情。
 
 ### `isUnmounted` {#is-unmounted}
 
-这是由 `useUnmounted` 创建的一个 ref getter，详见 [useUnmounted](/reference/use-unmounted) 获取更多详情。
+这是由 `useUnmounted` 创建的一个 Ref Getter，详见 [useUnmounted](/reference/use-unmounted) 获取更多详情。
 
 ### `isCancelled` {#is-cancelled}
 

@@ -13,7 +13,7 @@ A `Pausable` instance is defined as follows:
 ```tsx
 export type Pausable<PauseArgs extends unknown[] = [], ResumeArgs extends unknown[] = []> = {
   /**
-   * Whether the instance is active, it just a ref getter
+   * Whether the instance is active, it just a Ref Getter
    */
   isActive(): boolean
   /**

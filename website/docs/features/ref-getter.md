@@ -4,20 +4,20 @@ sidebar_position: 3
 
 # Ref Getter {#ref-getter}
 
-A ref getter is a specialized function designed to access the current value of a React ref.
+A Ref Getter is a specialized function designed to access the current value of a React ref.
 
 ## TL; DR {#tl-dr}
 
 - It can avoid issues related to stale closures effectively and simplify the reading of ref values.
 - It is useful in scenarios where ref is read frequently, such as custom Hooks or complex component logic.
-- Utilizing a ref getter does not trigger re-renders when the ref’s value is altered.
+- Utilizing a Ref Getter does not trigger re-renders when the ref’s value is altered.
 - To achieve a re-render based on changes, consider using `useState` or `useReducer`.
 
 ## Motivation {#motivation}
 
-In React, managing efficiently the access and update of values without re-rendering components is crucial for performance optimization.This is where a **ref getter** comes into play.
+In React, managing efficiently the access and update of values without re-rendering components is crucial for performance optimization.This is where a **Ref Getter** comes into play.
 
-A ref getter is a specialized function designed to access the current value of a React ref, thereby circumventing the need to directly engage with `ref.current`. This utility shines in scenarios such as custom Hooks or complex component logic, where the value of a ref is needed frequently. It guarantees the retrieval of the ref’s most current value, effectively avoiding issues related to stale closures.
+A Ref Getter is a specialized function designed to access the current value of a React ref, thereby circumventing the need to directly engage with `ref.current`. This utility shines in scenarios such as custom Hooks or complex component logic, where the value of a ref is needed frequently. It guarantees the retrieval of the ref’s most current value, effectively avoiding issues related to stale closures.
 
 It is important to note that utilizing a ref this way does **NOT** trigger re-renders when the ref’s value is altered. To achieve a re-render based on changes, employing `useState` or `useReducer` is advisable.
 
@@ -31,7 +31,7 @@ This delicate balance ensures your application remains both performant and maint
 
 ## `useGetterRef` {#use-getter-ref}
 
-`useGetterRef` is a custom Hook crafted to streamline the creation of a ref getter function alongside a ref object. This setup allows you to effortlessly fetch the current value of the ref via the ref getter function, while also granting the ability to update the ref directly.
+`useGetterRef` is a custom Hook crafted to streamline the creation of a Ref Getter function alongside a ref object. This setup allows you to effortlessly fetch the current value of the ref via the Ref Getter function, while also granting the ability to update the ref directly.
 
 ```tsx
 const [isActive, isActiveRef] = useGetterRef(false)
@@ -49,15 +49,15 @@ console.log(isActive) // Outputs: true
 
 ### `isActive` {#is-active}
 
-It is a ref getter created by `usePausable`, see [Pausable](/docs/features/pausable) for more details.
+It is a Ref Getter created by `usePausable`, see [Pausable](/docs/features/pausable) for more details.
 
 ### `isMounted` {#is-mounted}
 
-It is a ref getter created by `useMounted`, see [useMounted](/reference/use-mounted) for more details.
+It is a Ref Getter created by `useMounted`, see [useMounted](/reference/use-mounted) for more details.
 
 ### `isUnmounted` {#is-unmounted}
 
-It is a ref getter created by `useUnmounted`, see [useUnmounted](/reference/use-unmounted) for more details.
+It is a Ref Getter created by `useUnmounted`, see [useUnmounted](/reference/use-unmounted) for more details.
 
 ### `isCancelled` {#is-cancelled}
 

@@ -6,7 +6,7 @@ import { useStableFn } from '../use-stable-fn'
 
 export interface Pausable<PauseArgs extends unknown[] = [], ResumeArgs extends unknown[] = []> {
   /**
-   * Whether the instance is active, it just a ref getter
+   * Whether the instance is active, it just a Ref Getter
    */
   isActive(): boolean
   /**
