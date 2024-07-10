@@ -1,5 +1,5 @@
 import { Card } from '@/components'
-import { useLayoutMount, useMount } from '@shined/react-use'
+import { useLayoutMount, useMount, useSafeState } from '@shined/react-use'
 import { useRef } from 'react'
 
 export function App() {
@@ -13,14 +13,18 @@ export function App() {
 
 function Mount() {
   const ref = useRef<HTMLDivElement>(null)
+  const [height, setHeight] = useSafeState(0)
+
+  const now = performance.now()
+  while (performance.now() - now < 200) {}
 
   useMount(() => {
-    const { height } = ref.current?.getBoundingClientRect() ?? {}
-    console.log('useMount', height)
+    const { height = 0 } = ref.current?.getBoundingClientRect() ?? {}
+    setHeight(height)
   })
 
   return (
-    <div ref={ref} className={'p-4 bg-primary/80 text-white rounded flex items-center'}>
+    <div style={{ height: height + 10 }} ref={ref} className={'p-4 bg-primary/80 text-white rounded flex items-center'}>
       useMount
     </div>
   )
@@ -28,14 +32,18 @@ function Mount() {
 
 function LayoutMount() {
   const ref = useRef<HTMLDivElement>(null)
+  const [height, setHeight] = useSafeState(0)
+
+  const now = performance.now()
+  while (performance.now() - now < 200) {}
 
   useLayoutMount(() => {
-    const { height } = ref.current?.getBoundingClientRect() ?? {}
-    console.log('useLayoutMount', height)
+    const { height = 0 } = ref.current?.getBoundingClientRect() ?? {}
+    setHeight(height)
   })
 
   return (
-    <div ref={ref} className={'p-4 bg-primary/80 text-white rounded flex items-center'}>
+    <div style={{ height: height + 10 }} ref={ref} className={'p-4 bg-primary/80 text-white rounded flex items-center'}>
       useLayoutMount
     </div>
   )
