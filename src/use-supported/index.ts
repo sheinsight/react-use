@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useIsomorphicLayoutEffect } from '../use-isomorphic-layout-effect'
 import { useLatest } from '../use-latest'
 import { useSafeState } from '../use-safe-state'
 
@@ -12,7 +12,7 @@ export function useSupported(callback: () => unknown, deps: DependencyList = [])
 
   const latest = useLatest({ callback })
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     setIsSupported(Boolean(latest.current.callback()))
   }, deps)
 
