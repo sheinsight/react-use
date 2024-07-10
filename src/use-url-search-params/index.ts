@@ -1,5 +1,5 @@
 import { useEventListener } from '../use-event-listener'
-import { useMount } from '../use-mount'
+import { useLastUpdated } from '../use-last-updated'
 import { usePausableUpdateDeepCompareEffect } from '../use-pausable-update-deep-compare-effect'
 import { useSetState } from '../use-set-state'
 import { useStableFn } from '../use-stable-fn'
@@ -106,7 +106,7 @@ export function useUrlSearchParams<
 
   useEventListener(() => window, mode !== 'history' ? 'hashchange' : [], handleChange, false)
 
-  useMount(() => {
+  useLastUpdated(() => {
     const initialSp = read()
 
     if (initialSp.size) {
