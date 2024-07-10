@@ -1,6 +1,6 @@
 import { useCreation } from '../use-creation'
 import { useEventListener } from '../use-event-listener'
-import { useMount } from '../use-mount'
+import { useLayoutMount } from '../use-layout-mount'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
 import { normalizeElement, useTargetElement } from '../use-target-element'
@@ -49,7 +49,7 @@ export function useFocus<T extends HTMLElement = HTMLElement>(
   useEventListener(el, 'focus', () => setFocused(true))
   useEventListener(el, 'blur', () => setFocused(false))
 
-  useMount(() => {
+  useLayoutMount(() => {
     const isCurrentFocused = isElActive(el)
 
     if (focused && !isCurrentFocused) focus()
