@@ -1,5 +1,5 @@
 import { useCreation } from '../use-creation'
-import { useDeepCompareEffect } from '../use-deep-compare-effect'
+import { useDeepCompareLayoutEffect } from '../use-deep-compare-layout-effect'
 import { useLatest } from '../use-latest'
 import { useMediaQuery } from '../use-media-query'
 import { useSafeState } from '../use-safe-state'
@@ -111,7 +111,7 @@ export function useBreakpoints<K extends string>(
   const match = useStableFn((query: string) => Boolean(window?.matchMedia(query).matches))
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: effect need to re-run when breakpoints changes
-  useDeepCompareEffect(() => setQueries(transformQueries()), [breakpoints])
+  useDeepCompareLayoutEffect(() => setQueries(transformQueries()), [breakpoints])
 
   const isGreater = useStableFn((k: K) => match(`(min-width: ${calcValue(k)})`))
   const isSmaller = useStableFn((k: K) => match(`(max-width: ${calcValue(k, -0.1)})`))
