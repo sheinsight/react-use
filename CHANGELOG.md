@@ -1,3 +1,29 @@
+# [1.2.0](https://github.com/sheinsight/react-use/compare/v1.1.4...v1.2.0) (2024-07-10)
+
+
+### Bug Fixes
+
+* **useActiveElement:** use `useLayoutMount` to prevent layout jitter ([f8e2597](https://github.com/sheinsight/react-use/commit/f8e2597d9a906ceb047f06eb58cc7e0324125021))
+* **useBreakpoints:** use `useDeepCompareLayoutEffect` to prevent layout jitter ([5a58843](https://github.com/sheinsight/react-use/commit/5a5884347fde156bbde5bdcdc531dfe94f8fc977))
+* **useCssVar:** use `useLayoutMount` to prevent layout jitter ([7935a16](https://github.com/sheinsight/react-use/commit/7935a16595e618f1122c9790405d718233797217))
+* **useFavicon:** use `useLayoutMount` to prevent layout jitter ([d0c8233](https://github.com/sheinsight/react-use/commit/d0c8233dfad8e5bbcb202813de6ad4e51ff48a4d))
+* **useFocus:** use `useLayoutMount` to prevent layout jitter ([f295032](https://github.com/sheinsight/react-use/commit/f295032745b1c374a922df9be25d13217262bf92))
+* **useMediaQuery:** use `useDeepCompareLayoutEffect` to prevent layout jitter ([11f164f](https://github.com/sheinsight/react-use/commit/11f164f4f4755b951e7fc28302aee5f1f79cce5d))
+* **useNetwork:** use `useIsomorphicLayoutEffect` to prevent layout jitter ([04255e7](https://github.com/sheinsight/react-use/commit/04255e7f4c59db9ca61e62dc57f4e1d34d6413c1))
+* **useSupported:** use `useIsomorphicLayoutEffect` to prevent layout jitter ([b53787a](https://github.com/sheinsight/react-use/commit/b53787a1933c6de602ee67cb281ffc3950ffea60))
+* **useTextDirection:** use `useLayoutMount` to prevent layout jitter ([fc4743e](https://github.com/sheinsight/react-use/commit/fc4743efb1b0caa2ec32840ffcf40b211e9b3600))
+* **useUrlSearchParams:** use `useLayoutMount` to prevent layout jitter ([584d1f8](https://github.com/sheinsight/react-use/commit/584d1f88de5e686707399889093637037d8da6e8))
+* **useWindowFocus:** use `useLayoutMount` to prevent layout jitter ([273e959](https://github.com/sheinsight/react-use/commit/273e959b992f7b5ea392285066e9b520be1e9920))
+* **useWindowScroll:** use `useLayoutMount` to prevent layout jitter ([d136b2d](https://github.com/sheinsight/react-use/commit/d136b2d80c00b27403fcde4d481f748917cb5e5d))
+* **useWindowSize:** use `useLayoutMount` to prevent layout jitter ([c1d0b90](https://github.com/sheinsight/react-use/commit/c1d0b90867e6b154234bc7376a96e4d35509c35c))
+
+
+### Features
+
+* **useLayoutMount:** add `useLayoutMount` Hook ([25bb07f](https://github.com/sheinsight/react-use/commit/25bb07f4b45546a440d9850cbc6ead53fb838642))
+
+
+
 ## [1.1.4](https://github.com/sheinsight/react-use/compare/v1.1.3...v1.1.4) (2024-07-09)
 
 
