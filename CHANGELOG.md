@@ -1,3 +1,13 @@
+## [1.2.1](https://github.com/sheinsight/react-use/compare/v1.2.0...v1.2.1) (2024-07-10)
+
+
+### Bug Fixes
+
+* use `useMount` to improve performance ([0237634](https://github.com/sheinsight/react-use/commit/023763484e0cefbe09cf7cdb547f7c28a90c9c49))
+* **useUrlSearchParams:** fix wrong Hook usage ([6efb038](https://github.com/sheinsight/react-use/commit/6efb0381dbc5d46262cf0a22ae82a0304697a5ac))
+
+
+
 # [1.2.0](https://github.com/sheinsight/react-use/compare/v1.1.4...v1.2.0) (2024-07-10)
 
 
