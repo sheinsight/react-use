@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Ref 获取函数 (Ref Getter) {#ref-getter}
+# Ref 获取函数 Ref Getter {#ref-getter}
 
 Ref Getter 是一个专门设计用来访问 React ref 当前值的函数。
 
