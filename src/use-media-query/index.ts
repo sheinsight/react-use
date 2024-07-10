@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { useDeepCompareEffect } from '../use-deep-compare-effect'
+import { useDeepCompareLayoutEffect } from '../use-deep-compare-layout-effect'
 import { useLatest } from '../use-latest'
 import { useSafeState } from '../use-safe-state'
 import { unwrapArrayable, unwrapGettable } from '../utils/unwrap'
@@ -26,7 +26,7 @@ export function useMediaQuery<T extends UseMediaQueryType, R extends Arrayable<T
 
   const latest = useLatest(matches)
 
-  useDeepCompareEffect(() => {
+  useDeepCompareLayoutEffect(() => {
     if (!queryStrings.length) return
 
     // https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia#browser_compatibility
