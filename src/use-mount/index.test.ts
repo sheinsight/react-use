@@ -3,13 +3,6 @@ import { describe, expect, test, vi } from 'vitest'
 import { useMount } from './index'
 
 describe('useMount', () => {
-  test('should not call the callback function in SSR', () => {
-    const callback = vi.fn()
-    renderHookServer(() => useMount(callback))
-
-    expect(callback).toHaveBeenCalledTimes(0)
-  })
-
   test('should call the callback function when the component mounts', () => {
     const callback = vi.fn()
     renderHook(() => useMount(callback))

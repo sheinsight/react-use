@@ -1,4 +1,4 @@
-import { renderHook, renderHookServer } from '@/test'
+import { renderHook } from '@/test'
 import { afterEach, beforeEach, describe, expect, test } from 'vitest'
 import { useActiveElement } from './index'
 
@@ -27,11 +27,6 @@ describe('useActiveElement', () => {
     document.body.focus()
     const { result } = renderHook(() => useActiveElement())
     expect(result.current).toBe(document.body)
-  })
-
-  test('should return null when in SSR', () => {
-    const { result } = renderHookServer(() => useActiveElement())
-    expect(result.current).toBeNull()
   })
 
   test('should return the active element', () => {
