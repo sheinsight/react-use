@@ -2,18 +2,18 @@
 sidebar_position: 3
 ---
 
-# Ref Getter
+# Ref Getter {#ref-getter}
 
 A ref getter is a specialized function designed to access the current value of a React ref.
 
-## TL; DR
+## TL; DR {#tl-dr}
 
 - It can avoid issues related to stale closures effectively and simplify the reading of ref values.
 - It is useful in scenarios where ref is read frequently, such as custom Hooks or complex component logic.
 - Utilizing a ref getter does not trigger re-renders when the ref’s value is altered.
 - To achieve a re-render based on changes, consider using `useState` or `useReducer`.
 
-## Motivation
+## Motivation {#motivation}
 
 In React, managing efficiently the access and update of values without re-rendering components is crucial for performance optimization.This is where a **ref getter** comes into play.
 
@@ -29,7 +29,7 @@ This delicate balance ensures your application remains both performant and maint
 
 :::
 
-## `useGetterRef`
+## `useGetterRef` {#use-getter-ref}
 
 `useGetterRef` is a custom Hook crafted to streamline the creation of a ref getter function alongside a ref object. This setup allows you to effortlessly fetch the current value of the ref via the ref getter function, while also granting the ability to update the ref directly.
 
@@ -45,15 +45,11 @@ isActiveRef.current = true
 console.log(isActive) // Outputs: true
 ```
 
-## Ref Getters in This Library
+## Ref (or value) Getter in This Library {#ref-getter-in-this-library}
 
 ### `isActive` {#is-active}
 
 It is a ref getter created by `usePausable`, see [Pausable](/docs/features/pausable) for more details.
-
-### `isCancelled` {#is-cancelled}
-
-It is a ref getter params in `useAsyncEffect` callback, see [useAsyncEffect](/reference/use-async-effect) for more details.
 
 ### `isMounted` {#is-mounted}
 
@@ -62,5 +58,9 @@ It is a ref getter created by `useMounted`, see [useMounted](/reference/use-moun
 ### `isUnmounted` {#is-unmounted}
 
 It is a ref getter created by `useUnmounted`, see [useUnmounted](/reference/use-unmounted) for more details.
+
+### `isCancelled` {#is-cancelled}
+
+It is a value getter params in `useAsyncEffect` callback, see [useAsyncEffect](/reference/use-async-effect) for more details.
 
 ... and more to come!

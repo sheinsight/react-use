@@ -94,7 +94,7 @@ export default {
     metadata: [
       {
         name: 'description',
-        content: 'A SSR-friendly, comprehensive, and highly optimized React Hooks library.',
+        content: 'A SSR-friendly, comprehensive, standardized and highly optimized React Hooks library.',
       },
       {
         name: 'keywords',
@@ -107,7 +107,7 @@ export default {
       },
       {
         name: 'og:description',
-        content: 'A SSR-friendly, comprehensive, and highly optimized React Hooks library.',
+        content: 'A SSR-friendly, comprehensive, standardized and highly optimized React Hooks library.',
       },
     ],
     colorMode: {

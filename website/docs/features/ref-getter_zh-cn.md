@@ -2,18 +2,18 @@
 sidebar_position: 3
 ---
 
-# Ref Getter
+# Ref 获取函数 (Ref Getter) {#ref-getter}
 
 Ref Getter 是一个专门设计用来访问 React ref 当前值的函数。
 
-## 简而言之
+## 简而言之 {#tl-dr}
 
 - 它能有效避免与陈旧闭包相关的问题，并简化 ref 值的读取。
 - 在频繁读取 ref 的场景下非常有用，例如自定义 Hooks 或复杂组件逻辑。
 - 使用 Ref Getter 修改 ref 的值时不会触发组件的重新渲染。
 - 如果需要基于变化触发重新渲染，可考虑使用 `useState` 或 `useReducer`。
 
-## 动机
+## 动机 {#motivation}
 
 在 React 中，高效地管理值的访问和更新而不触发组件重新渲染对性能优化至关重要。这就是 **Ref Getter** 发挥作用的地方。
 
@@ -45,15 +45,11 @@ isActiveRef.current = true
 console.log(isActive) // 输出：true
 ```
 
-## 本库中的 Ref Getters
+## 本库中的 Ref (或 value) Getter {#ref-getter-in-this-library}
 
 ### `isActive` {#is-active}
 
 这是由 `usePausable` 创建的一个 ref getter，详见 [Pausable](/docs/features/pausable) 获取更多详情。
-
-### `isCancelled` {#is-cancelled}
-
-这是在 `useAsyncEffect` 回调中的一个 ref getter 参数，详见 [useAsyncEffect](/reference/use-async-effect) 获取更多详情。
 
 ### `isMounted` {#is-mounted}
 
@@ -62,5 +58,9 @@ console.log(isActive) // 输出：true
 ### `isUnmounted` {#is-unmounted}
 
 这是由 `useUnmounted` 创建的一个 ref getter，详见 [useUnmounted](/reference/use-unmounted) 获取更多详情。
+
+### `isCancelled` {#is-cancelled}
+
+这是在 `useAsyncEffect` 回调中的一个 value getter 参数，详见 [useAsyncEffect](/reference/use-async-effect) 获取更多详情。
 
 ... 更多内容即将到来！

@@ -15,7 +15,7 @@ A SSR-friendly, comprehensive, standardized and highly optimized React Hooks lib
 <p>
 
 <p align="center">
- <a href="https://sheinsight.github.io/react-use">Documentation</a> | <a href="https://sheinsight.github.io/react-use/docs/get-started">Getting Started</a> | <a href="https://sheinsight.github.io/react-use/reference">Reference</a>
+ <a href="https://sheinsight.github.io/react-use">Documentation</a> | <a href="https://sheinsight.github.io/react-use/docs/get-started">Get Started</a> | <a href="https://sheinsight.github.io/react-use/reference">Reference</a>
 </p>
 <p align="center">
 <a href="https://sheinsight.github.io/react-use/zh-cn/">中文文档</a>

@@ -2,11 +2,11 @@
 sidebar_position: 2
 ---
 
-# ElementTarget
+# ElementTarget {#element-target}
 
 `ElementTarget` is a union type that represents the various types of elements that can be targeted in React.
 
-## TL; DR
+## TL; DR {#tl-dr}
 
 - It's common to access elements in React for actions like clicking, hovering, etc.
 - Traditional methods include using `Ref` or DOM queries, which can be challenging in Server-side Rendering (SSR) environments.
@@ -15,7 +15,7 @@ sidebar_position: 2
 
 If you are looking for `ElementTarget` types, please refer to [ElementTarget Types](#element-target-types).
 
-## Motivation
+## Motivation {#motivation}
 
 Frequently, React Hooks require access to DOM elements to perform actions such as clicking outside a component (`useClickAway`), hovering (`useHover`), or scrolling (`useScroll`).
 
@@ -43,7 +43,7 @@ While these approaches work well, they introduce challenges in SSR environments 
 
 Additionally, it is often desirable to access an element directly by passing a `Ref`, a common requirement in many Hooks and daily use scenarios.
 
-## Introducing `useTargetElement`
+## Introducing `useTargetElement` {#introducing-use-target-element}
 
 To address these issues, we've created the `useTargetElement` Hook, which simplifies the process of obtaining a target element. This Hook returns a React `Ref` containing the target element:
 

@@ -2,9 +2,9 @@
 sidebar_position: 1
 ---
 
-# Safe State
+# Safe State {#safe-state}
 
-## Overview
+## Overview {#overview}
 
 `@shined/react-use` implement [useSafeState](/reference/use-safe-state) for all state management operations within components. This method ensures that state updates are controlled and secure, especially in scenarios that involve asynchronous operations or potential unexpected component unmounts. It's designed as a replacement for `React.useState`.
 
@@ -13,7 +13,7 @@ In essence, the behavior of `useSafeState` adapts based on the React version use
 - **React 17 and earlier**: The state updates only if the component is still mounted, a behavior ensured by the `useUnmounted` Hook. This approach effectively suppresses the common React warnings related to setting state on unmounted components.
 - **React 18 and later**: It functions identically to `React.useState`, leveraging React’s internal mechanisms for handling state updates more gracefully on unmounted components.
 
-## Handling `setState` Calls on Unmounted Components
+## Handling `setState` Calls on Unmounted Components {#handling-set-state-calls-on-unmounted-components}
 
 It is a common misconception that calling `setState` on an unmounted component leads to memory leaks. This warning primarily serves as a reminder to developers to terminate any ongoing operations such as timers and subscriptions after a component unmounts.
 

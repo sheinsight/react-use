@@ -2,13 +2,13 @@
 sidebar_position: 1
 ---
 
-# Introduction
+# Introduction {#introduction}
 
 `@shined/react-use` is an **SSR-friendly**, **comprehensive**, and **highly optimized** React Hooks library that delivers flexible and efficient hook solutions. Fully developed with **TypeScript**, it comes equipped with an interactive documentation filled with rich examples 🔥.
 
 Primarily inspired by [VueUse](https://vueuse.org/), along with influences from [react-use](https://github.com/streamich/react-use), [ahooks](https://ahooks.js.org/), and many other excellent libraries within the community. Huge thanks to the Open Source community, especially the authors of the libraries mentioned above, for their great work and inspiration.
 
-## 🚀 Features
+## 🚀 Features {#features}
 
 - **Flexibility**: Features include [ElementTarget](/docs/features/element-target), [Ref Getter](/docs/features/ref-getter), [Pausable](/docs/features/pausable), and more.
 - **Tree-shakable**: Designed and delivered with [ESM](https://nodejs.org/api/esm.html), import only what you need.
@@ -20,7 +20,7 @@ Primarily inspired by [VueUse](https://vueuse.org/), along with influences from 
 
 Visit the [Get Started](/docs/get-started) section to explore how it can be integrated into your project.
 
-## ⚡️ Optimizations
+## ⚡️ Optimizations {#optimizations}
 
 - **Safe State**: Implements a [safe state](/docs/optimization/safe-state) strategy for all stateful Hooks, reducing bugs and unwanted behaviors.
 - **Stable functions**: Every exported function benefits from [stabilization](/docs/optimization/stabilization) by default.

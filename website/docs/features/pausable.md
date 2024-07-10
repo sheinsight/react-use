@@ -1,10 +1,10 @@
-# Pausable
+# Pausable {#pausable}
 
 Using Hooks like `useIntervalFn` and `useMouse` makes managing different features easier and more dynamic. However, adding a way to pause and resume these Hooks could make them even more useful. This feature would give us more control and help avoid unnecessary updates, making the user experience better.
 
 With this in mind, we introduce `Pausable` instance.
 
-## `Pausable` Instance
+## `Pausable` Instance {#pausable-instance}
 
 The `Pausable` is designed to encapsulate the ability to pause and resume functionality, along with providing access to the current active state, without directly triggering a component re-render. This approach maintains the original expected behavior while offering additional control.
 
@@ -31,7 +31,7 @@ export type Pausable<PauseArgs extends unknown[] = [], ResumeArgs extends unknow
 }
 ```
 
-## Introducing `usePausable`
+## Introducing `usePausable` {#introducing-use-pausable}
 
 The `usePausable` Hook helps to create pausable instances. It use `useGetterRef` under the hood to provide a getter for the `isActive` property.
 

@@ -2,9 +2,9 @@
 sidebar_position: 1
 ---
 
-# 安全状态
+# 安全状态 Safe State {#safe-state}
 
-## 概览
+## 概览 {#overview}
 
 `@shined/react-use` 为组件内的所有状态管理操作实现了 [useSafeState](/reference/use-safe-state) 方法。这种方法确保状态更新是受控和安全的，特别是在涉及异步操作或可能的意外组件卸载场景中。它被设计为 `React.useState` 的替代方案。
 
@@ -13,7 +13,7 @@ sidebar_position: 1
 - **React 17 及更早版本**：仅在组件仍然挂载时更新状态，这一行为通过 `useUnmounted` Hook 确保。这种方法有效地抑制了与在卸载的组件上设置状态相关的常见 React 警告。
 - **React 18 及以后版本**：其功能与 `React.useState` 相同，利用了 React 的内部机制更优雅地处理卸载组件上的状态更新。
 
-## 处理卸载组件上的 `setState` 调用
+## 处理卸载组件上的 `setState` 调用 {#handling-set-state-calls-on-unmounted-components}
 
 人们常有一个误解，认为在卸载的组件上调用 `setState` 会导致内存泄漏。这个警告主要是提醒开发者在组件卸载后终止任何正在进行的操作，如计时器和订阅。
 

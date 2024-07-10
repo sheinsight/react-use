@@ -4,11 +4,11 @@ sidebar_position: 2
 
 ---
 
-# ElementTarget
+# 元素目标 ElementTarget {#element-target}
 
 `ElementTarget` 是一个联合类型，表示 React 中可以被定位的各种元素类型。
 
-## 简而言之
+## 简而言之 {#tl-dr}
 
 - 在 React 中访问元素进行点击、悬停等操作是很常见的。
 - 传统的方法包括使用 `Ref` 或 DOM 查询，这在服务器端渲染（SSR）环境中可能会有挑战。
@@ -17,7 +17,7 @@ sidebar_position: 2
 
 如果您正在寻找 `ElementTarget` 类型，请参考 [ElementTarget Types](#element-target-types)。
 
-## 动机
+## 动机 {#motivation}
 
 React Hooks 经常需要访问 DOM 元素来执行如点击组件外部（`useClickAway`）、悬停（`useHover`）或滚动（`useScroll`）等操作。
 
@@ -45,7 +45,7 @@ useEffect(() => {
 
 此外，经常希望通过传递 `Ref` 直接访问元素，这在许多 Hooks 和日常使用场景中是一个共同的需求。
 
-## 介绍 `useTargetElement`
+## 介绍 `useTargetElement` {#introducing-use-target-element}
 
 为了解决这些问题，我们创建了 `useTargetElement` Hook，它简化了获取目标元素的过程。这个 Hook 返回一个包含目标元素的 React `Ref`:
 
