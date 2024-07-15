@@ -1,3 +1,12 @@
+# [1.3.0](https://github.com/sheinsight/react-use/compare/v1.2.1...v1.3.0) (2024-07-15)
+
+
+### Features
+
+* new hook `useBoolean` ([5e4f003](https://github.com/sheinsight/react-use/commit/5e4f003aaf4dd2bcd37402a1e24e816da2b48043))
+
+
+
 ## [1.2.1](https://github.com/sheinsight/react-use/compare/v1.2.0...v1.2.1) (2024-07-10)
 
 
