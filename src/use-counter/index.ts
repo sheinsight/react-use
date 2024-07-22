@@ -22,22 +22,32 @@ export type Count = number
 export interface UseCounterReturnsAction {
   /**
    * increment the counter
+   *
+   * @param {number} [delta=1] - The increment value
    */
   inc: (delta?: number) => void
   /**
    * decrement the counter
+   *
+   * @param {number} [delta=1] - The decrement value
    */
   dec: (delta?: number) => void
   /**
    * set the counter
+   *
+   * @param {number} value - The new value
    */
   set: (value: number) => void
   /**
    * get the counter
+   *
+   * @returns {number} The current value of the counter
    */
   get(): number
   /**
    * reset the counter
+   *
+   * @param {number} [n] - The reset value
    */
   reset: (n?: number) => void
 }
@@ -55,15 +65,30 @@ export type UseCounterReturns = readonly [
    * The whole state of the counter
    */
   {
+    /**
+     * The current count of the counter
+     */
     count: number
+    /**
+     * The maximum value of the counter
+     */
     max: number
+    /**
+     * The minimum value of the counter
+     */
     min: number
+    /**
+     * The initial count of the counter
+     */
     initialCount: number
   },
 ]
 
 /**
  * A React Hook that provides a counter with increment, decrement and reset functions.
+ *
+ * @param {number} [initialCount=0] - `number`, The initial value of the counter
+ * @param {UseCounterOptions} [options] - `UseCounterOptions`, The options of the counter, see {@link UseCounterOptions}
  */
 export function useCounter(initialCount?: number, options: UseCounterOptions = {}): UseCounterReturns {
   const [state, setState] = useSetState(
