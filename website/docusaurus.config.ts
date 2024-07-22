@@ -1,5 +1,7 @@
 import path from 'node:path'
+import { camelCase, capitalCase, kebabCase } from 'change-case'
 import { themes as prismThemes } from 'prism-react-renderer'
+import hooks from './src/pages/components/search/hooks.json'
 
 import type * as Preset from '@docusaurus/preset-classic'
 import type { Config } from '@docusaurus/types'
@@ -65,6 +67,55 @@ export default {
         routeBasePath: '/reference/',
         editUrl: 'https://github.com/sheinsight/react-use/tree/main/reference/',
         include: ['**/index.{mdx,md}'],
+        sidebarItemsGenerator: ({
+          docs,
+        }: {
+          docs: {
+            id: string
+            title: string
+            frontMatter: object
+            source: string
+            sourceDirName: string
+            sidebarPosition?: string
+          }[]
+        }) => {
+          const items = new Map<string, { type: string; id: string; label: string }[]>()
+
+          for (const category of [
+            'State',
+            'Lifecycle',
+            'Browser',
+            'Element',
+            'Sensors',
+            'Network',
+            'Animation',
+            'Utilities',
+            'ProUtilities',
+          ]) {
+            items.set(category, [])
+          }
+
+          for (const hook of hooks) {
+            const doc = docs.find((doc) => doc.id.split('/')[0] ?? '' === hook.name)
+            if (!doc) continue
+
+            if (!items.has(hook.category)) {
+              items.set(hook.category, [])
+            }
+
+            items.get(hook.category)?.push({
+              id: `${kebabCase(hook.name)}/index`,
+              type: 'doc',
+              label: camelCase(hook.name),
+            })
+          }
+
+          return Array.from(items).map(([dirName, docs]) => ({
+            type: 'category',
+            label: capitalCase(dirName),
+            items: docs,
+          }))
+        },
       },
     ],
   ],
