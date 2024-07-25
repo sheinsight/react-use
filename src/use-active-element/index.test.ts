@@ -1,5 +1,5 @@
 import { renderHook } from '@/test'
-import { afterEach, beforeEach, describe, expect, test } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { useActiveElement } from './index'
 
 describe('useActiveElement', () => {
@@ -23,26 +23,26 @@ describe('useActiveElement', () => {
     input.remove()
   })
 
-  test('should return body when body is active', () => {
+  it('should return body when body is active', () => {
     document.body.focus()
     const { result } = renderHook(() => useActiveElement())
     expect(result.current).toBe(document.body)
   })
 
-  test('should return the active element', () => {
+  it('should return the active element', () => {
     input.focus()
     const { result } = renderHook(() => useActiveElement())
     expect(result.current).toBe(input)
   })
 
-  test('should return the active element', () => {
+  it('should return the active element', () => {
     shadowHost.focus()
     shadowInput.focus()
     const { result } = renderHook(() => useActiveElement({ deep: false }))
     expect(result.current).toBe(shadowHost)
   })
 
-  test('should return the active element inside shadow DOM', () => {
+  it('should return the active element inside shadow DOM', () => {
     shadowHost.focus()
     shadowInput.focus()
     const { result } = renderHook(() => useActiveElement({ deep: true }))

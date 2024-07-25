@@ -4,6 +4,11 @@ import { describe, expect, it, vi } from 'vitest'
 import { createSingleLoading } from './index'
 
 describe('createSingleLoading', () => {
+  it('should be defined and be a function', () => {
+    expect(createSingleLoading).toBeDefined()
+    expect(createSingleLoading).toBeInstanceOf(Function)
+  })
+
   it('should return an object with the correct shape', () => {
     const loading = createSingleLoading({ create })
     expect(loading).toEqual(
