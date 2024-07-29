@@ -1,0 +1,55 @@
+# useInputComposition
+
+import { HooksType } from '@/components'
+
+<HooksType category="Sensors" />
+
+A React Hook that helps to track the composition state of an input element.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { isComposiing, data } = useInputComposition(elementTarget)
+```
+
+### ElementTarget
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### Returns
+
+```tsx
+interface InputCompositionState {
+  /**
+   * Whether the input is in the composition state.
+   */
+  isComposing: boolean
+  /**
+   * The composition data.
+   */
+  data: string
+}
+
+export interface UseInputCompositionReturns extends InputCompositionState {}
+```

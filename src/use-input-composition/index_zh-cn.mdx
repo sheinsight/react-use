@@ -1,0 +1,55 @@
+# useInputComposition
+
+import { HooksType } from '@/components'
+
+<HooksType category="Sensors" />
+
+**useInputComposition** 是一个 React Hook，用于跟踪输入元素的组合状态。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const { isComposiing, data } = useInputComposition(elementTarget)
+```
+
+### 元素目标 ElementTarget \{#element-target}
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### 返回值 Returns \{#returns}
+
+```tsx
+interface InputCompositionState {
+  /**
+   * 输入框是否处于组合状态。
+   */
+  isComposing: boolean
+  /**
+   * 组合数据。
+   */
+  data: string
+}
+
+export interface UseInputCompositionReturns extends InputCompositionState {}
+```
