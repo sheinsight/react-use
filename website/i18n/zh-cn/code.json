@@ -1,4 +1,12 @@
 {
+  "reference.doc.reference.doc.notReleased":{
+    "message": "重要提示：此 Hook 仍未被发布，请不要尝试现在使用它。",
+    "description": "not release"
+  },
+  "reference.doc.since":{
+    "message": "此 Hook 从 {version} 版本起可用。",
+    "description": "version since"
+  },
   "reference.doc.pausable":{
     "message": "返回值包含 {link} 实例，可以暂停和重放 Hook 行为，以减少不必要的渲染。",
     "description": "pausable"
