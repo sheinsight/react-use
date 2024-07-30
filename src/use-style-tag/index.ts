@@ -56,7 +56,7 @@ export interface UseStyleTagOptions {
    */
   immediate?: boolean
   /**
-   * Whether to manually load the style tag
+   * Whether to manually control the tag, if not, it will automatically unload
    *
    * @defaultValue false
    */
