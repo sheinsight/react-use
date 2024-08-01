@@ -11,3 +11,8 @@ export function unwrapArrayable<T>(val: T | T[]): T[] {
 export function unwrapReffable<T>(val: T | { current: T }): T {
   return isObject(val) && 'current' in val ? val.current : val
 }
+
+export async function unwrapPromisable<T>(val: T | Promise<T>): Promise<Awaited<T>> {
+  const res = val instanceof Promise ? await val : val
+  return res instanceof Promise ? unwrapPromisable(res) : res
+}

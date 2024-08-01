@@ -17,6 +17,7 @@ export type PureObject<T = any> = Record<PropertyKey, T>
 export type Arrayable<T> = T | T[]
 export type Gettable<T> = T | (() => T)
 export type Reffable<T> = T | RefObject<T>
+export type Promisable<T> = T | Promise<T>
 export type GettableOrReffable<T> = Gettable<T> | Reffable<T>
 
 export type WindowEventName = keyof WindowEventMap
