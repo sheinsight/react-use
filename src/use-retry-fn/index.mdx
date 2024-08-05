@@ -1,0 +1,70 @@
+# useRetryFn
+
+import { HooksType, NotReleased } from '@/components'
+
+<HooksType category="Utilities" lowLevel />
+
+<NotReleased />
+
+A React Hook that helps to run a function with retry mechanism.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const fnWithRetry = useRetryFn(fn, options)
+```
+
+### Fn
+
+A function that will be called with retry mechanism.
+
+### Options
+
+```tsx
+export interface UseRetryFnOptions {
+  /**
+   * Number of retries.
+   *
+   * @defaultValue 3
+   */
+  retryCount?: number
+  /**
+   * Retry interval.
+   *
+   * @defaultValue 3_000 ms
+   */
+  retryInterval?: number | ((currentCount: number) => number)
+  /**
+   * Error callback.
+   *
+   * @defaultValue undefined
+   */
+  onError?: (error: unknown, state: { currentCount: number; retryCount: number }) => void
+  /**
+   * All retries failed callback.
+   *
+   * @defaultValue undefined
+   */
+  onRetryFailed?: (error: unknown) => void
+}
+```
+
