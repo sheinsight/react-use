@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { useCreation } from '../use-creation'
 import { useLatest } from '../use-latest'
 import { useStableFn } from '../use-stable-fn'
@@ -11,13 +12,13 @@ export interface UseRetryFnOptions {
    *
    * @defaultValue 3
    */
-  retryCount?: number
+  count?: number
   /**
    * Retry interval.
    *
    * @defaultValue 3_000 ms
    */
-  retryInterval?: number | ((currentCount: number) => number)
+  interval?: number | ((currentCount: number) => number)
   /**
    * Error callback.
    *
@@ -29,20 +30,33 @@ export interface UseRetryFnOptions {
    *
    * @defaultValue undefined
    */
-  onRetryFailed?: (error: unknown) => void
+  onRetryFailed?: (error: unknown, state: UseRetryFnRetryState) => void
 }
 
 export interface UseRetryFnRetryState {
+  /**
+   * Current retry count.
+   */
   currentCount: number
+  /**
+   * Number of retries.
+   */
   retryCount: number
+  /**
+   * Internal unique version to track the latest retry state in multiple concurrent calls conditions.
+   */
+  version: number
 }
 
 export function useRetryFn<T extends AnyFunc>(fn: T, options: UseRetryFnOptions = {}): T {
-  const { retryCount = 3, retryInterval = 3000, onError, onRetryFailed } = options
+  const { count = 3, interval = 3000, onError, onRetryFailed } = options
+
+  const version = useRef(0)
 
   const latest = useLatest({
     fn,
-    retryInterval,
+    count,
+    interval,
     onError,
     onRetryFailed,
   })
@@ -54,21 +68,32 @@ export function useRetryFn<T extends AnyFunc>(fn: T, options: UseRetryFnOptions 
     ): Promise<Awaited<ReturnType<T>> | undefined> => {
       try {
         const res = await latest.current.fn(...args)
+
+        if (retryState.version !== version.current) {
+          return res
+        }
+
         retryState.currentCount = 0
+
         return res
       } catch (error) {
+        if (retryState.version !== version.current) {
+          return
+        }
+
         retryState.currentCount++
 
-        const { onError, onRetryFailed, retryInterval } = latest.current
+        const { onError, onRetryFailed, interval } = latest.current
+
         onError?.(error, { ...retryState })
 
         if (retryState.currentCount >= retryState.retryCount) {
-          onRetryFailed?.(error)
+          onRetryFailed?.(error, { ...retryState })
           retryState.currentCount = 0
           return
         }
 
-        const intervalValue = isFunction(retryInterval) ? retryInterval(retryState.currentCount) : retryInterval
+        const intervalValue = isFunction(interval) ? interval(retryState.currentCount) : interval
         await new Promise((resolve) => setTimeout(resolve, intervalValue))
 
         return retryFn(retryState, ...args)
@@ -79,7 +104,12 @@ export function useRetryFn<T extends AnyFunc>(fn: T, options: UseRetryFnOptions 
   })
 
   const fnWithRetry = useStableFn(((...args: Parameters<T>) => {
-    const retryState = { currentCount: 0, retryCount }
+    const retryState = {
+      currentCount: 0,
+      retryCount: latest.current.count,
+      version: ++version.current,
+    }
+
     return runFnWithRetry(retryState, ...args)
   }) as T)
 
