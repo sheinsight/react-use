@@ -1,0 +1,64 @@
+# useLoadingSlowFn
+
+import { HooksType, NotReleased } from '@/components'
+
+<HooksType category="Utilities" />
+
+<NotReleased />
+
+A React Hook like [useAsyncFn](/reference/use-async-fn) for easily handling loading slow state.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { loadingSlow, loading, value, run, error } = useLoadingSlowFn(fn, options):
+```
+
+### Fn
+
+A function that returns a promise.
+
+### Options
+
+```tsx
+export interface UseLoadingSlowOptions extends UseAsyncFnOptions {
+  /**
+   * The timeout duration in milliseconds to determine if the loading is slow.
+   * 
+   * @defaultValue 3_000 ms
+   */
+  loadingTimeout?: number
+}
+```
+
+### Returns
+
+```tsx
+export interface UseLoadingSlowReturns<T extends AnyFunc> extends UseAsyncFnReturns<T> {
+  /**
+   * Whether the loading is slow.
+   */
+  loadingSlow: boolean
+}
+```
+
+See [useAsyncFn#api](/reference/use-async-fn/#api) for more details.

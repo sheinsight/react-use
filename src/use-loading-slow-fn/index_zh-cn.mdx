@@ -1,0 +1,64 @@
+# useLoadingSlowFn
+
+import { HooksType, NotReleased } from '@/components'
+
+<HooksType category="Utilities" />
+
+<NotReleased />
+
+一个类似 [useAsyncFn](/reference/use-async-fn) 的 React Hook，但额外提供了「加载慢」的状态。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const { loadingSlow, loading, value, run, error } = useLoadingSlowFn(fn, options):
+```
+
+### 函数 Fn \{#fn}
+
+一个返回 promise 的函数。
+
+### 选项 Options \{#options}
+
+```tsx
+export interface UseLoadingSlowOptions extends UseAsyncFnOptions {
+  /**
+   * 确定加载是否慢的超时时长（毫秒）。
+   * 
+   * @defaultValue 3_000 ms
+   */
+  loadingTimeout?: number
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export interface UseLoadingSlowReturns<T extends AnyFunc> extends UseAsyncFnReturns<T> {
+  /**
+   * 是否加载慢。
+   */
+  loadingSlow: boolean
+}
+```
+
+有关更多详情，请参见 [useAsyncFn#api](/reference/use-async-fn/#api)。
