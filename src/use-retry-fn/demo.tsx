@@ -9,9 +9,9 @@ export function App() {
       return Promise.reject(new Error())
     },
     {
-      retryCount: 3,
-      onError(error, { currentCount }) {
-        toast.error(`Retry... (count ${currentCount})`)
+      retryInterval: 1000,
+      onError(error, retryState) {
+        toast.error(`Retry... (count ${retryState.currentCount})`)
       },
       onRetryFailed(error) {
         toast.error('Retry failed')
