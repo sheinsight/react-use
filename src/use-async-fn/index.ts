@@ -127,7 +127,9 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
       updateRefValue(stateRef.current.loading, true)
       result = await latest.current.fn(...args)
       latest.current.onSuccess?.(result as D)
-      updateRefValue(stateRef.current.value, result)
+      runWhenVersionMatch(version, () => {
+        updateRefValue(stateRef.current.value, result)
+      })
     } catch (error) {
       runWhenVersionMatch(version, () => {
         latest.current.onError?.(error)
