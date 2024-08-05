@@ -7,7 +7,7 @@ import Logo from '@site/static/logo.svg'
 import { CodeBlock } from './code-block'
 
 export function Main() {
-  const { isDarkTheme } = useColorMode()
+  const { colorMode } = useColorMode()
   const { siteConfig } = useDocusaurusContext()
 
   return (
@@ -32,7 +32,7 @@ export function Main() {
         className="overflow-hidden"
         codeClassName="overflow-hidden"
         content="npm i @shined/react-use --save"
-        theme={isDarkTheme ? 'one-dark-pro' : 'one-light'}
+        theme={colorMode === 'dark' ? 'one-dark-pro' : 'one-light'}
       />
       <div className="flex gap-4 md:gap-6 items-center">
         <Link to="/docs/introduction">
