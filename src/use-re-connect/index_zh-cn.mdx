@@ -1,0 +1,49 @@
+# useReConnect
+
+import { HooksType, NotReleased } from '@/components'
+
+<HooksType category="Utilities" lowLevel />
+
+<NotReleased />
+
+一个 React Hook，用于在网络**重新**连接时运行一个函数。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+useReConnect(fn, options)
+```
+
+### 函数 Fn \{#fn}
+
+网络重新连接时将被调用的函数。
+
+### 选项 Options \{#options}
+
+```tsx
+export interface UseReConnectOptions {
+  /**
+   * 注册重新连接事件监听器。
+   */
+  registerReConnect?: (callback: AnyFunc) => void
+}
+```

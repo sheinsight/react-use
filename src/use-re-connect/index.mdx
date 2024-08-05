@@ -1,0 +1,49 @@
+# useReConnect
+
+import { HooksType, NotReleased } from '@/components'
+
+<HooksType category="Utilities" lowLevel />
+
+<NotReleased />
+
+A React Hook that helps to run a function when the page is reconnect.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+useReConnect(fn, options)
+```
+
+### Fn
+
+A function that will be called when the page is reconnect.
+
+### Options
+
+```tsx
+export interface UseReConnectOptions {
+  /**
+   * Register reconnect event listener.
+   */
+  registerReConnect?: (callback: AnyFunc) => void
+}
+```
