@@ -10,9 +10,12 @@ export function App() {
         <KeyValue label="Loading" value={fetchFn.loading} />
         <KeyValue label="Value" value={fetchFn.value ?? 'click to fetch'} />
       </Zone>
-      <Button disabled={fetchFn.loading} onClick={fetchFn.run}>
-        Fetch
-      </Button>
+      <Zone>
+        <Button disabled={fetchFn.loading} onClick={fetchFn.run}>
+          Fetch
+        </Button>
+        <Button onClick={fetchFn.run}>Fetch (without disabled status)</Button>
+      </Zone>
     </Card>
   )
 }
