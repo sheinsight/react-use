@@ -6,46 +6,59 @@ import { useTimeout } from '../use-timeout'
 import type { UseAsyncFnOptions, UseAsyncFnReturns } from '../use-async-fn'
 import type { AnyFunc } from '../utils/basic'
 
-export interface UseLoadingSlowOptions extends UseAsyncFnOptions {
+export interface UseLoadingSlowFnOptions extends UseAsyncFnOptions {
   /**
    * The timeout duration in milliseconds to determine if the loading is slow.
    *
-   * @defaultValue 3_000 ms
+   * @defaultValue 0 ms
    */
   loadingTimeout?: number
+  /**
+   * A callback to be called when the loading is slow.
+   *
+   * @defaultValue undefined
+   */
+  onLoadingSlow?: () => void
 }
 
-export interface UseLoadingSlowReturns<T extends AnyFunc> extends UseAsyncFnReturns<T> {
+export interface UseLoadingSlowFnReturns<T extends AnyFunc> extends UseAsyncFnReturns<T> {
   /**
    * Whether the loading is slow.
    */
   loadingSlow: boolean
 }
 
-export function useLoadingSlowFn<T extends AnyFunc>(fn: T, options: UseLoadingSlowOptions = {}) {
-  const { loadingTimeout = 3_000, ...useAsyncFnOptions } = options
+export function useLoadingSlowFn<T extends AnyFunc>(fn: T, options: UseLoadingSlowFnOptions = {}) {
+  const { loadingTimeout = 0, onLoadingSlow, ...useAsyncFnOptions } = options
 
   const versionRef = useRef(0)
   const latest = useLatest({ fn })
-  const { isTimeout, ...controls } = useTimeout(loadingTimeout, { controls: true })
 
-  const asyncFn = useAsyncFn(async () => {
-    if (controls.isActive()) {
-      controls.pause()
-    }
+  const { isTimeout, ...controls } = useTimeout(loadingTimeout, {
+    controls: true,
+    callback: onLoadingSlow,
+  })
 
-    controls.reset()
-    controls.resume()
+  const asyncFn = useAsyncFn(
+    (async () => {
+      if (controls.isActive()) {
+        controls.pause()
+      }
 
-    const ver = ++versionRef.current
-    const result = await latest.current.fn()
-
-    if (ver === versionRef.current) {
       controls.reset()
-    }
+      controls.resume()
 
-    return result
-  }, useAsyncFnOptions)
+      const ver = ++versionRef.current
+      const result = await latest.current.fn()
+
+      if (ver === versionRef.current) {
+        controls.reset()
+      }
+
+      return result
+    }) as T,
+    useAsyncFnOptions,
+  )
 
   return {
     ...asyncFn,

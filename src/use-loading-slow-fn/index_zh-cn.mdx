@@ -40,7 +40,7 @@ const { loadingSlow, loading, value, run, error } = useLoadingSlowFn(fn, options
 ### 选项 Options \{#options}
 
 ```tsx
-export interface UseLoadingSlowOptions extends UseAsyncFnOptions {
+export interface UseLoadingSlowFnOptions extends UseAsyncFnOptions {
   /**
    * 确定加载是否慢的超时时长（毫秒）。
    * 
@@ -53,7 +53,7 @@ export interface UseLoadingSlowOptions extends UseAsyncFnOptions {
 ### 返回值 Returns \{#returns}
 
 ```tsx
-export interface UseLoadingSlowReturns<T extends AnyFunc> extends UseAsyncFnReturns<T> {
+export interface UseLoadingSlowFnReturns<T extends AnyFunc> extends UseAsyncFnReturns<T> {
   /**
    * 是否加载慢。
    */

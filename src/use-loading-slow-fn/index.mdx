@@ -40,7 +40,7 @@ A function that returns a promise.
 ### Options
 
 ```tsx
-export interface UseLoadingSlowOptions extends UseAsyncFnOptions {
+export interface UseLoadingSlowFnOptions extends UseAsyncFnOptions {
   /**
    * The timeout duration in milliseconds to determine if the loading is slow.
    * 
@@ -53,7 +53,7 @@ export interface UseLoadingSlowOptions extends UseAsyncFnOptions {
 ### Returns
 
 ```tsx
-export interface UseLoadingSlowReturns<T extends AnyFunc> extends UseAsyncFnReturns<T> {
+export interface UseLoadingSlowFnReturns<T extends AnyFunc> extends UseAsyncFnReturns<T> {
   /**
    * Whether the loading is slow.
    */
