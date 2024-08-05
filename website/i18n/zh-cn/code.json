@@ -1,93 +1,93 @@
 {
-  "reference.doc.notReleased":{
+  "reference.doc.notReleased": {
     "message": "重要提示：此 Hook 仍未被发布，请不要尝试现在使用它。",
     "description": "not release"
   },
-  "reference.doc.since":{
+  "reference.doc.since": {
     "message": "此 Hook 从 {version} 版本起可用。",
     "description": "version since"
   },
-  "reference.doc.pausable":{
+  "reference.doc.pausable": {
     "message": "返回值包含 {link} 实例，可以暂停和重放 Hook 行为，以减少不必要的渲染。",
     "description": "pausable"
   },
-  "reference.doc.refGetter":{
+  "reference.doc.refGetter": {
     "message": "{code} 仅仅只是一个 {link}, 它的变更不会触发组件重新渲染。",
     "description": "refGetter"
   },
-  "reference.doc.elementTarget":{
+  "reference.doc.elementTarget": {
     "message": "{code}, 前往 {link} 了解更多。",
     "description": "elementTarget"
   },
-  "reference.tags.tag":{
+  "reference.tags.tag": {
     "message": "标签",
     "description": "tag"
   },
-  "reference.demo.source":{
+  "reference.demo.source": {
     "message": "查看源码",
     "description": "source"
   },
-  "reference.usage.showLess":{
+  "reference.usage.showLess": {
     "message": "收起内容",
     "description": "show less"
   },
-  "reference.usage.showMore":{
+  "reference.usage.showMore": {
     "message": "展示更多",
     "description": "show more"
   },
-  "reference.source.code":{
+  "reference.source.code": {
     "message": "🪝 Hook 实现",
     "description": "implementation"
   },
-  "reference.source.docFileName":{
+  "reference.source.docFileName": {
     "message": "index_zh-cn.mdx",
     "description": "docFileName"
   },
-  "reference.source.demo":{
+  "reference.source.demo": {
     "message": "🎨 Demo 演示",
     "description": "demonstration"
   },
-  "reference.source.doc":{
+  "reference.source.doc": {
     "message": "📄 本页文档",
     "description": "documentation"
   },
-  "reference.source.description":{
+  "reference.source.description": {
     "message": "点击下方链接前往 GitHub 查看对应源码。",
     "description": "description"
   },
-  "homepage.filter.searchPlaceholder":{
+  "homepage.filter.searchPlaceholder": {
     "message": "搜索...",
     "description": "searchPlaceholder"
   },
-  "homepage.filter.clear":{
+  "homepage.filter.clear": {
     "message": "清除筛选",
     "description": "clear filter"
   },
-  "homepage.filter.category":{
+  "homepage.filter.category": {
     "message": "分类集合",
     "description": "category"
   },
-  "homepage.filter.feature":{
+  "homepage.filter.feature": {
     "message": "功能特性",
     "description": "feature"
   },
-  "homepage.filter.summary":{
+  "homepage.filter.summary": {
     "message": "共找到 {hooksCount} 个 Hook 和 Util。",
     "description": "filter tip"
   },
-  "homepage.tagline":{
+  "homepage.tagline": {
     "message": "一个 SSR 友好、全面、标准化和高度优化的 React Hooks 库。",
     "description": "tagline"
   },
-  "homepage.button.introduction":{
+  "homepage.button.introduction": {
     "message": "介绍",
     "description": "introduction"
   },
-  "homepage.button.getStarted":{
+  "homepage.button.getStarted": {
     "message": "快速开始",
     "description": "getStarted"
   },
-  "homepage.button.reference":{
+  "homepage.button.reference": {
     "message": "API 文档",
     "description": "getStarted"
   },

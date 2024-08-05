@@ -47,6 +47,12 @@ export type UseAsyncFnOptions = {
    * @defaultValue false
    */
   clearBeforeRun?: boolean
+  /**
+   * 异步函数抛出错误时的回调函数
+   *
+   * @defaultValue undefined
+   */
+  onError?: (error: unknown) => void
 }
 ```
 

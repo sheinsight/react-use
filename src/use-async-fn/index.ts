@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { useLatest } from '../use-latest'
 import { useSetState } from '../use-set-state'
 import { useStableFn } from '../use-stable-fn'
@@ -11,6 +12,12 @@ export interface UseAsyncFnOptions {
    * @defaultValue false
    */
   clearBeforeRun?: boolean
+  /**
+   * a function to run when the async function throws an error
+   *
+   * @defaultValue undefined
+   */
+  onError?: (error: unknown) => void
 }
 
 export interface UseAsyncFnReturns<T extends AnyFunc> {
@@ -39,7 +46,9 @@ export interface UseAsyncFnReturns<T extends AnyFunc> {
  * @returns {UseAsyncFnReturns} `UseAsyncFnReturns`, see {@link UseAsyncFnReturns}
  */
 export function useAsyncFn<T extends AnyFunc>(fn: T, options: UseAsyncFnOptions = {}): UseAsyncFnReturns<T> {
-  const { clearBeforeRun } = options
+  const { clearBeforeRun, onError } = options
+
+  const versionRef = useRef(0)
 
   const [state, setState] = useSetState({
     loading: false,
@@ -47,9 +56,10 @@ export function useAsyncFn<T extends AnyFunc>(fn: T, options: UseAsyncFnOptions 
     value: undefined as Awaited<ReturnType<T>> | undefined,
   })
 
-  const latest = useLatest({ fn, clear: clearBeforeRun })
+  const latest = useLatest({ fn, onError, clear: clearBeforeRun })
 
   const stableRunFn = useStableFn(async (...args: Parameters<T>) => {
+    const ver = ++versionRef.current
     const newState = latest.current.clear ? { loading: true, value: undefined } : { loading: true }
 
     setState(newState)
@@ -59,13 +69,18 @@ export function useAsyncFn<T extends AnyFunc>(fn: T, options: UseAsyncFnOptions 
 
     try {
       result = await latest.current.fn(...args)
-      return result
     } catch (err) {
-      error = err
-      throw err
+      if (ver === versionRef.current) {
+        error = err
+        latest.current.onError?.(err)
+      }
     } finally {
-      setState({ value: result, error, loading: false })
+      if (ver === versionRef.current) {
+        setState({ value: result, error, loading: false })
+      }
     }
+
+    return result
   }) as T
 
   return {

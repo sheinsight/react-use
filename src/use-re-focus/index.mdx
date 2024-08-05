@@ -1,0 +1,51 @@
+# useReFocus
+
+import { HooksType, NotReleased } from '@/components'
+
+<HooksType category="Utilities" lowLevel />
+
+<NotReleased />
+
+A React Hook that helps to run a function when the page is refocused.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+import { RawCode } from '@/components'
+import source from '!!raw-loader!./demo'
+
+<RawCode>{source}</RawCode>
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+useReFocus(fn, options): void
+```
+
+### Fn
+
+A function that will be called when the page is refocused.
+
+### Options
+
+```tsx
+interface UseReFocusOptions extends UseThrottledFnOptions {
+  /**
+   * Register focus event listener.
+   */
+  registerReFocus?: (callback: AnyFunc) => void
+}
+```
+
+See [useThrottledFn](/reference/use-throttled-fn) for more information.
