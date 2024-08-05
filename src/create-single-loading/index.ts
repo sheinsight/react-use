@@ -123,13 +123,10 @@ export function createSingleLoading(options: CreateSingleLoadingOptions): Create
 
   function useAsyncFn<T extends AnyFunc>(asyncFunc: T) {
     const loading = useLoading()
-    const { run, value, error } = useAsyncFnOrigin(bind(asyncFunc))
 
     return {
-      run,
-      value,
+      ...useAsyncFnOrigin(bind(asyncFunc)),
       loading,
-      error,
       setLoading: set,
     }
   }
