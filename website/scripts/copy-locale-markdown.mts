@@ -1,6 +1,6 @@
 import fs from 'node:fs'
-import url from 'node:url'
 import path from 'node:path'
+import url from 'node:url'
 import { globby } from 'globby'
 
 // TODO: re-write use import.meta.dirname
