@@ -33,7 +33,7 @@ export interface UseAsyncFnOptions<D = any> {
    *
    * @defaultValue undefined
    */
-  onBefore?: () => void
+  onBefore?: (data: D | undefined) => void
   /**
    * a function to run after the async function
    *
@@ -119,15 +119,15 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     let result: D | undefined = undefined
 
     try {
-      latest.current.onBefore?.()
+      latest.current.onBefore?.(stateRef.current.value.value)
 
       if (latest.current.clearBeforeRun) {
         updateRefValue(stateRef.current.value, undefined, false)
       }
       updateRefValue(stateRef.current.loading, true)
       result = await latest.current.fn(...args)
-      latest.current.onSuccess?.(result as D)
       runWhenVersionMatch(version, () => {
+        latest.current.onSuccess?.(result as D)
         updateRefValue(stateRef.current.value, result)
       })
     } catch (error) {
