@@ -214,10 +214,6 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     ver === versionRef.current && fu()
   }
 
-  function resetTimerInterval() {
-    intervalControls.resume()
-  }
-
   const latest = useLatest({
     setCache,
     fetcher,
@@ -255,7 +251,7 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
       loadingTimeout: options.loadingTimeout,
       onLoadingSlow: options.onLoadingSlow,
       onBefore: (...args) => {
-        resetTimerInterval()
+        intervalControls.resume()
         return options.onBefore?.(...args)
       },
       onSuccess: options.onSuccess,
