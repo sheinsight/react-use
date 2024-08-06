@@ -88,9 +88,9 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
   const { clearBeforeRun, onError, onBefore, onSuccess, onFinally } = options
 
   const render = useRender()
-  const versionRef = useRef(0)
 
   const stateRef = useRef({
+    version: 0,
     error: { used: false, value: false },
     loading: { used: false, value: false },
     value: { used: false, value: options.initialValue },
@@ -103,18 +103,18 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
   }
 
   function runWhenVersionMatch(version: number, fu: AnyFunc) {
-    version === versionRef.current && fu()
+    version === stateRef.current.version && fu()
   }
 
   const cancel = useStableFn(() => {
-    versionRef.current++
+    stateRef.current.version++
     updateRefValue(stateRef.current.loading, false)
   })
 
   const latest = useLatest({ fn, onError, onBefore, onSuccess, onFinally, clearBeforeRun })
 
   const stableRunFn = useStableFn(async (...args: Parameters<T>) => {
-    const version = ++versionRef.current
+    const version = ++stateRef.current.version
 
     let result: D | undefined = undefined
 
@@ -122,23 +122,24 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
       latest.current.onBefore?.(stateRef.current.value.value)
 
       if (latest.current.clearBeforeRun) {
-        updateRefValue(stateRef.current.value, undefined, false)
+        updateRefValue(stateRef.current.value, undefined)
       }
       updateRefValue(stateRef.current.loading, true)
       result = await latest.current.fn(...args)
       runWhenVersionMatch(version, () => {
         latest.current.onSuccess?.(result as D)
         updateRefValue(stateRef.current.value, result)
+        updateRefValue(stateRef.current.error, undefined)
       })
     } catch (error) {
       runWhenVersionMatch(version, () => {
         latest.current.onError?.(error)
-        updateRefValue(stateRef.current.error, error, false)
+        updateRefValue(stateRef.current.error, error)
       })
     } finally {
       runWhenVersionMatch(version, () => {
         latest.current.onFinally?.(result)
-        updateRefValue(stateRef.current.loading, false, false)
+        updateRefValue(stateRef.current.loading, false)
       })
     }
 
