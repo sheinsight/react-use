@@ -29,6 +29,7 @@ import type { AnyFunc, Arrayable, Gettable, Promisable } from '../utils/basic'
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 const globalCache: CacheLike<any> = /* #__PURE__ */ new Map()
+
 export const mutate = /* #__PURE__ */ createMutate(globalCache)
 
 export const defaultIsVisible = () => document.visibilityState === 'visible'
@@ -219,6 +220,7 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
   const provider = unwrapGettable(options.provider) || globalCache
   const cacheKeyValue = unwrapGettable(options.cacheKey)
   const cachedData = (cacheKeyValue ? globalCache.get(cacheKeyValue) : undefined) as D | undefined
+  const versionRef = useRef(0)
 
   function setCache(value: D | undefined) {
     if (cacheKeyValue) {
@@ -230,6 +232,14 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     }
   }
 
+  function runWhenVersionMatch(ver: number, fu: AnyFunc) {
+    ver === versionRef.current && fu()
+  }
+
+  function resetTimerInterval() {
+    intervalControls.resume()
+  }
+
   const latest = useLatest({
     setCache,
     fetcher,
@@ -238,14 +248,8 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     isOnline: options.isOnline ?? defaultIsOnline,
   })
 
-  const versionRef = useRef(0)
-
   const debounceOptions = isNumber(options.debounce) ? { wait: options.debounce } : options.debounce
   const throttleOptions = isNumber(options.throttle) ? { wait: options.throttle } : options.throttle
-
-  function runWhenVersionMatch(ver: number, fu: AnyFunc) {
-    ver === versionRef.current && fu()
-  }
 
   const service = useLoadingSlowFn(
     useRetryFn(
@@ -268,31 +272,33 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
       },
     ),
     {
-      initialValue: cachedData,
+      initialValue: cachedData ?? options.initialData,
       clearBeforeRun: options.clearBeforeRun,
-      onLoadingSlow: options.onLoadingSlow,
       loadingTimeout: options.loadingTimeout,
-      onBefore: options.onBefore,
+      onLoadingSlow: options.onLoadingSlow,
+      onBefore: (...args) => {
+        resetTimerInterval()
+        return options.onBefore?.(...args)
+      },
       onSuccess: options.onSuccess,
       onFinally: options.onFinally,
     },
   )
 
-  const serviceWithStatusCheck = useStableFn((async () => {
+  const serviceWithStatusCheck = useStableFn(async () => {
+    if (!pausable.isActive()) return
+
     const { refreshWhenHidden, refreshWhenOffline, isVisible, isOnline } = latest.current
 
     const isVisibleMatch = (await isVisible()) || refreshWhenHidden
     const isOnlineMatch = (await isOnline()) || refreshWhenOffline
 
-    if (isVisibleMatch && isOnlineMatch) {
-      return service.run()
-    }
-  }) as T)
+    if (isVisibleMatch && isOnlineMatch) return service.run()
+  })
 
-  const serviceWithStatusAndActiveCheck = useStableFn(() => pausable.isActive() && serviceWithStatusCheck())
   const serviceWithRateControl = useThrottledFn(useDebouncedFn(service.run, debounceOptions), throttleOptions)
 
-  const intervalControls = useIntervalFn(serviceWithStatusAndActiveCheck, options.refreshInterval || 0, {
+  const intervalControls = useIntervalFn(serviceWithStatusCheck, options.refreshInterval || 0, {
     immediate: !options.manual,
   })
 
