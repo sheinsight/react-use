@@ -2,10 +2,10 @@ import { create } from '@shined/reactive'
 import { getSnapshot } from '@shined/reactive/vanilla'
 import { createContext, useContext } from 'react'
 import { useCreation } from '../use-creation'
+import { type CacheLike, type UseRequestMutate, type UseRequestOptions, useRequest } from '../use-resize-observer/index'
 import { useStableFn } from '../use-stable-fn'
 import { type AnyFunc, type Gettable, isFunction } from '../utils/basic'
 import { unwrapGettable } from '../utils/unwrap'
-import { type CacheLike, type UseRequestMutate, type UseRequestOptions, useRequest } from './index'
 
 import type { Store } from '@shined/reactive'
 

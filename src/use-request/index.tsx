@@ -18,7 +18,10 @@ import { unwrapArrayable, unwrapGettable } from '../utils/unwrap'
 import type { DependencyList, SetStateAction } from 'react'
 import type { UseDebouncedFnOptions } from '../use-debounced-fn'
 import type { UseIntervalFnInterval } from '../use-interval-fn'
+import type { UseLoadingSlowFnOptions } from '../use-loading-slow-fn'
 import type { Pausable } from '../use-pausable'
+import type { UseReConnectOptions } from '../use-re-connect'
+import type { UseReFocusOptions } from '../use-re-focus'
 import type { UseRetryFnOptions } from '../use-retry-fn'
 import type { ReactSetState } from '../use-safe-state'
 import type { UseThrottledFnOptions } from '../use-throttled-fn'
@@ -38,88 +41,174 @@ export interface CacheLike<Data> {
   keys(): IterableIterator<string>
 }
 
-export interface UseRequestOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>> {
-  // 首次 mount 后立即执行，默认 false
-  immediate?: boolean
-  // 首次 mount 执行时传给 fetcher 的请求参数，默认 []
-  // initialParams?: Gettable<Promisable<Parameters<T>>>
-  // 初始数据 （for SSR） 默认 undefined
+export interface UseRequestOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>> extends UseLoadingSlowFnOptions {
+  /**
+   * Whether to manually trigger the request
+   *
+   * @defaultValue false
+   */
+  manual?: boolean
+  /**
+   * Initial parameters passed to fetcher when first mount
+   *
+   * @defaultValue []
+   */
+  initialParams?: Gettable<Promisable<Parameters<T>>>
+  /**
+   * Initial data passed to fetcher when first mount
+   *
+   * @defaultValue undefined
+   */
   initialData?: D | undefined
-  // 缓存 key, 操作去重、单一 promise、数据缓存功能依赖于 cacheKey，默认 undefined，即不开启缓存
+  /**
+   * Cache key, can be a string or a function that returns a string
+   *
+   * @defaultValue undefined
+   */
   cacheKey?: string | ((...args: Parameters<T>) => string)
-  // 缓存提供者，默认为全局共享的 `new Map()`，可以设置为外部 store (reactive)、localStorage 等, 需要符合 CacheLike 接口定义
+  /**
+   * Cache provider, it can be set to an external store (reactive), localStorage, etc.
+   *
+   * Needs to comply with the CacheLike interface definition, defaults to a globally shared `new Map()`
+   *
+   * @defaultValue global shared `new Map()`
+   */
   provider?: Gettable<CacheLike<D>>
-
-  // 节流 => 只对手动执行 run 方法的频率生效
+  /**
+   * ThrottleOptions => only affects the frequency of manually executing the run method
+   *
+   * @defaultValue undefined
+   */
   throttle?: UseThrottledFnOptions['wait'] | UseThrottledFnOptions
-  // 防抖 => 只对手动执行 run 方法的频率生效
+  /**
+   * DebounceOptions => only affects the frequency of manually executing the run method
+   *
+   * @defaultValue undefined
+   */
   debounce?: UseDebouncedFnOptions['wait'] | UseDebouncedFnOptions
-  // 错误重试
-  errorRetry?: Pick<UseRetryFnOptions, 'count' | 'interval'>
-
-  // 是否在获得焦点时重新加载，默认关闭
+  /**
+   * Whether to reload when focus is obtained, default is off
+   *
+   * @defaultValue false
+   */
   refreshOnFocus?: boolean
-  // 获得焦点时重新加载的节流时间，默认 0，即关闭
+  /**
+   * Throttle time when obtaining focus, default 0, off
+   *
+   * @defaultValue 0
+   */
   refreshOnFocusThrottleWait?: number
-  // 自定义是否可见的判断函数
+  /**
+   * Custom visibility judgment function
+   *
+   * @defaultValue defaultIsVisible
+   */
   isVisible?: () => Promisable<boolean>
-  // 注册自定义焦点监听器
-  registerReFocus?: (callback: AnyFunc) => void
-
-  // 是否在网络重连时重新加载，默认关闭 => 内置行为，不受节流防抖限制
+  /**
+   * Register custom focus listener
+   *
+   * @defaultValue <use internal web behavior>
+   */
+  registerReFocus?: UseReFocusOptions['registerReFocus']
+  /**
+   * Whether to reload when network reconnects, default is off
+   *
+   * @defaultValue false
+   */
   refreshOnReconnect?: boolean
-  // 自定义是否在线的判断函数
+  /**
+   * Custom online judgment function
+   *
+   * @defaultValue defaultIsOnline
+   */
   isOnline?: () => Promisable<boolean>
-  // 注册自定义重连监听器
-  registerReconnect?: (callback: AnyFunc) => void
-
-  // 定时重新验证时间间隔，默认 0，即关闭 => 内置行为，不受节流防抖限制
+  /**
+   * Register custom reconnect listener
+   *
+   * @defaultValue <use internal web behavior>
+   */
+  registerReconnect?: UseReConnectOptions['registerReConnect']
+  /**
+   * Interval time for automatic refresh, default is 0, off
+   *
+   * @defaultValue 0
+   */
   refreshInterval?: Exclude<UseIntervalFnInterval, 'requestAnimationFrame'>
-  // 是否在页面隐藏时重新验证，默认关闭 => isVisible 进行判断
+  /**
+   * Whether to reload when hidden, default is off
+   *
+   * @defaultValue false
+   */
   refreshWhenHidden?: boolean
-  // 是否在离线时重新验证，默认关闭 => isOnline 进行判断
+  /**
+   * Whether to reload when offline, default is off
+   *
+   * @defaultValue false
+   */
   refreshWhenOffline?: boolean
-
-  // 重新刷新的依赖，当依赖变化时会触发刷新
+  /**
+   * The dependencies of the refresh operation, when the dependencies change, the refresh operation will be triggered
+   *
+   * @defaultValue []
+   */
   refreshDependencies?: DependencyList
-  // 刷新前是否清空之前的数据和缓存
-  clearBeforeRun?: boolean
-  // 数据加载中的阈值，默认 0, 即关闭，超过该阈值会触发 onLoadingSlow 回调
-  loadingTimeout?: number
-
-  // 操作前回调
-  onBefore?: () => void
-  // 操作成功回调
-  onSuccess?: (data: D) => void
-  // 操作错误回调
-  onError?: UseRetryFnOptions['onError']
-  // 错误重试回调
-  onErrorRetry?: UseRetryFnOptions['onError']
-  // 操作完成回调
-  onFinally?: (data: D | undefined) => void
-  // 数据加载缓慢回调
-  onLoadingSlow?: () => void
+  /**
+   * Error retry count
+   *
+   * @defaultValue 0
+   */
+  errorRetryCount?: UseRetryFnOptions['count']
+  /**
+   * Error retry interval
+   *
+   * @defaultValue 0
+   */
+  errorRetryInterval?: UseRetryFnOptions['interval']
+  /**
+   * Whether to clear the cache before each request
+   *
+   * @defaultValue false
+   */
+  onErrorRetry?: UseRetryFnOptions['onErrorRetry']
 }
 
 // pausable 实例控制的是所有内部的自动 refresh 行为（手动 run 和外部依赖变化除外）
 export interface UseRequestReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>> extends Pausable {
-  // 执行操作
+  /**
+   * Manually trigger the request
+   */
   run: T
-  // 抛弃当前操作，不会触发任何回调 （无法阻止 promise 执行，但阻止了后续逻辑）
+  /**
+   * Cancel the current operation, no callback will be triggered (cannot prevent promise execution, but prevents subsequent logic)
+   */
   cancel: () => void
-  // 返回的数据，可以在 options 里设置首次加载的数据
+  /**
+   * The data returned by the request
+   */
   data: D | undefined
-  // 错误信息
+  /**
+   * Error information
+   */
   error: unknown
-  // 修改数据
+  /**
+   * Modify the data
+   */
   mutate: ReactSetState<D | undefined>
-  // 当前操作正在进行中
+  /**
+   * Whether the request is in progress
+   */
   loading: boolean
-  // 是否正在初始化（无数据 + loading, initializing => !data && loading）
+  /**
+   * Whether the request is in the initialization state (no data + loading, initializing => !data && loading)
+   */
   initializing: boolean
-  // 是否正在刷新数据（有数据 + loading，refreshing => data && loading）
+  /**
+   * Whether the request is refreshing data (has data + loading, refreshing => data && loading)
+   */
   refreshing: boolean
-  //是否数据加载缓慢
+  /**
+   * Whether the request is slow
+   */
   loadingSlow: boolean
 }
 
@@ -172,14 +261,10 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
         return result
       }) as T,
       {
-        ...options.errorRetry,
-        onError(error, retryState) {
-          options?.onError?.(error, { ...retryState })
-
-          if (retryState.currentCount >= 1) {
-            options.onErrorRetry?.(error, { ...retryState })
-          }
-        },
+        count: options.errorRetryCount,
+        interval: options.errorRetryInterval,
+        onError: options.onError,
+        onErrorRetry: options.onErrorRetry,
       },
     ),
     {
@@ -193,7 +278,7 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     },
   )
 
-  const serviceWithStatusCheck = (async () => {
+  const serviceWithStatusCheck = useStableFn((async () => {
     const { refreshWhenHidden, refreshWhenOffline, isVisible, isOnline } = latest.current
 
     const isVisibleMatch = (await isVisible()) || refreshWhenHidden
@@ -202,12 +287,14 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     if (isVisibleMatch && isOnlineMatch) {
       return service.run()
     }
-  }) as T
+  }) as T)
 
   const serviceWithStatusAndActiveCheck = useStableFn(() => pausable.isActive() && serviceWithStatusCheck())
   const serviceWithRateControl = useThrottledFn(useDebouncedFn(service.run, debounceOptions), throttleOptions)
 
-  const intervalControls = useIntervalFn(serviceWithStatusAndActiveCheck, options.refreshInterval || 0)
+  const intervalControls = useIntervalFn(serviceWithStatusAndActiveCheck, options.refreshInterval || 0, {
+    immediate: !options.manual,
+  })
 
   useReConnect(() => options.refreshOnReconnect && serviceWithStatusCheck(), {
     registerReConnect: options.registerReconnect,
@@ -227,9 +314,11 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     () => intervalControls.resume(),
   )
 
-  useUpdateEffect(() => service.run(), [service.run, ...(options.refreshDependencies ?? [])])
+  useUpdateEffect(() => {
+    service.run()
+  }, [service.run, ...(options.refreshDependencies ?? [])])
 
-  useMount(options.immediate && service.run)
+  useMount(!options.manual && service.run)
 
   useUnmount(service.cancel)
 
@@ -245,7 +334,9 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     run: serviceWithRateControl,
     cancel: service.cancel,
     mutate: mutateWithCache,
-    loadingSlow: service.loadingSlow,
+    get loadingSlow() {
+      return service.loadingSlow
+    },
     get data() {
       return service.value
     },
