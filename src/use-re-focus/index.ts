@@ -5,7 +5,7 @@ import { useThrottledFn } from '../use-throttled-fn'
 import type { UseThrottledFnOptions } from '../use-throttled-fn'
 import type { AnyFunc } from '../utils/basic'
 
-interface UseReFocusOptions extends UseThrottledFnOptions {
+export interface UseReFocusOptions extends UseThrottledFnOptions {
   /**
    * Register focus event listener.
    */
