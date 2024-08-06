@@ -6,7 +6,7 @@ import { useRender } from '../use-render'
 import type { UseAsyncFnOptions, UseAsyncFnReturns } from '../use-async-fn'
 import type { AnyFunc } from '../utils/basic'
 
-export interface UseLoadingSlowFnOptions extends UseAsyncFnOptions {
+export interface UseLoadingSlowFnOptions<D> extends UseAsyncFnOptions<D> {
   /**
    * The timeout duration in milliseconds to determine if the loading is slow.
    *
@@ -21,14 +21,18 @@ export interface UseLoadingSlowFnOptions extends UseAsyncFnOptions {
   onLoadingSlow?: () => void
 }
 
-export interface UseLoadingSlowFnReturns<T extends AnyFunc> extends UseAsyncFnReturns<T> {
+export interface UseLoadingSlowFnReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>>
+  extends UseAsyncFnReturns<T, D> {
   /**
    * Whether the loading is slow.
    */
   loadingSlow: boolean
 }
 
-export function useLoadingSlowFn<T extends AnyFunc>(fn: T, options: UseLoadingSlowFnOptions = {}) {
+export function useLoadingSlowFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
+  fn: T,
+  options: UseLoadingSlowFnOptions<D> = {},
+) {
   const { loadingTimeout = 0, onLoadingSlow, ...useAsyncFnOptions } = options
 
   const render = useRender()

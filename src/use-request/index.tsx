@@ -18,7 +18,7 @@ import { unwrapArrayable, unwrapGettable } from '../utils/unwrap'
 import type { DependencyList, SetStateAction } from 'react'
 import type { UseDebouncedFnOptions } from '../use-debounced-fn'
 import type { UseIntervalFnInterval } from '../use-interval-fn'
-import type { UseLoadingSlowFnOptions } from '../use-loading-slow-fn'
+import type { UseLoadingSlowFnOptions, UseLoadingSlowFnReturns } from '../use-loading-slow-fn'
 import type { Pausable } from '../use-pausable'
 import type { UseReConnectOptions } from '../use-re-connect'
 import type { UseReFocusOptions } from '../use-re-focus'
@@ -42,7 +42,7 @@ export interface CacheLike<Data> {
   keys(): IterableIterator<string>
 }
 
-export interface UseRequestOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>> extends UseLoadingSlowFnOptions {
+export interface UseRequestOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>> extends UseLoadingSlowFnOptions<D> {
   /**
    * Whether to manually trigger the request
    *
@@ -174,31 +174,13 @@ export interface UseRequestOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>
 }
 
 // pausable 实例控制的是所有内部的自动 refresh 行为（手动 run 和外部依赖变化除外）
-export interface UseRequestReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>> extends Pausable {
-  /**
-   * Manually trigger the request
-   */
-  run: T
-  /**
-   * Cancel the current operation, no callback will be triggered (cannot prevent promise execution, but prevents subsequent logic)
-   */
-  cancel: () => void
+export interface UseRequestReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>>
+  extends Pausable,
+    Omit<UseLoadingSlowFnReturns<T, D>, 'value'> {
   /**
    * The data returned by the request
    */
   data: D | undefined
-  /**
-   * Error information
-   */
-  error: unknown
-  /**
-   * Modify the data
-   */
-  mutate: ReactSetState<D | undefined>
-  /**
-   * Whether the request is in progress
-   */
-  loading: boolean
   /**
    * Whether the request is in the initialization state (no data + loading, initializing => !data && loading)
    */
@@ -207,10 +189,6 @@ export interface UseRequestReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>
    * Whether the request is refreshing data (has data + loading, refreshing => data && loading)
    */
   refreshing: boolean
-  /**
-   * Whether the request is slow
-   */
-  loadingSlow: boolean
 }
 
 export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
@@ -353,10 +331,10 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
       return service.loading
     },
     get refreshing() {
-      return service.value && service.loading
+      return Boolean(service.value && service.loading)
     },
     get initializing() {
-      return !service.value && service.loading
+      return Boolean(!service.value && service.loading)
     },
   }
 }
