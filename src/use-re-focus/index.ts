@@ -52,6 +52,8 @@ export function useReFocus(callback: AnyFunc, options: UseReFocusOptions = {}) {
   useEffectOnce(() => {
     return registerReFocus(() => latest.current.throttledFn())
   })
+
+  return throttledFn.clear
 }
 
 // biome-ignore lint/suspicious/noExplicitAny: ignore appState type
