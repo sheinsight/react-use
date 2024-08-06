@@ -24,7 +24,13 @@ export interface UseRetryFnOptions {
    *
    * @defaultValue undefined
    */
-  onError?: (error: unknown, state: UseRetryFnRetryState) => void
+  onError?: (error: unknown) => void
+  /**
+   * Error retry callback.
+   *
+   * @defaultValue undefined
+   */
+  onErrorRetry?: (error: unknown, state: UseRetryFnRetryState) => void
   /**
    * All retries failed callback.
    *
@@ -49,7 +55,7 @@ export interface UseRetryFnRetryState {
 }
 
 export function useRetryFn<T extends AnyFunc>(fn: T, options: UseRetryFnOptions = {}): T {
-  const { count = 3, interval = 3000, onError, onRetryFailed } = options
+  const { count = 3, interval = 3000, onError, onErrorRetry, onRetryFailed } = options
 
   const version = useRef(0)
 
@@ -58,6 +64,7 @@ export function useRetryFn<T extends AnyFunc>(fn: T, options: UseRetryFnOptions 
     count,
     interval,
     onError,
+    onErrorRetry,
     onRetryFailed,
   })
 
@@ -83,15 +90,17 @@ export function useRetryFn<T extends AnyFunc>(fn: T, options: UseRetryFnOptions 
 
         retryState.currentCount++
 
-        const { onError, onRetryFailed, interval } = latest.current
+        const { onError, onErrorRetry, onRetryFailed, interval } = latest.current
 
-        onError?.(error, { ...retryState })
+        onError?.(error)
 
         if (retryState.currentCount >= retryState.retryCount) {
           onRetryFailed?.(error, { ...retryState })
           retryState.currentCount = 0
           return
         }
+
+        onErrorRetry?.(error, { ...retryState })
 
         const intervalValue = isFunction(interval) ? interval(retryState.currentCount) : interval
         await new Promise((resolve) => setTimeout(resolve, intervalValue))
