@@ -1,10 +1,9 @@
 import { useRef } from 'react'
 import { useAsyncFn } from '../use-async-fn'
 import { useLatest } from '../use-latest'
-import { useTimeout } from '../use-timeout'
+import { useRender } from '../use-render'
 
 import type { UseAsyncFnOptions, UseAsyncFnReturns } from '../use-async-fn'
-import { useRender } from '../use-render'
 import type { AnyFunc } from '../utils/basic'
 
 export interface UseLoadingSlowFnOptions extends UseAsyncFnOptions {
@@ -69,11 +68,11 @@ export function useLoadingSlowFn<T extends AnyFunc>(fn: T, options: UseLoadingSl
 
       const result = await latest.current.fn()
 
-      if (stateRef.current.timer) {
-        clearTimeout(stateRef.current.timer)
-      }
-
       runWhenVersionMatch(version, () => {
+        if (stateRef.current.timer) {
+          clearTimeout(stateRef.current.timer)
+        }
+
         updateRefValue(stateRef.current.loadingSlow, false)
       })
 
