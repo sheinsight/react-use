@@ -23,7 +23,6 @@ import type { Pausable } from '../use-pausable'
 import type { UseReConnectOptions } from '../use-re-connect'
 import type { UseReFocusOptions } from '../use-re-focus'
 import type { UseRetryFnOptions } from '../use-retry-fn'
-import type { ReactSetState } from '../use-safe-state'
 import type { UseThrottledFnOptions } from '../use-throttled-fn'
 import type { AnyFunc, Arrayable, Gettable, Promisable } from '../utils/basic'
 
@@ -227,14 +226,14 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
 
   const service = useLoadingSlowFn(
     useRetryFn(
-      (async () => {
+      (async (...args) => {
         const version = ++versionRef.current
         runWhenVersionMatch(version, () => {
           if (latest.current.clearBeforeRun) {
             latest.current.setCache(undefined)
           }
         })
-        const result = await latest.current.fetcher()
+        const result = await latest.current.fetcher(...args)
         runWhenVersionMatch(version, () => latest.current.setCache(result))
         return result
       }) as T,

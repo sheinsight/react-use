@@ -7,25 +7,11 @@ export function App() {
   const [count, actions] = useCounter(0)
 
   const { run, loading, loadingSlow, initializing, error, refreshing, data, cancel, mutate, resume, pause } =
-    useRequest(
-      async (name: string) => {
-        await new Promise((resolve) => setTimeout(resolve, 1000))
-        return `[result: ${name ?? 'no-name'}]`
-      },
-      {
-        initialData: 'initialData',
-        loadingTimeout: 600,
-        onBefore: () => console.log('onBefore'),
-        onSuccess: (data) => console.log('onSuccess', data),
-        onError: (error) => console.log('onError', error),
-        onFinally: (data) => console.log('onFinally', data),
-        refreshOnFocus: true,
-        refreshOnReconnect: true,
-        refreshInterval: 5_000,
-        refreshOnFocusThrottleWait: 3000,
-        refreshDependencies: [count],
-      },
-    )
+    useRequest(async (name: string) => {
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      console.log(name)
+      return `[result: ${name ?? 'no-name'}]`
+    })
 
   console.log('render', ++_count)
 

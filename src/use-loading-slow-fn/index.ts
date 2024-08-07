@@ -55,7 +55,7 @@ export function useLoadingSlowFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
   }
 
   const asyncFn = useAsyncFn(
-    (async () => {
+    (async (...args) => {
       updateRefValue(stateRef.current.loadingSlow, false)
 
       const version = ++stateRef.current.version
@@ -70,7 +70,7 @@ export function useLoadingSlowFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
         }, latest.current.loadingTimeout)
       }
 
-      const result = await latest.current.fn()
+      const result = await latest.current.fn(...args)
 
       runWhenVersionMatch(version, () => {
         if (stateRef.current.timer) {
