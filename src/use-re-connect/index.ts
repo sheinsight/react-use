@@ -11,28 +11,14 @@ export interface UseReConnectOptions {
 }
 
 export function registerWebReConnect(callback: AnyFunc) {
-  const connectedState = { current: navigator.onLine }
-
   function handleOnline() {
-    const nextState = true
-
-    if (!connectedState.current) {
-      callback()
-      connectedState.current = nextState
-    }
-  }
-
-  function handleOffline() {
-    const nextState = false
-    connectedState.current = nextState
+    callback()
   }
 
   window.addEventListener('online', handleOnline, { passive: true })
-  window.addEventListener('offline', handleOffline, { passive: true })
 
   return () => {
     window.removeEventListener('online', handleOnline)
-    window.removeEventListener('offline', handleOffline)
   }
 }
 
