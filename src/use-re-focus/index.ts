@@ -16,12 +16,12 @@ export function registerWebReFocus(callback: AnyFunc) {
   const focusState = { current: false }
 
   function handleFocus() {
-    const nextState = true
+    if (focusState.current) return
 
-    if (!focusState.current) {
-      callback()
-      focusState.current = nextState
-    }
+    const nextState = true
+    focusState.current = nextState
+
+    callback()
   }
 
   function handleBlur() {
@@ -29,10 +29,20 @@ export function registerWebReFocus(callback: AnyFunc) {
     focusState.current = nextState
   }
 
+  function handleVisibilityChange() {
+    if (document.visibilityState === 'visible') {
+      handleFocus()
+    } else if (document.visibilityState === 'hidden') {
+      handleBlur()
+    }
+  }
+
+  window.addEventListener('visibilitychange', handleVisibilityChange, { passive: true })
   window.addEventListener('focus', handleFocus, { passive: true })
   window.addEventListener('blur', handleBlur, { passive: true })
 
   return () => {
+    window.removeEventListener('visibilitychange', handleVisibilityChange)
     window.removeEventListener('focus', handleFocus)
     window.removeEventListener('blur', handleBlur)
   }

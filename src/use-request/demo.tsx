@@ -4,42 +4,58 @@ import { useCounter, useRequest } from '@shined/react-use'
 export function App() {
   return (
     <Card>
-      <h3>Immediate + Trigger by user</h3>
+      <h3>Immediate + Trigger by user + Dependencies</h3>
       <Demo1 />
-      <h3>Lifecycle + Refresh + Params + Mutate + Cancel</h3>
+      <h3>Lifecycle + Refresh + Params + Mutate + Cancel + Initialing + Refreshing</h3>
       <Demo2 />
+      <h3>Throttle + Debounce</h3>
+      <Demo3 />
       {/* <DemoFull /> */}
     </Card>
   )
 }
 
 function Demo1() {
-  const { run, data, loading, error } = useRequest(wait)
+  const [count, actions] = useCounter(0)
+  const { run, data, loading, error } = useRequest(wait, { refreshDependencies: [count] })
   return (
     <>
-      <KeyValue label="Data" value={error ? 'Error occurred!' : loading ? 'Loading...' : data ?? 'Not loaded'} />
-      <Button mono disabled={loading} onClick={() => run()}>
-        run()
-      </Button>
+      <KeyValue label="Data" value={error ? 'Error!' : loading ? 'Loading...' : data ?? 'Not loaded'} />
+      <Zone>
+        <Button mono disabled={loading} onClick={() => run()}>
+          run()
+        </Button>
+        <Button mono onClick={() => actions.inc()}>
+          actions.inc()
+        </Button>
+      </Zone>
     </>
   )
 }
 
 function Demo2() {
-  const { run, mutate, refresh, params, cancel, data, loading } = useRequest((n = OTP()) => wait(300, n), {
-    immediate: false,
-    onBefore: (data, params) => console.log('onBefore', data, params),
-    onSuccess: (data, params) => console.log('onSuccess', data, params),
-    onFinally: (data, params) => console.log('onFinally', data, params),
-    onMutate: (data, params) => console.log('onMutate', data, params),
-    onCancel: (data, params) => console.log('onCancel', data, params),
-  })
+  const { run, mutate, initializing, refreshing, refresh, params, cancel, data, loading } = useRequest(
+    (n = OTP()) => wait(300, n),
+    {
+      immediate: false,
+      onBefore: (data, params) => console.log('onBefore', data, params),
+      onSuccess: (data, params) => console.log('onSuccess', data, params),
+      onFinally: (data, params) => console.log('onFinally', data, params),
+      onMutate: (data, params) => console.log('onMutate', data, params),
+      onCancel: (data, params) => console.log('onCancel', data, params),
+      onRefresh: (data, params) => console.log('onRefresh', data, params),
+    },
+  )
 
   return (
     <>
       <Zone>
-        <KeyValue label="Data" value={data ?? 'Not loaded'} />
-        <KeyValue label="Params" value={JSON.stringify(params)} />
+        <KeyValue
+          label="Data"
+          value={initializing ? 'Initializing...' : data ?? 'Not loaded'}
+          valueClassName={cn(refreshing ? 'opacity-60' : '')}
+        />
+        <KeyValue label="Params" value={JSON.stringify(params)} valueClassName={cn(refreshing ? 'opacity-60' : '')} />
       </Zone>
       <Zone>
         <Button mono disabled={loading} onClick={() => run()}>
@@ -56,6 +72,35 @@ function Demo2() {
         </Button>
         <Button mono onClick={() => refresh()}>
           refresh()
+        </Button>
+      </Zone>
+    </>
+  )
+}
+
+function Demo3() {
+  const { run, data, loading, error } = useRequest(wait, { immediate: false, debounce: { wait: 300 } })
+  const {
+    run: run2,
+    data: data2,
+    loading: loading2,
+    error: error2,
+  } = useRequest(wait, { immediate: false, throttle: { wait: 1000 } })
+  return (
+    <>
+      <Zone>
+        <KeyValue label="Data with debounce" value={error ? 'Error!' : loading ? 'Loading...' : data ?? 'Not loaded'} />
+        <KeyValue
+          label="Data with throttle"
+          value={error2 ? 'Error!' : loading2 ? 'Loading...' : data2 ?? 'Not loaded'}
+        />
+      </Zone>
+      <Zone>
+        <Button mono onClick={() => run()}>
+          run() with debounce
+        </Button>
+        <Button mono onClick={() => run2()}>
+          run() with throttle
         </Button>
       </Zone>
     </>
@@ -147,7 +192,7 @@ function DemoFull() {
             <div>{refreshing && <span>({loadingSlow ? 'loading slow...' : 'refreshing...'})</span>}</div>
           </div>
         )}
-        {!!error && <div>Error occurred!</div>}
+        {!!error && <div>Error!</div>}
       </div>
     </>
   )

@@ -29,7 +29,7 @@ const globalCache: CacheLike<any> = /* #__PURE__ */ new Map()
 
 export const mutate = /* #__PURE__ */ createMutate(globalCache)
 
-export const defaultIsVisible = () => document.visibilityState === 'visible'
+export const defaultIsVisible = () => !document.hidden
 export const defaultIsOnline = () => navigator.onLine
 
 export interface CacheLike<Data> {
@@ -258,6 +258,7 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
       onSuccess: options.onSuccess,
       onFinally: options.onFinally,
       onCancel: options.onCancel,
+      onRefresh: options.onRefresh,
       onBefore(...args) {
         intervalControls.resume()
         return options.onBefore?.(...args)
@@ -304,7 +305,7 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     () => intervalControls.resume(),
   )
 
-  useUpdateEffect(() => service.run(), [service.run, ...(options.refreshDependencies ?? [])])
+  useUpdateEffect(() => void serviceWithStatusCheck(), [...(options.refreshDependencies ?? [])])
 
   return {
     ...pausable,
