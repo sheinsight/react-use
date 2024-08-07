@@ -70,6 +70,10 @@ export interface UseAsyncFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>
    * a function to run when the value is mutated
    */
   onMutate?: (value: D | undefined, params: Parameters<T> | []) => void
+  /**
+   * a function to run when the value is refreshed
+   */
+  onRefresh?: (value: D | undefined, params: Parameters<T> | []) => void
 }
 
 export interface UseAsyncFnReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>> {
@@ -123,6 +127,7 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     cancelOnUnmount = true,
     onError,
     onMutate,
+    onRefresh,
     onCancel,
     onBefore,
     onSuccess,
@@ -155,6 +160,7 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     cancelOnUnmount,
     onMutate,
     onCancel,
+    onRefresh,
     onError,
     onBefore,
     onSuccess,
@@ -211,8 +217,10 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     latest.current.onMutate?.(nextState, stateRef.current.params.value)
   })
 
-  const refresh = useStableFn(() => {
-    return run(...stateRef.current.params.value)
+  const refresh = useStableFn(async () => {
+    const result = await run(...stateRef.current.params.value)
+    latest.current.onRefresh?.(result, stateRef.current.params.value)
+    return result
   })
 
   useMount(immediate && run)
