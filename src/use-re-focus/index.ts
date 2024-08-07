@@ -13,38 +13,22 @@ export interface UseReFocusOptions extends UseThrottledFnOptions {
 }
 
 export function registerWebReFocus(callback: AnyFunc) {
-  const focusState = { current: false }
-
   function handleFocus() {
-    if (focusState.current) return
-
-    const nextState = true
-    focusState.current = nextState
-
     callback()
   }
 
-  function handleBlur() {
-    const nextState = false
-    focusState.current = nextState
-  }
-
   function handleVisibilityChange() {
-    if (document.visibilityState === 'visible') {
+    if (!document.hidden) {
       handleFocus()
-    } else if (document.visibilityState === 'hidden') {
-      handleBlur()
     }
   }
 
   window.addEventListener('visibilitychange', handleVisibilityChange, { passive: true })
   window.addEventListener('focus', handleFocus, { passive: true })
-  window.addEventListener('blur', handleBlur, { passive: true })
 
   return () => {
     window.removeEventListener('visibilitychange', handleVisibilityChange)
     window.removeEventListener('focus', handleFocus)
-    window.removeEventListener('blur', handleBlur)
   }
 }
 
