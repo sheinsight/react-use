@@ -222,8 +222,6 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     setCache,
     fetcher,
     ...options,
-    isVisible: options.isVisible ?? defaultIsVisible,
-    isOnline: options.isOnline ?? defaultIsOnline,
   })
 
   const debounceOptions = isNumber(options.debounce) ? { wait: options.debounce } : options.debounce
@@ -273,7 +271,12 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
   const serviceWithStatusCheck = useStableFn(async () => {
     if (!pausable.isActive() || latest.current.manual) return
 
-    const { refreshWhenHidden, refreshWhenOffline, isVisible, isOnline } = latest.current
+    const {
+      refreshWhenHidden = false,
+      refreshWhenOffline = false,
+      isVisible = defaultIsVisible,
+      isOnline = defaultIsOnline,
+    } = latest.current
 
     const isVisibleMatch = (await isVisible()) || refreshWhenHidden
     const isOnlineMatch = (await isOnline()) || refreshWhenOffline
@@ -283,9 +286,7 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
 
   const serviceWithRateControl = useThrottledFn(useDebouncedFn(service.run, debounceOptions), throttleOptions)
 
-  const intervalControls = useIntervalFn(serviceWithStatusCheck, options.refreshInterval || 0, {
-    immediate: !options.manual,
-  })
+  const intervalControls = useIntervalFn(serviceWithStatusCheck, options.refreshInterval ?? 0, { immediate: false })
 
   useReConnect(() => options.refreshOnReconnect && serviceWithStatusCheck(), {
     registerReConnect: options.registerReconnect,

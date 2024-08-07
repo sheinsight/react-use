@@ -62,6 +62,10 @@ export const isClient = Boolean(typeof window !== 'undefined' && isFunction(wind
 
 export function noop(): undefined {}
 
+export function wait(time = 0): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, time))
+}
+
 export function now(): number {
   return Date.now()
 }

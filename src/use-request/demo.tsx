@@ -10,6 +10,9 @@ export function App() {
       <Demo2 />
       <h3>Throttle + Debounce</h3>
       <Demo3 />
+      <h3>ReFocus + ReConnect + Loading Slow</h3>
+      <Demo4 />
+      <h3>Error Retry + Cache</h3>
       {/* <DemoFull /> */}
     </Card>
   )
@@ -79,13 +82,13 @@ function Demo2() {
 }
 
 function Demo3() {
-  const { run, data, loading, error } = useRequest(wait, { immediate: false, debounce: { wait: 300 } })
+  const { run, data, loading, error } = useRequest(wait, { immediate: false, debounce: 300 })
   const {
     run: run2,
     data: data2,
     loading: loading2,
     error: error2,
-  } = useRequest(wait, { immediate: false, throttle: { wait: 1000 } })
+  } = useRequest(wait, { immediate: false, throttle: 1000 })
   return (
     <>
       <Zone>
@@ -108,27 +111,16 @@ function Demo3() {
 }
 
 function Demo4() {
-  const { run, params, data, refresh, loading } = useRequest((n = OTP()) => wait(300, n), { immediate: false })
+  const { data, initializing, loadingSlow } = useRequest((n = OTP()) => wait(1000, n), {
+    refreshInterval: 6000,
+    refreshOnFocus: true,
+    refreshOnReconnect: true,
+    loadingTimeout: 500,
+  })
 
-  return (
-    <>
-      <Zone>
-        <KeyValue label="Data" value={data ?? 'Not loaded'} />
-        <KeyValue label="Params" value={JSON.stringify(params)} />
-      </Zone>
-      <Zone>
-        <Button mono disabled={loading} onClick={() => run()}>
-          run()
-        </Button>
-        <Button mono disabled={loading} onClick={() => run(OTP())}>
-          run(OTP())
-        </Button>
-        <Button mono disabled={loading} onClick={() => refresh()}>
-          refresh
-        </Button>
-      </Zone>
-    </>
-  )
+  const slowStr = loadingSlow ? ' (slow...)' : ''
+
+  return <KeyValue label="Data" value={initializing ? 'Initializing...' : data ? `${data}${slowStr}` : 'Not loaded'} />
 }
 
 let _count = 0
@@ -139,8 +131,7 @@ function DemoFull() {
   const { run, loading, loadingSlow, initializing, error, refreshing, data, cancel, mutate, resume, pause } =
     useRequest(
       async (name: string) => {
-        await new Promise((resolve) => setTimeout(resolve, 1000))
-        console.log(name)
+        await wait(1000)
         return `[result: ${name ?? 'no-name'}]`
       },
       {
