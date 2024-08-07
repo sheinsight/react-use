@@ -96,7 +96,7 @@ export interface UseAsyncFnReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>
   /**
    * the error thrown by the async function
    */
-  error: unknown | null
+  error: unknown
   /**
    * the value returned by the async function
    */
@@ -133,7 +133,7 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
 
   const stateRef = useRef({
     version: 0,
-    error: { used: false, value: false },
+    error: { used: false, value: null },
     loading: { used: false, value: Boolean(immediate) },
     value: { used: false, value: options.initialValue },
     params: { used: false, value: [] as Parameters<T> | [] },
