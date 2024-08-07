@@ -6,7 +6,8 @@ import { useRender } from '../use-render'
 import type { UseAsyncFnOptions, UseAsyncFnReturns } from '../use-async-fn'
 import type { AnyFunc } from '../utils/basic'
 
-export interface UseLoadingSlowFnOptions<D> extends UseAsyncFnOptions<D> {
+export interface UseLoadingSlowFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>>
+  extends UseAsyncFnOptions<T, D> {
   /**
    * The timeout duration in milliseconds to determine if the loading is slow.
    *
@@ -31,8 +32,8 @@ export interface UseLoadingSlowFnReturns<T extends AnyFunc, D = Awaited<ReturnTy
 
 export function useLoadingSlowFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
   fn: T,
-  options: UseLoadingSlowFnOptions<D> = {},
-) {
+  options: UseLoadingSlowFnOptions<T, D> = {},
+): UseLoadingSlowFnReturns<T, D> {
   const { loadingTimeout = 0, onLoadingSlow, ...useAsyncFnOptions } = options
 
   const render = useRender()
@@ -82,13 +83,24 @@ export function useLoadingSlowFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
 
       return result
     }) as T,
-    useAsyncFnOptions,
+    {
+      ...useAsyncFnOptions,
+      onCancel(...args) {
+        stateRef.current.version++
+        updateRefValue(stateRef.current.loadingSlow, false)
+        useAsyncFnOptions.onCancel?.(...args)
+      },
+    },
   )
 
   return {
     mutate: asyncFn.mutate,
     run: asyncFn.run,
     cancel: asyncFn.cancel,
+    refresh: asyncFn.refresh,
+    get params() {
+      return asyncFn.params
+    },
     get value() {
       return asyncFn.value
     },

@@ -3,14 +3,12 @@ import { useDebouncedFn } from '../use-debounced-fn'
 import { useIntervalFn } from '../use-interval-fn'
 import { useLatest } from '../use-latest'
 import { useLoadingSlowFn } from '../use-loading-slow-fn'
-import { useMount } from '../use-mount'
 import { usePausable } from '../use-pausable'
 import { useReConnect } from '../use-re-connect'
 import { useReFocus } from '../use-re-focus'
 import { useRetryFn } from '../use-retry-fn'
 import { useStableFn } from '../use-stable-fn'
 import { useThrottledFn } from '../use-throttled-fn'
-import { useUnmount } from '../use-unmount'
 import { useUpdateEffect } from '../use-update-effect'
 import { isDefined, isFunction, isNumber } from '../utils/basic'
 import { unwrapArrayable, unwrapGettable } from '../utils/unwrap'
@@ -41,9 +39,16 @@ export interface CacheLike<Data> {
   keys(): IterableIterator<string>
 }
 
-export interface UseRequestOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>> extends UseLoadingSlowFnOptions<D> {
+export interface UseRequestOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>>
+  extends Omit<UseLoadingSlowFnOptions<T, D>, 'initialValue' | 'immediate'> {
   /**
-   * Whether to manually trigger the request
+   * Whether to clear the cache before each request
+   *
+   * @defaultValue true
+   */
+  immediate?: boolean
+  /**
+   * Disable all automatic refresh behaviors, default is off
    *
    * @defaultValue false
    */
@@ -245,21 +250,27 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
       },
     ),
     {
+      immediate: options.immediate ?? true,
       initialValue: cachedData ?? options.initialData,
       clearBeforeRun: options.clearBeforeRun,
       loadingTimeout: options.loadingTimeout,
       onLoadingSlow: options.onLoadingSlow,
-      onBefore: (...args) => {
+      onSuccess: options.onSuccess,
+      onFinally: options.onFinally,
+      onCancel: options.onCancel,
+      onBefore(...args) {
         intervalControls.resume()
         return options.onBefore?.(...args)
       },
-      onSuccess: options.onSuccess,
-      onFinally: options.onFinally,
+      onMutate(nextData, ...rest) {
+        latest.current.setCache(nextData)
+        return options.onMutate?.(nextData, ...rest)
+      },
     },
   )
 
   const serviceWithStatusCheck = useStableFn(async () => {
-    if (!pausable.isActive()) return
+    if (!pausable.isActive() || latest.current.manual) return
 
     const { refreshWhenHidden, refreshWhenOffline, isVisible, isOnline } = latest.current
 
@@ -293,26 +304,17 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     () => intervalControls.resume(),
   )
 
-  useUpdateEffect(() => {
-    service.run()
-  }, [service.run, ...(options.refreshDependencies ?? [])])
-
-  useMount(!options.manual && service.run)
-
-  useUnmount(service.cancel)
-
-  const mutateWithCache = useStableFn((action: SetStateAction<D | undefined>) => {
-    const prevData = service.value
-    const nextData = isFunction(action) ? action(prevData) : action
-    service.mutate(nextData)
-    latest.current.setCache(nextData)
-  })
+  useUpdateEffect(() => service.run(), [service.run, ...(options.refreshDependencies ?? [])])
 
   return {
     ...pausable,
     run: serviceWithRateControl,
     cancel: service.cancel,
-    mutate: mutateWithCache,
+    mutate: service.mutate,
+    refresh: service.refresh,
+    get params() {
+      return service.params
+    },
     get loadingSlow() {
       return service.loadingSlow
     },
