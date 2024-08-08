@@ -1,5 +1,6 @@
 import { Button, Card, KeyValue, OTP, Zone, cn, wait } from '@/components'
-import { useCounter, useRequest } from '@shined/react-use'
+import { mutate, useCounter, useRequest } from '@shined/react-use'
+import { Toaster, toast } from 'react-hot-toast'
 
 export function App() {
   return (
@@ -12,9 +13,10 @@ export function App() {
       <Demo2 />
       <h3>Throttle + Debounce</h3>
       <Demo3 />
-      <h3>ReFocus + ReConnect + Loading Slow</h3>
+      <h3>ReFocus + ReConnect + AutoRefresh + Loading Slow</h3>
       <Demo4 />
-      {/* <DemoFull /> */}
+      <DemoFull />
+      <Toaster />
     </Card>
   )
 }
@@ -38,10 +40,11 @@ function Demo1() {
 }
 
 function Demo2() {
-  const { run, mutate, initializing, refreshing, refresh, params, cancel, data, loading } = useRequest(
+  const { run, mutate, initializing, refresh, refreshing, params, cancel, data, loading } = useRequest(
     (n = OTP()) => wait(300, n),
     {
       immediate: false,
+      cacheKey: 'cacheKeyForDemo5',
       onBefore: (data, params) => console.log('onBefore', data, params),
       onSuccess: (data, params) => console.log('onSuccess', data, params),
       onFinally: (data, params) => console.log('onFinally', data, params),
@@ -71,8 +74,11 @@ function Demo2() {
         <Button mono disabled={!loading} onClick={() => cancel()}>
           cancel
         </Button>
-        <Button mono onClick={() => mutate(OTP)}>
-          mutate(OTP())
+        <Button mono onClick={() => mutate(OTP())}>
+          mutate(data)
+        </Button>
+        <Button mono onClick={() => mutate((data, params) => [data ? `${data}.` : data, [222]])}>
+          mutate((d, p) =&gt; [d, p])
         </Button>
         <Button mono onClick={() => refresh()}>
           refresh()
@@ -113,7 +119,7 @@ function Demo3() {
 
 function Demo4() {
   const { data, initializing, loadingSlow } = useRequest((n = OTP()) => wait(1000, n), {
-    refreshInterval: 6000,
+    // refreshInterval: 6000,
     refreshOnFocus: true,
     refreshOnReconnect: true,
     loadingTimeout: 500,
@@ -134,17 +140,28 @@ const localStorageProvider = {
   keys: () => Object.keys(localStorage)[Symbol.iterator](),
 }
 
+let fetchCount = 0
+
 function Demo5() {
-  const fetch = useRequest((n = OTP()) => wait(1000, n), {
-    immediate: false,
-    cacheKey: 'cacheKeyForDemo5',
-    provider: localStorageProvider,
-  })
+  const fetch = useRequest(
+    async (n = OTP()) => {
+      fetchCount += 1
+      const res = await wait(1000, n)
+      if (fetchCount <= 1) throw new Error('Error!')
+      return res
+    },
+    {
+      immediate: false,
+      cacheKey: 'cacheKeyForDemo5',
+      // provider: localStorageProvider,
+      onErrorRetry: (error, { currentCount }) => toast.error(`Retry ${currentCount} failed.`),
+    },
+  )
 
   const fetch2 = useRequest((n = OTP()) => wait(1000, n), {
     immediate: false,
     cacheKey: 'cacheKeyForDemo5',
-    provider: localStorageProvider,
+    // provider: localStorageProvider,
   })
 
   const slowStr = fetch.loadingSlow ? ' (slow...)' : ''
@@ -175,6 +192,9 @@ function Demo5() {
           run2(OTP())
         </Button>
       </Zone>
+      <Button mono disabled={fetch2.loading} onClick={() => mutate(() => true, '99999', ['dddd'])}>
+        mutateGlobal
+      </Button>
     </>
   )
 }

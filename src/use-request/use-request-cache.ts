@@ -127,25 +127,33 @@ export function useRequestCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
   return [{ cachedData, cachedParams }, actions] as const
 }
 
-export const mutate = /* #__PURE__ */ createMutate(dataCache)
+export const mutate = /* #__PURE__ */ createMutate(dataCache, paramsCache)
 
-export type UseRequestMutate = (keyFilter: (key: string) => boolean, value: unknown) => void
+export type UseRequestMutate = (keyFilter: (key: string) => boolean, value?: unknown, params?: unknown[]) => void
 
-function createMutate(cache: CacheLike<unknown>): UseRequestMutate {
-  return (keyFilter: Arrayable<string> | ((key: string) => boolean), value: SetStateAction<unknown>) => {
+function createMutate(dataCache: CacheLike<unknown>, paramsCache: Map<string, unknown[]>): UseRequestMutate {
+  return (
+    keyFilter: Arrayable<string> | ((key: string) => boolean),
+    value: SetStateAction<unknown> = undefined,
+    params: unknown[] = [],
+  ) => {
     const keys = isFunction(keyFilter)
-      ? Array.from(cache.keys()).filter(keyFilter)
+      ? Array.from(dataCache.keys()).filter(keyFilter)
       : unwrapArrayable(keyFilter).filter(Boolean)
 
     for (const key of keys) {
-      const prevData = cache.get(key)
+      const prevData = dataCache.get(key)
       const nextData = isFunction(value) ? value(prevData) : value
 
       if (isDefined(key)) {
-        cache.set(key, nextData)
+        dataCache.set(key, nextData)
+        paramsCache.set(key, params)
       } else {
-        cache.delete(key)
+        dataCache.delete(key)
+        paramsCache.delete(key)
       }
+
+      cacheBus.emit(key)
     }
   }
 }

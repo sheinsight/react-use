@@ -1,3 +1,4 @@
+import { resolveMutateActions } from '../use-async-fn'
 import { useDebouncedFn } from '../use-debounced-fn'
 import { useIntervalFn } from '../use-interval-fn'
 import { useLatest } from '../use-latest'
@@ -13,6 +14,7 @@ import { isNumber } from '../utils/basic'
 import { useRequestCache } from './use-request-cache'
 
 import type { DependencyList } from 'react'
+import type { UseAsyncFnMutateAction } from '../use-async-fn'
 import type { UseDebouncedFnOptions } from '../use-debounced-fn'
 import type { UseIntervalFnInterval } from '../use-interval-fn'
 import type { UseLoadingSlowFnOptions, UseLoadingSlowFnReturns } from '../use-loading-slow-fn'
@@ -193,8 +195,11 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
       {
         count: options.errorRetryCount,
         interval: options.errorRetryInterval,
-        onError: options.onError,
         onErrorRetry: options.onErrorRetry,
+        onError(...args) {
+          cacheActions.clearPromiseCache()
+          return latest.current.onError?.(...args)
+        },
       },
     ),
     {
@@ -271,12 +276,24 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
 
   useUpdateEffect(() => void serviceWithStatusCheck(), [...(options.refreshDependencies ?? [])])
 
+  const mutateWithCache = useStableFn((...actions: UseAsyncFnMutateAction<D | undefined, Parameters<T> | []>) => {
+    const data = cacheActions.isCacheEnabled() ? cachedData : service.value
+    const params = cacheActions.isCacheEnabled() ? cachedParams : service.params
+    const [nextData, nextParams] = resolveMutateActions<D | undefined, Parameters<T> | []>(actions, data, params)
+    return service.mutate(nextData, nextParams)
+  })
+
+  const refreshWithCache = useStableFn(async (params?: Parameters<T> | []) => {
+    const actualParams = (params ?? service.params) || []
+    return service.refresh(actualParams)
+  })
+
   return {
     ...pausable,
+    mutate: mutateWithCache,
+    refresh: refreshWithCache,
     run: serviceWithRateControl,
     cancel: service.cancel,
-    mutate: service.mutate,
-    refresh: service.refresh,
     get params() {
       return cacheActions.isCacheEnabled() ? cachedParams : service.params
     },
@@ -293,10 +310,12 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
       return service.loading
     },
     get refreshing() {
-      return Boolean(service.value && service.loading)
+      const data = cacheActions.isCacheEnabled() ? cachedData : service.value
+      return Boolean(data && service.loading)
     },
     get initializing() {
-      return Boolean(!service.value && service.loading)
+      const data = cacheActions.isCacheEnabled() ? cachedData : service.value
+      return Boolean(!data && service.loading)
     },
   }
 }
