@@ -15,7 +15,7 @@ export function App() {
       <Demo3 />
       <h3>ReFocus + ReConnect + AutoRefresh + Loading Slow</h3>
       <Demo4 />
-      <DemoFull />
+      {/* <DemoFull /> */}
       <Toaster />
     </Card>
   )
