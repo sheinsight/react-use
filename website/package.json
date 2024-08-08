@@ -18,31 +18,39 @@
     "@docusaurus/preset-classic": "3.4.0",
     "@formkit/auto-animate": "^0.8.2",
     "@mdx-js/react": "^3.0.1",
-    "@unocss/reset": "^0.61.5",
+    "@unocss/reset": "^0.61.9",
     "change-case": "^5.4.4",
     "classnames": "^2.5.1",
     "clsx": "^2.1.1",
     "prism-react-renderer": "^2.3.1",
     "raw-loader": "^4.0.2",
     "react-hot-toast": "^2.4.1",
-    "shiki": "^1.11.0"
+    "shiki": "^1.12.1"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.4.0",
     "@docusaurus/tsconfig": "3.4.0",
     "@docusaurus/types": "3.4.0",
-    "@unocss/webpack": "^0.61.5",
+    "@unocss/webpack": "^0.61.9",
     "esno": "^4.7.0",
     "globby": "^14.0.2",
     "gray-matter": "^4.0.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "typescript": "^5.5.3",
-    "unocss": "^0.61.5"
+    "typescript": "^5.5.4",
+    "unocss": "^0.61.9"
   },
   "browserslist": {
-    "production": [">0.5%", "not dead", "not op_mini all"],
-    "development": ["last 3 chrome version", "last 3 firefox version", "last 5 safari version"]
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 3 chrome version",
+      "last 3 firefox version",
+      "last 5 safari version"
+    ]
   },
   "engines": {
     "node": ">=18.0"
