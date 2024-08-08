@@ -9,7 +9,7 @@ import { shallowEqual } from '../utils/equal'
 
 import type { SetStateAction } from 'react'
 import type { ReactSetState } from '../use-safe-state'
-import type { AnyFunc } from '../utils/basic'
+import type { AnyFunc, Gettable, Promisable } from '../utils/basic'
 
 export interface UseAsyncFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>> {
   /**
@@ -18,6 +18,12 @@ export interface UseAsyncFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>
    * @defaultValue undefined
    */
   initialValue?: D
+  /**
+   * Initial parameters passed to fetcher when first mount
+   *
+   * @defaultValue []
+   */
+  initialParams?: Gettable<Promisable<Parameters<T> | []>>
   /**
    * whether to run the async function immediately on component mount
    *
@@ -122,6 +128,7 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
   options: UseAsyncFnOptions<T, D> = {},
 ): UseAsyncFnReturns<T, D> {
   const {
+    initialParams = [],
     immediate = false,
     clearBeforeRun = false,
     cancelOnUnmount = true,
@@ -173,8 +180,8 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     latest.current.onCancel?.(stateRef.current.value.value, stateRef.current.params.value)
   })
 
-  const run = useStableFn(async (...args: Parameters<T>) => {
-    updateRefValue(stateRef.current.params, args, false)
+  const run = useStableFn(async (...args: Parameters<T> | []) => {
+    updateRefValue(stateRef.current.params, args)
 
     const version = ++stateRef.current.version
 
@@ -223,7 +230,12 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     return result
   })
 
-  useMount(immediate && run)
+  useMount(async () => {
+    if (immediate) {
+      const params = await (initialParams instanceof Function ? initialParams() : initialParams)
+      await run(...params)
+    }
+  })
 
   useUnmount(cancelOnUnmount && cancel)
 

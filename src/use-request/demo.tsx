@@ -125,27 +125,56 @@ function Demo4() {
 }
 
 const localStorageProvider = {
-  get: (key: string) => localStorage.getItem(key),
-  set: (key: string, value: string) => localStorage.setItem(key, value),
+  get: (key: string) => {
+    const value = localStorage.getItem(key)
+    return value ? JSON.parse(value) : undefined
+  },
+  set: (key: string, value: string) => localStorage.setItem(key, JSON.stringify(value)),
   delete: (key: string) => localStorage.removeItem(key),
   keys: () => Object.keys(localStorage)[Symbol.iterator](),
 }
 
 function Demo5() {
-  const { run, data, loading, loadingSlow } = useRequest((n = OTP()) => wait(1000, n), {
+  const fetch = useRequest((n = OTP()) => wait(1000, n), {
     immediate: false,
     cacheKey: 'cacheKeyForDemo5',
     provider: localStorageProvider,
   })
 
-  const slowStr = loadingSlow ? ' (slow...)' : ''
+  const fetch2 = useRequest((n = OTP()) => wait(1000, n), {
+    immediate: false,
+    cacheKey: 'cacheKeyForDemo5',
+    provider: localStorageProvider,
+  })
+
+  const slowStr = fetch.loadingSlow ? ' (slow...)' : ''
 
   return (
     <>
-      <KeyValue label="Data" value={data ? `${data}${slowStr}` : 'Not loaded'} />
-      <Button mono disabled={loading} onClick={() => run()}>
-        run()
-      </Button>
+      <Zone>
+        <KeyValue label="Data" value={fetch.data ? `${fetch.data}${slowStr}` : 'Not loaded'} />
+        <KeyValue label="Params" value={JSON.stringify(fetch.params)} />
+      </Zone>
+      <Zone>
+        <KeyValue label="Data2" value={fetch2.data ? `${fetch2.data}${slowStr}` : 'Not loaded'} />
+        <KeyValue label="Params2" value={JSON.stringify(fetch2.params)} />
+      </Zone>
+      <Zone>
+        <Button mono disabled={fetch.loading} onClick={() => fetch.run()}>
+          run()
+        </Button>
+        <Button mono disabled={fetch.loading} onClick={() => fetch.run(OTP())}>
+          run(OTP())
+        </Button>
+      </Zone>
+      <Zone>
+        <Button mono disabled={fetch2.loading} onClick={() => fetch2.run()}>
+          run2()
+        </Button>
+        <Button mono disabled={fetch2.loading} onClick={() => fetch2.run(OTP())}>
+          run2(OTP())
+        </Button>
+      </Zone>
     </>
   )
 }

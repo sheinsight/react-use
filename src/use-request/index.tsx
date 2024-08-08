@@ -9,10 +9,10 @@ import { useRetryFn } from '../use-retry-fn'
 import { useStableFn } from '../use-stable-fn'
 import { useThrottledFn } from '../use-throttled-fn'
 import { useUpdateEffect } from '../use-update-effect'
-import { isDefined, isFunction, isNumber } from '../utils/basic'
-import { unwrapArrayable, unwrapGettable } from '../utils/unwrap'
+import { isNumber } from '../utils/basic'
+import { useRequestCache } from './use-request-cache'
 
-import type { DependencyList, SetStateAction } from 'react'
+import type { DependencyList } from 'react'
 import type { UseDebouncedFnOptions } from '../use-debounced-fn'
 import type { UseIntervalFnInterval } from '../use-interval-fn'
 import type { UseLoadingSlowFnOptions, UseLoadingSlowFnReturns } from '../use-loading-slow-fn'
@@ -21,42 +21,26 @@ import type { UseReConnectOptions } from '../use-re-connect'
 import type { UseReFocusOptions } from '../use-re-focus'
 import type { UseRetryFnOptions } from '../use-retry-fn'
 import type { UseThrottledFnOptions } from '../use-throttled-fn'
-import type { AnyFunc, Arrayable, Gettable, Promisable } from '../utils/basic'
-
-const globalCache: CacheLike<unknown> = /* #__PURE__ */ new Map()
-
-export const mutate = /* #__PURE__ */ createMutate(globalCache)
+import type { AnyFunc, Gettable, Promisable } from '../utils/basic'
+import type { CacheLike } from './use-request-cache'
 
 export const defaultIsVisible = () => !document.hidden
 export const defaultIsOnline = () => navigator.onLine
 
-export interface CacheLike<Data> {
-  get(key: string): Data | undefined
-  set(key: string, value: Data): void
-  delete(key: string): void
-  keys(): IterableIterator<string>
-}
+export { mutate } from './use-request-cache'
+
+export type { UseRequestMutate, CacheLike } from './use-request-cache'
 
 export interface UseRequestOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>>
-  extends Omit<UseLoadingSlowFnOptions<T, D>, 'initialValue' | 'immediate'> {
-  /**
-   * Whether to clear the cache before each request
-   *
-   * @defaultValue true
-   */
-  immediate?: boolean
+  extends Omit<UseLoadingSlowFnOptions<T, D>, 'initialValue'>,
+    UseReConnectOptions,
+    Pick<UseReFocusOptions, 'registerReFocus'> {
   /**
    * Disable all automatic refresh behaviors, default is off
    *
    * @defaultValue false
    */
   manual?: boolean
-  /**
-   * Initial parameters passed to fetcher when first mount
-   *
-   * @defaultValue []
-   */
-  initialParams?: Gettable<Promisable<Parameters<T>>>
   /**
    * Initial data passed to fetcher when first mount
    *
@@ -68,7 +52,13 @@ export interface UseRequestOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>
    *
    * @defaultValue undefined
    */
-  cacheKey?: string | ((...args: Parameters<T>) => string)
+  cacheKey?: string | ((...args: Parameters<T> | []) => string)
+  /**
+   * Max cache time, will clear the cache after the specified time
+   *
+   * default is 5_000 ms, set `false` to disable
+   */
+  cacheExpirationTime?: number | false
   /**
    * Cache provider, it can be set to an external store (reactive), localStorage, etc.
    *
@@ -108,12 +98,6 @@ export interface UseRequestOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>
    */
   isVisible?: () => Promisable<boolean>
   /**
-   * Register custom focus listener
-   *
-   * @defaultValue <use internal web behavior>
-   */
-  registerReFocus?: UseReFocusOptions['registerReFocus']
-  /**
    * Whether to reload when network reconnects, default is off
    *
    * @defaultValue false
@@ -125,12 +109,6 @@ export interface UseRequestOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>
    * @defaultValue defaultIsOnline
    */
   isOnline?: () => Promisable<boolean>
-  /**
-   * Register custom reconnect listener
-   *
-   * @defaultValue <use internal web behavior>
-   */
-  registerReconnect?: UseReConnectOptions['registerReConnect']
   /**
    * Interval time for automatic refresh, default is 0, off
    *
@@ -196,56 +174,57 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
   fetcher: T,
   options: UseRequestOptions<T, D> = {},
 ): UseRequestReturns<T, D> {
-  const provider = unwrapGettable(options.provider) || globalCache
-  const cacheKeyValue = unwrapGettable(options.cacheKey)
-  const cachedData = (cacheKeyValue ? provider.get(cacheKeyValue) : undefined) as D | undefined
+  const latest = useLatest({ fetcher, ...options })
 
-  function setCache(value: D | undefined) {
-    if (!cacheKeyValue) return
-    if (value) {
-      provider.set(cacheKeyValue, value)
-    } else {
-      provider.delete(cacheKeyValue)
-    }
-  }
-
-  const latest = useLatest({
-    fetcher,
-    setCache,
-    ...options,
-  })
+  const [{ cachedData, cachedParams }, cacheActions] = useRequestCache<T, D>(options)
 
   const debounceOptions = isNumber(options.debounce) ? { wait: options.debounce } : options.debounce
   const throttleOptions = isNumber(options.throttle) ? { wait: options.throttle } : options.throttle
 
   const service = useLoadingSlowFn(
-    useRetryFn(fetcher, {
-      count: options.errorRetryCount,
-      interval: options.errorRetryInterval,
-      onError: options.onError,
-      onErrorRetry: options.onErrorRetry,
-    }),
+    useRetryFn(
+      (async (...args) => {
+        const prePromise = cacheActions.getPromiseCache()
+        if (prePromise) return prePromise
+        const promise = latest.current.fetcher(...args)
+        cacheActions.setPromiseCache(promise)
+        return await promise
+      }) as T,
+      {
+        count: options.errorRetryCount,
+        interval: options.errorRetryInterval,
+        onError: options.onError,
+        onErrorRetry: options.onErrorRetry,
+      },
+    ),
     {
       immediate: options.immediate ?? true,
-      initialValue: cachedData ?? options.initialData,
+      initialParams: options.initialParams,
+      initialValue: options.initialData ?? cachedData,
       clearBeforeRun: options.clearBeforeRun,
       loadingTimeout: options.loadingTimeout,
       onLoadingSlow: options.onLoadingSlow,
-      onFinally: options.onFinally,
-      onCancel: options.onCancel,
       onRefresh: options.onRefresh,
-      onSuccess(nextData, ...args) {
-        latest.current.setCache(nextData)
-        return latest.current.onSuccess?.(nextData, ...args)
+      onCancel(...args) {
+        cacheActions.clearPromiseCache()
+        return latest.current.onCancel?.(...args)
+      },
+      onFinally(...args) {
+        cacheActions.clearPromiseCache()
+        return latest.current.onFinally?.(...args)
+      },
+      onSuccess(nextData, params, ...rest) {
+        cacheActions.setCache(nextData, params)
+        return latest.current.onSuccess?.(nextData, params, ...rest)
       },
       onBefore(...args) {
-        latest.current.clearBeforeRun && latest.current.setCache(undefined)
+        if (latest.current.clearBeforeRun) cacheActions.setCache(undefined)
         intervalPausable.resume()
         return latest.current.onBefore?.(...args)
       },
-      onMutate(nextData, ...rest) {
-        latest.current.setCache(nextData)
-        return latest.current.onMutate?.(nextData, ...rest)
+      onMutate(nextData, params, ...rest) {
+        cacheActions.setCache(nextData, params)
+        return latest.current.onMutate?.(nextData, params, ...rest)
       },
     },
   )
@@ -268,15 +247,17 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
 
   const serviceWithRateControl = useThrottledFn(useDebouncedFn(service.run, debounceOptions), throttleOptions)
 
-  const intervalPausable = useIntervalFn(serviceWithStatusCheck, options.refreshInterval ?? 0, { immediate: false })
+  const intervalPausable = useIntervalFn(serviceWithStatusCheck, options.refreshInterval ?? 0, {
+    immediate: Boolean(options.refreshInterval && !options.manual),
+  })
 
   useReConnect(() => options.refreshOnReconnect && serviceWithStatusCheck(), {
-    registerReConnect: options.registerReconnect,
+    registerReConnect: options.registerReConnect,
   })
 
   useReFocus(() => options.refreshOnFocus && serviceWithStatusCheck(), {
     registerReFocus: options.registerReFocus,
-    wait: options.refreshOnFocusThrottleWait,
+    wait: options.refreshOnFocusThrottleWait ?? 5000,
   })
 
   const pausable = usePausable(
@@ -297,13 +278,13 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     mutate: service.mutate,
     refresh: service.refresh,
     get params() {
-      return service.params
+      return cacheActions.isCacheEnabled() ? cachedParams : service.params
     },
     get loadingSlow() {
       return service.loadingSlow
     },
     get data() {
-      return service.value
+      return cacheActions.isCacheEnabled() ? cachedData : service.value
     },
     get error() {
       return service.error
@@ -317,26 +298,5 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     get initializing() {
       return Boolean(!service.value && service.loading)
     },
-  }
-}
-
-export type UseRequestMutate = (keyFilter: (key: string) => boolean, value: unknown) => void
-
-function createMutate(cache: CacheLike<unknown>): UseRequestMutate {
-  return (keyFilter: Arrayable<string> | ((key: string) => boolean), value: SetStateAction<unknown>) => {
-    const keys = isFunction(keyFilter)
-      ? Array.from(cache.keys()).filter(keyFilter)
-      : unwrapArrayable(keyFilter).filter(Boolean)
-
-    for (const key of keys) {
-      const prevData = cache.get(key)
-      const nextData = isFunction(value) ? value(prevData) : value
-
-      if (isDefined(key)) {
-        cache.set(key, nextData)
-      } else {
-        cache.delete(key)
-      }
-    }
   }
 }
