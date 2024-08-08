@@ -199,7 +199,7 @@ function Demo5() {
   )
 }
 
-let _count = 0
+const _count = 0
 
 function DemoFull() {
   const [count, actions] = useCounter(0)
@@ -224,8 +224,6 @@ function DemoFull() {
         refreshDependencies: [count],
       },
     )
-
-  console.log('render', ++_count)
 
   return (
     <>
