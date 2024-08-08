@@ -4,6 +4,8 @@ import { useCounter, useRequest } from '@shined/react-use'
 export function App() {
   return (
     <Card>
+      <h3>Error Retry + Cache</h3>
+      <Demo5 />
       <h3>Immediate + Trigger by user + Dependencies</h3>
       <Demo1 />
       <h3>Lifecycle + Refresh + Params + Mutate + Cancel + Initialing + Refreshing</h3>
@@ -12,7 +14,6 @@ export function App() {
       <Demo3 />
       <h3>ReFocus + ReConnect + Loading Slow</h3>
       <Demo4 />
-      <h3>Error Retry + Cache</h3>
       {/* <DemoFull /> */}
     </Card>
   )
@@ -121,6 +122,32 @@ function Demo4() {
   const slowStr = loadingSlow ? ' (slow...)' : ''
 
   return <KeyValue label="Data" value={initializing ? 'Initializing...' : data ? `${data}${slowStr}` : 'Not loaded'} />
+}
+
+const localStorageProvider = {
+  get: (key: string) => localStorage.getItem(key),
+  set: (key: string, value: string) => localStorage.setItem(key, value),
+  delete: (key: string) => localStorage.removeItem(key),
+  keys: () => Object.keys(localStorage)[Symbol.iterator](),
+}
+
+function Demo5() {
+  const { run, data, loading, loadingSlow } = useRequest((n = OTP()) => wait(1000, n), {
+    immediate: false,
+    cacheKey: 'cacheKeyForDemo5',
+    provider: localStorageProvider,
+  })
+
+  const slowStr = loadingSlow ? ' (slow...)' : ''
+
+  return (
+    <>
+      <KeyValue label="Data" value={data ? `${data}${slowStr}` : 'Not loaded'} />
+      <Button mono disabled={loading} onClick={() => run()}>
+        run()
+      </Button>
+    </>
+  )
 }
 
 let _count = 0

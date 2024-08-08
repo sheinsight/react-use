@@ -1,4 +1,3 @@
-import { useRef } from 'react'
 import { useDebouncedFn } from '../use-debounced-fn'
 import { useIntervalFn } from '../use-interval-fn'
 import { useLatest } from '../use-latest'
@@ -24,8 +23,7 @@ import type { UseRetryFnOptions } from '../use-retry-fn'
 import type { UseThrottledFnOptions } from '../use-throttled-fn'
 import type { AnyFunc, Arrayable, Gettable, Promisable } from '../utils/basic'
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-const globalCache: CacheLike<any> = /* #__PURE__ */ new Map()
+const globalCache: CacheLike<unknown> = /* #__PURE__ */ new Map()
 
 export const mutate = /* #__PURE__ */ createMutate(globalCache)
 
@@ -177,7 +175,6 @@ export interface UseRequestOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>
   onErrorRetry?: UseRetryFnOptions['onErrorRetry']
 }
 
-// pausable 实例控制的是所有内部的自动 refresh 行为（手动 run 和外部依赖变化除外）
 export interface UseRequestReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>>
   extends Pausable,
     Omit<UseLoadingSlowFnReturns<T, D>, 'value'> {
@@ -201,26 +198,20 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
 ): UseRequestReturns<T, D> {
   const provider = unwrapGettable(options.provider) || globalCache
   const cacheKeyValue = unwrapGettable(options.cacheKey)
-  const cachedData = (cacheKeyValue ? globalCache.get(cacheKeyValue) : undefined) as D | undefined
-  const versionRef = useRef(0)
+  const cachedData = (cacheKeyValue ? provider.get(cacheKeyValue) : undefined) as D | undefined
 
   function setCache(value: D | undefined) {
-    if (cacheKeyValue) {
-      if (value) {
-        provider.set(cacheKeyValue, value)
-      } else {
-        provider.delete(cacheKeyValue)
-      }
+    if (!cacheKeyValue) return
+    if (value) {
+      provider.set(cacheKeyValue, value)
+    } else {
+      provider.delete(cacheKeyValue)
     }
   }
 
-  function runWhenVersionMatch(ver: number, fu: AnyFunc) {
-    ver === versionRef.current && fu()
-  }
-
   const latest = useLatest({
-    setCache,
     fetcher,
+    setCache,
     ...options,
   })
 
@@ -228,42 +219,33 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
   const throttleOptions = isNumber(options.throttle) ? { wait: options.throttle } : options.throttle
 
   const service = useLoadingSlowFn(
-    useRetryFn(
-      (async (...args) => {
-        const version = ++versionRef.current
-        runWhenVersionMatch(version, () => {
-          if (latest.current.clearBeforeRun) {
-            latest.current.setCache(undefined)
-          }
-        })
-        const result = await latest.current.fetcher(...args)
-        runWhenVersionMatch(version, () => latest.current.setCache(result))
-        return result
-      }) as T,
-      {
-        count: options.errorRetryCount,
-        interval: options.errorRetryInterval,
-        onError: options.onError,
-        onErrorRetry: options.onErrorRetry,
-      },
-    ),
+    useRetryFn(fetcher, {
+      count: options.errorRetryCount,
+      interval: options.errorRetryInterval,
+      onError: options.onError,
+      onErrorRetry: options.onErrorRetry,
+    }),
     {
       immediate: options.immediate ?? true,
       initialValue: cachedData ?? options.initialData,
       clearBeforeRun: options.clearBeforeRun,
       loadingTimeout: options.loadingTimeout,
       onLoadingSlow: options.onLoadingSlow,
-      onSuccess: options.onSuccess,
       onFinally: options.onFinally,
       onCancel: options.onCancel,
       onRefresh: options.onRefresh,
+      onSuccess(nextData, ...args) {
+        latest.current.setCache(nextData)
+        return latest.current.onSuccess?.(nextData, ...args)
+      },
       onBefore(...args) {
-        intervalControls.resume()
-        return options.onBefore?.(...args)
+        latest.current.clearBeforeRun && latest.current.setCache(undefined)
+        intervalPausable.resume()
+        return latest.current.onBefore?.(...args)
       },
       onMutate(nextData, ...rest) {
         latest.current.setCache(nextData)
-        return options.onMutate?.(nextData, ...rest)
+        return latest.current.onMutate?.(nextData, ...rest)
       },
     },
   )
@@ -286,7 +268,7 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
 
   const serviceWithRateControl = useThrottledFn(useDebouncedFn(service.run, debounceOptions), throttleOptions)
 
-  const intervalControls = useIntervalFn(serviceWithStatusCheck, options.refreshInterval ?? 0, { immediate: false })
+  const intervalPausable = useIntervalFn(serviceWithStatusCheck, options.refreshInterval ?? 0, { immediate: false })
 
   useReConnect(() => options.refreshOnReconnect && serviceWithStatusCheck(), {
     registerReConnect: options.registerReconnect,
@@ -300,10 +282,10 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
   const pausable = usePausable(
     true,
     () => {
-      intervalControls.pause()
+      intervalPausable.pause()
       service.cancel()
     },
-    () => intervalControls.resume(),
+    () => intervalPausable.resume(),
   )
 
   useUpdateEffect(() => void serviceWithStatusCheck(), [...(options.refreshDependencies ?? [])])
@@ -338,13 +320,10 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
   }
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export type UseRequestMutate = (keyFilter: (key: string) => boolean, value: any) => void
+export type UseRequestMutate = (keyFilter: (key: string) => boolean, value: unknown) => void
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-function createMutate(cache: CacheLike<any>): UseRequestMutate {
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  return (keyFilter: Arrayable<string> | ((key: string) => boolean), value: SetStateAction<any>) => {
+function createMutate(cache: CacheLike<unknown>): UseRequestMutate {
+  return (keyFilter: Arrayable<string> | ((key: string) => boolean), value: SetStateAction<unknown>) => {
     const keys = isFunction(keyFilter)
       ? Array.from(cache.keys()).filter(keyFilter)
       : unwrapArrayable(keyFilter).filter(Boolean)
