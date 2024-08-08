@@ -99,13 +99,15 @@ export function useRetryFn<T extends AnyFunc>(fn: T, options: UseRetryFnOptions 
 
         onError?.(error)
 
-        if (retryState.currentCount >= retryState.retryCount) {
+        if (retryState.currentCount > retryState.retryCount) {
           onRetryFailed?.(error, { ...retryState })
           retryState.currentCount = 0
           return
         }
 
-        await wait(isFunction(interval) ? interval(retryState.currentCount) : interval)
+        const nextInterval = isFunction(interval) ? interval(retryState.currentCount) : interval
+
+        await wait(nextInterval)
 
         onErrorRetry?.(error, { ...retryState })
 
