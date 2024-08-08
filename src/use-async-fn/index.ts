@@ -7,8 +7,6 @@ import { useUnmount } from '../use-unmount'
 import { isFunction } from '../utils/basic'
 import { shallowEqual } from '../utils/equal'
 
-import type { SetStateAction } from 'react'
-import type { ReactSetState } from '../use-safe-state'
 import type { AnyFunc, Gettable, Promisable } from '../utils/basic'
 
 export interface UseAsyncFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>> {
@@ -82,6 +80,15 @@ export interface UseAsyncFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>
   onRefresh?: (value: D | undefined, params: Parameters<T> | []) => void
 }
 
+export type UseAsyncFnMutateAction<D, P> =
+  | [D | undefined]
+  | [D | undefined, P | undefined]
+  | [(prevData: D | undefined, preParams?: P) => [D, P | undefined]]
+
+export function resolveMutateActions<D, P>(actions: UseAsyncFnMutateAction<D, P>, prevData: D, prevParams: P): [D, P] {
+  return (isFunction(actions[0]) ? actions[0](prevData, prevParams) : (actions as [D, P])) as [D, P]
+}
+
 export interface UseAsyncFnReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>> {
   /**
    * a function to run the async function
@@ -90,7 +97,7 @@ export interface UseAsyncFnReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>
   /**
    * a function to refresh the async function
    */
-  refresh: () => Promise<D | undefined>
+  refresh: (params?: Parameters<T> | []) => Promise<D | undefined>
   /**
    * a function to cancel the async function
    */
@@ -98,7 +105,7 @@ export interface UseAsyncFnReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>
   /**
    * manually set the value
    */
-  mutate: ReactSetState<D | undefined>
+  mutate: (...actions: UseAsyncFnMutateAction<D | undefined, Parameters<T> | []>) => void
   /**
    * whether the async function is loading
    */
@@ -218,15 +225,23 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     return result
   }) as T
 
-  const mutate = useStableFn((action: SetStateAction<D | undefined>) => {
-    const nextState = isFunction(action) ? action(stateRef.current.value.value) : action
-    updateRefValue(stateRef.current.value, nextState)
-    latest.current.onMutate?.(nextState, stateRef.current.params.value)
+  const mutate = useStableFn((...actions: UseAsyncFnMutateAction<D | undefined, Parameters<T> | []>) => {
+    const [nextValue, nextParams] = resolveMutateActions<D | undefined, Parameters<T> | []>(
+      actions,
+      stateRef.current.value.value,
+      stateRef.current.params.value,
+    )
+
+    updateRefValue(stateRef.current.value, nextValue)
+    updateRefValue(stateRef.current.params, nextParams)
+
+    latest.current.onMutate?.(nextValue, nextParams ?? [])
   })
 
-  const refresh = useStableFn(async () => {
-    const result = await run(...stateRef.current.params.value)
-    latest.current.onRefresh?.(result, stateRef.current.params.value)
+  const refresh = useStableFn(async (params?: Parameters<T> | []) => {
+    const actualParams = (params ?? stateRef.current.params.value) || []
+    const result = await run(...actualParams)
+    latest.current.onRefresh?.(result, actualParams)
     return result
   })
 
