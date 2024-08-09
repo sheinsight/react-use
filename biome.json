@@ -11,7 +11,7 @@
   },
   "files": {
     "include": ["src/**/*", "website/**/*.{ts,tsx,css,json}", "testing/**/*", "plans/**/*"],
-    "ignore": ["./src/utils/react-fast-compare.ts"],
+    "ignore": ["./src/utils/react-fast-compare.ts", "website/src/pages/components/search/hooks.json"],
     "ignoreUnknown": true
   },
   "linter": {
