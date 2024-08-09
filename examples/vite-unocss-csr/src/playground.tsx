@@ -19,7 +19,7 @@ import {
 } from '@shined/react-use'
 
 export const Playground = () => {
-  const [showChild, toggle] = useToggle(true)
+  const [showChild, { toggle }] = useToggle(true)
   const ref = useRef<HTMLDivElement>(null)
   const ref2 = useRef<HTMLButtonElement>(null)
 

@@ -2,7 +2,7 @@ import { Button, Card, KeyValue, wait as mockFetch } from '@/components'
 import { useAsyncUpdateEffect, useCounter, useSafeState, useToggle } from '@shined/react-use'
 
 export function App() {
-  const [status, toggle] = useToggle(false)
+  const [status, { toggle }] = useToggle(false)
   const [count, actions] = useCounter(0)
   const [value, setValue] = useSafeState('none')
 
