@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { useAsyncFn } from '../use-async-fn'
 import { useLatest } from '../use-latest'
 import { useRender } from '../use-render'
+import { shallowEqual } from '../utils/equal'
 
 import type { UseAsyncFnOptions, UseAsyncFnReturns } from '../use-async-fn'
 import type { AnyFunc } from '../utils/basic'
@@ -45,10 +46,10 @@ export function useLoadingSlowFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     loadingSlow: { used: false, value: false },
   })
 
-  function updateRefValue<T>(refItem: { used: boolean; value: T }, newValue: T, update = true) {
-    if (refItem.value === newValue) return
+  function updateRefValue<T>(refItem: { used: boolean; value: T }, newValue: T) {
+    if (shallowEqual(refItem.value, newValue)) return
     refItem.value = newValue
-    refItem.used && update && render()
+    refItem.used && render()
   }
 
   function runWhenVersionMatch(version: number, fu: AnyFunc) {
