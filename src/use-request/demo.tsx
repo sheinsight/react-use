@@ -15,7 +15,6 @@ export function App() {
       <Demo4 />
       <h3>Error Retry + Cache (SWR)</h3>
       <Demo5 />
-      {/* <DemoFull /> */}
       <Toaster />
     </Card>
   )
@@ -198,70 +197,6 @@ function Demo5() {
       <Button mono disabled={fetch2.loading} onClick={() => mutate(() => true, '99999', ['dddd'])}>
         mutateGlobal
       </Button>
-    </>
-  )
-}
-
-const _count = 0
-
-function DemoFull() {
-  const [count, actions] = useCounter(0)
-
-  const { run, loading, loadingSlow, initializing, error, refreshing, data, cancel, mutate, resume, pause } =
-    useRequest(
-      async (name: string) => {
-        await wait(1000)
-        return `[result: ${name ?? 'no-name'}]`
-      },
-      {
-        initialData: 'initialData',
-        loadingTimeout: 600,
-        onBefore: () => console.log('onBefore'),
-        onSuccess: (data) => console.log('onSuccess', data),
-        onError: (error) => console.log('onError', error),
-        onFinally: (data) => console.log('onFinally', data),
-        refreshOnFocus: true,
-        refreshOnReconnect: true,
-        refreshInterval: 5_000,
-        refreshOnFocusThrottleWait: 3000,
-        refreshDependencies: [count],
-      },
-    )
-
-  return (
-    <>
-      <Zone>
-        <Button mono onClick={() => run(OTP())}>
-          Run
-        </Button>
-        <Button mono disabled={!loading} onClick={() => cancel()}>
-          Cancel
-        </Button>
-        <Button mono onClick={() => mutate('123')}>
-          Mutate
-        </Button>
-        <Button mono onClick={() => actions.inc()}>
-          Add DepCount
-        </Button>
-      </Zone>
-      <Zone>
-        <Button mono onClick={() => pause()}>
-          Pause
-        </Button>
-        <Button mono onClick={() => resume()}>
-          Resume
-        </Button>
-      </Zone>
-      <div className={loadingSlow ? 'text-amber' : ''}>
-        {initializing && <div>initializing... {loadingSlow ? '(loading slow...)' : ''}</div>}
-        {data && (
-          <div className="flex gap-2">
-            <div>{data}</div>
-            <div>{refreshing && <span>({loadingSlow ? 'loading slow...' : 'refreshing...'})</span>}</div>
-          </div>
-        )}
-        {!!error && <div>Error!</div>}
-      </div>
     </>
   )
 }
