@@ -65,7 +65,6 @@ export type UseKeyStrokeHandler = (event: KeyboardEvent) => void
  */
 export function useKeyStroke(key?: KeyFilter, handler?: UseKeyStrokeHandler, options?: UseKeyStrokeOptions): Noop
 export function useKeyStroke(handler?: UseKeyStrokeHandler, options?: UseKeyStrokeOptions): Noop
-// biome-ignore lint/suspicious/noExplicitAny: for overload
 export function useKeyStroke(...args: any[]) {
   const key = useRef<KeyFilter>()
   const handler = useRef<UseKeyStrokeHandler>()

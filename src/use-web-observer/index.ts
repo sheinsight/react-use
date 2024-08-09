@@ -102,13 +102,11 @@ export function useWebObserver(
   initOptions?: ReportingObserverOptions,
   observerOptions?: undefined,
 ): UseWebObserverReturns<ReportingObserver>
-// biome-ignore lint/suspicious/noExplicitAny: for overload
 export function useWebObserver(...args: any[]): any {
   const [observer, target, callback, options = {}, initOptions = {}, observerOptions = {}] = args
   const { immediate = true } = options
 
   const isSupported = useSupported(() => observer in window)
-  // biome-ignore lint/suspicious/noExplicitAny: for overload
   const observerRef = useRef<any | null>(null)
 
   const stopObserver = () => {
@@ -126,9 +124,7 @@ export function useWebObserver(...args: any[]): any {
 
     if (els.length || hasNoElements) {
       ref.current = true
-      // biome-ignore lint/suspicious/noExplicitAny: for overload
       const Observer = window[observer] as any
-      // biome-ignore lint/suspicious/noExplicitAny: for overload
       observerRef.current = new Observer((...args: any[]) => latest.current.callback(...args), initOptions)
 
       if (els.length) {

@@ -27,13 +27,9 @@ export interface Pausable<PauseArgs extends unknown[] = [], ResumeArgs extends u
  * A React Hook that helps to create a [Pausable](https://sheinsight.github.io/react-use/docs/features/pausable) instance.
  */
 export function usePausable<
-  // biome-ignore lint/suspicious/noExplicitAny: need any
   PauseCP extends any[],
-  // biome-ignore lint/suspicious/noExplicitAny: need any
   ResumeCP extends any[],
-  // biome-ignore lint/suspicious/noExplicitAny: need any
   PauseC extends (ref: React.MutableRefObject<boolean>, ...args: [...PauseCP]) => any,
-  // biome-ignore lint/suspicious/noExplicitAny: need any
   ResumeC extends (ref: React.MutableRefObject<boolean>, ...args: [...ResumeCP]) => any,
 >(initialValue?: boolean, pauseCallback?: PauseC, resumeCallback?: ResumeC): Pausable<PauseCP, ResumeCP> {
   const render = useRender()

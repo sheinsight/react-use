@@ -5,9 +5,7 @@ import { useUnmount } from '../use-unmount'
 
 import type { AnyFunc, Noop } from '../utils/basic'
 
-// biome-ignore lint/suspicious/noExplicitAny: need any
 export type EventBusListener<T = any, P = any> = (event: T, payload?: P) => void
-// biome-ignore lint/suspicious/noExplicitAny: need any
 export type EventBusEvents<T, P = any> = Set<EventBusListener<T, P>>
 export type EventBusIdentifier = symbol | string | number
 
@@ -57,7 +55,6 @@ export interface UseEventBusOptions {
   autoCleanup?: boolean
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: need any
 export const events = /* #__PURE__ */ new Map<EventBusIdentifier, EventBusEvents<any>>()
 
 /**
@@ -65,7 +62,6 @@ export const events = /* #__PURE__ */ new Map<EventBusIdentifier, EventBusEvents
  *
  * TODO: add a hooks to consume event (auto release when unmount)
  */
-// biome-ignore lint/suspicious/noExplicitAny: need any
 export function useEventBus<T = any, P = any>(
   key: EventBusIdentifier,
   options: UseEventBusOptions = {},

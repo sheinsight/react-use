@@ -142,6 +142,9 @@
             ]
           }
         }
+      },
+      "suspicious": {
+        "noExplicitAny": "off"
       }
     }
   },

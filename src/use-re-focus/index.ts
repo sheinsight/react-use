@@ -50,7 +50,6 @@ export function useReFocus(callback: AnyFunc, options: UseReFocusOptions = {}) {
   return throttledFn.clear
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: ignore appState type
 export function createReactNativeReFocusRegister(appState: any) {
   return function registerReactNativeReFocus(callback: AnyFunc) {
     let state = appState.currentState

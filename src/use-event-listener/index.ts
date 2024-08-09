@@ -8,9 +8,7 @@ import { unwrapArrayable, unwrapGettable, unwrapReffable } from '../utils/unwrap
 import type { Arrayable, Gettable, GettableOrReffable, Noop } from '../utils/basic'
 
 export interface InferEventTarget<Events> {
-  // biome-ignore lint/suspicious/noExplicitAny: need any
   addEventListener: (event: Events, fn?: any, options?: any) => any
-  // biome-ignore lint/suspicious/noExplicitAny: need any
   removeEventListener: (event: Events, fn?: any, options?: any) => any
 }
 
@@ -62,7 +60,6 @@ export function useEventListener<EventType = Event>(
   listener: GeneralEventListener<EventType>,
   options?: boolean | AddEventListenerOptions,
 ): Noop
-// biome-ignore lint/suspicious/noExplicitAny: need any
 export function useEventListener(...args: any[]) {
   let target: GettableOrReffable<EventTarget | null | undefined>
   let events: Arrayable<string>

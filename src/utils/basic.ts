@@ -7,11 +7,9 @@ import type { RefObject } from 'react'
 export type ExtendedReactEffect<T = unknown> = (effect: EffectCallback, deps?: DependencyList, ...args: T[]) => void
 
 export type Noop = () => void
-// biome-ignore lint/suspicious/noExplicitAny: any function
 export type AnyFunc = (...args: any[]) => any
 export type WithThis<T extends AnyFunc> = (this: ThisParameterType<T>, ...args: Parameters<T>) => ReturnType<T>
 
-// biome-ignore lint/suspicious/noExplicitAny: any pure object
 export type PureObject<T = any> = Record<PropertyKey, T>
 
 export type Arrayable<T> = T | T[]

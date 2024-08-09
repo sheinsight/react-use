@@ -37,7 +37,6 @@ export function useTargetElement<
   R extends GlobalTarget | Element,
   T extends string | null | undefined | false | MutableRefObject<AtomBaseTarget | undefined> | R,
 >(target: Gettable<T>, options?: UseTargetElementOptions): RefObject<R>
-// biome-ignore lint/suspicious/noExplicitAny: for overload
 export function useTargetElement(target: any, _options: UseTargetElementOptions = {}) {
   const elementRef = useRef(null)
 
