@@ -89,8 +89,6 @@ export function useRequestCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
       provider.delete(cacheKeyValue)
       timerCache.delete(cacheKeyValue)
     } else {
-      // TODO: implement compare function to compare value change
-
       provider.set(cacheKeyValue, value)
       resetCacheTimer()
     }
@@ -99,8 +97,6 @@ export function useRequestCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
 
     if (!latest.current.compare(preValue, value)) {
       cacheBus.emit(cacheKeyValue)
-    } else {
-      console.log('not emit')
     }
   })
 
