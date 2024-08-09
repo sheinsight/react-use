@@ -7,6 +7,7 @@ interface KeyValueProps {
   color?: 'red' | 'amber' | 'blue' | 'lime'
   suffix?: string
   children?: string | boolean | number
+  valueClassName?: string
 }
 
 const colors = {
@@ -28,7 +29,7 @@ export function KeyValue(props: KeyValueProps) {
       <span className="text-black/80 dark:text-white/80" style={{ width: props.labelWidth }}>
         {props.label ?? 'Value'}:{' '}
       </span>
-      <div className="flex-1">
+      <div className={cn('flex-1', props.valueClassName)}>
         <span className={cn('font-bold', colors[props.color ?? color] || '')}>{`${value}`}</span>
         <span>{props.suffix}</span>
       </div>

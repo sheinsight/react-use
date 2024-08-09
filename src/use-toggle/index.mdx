@@ -34,8 +34,8 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const [value, toggle, actions] = useToggle(bool)
-const [value, toggle, actions] = useToggle(one, theOther)
+const [value, actions] = useToggle(bool)
+const [value, actions] = useToggle(one, theOther)
 ```
 
 ### Parameters
@@ -51,6 +51,10 @@ It accepts one or two parameters:
 ```tsx
 export interface UseToggleReturnsActions<O, T> {
   /**
+   * Toggle the state.
+   */
+  toggle(): void
+  /**
    * Set the state to the left value.
    */
   setLeft(): void
@@ -64,5 +68,5 @@ export interface UseToggleReturnsActions<O, T> {
   setState: ReactSetState<O | T>
 }
 
-export type UseToggleReturns<O, T> = [O | T, () => void, UseToggleReturnsActions<O, T>]
+export type UseToggleReturns<O, T> = [O | T, UseToggleReturnsActions<O, T>]
 ```

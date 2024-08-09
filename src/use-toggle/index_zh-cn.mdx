@@ -34,8 +34,8 @@ import { Source } from '@/components'
 ## API \{#api}
 
 ```tsx
-const [value, toggle, actions] = useToggle(bool)
-const [value, toggle, actions] = useToggle(one, theOther)
+const [value, actions] = useToggle(bool)
+const [value, actions] = useToggle(one, theOther)
 ```
 
 ### 参数 Parameters \{#parameters}
@@ -51,6 +51,10 @@ const [value, toggle, actions] = useToggle(one, theOther)
 ```tsx
 export interface UseToggleReturnsActions<O, T> {
   /**
+   * 切换状态。
+   */
+  toggle(): void
+  /**
    * 设置状态为左值。
    */
   setLeft(): void
@@ -64,5 +68,5 @@ export interface UseToggleReturnsActions<O, T> {
   setState: ReactSetState<O | T>
 }
 
-export type UseToggleReturns<O, T> = [O | T, () => void, UseToggleReturnsActions<O, T>]
+export type UseToggleReturns<O, T> = [O | T, UseToggleReturnsActions<O, T>]
 ```

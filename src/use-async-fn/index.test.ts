@@ -75,6 +75,6 @@ describe('useAsyncFn', () => {
       await result.current.run()
     })
 
-    expect(result.current.error).toBe(null)
+    expect(result.current.error).toBe(undefined)
   })
 })

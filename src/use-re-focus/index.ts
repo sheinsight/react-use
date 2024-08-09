@@ -5,7 +5,7 @@ import { useThrottledFn } from '../use-throttled-fn'
 import type { UseThrottledFnOptions } from '../use-throttled-fn'
 import type { AnyFunc } from '../utils/basic'
 
-interface UseReFocusOptions extends UseThrottledFnOptions {
+export interface UseReFocusOptions extends UseThrottledFnOptions {
   /**
    * Register focus event listener.
    */
@@ -13,28 +13,22 @@ interface UseReFocusOptions extends UseThrottledFnOptions {
 }
 
 export function registerWebReFocus(callback: AnyFunc) {
-  const focusState = { current: false }
-
   function handleFocus() {
-    const nextState = true
+    callback()
+  }
 
-    if (!focusState.current) {
-      callback()
-      focusState.current = nextState
+  function handleVisibilityChange() {
+    if (!document.hidden) {
+      handleFocus()
     }
   }
 
-  function handleBlur() {
-    const nextState = false
-    focusState.current = nextState
-  }
-
+  window.addEventListener('visibilitychange', handleVisibilityChange, { passive: true })
   window.addEventListener('focus', handleFocus, { passive: true })
-  window.addEventListener('blur', handleBlur, { passive: true })
 
   return () => {
+    window.removeEventListener('visibilitychange', handleVisibilityChange)
     window.removeEventListener('focus', handleFocus)
-    window.removeEventListener('blur', handleBlur)
   }
 }
 
@@ -52,9 +46,10 @@ export function useReFocus(callback: AnyFunc, options: UseReFocusOptions = {}) {
   useEffectOnce(() => {
     return registerReFocus(() => latest.current.throttledFn())
   })
+
+  return throttledFn.clear
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: ignore appState type
 export function createReactNativeReFocusRegister(appState: any) {
   return function registerReactNativeReFocus(callback: AnyFunc) {
     let state = appState.currentState

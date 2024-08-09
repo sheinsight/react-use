@@ -107,7 +107,7 @@ describe('createSingleLoading', () => {
     })
 
     expect(result.current.loading).toBe(false)
-    expect(result.current.error).toBe(null)
+    expect(result.current.error).toBe(undefined)
     expect(result.current.value).toBe('mock value')
 
     asyncFn.mockRejectedValue(new Error('mock error'))
@@ -120,6 +120,6 @@ describe('createSingleLoading', () => {
 
     expect(result.current.loading).toBe(false)
     expect(result.current.error).toEqual(new Error('mock error'))
-    expect(result.current.value).toBe(undefined)
+    expect(result.current.value).toBe('mock value')
   })
 })

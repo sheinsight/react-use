@@ -6,9 +6,10 @@ interface ButtonProps
 export function Button(
   props: ButtonProps & {
     variant?: 'primary' | 'secondary' | 'danger' | 'warning'
+    mono?: boolean
   },
 ) {
-  const { type, variant = 'primary', className = '', ...rest } = props
+  const { mono = false, type, variant = 'primary', className = '', ...rest } = props
 
   const variants = {
     primary:
@@ -28,6 +29,7 @@ export function Button(
       className={cn(
         className,
         variantCls,
+        mono ? 'font-mono' : '',
         'transition will-change-auto enabled:hover:shadow-md rounded-4px text-white px-16px py-8px border-none cursor-pointer text-1rem disabled:cursor-not-allowed enabled:active:pb-6px enabled:active:pt-10px',
       )}
       {...rest}

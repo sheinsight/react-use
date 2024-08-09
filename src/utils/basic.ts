@@ -7,11 +7,9 @@ import type { RefObject } from 'react'
 export type ExtendedReactEffect<T = unknown> = (effect: EffectCallback, deps?: DependencyList, ...args: T[]) => void
 
 export type Noop = () => void
-// biome-ignore lint/suspicious/noExplicitAny: any function
 export type AnyFunc = (...args: any[]) => any
 export type WithThis<T extends AnyFunc> = (this: ThisParameterType<T>, ...args: Parameters<T>) => ReturnType<T>
 
-// biome-ignore lint/suspicious/noExplicitAny: any pure object
 export type PureObject<T = any> = Record<PropertyKey, T>
 
 export type Arrayable<T> = T | T[]
@@ -61,6 +59,10 @@ export const isDev = process.env.NODE_ENV !== 'production'
 export const isClient = Boolean(typeof window !== 'undefined' && isFunction(window?.document?.createElement))
 
 export function noop(): undefined {}
+
+export function wait(time = 0): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, time))
+}
 
 export function now(): number {
   return Date.now()

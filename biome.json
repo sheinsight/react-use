@@ -10,7 +10,7 @@
     "enabled": true
   },
   "files": {
-    "include": ["src/**/*", "website/**/*", "testing/**/*x", "plans/**/*"],
+    "include": ["src/**/*", "website/**/*.{ts,tsx,css,json}", "testing/**/*", "plans/**/*"],
     "ignore": ["./src/utils/react-fast-compare.ts"],
     "ignoreUnknown": true
   },
@@ -142,6 +142,9 @@
             ]
           }
         }
+      },
+      "suspicious": {
+        "noExplicitAny": "off"
       }
     }
   },

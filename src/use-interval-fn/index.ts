@@ -18,7 +18,7 @@ export type UseIntervalFnInterval = Gettable<number> | 'requestAnimationFrame'
  */
 export function useIntervalFn(
   callback: AnyFunc,
-  interval: UseIntervalFnInterval = 1000,
+  interval: UseIntervalFnInterval = 0,
   options: UseIntervalFnOptions = {},
 ): Pausable {
   const { immediate = true, immediateCallback = false } = options

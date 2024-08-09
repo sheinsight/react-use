@@ -100,7 +100,6 @@ export function useFullscreen(
       await document[exit as 'exitFullscreen']()
     } else {
       if (isFunction(el.current[exit as never])) {
-        // biome-ignore lint/suspicious/noExplicitAny: need any
         await (el.current[exit as never] as any)?.()
       }
     }
