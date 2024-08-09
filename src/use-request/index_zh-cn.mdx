@@ -6,29 +6,161 @@ import { HooksType, NotReleased } from '@/components'
 
 <NotReleased />
 
-A React Hook that xxx.
+用于数据获取的基本 React Hook，支持缓存、自动刷新以及许多其他优秀特性。
 
-## Demo
+## 演示 Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 Usage \{#usage}
 
 import { RawCode } from '@/components'
 import source from '!!raw-loader!./demo'
 
 <RawCode>{source}</RawCode>
 
-## Source
+## 源码 Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
+const { run, data, loading, refreshing, initializing, error, cancel, refresh, mutate, loadingSlow, ...pausable } = useRequest(fetcher, options)
+```
 
+### 获取数据函数 Fetcher \{#fetcher}
+
+一个异步函数，用于获取数据，返回一个 Promise。
+
+### 选项 Options \{#options}
+
+参见 [UseLoadingSlowFnOptions](/reference/use-loading-slow-fn#options), [UseReConnectOptions](/reference/use-re-connect#options), [UseReFocusOptions](/reference/use-re-focus#options), [UseThrottledFnOptions](/reference/use-throttled-fn#options), [UseDebouncedFnOptions](/reference/use-debounced-fn#options), [UseIntervalFnInterval](/reference/use-interval-fn#interval) 和 [UseRetryFnOptions](/reference/use-retry-fn#options) 获取更多详细信息。
+
+```tsx
+export interface UseRequestOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
+  extends Omit<UseLoadingSlowFnOptions<T, D, E>, 'initialValue'>,
+    Pick<UseReConnectOptions, 'registerReConnect'>,
+    Pick<UseReFocusOptions, 'registerReFocus'> {
+  /**
+   * 禁用所有自动刷新行为，缺省值为关闭
+   *
+   * @defaultValue false
+   */
+  manual?: boolean
+  /**
+   * 初次挂载时传递给 fetcher 的初始数据
+   *
+   * @defaultValue undefined
+   */
+  initialData?: D | undefined
+  /**
+   * 缓存键，可以是字符串或返回字符串的函数
+   *
+   * @defaultValue undefined
+   */
+  cacheKey?: string | ((...args: Parameters<T> | []) => string)
+  /**
+   * 最大缓存时间，指定时间后清除缓存
+   *
+   * 默认为 5 分钟，设置为 `false` 可以禁用
+   */
+  cacheExpirationTime?: number | false
+  /**
+   * 缓存提供者，可以设置为外部 Store（Reactive）、localStorage 等。
+   *
+   * 需要符合 CacheLike 接口定义，默认为全局共享的 `new Map()`
+   *
+   * @defaultValue 全局共享的 `new Map()`
+   */
+  provider?: Gettable<CacheLike<D>>
+  /**
+   * 节流选项 => 仅影响手动执行 run 方法的频率
+   *
+   * @defaultValue undefined
+   */
+  throttle?: UseThrottledFnOptions['wait'] | UseThrottledFnOptions
+  /**
+   * 防抖选项 => 仅影响手动执行 run 方法的频率
+   *
+   * @defaultValue undefined
+   */
+  debounce?: UseDebouncedFnOptions['wait'] | UseDebouncedFnOptions
+  /**
+   * 获得焦点时是否重新加载，默认关闭
+   *
+   * @defaultValue false
+   */
+  refreshOnFocus?: boolean
+  /**
+   * 获得焦点时的节流时间，默认为 0，关闭
+   *
+   * @defaultValue 0
+   */
+  refreshOnFocusThrottleWait?: number
+  /**
+   * 自定义可视判断函数
+   *
+   * @defaultValue defaultIsVisible
+   */
+  isVisible?: () => Promisable<boolean>
+  /**
+   * 网络重新连接时是否重新加载，默认关闭
+   *
+   * @defaultValue false
+   */
+  refreshOnReconnect?: boolean
+  /**
+   * 自定义在线判断函数
+   *
+   * @defaultValue defaultIsOnline
+   */
+  isOnline?: () => Promisable<boolean>
+  /**
+   * 自动刷新的间隔时间，默认为 0，关闭
+   *
+   * @defaultValue 0
+   */
+  refreshInterval?: Exclude<UseIntervalFnInterval, 'requestAnimationFrame'>
+  /**
+   * 隐藏时是否重新加载，默认关闭
+   *
+   * @defaultValue false
+   */
+  refreshWhenHidden?: boolean
+  /**
+   * 离线时是否重新加载，默认关闭
+   *
+   * @defaultValue false
+   */
+  refreshWhenOffline?: boolean
+  /**
+   * 刷新操作的依赖项，依赖项变化时，将触发刷新操作
+   *
+   * @defaultValue []
+   */
+  refreshDependencies?: DependencyList
+  /**
+   * 错误重试次数
+   *
+   * @defaultValue 0
+   */
+  errorRetryCount?: UseRetryFnOptions<E>['count']
+  /**
+   * 错误重试间隔
+   *
+   * @defaultValue 0
+   */
+  errorRetryInterval?: UseRetryFnOptions<E>['interval']
+  /**
+   * 每次请求前是否清除缓存
+   *
+   * @defaultValue false
+   */
+  onErrorRetry?: UseRetryFnOptions<E>['onErrorRetry']
+}
 ```
