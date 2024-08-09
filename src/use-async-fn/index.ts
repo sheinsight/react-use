@@ -9,7 +9,7 @@ import { shallowEqual } from '../utils/equal'
 
 import type { AnyFunc, Gettable, Promisable } from '../utils/basic'
 
-export interface UseAsyncFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>> {
+export interface UseAsyncFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any> {
   /**
    * Initial data to be used as the initial value
    *
@@ -45,7 +45,7 @@ export interface UseAsyncFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>
    *
    * @defaultValue undefined
    */
-  onError?: (error: unknown) => void
+  onError?: (error: E | undefined) => void
   /**
    * a function to run before the async function
    *
@@ -99,7 +99,7 @@ export function resolveMutateActions<D, P>(actions: UseAsyncFnMutateAction<D, P>
   return (isFunction(actions[0]) ? actions[0](prevData, prevParams) : (actions as [D, P])) as [D, P]
 }
 
-export interface UseAsyncFnReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>> {
+export interface UseAsyncFnReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any> {
   /**
    * a function to run the async function
    */
@@ -123,7 +123,7 @@ export interface UseAsyncFnReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>
   /**
    * the error thrown by the async function
    */
-  error: unknown
+  error: E | undefined
   /**
    * the value returned by the async function
    */
@@ -145,10 +145,10 @@ interface RefItem<T> {
  * @param {AnyFunc} fn - `AnyFunc`, the async function to run, see {@link AnyFunc}
  * @returns {UseAsyncFnReturns} `UseAsyncFnReturns`, see {@link UseAsyncFnReturns}
  */
-export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
+export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>(
   fn: T,
-  options: UseAsyncFnOptions<T, D> = {},
-): UseAsyncFnReturns<T, D> {
+  options: UseAsyncFnOptions<T, D, E> = {},
+): UseAsyncFnReturns<T, D, E> {
   const {
     initialParams = [],
     immediate = false,
@@ -168,7 +168,7 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
 
   const stateRef = useRef({
     version: 0,
-    error: { used: false, value: null },
+    error: { used: false, value: undefined as E | undefined },
     loading: { used: false, value: Boolean(immediate) },
     value: { used: false, value: options.initialValue },
     params: { used: false, value: [] as Parameters<T> | [] },
@@ -237,7 +237,7 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
       })
     } catch (error) {
       runWhenVersionMatch(version, () => {
-        latest.current.onError?.(error)
+        latest.current.onError?.(error as E | undefined)
         updateRefValue(stateRef.current.error, error)
       })
     } finally {

@@ -33,8 +33,8 @@ export { mutate } from './use-request-cache'
 
 export type { UseRequestMutate, CacheLike } from './use-request-cache'
 
-export interface UseRequestOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>>
-  extends Omit<UseLoadingSlowFnOptions<T, D>, 'initialValue'>,
+export interface UseRequestOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
+  extends Omit<UseLoadingSlowFnOptions<T, D, E>, 'initialValue'>,
     Pick<UseReConnectOptions, 'registerReConnect'>,
     Pick<UseReFocusOptions, 'registerReFocus'> {
   /**
@@ -140,24 +140,24 @@ export interface UseRequestOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>
    *
    * @defaultValue 0
    */
-  errorRetryCount?: UseRetryFnOptions['count']
+  errorRetryCount?: UseRetryFnOptions<E>['count']
   /**
    * Error retry interval
    *
    * @defaultValue 0
    */
-  errorRetryInterval?: UseRetryFnOptions['interval']
+  errorRetryInterval?: UseRetryFnOptions<E>['interval']
   /**
    * Whether to clear the cache before each request
    *
    * @defaultValue false
    */
-  onErrorRetry?: UseRetryFnOptions['onErrorRetry']
+  onErrorRetry?: UseRetryFnOptions<E>['onErrorRetry']
 }
 
-export interface UseRequestReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>>
+export interface UseRequestReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
   extends Pausable,
-    Omit<UseLoadingSlowFnReturns<T, D>, 'value'> {
+    Omit<UseLoadingSlowFnReturns<T, D, E>, 'value'> {
   /**
    * The data returned by the request
    */
@@ -172,18 +172,18 @@ export interface UseRequestReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>
   refreshing: boolean
 }
 
-export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
+export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>(
   fetcher: T,
-  options: UseRequestOptions<T, D> = {},
-): UseRequestReturns<T, D> {
+  options: UseRequestOptions<T, D, E> = {},
+): UseRequestReturns<T, D, E> {
   const [cache, cacheActions] = useRequestCache<T, D>(options)
 
   const latest = useLatest({ fetcher, cache, ...options })
   const debounceOptions = isNumber(options.debounce) ? { wait: options.debounce } : options.debounce
   const throttleOptions = isNumber(options.throttle) ? { wait: options.throttle } : options.throttle
 
-  const service = useLoadingSlowFn(
-    useRetryFn(
+  const service = useLoadingSlowFn<T, D, E>(
+    useRetryFn<T, E>(
       (async (...args) => {
         const prePromise = cacheActions.getPromiseCache()
         if (prePromise) return prePromise

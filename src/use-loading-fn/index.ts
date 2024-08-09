@@ -3,15 +3,17 @@ import { useAsyncFn } from '../use-async-fn'
 import type { UseAsyncFnOptions, UseAsyncFnReturns } from '../use-async-fn'
 import type { AnyFunc } from '../utils/basic'
 
-export interface UseLoadingFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>> extends UseAsyncFnOptions<T, D> {}
-export interface UseLoadingFnReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>> extends UseAsyncFnReturns<T, D> {}
+export interface UseLoadingFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
+  extends UseAsyncFnOptions<T, D, E> {}
+export interface UseLoadingFnReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
+  extends UseAsyncFnReturns<T, D, E> {}
 
 /**
  * A React Hooks for handling loading state with ease, alias of [useAsyncFn](https://sheinsight.github.io/react-use/reference/use-async-fn).
  */
-export function useLoadingFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
+export function useLoadingFn<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>(
   fn: T,
-  options: UseLoadingFnOptions<T, D> = {},
-): UseLoadingFnReturns<T, D> {
-  return useAsyncFn(fn, options)
+  options: UseLoadingFnOptions<T, D, E> = {},
+): UseLoadingFnReturns<T, D, E> {
+  return useAsyncFn<T, D, E>(fn, options)
 }

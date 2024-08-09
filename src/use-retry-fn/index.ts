@@ -6,7 +6,7 @@ import { isFunction, wait } from '../utils/basic'
 
 import type { AnyFunc } from '../utils/basic'
 
-export interface UseRetryFnOptions {
+export interface UseRetryFnOptions<E = unknown> {
   /**
    * Number of retries.
    *
@@ -24,19 +24,19 @@ export interface UseRetryFnOptions {
    *
    * @defaultValue undefined
    */
-  onError?: (error: unknown) => void
+  onError?: (error: E | undefined) => void
   /**
    * Error retry callback.
    *
    * @defaultValue undefined
    */
-  onErrorRetry?: (error: unknown, state: UseRetryFnRetryState) => void
+  onErrorRetry?: (error: E | undefined, state: UseRetryFnRetryState) => void
   /**
    * All retries failed callback.
    *
    * @defaultValue undefined
    */
-  onRetryFailed?: (error: unknown, state: UseRetryFnRetryState) => void
+  onRetryFailed?: (error: E | undefined, state: UseRetryFnRetryState) => void
 }
 
 export interface UseRetryFnRetryState {
@@ -59,7 +59,7 @@ export function defaultRetryInterval(currentCount: number) {
   return nextInterval >= 30_000 ? 30_000 : nextInterval
 }
 
-export function useRetryFn<T extends AnyFunc>(fn: T, options: UseRetryFnOptions = {}): T {
+export function useRetryFn<T extends AnyFunc, E = any>(fn: T, options: UseRetryFnOptions<E> = {}): T {
   const { count = 3, interval = defaultRetryInterval, onError, onErrorRetry, onRetryFailed } = options
 
   const version = useRef(0)
@@ -97,10 +97,10 @@ export function useRetryFn<T extends AnyFunc>(fn: T, options: UseRetryFnOptions 
 
         const { onError, onErrorRetry, onRetryFailed, interval } = latest.current
 
-        onError?.(error)
+        onError?.(error as E | undefined)
 
         if (retryState.currentCount > retryState.retryCount) {
-          onRetryFailed?.(error, { ...retryState })
+          onRetryFailed?.(error as E | undefined, { ...retryState })
           retryState.currentCount = 0
           return
         }
@@ -109,7 +109,7 @@ export function useRetryFn<T extends AnyFunc>(fn: T, options: UseRetryFnOptions 
 
         await wait(nextInterval)
 
-        onErrorRetry?.(error, { ...retryState })
+        onErrorRetry?.(error as E | undefined, { ...retryState })
 
         return retryFn(retryState, ...args)
       }

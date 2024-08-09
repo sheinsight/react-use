@@ -7,8 +7,8 @@ import { shallowEqual } from '../utils/equal'
 import type { UseAsyncFnOptions, UseAsyncFnReturns } from '../use-async-fn'
 import type { AnyFunc } from '../utils/basic'
 
-export interface UseLoadingSlowFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>>
-  extends UseAsyncFnOptions<T, D> {
+export interface UseLoadingSlowFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
+  extends UseAsyncFnOptions<T, D, E> {
   /**
    * The timeout duration in milliseconds to determine if the loading is slow.
    *
@@ -23,18 +23,18 @@ export interface UseLoadingSlowFnOptions<T extends AnyFunc, D = Awaited<ReturnTy
   onLoadingSlow?: () => void
 }
 
-export interface UseLoadingSlowFnReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>>
-  extends UseAsyncFnReturns<T, D> {
+export interface UseLoadingSlowFnReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
+  extends UseAsyncFnReturns<T, D, E> {
   /**
    * Whether the loading is slow.
    */
   loadingSlow: boolean
 }
 
-export function useLoadingSlowFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
+export function useLoadingSlowFn<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>(
   fn: T,
-  options: UseLoadingSlowFnOptions<T, D> = {},
-): UseLoadingSlowFnReturns<T, D> {
+  options: UseLoadingSlowFnOptions<T, D, E> = {},
+): UseLoadingSlowFnReturns<T, D, E> {
   const { loadingTimeout = 0, onLoadingSlow, ...useAsyncFnOptions } = options
 
   const render = useRender()
@@ -56,7 +56,7 @@ export function useLoadingSlowFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     version === stateRef.current.version && fu()
   }
 
-  const asyncFn = useAsyncFn(
+  const asyncFn = useAsyncFn<T, D, E>(
     (async (...args) => {
       updateRefValue(stateRef.current.loadingSlow, false)
 
