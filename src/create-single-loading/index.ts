@@ -78,6 +78,8 @@ export interface CreateSingleLoadingOptions {
  * @param {CreateSingleLoadingOptions} options {@link CreateSingleLoadingOptions}
  * @returns {CreateSingleLoadingReturns} `CreateSingleLoadingReturns`, single loading instance, see {@link CreateSingleLoadingReturns}
  *
+ * @deprecated will be removed in the future, maybe moved to `@shined/reactive`
+ *
  * @see {@link https://sheinsight.github.io/reactive/ | Reactive - Documentation}
  */
 export function createSingleLoading(options: CreateSingleLoadingOptions): CreateSingleLoadingReturns {
