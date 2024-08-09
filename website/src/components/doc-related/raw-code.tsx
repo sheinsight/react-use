@@ -16,7 +16,7 @@ export function RawCode(
   const rawCode = props.children || ''
   const lines = (rawCode || '').split('\n').filter((e) => !ignores.some((t) => e.includes(t)))
   const lineLen = lines.length
-  const [show, toggleShow] = useToggle(lineLen <= threshold)
+  const [show, { toggle }] = useToggle(lineLen <= threshold)
   const code = lines.join('\n').trim()
 
   const enableCollapse = lineLen > threshold
@@ -34,7 +34,7 @@ export function RawCode(
             show ? '' : 'bg-gradient-to-t',
           )}
         >
-          <Button onClick={toggleShow}>
+          <Button onClick={toggle}>
             {show ? (
               <Translate id="reference.usage.showLess">Show less</Translate>
             ) : (
