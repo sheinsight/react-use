@@ -13,6 +13,8 @@ export type UseReactiveOptions<State> = SnapshotOptions<State> & { create: typeo
 
 /**
  * A React Hook that helps to use [Reactive](https://sheinsight.github.io/reactive) in React with ease.
+ *
+ * @deprecated will be removed in the future, maybe moved to `@shined/reactive`
  */
 export function useReactive<State extends object>(
   initialState: State,
