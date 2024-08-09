@@ -72,12 +72,22 @@ export interface UseAsyncFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>
   onCancel?: (value: D | undefined, params: Parameters<T> | []) => void
   /**
    * a function to run when the value is mutated
+   *
+   * @defaultValue undefined
    */
   onMutate?: (value: D | undefined, params: Parameters<T> | []) => void
   /**
    * a function to run when the value is refreshed
+   *
+   * @defaultValue undefined
    */
   onRefresh?: (value: D | undefined, params: Parameters<T> | []) => void
+  /**
+   * Custom cache comparison function, true means the cache is the same
+   *
+   * @defaultValue shallowEqual
+   */
+  compare?: (prevData: D | undefined, nextData: D | undefined) => boolean
 }
 
 export type UseAsyncFnMutateAction<D, P> =
@@ -124,6 +134,11 @@ export interface UseAsyncFnReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>
   params: Parameters<T> | []
 }
 
+interface RefItem<T> {
+  used: boolean
+  value: T
+}
+
 /**
  * A React Hook to run **async** functions with extra **loading** state that indicates whether the promise is pending.
  *
@@ -139,6 +154,7 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     immediate = false,
     clearBeforeRun = false,
     cancelOnUnmount = true,
+    compare,
     onError,
     onMutate,
     onRefresh,
@@ -158,10 +174,18 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     params: { used: false, value: [] as Parameters<T> | [] },
   })
 
-  function updateRefValue<T>(refItem: { used: boolean; value: T }, newValue: T, update = true) {
+  function updateRefValue<T>(
+    refItem: RefItem<T>,
+    newValue: T,
+    compare: (prevData: T, nextData: T) => boolean = shallowEqual,
+  ) {
     if (shallowEqual(refItem.value, newValue)) return
-    refItem.value = newValue
-    refItem.used && update && render()
+    const valueChanged = !compare(refItem.value, newValue)
+
+    if (valueChanged) {
+      refItem.value = newValue
+      refItem.used && valueChanged && render()
+    }
   }
 
   function runWhenVersionMatch(version: number, fu: AnyFunc) {
@@ -179,6 +203,7 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     onBefore,
     onSuccess,
     onFinally,
+    compare,
   })
 
   const cancel = useStableFn(() => {
@@ -207,7 +232,7 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
 
       runWhenVersionMatch(version, () => {
         latest.current.onSuccess?.(result as D, stateRef.current.params.value)
-        updateRefValue(stateRef.current.value, result)
+        updateRefValue(stateRef.current.value, result, latest.current.compare)
         updateRefValue(stateRef.current.error, undefined)
       })
     } catch (error) {
