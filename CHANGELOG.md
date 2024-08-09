@@ -1,3 +1,35 @@
+# [1.4.0](https://github.com/sheinsight/react-use/compare/v1.3.0...v1.4.0) (2024-08-09)
+
+
+### Bug Fixes
+
+* **useAsyncFn:** fix race condition bug ([9071e38](https://github.com/sheinsight/react-use/commit/9071e385075e0a10706420a9826e82e62dbf67b7))
+* **useResetState:** fix returned `initialValue` ([5e1288f](https://github.com/sheinsight/react-use/commit/5e1288f6a62d4329053d0608fdeac653703fcf10))
+* **useToggle:** fix hook returned value ([dd976b9](https://github.com/sheinsight/react-use/commit/dd976b956dadb7f662a0b702a44a8903630bf66c))
+
+
+### Features
+
+* add new Hook `useInputComposition` to track composition state of `input` element ([5be4b66](https://github.com/sheinsight/react-use/commit/5be4b66bb4562903c5ceb5c2b5d9b5cd7aaeaadf))
+* **createSingleLoading:** deprecated, it will be removed in the future, maybe moved to `@shined/reactive` ([8b479c7](https://github.com/sheinsight/react-use/commit/8b479c7a51f66f2d92673eeade3bd611fb591c35))
+* new Hook `useLoadingSlowFn` to track loading slow state ([732fa3f](https://github.com/sheinsight/react-use/commit/732fa3f58178038bec1bb560b3b8ca3b87fb9c46))
+* new Hook `useReConnect` to run a callback when re-connect ([772aba0](https://github.com/sheinsight/react-use/commit/772aba0cc688dc3278d153b0c9e9933a062a39ab))
+* new Hook `useReFocus` to run a callback when re-focus ([88cc9f2](https://github.com/sheinsight/react-use/commit/88cc9f2d87ea5c3ecdbee47c4057955142729aba))
+* new Hook `useRetryFn` to create a function with retry mechanism ([2ecebc0](https://github.com/sheinsight/react-use/commit/2ecebc08d3e803d834a229a56c1d1c38067930a7))
+* **useAsyncFn:** `mutate` & `refresh` support params ([02ff03d](https://github.com/sheinsight/react-use/commit/02ff03d8de6da5aa1f135b18947d406e06995286))
+* **useAsyncFn:** support `compare` options to control render behavior ([dfed260](https://github.com/sheinsight/react-use/commit/dfed260ac2151af40f6b74a4ae76785e9c99d981))
+* **useAsyncFn:** support `onError` callback ([072f0cf](https://github.com/sheinsight/react-use/commit/072f0cfa45dfba75a71e324cc51224a881665e1a))
+* **useAsyncFn:** support lifecycle callbacks & improve render performance ([fe1b821](https://github.com/sheinsight/react-use/commit/fe1b821dbce3ba26c6538631b5d99e5288c2186c))
+* **useAsync:** support `onMutate`, `onCancel`, `onRefresh` callbacks ([a129849](https://github.com/sheinsight/react-use/commit/a129849aedae493a477467ab1722edb01740875c))
+* **useReactive:** deprecated, it will be removed in the future, maybe moved to `@shined/reactive` ([03ac5d9](https://github.com/sheinsight/react-use/commit/03ac5d90345352340d07f03f1fcfe56770e533c5))
+
+
+### Performance Improvements
+
+* **useLoadingSlowFn:**  using getter to refine performance ([31a59ca](https://github.com/sheinsight/react-use/commit/31a59ca6ad01bae045e9e22e04c518ace4d4c3f4))
+
+
+
 # [1.3.0](https://github.com/sheinsight/react-use/compare/v1.2.1...v1.3.0) (2024-07-15)
 
 
