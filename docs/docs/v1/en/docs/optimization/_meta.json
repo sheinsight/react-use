@@ -1,0 +1,17 @@
+[
+  {
+    "type": "file",
+    "name": "safe-state",
+    "label": "🔒 Safe State"
+  },
+  {
+    "type": "file",
+    "name": "stabilization",
+    "label": "📌 Stabilization"
+  },
+  {
+    "type": "file",
+    "name": "latest-state",
+    "label": "🪄 Latest State"
+  }
+]

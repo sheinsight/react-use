@@ -1,0 +1,30 @@
+[
+  {
+    "type": "file",
+    "name": "introduction",
+    "label": "Introduction"
+  },
+  {
+    "type": "file",
+    "name": "get-started",
+    "label": "Get Started"
+  },
+  {
+    "type": "dir",
+    "name": "features",
+    "label": "Features",
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "optimization",
+    "label": "Optimization",
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "faqs",
+    "label": "FAQs",
+    "collapsed": false
+  }
+]

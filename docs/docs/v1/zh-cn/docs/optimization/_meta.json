@@ -1,0 +1,17 @@
+[
+  {
+    "type": "file",
+    "name": "safe-state",
+    "label": "🔒 安全状态（Safe State）"
+  },
+  {
+    "type": "file",
+    "name": "stabilization",
+    "label": "📌 函数稳定化（Stabilization）"
+  },
+  {
+    "type": "file",
+    "name": "latest-state",
+    "label": "🪄 最新值（Latest State）"
+  }
+]

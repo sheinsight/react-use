@@ -1,0 +1,30 @@
+[
+  {
+    "type": "file",
+    "name": "introduction",
+    "label": "介绍"
+  },
+  {
+    "type": "file",
+    "name": "get-started",
+    "label": "起步"
+  },
+  {
+    "type": "dir",
+    "name": "features",
+    "label": "功能特性",
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "optimization",
+    "label": "内部优化",
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "faqs",
+    "label": "常见问题",
+    "collapsed": false
+  }
+]

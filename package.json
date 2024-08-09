@@ -57,9 +57,9 @@
     "postrelease": "pnpm run changelog && git add CHANGELOG.md && git commit -m 'chore: update changelog' && git push",
     "test": "vitest",
     "test:ci": "pnpm run lint && vitest",
-    "docs:dev": " pnpm -C website run dev",
-    "docs:dev:zh-cn": " pnpm -C website run dev --locale zh-cn",
-    "docs:build": " pnpm -C website run build",
+    "docs:dev": " pnpm -C docs run dev",
+    "docs:dev:zh-cn": " pnpm -C docs run dev",
+    "docs:build": " pnpm -C docs run build",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "typecheck": "tsc",
     "prepare": "is-ci || husky"

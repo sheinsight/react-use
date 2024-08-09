@@ -17,5 +17,5 @@
     }
   },
   "include": ["./src"],
-  "exclude": ["./website", "./src/**/demo.tsx"]
+  "exclude": ["./website", "packages/src/**/demo.tsx"]
 }
