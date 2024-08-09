@@ -2,7 +2,7 @@ import { Button, Card, KeyValue, Zone } from '@/components'
 import { useBeforeUnload, useToggle } from '@shined/react-use'
 
 export function App() {
-  const [show, toggle] = useToggle(true)
+  const [show, { toggle }] = useToggle(true)
 
   function callback(event: BeforeUnloadEvent) {
     // do something before the page is unload, such as sending beacon

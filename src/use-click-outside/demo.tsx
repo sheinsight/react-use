@@ -3,16 +3,16 @@ import { useClickOutside, useToggle } from '@shined/react-use'
 import { useRef } from 'react'
 
 export function App() {
-  const [show, toggleShow, showActions] = useToggle(false)
+  const [show, actions] = useToggle(false)
 
   const ref = useRef<HTMLDivElement | null>(null)
 
-  useClickOutside(ref, () => showActions.setState(false), { ignore: ['#btn-ignored'] })
+  useClickOutside(ref, () => actions.setState(false), { ignore: ['#btn-ignored'] })
 
   return (
     <Card>
       <Zone>
-        <Button onClick={toggleShow}>Toggle Modal</Button>
+        <Button onClick={actions.toggle}>Toggle Modal</Button>
         <Button variant="warning">Outer Element</Button>
         <Button variant="secondary" id="btn-ignored">
           Ignored Element

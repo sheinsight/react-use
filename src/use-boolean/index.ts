@@ -31,13 +31,13 @@ export type UseBooleanReturns = readonly [value: boolean, UseBooleanActions]
  *
  */
 export function useBoolean(initialValue: boolean = true): UseBooleanReturns {
-  const [value, toggle, _actions] = useToggle(initialValue)
+  const [value, _actions] = useToggle(initialValue)
 
   const actions = useCreation(() => ({
     setTrue: () => _actions.setState(true),
     setFalse: () => _actions.setState(false),
     setState: _actions.setState,
-    toggle,
+    toggle: _actions.toggle,
   }))
 
   return [value, actions] as const
