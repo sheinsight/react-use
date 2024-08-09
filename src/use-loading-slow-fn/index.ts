@@ -31,6 +31,11 @@ export interface UseLoadingSlowFnReturns<T extends AnyFunc, D = Awaited<ReturnTy
   loadingSlow: boolean
 }
 
+/**
+ * A hook to run an async function and determine if the loading is slow.
+ *
+ * @since 1.4.0
+ */
 export function useLoadingSlowFn<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>(
   fn: T,
   options: UseLoadingSlowFnOptions<T, D, E> = {},

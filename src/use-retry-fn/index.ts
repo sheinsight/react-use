@@ -59,6 +59,11 @@ export function defaultRetryInterval(currentCount: number) {
   return nextInterval >= 30_000 ? 30_000 : nextInterval
 }
 
+/**
+ * A hook to retry the function when it fails.
+ *
+ * @since 1.4.0
+ */
 export function useRetryFn<T extends AnyFunc, E = any>(fn: T, options: UseRetryFnOptions<E> = {}): T {
   const { count = 3, interval = defaultRetryInterval, onError, onErrorRetry, onRetryFailed } = options
 

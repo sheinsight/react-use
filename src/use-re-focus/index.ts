@@ -32,6 +32,11 @@ export function registerWebReFocus(callback: AnyFunc) {
   }
 }
 
+/**
+ * A hook to call the callback when the window is focused.
+ *
+ * @since 1.4.0
+ */
 export function useReFocus(callback: AnyFunc, options: UseReFocusOptions = {}) {
   const { registerReFocus = registerWebReFocus, ...throttleOptions } = options
 

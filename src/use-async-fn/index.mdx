@@ -30,7 +30,10 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const { run, loading, value, error } = useAsyncFn(asyncFn, options)
+const {
+  run, loading, value, error,
+  refresh, cancel, mutate, params
+} = useAsyncFn(asyncFn, options)
 ```
 
 ### AsyncFn
@@ -40,7 +43,25 @@ A function that returns a promise.
 ### Options
 
 ```tsx
-export type UseAsyncFnOptions = {
+export interface UseAsyncFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any> {
+  /**
+   * Initial data to be used as the initial value
+   *
+   * @defaultValue undefined
+   */
+  initialValue?: D
+  /**
+   * Initial parameters passed to fetcher when first mount
+   *
+   * @defaultValue []
+   */
+  initialParams?: Gettable<Promisable<Parameters<T> | []>>
+  /**
+   * whether to run the async function immediately on component mount
+   *
+   * @defaultValue false
+   */
+  immediate?: boolean
   /**
    * whether to clear the value before running the function
    *
@@ -48,22 +69,87 @@ export type UseAsyncFnOptions = {
    */
   clearBeforeRun?: boolean
   /**
+   * whether to cancel the async function when the component is unmounted
+   *
+   * @defaultValue true
+   */
+  cancelOnUnmount?: boolean
+  /**
    * a function to run when the async function throws an error
    *
    * @defaultValue undefined
    */
-  onError?: (error: unknown) => void
+  onError?: (error: E | undefined) => void
+  /**
+   * a function to run before the async function
+   *
+   * @defaultValue undefined
+   */
+  onBefore?: (value: D | undefined, params: Parameters<T> | []) => void
+  /**
+   * a function to run after the async function
+   *
+   * @defaultValue undefined
+   */
+  onSuccess?: (value: D, params: Parameters<T> | []) => void
+  /**
+   * a function to run after the async function
+   *
+   * @defaultValue undefined
+   */
+  onFinally?: (value: D | undefined, params: Parameters<T> | []) => void
+  /**
+   * a function to run when the async function is cancelled
+   *
+   * @defaultValue undefined
+   */
+  onCancel?: (value: D | undefined, params: Parameters<T> | []) => void
+  /**
+   * a function to run when the value is mutated
+   *
+   * @defaultValue undefined
+   */
+  onMutate?: (value: D | undefined, params: Parameters<T> | []) => void
+  /**
+   * a function to run when the value is refreshed
+   *
+   * @defaultValue undefined
+   */
+  onRefresh?: (value: D | undefined, params: Parameters<T> | []) => void
+  /**
+   * Custom cache comparison function, true means the cache is the same
+   *
+   * @defaultValue shallowEqual
+   */
+  compare?: (prevData: D | undefined, nextData: D | undefined) => boolean
 }
 ```
 
 ### Returns
 
 ```tsx
-export type UseAsyncFnReturns<T extends AnyFunc> = {
+export type UseAsyncFnMutateAction<D, P> =
+  | [D | undefined]
+  | [D | undefined, P | undefined]
+  | [(prevData: D | undefined, preParams?: P) => [D, P | undefined]]
+
+export interface UseAsyncFnReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any> {
   /**
    * a function to run the async function
    */
   run: T
+  /**
+   * a function to refresh the async function
+   */
+  refresh: (params?: Parameters<T> | []) => Promise<D | undefined>
+  /**
+   * a function to cancel the async function
+   */
+  cancel: () => void
+  /**
+   * manually set the value
+   */
+  mutate: (...actions: UseAsyncFnMutateAction<D | undefined, Parameters<T> | []>) => void
   /**
    * whether the async function is loading
    */
@@ -71,10 +157,14 @@ export type UseAsyncFnReturns<T extends AnyFunc> = {
   /**
    * the error thrown by the async function
    */
-  error: unknown | null
+  error: E | undefined
   /**
    * the value returned by the async function
    */
-  value: Awaited<ReturnType<T>> | undefined
+  value: D | undefined
+  /**
+   * the parameters passed to the async function
+   */
+  params: Parameters<T> | []
 }
 ```

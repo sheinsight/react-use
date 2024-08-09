@@ -17,6 +17,11 @@ export interface UseInputCompositionState {
 
 export interface UseInputCompositionReturns extends UseInputCompositionState {}
 
+/**
+ * A hook to get the composition state of an input element.
+ *
+ * @since 1.4.0
+ */
 export function useInputComposition<T extends HTMLElement>(target: ElementTarget<T>): UseInputCompositionReturns {
   const [state, setState] = useSafeState<UseInputCompositionState>({ isComposing: false, data: '' })
 

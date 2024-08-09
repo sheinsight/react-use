@@ -30,7 +30,10 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const { run, data, loading, refreshing, initializing, error, cancel, refresh, mutate, loadingSlow, ...pausable } = useRequest(fetcher, options)
+const {
+  run, data, loading, refreshing, initializing, error,
+  cancel, refresh, mutate, loadingSlow, ...pausable
+} = useRequest(fetcher, options)
 ```
 
 ### Fetcher
@@ -162,5 +165,32 @@ export interface UseRequestOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>
    * @defaultValue false
    */
   onErrorRetry?: UseRetryFnOptions<E>['onErrorRetry']
+}
+```
+
+### Returns
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+See [UseLoadingSlowFnReturns](/reference/use-loading-slow-fn#returns) for more details.
+
+```tsx
+export interface UseRequestReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
+  extends Pausable,
+    Omit<UseLoadingSlowFnReturns<T, D, E>, 'value'> {
+  /**
+   * The data returned by the request
+   */
+  data: D | undefined
+  /**
+   * Whether the request is in the initialization state (no data + loading, initializing => !data && loading)
+   */
+  initializing: boolean
+  /**
+   * Whether the request is refreshing data (has data + loading, refreshing => data && loading)
+   */
+  refreshing: boolean
 }
 ```

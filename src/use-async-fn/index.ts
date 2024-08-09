@@ -14,18 +14,24 @@ export interface UseAsyncFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>
    * Initial data to be used as the initial value
    *
    * @defaultValue undefined
+   *
+   * @since 1.4.0
    */
   initialValue?: D
   /**
    * Initial parameters passed to fetcher when first mount
    *
    * @defaultValue []
+   *
+   * @since 1.4.0
    */
   initialParams?: Gettable<Promisable<Parameters<T> | []>>
   /**
    * whether to run the async function immediately on component mount
    *
    * @defaultValue false
+   *
+   * @since 1.4.0
    */
   immediate?: boolean
   /**
@@ -38,54 +44,72 @@ export interface UseAsyncFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>
    * whether to cancel the async function when the component is unmounted
    *
    * @defaultValue true
+   *
+   * @since 1.4.0
    */
   cancelOnUnmount?: boolean
   /**
    * a function to run when the async function throws an error
    *
    * @defaultValue undefined
+   *
+   * @since 1.4.0
    */
   onError?: (error: E | undefined) => void
   /**
    * a function to run before the async function
    *
    * @defaultValue undefined
+   *
+   * @since 1.4.0
    */
   onBefore?: (value: D | undefined, params: Parameters<T> | []) => void
   /**
    * a function to run after the async function
    *
    * @defaultValue undefined
+   *
+   * @since 1.4.0
    */
   onSuccess?: (value: D, params: Parameters<T> | []) => void
   /**
    * a function to run after the async function
    *
    * @defaultValue undefined
+   *
+   * @since 1.4.0
    */
   onFinally?: (value: D | undefined, params: Parameters<T> | []) => void
   /**
    * a function to run when the async function is cancelled
    *
    * @defaultValue undefined
+   *
+   * @since 1.4.0
    */
   onCancel?: (value: D | undefined, params: Parameters<T> | []) => void
   /**
    * a function to run when the value is mutated
    *
    * @defaultValue undefined
+   *
+   * @since 1.4.0
    */
   onMutate?: (value: D | undefined, params: Parameters<T> | []) => void
   /**
    * a function to run when the value is refreshed
    *
    * @defaultValue undefined
+   *
+   * @since 1.4.0
    */
   onRefresh?: (value: D | undefined, params: Parameters<T> | []) => void
   /**
    * Custom cache comparison function, true means the cache is the same
    *
    * @defaultValue shallowEqual
+   *
+   * @since 1.4.0
    */
   compare?: (prevData: D | undefined, nextData: D | undefined) => boolean
 }
@@ -94,10 +118,6 @@ export type UseAsyncFnMutateAction<D, P> =
   | [D | undefined]
   | [D | undefined, P | undefined]
   | [(prevData: D | undefined, preParams?: P) => [D, P | undefined]]
-
-export function resolveMutateActions<D, P>(actions: UseAsyncFnMutateAction<D, P>, prevData: D, prevParams: P): [D, P] {
-  return (isFunction(actions[0]) ? actions[0](prevData, prevParams) : (actions as [D, P])) as [D, P]
-}
 
 export interface UseAsyncFnReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any> {
   /**
@@ -137,6 +157,10 @@ export interface UseAsyncFnReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>
 interface RefItem<T> {
   used: boolean
   value: T
+}
+
+export function resolveMutateActions<D, P>(actions: UseAsyncFnMutateAction<D, P>, prevData: D, prevParams: P): [D, P] {
+  return (isFunction(actions[0]) ? actions[0](prevData, prevParams) : (actions as [D, P])) as [D, P]
 }
 
 /**

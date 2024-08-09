@@ -30,7 +30,7 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const { loadingSlow, loading, value, run, error } = useLoadingSlowFn(fn, options):
+const { loadingSlow, ...useAsyncFnReturns } = useLoadingSlowFn(fn, options):
 ```
 
 ### Fn
@@ -39,26 +39,36 @@ A function that returns a promise.
 
 ### Options
 
+See [UseAsyncFnOptions](/reference/use-async-fn#options) for more details.
+
 ```tsx
-export interface UseLoadingSlowFnOptions extends UseAsyncFnOptions {
+export interface UseLoadingSlowFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
+  extends UseAsyncFnOptions<T, D, E> {
   /**
    * The timeout duration in milliseconds to determine if the loading is slow.
-   * 
-   * @defaultValue 3_000 ms
+   *
+   * @defaultValue 0 ms
    */
   loadingTimeout?: number
+  /**
+   * A callback to be called when the loading is slow.
+   *
+   * @defaultValue undefined
+   */
+  onLoadingSlow?: () => void
 }
 ```
 
 ### Returns
 
+See [UseAsyncFnReturns](/reference/use-async-fn#returns) for more details.
+
 ```tsx
-export interface UseLoadingSlowFnReturns<T extends AnyFunc> extends UseAsyncFnReturns<T> {
+export interface UseLoadingSlowFnReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
+  extends UseAsyncFnReturns<T, D, E> {
   /**
    * Whether the loading is slow.
    */
   loadingSlow: boolean
 }
 ```
-
-See [useAsyncFn#api](/reference/use-async-fn/#api) for more details.

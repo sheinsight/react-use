@@ -40,31 +40,37 @@ A function that will be called with retry mechanism.
 ### Options
 
 ```tsx
-export interface UseRetryFnOptions {
+export interface UseRetryFnOptions<E = unknown> {
   /**
    * Number of retries.
    *
    * @defaultValue 3
    */
-  retryCount?: number
+  count?: number
   /**
-   * Retry interval.
+   * Retry interval. ms
    *
-   * @defaultValue 3_000 ms
+   * @defaultValue defaultRetryInterval
    */
-  retryInterval?: number | ((currentCount: number) => number)
+  interval?: number | ((currentCount: number) => number)
   /**
    * Error callback.
    *
    * @defaultValue undefined
    */
-  onError?: (error: unknown, state: { currentCount: number; retryCount: number }) => void
+  onError?: (error: E | undefined) => void
+  /**
+   * Error retry callback.
+   *
+   * @defaultValue undefined
+   */
+  onErrorRetry?: (error: E | undefined, state: UseRetryFnRetryState) => void
   /**
    * All retries failed callback.
    *
    * @defaultValue undefined
    */
-  onRetryFailed?: (error: unknown) => void
+  onRetryFailed?: (error: E | undefined, state: UseRetryFnRetryState) => void
 }
 ```
 

@@ -29,6 +29,7 @@ export type UseBooleanReturns = readonly [value: boolean, UseBooleanActions]
  *
  * @param {boolean} [initialValue=true] The initial value of the boolean state.
  *
+ * @since 1.3.0
  */
 export function useBoolean(initialValue: boolean = true): UseBooleanReturns {
   const [value, _actions] = useToggle(initialValue)

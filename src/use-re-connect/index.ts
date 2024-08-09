@@ -22,6 +22,11 @@ export function registerWebReConnect(callback: AnyFunc) {
   }
 }
 
+/**
+ * A hook to call the callback when the network is reconnected.
+ *
+ * @since 1.4.0
+ */
 export function useReConnect(callback: AnyFunc, options: UseReConnectOptions = {}) {
   const { registerReConnect = registerWebReConnect } = options
 

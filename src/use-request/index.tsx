@@ -172,6 +172,11 @@ export interface UseRequestReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>
   refreshing: boolean
 }
 
+/**
+ * A basic React Hook for data fetching, supports cache, automatic refresh, and many awesome features.
+ *
+ * @since 1.4.0
+ */
 export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>(
   fetcher: T,
   options: UseRequestOptions<T, D, E> = {},
