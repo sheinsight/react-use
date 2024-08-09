@@ -2,29 +2,29 @@
   {
     "type": "file",
     "name": "introduction",
-    "label": "Introduction"
+    "label": "🎉 Introduction"
   },
   {
     "type": "file",
     "name": "get-started",
-    "label": "Get Started"
+    "label": "🏃 Get Started"
   },
   {
     "type": "dir",
     "name": "features",
-    "label": "Features",
+    "label": "✨ Features",
     "collapsed": false
   },
   {
     "type": "dir",
     "name": "optimization",
-    "label": "Optimization",
+    "label": "⚡️ Optimization",
     "collapsed": false
   },
   {
     "type": "dir",
     "name": "faqs",
-    "label": "FAQs",
+    "label": "❓ FAQs",
     "collapsed": false
   }
 ]

@@ -1,8 +1,4 @@
----
-sidebar_position: 1
----
-
-# 安全状态 Safe State {#safe-state}
+# 🔒 安全状态（Safe State） {#safe-state}
 
 ## 概览 {#overview}
 

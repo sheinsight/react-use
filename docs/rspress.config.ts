@@ -7,8 +7,11 @@ export default defineConfig({
   title: '@shined/react-use',
   description:
     'A SSR-friendly, comprehensive, standardized and highly optimized React Hooks library.',
-  icon: '/logo.svg',
-  logo: '/logo.svg',
+  icon: '/icon.svg',
+  logo: {
+    'dark': '/logo-dark.svg',
+    'light': '/logo-light.svg',
+  },
   lang: 'en',
   multiVersion: {
     default: 'v1',

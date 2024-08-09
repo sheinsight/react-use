@@ -1,8 +1,4 @@
----
-sidebar_position: 3
----
-
-# 最新状态 Latest State {#latest-state}
+# 🪄 最新状态（Latest State） {#latest-state}
 
 ## 概览 {#overview}
 

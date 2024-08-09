@@ -1,8 +1,4 @@
----
-title: 'Ref Getter'
----
-
-# Ref Getter {#ref-getter}
+# 🚥 Ref Getter {#ref-getter}
 
 A Ref Getter is a specialized function designed to access the current value of a React ref.
 

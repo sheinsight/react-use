@@ -1,4 +1,4 @@
-# ElementTarget {#element-target}
+# 🎯 ElementTarget {#element-target}
 
 `ElementTarget` is a union type that represents the various types of elements that can be targeted in React.
 

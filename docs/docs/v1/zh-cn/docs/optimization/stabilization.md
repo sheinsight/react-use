@@ -1,8 +1,4 @@
----
-sidebar_position: 2
----
-
-# 稳定化 Stabilization {#stabilization}
+# 📌 稳定化（Stabilization） {#stabilization}
 
 ## 概览 {#overview}
 

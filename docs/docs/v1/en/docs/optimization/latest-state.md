@@ -1,8 +1,4 @@
----
-sidebar_position: 3
----
-
-# Latest State {#latest-state}
+# 🪄 Latest State {#latest-state}
 
 ## Overview {#overview}
 

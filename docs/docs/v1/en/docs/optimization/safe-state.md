@@ -1,8 +1,4 @@
----
-sidebar_position: 1
----
-
-# Safe State {#safe-state}
+# 🔒 Safe State {#safe-state}
 
 ## Overview {#overview}
 

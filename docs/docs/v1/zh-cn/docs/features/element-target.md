@@ -1,10 +1,4 @@
----
-
-sidebar_position: 2
-
----
-
-# 元素目标 ElementTarget {#element-target}
+# 🎯 元素目标（ElementTarget） {#element-target}
 
 `ElementTarget` 是一个联合类型，表示 React 中可以被定位的各种元素类型。
 

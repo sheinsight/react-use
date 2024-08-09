@@ -1,4 +1,4 @@
-# Pausable {#pausable}
+# ⏸️ Pausable {#pausable}
 
 Using Hooks like `useIntervalFn` and `useMouse` makes managing different features easier and more dynamic. However, adding a way to pause and resume these Hooks could make them even more useful. This feature would give us more control and help avoid unnecessary updates, making the user experience better.
 

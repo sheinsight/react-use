@@ -1,4 +1,4 @@
-# 可暂停 `Pausable` {#pausable}
+# ⏸️ 可暂停（`Pausable`） {#pausable}
 
 利用像 `useIntervalFn` 和 `useMouse` 这样的 Hook 使得管理不同的功能变得更加简单和动态。然而，增加一种暂停和恢复这些 Hook 的方式可以使它们更加有用。这一特性会给我们更多的控制权，并帮助避免不必要的更新，从而改善用户体验。
 
