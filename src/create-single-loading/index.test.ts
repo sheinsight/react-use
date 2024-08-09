@@ -97,7 +97,7 @@ describe('createSingleLoading', () => {
     const { result } = renderHook(() => loading.useAsyncFn(asyncFn))
 
     expect(result.current.loading).toBe(false)
-    expect(result.current.error).toBe(null)
+    expect(result.current.error).toBe(undefined)
     expect(result.current.value).toBe(undefined)
 
     asyncFn.mockResolvedValue('mock value')
