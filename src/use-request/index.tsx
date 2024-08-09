@@ -35,7 +35,7 @@ export type { UseRequestMutate, CacheLike } from './use-request-cache'
 
 export interface UseRequestOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>>
   extends Omit<UseLoadingSlowFnOptions<T, D>, 'initialValue'>,
-    UseReConnectOptions,
+    Pick<UseReConnectOptions, 'registerReConnect'>,
     Pick<UseReFocusOptions, 'registerReFocus'> {
   /**
    * Disable all automatic refresh behaviors, default is off
@@ -176,10 +176,9 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
   fetcher: T,
   options: UseRequestOptions<T, D> = {},
 ): UseRequestReturns<T, D> {
-  const latest = useLatest({ fetcher, ...options })
+  const [cache, cacheActions] = useRequestCache<T, D>(options)
 
-  const [{ cachedData, cachedParams }, cacheActions] = useRequestCache<T, D>(options)
-
+  const latest = useLatest({ fetcher, cache, ...options })
   const debounceOptions = isNumber(options.debounce) ? { wait: options.debounce } : options.debounce
   const throttleOptions = isNumber(options.throttle) ? { wait: options.throttle } : options.throttle
 
@@ -205,7 +204,7 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     {
       immediate: options.immediate ?? true,
       initialParams: options.initialParams,
-      initialValue: options.initialData ?? cachedData,
+      initialValue: options.initialData ?? cache.data,
       clearBeforeRun: options.clearBeforeRun,
       loadingTimeout: options.loadingTimeout,
       onLoadingSlow: options.onLoadingSlow,
@@ -277,8 +276,8 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
   useUpdateEffect(() => void serviceWithStatusCheck(), [...(options.refreshDependencies ?? [])])
 
   const mutateWithCache = useStableFn((...actions: UseAsyncFnMutateAction<D | undefined, Parameters<T> | []>) => {
-    const data = cacheActions.isCacheEnabled() ? cachedData : service.value
-    const params = cacheActions.isCacheEnabled() ? cachedParams : service.params
+    const data = cacheActions.isCacheEnabled() ? latest.current.cache.data : service.value
+    const params = cacheActions.isCacheEnabled() ? latest.current.cache.params : service.params
     const [nextData, nextParams] = resolveMutateActions<D | undefined, Parameters<T> | []>(actions, data, params)
     return service.mutate(nextData, nextParams)
   })
@@ -295,13 +294,13 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     run: serviceWithRateControl,
     cancel: service.cancel,
     get params() {
-      return cacheActions.isCacheEnabled() ? cachedParams : service.params
+      return cacheActions.isCacheEnabled() ? cache.params : service.params
     },
     get loadingSlow() {
       return service.loadingSlow
     },
     get data() {
-      return cacheActions.isCacheEnabled() ? cachedData : service.value
+      return cacheActions.isCacheEnabled() ? cache.data : service.value
     },
     get error() {
       return service.error
@@ -310,11 +309,11 @@ export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
       return service.loading
     },
     get refreshing() {
-      const data = cacheActions.isCacheEnabled() ? cachedData : service.value
+      const data = cacheActions.isCacheEnabled() ? cache.data : service.value
       return Boolean(data && service.loading)
     },
     get initializing() {
-      const data = cacheActions.isCacheEnabled() ? cachedData : service.value
+      const data = cacheActions.isCacheEnabled() ? cache.data : service.value
       return Boolean(!data && service.loading)
     },
   }

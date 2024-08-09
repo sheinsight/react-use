@@ -30,5 +30,15 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
+const { run, data, loading, refreshing, initializing, error, cancel, refresh, mutate, loadingSlow, ...pausable } = useRequest(fetcher, options)
+```
+
+### Fetcher
+
+A async function that fetch data, return a Promise.
+
+### Options
+
+```tsx
 
 ```

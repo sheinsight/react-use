@@ -5,16 +5,16 @@ import { Toaster, toast } from 'react-hot-toast'
 export function App() {
   return (
     <Card>
-      <h3>Error Retry + Cache</h3>
-      <Demo5 />
       <h3>Immediate + Trigger by user + Dependencies</h3>
       <Demo1 />
-      <h3>Lifecycle + Refresh + Params + Mutate + Cancel + Initialing + Refreshing</h3>
+      <h3>Lifecycle + Refresh + Params + Mutate + Cancel</h3>
       <Demo2 />
       <h3>Throttle + Debounce</h3>
       <Demo3 />
       <h3>ReFocus + ReConnect + AutoRefresh + Loading Slow</h3>
       <Demo4 />
+      <h3>Error Retry + Cache (SWR)</h3>
+      <Demo5 />
       {/* <DemoFull /> */}
       <Toaster />
     </Card>
@@ -152,6 +152,9 @@ function Demo5() {
     },
     {
       immediate: false,
+      compare() {
+        return true
+      },
       cacheKey: 'cacheKeyForDemo5',
       // provider: localStorageProvider,
       onErrorRetry: (error, { currentCount }) => toast.error(`Retry ${currentCount} failed.`),

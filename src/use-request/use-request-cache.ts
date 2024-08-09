@@ -29,6 +29,7 @@ export function useRequestCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     provider?: Gettable<CacheLike<D>>
     cacheKey?: string | ((...args: Parameters<T> | []) => string)
     cacheExpirationTime?: number | false
+    compare?: (prevData: D | undefined, nextData: D | undefined) => boolean
   } = {},
 ) {
   const render = useRender()
@@ -42,6 +43,7 @@ export function useRequestCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     provider,
     cacheKeyValue,
     cacheExpirationTime,
+    compare: options.compare ?? shallowEqual,
   })
 
   useEffectOnce(() => {
@@ -78,8 +80,8 @@ export function useRequestCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
 
     if (!cacheKeyValue) return
 
-    const preValue = provider.get(cacheKeyValue)
-    const preParams = paramsCache.get(cacheKeyValue)
+    const preValue = provider.get(cacheKeyValue) as D | undefined
+    const preParams = paramsCache.get(cacheKeyValue) as Parameters<T> | []
 
     if (shallowEqual(preValue, value) && shallowEqual(preParams, params)) return
 
@@ -87,13 +89,19 @@ export function useRequestCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
       provider.delete(cacheKeyValue)
       timerCache.delete(cacheKeyValue)
     } else {
+      // TODO: implement compare function to compare value change
+
       provider.set(cacheKeyValue, value)
       resetCacheTimer()
     }
 
     paramsCache.set(cacheKeyValue, params)
 
-    cacheBus.emit(cacheKeyValue)
+    if (!latest.current.compare(preValue, value)) {
+      cacheBus.emit(cacheKeyValue)
+    } else {
+      console.log('not emit')
+    }
   })
 
   const getPromiseCache = useStableFn(() => {
@@ -124,7 +132,7 @@ export function useRequestCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     isCacheEnabled,
   }))
 
-  return [{ cachedData, cachedParams }, actions] as const
+  return [{ data: cachedData, params: cachedParams }, actions] as const
 }
 
 export const mutate = /* #__PURE__ */ createMutate(dataCache, paramsCache)
