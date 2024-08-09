@@ -9,6 +9,10 @@ import type { ReactSetState } from '../use-safe-state'
 
 export interface UseToggleReturnsActions<O, T> {
   /**
+   * Toggle the state between the left and right values.
+   */
+  toggle(): void
+  /**
    * Set the state to the left value.
    */
   setLeft(): void
@@ -22,7 +26,7 @@ export interface UseToggleReturnsActions<O, T> {
   setState: ReactSetState<O | T>
 }
 
-export type UseToggleReturns<O, T> = readonly [O | T, () => void, UseToggleReturnsActions<O, T>]
+export type UseToggleReturns<O, T> = readonly [O | T, UseToggleReturnsActions<O, T>]
 
 /**
  * A React Hook that helps to manage a togglable state.
@@ -45,7 +49,7 @@ export function useToggle<O, T>(maybeTuple: O | T | readonly [one: O, theOther: 
 
   const setLeft = useStableFn(() => setState(latest.current.one))
   const setRight = useStableFn(() => setState(latest.current.theOther))
-  const actions = useCreation(() => ({ setLeft, setRight, setState }))
+  const actions = useCreation(() => ({ setLeft, toggle, setRight, setState }))
 
-  return [state, toggle, actions] as const
+  return [state, actions] as const
 }
