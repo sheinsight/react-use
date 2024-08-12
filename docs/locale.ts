@@ -163,7 +163,7 @@ export const navbar = {
     {
       text: '上手指南',
       link: `/${langSlug.zhCN}/docs/get-started`,
-      activeMatch: '^/zh-cn/docs/',
+      activeMatch: `^/${langSlug.zhCN}/docs/`,
       position: 'left',
     },
     {

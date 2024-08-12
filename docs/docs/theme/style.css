@@ -1,7 +1,7 @@
 @unocss;
 
 :root {
-  --rp-c-text-code: #456650;
+  --rp-c-text-code: var(--rp-c-brand-dark);
   --rp-c-text-code-bg: #90998e1a;
   --rp-c-brand: #2e8555;
   --rp-c-brand-light: #57a177;
@@ -17,6 +17,8 @@
 }
 
 .dark {
+  --rp-c-text-code: var(--rp-c-brand-light);
+  --rp-c-text-code-bg: #90998e1a;
   --rp-c-link: var(--rp-c-brand-light);
   --rp-c-bg: #1b1b1d;
 
