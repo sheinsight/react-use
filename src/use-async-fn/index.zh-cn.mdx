@@ -1,0 +1,167 @@
+# useAsyncFn
+
+import { HooksType } from '@/components'
+
+<HooksType category="Utilities" />
+
+一个 React Hook, 用于执行 **异步** 函数，并额外提供一个 **加载** 状态，表明 Promise 是否处于挂起状态。
+
+## 演示 Demo \{#demo}
+
+点击模拟 fetch，检查加载状态。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const {
+  run, loading, value, error,
+  refresh, cancel, mutate, params
+} = useAsyncFn(asyncFn, options)
+```
+
+### 异步函数 AsyncFn \{#async-fn}
+
+返回一个 Promise 的函数。
+
+### 选项 Options \{#options}
+
+```tsx
+export interface UseAsyncFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any> {
+  /**
+   * 作为初始值的初始数据
+   *
+   * @defaultValue undefined
+   */
+  initialValue?: D
+  /**
+   * 第一次挂载时传递给 fetcher 的初始参数
+   *
+   * @defaultValue []
+   */
+  initialParams?: Gettable<Promisable<Parameters<T> | []>>
+  /**
+   * 是否在组件挂载时立即运行异步函数
+   *
+   * @defaultValue false
+   */
+  immediate?: boolean
+  /**
+   * 运行函数前是否清除值
+   *
+   * @defaultValue false
+   */
+  clearBeforeRun?: boolean
+  /**
+   * 组件卸载时是否取消异步函数
+   *
+   * @defaultValue true
+   */
+  cancelOnUnmount?: boolean
+  /**
+   * 当异步函数抛出错误时运行的函数
+   *
+   * @defaultValue undefined
+   */
+  onError?: (error: E | undefined) => void
+  /**
+   * 运行异步函数之前的函数
+   *
+   * @defaultValue undefined
+   */
+  onBefore?: (value: D | undefined, params: Parameters<T> | []) => void
+  /**
+   * 运行异步函数之后的函数
+   *
+   * @defaultValue undefined
+   */
+  onSuccess?: (value: D, params: Parameters<T> | []) => void
+  /**
+   * 运行异步函数之后全部完成的函数
+   *
+   * @defaultValue undefined
+   */
+  onFinally?: (value: D | undefined, params: Parameters<T> | []) => void
+  /**
+   * 当异步函数被取消时运行的函数
+   *
+   * @defaultValue undefined
+   */
+  onCancel?: (value: D | undefined, params: Parameters<T> | []) => void
+  /**
+   * 当值被改变时运行的函数
+   *
+   * @defaultValue undefined
+   */
+  onMutate?: (value: D | undefined, params: Parameters<T> | []) => void
+  /**
+   * 当值被刷新时运行的函数
+   *
+   * @defaultValue undefined
+   */
+  onRefresh?: (value: D | undefined, params: Parameters<T> | []) => void
+  /**
+   * 自定义缓存比较函数，true 表示缓存相同
+   *
+   * @defaultValue shallowEqual
+   */
+  compare?: (prevData: D | undefined, nextData: D | undefined) => boolean
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UseAsyncFnMutateAction<D, P> =
+  | [D | undefined]
+  | [D | undefined, P | undefined]
+  | [(prevData: D | undefined, preParams?: P) => [D, P | undefined]]
+
+export interface UseAsyncFnReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any> {
+  /**
+   * 运行异步函数的函数
+   */
+  run: T
+  /**
+   * 刷新异步函数的函数
+   */
+  refresh: (params?: Parameters<T> | []) => Promise<D | undefined>
+  /**
+   * 取消异步函数的函数
+   */
+  cancel: () => void
+  /**
+   * 手动设置值的函数
+   */
+  mutate: (...actions: UseAsyncFnMutateAction<D | undefined, Parameters<T> | []>) => void
+  /**
+   * 异步函数是否在加载
+   */
+  loading: boolean
+  /**
+   * 异步函数抛出的错误
+   */
+  error: E | undefined
+  /**
+   * 异步函数返回的值
+   */
+  value: D | undefined
+  /**
+   * 传递给异步函数的参数
+   */
+  params: Parameters<T> | []
+}
+```

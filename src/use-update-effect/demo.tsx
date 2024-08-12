@@ -1,6 +1,5 @@
-import { Button, Card, KeyValue } from '@/components'
+import { Button, Card, KeyValue, Toaster, toast } from '@/components'
 import { useCounter, useUnmount, useUpdateEffect } from '@shined/react-use'
-import { Toaster, toast } from 'react-hot-toast'
 
 export function App() {
   const [count, actions] = useCounter(0)

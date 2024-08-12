@@ -1,6 +1,5 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, Card, KeyValue, Toaster, Zone, toast } from '@/components'
 import { useGetterRef, useRender, useUnmount } from '@shined/react-use'
-import { Toaster, toast } from 'react-hot-toast'
 
 export function App() {
   const [ref, get] = useGetterRef(0)

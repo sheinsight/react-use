@@ -1,0 +1,50 @@
+# useReactive
+
+import { HooksType } from '@/components'
+
+<HooksType category="ProUtilities" />
+
+一个便于在 React 中使用 [Reactive](https://sheinsight.github.io/reactive) 的 React Hook。
+
+:::tip
+使用这个工具之前，你需要安装 `@shined/reactive`。
+:::
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+import { create } from '@shined/reactive';
+const [state, mutate] = useReactive(initialState, { create })
+```
+
+### 初始状态 InitialState \{#initial-state}
+
+用于初始化状态的一个 `object` 对象。
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseReactiveOptions<State> = SnapshotOptions<State> & { create: typeof create }
+```
+
+[Reactive](https://sheinsight.github.io/reactive) 的选项，参见 [Reactive 创建选项](https://sheinsight.github.io/reactive/reference/root-api.html#create)。
+
+### 返回值 Returns \{#returns}
+
+`state` 是当前状态，`mutate` 是一个对象，其改变将触发重渲染。

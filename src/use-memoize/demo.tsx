@@ -1,6 +1,5 @@
-import { Button, Card, Zone, wait as mockFetch } from '@/components'
+import { Button, Card, Toaster, Zone, wait as mockFetch, toast } from '@/components'
 import { useMemoize, useUnmount } from '@shined/react-use'
-import { Toaster, toast } from 'react-hot-toast'
 
 async function getUserById(id: number) {
   toast.success(`Fetching user ${id}...`, { icon: '👤' })

@@ -1,0 +1,39 @@
+# useUnmounted
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" />
+
+一个返回 [Ref Getter](/docs/features/ref-getter) 的 React Hook，用于判断组件是否已卸载。
+
+## 演示 Demo \{#demo}
+
+尝试点击 `开始计时器`，然后在一秒内点击 "切换挂载" 按钮以查看结果。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const isUnmounted = useUnmounted()
+```
+
+### 返回值 Returns \{#returns}
+
+import { Tip } from '@/components'
+
+<Tip type="ref-getter" name="isUnmounted" />
+
+一个 Ref Getter，如果组件已卸载则返回 `true`。

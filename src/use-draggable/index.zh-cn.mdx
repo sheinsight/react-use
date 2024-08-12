@@ -1,0 +1,149 @@
+# useDraggable
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" />
+
+一个 React 钩子，用于让元素可拖动。
+
+## 演示 Demo \{#demo}
+
+尝试拖动浮动元素。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const draggable = useDraggable(elementTarget, options)
+```
+
+### 元素目标 ElementTarget \{#element-target}
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseDraggableOptions = {
+  /**
+   * 是否只有当指针精确地在目标元素上时才能拖动元素。
+   *
+   * @defaultValue false
+   */
+  exact?: boolean
+  /**
+   * 是否阻止指针事件的默认行为。
+   *
+   * @defaultValue false
+   */
+  preventDefault?: boolean
+  /**
+   * 是否停止指针事件的传播。
+   *
+   * @defaultValue false
+   */
+  stopPropagation?: boolean
+  /**
+   * 是否捕获指针事件。
+   *
+   * @defaultValue true
+   */
+  capture?: boolean
+  /**
+   * 应被拖动的元素。
+   *
+   * @defaultValue target
+   */
+  handle?: ElementTarget
+  /**
+   * 应被拖动的元素。
+   *
+   * @defaultValue window
+   */
+  draggingElement?: ElementTarget | GlobalTarget
+  /**
+   * 应包含可拖动元素的容器元素。
+   *
+   * @defaultValue undefined
+   */
+  containerElement?: ElementTarget
+  /**
+   * 应处理的指针事件类型。
+   *
+   * @defaultValue ['mouse', 'touch', 'pen']
+   */
+  pointerTypes?: PointerType[]
+  /**
+   * 可拖动元素的初始位置。
+   *
+   * @defaultValue { x: 0; y: 0 }
+   */
+  initialValue?: Position
+  /**
+   * 开始拖动时调用的回调函数。
+   */
+  onStart?: (position: Position, event: PointerEvent) => void | false
+  /**
+   * 拖动移动时调用的回调函数。
+   */
+  onMove?: (position: Position, event: PointerEvent) => void
+  /**
+   * 拖动结束时调用的回调函数。
+   */
+  onEnd?: (position: Position, event: PointerEvent) => void
+  /**
+   * 可拖动元素可沿其移动的轴。
+   * 
+   * @defaultValue 'both'
+   */
+  axis?: 'x' | 'y' | 'both'
+  /**
+   * 是否禁用可拖动元素。
+   * 
+   * @defaultValue false
+   */
+  disabled?: boolean
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UseDraggableReturns = {
+  /**
+   * 可拖动元素的 x 坐标。
+   */
+  x: number
+  /**
+   * 可拖动元素的 y 坐标。
+   */
+  y: number
+  /**
+   * 应用于可拖动元素的样式。
+   */
+  style: CSSProperties
+  /**
+   * 可拖动元素的位置。
+   */
+  position: Position
+  /**
+   * 可拖动元素是否正在被拖动。
+   */
+  isDragging: boolean
+}
+```

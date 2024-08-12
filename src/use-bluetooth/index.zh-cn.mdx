@@ -1,0 +1,118 @@
+# useBluetooth
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" isSupported />
+
+一个用于与 Web [蓝牙 API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API) 交互的简单 API 的 React 钩子。
+
+## 演示 Demo \{#demo}
+
+点击 `requestDevice` 以选择一个蓝牙设备，然后点击 `connect` 来连接该设备。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const bluetooth = useBlueTooth(options)
+```
+
+### 选项 Options \{#options}
+
+```tsx
+export interface BluetoothRequestDeviceOptions {
+  /**
+   * 一个过滤对象的数组，指示将匹配的设备的属性。
+   *
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Bluetooth/requestDevice#filters | requestDevice#filters - MDN}
+   */
+  filters?: BluetoothLEScanFilter[] | undefined
+  /**
+   * 应用程序希望在远程设备上访问的服务列表。
+   *
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/BluetoothRemoteGATTService/uuid | BluetoothRemoteGATTService/uuid - MDN}
+   */
+  optionalServices?: BluetoothServiceUUID[] | undefined
+}
+
+export interface UseBluetoothOptions extends BluetoothRequestDeviceOptions {
+  /**
+   * 是否接受所有设备
+   *
+   * @defaultValue false
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Bluetooth/requestDevice#acceptAllDevices | requestDevice#acceptAllDevices - MDN}
+   */
+  acceptAllDevices?: boolean
+  /**
+   * 是否立即连接
+   *
+   * @defaultValue true
+   */
+  immediate?: boolean
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export interface UseBlueToothReturns {
+  /**
+   * 设备是否已连接
+   */
+  isConnected: boolean
+  /**
+   * 设备是否正在连接
+   */
+  isConnecting: boolean
+  /**
+   * 连接时发生的错误
+   */
+  error: unknown | null
+  /**
+   * GATT 服务器
+   */
+  server: BluetoothRemoteGATTServer | undefined
+  /**
+   * 设备
+   */
+  device: BluetoothDevice | undefined
+  /**
+   * 连接到蓝牙 GATT 服务器
+   *
+   * @returns {Promise<BluetoothRemoteGATTServer | undefined>} GATT 服务器，参见 {@link BluetoothRemoteGATTServer}
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/BluetoothRemoteGATTServer | BluetoothRemoteGATTServer - MDN}
+   */
+  connect(): Promise<BluetoothRemoteGATTServer | undefined>
+  /**
+   * 断开与蓝牙 GATT 服务器的连接
+   *
+   * @returns {void} `void`
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/BluetoothRemoteGATTServer/disconnect | BluetoothRemoteGATTServer.disconnect - MDN}
+   */
+  disconnect(): void
+  /**
+   * 浏览器是否支持 Web 蓝牙 API
+   */
+  isSupported: boolean
+  /**
+   * 请求一个蓝牙设备
+   *
+   * @returns {Promise<BluetoothDevice | undefined>} 蓝牙设备，参见 {@link BluetoothDevice}
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Bluetooth/requestDevice | Bluetooth.requestDevice - MDN}
+   */
+  requestDevice(): Promise<BluetoothDevice | undefined>
+}
+```

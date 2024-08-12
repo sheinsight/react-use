@@ -1,0 +1,115 @@
+# useMouse
+
+import { HooksType } from '@/components'
+
+<HooksType category="Sensors" pausable />
+
+用于跟踪鼠标位置的 React Hook。
+
+## 演示 Demo \{#demo}
+
+尝试滚动页面或移动您的鼠标来观察不同类型之间的差异。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const { x, y, position, sourceType, stop } = useMouse(options)
+```
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseMouseOptions = {
+  /**
+   * 用于从事件中提取的坐标类型。
+   *
+   * @defaultValue 'page'
+   */
+  type?: UseMouseCoordType | UseMouseEventExtractor
+  /**
+   * 目标元素以便附加事件监听器。
+   *
+   * @defaultValue window
+   */
+  target?: Window | EventTarget | null | undefined
+  /**
+   * 是否启用触摸事件。
+   *
+   * @defaultValue true
+   */
+  touch?: boolean
+  /**
+   * 是否启用滚动事件。
+   *
+   * @defaultValue true
+   */
+  scroll?: boolean
+  /**
+   * 触摸结束时是否重置位置。
+   *
+   * @defaultValue false
+   */
+  resetOnTouchEnds?: boolean
+  /**
+   * 初始位置。
+   *
+   * @defaultValue { x: 0, y: 0 }
+   */
+  initialValue?: Position
+  /**
+   * 是否立即开始更新位置。
+   *
+   * @defaultValue false
+   */
+  immediate?: boolean
+}
+```
+
+### 返回值 Returns \{#returns}
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+```tsx
+export type Position = {
+  /**
+   * X 坐标
+   */
+  x: number
+  /**
+   * Y 坐标
+   */
+  y: number
+}
+
+export type UseMouseReturns = Position &
+  Pausable & {
+    /**
+     * 鼠标事件的位置。
+     */
+    position: Position
+    /**
+     * 事件的来源类型。
+     */
+    sourceType: UseMouseSourceType
+    /**
+     * 立即停止鼠标事件监听器。
+     */
+    stop(): void
+  }
+```

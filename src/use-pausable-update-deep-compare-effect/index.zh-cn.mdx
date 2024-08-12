@@ -1,0 +1,45 @@
+# usePausableUpdateDeepCompareEffect
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" pausable lowLevel />
+
+一个类似于 [useUpdateDeepCompareEffect](/reference/use-update-deep-compare-effect) 的 React 钩子，但是可暂停的。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const pausable = usePausableUpdateDeepCompareEffect(callback, deps)
+```
+
+### 回调 Callback \{#callback}
+
+与 [React.useEffect](https://react.dev/reference/react/useEffect) 相同。
+
+### 依赖 Deps \{#deps}
+
+与 [React.useEffect](https://react.dev/reference/react/useEffect) 相同。
+
+### 返回值 Returns \{#returns}
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+一个 `Pausable` 实例。

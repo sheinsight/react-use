@@ -1,0 +1,66 @@
+# useTimeoutFn
+
+import { HooksType } from '@/components'
+
+<HooksType category="Animation" pausable />
+
+一个 React Hook，用于创建定时函数。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const pausable = useTimeoutFn(handler, interval, options)
+```
+
+### 函数 Handler \{#handler}
+
+定时器到期时调用的 `function`。
+
+### 间隔 Interval \{#interval}
+
+定时器的间隔时间（以毫秒为单位）。
+
+### 选项 Options \{#options}
+
+```tsx
+export interface UseTimeoutFnOptions {
+  /**
+   * 调用此函数后立即开始计时器
+   *
+   * @defaultValue true
+   */
+  immediate?: boolean
+  /**
+   * 计时器结束时立即渲染组件
+   *
+   * 当你需要 `isActive` ref 在计时器结束后立即更新时，将此设置为 `true`
+   *
+   * @defaultValue false
+   */
+  updateOnEnd?: boolean
+}
+```
+
+### 返回值 Returns \{#returns}
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+一个可暂停实例 `Pausable`。

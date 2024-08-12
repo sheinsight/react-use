@@ -1,0 +1,69 @@
+# useToggle
+
+import { HooksType } from '@/components'
+
+<HooksType category="State" />
+
+一个 React 钩子（Hook），用于管理一个可切换的状态。
+
+:::tip
+
+如果您需要管理一个在几个值之间切换的状态，可以考虑使用 [useCircularList](/reference/use-circular-list) 作为替代方案。
+
+:::
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const [value, actions] = useToggle(bool)
+const [value, actions] = useToggle(one, theOther)
+```
+
+### 参数 Parameters \{#parameters}
+
+它接受一个或两个参数：
+
+- `bool`：一个 `boolean` 值，是状态的初始值，将在 `true` 和 `false` 之间切换。
+
+- `one`, `theOther`：状态切换的两个值。
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export interface UseToggleReturnsActions<O, T> {
+  /**
+   * 切换状态。
+   */
+  toggle(): void
+  /**
+   * 设置状态为左值。
+   */
+  setLeft(): void
+  /**
+   * 设置状态为右值。
+   */
+  setRight(): void
+  /**
+   * 设置状态为一个新值。
+   */
+  setState: ReactSetState<O | T>
+}
+
+export type UseToggleReturns<O, T> = [O | T, UseToggleReturnsActions<O, T>]
+```

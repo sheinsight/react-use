@@ -1,0 +1,110 @@
+# useLongPress
+
+import { HooksType } from '@/components'
+
+<HooksType category="Sensors" />
+
+一个 React 钩子（Hook），用于处理长按事件。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#API}
+
+```tsx
+const lp = useLongPress(elementTarget, handler, options)
+```
+
+### 元素目标 ElementTarget \{#element-target}
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### 处理函数 Handler \{#handler}
+
+```tsx
+export type UseLongPressHandler = (evt: PointerEvent) => void
+```
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseLongPressModifiers = {
+  /**
+   * 是否阻止事件的默认行为
+   */
+  preventDefault?: boolean
+  /**
+   * 是否停止事件的传播
+   */
+  stopPropagation?: boolean
+  /**
+   * 是否只触发一次事件
+   */
+  once?: boolean
+  /**
+   * 是否捕获事件
+   */
+  capture?: boolean
+  /**
+   * 是否只在目标元素本身上触发事件
+   */
+  self?: boolean
+}
+
+export interface UseLongPressOptions {
+  /**
+   * 触发 `longpress` 前的时间（毫秒）
+   *
+   * @defaultValue 500
+   */
+  delay?: number
+  /**
+   * 事件修饰符
+   */
+  modifiers?: UseLongPressModifiers
+  /**
+   * 允许的移动距离（像素），从 pointerdown 位置移动太远时将取消操作。
+   *
+   * @defaultValue 10
+   */
+  distanceThreshold?: number | false
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UseLongPressReturns = {
+  /**
+   * 元素是否被按下
+   */
+  isPressed: boolean
+  /**
+   * 元素是否被长按
+   */
+  isLongPressed: boolean
+  /**
+   * 元素是否满足阈值
+   */
+  isMeetThreshold: boolean
+  /**
+   * 停止长按事件
+   */
+  stop(): void
+}
+```

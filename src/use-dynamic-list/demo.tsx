@@ -1,5 +1,4 @@
-import { Button, Card, Input, Zone } from '@/components'
-import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { Button, Card, Input, Zone, useAutoAnimate } from '@/components'
 import { useDynamicList } from '@shined/react-use'
 
 export function App() {

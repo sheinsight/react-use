@@ -1,0 +1,96 @@
+# useMultiSelect
+
+import { HooksType } from '@/components'
+
+<HooksType category="ProUtilities" />
+
+一个管理多选状态的 React 钩子。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const [state, actions] = useMultiSelect(list, defaultSelected)
+```
+
+### 列表 List \{#list}
+
+要管理多选状态的项目列表。
+
+### 默认选中 DefaultSelected \{#default-selected}
+
+默认选中的项目列表。
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UseMultiSelectReturns<T> = readonly [
+  {
+    /**
+     * 被选中的项目
+     */
+    selected: T[]
+    /**
+     * 没有项目被选中
+     */
+    isNoneSelected: boolean
+    /**
+     * 所有项目都被选中
+     */
+    isAllSelected: boolean
+    /**
+     * 一些项目被选中
+     */
+    isPartiallySelected: boolean
+  },
+  {
+    /**
+     * 项目是否被选中
+     */
+    isItemSelected: (item: T) => boolean
+    /**
+     * 设置被选中的项目
+     */
+    setSelected: ReactSetState<T[]>
+    /**
+     * 选中项目
+     */
+    select: (item: T) => void
+    /**
+     * 选中所有项目
+     */
+    selectAll(): void
+    /**
+     * 取消选中项目
+     */
+    unSelect: (item: T) => void
+    /**
+     * 取消选中所有项目
+     */
+    unSelectAll(): void
+    /**
+     * 切换项目的选中状态
+     */
+    toggle: (item: T) => void
+    /**
+     * 切换所有项目的选中状态
+     */
+    toggleAll(): void
+  },
+]
+```

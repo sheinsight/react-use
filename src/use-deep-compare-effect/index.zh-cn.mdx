@@ -1,0 +1,37 @@
+# useDeepCompareEffect
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" lowLevel />
+
+一个类似于 [React.useEffect](https://react.dev/reference/react/useEffect) 的 React 钩子，但是对依赖进行了 [深度比较](https://github.com/sheinsight/react-use/blob/main/src/utils/equal.ts#L29)。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+useDeepCompareEffect(callback, deps)
+```
+
+### 回调函数 Callback \{#callback}
+
+与 [React.useEffect](https://react.dev/reference/react/useEffect) 相同。
+
+### 依赖项 Deps \{#deps}
+
+与 [React.useEffect](https://react.dev/reference/react/useEffect) 相同。

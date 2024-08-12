@@ -1,0 +1,35 @@
+# useAsyncUpdateEffect
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" lowLevel />
+
+一个 React 钩子，与 [useAsyncEffect](/reference/use-async-effect) 类似，但是 **在首次挂载时忽略执行**。
+
+:::note
+由于是 `async` 的，它不应该返回一个清理函数，因为无法按预期进行清理。
+
+如果你需要清理一些内容，使用 `UseAsyncEffectCallback` 中的 `isCancelled` 来检查 Effect 的状态。
+:::
+
+## 演示 Demo \{#demo}
+
+它**不会**在首次挂载时执行。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+见 [useAsyncEffect](/reference/use-async-effect/#api)。

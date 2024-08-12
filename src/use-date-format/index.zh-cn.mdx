@@ -1,0 +1,125 @@
+# useDateFormat
+
+import { HooksType } from '@/components'
+
+<HooksType category='Utilities' />
+
+一个无依赖的 React Hook，用于使用符号格式化日期，类似于诸如 [dayjs](https://day.js.org/docs/en/display/format)、[momentjs](https://momentjs.com/docs/#/displaying/format/) 或 [date-fns](https://date-fns.org/docs/format) 等库中的 `format` 函数。
+
+:::tip
+默认情况下，格式化行为与 `dayjs`、`momentjs` 和 `date-fns@^1` 一致。您可以将 `unicodeSymbols` 选项设置为 `true` 以使用 [Unicode 标准日期符号](https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table)，这类似于 `date-fns@^2` 及以后版本。
+:::
+
+## 演示 Demo \{#demo}
+
+尝试编辑下面的格式模板，查看结果。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 格式化符号 Format Symbols \{#format-symbols}
+
+| 约定式 | Unicode | 输出                     | 描述                    | 是否相同 |
+| ------ | ------- | ------------------------ | ----------------------- | -------- |
+| `Yo`   | -       | 2024th                   | 序数格式年份            | -        |
+| `YY`   | `yy`    | 24                       | 两位数年份              | ❌       |
+| `YYYY` | `yyyy`  | 2024                     | 四位数年份              | ❌       |
+| `M`    | `M`     | 1-12                     | 月份，从 1 开始         | ✅       |
+| `Mo`   | -       | 1st, 2nd, ..., 12th      | 月份，序数格式          | -        |
+| `MM`   | `MM`    | 01-12                    | 月份，两位数            | ✅       |
+| `MMM`  | `MMM`   | Jan-Dec                  | 缩写月份名              | ✅       |
+| `MMMM` | `MMMM`  | January-December         | 完整月份名              | ✅       |
+| `D`    | `d`     | 1-31                     | 月份中的日期            | ❌       |
+| `Do`   | -       | 1st, 2nd, ..., 31st      | 月份中的日期，序数格式  | -        |
+| `DD`   | `dd`    | 01-31                    | 月份中的日期，两位数    | ❌       |
+| `H`    | `H`     | 0-23                     | 小时                    | ✅       |
+| `Ho`   | -       | 0th, 1st, 2nd, ..., 23rd | 小时，序数格式          | -        |
+| `HH`   | `HH`    | 00-23                    | 小时，两位数            | ✅       |
+| `h`    | `h`     | 1-12                     | 12 小时制小时           | ✅       |
+| `ho`   | -       | 1st, 2nd, ..., 12th      | 12 小时制小时，序数格式 | -        |
+| `hh`   | `hh`    | 01-12                    | 12 小时制小时，两位数   | ✅       |
+| `m`    | `m`     | 0-59                     | 分钟                    | ✅       |
+| `mo`   | -       | 0th, 1st, ..., 59th      | 分钟，序数格式          | -        |
+| `mm`   | `mm`    | 00-59                    | 分钟，两位数            | ✅       |
+| `s`    | `s`     | 0-59                     | 秒数                    | ✅       |
+| `so`   | -       | 0th, 1st, ..., 59th      | 秒数，序数格式          | -        |
+| `ss`   | `ss`    | 00-59                    | 秒数，两位数            | ✅       |
+| `S`    | `S`     | 0-9                      | 毫秒，1 位数            | ✅       |
+| `SS`   | `SS`    | 00-99                    | 毫秒，两位数            | ✅       |
+| `SSS`  | `SSS`   | 000-999                  | 毫秒，三位数            | ✅       |
+| `A`    | -       | AM PM                    | 上下午                  | -        |
+| `AA`   | -       | A.M. P.M.                | 上下午，带点            | -        |
+| `a`    | `aaaa`  | am pm                    | 上下午，小写            | ❌       |
+| `aa`   | -       | a.m. p.m.                | 上下午，小写，带点      | -        |
+| `d`    | -       | 0-6                      | 星期几，以星期日为 0    | -        |
+| `dd`   | `eeeee` | S-S                      | 当地星期几的缩写名      | ❌       |
+| `ddd`  | `eee`   | Sun-Sat                  | 当地星期几的短名字      | ❌       |
+| `dddd` | `eeee`  | Sunday-Saturday          | 当地星期几的名称        | ❌       |
+
+> 可通过 `options` 中的 `customMeridiem` 自定义上下午。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const dateStr = useDateFormat(dateLike, format, options)
+```
+
+### 类日期 DateLike \{#datelike}
+
+```tsx
+export type DateLike = Date | number | string
+```
+
+### 格式模版 Format \{#format}
+
+表示输出日期字符串格式的 `string`。默认为 `YYYY-MM-DD HH:mm:ss`。
+
+### 选项 Options \{#options}
+
+```tsx
+export type FormatDateOptions = {
+  /**
+   * 是否使用 Unicode 日期符号。
+   *
+   * @see https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table
+   *
+   * @defaultValue false
+   */
+  unicodeSymbols?: boolean
+  /**
+   * locales 参数表示要使用的语言环境。
+   */
+  locales?: Intl.LocalesArgument
+  /**
+   * 格式化上下午的自定义函数。
+   */
+  customMeridiem?: (
+    hours: number,
+    minutes: number,
+    isLowercase?: boolean,
+    hasPeriod?: boolean
+  ) => string
+}
+
+export type UseDateFormatOptions = FormatDateOptions & {
+  /**
+   * 当日期无效时的默认字符串。
+   */
+  fallback?: string
+}
+```
+
+### 返回值 Returns \{#returns}
+
+表示格式化日期字符串的 `string`。

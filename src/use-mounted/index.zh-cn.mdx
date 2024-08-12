@@ -1,0 +1,39 @@
+# useMounted
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" />
+
+一个 React 钩子（Hook），返回一个 [Ref Getter](/docs/features/ref-getter)，用于指示组件是否已挂载。
+
+## 演示 Demo \{#demo}
+
+尝试点击 `Start Timer`，然后在一秒内点击 "Toggle mount" 按钮查看结果。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const isMounted = useMounted()
+```
+
+import { Tip } from '@/components'
+
+<Tip type="ref-getter" name="isUnmounted" />
+
+### 返回值 Returns \{#returns}
+
+一个 Ref Getter，返回一个布尔值，用于指示组件是否已挂载。

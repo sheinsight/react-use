@@ -1,0 +1,79 @@
+# useDropZone
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" />
+
+一个 React Hook，允许您创建一个拖放区。
+
+## 演示 Demo \{#demo}
+
+尝试从您的电脑拖放一个 PNG 文件，或者通过下方的图像测试 over 状态。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { isOverDropZone, files } = useDropZone(elementTarget, options)
+```
+
+### 元素目标 ElementTarget \{#element-target}
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseDropZoneOptions = {
+  /**
+   * 被拖放区域接受的文件类型。
+   */
+  dataTypes?: string[] | ((types: readonly string[]) => boolean)
+  /**
+   * 当用户在拖放区域放下文件时调用的回调函数。
+   */
+  onDrop?: (files: File[] | null, event: DragEvent) => void
+  /**
+   * 当用户将文件拖到拖放区域上方时调用的回调函数。
+   */
+  onEnter?: (files: File[] | null, event: DragEvent) => void
+  /**
+   * 当用户将文件从拖放区域拖出时调用的回调函数。
+   */
+  onLeave?: (files: File[] | null, event: DragEvent) => void
+  /**
+   * 当用户在拖放区域上方拖动文件时调用的回调函数。
+   */
+  onOver?: (files: File[] | null, event: DragEvent) => void
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UseDropZoneReturns = {
+  /**
+   * 在拖放区域中放下的文件。
+   */
+  files: File[] | null
+  /**
+   * 用户当前是否正在拖动文件到拖放区域上方。
+   */
+  isOverDropZone: boolean
+}
+```

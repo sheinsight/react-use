@@ -1,0 +1,79 @@
+# useClipboardItems
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" isSupported />
+
+几乎与 [useClipboard](/reference/use-clipboard) 相同，但通过 [ClipboardItem](https://developer.mozilla.org/en-US/docs/Web/API/ClipboardItem) 支持多种丰富的内容。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const clipboard = useClipboardItems(options)
+```
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseClipboardItemsOptions<Source> = {
+  /**
+   * 启用剪贴板读取，需要请求权限
+   *
+   * @defaultValue false
+   */
+  read?: boolean
+  /**
+   * 拷贝源
+   */
+  source?: Source
+  /**
+   * 重置 `copied` 变量状态的毫秒数
+   *
+   * @defaultValue 1500
+   */
+  copiedDuration?: number
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UseClipboardItemsReturns<Optional> = {
+  /**
+   * 浏览器是否支持剪贴板 API
+   */
+  isSupported: boolean
+  /**
+   * 剪贴板内容
+   */
+  content: ClipboardItems
+  /**
+   * 内容已拷贝状态
+   */
+  copied: boolean
+  /**
+   * 拷贝内容到剪贴板
+   */
+  copy: Optional extends true ? (content?: ClipboardItems) => Promise<void> : (text: ClipboardItems) => Promise<void>
+  /**
+   * 清空剪贴板
+   */
+  clear(): void
+}
+```

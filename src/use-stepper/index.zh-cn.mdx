@@ -1,0 +1,116 @@
+# useStepper
+
+import { HooksType } from '@/components'
+
+<HooksType category="ProUtilities" />
+
+一个帮助创建步骤器状态的 React 钩子。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const step = useStepper(steps, initialStepIdx)
+```
+
+### 步骤 Steps \{#steps}
+
+一个`array`类型的步骤数组，步骤可以是包含函数、字符串或数字等任何对象。
+
+### 初始步骤索引 InitialStepIdx \{#initial-step-idx}
+
+一个代表初始步骤索引的`number`类型。
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export interface UseStepperReturns<StepName, Steps, Step> {
+  /**
+   * 步骤列表。
+   */
+  steps: Readonly<Steps>
+  /**
+   * 当前步骤的索引。
+   */
+  index: number
+  /**
+   * 当前步骤。
+   */
+  current: Step
+  /**
+   * 下一个步骤，如果当前步骤是最后一个则为 undefined。
+   */
+  next: StepName | undefined
+  /**
+   * 前一个步骤，如果当前步骤是第一个则为 undefined。
+   */
+  previous: StepName | undefined
+  /**
+   * 当前步骤是否为第一个。
+   */
+  isFirst: boolean
+  /**
+   * 当前步骤是否为最后一个。
+   */
+  isLast: boolean
+  /**
+   * 获取指定索引的步骤。
+   */
+  at: (index: number) => Step | undefined
+  /**
+   * 通过指定名称获取步骤。
+   */
+  get: (step: StepName) => Step | undefined
+  /**
+   * 跳转到指定的步骤。
+   */
+  goTo: (step: StepName) => void
+  /**
+   * 跳转到下一个步骤。如果当前步骤是最后一个，则不做任何操作。
+   */
+  goToNext(): void
+  /**
+   * 跳转到前一个步骤。如果当前步骤是第一个，则不做任何操作。
+   */
+  goToPrevious(): void
+  /**
+   * 回到给定步骤，仅当当前步骤是之后的步骤时。
+   */
+  goBackTo: (step: StepName) => void
+  /**
+   * 检查给定步骤是否为下一个步骤。
+   */
+  isNext: (step: StepName) => boolean
+  /**
+   * 检查给定步骤是否为之前的步骤。
+   */
+  isPrevious: (step: StepName) => boolean
+  /**
+   * 检查给定步骤是否为当前步骤。
+   */
+  isCurrent: (step: StepName) => boolean
+  /**
+   * 检查当前步骤是否在给定步骤之前。
+   */
+  isBefore: (step: StepName) => boolean
+  /**
+   * 检查当前步骤是否在给定步骤之后。
+   */
+  isAfter: (step: StepName) => boolean
+}
+```

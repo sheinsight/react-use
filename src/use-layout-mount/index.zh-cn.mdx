@@ -1,0 +1,47 @@
+# useLayoutMount
+
+import { HooksType, Since } from '@/components'
+
+<HooksType category="Lifecycle" />
+
+<Since version="v1.2.0" />
+
+一个类似于 [useMount](/reference/use-mount) 的 React Hook，但是内部使用了 [useIsomorphicLayoutEffect](/reference/use-isomorphic-layout-effect)。
+
+## 演示 Demo \{#demo}
+
+打开控制台查看日志。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+useLayoutMount(callback, strictOnce)
+```
+
+### 回调 Callback \{#callback}
+
+组件挂载时（useLayoutEffect）会被调用的一个 `function`，可以是 **异步** 的。
+
+### 严格一次 StrictOnce \{#strict-once}
+
+:::warning
+
+`strictOnce` 选项 **不** 推荐使用，因为它 [损害](https://react.dev/learn/synchronizing-with-effects#dont-use-refs-to-prevent-effects-from-firing) 了 React 18 严格模式原有的初衷。
+
+:::
+
+一个 `boolean`，指示在 React 18 的 [严格模式](https://react.dev/reference/react/StrictMode) 中处理程序是否仅被调用一次。默认为 `false`。

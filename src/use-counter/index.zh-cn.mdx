@@ -1,0 +1,93 @@
+# useCounter
+
+import { HooksType } from '@/components'
+
+<HooksType category="State" />
+
+一个 React Hook，提供包含增加、减少和重置功能的计数器。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const [count, actions] = useCounter(options)
+```
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseCounterOptions = {
+  /**
+   * 计数器的最大值
+   */
+  max?: number
+  /**
+   * 计数器的最小值
+   */
+  min?: number
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type Count = number
+
+export interface UseCounterReturnsAction {
+  /**
+   * 增加计数器
+   */
+  inc: (delta?: number) => void
+  /**
+   * 减少计数器
+   */
+  dec: (delta?: number) => void
+  /**
+   * 设置计数器
+   */
+  set: (value: number) => void
+  /**
+   * 获取计数器
+   */
+  get(): number
+  /**
+   * 重置计数器
+   */
+  reset: (n?: number) => void
+}
+
+export type UseCounterReturns = [
+  /**
+   * 计数器的计数状态
+   */
+  Count,
+  /**
+   * 控制计数器的功能
+   */
+  UseCounterReturnsAction,
+  /**
+   * 计数器的完整状态
+   */
+  {
+    count: number
+    max: number
+    min: number
+    initialCount: number
+  },
+]
+```

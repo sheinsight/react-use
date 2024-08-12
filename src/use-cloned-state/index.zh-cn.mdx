@@ -1,0 +1,77 @@
+# useClonedState
+
+import { HooksType } from '@/components'
+
+<HooksType category="State" />
+
+一个 React Hook，返回一个与原始状态具有相同属性和值的克隆状态。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const [cloned, setCloned, sync] = useClonedState(state, options)
+```
+
+### 状态 State \{#state}
+
+任何有效的 JavaScript 类型，如 `string`、`number`、`object`、`array` 等。
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseClonedStateOptions = {
+  /**
+   * 克隆函数
+   *
+   * @defaultValue defaultCloneFn
+   */
+  clone?: <T>(source: T) => T
+  /**
+   * 是否手动触发克隆函数
+   *
+   * @defaultValue false
+   */
+  manual?: boolean
+  /**
+   * 是否深度比较源对象
+   *
+   * @defaultValue true
+   */
+  deep?: boolean
+}
+```
+
+### 返回值 Returns \{returns}
+
+```tsx
+export type UseClonedStateReturns<T> = [
+  /**
+   * 克隆状态
+   */
+  cloned: T,
+  /**
+   * 设置克隆状态
+   */
+  setCloned: ReactSetState<T>,
+  /**
+   * 同步克隆状态与源状态
+   */
+  sync: () => void,
+]
+```

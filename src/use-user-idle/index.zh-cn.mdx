@@ -1,0 +1,89 @@
+# useUserIdle
+
+import { HooksType } from '@/components'
+
+<HooksType category="Sensors" pausable />
+
+一个用于帮助检测用户是否处于空闲状态的 React Hook。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const { lastActive, isIdle, reset } = useUserIdle(timeout, options)
+```
+
+### 超时 Timeout \{#timeout}
+
+一个 `number` 类型的值，表示将用户视为闲置状态之前的毫秒数。
+
+### 选项 Options \{#options}
+
+```tsx
+export interface UseUserIdleOptions {
+  /**
+   * 监听以便检测用户活动的事件名称
+   *
+   * @defaultValue ['mousemove', 'mousedown', 'resize', 'keydown', 'touchstart', 'wheel']
+   */
+  events?: WindowEventName[]
+  /**
+   * 监听文档可见性变化
+   *
+   * @defaultValue true
+   */
+  watchVisibility?: boolean
+  /**
+   * 初始状态的 ref 是否空闲
+   *
+   * @defaultValue false
+   */
+  initialState?: boolean
+  /**
+   * 立即重置空闲状态
+   *
+   * @defaultValue true
+   */
+  immediate?: boolean
+}
+```
+
+### 返回值 Returns \{#returns}
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+```tsx
+export interface UseUserIdleReturns extends Pausable<[reset?: boolean], [reset?: boolean]> {
+  /**
+   * 用户是否空闲
+   */
+  isIdle: boolean
+  /**
+   * 最后一次用户活动的时间戳
+   */
+  lastActive: MutableRefObject<number>
+  /**
+   * 重置空闲状态
+   *
+   * @param restart - 是否重新启动空闲计时器，默认为 `true`。
+   */
+  reset: (restart?: boolean) => void
+}
+```

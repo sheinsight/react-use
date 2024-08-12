@@ -1,3 +1,7 @@
+---
+category: ProUtilities
+---
+
 # useManualStateHistory
 
 import { HooksType } from '@/components'
@@ -14,10 +18,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
 
-<RawCode>{source}</RawCode>
 
 ## Source
 
@@ -36,8 +37,6 @@ const history = useManualStateHistory(state, options)
 Any serializable source state value to be record in the history.
 
 ### Options
-
-import Link from '@docusaurus/Link'
 
 ```tsx
 export type UseManualStateHistoryOptions<Raw, Serialized = Raw> = {
@@ -80,9 +79,9 @@ export type UseManualStateHistoryOptions<Raw, Serialized = Raw> = {
 }
 ```
 
-`UseThrottledFnOptions` is th options of `useThrottledFn`, see <Link to="/reference/use-throttled-fn/#options">useThrottledFn</Link>.
+`UseThrottledFnOptions` is th options of `useThrottledFn`, see [useThrottledFn](/reference/use-throttled-fn/#options).
 
-`UseDebouncedFnOptions` is th options of `useDebouncedFn`, see <Link to="/reference/use-debounced-fn/#options">useDebouncedFn</Link>.
+`UseDebouncedFnOptions` is th options of `useDebouncedFn`, see [useDebouncedFn](/reference/use-debounced-fn/#options).
 
 ### Returns
 

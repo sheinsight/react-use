@@ -1,0 +1,73 @@
+# useElementByPoint
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" isSupported />
+
+一个用于返回给定点位置上元素的 React Hook。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const { isSupported, element, ...controls } = useElementByPoint(options)
+```
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseElementByPointOptions<M extends boolean = false> = Position & {
+  /**
+   * 是否返回多个元素
+   *
+   * @defaultValue false
+   */
+  multiple?: M
+  /**
+   * 是否立即执行
+   *
+   * @defaultValue true
+   */
+  immediate?: boolean
+  /**
+   * 执行的间隔
+   *
+   * @defaultValue 'requestAnimationFrame'
+   */
+  interval?: 'requestAnimationFrame' | number
+}
+```
+
+### 返回值 Returns \{#returns}
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+```tsx
+export type UseElementByPointReturns<E extends Element | null | Element[]> = Pausable & {
+  /**
+   * 浏览器是否支持该 API
+   */
+  isSupported: boolean
+  /**
+   * 指定位置上的元素
+   */
+  element: E
+}
+```

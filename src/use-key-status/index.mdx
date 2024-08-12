@@ -1,3 +1,7 @@
+---
+category: Sensors
+---
+
 # useKeyStatus
 
 import { HooksType } from '@/components'
@@ -16,10 +20,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
 
-<RawCode>{source}</RawCode>
 
 ## Source
 
@@ -35,25 +36,23 @@ const isPressed = useKeyStatus(keyFilter, handler, options)
 
 ### KeyFilter \{#key-filter}
 
-import Link from '@docusaurus/Link'
-
-See <Link to="/reference/use-key-stroke/#key-filter">KeyFilter</Link> of `useKeyStroke` for more details.
+See [KeyFilter](/reference/use-key-stroke/#key-filter) of `useKeyStroke` for more details.
 
 ### Handler
 
 ```tsx
-export type UseKeyStatusHandler = UseKeyStrokeHandler
+export type UseKeyStatusHandler = UseKeyStrokeHandler;
 ```
 
-See <Link to="/reference/use-key-stroke/#handler">Handler</Link> of `useKeyStroke` for more details.
+See [Handler](/reference/use-key-stroke/#handler) of `useKeyStroke` for more details.
 
 ### Options
 
 ```tsx
-export type UseKeyStatusOptions = Omit<UseKeyStrokeOptions, 'eventName' | 'dedupe'>
+export type UseKeyStatusOptions = Omit<UseKeyStrokeOptions, 'eventName' | 'dedupe'>;
 ```
 
-See <Link to="/reference/use-key-stroke/#options">Options</Link> of `useKeyStroke` for more details.
+See [Options](/reference/use-key-stroke/#options) of `useKeyStroke` for more details.
 
 ### Returns
 

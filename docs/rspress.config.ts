@@ -1,68 +1,118 @@
-import * as path from 'node:path'
+import fs from 'node:fs'
+import path from 'node:path'
+import { camelCase, capitalCase } from 'change-case'
+import matter from 'gray-matter'
 import { defineConfig } from 'rspress/config'
+
+import { locale } from './locale'
+
+import type { LocaleConfig, RspressPlugin } from '@rspress/shared'
+
+const hooksDocPlugin = (): RspressPlugin => {
+  const ignoredDirs = ['utils']
+
+  const categories = new Map<string, string[]>([
+    ['State', []],
+    ['Lifecycle', []],
+    ['Browser', []],
+    ['Element', []],
+    ['Sensors', []],
+    ['Network', []],
+    ['Animation', []],
+    ['Utilities', []],
+    ['ProUtilities', []],
+  ])
+
+  const hooks = fs
+    .readdirSync(path.join(__dirname, '../src'), { withFileTypes: true })
+    .filter((d) => d.isDirectory() && ignoredDirs.every((e) => e !== d.name))
+
+  const routes = hooks.flatMap((dir) => {
+    const enPath = path.join(__dirname, '../src', dir.name, 'index.mdx')
+    const zhCNPath = path.join(__dirname, '../src', dir.name, 'index.zh-cn.mdx')
+
+    if (!fs.existsSync(enPath)) {
+      return []
+    }
+
+    const { data } = matter(fs.readFileSync(enPath, 'utf-8'))
+    const category = data.type || data.category || 'Uncategorized'
+    categories.set(category, (categories.get(category) ?? []).concat(dir.name))
+
+    return [
+      {
+        routePath: `/en/reference/${dir.name}`,
+        filepath: enPath,
+      },
+      {
+        routePath: `/zh-cn/reference/${dir.name}`,
+        filepath: fs.existsSync(zhCNPath) ? zhCNPath : enPath,
+      },
+    ]
+  })
+
+  for (const [category, hooks] of categories.entries()) {
+    if (hooks.length === 0) {
+      categories.delete(category)
+    }
+  }
+
+  return {
+    name: 'plugin-hooks-documentation',
+    addPages(config, isProd) {
+      return routes
+    },
+    config(config) {
+      for (const locale of (config.themeConfig?.locales ?? []) as LocaleConfig[]) {
+        locale.sidebar ??= {}
+        const path = `${locale.lang === 'en' ? '' : `/${locale.lang}`}/reference`
+
+        locale.sidebar[path] = Array.from(categories.entries()).map(([category, hooks]) => ({
+          text: capitalCase(category),
+          collapsed: true,
+          items: hooks.map((hook) => ({
+            text: camelCase(hook),
+            link: `${path}/${hook}`,
+          })),
+        }))
+
+        locale.sidebar[path].unshift({
+          text: locale.lang === 'en' ? 'Categories Overview' : 'Hooks 分类概览',
+          link: path,
+        })
+      }
+
+      return config
+    },
+  }
+}
 
 export default defineConfig({
   root: path.join(__dirname, 'docs'),
   base: '/react-use/',
-  title: '@shined/react-use',
-  description:
-    'A SSR-friendly, comprehensive, standardized and highly optimized React Hooks library.',
+  lang: 'en',
   icon: '/icon.svg',
   logo: {
-    'dark': '/logo-dark.svg',
-    'light': '/logo-light.svg',
-  },
-  lang: 'en',
-  multiVersion: {
-    default: 'v1',
-    versions: ['v1'],
-  },
-  themeConfig: {
-    darkMode: true,
-    socialLinks: [
-      { icon: 'github', mode: 'link', content: 'https://github.com/sheinsight/react-use' },
-    ],
-    locales: [
-      {
-        lang: 'en',
-        label: 'English',
-        title: '@shined/react-use',
-        description:
-          'A SSR-friendly, comprehensive, standardized and highly optimized React Hooks library.',
-        lastUpdatedText: 'Last Updated at',
-        lastUpdated: true,
-        prevPageText: 'Previous',
-        nextPageText: 'Next',
-        searchPlaceholderText: 'Search...',
-        searchNoResultsText: 'No results found',
-        searchSuggestedQueryText: 'Try different keywords?',
-      },
-      {
-        lang: 'zh-cn',
-        label: '简体中文',
-        title: '@shined/react-use',
-        description: '一个 SSR 友好、全面、标准化和高度优化的 React Hooks 库。',
-        lastUpdatedText: '最后更新于',
-        lastUpdated: true,
-        prevPageText: '上一页',
-        nextPageText: '下一页',
-        searchPlaceholderText: '搜索...',
-        searchNoResultsText: '没有找到相关结果',
-        searchSuggestedQueryText: '试试不同的关键词？',
-      },
-    ],
+    dark: '/logo-dark.svg',
+    light: '/logo-light.svg',
   },
   search: {
     versioned: true,
   },
   route: {
-    exclude: ['{components,hooks,utils}/**/*'],
+    exclude: ['./**/{components,hooks,utils}/**/*'],
+    cleanUrls: true,
+  },
+  plugins: [hooksDocPlugin()],
+  themeConfig: {
+    darkMode: true,
+    socialLinks: [{ icon: 'github', mode: 'link', content: 'https://github.com/sheinsight/react-use' }],
+    locales: [locale.en, locale.zhCN],
   },
   builderConfig: {
-    // html: { tags: [{ tag: 'script', children: "window.RSPRESS_THEME = 'dark';" }] },
     source: {
       alias: {
-        '@': './src',
+        '@': path.resolve(__dirname, './src'),
       },
     },
   },

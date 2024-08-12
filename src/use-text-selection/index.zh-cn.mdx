@@ -1,0 +1,52 @@
+# useTextSelection
+
+import { HooksType } from '@/components'
+
+<HooksType category="Sensors" />
+
+一个 React Hook，用于获取文档的选择状态。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const { text, rects, ranges, selectionRef } = useTextSelection()
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export interface UseTextSelectionReturns {
+  /**
+   * 一个 React Ref 对象，持有当前的 Selection 对象。
+   */
+  selectionRef: MutableRefObject<Selection | null>
+  /**
+   * 所选的文本。
+   */
+  text: string
+  /**
+   * 每个选定范围的 DOMRect 对象。
+   */
+  rects: DOMRect[]
+  /**
+   * 每个选定范围的 Range 对象。
+   */
+  ranges: Range[]
+}
+```

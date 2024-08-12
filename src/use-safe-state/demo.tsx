@@ -1,6 +1,5 @@
-import { Button, Card, KeyValue, OTP, Zone } from '@/components'
+import { Button, Card, KeyValue, OTP, Toaster, Zone, toast } from '@/components'
 import { useSafeState, useUnmount, useUpdateEffect } from '@shined/react-use'
-import { Toaster, toast } from 'react-hot-toast'
 
 export function App() {
   const [state, setState] = useSafeState('Hello')

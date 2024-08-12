@@ -1,0 +1,89 @@
+# useEventBus
+
+import { HooksType } from '@/components'
+
+<HooksType category="Utilities" />
+
+一个提供简单事件总线的 React Hook。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { on, once, off, emit, reset } = useEventBus(identifier, options)
+```
+
+### 标识符 Identifier \{#identifier}
+
+```tsx
+export type EventBusIdentifier = symbol | string | number
+```
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseEventBusOptions = {
+  /**
+   * 是否在组件卸载时自动清理监听器。
+   *
+   * @defaultValue true
+   */
+  autoCleanup?: boolean
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UseEventBusReturns<T, P> = {
+  /**
+   * 订阅一个事件。调用 emit 时，监听器会执行。
+   *
+   * @param listener 观察监听器。
+   * @returns 一个停止函数用于移除当前的回调。
+   */
+  on: (listener: EventBusListener<T, P>) => AnyFunc
+  /**
+   * 类似于 `on`，但只触发一次
+   *
+   * @param listener 观察监听器。
+   * @returns 一个停止函数用于移除当前的回调。
+   */
+  once: (listener: EventBusListener<T, P>) => AnyFunc
+  /**
+   * 发出一个事件，对应的事件监听器会执行。
+   *
+   * @param event 发送的数据。
+   */
+  emit: (event?: T, payload?: P) => void
+  /**
+   * 移除对应的监听器。
+   *
+   * @param listener 观察监听器。
+   */
+  off: (listener: EventBusListener<T>) => void
+  /**
+   * 在全局范围内清除所有事件
+   */
+  reset(): void
+  /**
+   * 清除当前组件上下文中的所有监听器
+   */
+  cleanup(): void
+}
+```

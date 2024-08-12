@@ -1,0 +1,41 @@
+# useTrackedEffect
+
+import { HooksType } from '@/components'
+
+<HooksType category="Lifecycle" devOnly />
+
+一个用于检测在渲染之间**实际更改**的依赖项的 React Hook。
+
+## 演示 Demo \{#demo}
+
+尝试打开 DevTools 查看日志。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+useTrackedEffect(callback, deps)
+```
+
+### 处理函数 Callback \{#callback}
+
+```tsx
+export type TrackedEffectCallback = (changedDepIndexes: number[], previousDeps?: Deps, currentDeps?: Deps) => void
+```
+
+### 依赖项 Deps \{#deps}
+
+与 [React.useLayoutEffect](https://react.dev/reference/react/useLayoutEffect) 相同。

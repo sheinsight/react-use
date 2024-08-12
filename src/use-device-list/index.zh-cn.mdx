@@ -1,0 +1,91 @@
+# useDeviceList
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" isSupported />
+
+一个返回当前连接的设备列表的 React 钩子。
+
+## 演示 Demo \{#demo}
+
+授予访问设备的权限。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const device = useDeviceList(options)
+```
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseDeviceListOptions = {
+  onUpdated?: (devices: MediaDeviceInfo[]) => void
+  /**
+   * 如未获得权限，则立即请求权限，
+   * 否则标签和 deviceIds 可能为空
+   *
+   * @defaultValue false
+   */
+  requestPermissions?: boolean
+  /**
+   * 请求媒体权限的类型
+   *
+   * @defaultValue { audio: true, video: true }
+   */
+  constraints?: MediaStreamConstraints
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UseDeviceListReturns = {
+  /**
+   * 所有设备的列表
+   */
+  devices: MediaDeviceInfo[]
+  /**
+   * 获取所有视频输入的 getter
+   */
+  videoInputs(): MediaDeviceInfo[]
+  /**
+   * 获取所有音频输入的 getter
+   */
+  audioInputs(): MediaDeviceInfo[]
+  /**
+   * 获取所有音频输出的 getter
+   */
+  audioOutputs(): MediaDeviceInfo[]
+  /**
+   * 检查是否已授予权限的布尔值
+   */
+  isPermissionGranted: boolean
+  /**
+   * 检查浏览器是否支持 API 的函数
+   */
+  isSupported: boolean
+  /**
+   * 请求访问媒体设备的权限的函数
+   */
+  ensurePermission(): Promise<boolean>
+  /**
+   * 更新设备列表的函数
+   */
+  update(): Promise<void>
+}
+```

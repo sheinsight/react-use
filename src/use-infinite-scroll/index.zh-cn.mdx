@@ -1,0 +1,84 @@
+# useInfiniteScroll
+
+import { HooksType } from '@/components'
+
+<HooksType category="ProUtilities" />
+
+一个 React 钩子（Hook），允许您在组件中使用无限滚动功能。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { isLoading, isLoadDone } = useInfiniteScroll(elementTarget, options)
+```
+
+### 元素目标 ElementTarget \{#element-target}
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### 选项 Options \{#options}
+
+
+```tsx
+export type UseInfiniteScrollOptions<T extends HTMLElement = HTMLElement> = {
+  /**
+   * 距离滚动容器底部的距离
+   *
+   * @defaultValue 0
+   */
+  distance?: number
+  /**
+   * 滚动方向
+   *
+   * @defaultValue 'bottom'
+   */
+  direction?: 'top' | 'bottom' | 'left' | 'right'
+  /**
+   * 每次滚动事件之间的间隔
+   *
+   * @defaultValue 100
+   */
+  interval?: number
+  /**
+   * 检查是否还可以加载更多
+   */
+  canLoadMore?: (el: T) => boolean
+  /**
+   * 滚动事件回调函数
+   */
+  onScroll?: (event: Event) => void
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UseInfiniteScrollReturns = {
+  /**
+   * 加载状态
+   */
+  isLoading: boolean
+  /**
+   * 加载完成状态
+   */
+  isLoadDone: boolean
+}
+```

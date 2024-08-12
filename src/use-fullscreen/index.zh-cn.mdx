@@ -1,0 +1,79 @@
+# useFullscreen
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" isSupported />
+
+一个可以让你轻松使用 [requestFullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Element/requestFullscreen) 的 React Hook。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const fs = useFullscreen(elementTarget, options)
+```
+
+### 元素目标 ElementTarget \{#element-target}
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseFullscreenOptions = {
+  /**
+   * 组件被卸载时自动退出全屏模式
+   *
+   * @defaultValue false
+   */
+  autoExit?: boolean
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export interface UseFullscreenReturns {
+  /**
+   * 浏览器是否支持全屏 API
+   */
+  isSupported: boolean
+  /**
+   * 元素是否处于全屏模式
+   */
+  isFullscreen: boolean
+  /**
+   * 元素本身是否处于全屏模式
+   */
+  isSelfFullscreen: boolean
+  /**
+   * 进入全屏模式
+   */
+  enter(): Promise<void>
+  /**
+   * 退出全屏模式
+   */
+  exit(): Promise<void>
+  /**
+   * 切换全屏模式
+   */
+  toggle(): Promise<void>
+}
+```

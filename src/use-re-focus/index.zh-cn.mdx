@@ -1,0 +1,48 @@
+# useReFocus
+
+import { HooksType, Since } from '@/components'
+
+<HooksType category="Utilities" lowLevel />
+
+<Since version="v1.4.0" />
+
+这是一个 React 钩子（Hook），用于在**重新**获得焦点时运行一个函数。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+useReFocus(fn, options): void
+```
+
+### 函数 Fn \{#fn}
+
+当重新获得焦点时将被调用的函数。
+
+### 选项 Options \{#options}
+
+```tsx
+interface UseReFocusOptions extends UseThrottledFnOptions {
+  /**
+   * 注册焦点事件监听器。
+   */
+  registerReFocus?: (callback: AnyFunc) => void
+}
+```
+
+查看 [useThrottledFn](/reference/use-throttled-fn) 以了解更多信息。

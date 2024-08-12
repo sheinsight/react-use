@@ -1,0 +1,65 @@
+# useNow
+
+import { HooksType } from '@/components'
+
+<HooksType category="Utilities" pausable />
+
+一个 React 钩子，用于跟踪当前日期。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#API}
+
+```tsx
+const now = useNow(options)
+const { now, ...controls } = useNow({ controls: true, ...otherOptions })
+```
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseNowOptions<Controls extends boolean> = UseIntervalFnOptions & {
+  /**
+   * 暴露控制器
+   *
+   * @defaultValue false
+   */
+  controls?: Controls
+  /**
+   * 更新间隔（毫秒），或使用 requestAnimationFrame
+   *
+   * @defaultValue requestAnimationFrame
+   */
+  interval?: UseIntervalFnInterval
+  /**
+   * 每次更新时的回调函数
+   */
+  callback?: (now: Date) => void
+}
+```
+
+### 返回值 Returns \{#returns}
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+如果 `controls` 为 `true`，则返回包含 `now` 和 `Pausable` 实例的对象，否则返回当前的 `Date` 实例。
+
+```tsx
+export type UseNowReturns<Controls extends boolean> = Controls extends true ? { now: Date } & Pausable : Date
+```

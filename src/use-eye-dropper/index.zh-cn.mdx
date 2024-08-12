@@ -1,0 +1,75 @@
+# useEyeDropper
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" isSupported />
+
+一个 React Hook，允许你使用滴管工具获取屏幕上某像素的颜色。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { isSupported, sRGBHex, open } = useEyeDropper(options)
+```
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseEyeDropperOptions = {
+  /**
+   * 初始 sRGBHex。
+   *
+   * @defaultValue ''
+   */
+  initialValue?: string
+  /**
+   * 是否将 sRGBHex 转换为大写。
+   *
+   * @defaultValue true
+   */
+  upperCase?: boolean
+  /**
+   * 是否保留 sRGBHex 中的前导井号。
+   *
+   * @defaultValue true
+   */
+  keepLeadingHash?: boolean
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UseEyeDropperReturns = {
+  /**
+   * 是否支持 EyeDropper。
+   */
+  isSupported: boolean
+  /**
+   * sRGBHex 颜色值。
+   */
+  sRGBHex: string
+  /**
+   * 打开 EyeDropper。
+   *
+   * @param options - 打开选项。
+   */
+  open: (options?: EyeDropperOpenOptions) => Promise<string | null>
+}
+```

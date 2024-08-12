@@ -1,0 +1,96 @@
+# createSingleLoading
+
+这是一个 Util，提供一种通过多个 Hooks 或 loading 实例管理单个（全局）加载状态的方法，底层使用了 [Reactive](https://sheinsight.github.io/reactive/)。
+
+:::tip
+
+使用此 Util 需要安装 `@shined/reactive`。
+
+:::
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+## 源码 Source \{#source}
+
+## API
+
+```tsx
+import { create } from '@shined/reactive'
+const pageLoading = createSingleLoading({ create })
+const { set, get, bind, useLoading, useAsyncFn } = pageLoading
+```
+
+### 选项 Options \{#options}
+
+```tsx
+export interface CreateSingleLoadingOptions {
+  /**
+   * 是否在错误时设置为 false
+   *
+   * @defaultValue true 默认值为 true
+   */
+  resetOnError?: boolean
+  /**
+   * 初始加载状态
+   *
+   * @defaultValue false 默认值为 false
+   */
+  initialState?: boolean
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export interface UseAsyncFnExtendReturns<T extends AnyFunc> extends UseAsyncFnReturns<T> {
+  /**
+   * 设置加载状态
+   *
+   * @param {boolean} value - `boolean`, 要设置的加载值
+   * @returns {void} `void`
+   */
+  setLoading: (value: boolean) => void
+}
+
+export interface CreateSingleLoadingReturns {
+  /**
+   * 一个在 React 中使用的 Hook，用于绑定具有加载状态的异步函数
+   *
+   * @param {AnyFunc} asyncFn - `AnyFunc`, 要绑定的异步函数，见 {@link AnyFunc}
+   * @returns {UseAsyncFnExtendReturns} 见 {@link UseAsyncFnExtendReturns}
+   */
+  useAsyncFn: <T extends AnyFunc>(asyncFn: T) => UseAsyncFnExtendReturns<T>
+  /**
+   * 一个在 React 中使用的 Hook，用于使用加载状态
+   *
+   * @returns {boolean} `boolean`, 加载状态
+   */
+  useLoading(): boolean
+  /**
+   * 通过 loading 实例设置加载状态
+   *
+   * @param {boolean} value - `boolean`, 要设置的值
+   * @returns {void} `void`
+   */
+  set: (value: boolean) => void
+  /**
+   * 通过 loading 实例获取加载状态
+   *
+   * @returns {boolean} `boolean`, 加载状态
+   */
+  get(): boolean
+  /**
+   * 将 loading 的加载状态绑定到异步函数中
+   *
+   * @param {AnyFunc} asyncFn - `AnyFunc`, 要绑定的异步函数，见 {@link AnyFunc}
+   * @returns {AnyFunc} `AnyFunc`, 与 `asyncFn` 参数相同，见 {@link AnyFunc}
+   */
+  bind: <T extends AnyFunc>(asyncFn: T) => T
+}
+```

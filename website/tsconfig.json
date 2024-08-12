@@ -20,6 +20,5 @@
       "@shined/react-use": ["../src"],
       "@/components": ["./src/components"]
     }
-  },
-  "include": ["./src", "./i18n", "./docs", "./changelog", "../src/**/demo.tsx"]
+  }
 }

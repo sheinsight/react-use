@@ -1,0 +1,43 @@
+# useStableFn
+
+import { HooksType } from '@/components'
+
+<HooksType category="Utilities" lowLevel />
+
+一个返回其内存地址永不改变的函数的 React Hook。
+
+## 演示 Demo \{#demo}
+
+尝试增加计数器以更新组件并触发重新渲染，你会发现函数的内存地址永不改变，所以永远不会显示对应的提示。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const stableFn = useStableFn(fn)
+```
+
+### 待处理函数 Fn \{#fn}
+
+其内存地址将保持稳定的函数。
+
+### 返回值 Returns \{#returns}
+
+形状类型签名的函数，但其内存地址永不改变。
+
+
+
+

@@ -1,7 +1,6 @@
-import { Card, Zone } from '@/components'
+import { Card, Toaster, Zone, toast } from '@/components'
 import { useEventListener, useUnmount } from '@shined/react-use'
 import { useRef } from 'react'
-import { Toaster, toast } from 'react-hot-toast'
 
 export function App() {
   const divRef = useRef<HTMLDivElement>(null)

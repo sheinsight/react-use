@@ -1,0 +1,37 @@
+# useActiveElement
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" lowLevel />
+
+这是一个 React Hook，用于返回当前的**活动元素**（通过 `document.activeElement`），可选择遍历阴影 DOM。
+
+## 演示 Demo \{#demo}
+
+点击下方的 `input`、`button` 或通过 `tab` 切换，观察活动元素的变化。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const activeElement = useActiveElement()
+```
+
+### 返回值 Returns \{#returns}
+
+`Element` 或 `null`。
+
+初始值为 `null`，当组件被挂载或活动元素变化时，将更新为 `Element`。

@@ -1,0 +1,79 @@
+# useClipboard
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" isSupported />
+
+一个 React 钩子，用于使用 [Clipboard API](https://developer.mozilla.org/zh-CN/docs/Web/API/Clipboard_API) 复制文本，在 API 不可用时回退到 `document.execCommand('copy')`。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const clipboard = useClipboard(options)
+```
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseClipboardOptions<Source> = {
+  /**
+   * 启用读取剪贴板，需要请求权限
+   *
+   * @defaultValue false
+   */
+  read?: boolean
+  /**
+   * 目标复制值，直接调用 copy 方法不传任何参数时会默认复制这个最新状态值。
+   */
+  source?: Source
+  /**
+   * 重置 `copied` 变量状态的毫秒数
+   *
+   * @defaultValue 1_500
+   */
+  copiedDuration?: number
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export interface UseClipboardReturns<HasSource> {
+  /**
+   * 剪贴板 API 是否受支持
+   */
+  isSupported: boolean
+  /**
+   * 剪贴板中的文本
+   */
+  text: string
+  /**
+   * 表示文本是否已复制的标志，在 `copiedDuration` 后将重置
+   */
+  copied: boolean
+  /**
+   * 复制文本到剪贴板
+   */
+  copy: HasSource extends true ? (text?: string) => Promise<void> : (text: string) => Promise<void>
+  /**
+   * 复制文本到剪贴板
+   */
+  clear(): void
+}
+```

@@ -1,0 +1,78 @@
+# useWindowSize
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" />
+
+一个 React Hook，用于追踪窗口的高度和内部宽度，并且可选地监听方向媒体查询。
+
+## 演示 Demo \{#demo}
+
+尝试调整窗口大小以查看效果。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const size = useWindowSize(options)
+```
+
+### 选项 Options \{#options}
+
+```tsx
+export interface UseWindowSizeOptions {
+  /**
+   * 窗口的初始宽度。
+   *
+   * @defaultValue Number.POSITIVE_INFINITY
+   */
+  initialWidth?: number
+  /**
+   * 窗口的初始高度。
+   *
+   * @defaultValue Number.POSITIVE_INFINITY
+   */
+  initialHeight?: number
+  /**
+   * 是否监听方向变化。
+   *
+   * @defaultValue true
+   */
+  listenOrientation?: boolean
+  /**
+   * 是否包括滚动条宽度。
+   *
+   * @defaultValue true
+   */
+  includeScrollbar?: boolean
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export interface WindowSize {
+  width: number
+  height: number
+}
+
+export interface UseWindowSizeReturns extends Size {
+  /**
+   * 更新窗口大小。
+   */
+  update(): void
+}
+```

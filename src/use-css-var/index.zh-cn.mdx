@@ -1,0 +1,71 @@
+# useCssVar
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" />
+
+一个 React Hook，允许你在组件中使用 CSS 变量。
+
+## 演示 Demo \{#demo}
+
+尝试切换暗黑模式或点击下方按钮以检查。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const [variable, setVariable] = useCssVar(variableName, options, target)
+```
+
+### 变量名 VariableName \{#variable-name}
+
+`string`，你想要使用的 CSS 变量的名称。
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseCssVarOptions = {
+  /**
+   * CSS 变量的默认值
+   *
+   * @defaultValue ''
+   */
+  defaultValue?: string
+  /**
+   * 是否观察 CSS 变量的更改
+   *
+   * @defaultValue false
+   */
+  observe?: boolean
+}
+```
+
+### 元素目标 ElementTarget \{#element-target}
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+`() => document.documentElement` by defaults.
+
+### 返回值 Returns \{#returns}
+
+与 [React.useState](https://react.dev/reference/react/useState) 相同，返回一个包含当前 CSS 变量值的元组和一个更新它的函数。
+
+```tsx
+export type UseCssVarReturns = readonly [string, ReactSetState<string>]
+```
+

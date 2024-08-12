@@ -1,0 +1,99 @@
+# usePermission
+
+import { HooksType } from '@/components'
+
+<HooksType category="Browser" isSupported lowLevel />
+
+一个 React Hook，用于查询浏览器功能的权限状态。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const state = usePermission(permissionDesc, options)
+const { state, isSupported, query } = usePermission(permissionDesc, { controls: true, ...otherOptions })
+```
+
+### 权限描述 PermissionDesc \{#permission-desc}
+
+```tsx
+type DescriptorNamePolyfill =
+  | 'accelerometer'
+  | 'accessibility-events'
+  | 'ambient-light-sensor'
+  | 'background-sync'
+  | 'camera'
+  | 'clipboard-read'
+  | 'clipboard-write'
+  | 'gyroscope'
+  | 'magnetometer'
+  | 'microphone'
+  | 'notifications'
+  | 'payment-handler'
+  | 'persistent-storage'
+  | 'push'
+  | 'speaker'
+
+export type GeneralPermissionDescriptor = PermissionDescriptor | { name: DescriptorNamePolyfill }
+
+export type PermissionDesc = GeneralPermissionDescriptor | GeneralPermissionDescriptor['name'] | false
+```
+
+### 选项 Options \{#options}
+
+```tsx
+export type UsePermissionOptions<Controls extends boolean> = {
+  /**
+   * 暴露更多控制选项
+   *
+   * @defaultValue false
+   */
+  controls?: Controls
+  /**
+   * 是否立即查询
+   *
+   * @defaultValue true
+   */
+  immediate?: boolean
+  /**
+   * 状态变化时的回调函数
+   */
+  onStateChange?: (state: PermissionState) => void
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UsePermissionReturns<Controls extends boolean> = Controls extends true
+  ? {
+      /**
+       * 若权限受支持
+       */
+      isSupported: boolean
+      /**
+       * 查询权限状态
+       */
+      state: RefObject<PermissionState>
+      /**
+       * 查询权限状态
+       */
+      query(): Promise<PermissionStatus | null>
+    }
+  : RefObject<PermissionState>
+```

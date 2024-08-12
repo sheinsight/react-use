@@ -1,6 +1,5 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, Card, KeyValue, Toaster, Zone, toast } from '@/components'
 import { useTimeout, useUnmount } from '@shined/react-use'
-import { Toaster, toast } from 'react-hot-toast'
 
 export function App() {
   const isTimeout = useTimeout(2000)

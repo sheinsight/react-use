@@ -1,0 +1,47 @@
+# useStateHistory
+
+import { HooksType } from '@/components'
+
+<HooksType category="ProUtilities" pausable />
+
+一个 React 钩子，用于自动追踪和操作状态的历史。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+几乎与 [useManualStateHistory](/reference/use-manual-state-history) 相同，但额外返回了一个 [可暂停](/docs/features/pausable) 实例。
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+```tsx
+const { ...history, ...pausable } = useStateHistory(state, options)
+```
+
+### 状态 State \{#state}
+
+与 [useManualStateHistory#state](/reference/use-manual-state-history/#state) 相同。
+
+### 选项 Options \{#options}
+
+```tsx
+export interface UseStateHistoryOptions<Raw, Serialized = Raw> extends UseManualStateHistoryOptions<Raw, Serialized> {
+  deep?: boolean
+}
+```

@@ -1,0 +1,73 @@
+# useScrollLock
+
+import { HooksType } from '@/components'
+
+<HooksType category="Element" />
+
+一个 React Hook，用于帮助锁定或解锁一个元素的滚动行为。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const [isLocked, setLocked, actions] = useScrollLock(elementTarget, initialState)
+```
+
+### 元素目标 ElementTarget \{#element-target}
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### 初始状态 InitialState \{#initial-state}
+
+一个 `boolean` 值，用以确定滚动锁定的初始状态。
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UseScrollLockReturnsActions = {
+  /**
+   * 锁定滚动
+   */
+  lock(): void
+  /**
+   * 解锁滚动
+   */
+  unlock(): void
+  /**
+   * 切换滚动锁定状态
+   */
+  toggle(): void
+}
+
+export type UseScrollLockReturns = [
+  /**
+   * 滚动是否被锁定
+   */
+  isLocked: boolean,
+  /**
+   * 设置滚动锁定状态
+   */
+  setLocked: ReactSetState<boolean>,
+  /**
+   * 锁定/解锁滚动的操作
+   */
+  UseScrollLockReturnsActions,
+]
+```
