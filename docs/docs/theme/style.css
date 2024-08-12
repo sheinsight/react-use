@@ -2,13 +2,13 @@
 
 :root {
   --rp-c-text-code: #456650;
-  --rp-c-text-code-bg: rgb(144 153 142 / 0.1);
+  --rp-c-text-code-bg: #90998e1a;
   --rp-c-brand: #2e8555;
   --rp-c-brand-light: #57a177;
   --rp-c-brand-lighter: #7cbc99;
   --rp-c-brand-dark: #267448;
   --rp-c-brand-darker: #1d5936;
-  --rp-c-brand-tint: rgba(104, 143, 121, 0.16);
+  --rp-c-brand-tint: #688f7929;
   --rp-c-link: var(--rp-c-brand-dark);
   --rp-c-bg: #ffffff;
   --rp-radius: 6px;
@@ -18,7 +18,22 @@
 
 .dark {
   --rp-c-link: var(--rp-c-brand-light);
-  --rp-c-bg: rgb(27, 27, 29);
+  --rp-c-bg: #1b1b1d;
+
+  .rspress-nav-search-button {
+    background-color: #101010;
+  }
+}
+
+.rspress-nav-search-button {
+  background-color: #f6f6f6;
+}
+
+.rspress-nav-menu-group-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 100% !important;
 }
 
 a.user-link {
