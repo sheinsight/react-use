@@ -6,7 +6,7 @@ category: Lifecycle
 
 import { HooksType } from '@/components'
 
-<HooksType category="Lifecycle" devOnly />
+<HooksType category={frontmatter.category} devOnly />
 
 A React Hook for detecting dependencies that have **actually changed** between renders.
 

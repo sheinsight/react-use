@@ -6,7 +6,7 @@ category: Lifecycle
 
 import { HooksType } from '@/components'
 
-<HooksType category="Lifecycle" lowLevel />
+<HooksType category={frontmatter.category} lowLevel />
 
 A React Hook that creates a memoized value that only re-create when the dependencies change.
 

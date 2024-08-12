@@ -2,7 +2,7 @@
 
 import { HooksType } from '@/components'
 
-<HooksType category="State" />
+<HooksType category={frontmatter.category} />
 
 用于在下一帧使用 [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) 更新状态，以获得更好性能的 React Hook，类似于 [React.useState](https://react.dev/reference/react/useState)。
 

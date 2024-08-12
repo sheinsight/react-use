@@ -2,7 +2,7 @@
 
 import { HooksType } from '@/components'
 
-<HooksType category="Lifecycle" lowLevel />
+<HooksType category={frontmatter.category} lowLevel />
 
 一个 React 钩子，与 [useAsyncEffect](/reference/use-async-effect) 类似，但是 **在首次挂载时忽略执行**。
 

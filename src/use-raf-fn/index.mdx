@@ -6,7 +6,7 @@ category: Utilities
 
 import { HooksType } from '@/components'
 
-<HooksType category="Utilities" lowLevel />
+<HooksType category={frontmatter.category} lowLevel />
 
 A React Hook that run a function only once on the next frame using [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame).
 

@@ -3,7 +3,7 @@
 import Admonition from '@theme/Admonition'
 import { HooksType } from '@/components'
 
-<HooksType category="State" />
+<HooksType category={frontmatter.category} />
 
 一个类似于 [React.useState](https://react.dev/reference/react/useState) 的 React Hook，它包含一个可选的深度比较功能（默认值为 `false`）。
 

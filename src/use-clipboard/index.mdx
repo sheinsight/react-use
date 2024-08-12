@@ -6,7 +6,7 @@ category: Browser
 
 import { HooksType } from '@/components'
 
-<HooksType category="Browser" isSupported />
+<HooksType category={frontmatter.category} isSupported />
 
 A React Hook that copy text with [Clipboard API](https://developer.mozilla.org/zh-CN/docs/Web/API/Clipboard_API) or fallback to `document.execCommand('copy')` if it's not available.
 

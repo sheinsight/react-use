@@ -6,7 +6,7 @@ category: Lifecycle
 
 import { HooksType } from '@/components'
 
-<HooksType category="Lifecycle" lowLevel />
+<HooksType category={frontmatter.category} lowLevel />
 
 A React Hook like [React.useEffect](https://react.dev/reference/react/useEffect), but with [deep comparison](https://github.com/sheinsight/react-use/blob/main/src/utils/equal.ts#L29) of dependencies.
 

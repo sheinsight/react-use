@@ -2,7 +2,7 @@
 
 import { HooksType } from '@/components'
 
-<HooksType category="Lifecycle" />
+<HooksType category={frontmatter.category} />
 
 一个类似于 [React.useLayoutEffect](https://react.dev/reference/react/useLayoutEffect) 的 React 钩子，但在挂载时忽略首次调用，并在底层使用 `useIsomorphicLayoutEffect` 以支持服务器端渲染（SSR）。
 

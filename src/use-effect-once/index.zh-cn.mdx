@@ -2,7 +2,7 @@
 
 import { HooksType } from '@/components'
 
-<HooksType category="Lifecycle" />
+<HooksType category={frontmatter.category} />
 
 一个类似 [React.useEffect](https://react.dev/reference/react/useEffect) 的 React Hook，但只运行一次，等同于 `useEffect(callback，[])`，但名称更加**语义化**。实际上，它只是带有空依赖数组的 `useEffect` 的别名。
 

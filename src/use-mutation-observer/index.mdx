@@ -6,7 +6,7 @@ category: Element
 
 import { HooksType } from '@/components'
 
-<HooksType category="Element" pausable isSupported lowLevel />
+<HooksType category={frontmatter.category} pausable isSupported lowLevel />
 
 A React Hook that use [MutationObserver API](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) with ease.
 

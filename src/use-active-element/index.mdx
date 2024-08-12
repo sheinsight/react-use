@@ -6,7 +6,7 @@ category: Element
 
 import { HooksType } from '@/components'
 
-<HooksType category="Element" lowLevel />
+<HooksType category={frontmatter.category} lowLevel />
 
 A React Hook that returns the currently **active element** (via `document.activeElement`), optionally traversing the shadow DOM.
 

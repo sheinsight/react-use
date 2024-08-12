@@ -1,8 +1,12 @@
+---
+category: ProUtilities
+---
+
 # useRequest
 
 import { HooksType, Since } from '@/components'
 
-<HooksType category="Utilities" lowLevel />
+<HooksType category={frontmatter.category} lowLevel />
 
 <Since version="v1.4.0" />
 
@@ -33,7 +37,7 @@ const {
 } = useRequest(fetcher, options)
 ```
 
-### 提取器 Fetcher \{#fetcher}
+### 数据获取函数 Fetcher \{#fetcher}
 
 一个异步函数，用于数据获取，返回一个 Promise。
 

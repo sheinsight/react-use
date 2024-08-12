@@ -1,1 +1,17 @@
 @unocss;
+
+:root {
+  --rp-c-text-code: #456650;
+  --rp-c-text-code-bg: rgb(144 153 142 / 0.1);
+  --rp-c-brand: #2e8555;
+  --rp-c-brand-light: #57a177;
+  --rp-c-brand-lighter: #7cbc99;
+  --rp-c-brand-dark: #267448;
+  --rp-c-brand-darker: #1d5936;
+  --rp-c-brand-tint: rgba(104, 143, 121, 0.16);
+  --rp-c-link: var(--rp-c-brand-dark);
+}
+
+.dark {
+  --rp-c-link: var(--rp-c-brand-light);
+}

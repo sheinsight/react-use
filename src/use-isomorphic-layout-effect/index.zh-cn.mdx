@@ -2,7 +2,7 @@
 
 import { HooksType } from '@/components'
 
-<HooksType category="Lifecycle" />
+<HooksType category={frontmatter.category} />
 
 一种 React 钩子（Hook），它会在客户端自动使用 [React.useLayoutEffect](https://react.dev/reference/react/useLayoutEffect)，在服务器端使用 [React.useEffect](https://react.dev/reference/react/useEffect)，以避免在服务器端渲染（SSR）中对 `useLayoutEffect` 的警告。
 

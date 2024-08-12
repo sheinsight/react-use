@@ -6,7 +6,7 @@ category: Lifecycle
 
 import { HooksType } from '@/components'
 
-<HooksType category="Lifecycle" pausable lowLevel />
+<HooksType category={frontmatter.category} pausable lowLevel />
 
 A React Hook like [React.useLayoutEffect](https://react.dev/reference/react/useLayoutEffect), but pausable.
 

@@ -7,7 +7,7 @@ category: State
 import Admonition from '@theme/Admonition'
 import { HooksType } from '@/components'
 
-<HooksType category="State" />
+<HooksType category={frontmatter.category} />
 
 A React Hook similar to [React.useState](https://react.dev/reference/react/useState), including an optional deep comparison feature (`false` by default).
 

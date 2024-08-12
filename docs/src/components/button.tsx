@@ -30,8 +30,8 @@ export function Button(
       className={cn(
         className,
         variantCls,
-        mono ? 'font-mono' : '',
-        'transition will-change-auto enabled:hover:shadow-md rounded-4px text-white px-16px py-8px border-none cursor-pointer text-1rem disabled:cursor-not-allowed enabled:active:pb-6px enabled:active:pt-10px',
+        mono && 'font-mono',
+        'transition will-change-auto enabled:hover:shadow-md rounded-4px text-white px-4 py-2 border-none cursor-pointer text-1rem disabled:cursor-not-allowed enabled:active:pb-6px enabled:active:pt-10px',
       )}
       {...rest}
     />

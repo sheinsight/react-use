@@ -2,7 +2,7 @@
 
 import { HooksType } from '@/components'
 
-<HooksType category="State" />
+<HooksType category={frontmatter.category} />
 
 类似于 [React.useState](https://react.dev/reference/react/useState) 的一个 React 钩子（Hook），但提供了一个 `reset` 函数，用来将状态重置为初始值。
 

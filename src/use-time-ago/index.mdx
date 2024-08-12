@@ -6,7 +6,7 @@ category: Utilities
 
 import { HooksType } from '@/components'
 
-<HooksType category="Utilities" pausable />
+<HooksType category={frontmatter.category} pausable />
 
 A React Hook that helps to format a date to a human-readable time ago string. It will automatically update the time ago string every 30 seconds by default.
 
