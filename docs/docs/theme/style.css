@@ -31,6 +31,10 @@
   background-color: #f6f6f6;
 }
 
+.rspress-nav-menu-item {
+  background-color: unset !important;
+}
+
 .rspress-nav-menu-group-button {
   display: inline-flex;
   align-items: center;

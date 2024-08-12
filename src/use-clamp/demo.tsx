@@ -19,16 +19,32 @@ export function App() {
         <KeyValue label="Count" value={count} />
       </Zone>
       <Zone>
-        <Button onClick={() => actions.inc()}>inc(1)</Button>
-        <Button onClick={() => actions.dec()}>dec(1)</Button>
-        <Button onClick={() => actions.reset()}>Reset</Button>
-        <Button onClick={() => actions.reset(12)}>Reset 12</Button>
+        <Button mono onClick={() => actions.inc()}>
+          inc(1)
+        </Button>
+        <Button mono onClick={() => actions.dec()}>
+          dec(1)
+        </Button>
+        <Button mono onClick={() => actions.reset()}>
+          Reset()
+        </Button>
+        <Button mono onClick={() => actions.reset(count + 1)}>
+          Reset(count + 1)
+        </Button>
       </Zone>
       <Zone>
-        <Button onClick={() => minActions.inc()}>Min+1</Button>
-        <Button onClick={() => minActions.dec()}>Min-1</Button>
-        <Button onClick={() => maxActions.inc()}>Max+1</Button>
-        <Button onClick={() => maxActions.dec()}>Max-1</Button>
+        <Button mono onClick={() => minActions.inc()}>
+          Min + 1
+        </Button>
+        <Button mono onClick={() => minActions.dec()}>
+          Min - 1
+        </Button>
+        <Button mono onClick={() => maxActions.inc()}>
+          Max + 1
+        </Button>
+        <Button mono onClick={() => maxActions.dec()}>
+          Max - 1
+        </Button>
       </Zone>
     </Card>
   )

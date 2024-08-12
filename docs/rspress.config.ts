@@ -4,8 +4,8 @@ import { camelCase, kebabCase } from 'change-case'
 import gm from 'gray-matter'
 import { rimrafSync } from 'rimraf'
 import { defineConfig } from 'rspress/config'
-import i18n from './i18n.json'
 
+import i18n from './i18n.json'
 import { locale } from './locale'
 
 import type { RspressPlugin } from '@rspress/shared'
@@ -122,7 +122,7 @@ export default defineConfig({
     ],
     locales: [locale.en, locale.zhCN],
   },
-  outDir: path.resolve(__dirname, './dist'),
+  outDir: 'dist',
   builderConfig: {
     source: {
       alias: {

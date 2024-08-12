@@ -1,17 +1,19 @@
+---
+category: State
+---
+
 # useBoolean
 
 import { HooksType, Since } from '@/components'
 
-<HooksType category={frontmatter.category} />
+<HooksType {...frontmatter} />
 
 <Since version="v1.3.0" />
 
 一个用于帮助管理 `boolean` 状态的 React Hook。
 
-:::tip
-
-如果你需要管理在几个值之间交替的状态，请考虑使用 [useCircularList](/reference/use-circular-list) 作为替代方案。
-
+:::tip 小提示
+如果你需要管理多个值的循环交替状态（如切换多语言、多主题等），建议使用 [useCircularList](/reference/use-circular-list)。
 :::
 
 ## 演示 Demo \{#demo}
@@ -22,7 +24,25 @@ import { App } from './demo'
 
 ## 用法 Usage \{#usage}
 
+```tsx
+const [bool, actions] = useBoolean(false);
 
+actions.toggle();
+actions.setTrue();
+actions.setFalse();
+```
+
+## 场景 Scenes \{#scenes}
+
+- 管理对话框的显示状态（打开/关闭）
+- 控制下拉菜单的展开与收起
+- 控制表单项的选中状态（比如复选框）
+- 触发开关按钮的开/关状态
+- 控制加载状态指示器的显示与隐藏
+- 切换组件的暗黑模式和普通模式
+- 实现“收藏/取消收藏”功能的状态管理
+- 控制提示信息的显示与消失（如错误提示、成功提示等）
+- ...
 
 ## 源码 Source \{#source}
 

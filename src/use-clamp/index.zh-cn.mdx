@@ -1,12 +1,16 @@
+---
+category: State
+---
+
 # useClamp
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} />
+<HooksType {...frontmatter} />
 
-一个 React 钩子，用于将数字限制在最小值和最大值之间。
+一个用于将数字限制在最小值和最大值之间的 React Hook，待处理值、最小值和最大值支持动态变化。
 
-它只是 [useCounter](/reference/use-counter) 的一个别名，增加了 min 和 max 选项。
+本质上，它只是设置了 `min` 和 `max` 选项的 [useCounter](/reference/use-counter) 的更加语意化的版本。
 
 ## 演示 Demo \{#demo}
 
@@ -16,7 +20,34 @@ import { App } from './demo'
 
 ## 用法 Usage \{#usage}
 
+```tsx
+const [count, countActions] = useCount(20)
+// 待处理的值为 20，最小值为 1，最大值为 16
+const [count, actions] = useClamp(count, 1, 16) 
 
+// count 结果为 16，因为 20 超出了最大值 16
+console.log(count)
+
+// 无论 countActions 进行任何操作，result 始终返回的值始终介于 1 和 16 之间
+
+// 也支持 useCounter 的所有操作直接修改，但是同样受限于 min 和 max
+actions.inc() 
+actions.inc(2)
+actions.dec()
+actions.dec(2)
+actions.set(10)
+actions.reset()
+actions.reset(12)
+```
+
+## 场景 Scenes \{#scenes}
+
+- 用户界面交互（如滑块、旋钮）的值控制，提供更良好的用户体验
+- 动态数据展示，确保数据在用户界面中保持在可接受范围内
+- 控制表单输入范围，避免用户输入超出预定数值范围
+- 动画参数限制，确保动画速度或位置参数不超出预期范围
+- 数据可视化组件参数调节，如图表的缩放级别限制
+- ...
 
 ## 源码 Source \{#source}
 
@@ -26,4 +57,8 @@ import { Source } from '@/components'
 
 ## API
 
-有关更多细节，请参见 [useCounter](/reference/use-counter)。
+```tsx
+const [result, acitons] = useClamp(count, min, max);
+```
+
+更多请参考 [useCounter](/reference/use-counter)。

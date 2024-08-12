@@ -1,4 +1,5 @@
 import { cn, repoBase } from '@/utils'
+import { useLang, useLocation } from 'rspress/runtime'
 
 interface CardContentProps
   extends React.PropsWithChildren<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>> {}
@@ -9,14 +10,15 @@ export function Card(
     id?: string
   },
 ) {
-  // const { pathname } = useLocation()
+  const isZhCN = useLang() === 'zh-cn'
+  const { pathname } = useLocation()
 
   const { id, children, row, className, ...rest } = props
   const direction = row ? 'flex items-center' : 'flex flex-col items-start'
 
-  // const isGetStarted = pathname.includes('get-started')
-  // const hookSlug = pathname.split('/').filter(Boolean).pop()
-  // const sourceUrl = `${repoBase}/${hookSlug}/demo.tsx`
+  const isGetStarted = pathname.includes('get-started')
+  const hookSlug = pathname.split('/').filter(Boolean).pop()
+  const sourceUrl = `${repoBase}/${hookSlug}/demo.tsx`
 
   return (
     <div
@@ -28,11 +30,11 @@ export function Card(
       )}
       {...rest}
     >
-      {/* {!isGetStarted && (
+      {!isGetStarted && (
         <a href={sourceUrl} className="absolute right-2 top-2 text-xs underline">
-          <Translate id="reference.demo.source">Source</Translate>
+          {isZhCN ? '源码' : 'Source'}
         </a>
-      )} */}
+      )}
       {children}
     </div>
   )

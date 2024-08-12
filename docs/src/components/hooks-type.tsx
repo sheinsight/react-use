@@ -30,10 +30,7 @@ export const iconMap = {
 export function HooksType(props: HooksTypeProps) {
   return (
     <div className="flex items-center gap-2 mb-4">
-      <span>
-        Tags:
-        {/* <Translate id="reference.tags.tag">Tags</Translate>: */}
-      </span>
+      <span>Tags:</span>
       <Labels {...props} />
     </div>
   )
@@ -47,6 +44,8 @@ export function Labels(
   const { features = [], categoryOrder, category } = props
 
   const isLast = categoryOrder === 'last'
+
+  console.log(features, category)
 
   const cate = (
     <Label to={`/?category=${category}`}>
