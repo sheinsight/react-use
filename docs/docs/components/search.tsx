@@ -1,16 +1,14 @@
 import { Labels, cn, iconMap } from '@/components'
+import hooks from '@@/hooks.json'
 import { useControlledComponent, useCreation, useUrlSearchParams } from '@shined/react-use'
 import { camelCase } from 'change-case'
-// import hooks from '@/hooks.json'
-
-const hooks = []
 
 const filterLabelCls =
   'transition will-change-auto inline-flex gap-1 items-center rounded border border-solid text-xs border-gray/20 px-2 py-1 rounded-full cursor-pointer'
 
 export function SearchHooks() {
   const categories = useCreation(() => Array.from(new Set(hooks.map((e) => e.category))).sort())
-  const features = useCreation(() => Array.from(new Set(hooks.flatMap((e) => e.features.map((e) => e.name)))).sort())
+  const features = useCreation(() => Array.from(new Set(hooks.flatMap((e) => e.features))).sort())
 
   const input = useControlledComponent('')
 
@@ -30,7 +28,7 @@ export function SearchHooks() {
       const feature = (params.feature ?? '').toLowerCase()
 
       const isCategoryMatch = !params.category || params.category.toLowerCase() === hook.category.toLowerCase()
-      const isFeatureMatch = !params.feature || hook.features.some((e) => e.name.toLowerCase() === feature && e.value)
+      const isFeatureMatch = !params.feature || hook.features.some((e) => e.toLowerCase() === feature)
 
       return isNameMatch && isCategoryMatch && isFeatureMatch
     })
@@ -121,7 +119,7 @@ export function SearchHooks() {
           {filteredHooks.map((hook) => {
             const props = {
               category: hook.category,
-              ...Object.fromEntries(hook.features.map((e) => [camelCase(e.name), e.value])),
+              ...Object.fromEntries(hook.features.map((e) => [camelCase(e), e])),
             }
 
             return (

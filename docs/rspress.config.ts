@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { camelCase, kebabCase } from 'change-case'
-import matter from 'gray-matter'
+import gm from 'gray-matter'
 import { rimrafSync } from 'rimraf'
 import { defineConfig } from 'rspress/config'
 import i18n from './i18n.json'
@@ -11,7 +11,7 @@ import { locale } from './locale'
 import type { RspressPlugin } from '@rspress/shared'
 
 // disable cache to avoid dev cache not match error
-rimrafSync(path.join(__dirname, './doc_build'))
+rimrafSync(path.join(__dirname, './dist'))
 
 const hooksDocPlugin = (): RspressPlugin => {
   const ignoredDirs = ['utils']
@@ -29,18 +29,18 @@ const hooksDocPlugin = (): RspressPlugin => {
   ])
 
   const hooks = fs
-    .readdirSync(path.join(__dirname, '../src'), { withFileTypes: true })
+    .readdirSync(path.resolve(__dirname, '../src'), { withFileTypes: true })
     .filter((d) => d.isDirectory() && ignoredDirs.every((e) => e !== d.name))
 
   const routes = hooks.flatMap((dir) => {
-    const enPath = path.join(__dirname, '../src', dir.name, 'index.mdx')
-    const zhCNPath = path.join(__dirname, '../src', dir.name, 'index.zh-cn.mdx')
+    const enPath = path.resolve(__dirname, '../src', dir.name, 'index.mdx')
+    const zhCNPath = path.resolve(__dirname, '../src', dir.name, 'index.zh-cn.mdx')
 
     if (!fs.existsSync(enPath)) {
       return []
     }
 
-    const { data } = matter(fs.readFileSync(enPath, 'utf-8'))
+    const { data } = gm(fs.readFileSync(enPath, 'utf-8'))
     const category = data.type || data.category || 'Uncategorized'
     categories.set(category, (categories.get(category) ?? []).concat(dir.name))
 
@@ -95,7 +95,7 @@ const hooksDocPlugin = (): RspressPlugin => {
 }
 
 export default defineConfig({
-  root: path.join(__dirname, 'docs'),
+  root: path.resolve(__dirname, './docs'),
   base: '/react-use/',
   lang: 'en',
   icon: '/icon.svg',
@@ -107,7 +107,7 @@ export default defineConfig({
     versioned: true,
   },
   route: {
-    exclude: ['./**/{components,hooks,utils}/**/*'],
+    exclude: ['**/{components,hooks,utils}/**/*'],
     cleanUrls: true,
   },
   plugins: [hooksDocPlugin()],
@@ -122,10 +122,12 @@ export default defineConfig({
     ],
     locales: [locale.en, locale.zhCN],
   },
+  outDir: path.resolve(__dirname, './dist'),
   builderConfig: {
     source: {
       alias: {
         '@': path.resolve(__dirname, './src'),
+        '@@': path.resolve(__dirname, './'),
       },
     },
   },

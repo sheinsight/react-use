@@ -1,9 +1,13 @@
 {
   "name": "rspress-doc-template",
   "version": "1.4.0",
+  "type": "module",
   "private": true,
   "scripts": {
+    "update:hooks": "esno ./scripts/generate-hooks-data.ts",
+    "predev": "pnpm run update:hooks",
     "dev": "rspress dev",
+    "prebuild": "pnpm run update:hooks",
     "build": "rspress build",
     "preview": "rspress preview"
   },
@@ -24,6 +28,7 @@
     "@types/node": "^22.2.0",
     "@unocss/postcss": "^0.61.9",
     "@unocss/reset": "^0.61.9",
+    "esno": "^4.7.0",
     "gray-matter": "^4.0.3",
     "rimraf": "^6.0.1",
     "unocss": "^0.61.9"

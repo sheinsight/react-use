@@ -51,6 +51,9 @@ importers:
       '@unocss/reset':
         specifier: ^0.61.9
         version: 0.61.9
+      esno:
+        specifier: ^4.7.0
+        version: 4.7.0
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -1444,6 +1447,10 @@ packages:
   eslint-scope@5.1.1:
     resolution: {integrity: sha512-2NxwbF/hZ0KpepYN0cNbo+FN6XoK7GaHlQhgx/hIZl6Va0bF45RQOOwhLIy8lQDbuCiadSLCBnH2CFYquit5bw==}
     engines: {node: '>=8.0.0'}
+
+  esno@4.7.0:
+    resolution: {integrity: sha512-81owrjxIxOwqcABt20U09Wn8lpBo9K6ttqbGvQcB3VYNLJyaV1fvKkDtpZd3Rj5BX3WXiGiJCjUevKQGNICzJg==}
+    hasBin: true
 
   esprima@4.0.1:
     resolution: {integrity: sha512-eGuFFw7Upda+g4p+QHvnW0RyTX/SVeJBDM/gCtMARO0cLuT2HcEKnTPvhjV6aGeqrCB/sbNop0Kszm0jsaWU4A==}
@@ -4312,6 +4319,10 @@ snapshots:
     dependencies:
       esrecurse: 4.3.0
       estraverse: 4.3.0
+
+  esno@4.7.0:
+    dependencies:
+      tsx: 4.17.0
 
   esprima@4.0.1: {}
 
