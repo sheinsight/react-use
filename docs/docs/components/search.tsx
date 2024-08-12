@@ -1,4 +1,4 @@
-import { Labels, cn, iconMap } from '@/components'
+import { Labels, cn, iconMap, useNormalizedPath } from '@/components'
 import hooks from '@@/hooks.json'
 import { useControlledComponent, useCreation, useUrlSearchParams } from '@shined/react-use'
 import { camelCase } from 'change-case'
@@ -21,7 +21,7 @@ export function SearchHooks() {
 
   const filteredHooks = useCreation(() => {
     return hooks.filter((hook) => {
-      const isNameMatch = [camelCase(hook.name).toLowerCase(), hook.name.toLowerCase()].some((e) =>
+      const isNameMatch = [hook.slug.toLowerCase(), hook.name.toLowerCase()].some((e) =>
         e.includes(input.value.trim().toLowerCase()),
       )
 
@@ -128,8 +128,14 @@ export function SearchHooks() {
                 className="flex flex-col lg:flex-row flex-wrap justify-between gap-2 dark:bg-white/6 bg-black/4 rounded px-2 py-1"
               >
                 <div>
-                  <a href={`/reference/${hook.name}`}>
-                    <span className="text-primary dark:text-primary">{camelCase(hook.name)}</span>
+                  <a
+                    href={useNormalizedPath(`/reference/${hook.slug}`)}
+                    className={cn(
+                      'text-primary dark:text-primary',
+                      hook.deprecated ? 'line-through' : 'hover:underline',
+                    )}
+                  >
+                    <span>{hook.name}</span>
                   </a>
                 </div>
                 <div>

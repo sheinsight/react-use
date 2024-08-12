@@ -20,14 +20,17 @@ const hooks = hooksDirents
     const { data } = gm(fs.readFileSync(mdxPath, 'utf-8'))
     const category = data.type || data.category || 'Uncategorized'
     const features = data.features || []
+    const deprecated = data.deprecated || false
 
     return {
       name: camelCase(e.name),
       slug: e.name,
       category,
       features,
+      deprecated,
     }
   })
   .filter(Boolean)
+  .sort((a, b) => a?.deprecated - b?.deprecated)
 
 fs.writeFileSync(path.resolve(__dirname, '../hooks.json'), JSON.stringify(hooks))
