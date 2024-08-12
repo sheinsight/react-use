@@ -1,12 +1,13 @@
 ---
 category: Element
+features: ['LowLevel']
 ---
 
 # useActiveElement
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} lowLevel />
+<HooksType {...frontmatter}/>
 
 A React Hook that returns the currently **active element** (via `document.activeElement`), optionally traversing the shadow DOM.
 

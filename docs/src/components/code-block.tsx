@@ -1,5 +1,5 @@
+import { cn } from '@/utils'
 import { useAsyncEffect, useClipboard } from '@shined/react-use'
-import { cn } from '@site/src/utils'
 import { useState } from 'react'
 import { codeToHtml } from 'shiki'
 
@@ -26,7 +26,13 @@ export function CodeBlock(props: Props) {
       const html = await codeToHtml(code, {
         lang: lang ?? 'json',
         theme: theme ?? 'one-dark-pro',
-        transformers: [],
+        transformers: [
+          {
+            pre(node) {
+              this.addClassToHast(node, 'm-0 px-4 py-2')
+            },
+          },
+        ],
       })
 
       if (!isCancelled()) setHtml(html)
@@ -45,7 +51,7 @@ export function CodeBlock(props: Props) {
           clipboard.copied ? 'opacity-100!' : 'group-hover:opacity-100!',
         )}
       >
-        <div className="p-1 text-gray-5! dark:text-white!">{clipboard.copied ? 'Copied' : 'Copy'}</div>
+        <div className="py-1 px-2 text-sm text-gray-5! dark:text-white!">{clipboard.copied ? 'Copied' : 'Copy'}</div>
       </button>
       {/* biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
       <div className={cn('m-0 overflow-scroll', codeClassName)} dangerouslySetInnerHTML={{ __html: html }} />

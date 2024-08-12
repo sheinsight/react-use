@@ -2,6 +2,7 @@ import { cn } from '@/utils'
 
 interface HooksTypeProps {
   category?: string
+  features?: ('Pausable' | 'IsSupported' | 'LowLevel' | 'DevOnly')[]
   pausable?: boolean
   isSupported?: boolean
   lowLevel?: boolean
@@ -43,7 +44,7 @@ export function Labels(
     categoryOrder?: 'last' | undefined
   },
 ) {
-  const { categoryOrder, category, lowLevel, isSupported, pausable, devOnly } = props
+  const { features = [], categoryOrder, category } = props
 
   const isLast = categoryOrder === 'last'
 
@@ -58,28 +59,28 @@ export function Labels(
     <div className="flex flex-wrap items-center gap-2">
       {category && !isLast && cate}
 
-      {lowLevel && (
+      {features.includes('LowLevel') && (
         <Label bgColor="red" to="/?feature=LowLevel">
           {iconMap.LowLevel}
           LowLevel
         </Label>
       )}
 
-      {devOnly && (
+      {features.includes('DevOnly') && (
         <Label bgColor="purple" to="/?feature=DevOnly">
           {iconMap.DevOnly}
           DevOnly
         </Label>
       )}
 
-      {isSupported && (
+      {features.includes('IsSupported') && (
         <Label bgColor="blue" to="/?feature=IsSupported">
           {iconMap.IsSupported}
           isSupported
         </Label>
       )}
 
-      {pausable && (
+      {features.includes('Pausable') && (
         <Label bgColor="amber" to="/?feature=Pausable">
           {iconMap.Pausable}
           Pausable

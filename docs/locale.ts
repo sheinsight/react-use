@@ -1,3 +1,4 @@
+import i18n from './i18n.json'
 import { version } from './package.json'
 
 import type { LocaleConfig } from '@rspress/shared'
@@ -135,13 +136,14 @@ export const navbar = {
       position: 'left',
     },
     {
-      text: 'Hooks',
+      text: 'Reference',
       link: '/reference',
       position: 'left',
     },
     {
       text: 'Playground',
       link: 'https://react-online.vercel.app/#code=aW1wb3J0IHsgY3JlYXRlIH0gZnJvbSAnQHNoaW5lZC9yZWFjdGl2ZScKaW1wb3J0IHsgY3JlYXRlUm9vdCB9IGZyb20gJ3JlYWN0LWRvbS9jbGllbnQnCmltcG9ydCB7IHVzZU1vdXNlLCB1c2VSZWFjdGl2ZSB9IGZyb20gJ0BzaGluZWQvcmVhY3QtdXNlJwoKCmZ1bmN0aW9uIEFwcCgpIHsKICBjb25zdCB7IHgsIHkgfSA9IHVzZU1vdXNlKCkKICBjb25zdCBbeyBjb3VudCB9LCBtdXRhdGVdID0gdXNlUmVhY3RpdmUoeyBjb3VudDogMCB9LCB7IGNyZWF0ZSB9KQoKICBjb25zdCBhZGRPbmUgPSAoKSA9PiBtdXRhdGUuY291bnQrKwoKICByZXR1cm4gKAogICAgPGRpdj4KICAgICAgPGRpdj4oeCwgeSk6ICh7eH0sIHt5fSk8L2Rpdj4KICAgICAgPGJ1dHRvbiBvbkNsaWNrPXthZGRPbmV9PkNvdW50OiB7Y291bnR9PC9idXR0b24%2BCiAgICA8L2Rpdj4KICApCn0KCmNyZWF0ZVJvb3QoZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3Jvb3QnKSEpLnJlbmRlcig8QXBwIC8%2BKQo%3D',
+      position: 'left',
     },
     {
       text: `v${version}`,
@@ -172,6 +174,7 @@ export const navbar = {
     {
       text: '演练场',
       link: 'https://react-online.vercel.app/#code=aW1wb3J0IHsgY3JlYXRlIH0gZnJvbSAnQHNoaW5lZC9yZWFjdGl2ZScKaW1wb3J0IHsgY3JlYXRlUm9vdCB9IGZyb20gJ3JlYWN0LWRvbS9jbGllbnQnCmltcG9ydCB7IHVzZU1vdXNlLCB1c2VSZWFjdGl2ZSB9IGZyb20gJ0BzaGluZWQvcmVhY3QtdXNlJwoKCmZ1bmN0aW9uIEFwcCgpIHsKICBjb25zdCB7IHgsIHkgfSA9IHVzZU1vdXNlKCkKICBjb25zdCBbeyBjb3VudCB9LCBtdXRhdGVdID0gdXNlUmVhY3RpdmUoeyBjb3VudDogMCB9LCB7IGNyZWF0ZSB9KQoKICBjb25zdCBhZGRPbmUgPSAoKSA9PiBtdXRhdGUuY291bnQrKwoKICByZXR1cm4gKAogICAgPGRpdj4KICAgICAgPGRpdj4oeCwgeSk6ICh7eH0sIHt5fSk8L2Rpdj4KICAgICAgPGJ1dHRvbiBvbkNsaWNrPXthZGRPbmV9PkNvdW50OiB7Y291bnR9PC9idXR0b24%2BCiAgICA8L2Rpdj4KICApCn0KCmNyZWF0ZVJvb3QoZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3Jvb3QnKSEpLnJlbmRlcig8QXBwIC8%2BKQo%3D',
+      position: 'left',
     },
     {
       text: `v${version}`,
@@ -194,7 +197,7 @@ export const locale = {
     lang: 'en',
     label: 'English',
     title: '@shined/react-use',
-    description: 'A SSR-friendly, comprehensive, standardized and highly optimized React Hooks library.',
+    description: i18n['homepage.tagline'].en,
     lastUpdatedText: 'Updated at',
     lastUpdated: true,
     prevPageText: 'Previous',
@@ -209,7 +212,7 @@ export const locale = {
     lang: 'zh-cn',
     label: '简体中文',
     title: '@shined/react-use',
-    description: '一个 SSR 友好、全面、标准化和高度优化的 React Hooks 库。',
+    description: i18n['homepage.tagline']['zh-cn'],
     lastUpdatedText: '更新于',
     lastUpdated: true,
     prevPageText: '上一页',

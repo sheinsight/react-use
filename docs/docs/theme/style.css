@@ -10,8 +10,68 @@
   --rp-c-brand-darker: #1d5936;
   --rp-c-brand-tint: rgba(104, 143, 121, 0.16);
   --rp-c-link: var(--rp-c-brand-dark);
+  --rp-c-bg: #ffffff;
+  --rp-radius: 6px;
+  --rp-radius-small: 4px;
+  --rp-radius-large: 8px;
 }
 
 .dark {
   --rp-c-link: var(--rp-c-brand-light);
+  --rp-c-bg: rgb(27, 27, 29);
+}
+
+a.user-link {
+  color: var(--rp-c-link);
+  cursor: pointer;
+  display: inline;
+  transition: color 0.25s;
+  word-break: break-all;
+  text-decoration: inherit;
+  box-sizing: border-box;
+
+  &:hover {
+    /* border-bottom: 1px solid var(--rp-c-brand); */
+    text-decoration: underline;
+    opacity: 0.85;
+  }
+}
+
+.rspress-sidebar section > div {
+  padding-right: 8px;
+
+  & > div {
+    border-radius: 0 !important;
+    background-color: unset !important;
+  }
+}
+
+.rspress-nav-menu-group-content {
+  .rounded-2xl {
+    border-radius: 6px;
+  }
+
+  .p-3 {
+    padding: 4px 6px;
+  }
+}
+
+.rspress-nav-appearance {
+  .p-1 {
+    padding: 0;
+  }
+
+  .border {
+    border: none;
+  }
+
+  & > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  & svg {
+    transform: scale(calc(4 / 3));
+  }
 }

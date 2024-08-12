@@ -2,14 +2,13 @@ import { defineConfig, presetIcons, presetUno } from 'unocss'
 
 export default defineConfig({
   content: {
-    filesystem: ['{docs,src}/**/*.tsx', '../src/**/demo.tsx'],
+    filesystem: ['{docs,src}/**/*', '../src/**/demo.tsx'],
   },
   presets: [
     presetUno({
       dark: { dark: 'html[class="dark"]' },
     }),
     presetIcons({
-      cdn: 'https://esm.sh/',
       extraProperties: {
         display: 'inline-block',
       },

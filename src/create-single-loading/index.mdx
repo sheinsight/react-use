@@ -4,12 +4,14 @@ category: ProUtilities
 
 # createSingleLoading
 
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
 A utility that provide a way to manage single (or global) loading state via multiple Hooks or loading instance, using [Reactive](https://sheinsight.github.io/reactive/) under the hood.
 
 :::tip
-
 You need to install `@shined/reactive` to use this utility.
-
 :::
 
 ## Demo
@@ -25,9 +27,9 @@ import { App } from './demo'
 ## API
 
 ```tsx
-import { create } from '@shined/reactive'
-const pageLoading = createSingleLoading({ create })
-const { set, get, bind, useLoding, useAsyncFn } = pageLoading
+import { create } from '@shined/reactive';
+const pageLoading = createSingleLoading({ create });
+const { set, get, bind, useLoding, useAsyncFn } = pageLoading;
 ```
 
 ### Options

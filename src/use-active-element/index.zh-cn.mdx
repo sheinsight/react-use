@@ -1,8 +1,13 @@
+---
+category: Element
+features: ['LowLevel']
+---
+
 # useActiveElement
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} lowLevel />
+<HooksType {...frontmatter} />
 
 这是一个 React Hook，用于返回当前的**活动元素**（通过 `document.activeElement`），可选择遍历阴影 DOM。
 

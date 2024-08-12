@@ -22,7 +22,7 @@ export function Button(
       'bg-#e09f3e/80 disabled:bg-#aaaaaa/48 outline-#e09f3e/80 enabled:hover:bg-#e09f3e/90 enabled:active:bg-#e09f3e',
   }
 
-  const variantCls = `px-4 py-2 rounded-4px border-none cursor-pointer text-1rem ${variants[variant]}`
+  const variantCls = `rounded-4px border-none cursor-pointer text-1rem ${variants[variant]}`
 
   return (
     <button
@@ -31,7 +31,7 @@ export function Button(
         className,
         variantCls,
         mono && 'font-mono',
-        'transition will-change-auto enabled:hover:shadow-md rounded-4px text-white px-4 py-2 border-none cursor-pointer text-1rem disabled:cursor-not-allowed enabled:active:pb-6px enabled:active:pt-10px',
+        'transition will-change-auto enabled:hover:shadow-md rounded-4px text-white border-none cursor-pointer text-1rem disabled:cursor-not-allowed px-12px py-4px enabled:active:pb-3px enabled:active:pt-5px',
       )}
       {...rest}
     />

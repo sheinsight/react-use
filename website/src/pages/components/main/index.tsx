@@ -4,7 +4,7 @@ import { useColorMode } from '@docusaurus/theme-common'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import { Button } from '@site/src/components'
 import Logo from '@site/static/logo.svg'
-import { CodeBlock } from './code-block'
+import { CodeBlock } from '../../../../../docs/src/components/code-block'
 
 export function Main() {
   const { colorMode } = useColorMode()

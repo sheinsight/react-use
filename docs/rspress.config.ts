@@ -1,12 +1,17 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { camelCase, capitalCase } from 'change-case'
+import { camelCase, kebabCase } from 'change-case'
 import matter from 'gray-matter'
+import { rimrafSync } from 'rimraf'
 import { defineConfig } from 'rspress/config'
+import i18n from './i18n.json'
 
 import { locale } from './locale'
 
-import type { LocaleConfig, RspressPlugin } from '@rspress/shared'
+import type { RspressPlugin } from '@rspress/shared'
+
+// disable cache to avoid dev cache not match error
+rimrafSync(path.join(__dirname, './doc_build'))
 
 const hooksDocPlugin = (): RspressPlugin => {
   const ignoredDirs = ['utils']
@@ -39,15 +44,10 @@ const hooksDocPlugin = (): RspressPlugin => {
     const category = data.type || data.category || 'Uncategorized'
     categories.set(category, (categories.get(category) ?? []).concat(dir.name))
 
+    // currently only `en` & `zh-cn` supported
     return [
-      {
-        routePath: `/en/reference/${dir.name}`,
-        filepath: enPath,
-      },
-      {
-        routePath: `/zh-cn/reference/${dir.name}`,
-        filepath: fs.existsSync(zhCNPath) ? zhCNPath : enPath,
-      },
+      { routePath: `/en/reference/${dir.name}`, filepath: enPath },
+      { routePath: `/zh-cn/reference/${dir.name}`, filepath: fs.existsSync(zhCNPath) ? zhCNPath : enPath },
     ]
   })
 
@@ -63,21 +63,28 @@ const hooksDocPlugin = (): RspressPlugin => {
       return routes
     },
     config(config) {
-      for (const locale of (config.themeConfig?.locales ?? []) as LocaleConfig[]) {
+      config.themeConfig ??= { locales: [] }
+      config.themeConfig.locales ??= []
+
+      for (const locale of config.themeConfig.locales) {
         locale.sidebar ??= {}
         const path = `${locale.lang === 'en' ? '' : `/${locale.lang}`}/reference`
 
-        locale.sidebar[path] = Array.from(categories.entries()).map(([category, hooks]) => ({
-          text: capitalCase(category),
-          collapsed: true,
-          items: hooks.map((hook) => ({
-            text: camelCase(hook),
-            link: `${path}/${hook}`,
-          })),
-        }))
+        locale.sidebar[path] = Array.from(categories.entries()).map(([category, hooks]) => {
+          const i18nItem = i18n[`reference.sidebar.${kebabCase(category)}` as never]
+
+          return {
+            text: i18nItem[locale.lang] ?? camelCase(category),
+            collapsed: true,
+            items: hooks.map((hook) => ({
+              text: camelCase(hook),
+              link: `${path}/${hook}`,
+            })),
+          }
+        })
 
         locale.sidebar[path].unshift({
-          text: locale.lang === 'en' ? 'Categories Overview' : 'Hooks 分类概览',
+          text: i18n['reference.sidebar.overview'][locale.lang as never] ?? 'Categories Overview',
           link: path,
         })
       }
@@ -106,7 +113,13 @@ export default defineConfig({
   plugins: [hooksDocPlugin()],
   themeConfig: {
     darkMode: true,
-    socialLinks: [{ icon: 'github', mode: 'link', content: 'https://github.com/sheinsight/react-use' }],
+    socialLinks: [
+      {
+        icon: 'github',
+        mode: 'link',
+        content: 'https://github.com/sheinsight/react-use',
+      },
+    ],
     locales: [locale.en, locale.zhCN],
   },
   builderConfig: {

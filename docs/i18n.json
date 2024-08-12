@@ -1,1 +1,94 @@
-{}
+{
+  "homepage.tagline": {
+    "en": "A SSR-friendly, comprehensive, standardized and highly optimized React Hooks library.",
+    "zh-cn": "一个 SSR 友好、全面、标准化且高度优化的 React Hooks 库。"
+  },
+  "homepage.introduction": {
+    "en": "Introduction",
+    "zh-cn": "介绍"
+  },
+  "homepage.get-started": {
+    "en": "Get Started",
+    "zh-cn": "上手指南"
+  },
+  "homepage.reference": {
+    "en": "Reference",
+    "zh-cn": "Hooks 列表"
+  },
+  "reference.sidebar.overview": {
+    "en": "📚 Categories Overview",
+    "zh-cn": "📚 Hooks 分类概览"
+  },
+  "reference.sidebar.state": {
+    "en": "💾 State",
+    "zh-cn": "💾 状态（State）"
+  },
+  "reference.sidebar.lifecycle": {
+    "en": "⏳ Lifecycle",
+    "zh-cn": "⏳ 生命周期（Lifecycle）"
+  },
+  "reference.sidebar.browser": {
+    "en": "🌐 Browser",
+    "zh-cn": "🌐 浏览器（Browser）"
+  },
+  "reference.sidebar.element": {
+    "en": "🔶 Element",
+    "zh-cn": "🔶 元素（Element）"
+  },
+  "reference.sidebar.sensors": {
+    "en": "🔍 Sensors",
+    "zh-cn": "🔍 传感器（Sensors）"
+  },
+  "reference.sidebar.network": {
+    "en": "🌐 Network",
+    "zh-cn": "🌐 网络（Network）"
+  },
+  "reference.sidebar.animation": {
+    "en": "🎥 Animation",
+    "zh-cn": "🎥 动画（Animation）"
+  },
+  "reference.sidebar.utilities": {
+    "en": "🔧 Utilities",
+    "zh-cn": "🔧 实用工具（Utilities）"
+  },
+  "reference.sidebar.pro-utilities": {
+    "en": "🚀 Pro Utilities",
+    "zh-cn": "🚀 高阶场景（Pro Utilities）"
+  },
+  "reference.tags.tag": {
+    "en": "tag",
+    "zh-cn": "标签"
+  },
+  "reference.demo.source": {
+    "en": "source",
+    "zh-cn": "查看源码"
+  },
+  "reference.usage.showLess": {
+    "en": "show less",
+    "zh-cn": "收起内容"
+  },
+  "reference.usage.showMore": {
+    "en": "show more",
+    "zh-cn": "展示更多"
+  },
+  "reference.source.code": {
+    "en": "implementation",
+    "zh-cn": "🪝 Hook 实现"
+  },
+  "reference.source.docFileName": {
+    "en": "index.mdx",
+    "zh-cn": "index.zh-cn.mdx"
+  },
+  "reference.source.demo": {
+    "en": "demonstration",
+    "zh-cn": "🎨 Demo 演示"
+  },
+  "reference.source.doc": {
+    "en": "documentation",
+    "zh-cn": "📄 本页文档"
+  },
+  "reference.source.en": {
+    "en": "Click the link below to view the source code on GitHub.",
+    "zh-cn": "点击下方链接前往 GitHub 查看源码。"
+  }
+}
