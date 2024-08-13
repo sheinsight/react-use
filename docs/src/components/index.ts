@@ -1,6 +1,7 @@
 export * from './button'
 export * from './card'
 export * from './code-block'
+export * from './deprecated'
 export * from './hooks-type'
 export * from './input'
 export * from './key'
