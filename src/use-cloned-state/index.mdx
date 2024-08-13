@@ -6,21 +6,49 @@ category: State
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} />
+<HooksType {...frontmatter} />
 
-A React Hook that returns a cloned state with the same properties and values as the original state.
+A React Hook for creating a cloned state that supports modification, synchronous operation, and isolation from each other, with support for custom `clone` functions, defaulting to `JSON.parse(JSON.stringify(source))`.
 
-## Demo
+## Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## Usage \{#usage}
+
+```tsx
+const [form, setForm] = useSafeState({
+  name: 'react-use',
+  description: 'An awesome react hooks library.',
+})
+
+const [cloned, setCloned, syncSource] = useClonedState(form)
+
+// Modify the clone state directly, i.e., "edit the form", data is isolated from the source state
+const handleModify = (e: React.ChangeEvent<HTMLInputElement>) => {
+  setCloned((cloned) => ({
+    ...cloned,
+    [e.target.name]: e.target.value,
+  }))
+}
+
+// Use the current state of the clone as the new form state, i.e., "save changes"
+const handleSave = () => setForm(cloned)
+
+// Synchronize (reset) the source state with the clone state, i.e., "undo changes"
+const handleReset = () => syncSource()
+```
 
 
+## Scenes \{#scenes}
 
-## Source
+- Data editing scenarios, maintaining two sets of isolated data, convenient for comparison, undoing, redoing, etc.
+- Implementation of data deep copying, generating multiple sets of isolated data states
+- ...
+
+## Source \{#source}
 
 import { Source } from '@/components'
 
@@ -29,31 +57,33 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const [cloned, setCloned, sync] = useClonedState(state, options)
+const [cloned, setCloned, syncSource] = useClonedState(source, options)
 ```
 
-### State
+### Source \{#source}
 
-Any valid JavaScript type, such as `string`, `number`, `object`, `array`, etc.
+Any valid JavaScript data type, such as `string`, `number`, `object`, `array`, etc.
 
-### Options
+### Options \{#options}
 
 ```tsx
 export type UseClonedStateOptions = {
   /**
    * Clone function
    *
-   * @defaultValue defaultCloneFn
+   * @defaultValue defaultCloneFn (Implemented simply using JSON.parse(JSON.stringify(source)))
    */
   clone?: <T>(source: T) => T
   /**
-   * Whether to manually trigger the clone function
+   * Whether to manually trigger the synchronize (syncSource) function when the input state changes, defaulting to manual.
    *
-   * @defaultValue false
+   * @defaultValue true
    */
   manual?: boolean
   /**
-   * Whether to deep compare the source object
+   * Whether to perform a deep comparison of the input state and trigger the synchronize (syncSource) function only if the deep comparison result is false.
+   * 
+   * deep comparison is enabled by default
    *
    * @defaultValue true
    */
@@ -61,10 +91,10 @@ export type UseClonedStateOptions = {
 }
 ```
 
-### Returns
+### Returns \{#returns}
 
 ```tsx
-export type UseClonedStateReturns<T> = [
+export type UseClonedStateReturns<T> = readonly [
   /**
    * Cloned state
    */
@@ -74,8 +104,8 @@ export type UseClonedStateReturns<T> = [
    */
   setCloned: ReactSetState<T>,
   /**
-   * Sync cloned state with source state
+   * Synchronize cloned state with source state
    */
-  sync: () => void,
+  syncSource: () => void,
 ]
 ```

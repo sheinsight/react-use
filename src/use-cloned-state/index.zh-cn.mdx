@@ -1,10 +1,14 @@
+---
+category: State
+---
+
 # useClonedState
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} />
+<HooksType {...frontmatter} />
 
-一个 React Hook，返回一个与原始状态具有相同属性和值的克隆状态。
+一个用来创建支持修改、同步操作、相互隔离的克隆状态的 React Hook，支持自定义 `clone` 函数，默认使用 `JSON.parse(JSON.stringify(source))`。
 
 ## 演示 Demo \{#demo}
 
@@ -14,7 +18,35 @@ import { App } from './demo'
 
 ## 用法 Usage \{#usage}
 
+```tsx
+const [form, setForm] = useSafeState({
+  name: 'react-use',
+  description: 'An awesome react hooks library.',
+})
 
+const [cloned, setCloned, syncSource] = useClonedState(form)
+
+// 直接修改克隆状态，即“修改表单”，数据与源状态隔离
+const handleModify = (e: React.ChangeEvent<HTMLInputElement>) => {
+  setCloned((cloned) => ({
+    ...cloned,
+    [e.target.name]: e.target.value,
+  }))
+}
+
+// 使用克隆状态的当前状态作为新的表单状态，即“保存修改”
+const handleSave = () => setForm(cloned)
+
+// 同步（重置）源状态与克隆状态，即“撤销修改”
+const handleReset = () => syncSource()
+```
+
+
+## 场景 Scenes \{#scenes}
+
+- 数据编辑场景，维护两份隔离的数据，方便对比、撤销、重做等操作
+- 实现数据的深拷贝，生成多份相互隔离的数据状态
+- ...
 
 ## 源码 Source \{#source}
 
@@ -25,12 +57,12 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const [cloned, setCloned, sync] = useClonedState(state, options)
+const [cloned, setCloned, syncSource] = useClonedState(source, options)
 ```
 
-### 状态 State \{#state}
+### 源数据 Source \{#source}
 
-任何有效的 JavaScript 类型，如 `string`、`number`、`object`、`array` 等。
+任何有效的 JavaScript 数据类型，如 `string`、`number`、`object`、`array` 等。
 
 ### 选项 Options \{#options}
 
@@ -39,17 +71,17 @@ export type UseClonedStateOptions = {
   /**
    * 克隆函数
    *
-   * @defaultValue defaultCloneFn
+   * @defaultValue defaultCloneFn (底层使用 JSON.parse(JSON.stringify(source)) 简单实现)
    */
   clone?: <T>(source: T) => T
   /**
-   * 是否手动触发克隆函数
+   * 是否在传入的 state 变化时，手动触发同步（syncSource）函数，默认手动，即不会自动触发同步
    *
-   * @defaultValue false
+   * @defaultValue true
    */
   manual?: boolean
   /**
-   * 是否深度比较源对象
+   * 是否对传入的 state 进行深度比较，并在深度比较结果为 false 才触发同步（syncSource）函数，默认开启深度比较
    *
    * @defaultValue true
    */
@@ -60,7 +92,7 @@ export type UseClonedStateOptions = {
 ### 返回值 Returns \{returns}
 
 ```tsx
-export type UseClonedStateReturns<T> = [
+export type UseClonedStateReturns<T> = readonly [
   /**
    * 克隆状态
    */
@@ -72,6 +104,6 @@ export type UseClonedStateReturns<T> = [
   /**
    * 同步克隆状态与源状态
    */
-  sync: () => void,
+  syncSource: () => void,
 ]
 ```
