@@ -99,6 +99,8 @@ export default defineConfig({
   base: '/react-use/',
   lang: 'en',
   icon: '/icon.svg',
+  title: '@shined/react-use',
+  description: i18n['homepage.tagline'].en,
   logo: {
     dark: '/logo-dark.svg',
     light: '/logo-light.svg',

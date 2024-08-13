@@ -45,8 +45,6 @@ export function Labels(
 
   const isLast = categoryOrder === 'last'
 
-  console.log(features, category)
-
   const cate = (
     <Label to={`/?category=${category}`}>
       {iconMap[category as keyof typeof iconMap] || ''}

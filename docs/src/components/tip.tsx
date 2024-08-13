@@ -5,5 +5,5 @@ interface TipProps {
 }
 
 export function Tip(props: TipProps) {
-  return <div>TIp</div>
+  return <div>Tip</div>
 }
