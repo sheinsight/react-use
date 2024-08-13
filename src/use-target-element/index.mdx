@@ -1,12 +1,13 @@
 ---
 category: Element
+features: ['LowLevel']
 ---
 
 # useTargetElement
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} lowLevel />
+<HooksType {...frontmatter} />
 
 A React Hook that helps to get the target element via selector, ref, element and more, SSR-friendly.
 

@@ -1,8 +1,12 @@
+---
+category: Utilities
+---
+
 # useAsyncFn
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} />
+<HooksType {...frontmatter} />
 
 一个 React Hook, 用于执行 **异步** 函数，并额外提供一个 **加载** 状态，表明 Promise 是否处于挂起状态。
 

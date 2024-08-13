@@ -2,7 +2,7 @@
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} />
+<HooksType {...frontmatter} />
 
 使用该 React Hook 可以创建一个 ref，通过它可以检查组件是否已卸载。推荐使用 [useUnmounted](/reference/use-unmounted) ([Ref Getter](/docs/features/ref-getter)) 来获取组件卸载状态。
 

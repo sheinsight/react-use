@@ -2,7 +2,7 @@
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} />
+<HooksType {...frontmatter} />
 
 一种 React 钩子（Hook），用于在页面卸载前执行操作（例如，关闭、刷新页面），并可选择性地触发浏览器原生确认对话框。将 `preventDefault` 设置为 `true`，以显示确认离开对话框。
 

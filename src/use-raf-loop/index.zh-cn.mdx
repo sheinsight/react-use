@@ -2,7 +2,7 @@
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} pausable />
+<HooksType {...frontmatter} pausable />
 
 一个 React Hook，帮助在每一帧使用 [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) 运行一个函数。
 

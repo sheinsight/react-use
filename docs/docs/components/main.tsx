@@ -8,7 +8,7 @@ export function Main() {
   return (
     <div className="flex flex-col items-center md:items-start gap-4 pt-20vh md:pt-12vh">
       <ReactUseIcon />
-      <h1 className="font-mono font-bold">@shined/react-use</h1>
+      <h1 className="font-mono font-bold text-3xl">@shined/react-use</h1>
       <div className="flex gap-2">
         <img
           alt="NPM Version"

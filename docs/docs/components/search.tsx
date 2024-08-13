@@ -1,4 +1,4 @@
-import { Labels, cn, iconMap, useNormalizedPath } from '@/components'
+import { type HooksTypeProps, Labels, cn, iconMap, useNormalizedPath } from '@/components'
 import hooks from '@@/hooks.json'
 import { useControlledComponent, useCreation, useUrlSearchParams } from '@shined/react-use'
 import { camelCase } from 'change-case'
@@ -119,7 +119,7 @@ export function SearchHooks() {
           {filteredHooks.map((hook) => {
             const props = {
               category: hook.category,
-              ...Object.fromEntries(hook.features.map((e) => [camelCase(e), e])),
+              features: hook.features as HooksTypeProps['features'],
             }
 
             return (

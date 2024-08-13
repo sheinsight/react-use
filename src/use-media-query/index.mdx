@@ -1,12 +1,13 @@
 ---
 category: Browser
+features: ['LowLevel']
 ---
 
 # useMediaQuery
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} lowLevel />
+<HooksType {...frontmatter} />
 
 A React Hook that tracks the state of CSS media query/queries.
 

@@ -6,7 +6,7 @@ category: Lifecycle
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} />
+<HooksType {...frontmatter} />
 
 A React Hook that like [useEffectOnce](/reference/use-effect-once) but use [useIsomorphicLayoutEffect](/reference/use-isomorphic-layout-effect) under the hood.
 

@@ -1,12 +1,13 @@
 ---
 category: Utilities
+features: ['DevOnly']
 ---
 
 # useLoremIpsum
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} devOnly />
+<HooksType {...frontmatter} />
 
 A React Hook that helps to generate [Lorem Ipsum](https://www.lipsum.com/) text. Useful for testing and placeholder text.
 

@@ -1,12 +1,13 @@
 ---
 category: ProUtilities
+features: ['Pausable']
 ---
 
 # useParallax
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} pausable />
+<HooksType {...frontmatter} />
 
 A React Hook that create a parallax effect.
 

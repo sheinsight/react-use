@@ -1,8 +1,12 @@
+---
+category: Utilities
+---
+
 # useAsyncLock
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} />
+<HooksType {...frontmatter} />
 
 一个 React 钩子（Hook），用于创建一个函数，以确保**每次只有一个在运行**，并且提供了一个额外的无效操作回调函数。
 

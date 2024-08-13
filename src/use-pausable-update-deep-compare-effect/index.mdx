@@ -1,12 +1,13 @@
 ---
 category: Lifecycle
+features: ['Pausable', 'LowLevel']
 ---
 
 # usePausableUpdateDeepCompareEffect
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} pausable lowLevel />
+<HooksType {...frontmatter} />
 
 A React Hook like [useUpdateDeepCompareEffect](/reference/use-update-deep-compare-effect), but pausable.
 

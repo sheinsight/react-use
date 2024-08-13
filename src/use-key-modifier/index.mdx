@@ -6,7 +6,7 @@ category: Sensors
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} />
+<HooksType {...frontmatter} />
 
 A React Hook that allows you to detect if a [key modifier](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/getModifierState) is pressed.
 

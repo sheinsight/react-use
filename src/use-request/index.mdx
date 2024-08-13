@@ -1,12 +1,13 @@
 ---
 category: ProUtilities
+features: ['LowLevel']
 ---
 
 # useRequest
 
 import { HooksType, Since } from '@/components'
 
-<HooksType category={frontmatter.category} lowLevel />
+<HooksType {...frontmatter} />
 
 <Since version="v1.4.0" />
 

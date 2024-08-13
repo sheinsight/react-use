@@ -1,8 +1,12 @@
+---
+category: Element
+---
+
 # useAdaptiveTextarea
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} />
+<HooksType {...frontmatter} />
 
 一个 React 钩子 (Hook)，用于创建**自适应**的文本域 (textarea)，能够基于其内容自动调整高度。
 

@@ -1,12 +1,13 @@
 ---
 category: Lifecycle
+features: ['LowLevel']
 ---
 
 # useDeepCompareLayoutEffect
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} lowLevel />
+<HooksType {...frontmatter} />
 
 Same as [useDeepCompareEffect](/reference/use-deep-compare-effect), but use `useLayoutEffect` instead of `useEffect`.
 

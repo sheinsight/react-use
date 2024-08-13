@@ -1,12 +1,13 @@
 ---
 category: Browser
+features: ['IsSupported', 'LowLevel']
 ---
 
 # usePermission
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} isSupported lowLevel />
+<HooksType {...frontmatter} />
 
 A React Hook that helps to query the permission status of a browser feature.
 

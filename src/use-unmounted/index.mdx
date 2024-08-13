@@ -6,7 +6,7 @@ category: Lifecycle
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} />
+<HooksType {...frontmatter} />
 
 A React Hook that return a [Ref Getter](/docs/features/ref-getter) that returns `true` if the component is unmounted.
 

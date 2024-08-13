@@ -1,6 +1,6 @@
 import { cn } from '@/utils'
 
-interface HooksTypeProps {
+export interface HooksTypeProps {
   category?: string
   features?: ('Pausable' | 'IsSupported' | 'LowLevel' | 'DevOnly')[]
   pausable?: boolean

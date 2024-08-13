@@ -2,7 +2,7 @@
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} lowLevel />
+<HooksType {...frontmatter} lowLevel />
 
 一个类似于 [React.useEffect](https://react.dev/reference/react/useEffect) 的 React 钩子，但是对依赖进行了 [深度比较](https://github.com/sheinsight/react-use/blob/main/src/utils/equal.ts#L29)。
 

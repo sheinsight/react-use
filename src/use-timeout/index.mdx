@@ -1,12 +1,13 @@
 ---
 category: Animation
+features: ['Pausable']
 ---
 
 # useTimeout
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} pausable />
+<HooksType {...frontmatter} />
 
 A React Hook that create a state that changes after a specified delay.
 

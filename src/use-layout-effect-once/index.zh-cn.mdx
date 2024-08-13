@@ -2,7 +2,7 @@
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} />
+<HooksType {...frontmatter} />
 
 这是一个 React 钩子（Hook），其作用类似于 [useEffectOnce](/reference/use-effect-once)，但是内部使用了 [useIsomorphicLayoutEffect](/reference/use-isomorphic-layout-effect)。
 

@@ -2,7 +2,7 @@
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} lowLevel />
+<HooksType {...frontmatter} lowLevel />
 
 `useLatest` 是一个 React 钩子（Hook），它返回一个指向最新值的 ref。它可以用来避免在定时器回调或异步上下文中出现 **陈旧状态**。
 

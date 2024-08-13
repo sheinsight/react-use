@@ -1,12 +1,13 @@
 ---
 category: Lifecycle
+features: ['DevOnly']
 ---
 
 # useTrackedEffect
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} devOnly />
+<HooksType {...frontmatter} />
 
 A React Hook for detecting dependencies that have **actually changed** between renders.
 

@@ -2,7 +2,7 @@
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} />
+<HooksType {...frontmatter} />
 
 一个类似于 [React.useEffect](https://react.dev/reference/react/useEffect) 的 React 钩子，但它忽略了挂载时的第一次调用。
 

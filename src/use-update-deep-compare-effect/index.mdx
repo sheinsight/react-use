@@ -1,12 +1,13 @@
 ---
 category: Lifecycle
+features: ['LowLevel']
 ---
 
 # useUpdateDeepCompareEffect
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} lowLevel />
+<HooksType {...frontmatter} />
 
 A React Hook like [useDeepCompareEffect](/reference/use-deep-compare-effect), but ignore the first invocation on mount.
 

@@ -1,12 +1,13 @@
 ---
 category: Lifecycle
+features: ['LowLevel']
 ---
 
 # useGetterRef
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} lowLevel />
+<HooksType {...frontmatter} />
 
 A React Hook that create a gettable ref, a function way to get the latest value of a ref.
 

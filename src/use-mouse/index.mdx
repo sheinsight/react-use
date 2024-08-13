@@ -1,12 +1,13 @@
 ---
 category: Sensors
+features: ['Pausable']
 ---
 
 # useMouse
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} pausable />
+<HooksType {...frontmatter} />
 
 A React Hook that tracks mouse position.
 

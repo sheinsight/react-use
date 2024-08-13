@@ -2,7 +2,7 @@
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} />
+<HooksType {...frontmatter} />
 
 `useElementBounding` 是一个 React 钩子（Hook），它返回一个元素的 [边界客户端矩形（bounding client rect）](https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect)。
 

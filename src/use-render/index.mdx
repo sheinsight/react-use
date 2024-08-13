@@ -1,12 +1,13 @@
 ---
 category: Lifecycle
+features: ['LowLevel']
 ---
 
 # useRender
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} lowLevel />
+<HooksType {...frontmatter} />
 
 A React Hook that return a function to re-render component. Helpful when you need to re-render a component without changing the state.
 

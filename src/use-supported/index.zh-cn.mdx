@@ -2,7 +2,7 @@
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} isSupported lowLevel />
+<HooksType {...frontmatter} isSupported lowLevel />
 
 一个 React Hook，用于检测浏览器在客户端和服务器端渲染（SSR）中是否支持某项功能。
 

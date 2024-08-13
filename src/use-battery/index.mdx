@@ -1,13 +1,13 @@
 ---
 category: Browser
-features: ['isSupported']
+features: ['IsSupported']
 ---
 
 # useBattery
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} isSupported />
+<HooksType {...frontmatter} />
 
 A React Hook that get [Battery](https://developer.mozilla.org/zh-CN/docs/Web/API/Battery_Status_API) state with ease.
 

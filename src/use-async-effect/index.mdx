@@ -6,29 +6,45 @@ category: Lifecycle
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} />
+<HooksType {...frontmatter} />
 
-A React Hook which is like [React.useEffect](https://react.dev/reference/react/useEffect) but support **cancellable** **async** function.
+A React Hook similar to [React.useEffect](https://react.dev/reference/react/useEffect), but supports **cancellable** **asynchronous** functions.
 
-:::note
-It should not return a cleanup function as it's `async` which cannot cleanup as expected.
+:::warning Warning
+It should not return a cleanup function, as it is `async` and cannot synchronously return a cleanup function to be executed as expected.
 
-If you need to cleanup something, use `isCancelled` in `UseAsyncEffectCallback` instead to check effect status.
+If you need to clean up something, please use `isCancelled()` within `UseAsyncEffectCallback` to check the status of the Effect.
 :::
 
-## Demo
+## Scenes \{#scenes}
 
-Click fetch several times, and you will find that all **obsolete** action are ignored as expected.
+- **Asynchronous Data Request Scenes:** Implementing asynchronous data requests when the page loads or dependencies change
+- **Status Update Monitoring Scenes:** Executing asynchronous state synchronization updates after dependency state updates
+- **Resource Cleanup and Cancellation Scenes:** Implementing asynchronous operation cancellation and resource cleanup at the end of an Effect through `isCancelled()`
+- ...
+
+## Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## Usage \{#usage}
+
+```tsx
+useAsyncEffect(async () => {}, [state])
 
 
+useAsyncEffect(async (isCancelled) => {
+  // do something async
+  
+  if(isCancelled()) return
+  
+  // do something when effect is not cancelled
+}, [state])
+```
 
-## Source
+## Source \{#source}
 
 import { Source } from '@/components'
 
@@ -40,9 +56,9 @@ import { Source } from '@/components'
 useAsyncEffect(asyncCallback, deps)
 ```
 
-### AsyncCallback
+### AsyncCallback \{#async-callback}
 
-A effect callback, support **async** function.
+An Effect callback that supports **asynchronous** functions, but does not support returning a cleanup function.
 
 ```tsx
 export type AsyncEffectCallback = (isCancelled: () => boolean) => void
@@ -50,6 +66,6 @@ export type AsyncEffectCallback = (isCancelled: () => boolean) => void
 export type UseAsyncEffectCallback = AsyncEffectCallback
 ```
 
-### Deps
+### Deps \{#deps}
 
-Same as [React.useEffect](https://react.dev/reference/react/useEffect).
+The same as [React.useEffect](https://react.dev/reference/react/useEffect).

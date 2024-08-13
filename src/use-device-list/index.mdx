@@ -1,12 +1,13 @@
 ---
 category: Browser
+features: ['IsSupported']
 ---
 
 # useDeviceList
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} isSupported />
+<HooksType {...frontmatter} />
 
 A React Hook that returns a list of devices that are currently connected.
 

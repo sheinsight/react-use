@@ -1,12 +1,13 @@
 ---
 category: Utilities
+features: ['LowLevel']
 ---
 
 # useStableFn
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} lowLevel />
+<HooksType {...frontmatter} />
 
 A React Hook that returns a function whose memory address will never change.
 

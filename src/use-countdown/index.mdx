@@ -1,12 +1,13 @@
 ---
 category: Utilities
+features: ['Pausable']
 ---
 
 # useCountdown
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} pausable />
+<HooksType {...frontmatter} />
 
 A React Hook that provides a countdown timer.
 

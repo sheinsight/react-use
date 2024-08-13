@@ -1,12 +1,13 @@
 ---
 category: Browser
+features: ['IsSupported']
 ---
 
 # useClipboardItems
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} isSupported />
+<HooksType {...frontmatter} />
 
 Almost same as [useClipboard](/reference/use-clipboard), but support multiple items via [ClipboardItem](https://developer.mozilla.org/en-US/docs/Web/API/ClipboardItem).
 
