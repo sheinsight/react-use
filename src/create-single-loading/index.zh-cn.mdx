@@ -5,9 +5,11 @@ deprecated: true
 
 # createSingleLoading
 
-import { HooksType } from '@/components'
+import { HooksType, Deprecated } from '@/components'
 
 <HooksType {...frontmatter} />
+
+<Deprecated version="1.4.0" />
 
 这是一个 Util，提供一种通过多个 Hooks 或 loading 实例管理单个（全局）加载状态的方法，底层使用了 [Reactive](https://sheinsight.github.io/reactive/)。
 

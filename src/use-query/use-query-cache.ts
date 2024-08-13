@@ -10,23 +10,23 @@ import { unwrapArrayable, unwrapGettable } from '../utils/unwrap'
 import type { SetStateAction } from 'react'
 import type { AnyFunc, Arrayable, Gettable, SetTimeoutReturn } from '../utils/basic'
 
-export interface UseRequestCacheLike<Data> {
+export interface UseQueryCacheLike<Data> {
   get(key: string): Data | undefined
   set(key: string, value: Data): void
   delete(key: string): void
   keys(): IterableIterator<string>
 }
 
-const dataCache: UseRequestCacheLike<unknown> = /* #__PURE__ */ new Map()
+const dataCache: UseQueryCacheLike<unknown> = /* #__PURE__ */ new Map()
 const paramsCache: Map<string, unknown[]> = /* #__PURE__ */ new Map()
 const timerCache: Map<string, SetTimeoutReturn> = /* #__PURE__ */ new Map()
 const promiseCache: Map<string, Promise<unknown>> = /* #__PURE__ */ new Map()
 
 const cacheBus = createEventBus()
 
-export function useRequestCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
+export function useQueryCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
   options: {
-    provider?: Gettable<UseRequestCacheLike<D>>
+    provider?: Gettable<UseQueryCacheLike<D>>
     cacheKey?: string | ((...args: Parameters<T> | []) => string)
     cacheExpirationTime?: number | false
     compare?: (prevData: D | undefined, nextData: D | undefined) => boolean
@@ -133,9 +133,9 @@ export function useRequestCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
 
 export const mutate = /* #__PURE__ */ createMutate(dataCache, paramsCache)
 
-export type UseRequestMutate = (keyFilter: (key: string) => boolean, value?: unknown, params?: unknown[]) => void
+export type UseQueryMutate = (keyFilter: (key: string) => boolean, value?: unknown, params?: unknown[]) => void
 
-function createMutate(dataCache: UseRequestCacheLike<unknown>, paramsCache: Map<string, unknown[]>): UseRequestMutate {
+function createMutate(dataCache: UseQueryCacheLike<unknown>, paramsCache: Map<string, unknown[]>): UseQueryMutate {
   return (
     keyFilter: Arrayable<string> | ((key: string) => boolean),
     value: SetStateAction<unknown> = undefined,

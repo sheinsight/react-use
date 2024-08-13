@@ -1,17 +1,20 @@
 ---
 category: ProUtilities
-features: ['LowLevel']
 ---
 
 # useRequest
 
-import { HooksType, Since } from '@/components'
+import { HooksType, Since, Deprecated } from '@/components'
 
 <HooksType {...frontmatter} />
 
 <Since version="v1.4.0" />
 
-A basic React Hook for data fetching, supports cache, automatic refresh, and many awesome features.
+<Deprecated version="v1.5.0" />
+
+A hook that helps you manage the request status, including loading, refreshing, initializing, error, etc.
+
+> A deprecated version of [useQuery](/reference/use-query), please use **useQuery** instead.
 
 ## Demo
 
@@ -38,161 +41,4 @@ const {
 } = useRequest(fetcher, options)
 ```
 
-### Fetcher
-
-A async function that fetch data, return a Promise.
-
-### Options
-
-See [UseLoadingSlowFnOptions](/reference/use-loading-slow-fn#options), [UseReConnectOptions](/reference/use-re-connect#options), [UseReFocusOptions](/reference/use-re-focus#options), [UseThrottledFnOptions](/reference/use-throttled-fn#options), [UseDebouncedFnOptions](/reference/use-debounced-fn#options), [UseIntervalFnInterval](/reference/use-interval-fn#interval) and [UseRetryFnOptions](/reference/use-retry-fn#options) for more details.
-
-```tsx
-export interface UseRequestOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
-  extends Omit<UseLoadingSlowFnOptions<T, D, E>, 'initialValue'>,
-    Pick<UseReConnectOptions, 'registerReConnect'>,
-    Pick<UseReFocusOptions, 'registerReFocus'> {
-  /**
-   * Disable all automatic refresh behaviors, default is off
-   *
-   * @defaultValue false
-   */
-  manual?: boolean
-  /**
-   * Initial data passed to fetcher when first mount
-   *
-   * @defaultValue undefined
-   */
-  initialData?: D | undefined
-  /**
-   * Cache key, can be a string or a function that returns a string
-   *
-   * @defaultValue undefined
-   */
-  cacheKey?: string | ((...args: Parameters<T> | []) => string)
-  /**
-   * Max cache time, will clear the cache after the specified time
-   *
-   * default is 5 minutes, set `false` to disable
-   */
-  cacheExpirationTime?: number | false
-  /**
-   * Cache provider, it can be set to an external store (reactive), localStorage, etc.
-   *
-   * Needs to comply with the CacheLike interface definition, defaults to a globally shared `new Map()`
-   *
-   * @defaultValue global shared `new Map()`
-   */
-  provider?: Gettable<CacheLike<D>>
-  /**
-   * ThrottleOptions => only affects the frequency of manually executing the run method
-   *
-   * @defaultValue undefined
-   */
-  throttle?: UseThrottledFnOptions['wait'] | UseThrottledFnOptions
-  /**
-   * DebounceOptions => only affects the frequency of manually executing the run method
-   *
-   * @defaultValue undefined
-   */
-  debounce?: UseDebouncedFnOptions['wait'] | UseDebouncedFnOptions
-  /**
-   * Whether to reload when focus is obtained, default is off
-   *
-   * @defaultValue false
-   */
-  refreshOnFocus?: boolean
-  /**
-   * Throttle time when obtaining focus, default 0, off
-   *
-   * @defaultValue 0
-   */
-  refreshOnFocusThrottleWait?: number
-  /**
-   * Custom visibility judgment function
-   *
-   * @defaultValue defaultIsVisible
-   */
-  isVisible?: () => Promisable<boolean>
-  /**
-   * Whether to reload when network reconnects, default is off
-   *
-   * @defaultValue false
-   */
-  refreshOnReconnect?: boolean
-  /**
-   * Custom online judgment function
-   *
-   * @defaultValue defaultIsOnline
-   */
-  isOnline?: () => Promisable<boolean>
-  /**
-   * Interval time for automatic refresh, default is 0, off
-   *
-   * @defaultValue 0
-   */
-  refreshInterval?: Exclude<UseIntervalFnInterval, 'requestAnimationFrame'>
-  /**
-   * Whether to reload when hidden, default is off
-   *
-   * @defaultValue false
-   */
-  refreshWhenHidden?: boolean
-  /**
-   * Whether to reload when offline, default is off
-   *
-   * @defaultValue false
-   */
-  refreshWhenOffline?: boolean
-  /**
-   * The dependencies of the refresh operation, when the dependencies change, the refresh operation will be triggered
-   *
-   * @defaultValue []
-   */
-  refreshDependencies?: DependencyList
-  /**
-   * Error retry count
-   *
-   * @defaultValue 0
-   */
-  errorRetryCount?: UseRetryFnOptions<E>['count']
-  /**
-   * Error retry interval
-   *
-   * @defaultValue 0
-   */
-  errorRetryInterval?: UseRetryFnOptions<E>['interval']
-  /**
-   * Whether to clear the cache before each request
-   *
-   * @defaultValue false
-   */
-  onErrorRetry?: UseRetryFnOptions<E>['onErrorRetry']
-}
-```
-
-### Returns
-
-import { Tip } from '@/components'
-
-<Tip type="pausable" />
-
-See [UseLoadingSlowFnReturns](/reference/use-loading-slow-fn#returns) for more details.
-
-```tsx
-export interface UseRequestReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
-  extends Pausable,
-    Omit<UseLoadingSlowFnReturns<T, D, E>, 'value'> {
-  /**
-   * The data returned by the request
-   */
-  data: D | undefined
-  /**
-   * Whether the request is in the initialization state (no data + loading, initializing => !data && loading)
-   */
-  initializing: boolean
-  /**
-   * Whether the request is refreshing data (has data + loading, refreshing => data && loading)
-   */
-  refreshing: boolean
-}
-```
+See [useQuery](/reference/use-query) for more details.
