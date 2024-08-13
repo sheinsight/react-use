@@ -1,10 +1,21 @@
+---
+category: State
+---
+
 # useSetState
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} />
+<HooksType {...frontmatter} />
 
-一个帮助如同 React 传统类组件的 `this.setState` 的方式来使用 state 的 React 钩子。
+一个使用 React 类组件（Class Component）的 `this.setState` 的方式来使用 State 的 React Hook。
+
+## 场景 Scenes \{#scenes}
+
+- **贴近开发者习惯：** 与 Class Component 中的 `this.setState` 类似，更贴近开发者的旧习惯
+- **状态管理场景：** 实现组件状态的增量更新，无需替换整个状态对象
+- **表单处理场景：** 管理表单项的状态，支持部分字段的更新，便于实现复杂表单逻辑
+- ...
 
 ## 演示 Demo \{#demo}
 
@@ -14,7 +25,13 @@ import { App } from './demo'
 
 ## 用法 Usage \{#usage}
 
+```tsx
+const [info, setInfo] = useSetState({ name: '张三', age: 18 }, { deep: true })
 
+setInfo({ name: '李四' }) // 设置新的值，只更新 name 字段，age 字段保持不变
+setInfo({ age: 20 }) // 设置新的值，只更新 age 字段，name 字段保持不变
+setInfo({ name: '李四' }) // 再次设置「相同」的值，将不会触发重渲染。 参考 useSafeState 的 options。
+```
 
 ## 源码 Source \{#source}
 

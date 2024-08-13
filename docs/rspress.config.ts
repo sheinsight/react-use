@@ -74,7 +74,7 @@ const hooksDocPlugin = (): RspressPlugin => {
           const i18nItem = i18n[`reference.sidebar.${kebabCase(category)}` as never]
 
           return {
-            text: i18nItem[locale.lang] ?? camelCase(category),
+            text: i18nItem?.[locale.lang] ?? camelCase(category),
             collapsed: true,
             items: hooks.map((hook) => ({
               text: camelCase(hook),

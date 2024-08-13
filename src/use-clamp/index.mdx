@@ -30,10 +30,10 @@ import { App } from './demo'
 ```tsx
 const [count, countActions] = useCount(20)
 // The value to process is 20, the minimum is 1, and the maximum is 16
-const [count, actions] = useClamp(count, 1, 16) 
+const [result, actions] = useClamp(count, 1, 16) 
 
 // The result of count is 16 because 20 exceeds the maximum of 16
-console.log(count)
+console.log(result)
 
 // No matter the operations performed by countActions, the returned value of result always stays between 1 and 16
 

@@ -24,14 +24,17 @@ export function Card(
     <div
       id={id}
       className={cn(
-        'relative outline-primary/80 gap-4 bg-#AAAAAA/20 dark:bg-#888888/20 rounded-2 p-6 my-2',
+        'relative outline-primary/80 gap-2 bg-#AAAAAA/20 dark:bg-#888888/20 rounded-2 p-4 my-2',
         direction,
         className,
       )}
       {...rest}
     >
       {!isGetStarted && (
-        <a href={sourceUrl} className="absolute right-2 top-2 text-xs underline">
+        <a
+          href={sourceUrl}
+          className="absolute text-primary hover:text-primary/80 transition-all right-2 top-2 text-sm underline"
+        >
           {isZhCN ? '源码' : 'Source'}
         </a>
       )}

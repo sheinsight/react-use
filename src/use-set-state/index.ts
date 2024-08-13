@@ -14,7 +14,7 @@ export interface UseSetStateOptions extends UseSafeStateOptions {}
 export type UseSetStateReturns<T extends PureObject> = readonly [T, UseSetStateSetMergedState<T>]
 
 /**
- * A React Hook that helps to use state like `this.setState` method of React's legacy class component.
+ * A React Hook that uses the React Class Component's `this.setState` method for state management.
  */
 export function useSetState<T extends PureObject>(
   initialState: Gettable<T>,

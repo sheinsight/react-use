@@ -1,10 +1,20 @@
+---
+category: State
+---
+
 # useResetState
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} />
+<HooksType {...frontmatter} />
 
-类似于 [React.useState](https://react.dev/reference/react/useState) 的一个 React 钩子（Hook），但提供了一个 `reset` 函数，用来将状态重置为初始值。
+一个类似于 [React.useState](https://react.dev/reference/react/useState) 的 React Hook，但额外提供了一个 `reset` 函数，用来将状态重置为初始值。
+
+## 场景 Scenes \{#scenes}
+
+- **状态初始化与重置场景：** 允许在组件生命周期内重置状态至初始值
+- **交互元素状态管理：** 用于得分、步数等需要可重置的状态管理
+- ...
 
 ## 演示 Demo \{#demo}
 
@@ -14,7 +24,20 @@ import { App } from './demo'
 
 ## 用法 Usage \{#usage}
 
+```tsx
+const [name, setName, resetName, initialName] = useResetState('张三')
 
+// 修改状态
+setName('李四')
+
+// 重置状态为初始值
+resetName()
+
+// 重置状态为指定值，并同时修改初始值为指定值
+resetName('王五')
+
+console.log(name, initialName) // 王五, 王五
+```
 
 ## 源码 Source \{#source}
 
@@ -39,8 +62,7 @@ const [state, setState, reset, initialState] = useResetState(initialState, optio
 ### 返回值 Returns \{#returns}
 
 ```tsx
-export function useResetState<T>(
-  initialState: Gettable<T>,
-  options?: UseResetStateOptions,
-): [T, ReactSetState<T>, (initialState?: T) => void, T]
+type UseResetStateReturns = readonly [T, ReactSetState<T>, (initialState?: T) => void, T]
 ```
+
+有关更多详情，请参见 [useSafeState#returns](/reference/use-safe-state/#returns)。

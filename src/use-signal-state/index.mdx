@@ -6,43 +6,52 @@ category: State
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} />
+<HooksType {...frontmatter} />
 
-A React Hook that use state like `createSignal` of [Solid](https://www.solidjs.com), **without closure issues**.
+A React Hook similar to `createSignal` from [Solid](https://www.solidjs.com), which allows reading the state value via the `state()` method, **avoiding closure issues**.
 
-## Demo
+## Scenes \{#scenes}
 
-Try to change the two type of state below quickly, and then see the log in DevTools.
+- **Preventing closure issues:** Effectively solves outdated closure issues that might occur with traditional `useState` in closure scenarios.
+- ...
+
+## Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## Usage \{#usage}
 
+```tsx
+const [state, setState] = useSignalState(0)
 
+console.log(state()) // Call the function to read the state value, ensuring it's always up to date
 
-## Source
+setState(1) // Set a new value
+```
+
+## Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const [state, setState] = useSignalState(initialState)
 ```
 
-### InitialState
+### InitialState \{#initial-state}
 
-Same as [React.useState](https://react.dev/reference/react/useState).
+The same as [React.useState](https://react.dev/reference/react/useState).
 
-### Options
+### Options \{#options}
 
-See [useSafeState#options](/reference/use-safe-state/#options) for more details.
+Refer to [useSafeState#options](/reference/use-safe-state/#options).
 
-### Returns
+### Returns \{#returns}
 
 ```tsx
 export type UseSignalStateReturns = [() => T, ReactSetState<T>]

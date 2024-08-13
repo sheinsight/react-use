@@ -30,10 +30,10 @@ import { App } from './demo'
 ```tsx
 const [count, countActions] = useCount(20)
 // 待处理的值为 20，最小值为 1，最大值为 16
-const [count, actions] = useClamp(count, 1, 16) 
+const [result, actions] = useClamp(count, 1, 16) 
 
-// count 结果为 16，因为 20 超出了最大值 16
-console.log(count)
+// result 结果为 16，因为 20 超出了最大值 16
+console.log(result)
 
 // 无论 countActions 进行任何操作，result 始终返回的值始终介于 1 和 16 之间
 
@@ -56,7 +56,7 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const [result, acitons] = useClamp(count, min, max);
+const [result, actions] = useClamp(count, min, max);
 ```
 
 本质上，它只是设置了 `min` 和 `max` 选项的 [useCounter](/reference/use-counter) 的更加语意化的版本，更多请参考 [useCounter](/reference/use-counter)。

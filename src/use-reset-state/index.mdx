@@ -6,45 +6,63 @@ category: State
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} />
+<HooksType {...frontmatter} />
 
-A React Hook like [React.useState](https://react.dev/reference/react/useState), but provide a `reset` function to reset the state to initial value.
+A React Hook similar to [React.useState](https://react.dev/reference/react/useState), but it additionally provides a `reset` function to reset the state back to the initial value.
 
-## Demo
+## Scenes \{#scenes}
+
+- **State Initialization and Resetting:** Allows resetting the state back to its initial value within the component's lifecycle
+- **Interactive Element State Management:** Used for managing resettable states like scores, steps, etc.
+- ...
+
+## Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## Usage \{#usage}
 
+```tsx
+const [name, setName, resetName, initialName] = useResetState('Bob')
 
+// Change the state
+setName('Amy')
 
-## Source
+// Reset the state to the initial value
+resetName()
+
+// Reset the state to a specified value and simultaneously modify the initial value to that specified value
+resetName('Lily')
+
+console.log(name, initialName) // Lily, Lily
+```
+
+## Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const [state, setState, reset, initialState] = useResetState(initialState, options)
 ```
 
-### InitialState
+### InitialState \{#initial-state}
 
-The initial state of the state.
+The initial value of the state.
 
-### Options
+### Options \{#options}
 
-See [useSafeState#options](/reference/use-safe-state/#options) for more details.
+For more details, please see [useSafeState#options](/reference/use-safe-state/#options).
 
-### Returns
+### Returns \{#returns}
 
 ```tsx
-export function useResetState<T>(
-  initialState: Gettable<T>,
-  options?: UseResetStateOptions,
-): [T, ReactSetState<T>, (initialState?: T) => void, T]
+type UseResetStateReturns = readonly [T, ReactSetState<T>, (initialState?: T) => void, T]
 ```
+
+For more details, please see [useSafeState#returns](/reference/use-safe-state/#returns).

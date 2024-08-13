@@ -6,48 +6,60 @@ category: State
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} />
+<HooksType {...frontmatter} />
 
-A React Hook that helps to manage a togglable state.
+A React Hook for managing togglable states.
 
-:::tip
-
-If you need to manage a state that alternates among several values, consider utilizing [useCircularList](/reference/use-circular-list) as an alternative.
-
+:::tip TIP
+If you need to manage the rotation of multiple values (such as toggling between multiple languages or themes), it's recommended to use [useCircularList](/reference/use-circular-list).
 :::
 
-## Demo
+## Scenes \{#scenes}
+
+- **Toggle State Scenes:** Quickly toggle between two states, such as theme switching (dark mode/light mode)
+- **Form Item Selection:** Managing states in options, such as gender selection (male/female)
+- **Open/Closed or Enable/Disable:** Toggle open/closed states, enable/disable, etc. (Direct use of [useBoolean](/reference/use-boolean) is recommended)
+- ...
+
+## Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## Usage \{#usage}
 
+```tsx
+const [value, actions] = useToggle(['value 1', 'value 2'])
 
+actions.toggle() // Toggle the state
+actions.setLeft() // Set the state to left value
+actions.setRight() // Set the state to right value
+actions.setState('value 1') // Set the state to a specific value
+```
 
-## Source
+## Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
-const [value, actions] = useToggle(bool)
-const [value, actions] = useToggle(one, theOther)
+const [bool, actions] = useToggle(bool)
+const [value, actions] = useToggle([one, theOther])
 ```
 
-### Parameters
+### Parameters \{#parameters}
 
 It accepts one or two parameters:
 
-- `bool`: A `boolean`, the initial value of the state, will be toggled between `true` and `false`.
+- `bool`: A `boolean` value, the initial state, which will toggle between `true` and `false`.
 
-- `one`, `theOther`: The two values that the state toggles between.
+- `one`, `theOther`: The two values between which the state will toggle.
 
-### Returns
+### Returns \{#returns}
 
 ```tsx
 export interface UseToggleReturnsActions<O, T> {

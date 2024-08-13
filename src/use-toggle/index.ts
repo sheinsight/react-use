@@ -29,9 +29,7 @@ export interface UseToggleReturnsActions<O, T> {
 export type UseToggleReturns<O, T> = readonly [O | T, UseToggleReturnsActions<O, T>]
 
 /**
- * A React Hook that helps to manage a togglable state.
- *
- * If you need to manage a state that alternates among several values, consider utilizing [useCircularList](https://sheinsight.github.io/react-use/reference/use-circular-list) as an alternative.
+ * A React Hook for managing togglable states.
  */
 export function useToggle(one: true): UseToggleReturns<true, false>
 export function useToggle(one: false): UseToggleReturns<false, true>
