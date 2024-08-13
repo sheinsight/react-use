@@ -10,6 +10,13 @@ import { HooksType } from '@/components'
 
 A React Hook for creating a cloned state that supports modification, synchronous operation, and isolation from each other, with support for custom `clone` functions, defaulting to `JSON.parse(JSON.stringify(source))`.
 
+## Scenes \{#scenes}
+
+- **Data state cloning and isolation scenario:** Implements deep cloning of data to create separate states for editing without affecting the original data
+- **Edit history tracking scenario:** Maintains a history of data edits to support undo and redo functions
+- **Data comparison scenario:** Offers functionality to compare original and modified data
+- ...
+
 ## Demo \{#demo}
 
 import { App } from './demo'
@@ -40,13 +47,6 @@ const handleSave = () => setForm(cloned)
 // Synchronize (reset) the source state with the clone state, i.e., "undo changes"
 const handleReset = () => syncSource()
 ```
-
-
-## Scenes \{#scenes}
-
-- Data editing scenarios, maintaining two sets of isolated data, convenient for comparison, undoing, redoing, etc.
-- Implementation of data deep copying, generating multiple sets of isolated data states
-- ...
 
 ## Source \{#source}
 

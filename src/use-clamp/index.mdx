@@ -12,6 +12,13 @@ A React Hook that clamps a number between a minimum and maximum value, supportin
 
 Essentially, it's a more semantic version of [useCounter](/reference/use-counter) with `min` and `max` options set.
 
+## Scenes \{#scenes}
+
+- **Handling Count Calculations:** Provides functionality for increasing, decreasing, setting, getting, and resetting counters.
+- **UI Interaction Scenarios:** Implements dynamic updates and displays of quantities on user interfaces, such as the number of items in a shopping cart or carousel sliding.
+- **Form Input Limitations:** Used for limiting the number range within forms or input fields.
+- ...
+
 ## Demo \{#demo}
 
 import { App } from './demo'
@@ -39,15 +46,6 @@ actions.set(10)
 actions.reset()
 actions.reset(12)
 ```
-
-## Scenes \{#scenes}
-
-- Value control in user interface interactions (such as sliders, knobs), providing a better user experience
-- Dynamic data display, ensuring that data stays within an acceptable range in the user interface
-- Form input range control, preventing users from entering values beyond a predefined range
-- Animation parameter constraints, ensuring that animation speed or position parameters do not exceed expected ranges
-- Data visualization component parameter adjustments, such as restrictions on chart scaling levels
-- ...
 
 ## Source \{#source}
 

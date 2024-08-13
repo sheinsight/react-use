@@ -25,7 +25,7 @@ export type UseBooleanActions = {
 export type UseBooleanReturns = readonly [value: boolean, UseBooleanActions]
 
 /**
- * A hook to manage a boolean state.
+ * A React Hook for managing `boolean` state.
  *
  * @param {boolean} [initialValue=true] The initial value of the boolean state.
  *

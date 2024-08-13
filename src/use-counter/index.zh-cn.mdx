@@ -1,10 +1,21 @@
+---
+category: State
+---
+
 # useCounter
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} />
+<HooksType {...frontmatter} />
 
-一个 React Hook，提供包含增加、减少和重置功能的计数器。
+一个提供包含增加、减少和重置功能的计数器的 React Hook。
+
+## 场景 Scenes \{#scenes}
+
+- **处理数量计算场景：** 提供增加、减少、设置、获取、重置计数器的功能
+- **界面交互场景：** 实现用户界面上数量的动态更新和显示，如购物车商品数量、轮播图切换
+- **限制数值范围场景：** 对数值进行最大值和最小值的限制 (建议使用更加语意化的 [useClamp](/reference/use-clamp))
+- ...
 
 ## 演示 Demo \{#demo}
 
@@ -14,7 +25,28 @@ import { App } from './demo'
 
 ## 用法 Usage \{#usage}
 
+```tsx
+const [count, actions] = useCounter(20)
+const [count, actions, couterState] = useCounter(20, { min: 1, max: 100 })
 
+// 增加计数器
+actions.inc()
+actions.inc(2)
+
+// 减少计数器
+actions.dec()
+actions.dec(4)
+
+// 设置计数器为指定值
+actions.set(10)
+
+// 重置计数器为初始值（或同时重设初始值）
+actions.reset()
+actions.reset(12)
+
+// 获取计数器的值，值为 count
+acitons.get()
+```
 
 ## 源码 Source \{#source}
 
@@ -25,8 +57,12 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const [count, actions] = useCounter(options)
+const [count, actions] = useCounter(initialCount, options)
 ```
+
+### 初始值 InitialCount \{#initial-count}
+
+一个 `number` 类型的初始值。
 
 ### 选项 Options \{#options}
 
@@ -46,8 +82,6 @@ export type UseCounterOptions = {
 ### 返回值 Returns \{#returns}
 
 ```tsx
-export type Count = number
-
 export interface UseCounterReturnsAction {
   /**
    * 增加计数器
@@ -71,23 +105,37 @@ export interface UseCounterReturnsAction {
   reset: (n?: number) => void
 }
 
-export type UseCounterReturns = [
+export interface UseCounterState {
+  /**
+   * 计数器的值
+   */
+  count: number
+  /**
+   * 计数器的最大值
+   */
+  max: number
+  /**
+   * 计数器的最小值
+   */
+  min: number
+  /**
+   * 计数器的初始值
+   */
+  initialCount: number
+}
+
+export type UseCounterReturns = readonly [
   /**
    * 计数器的计数状态
    */
-  Count,
+  number,
   /**
    * 控制计数器的功能
    */
   UseCounterReturnsAction,
   /**
-   * 计数器的完整状态
+   * 计数器的完整内部状态
    */
-  {
-    count: number
-    max: number
-    min: number
-    initialCount: number
-  },
+  UseCounterState,
 ]
 ```

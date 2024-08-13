@@ -16,6 +16,12 @@ import { HooksType, Since } from '@/components'
 如果你需要管理多个值的循环交替状态（如切换多语言、多主题等），建议使用 [useCircularList](/reference/use-circular-list)。
 :::
 
+## 场景 Scenes \{#scenes}
+
+- **控制元素显隐场景：** 用于控制页面元素如对话框、下拉菜单的显示和隐藏
+- **表单开关输入场景：** 管理表单中开关类型输入（如复选框）的状态
+- ...
+
 ## 演示 Demo \{#demo}
 
 import { App } from './demo'
@@ -31,18 +37,6 @@ actions.toggle();
 actions.setTrue();
 actions.setFalse();
 ```
-
-## 场景 Scenes \{#scenes}
-
-- 管理对话框的显示状态（打开/关闭）
-- 控制下拉菜单的展开与收起
-- 控制表单项的选中状态（比如复选框）
-- 触发开关按钮的开/关状态
-- 控制加载状态指示器的显示与隐藏
-- 切换组件的暗黑模式和普通模式
-- 实现“收藏/取消收藏”功能的状态管理
-- 控制提示信息的显示与消失（如错误提示、成功提示等）
-- ...
 
 ## 源码 Source \{#source}
 

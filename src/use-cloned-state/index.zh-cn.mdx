@@ -10,6 +10,13 @@ import { HooksType } from '@/components'
 
 一个用来创建支持修改、同步操作、相互隔离的克隆状态的 React Hook，支持自定义 `clone` 函数，默认使用 `JSON.parse(JSON.stringify(source))`。
 
+## 场景 Scenes \{#scenes}
+
+- **数据状态克隆与隔离场景：** 实现数据的深拷贝，创建独立状态，用于编辑不影响原始数据
+- **编辑历史记录场景：** 维护数据的编辑历史，支持撤销、重做功能
+- **数据对比场景：** 提供原始数据和修改后数据的对比功能
+- ...
+
 ## 演示 Demo \{#demo}
 
 import { App } from './demo'
@@ -40,13 +47,6 @@ const handleSave = () => setForm(cloned)
 // 同步（重置）源状态与克隆状态，即“撤销修改”
 const handleReset = () => syncSource()
 ```
-
-
-## 场景 Scenes \{#scenes}
-
-- 数据编辑场景，维护两份隔离的数据，方便对比、撤销、重做等操作
-- 实现数据的深拷贝，生成多份相互隔离的数据状态
-- ...
 
 ## 源码 Source \{#source}
 

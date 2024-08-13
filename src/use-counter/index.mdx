@@ -6,21 +6,49 @@ category: State
 
 import { HooksType } from '@/components'
 
-<HooksType category={frontmatter.category} />
+<HooksType {...frontmatter} />
 
-A React Hook that provides a counter with increment, decrement and reset functions.
+A React hook that provides a counter with increment, decrement, and reset functionalities.
 
-## Demo
+## Scenes \{#scenes}
+
+- **Number computation scenes:** Offers functionalities to increment, decrement, set, get, and reset the counter
+- **UI interaction scenes:** Implements the dynamic update and display of quantities on the user interface, such as the number of products in a shopping cart, carousel switching
+- **Limiting value range scenes:** Applies maximum and minimum value restrictions to the number (it is recommended to use the more semantically clear [useClamp](/reference/use-clamp))
+- ...
+
+## Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## Usage \{#usage}
 
+```tsx
+const [count, actions] = useCounter(20)
+const [count, actions, couterState] = useCounter(20, { min: 1, max: 100 })
 
+// Increment the counter
+actions.inc()
+actions.inc(2)
 
-## Source
+// Decrement the counter
+actions.dec()
+actions.dec(4)
+
+// Set the counter to a specific value
+actions.set(10)
+
+// Reset the counter to the initial value (or reset the initial value as well)
+actions.reset()
+actions.reset(12)
+
+// Get the value of the counter, the value is count
+acitons.get()
+```
+
+## Source \{#source}
 
 import { Source } from '@/components'
 
@@ -29,69 +57,85 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const [count, actions] = useCounter(options)
+const [count, actions] = useCounter(initialCount, options)
 ```
 
-### Options
+### InitialCount \{#initial-count}
+
+A `number` type of initial value.
+
+### Options \{#options}
 
 ```tsx
 export type UseCounterOptions = {
   /**
-   * the maximum value of the counter
+   * The maximum value of the counter
    */
   max?: number
   /**
-   * the minimum value of the counter
+   * The minimum value of the counter
    */
   min?: number
 }
 ```
 
-### Returns
+### Returns \{#returns}
 
 ```tsx
-export type Count = number
-
 export interface UseCounterReturnsAction {
   /**
-   * increment the counter
+   * Increment the counter
    */
   inc: (delta?: number) => void
   /**
-   * decrement the counter
+   * Decrement the counter
    */
   dec: (delta?: number) => void
   /**
-   * set the counter
+   * Set the counter
    */
   set: (value: number) => void
   /**
-   * get the counter
+   * Get the counter
    */
   get(): number
   /**
-   * reset the counter
+   * Reset the counter
    */
   reset: (n?: number) => void
 }
 
-export type UseCounterReturns = [
+export interface UseCounterState {
+  /**
+   * The value of the counter
+   */
+  count: number
+  /**
+   * The maximum value of the counter
+   */
+  max: number
+  /**
+   * The minimum value of the counter
+   */
+  min: number
+  /**
+   * The initial value of the counter
+   */
+  initialCount: number
+}
+
+export type UseCounterReturns = readonly [
   /**
    * The count state of the counter
    */
-  Count,
+  number,
   /**
-   * The actions to control the counter
+   * Functions to control the counter
    */
   UseCounterReturnsAction,
   /**
-   * The whole state of the counter
+   * The full internal state of the counter
    */
-  {
-    count: number
-    max: number
-    min: number
-    initialCount: number
-  },
+  UseCounterState,
 ]
 ```
