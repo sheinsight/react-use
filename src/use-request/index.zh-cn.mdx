@@ -1,17 +1,20 @@
 ---
 category: ProUtilities
-features: ['LowLevel']
 ---
 
 # useRequest
 
-import { HooksType, Since } from '@/components'
+import { HooksType, Since, Deprecated } from '@/components'
 
 <HooksType {...frontmatter} />
 
 <Since version="v1.4.0" />
 
+<Deprecated version="v1.5.0" />
+
 一个基础的 React 钩子，用于数据获取，支持缓存、自动刷新以及许多其他强大功能。
+
+> 这是 `useQuery` 的已弃用的版本，请使用 [useQuery](/reference/use-query)。
 
 ## 演示 Demo \{#demo}
 
@@ -38,161 +41,4 @@ const {
 } = useRequest(fetcher, options)
 ```
 
-### 数据获取函数 Fetcher \{#fetcher}
-
-一个异步函数，用于数据获取，返回一个 Promise。
-
-### 选项 Options \{#options}
-
-有关更多详情，请查看 [UseLoadingSlowFnOptions](/reference/use-loading-slow-fn#options), [UseReConnectOptions](/reference/use-re-connect#options), [UseReFocusOptions](/reference/use-re-focus#options), [UseThrottledFnOptions](/reference/use-throttled-fn#options), [UseDebouncedFnOptions](/reference/use-debounced-fn#options), [UseIntervalFnInterval](/reference/use-interval-fn#interval) and [UseRetryFnOptions](/reference/use-retry-fn#options)。
-
-```tsx
-export interface UseRequestOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
-  extends Omit<UseLoadingSlowFnOptions<T, D, E>, 'initialValue'>,
-    Pick<UseReConnectOptions, 'registerReConnect'>,
-    Pick<UseReFocusOptions, 'registerReFocus'> {
-  /**
-   * 禁用所有自动刷新行为， 默认关闭
-   *
-   * @defaultValue false
-   */
-  manual?: boolean
-  /**
-   * 初始挂载时传递给提取器的数据
-   *
-   * @defaultValue undefined
-   */
-  initialData?: D | undefined
-  /**
-   * 缓存键，可以是字符串或返回字符串的函数
-   *
-   * @defaultValue undefined
-   */
-  cacheKey?: string | ((...args: Parameters<T> | []) => string)
-  /**
-   * 最大缓存时间，指定时间后清除缓存
-   *
-   * 默认为 5 分钟，设置 `false` 以禁用
-   */
-  cacheExpirationTime?: number | false
-  /**
-   * 缓存提供者，可以设置为外部存储（响应式）、localStorage 等。
-   *
-   * 需要符合 CacheLike 接口定义，默认为全局共享的 `new Map()`
-   *
-   * @defaultValue global shared `new Map()`
-   */
-  provider?: Gettable<CacheLike<D>>
-  /**
-   * 节流选项 => 仅影响手动执行 run 方法的频率
-   *
-   * @defaultValue undefined
-   */
-  throttle?: UseThrottledFnOptions['wait'] | UseThrottledFnOptions
-  /**
-   * 防抖选项 => 仅影响手动执行 run 方法的频率
-   *
-   * @defaultValue undefined
-   */
-  debounce?: UseDebouncedFnOptions['wait'] | UseDebouncedFnOptions
-  /**
-   * 获取焦点时是否重新加载， 默认关闭
-   *
-   * @defaultValue false
-   */
-  refreshOnFocus?: boolean
-  /**
-   * 获取焦点时的节流时间，默认 0，关闭
-   *
-   * @defaultValue 0
-   */
-  refreshOnFocusThrottleWait?: number
-  /**
-   * 自定义可见性判断函数
-   *
-   * @defaultValue defaultIsVisible
-   */
-  isVisible?: () => Promisable<boolean>
-  /**
-   * 网络重连时是否重新加载， 默认关闭
-   *
-   * @defaultValue false
-   */
-  refreshOnReconnect?: boolean
-  /**
-   * 自定义在线判断函数
-   *
-   * @defaultValue defaultIsOnline
-   */
-  isOnline?: () => Promisable<boolean>
-  /**
-   * 自动刷新的间隔时间，默认为 0，关闭
-   *
-   * @defaultValue 0
-   */
-  refreshInterval?: Exclude<UseIntervalFnInterval, 'requestAnimationFrame'>
-  /**
-   * 隐藏时是否重新加载，默认关闭
-   *
-   * @defaultValue false
-   */
-  refreshWhenHidden?: boolean
-  /**
-   * 离线时是否重新加载，默认关闭
-   *
-   * @defaultValue false
-   */
-  refreshWhenOffline?: boolean
-  /**
-   * 刷新操作的依赖项，当依赖项改变时，将触发刷新操作
-   *
-   * @defaultValue []
-   */
-  refreshDependencies?: DependencyList
-  /**
-   * 错误重试次数
-   *
-   * @defaultValue 0
-   */
-  errorRetryCount?: UseRetryFnOptions<E>['count']
-  /**
-   * 错误重试间隔
-   *
-   * @defaultValue 0
-   */
-  errorRetryInterval?: UseRetryFnOptions<E>['interval']
-  /**
-   * 是否在每次请求前清除缓存
-   *
-   * @defaultValue false
-   */
-  onErrorRetry?: UseRetryFnOptions<E>['onErrorRetry']
-}
-```
-
-### 返回值 Returns \{#returns}
-
-import { Tip } from '@/components'
-
-<Tip type="pausable" />
-
-有关更多详情，请查看 [UseLoadingSlowFnReturns](/reference/use-loading-slow-fn#returns)。
-
-```tsx
-export interface UseRequestReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
-  extends Pausable,
-    Omit<UseLoadingSlowFnReturns<T, D, E>, 'value'> {
-  /**
-   * 请求返回的数据
-   */
-  data: D | undefined
-  /**
-   * 请求是否处于初始化状态（无数据 + 加载中, initializing => !data && loading）
-   */
-  initializing: boolean
-  /**
-   * 请求是否正在刷新数据（有数据 + 加载中, refreshing => data && loading）
-   */
-  refreshing: boolean
-}
-```
+更多详情请参考 [useQuery](/reference/use-query)。

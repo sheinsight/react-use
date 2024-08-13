@@ -10,14 +10,14 @@ import { unwrapArrayable, unwrapGettable } from '../utils/unwrap'
 import type { SetStateAction } from 'react'
 import type { AnyFunc, Arrayable, Gettable, SetTimeoutReturn } from '../utils/basic'
 
-export interface CacheLike<Data> {
+export interface UseRequestCacheLike<Data> {
   get(key: string): Data | undefined
   set(key: string, value: Data): void
   delete(key: string): void
   keys(): IterableIterator<string>
 }
 
-const dataCache: CacheLike<unknown> = /* #__PURE__ */ new Map()
+const dataCache: UseRequestCacheLike<unknown> = /* #__PURE__ */ new Map()
 const paramsCache: Map<string, unknown[]> = /* #__PURE__ */ new Map()
 const timerCache: Map<string, SetTimeoutReturn> = /* #__PURE__ */ new Map()
 const promiseCache: Map<string, Promise<unknown>> = /* #__PURE__ */ new Map()
@@ -26,7 +26,7 @@ const cacheBus = createEventBus()
 
 export function useRequestCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
   options: {
-    provider?: Gettable<CacheLike<D>>
+    provider?: Gettable<UseRequestCacheLike<D>>
     cacheKey?: string | ((...args: Parameters<T> | []) => string)
     cacheExpirationTime?: number | false
     compare?: (prevData: D | undefined, nextData: D | undefined) => boolean
@@ -135,7 +135,7 @@ export const mutate = /* #__PURE__ */ createMutate(dataCache, paramsCache)
 
 export type UseRequestMutate = (keyFilter: (key: string) => boolean, value?: unknown, params?: unknown[]) => void
 
-function createMutate(dataCache: CacheLike<unknown>, paramsCache: Map<string, unknown[]>): UseRequestMutate {
+function createMutate(dataCache: UseRequestCacheLike<unknown>, paramsCache: Map<string, unknown[]>): UseRequestMutate {
   return (
     keyFilter: Arrayable<string> | ((key: string) => boolean),
     value: SetStateAction<unknown> = undefined,
