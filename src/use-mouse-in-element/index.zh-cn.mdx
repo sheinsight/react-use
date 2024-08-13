@@ -1,0 +1,91 @@
+---
+category: Sensors
+features: ['Pausable']
+---
+
+# useMouseInElement
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个用于追踪鼠标在元素中位置的 React Hook。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const { isOutside, elementX, elementY, ...rest } = useMouseInElement(elementTarget, options)
+```
+
+### 元素目标 ElementTarget \{#element-target}
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### 选项 Options \{#options}
+
+```tsx
+export type MouseInElementOptions = UseMouseOptions & { handleOutside?: boolean }
+```
+
+### 返回值 Returns \{#returns}
+
+<Tip type="pausable" />
+
+```tsx
+export type UseMouseInElementReturns = Pausable & {
+  /**
+   * 鼠标是否在元素之外
+   */
+  isOutside: boolean
+  /**
+   * 鼠标相对于元素的 x 位置
+   */
+  elementX: number
+  /**
+   * 鼠标相对于元素的 y 位置
+   */
+  elementY: number
+  /**
+   * 元素的 x 位置
+   */
+  elementPositionX: number
+  /**
+   * 元素的 y 位置
+   */
+  elementPositionY: number
+  /**
+   * 元素的高度
+   */
+  elementHeight: number
+  /**
+   * 元素的宽度
+   */
+  elementWidth: number
+  /**
+   * 鼠标状态
+   */
+  stop(): void
+  /**
+   * 鼠标状态
+   */
+  mouse: UseMouseReturns
+}
+```

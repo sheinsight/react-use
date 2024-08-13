@@ -1,8 +1,13 @@
+---
+category: Browser
+features: ['IsSupported']
+---
+
 # useDeviceList
 
 import { HooksType } from '@/components'
 
-<HooksType category="Browser" isSupported />
+<HooksType {...frontmatter} />
 
 A React Hook that returns a list of devices that are currently connected.
 
@@ -16,10 +21,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 

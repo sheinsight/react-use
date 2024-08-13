@@ -11,11 +11,7 @@
     "paths": {
       "@/test": ["./testing"],
       "@shined/react-use": ["./src"],
-      "@/components": ["./website/src/components"],
-      "@formkit/auto-animate/react": ["./website/node_modules/@formkit/auto-animate/react"],
-      "react-hot-toast": ["./website/node_modules/react-hot-toast"]
+      "@/components": ["./docs/src/components"]
     }
-  },
-  "include": ["./src"],
-  "exclude": ["./website", "./src/**/demo.tsx"]
+  }
 }

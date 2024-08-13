@@ -1,0 +1,87 @@
+---
+category: Element
+features: ['Pausable', 'IsSupported', 'LowLevel']
+---
+
+# useIntersectionObserver
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个简易使用 [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) 的 React 钩子。
+
+## 演示 Demo \{#demo}
+
+尝试向下滚动查看效果。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const obsererReturn = useIntersectionObserver(elementTarget, options)
+```
+
+### 元素目标 ElementTarget \{#element-target}
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### 选项 Options \{#options}
+
+```tsx
+export interface UseWebObserverOptions {
+  /**
+   * 调用此函数后立即开始观察
+   *
+   * @defaultValue true
+   */
+  immediate?: boolean
+}
+
+/**
+ * DOM 内建的 IntersectionObserverInit
+ *
+ * @see https://developer.mozilla.org/zh-CN/docs/Web/API/IntersectionObserver/IntersectionObserver#options
+ */
+interface IntersectionObserverInit {
+  root?: Element | Document | null
+  rootMargin?: string
+  threshold?: number | number[]
+}
+
+export type UseIntersectionObserverOptions = UseWebObserverOptions & IntersectionObserverInit
+```
+
+### 返回值 Returns \{#returns}
+
+<Tip type="pausable" />
+
+```tsx
+export interface UseWebObserverReturns<Observer> extends Pausable {
+  /**
+   * 持有观察者实例的 ref
+   */
+  observerRef: React.MutableRefObject<Observer | null>
+  /**
+   * 检查当前环境是否支持观察者
+   */
+  isSupported: boolean
+}
+
+export type UseIntersectionObserverReturns = UseWebObserverReturns<IntersectionObserver>
+```

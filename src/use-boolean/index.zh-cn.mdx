@@ -1,0 +1,80 @@
+---
+category: State
+---
+
+# useBoolean
+
+import { HooksType, Since } from '@/components'
+
+<HooksType {...frontmatter} />
+
+<Since version="v1.3.0" />
+
+一个用于帮助管理 `boolean` 状态的 React Hook。
+
+:::tip 小提示
+如果你需要管理多个值的循环交替状态（如切换多语言、多主题等），建议使用 [useCircularList](/reference/use-circular-list)。
+:::
+
+## 场景 Scenes \{#scenes}
+
+- **控制元素显隐场景：** 用于控制页面元素如对话框、下拉菜单的显示和隐藏
+- **表单开关输入场景：** 管理表单中开关类型输入（如复选框）的状态
+- ...
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+```tsx
+const [bool, actions] = useBoolean(false);
+
+actions.toggle();
+actions.setTrue();
+actions.setFalse();
+```
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const [bool, actions] = useBoolean(initialBool)
+```
+
+### 初始布尔值 InitialBool \{#initial-bool}
+
+表示初始状态的 `boolean` 值。
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UseBooleanActions = {
+  /**
+   * 将布尔状态设置为 `true`。
+   */
+  setTrue: () => void
+  /**
+   * 将布尔状态设置为 `false`。
+   */
+  setFalse: () => void
+  /**
+   * 将布尔状态设置为给定的值。
+   */
+  setState: ReactSetState<boolean>
+  /**
+   * 切换布尔状态。
+   */
+  toggle: () => void
+}
+
+export type UseBooleanReturns = readonly [value: boolean, UseBooleanActions]
+```

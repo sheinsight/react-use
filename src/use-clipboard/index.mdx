@@ -1,8 +1,13 @@
+---
+category: Browser
+features: ['IsSupported']
+---
+
 # useClipboard
 
 import { HooksType } from '@/components'
 
-<HooksType category="Browser" isSupported />
+<HooksType {...frontmatter} />
 
 A React Hook that copy text with [Clipboard API](https://developer.mozilla.org/zh-CN/docs/Web/API/Clipboard_API) or fallback to `document.execCommand('copy')` if it's not available.
 
@@ -14,10 +19,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 

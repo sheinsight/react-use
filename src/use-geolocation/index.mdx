@@ -1,8 +1,13 @@
+---
+category: Sensors
+features: ['Pausable', 'IsSupported']
+---
+
 # useGeolocation
 
 import { HooksType } from '@/components'
 
-<HooksType category="Sensors" pausable isSupported />
+<HooksType {...frontmatter} />
 
 A React Hook that provides a simple way to get the user's [geolocation](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation).
 
@@ -14,10 +19,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 

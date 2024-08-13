@@ -1,0 +1,56 @@
+---
+category: Lifecycle
+---
+
+# useMount
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个 React Hook，它只在组件挂载时运行一个函数一次。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+useMount(callback, strictOnce)
+```
+
+### 回调函数 Callback \{#callback}
+
+在组件挂载时调用的 `function`，支持异步函数。
+
+### 严格一次 StrictOnce \{#strict-once}
+
+严格限制回调函数只执行一次，不推荐使用，默认值为 `false`。
+
+:::warning
+
+不推荐使用 `strictOnce` 选项，因为它 [破坏了](https://react.dev/learn/synchronizing-with-effects#dont-use-refs-to-prevent-effects-from-firing) React 18 严格模式的原始意图。
+
+:::
+
+一个 `boolean` 值，指示处理程序在 React 18 的 [Strict Mode](https://react.dev/reference/react/StrictMode) 中是否仅应调用一次。默认值为 false。
+
+
+
+
+
+
+

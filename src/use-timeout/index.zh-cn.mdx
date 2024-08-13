@@ -1,0 +1,76 @@
+---
+category: Animation
+features: ['Pausable']
+---
+
+# useTimeout
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个 React Hook，用于创建一个在指定延迟后变化的状态。
+
+## 演示 Demo \{#demo}
+
+尝试在两秒内快速点击检查按钮，两秒后再试一次，或重置超时并再次尝试。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const isTimeout = useTimeout(2000)
+const { isTimeout, start, pause, reset } = useTimeout(2000, { controls: true })
+```
+
+### 间隔时间 Interval \{#interval}
+
+一个 `number` 类型，表示延迟的毫秒数。
+
+### 选项 Options \{#options}
+
+```tsx
+export interface UseTimeoutOptions<Controls extends boolean, Callback extends AnyFunc = AnyFunc>
+  extends UseTimeoutFnOptions {
+  /**
+   * 暴露更多控制项
+   *
+   * @defaultValue false
+   */
+  controls?: Controls
+  /**
+   * 超时回调
+   */
+  callback?: Callback
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UseTimeoutReturns<Controls extends boolean, C extends AnyFunc = AnyFunc> = Controls extends true
+  ? Pausable<[], Parameters<C> | []> & {
+      /**
+       * 超时状态
+       */
+      isTimeout: boolean
+      /**
+       * 重置超时
+       */
+      reset(): void
+    }
+  : boolean
+```

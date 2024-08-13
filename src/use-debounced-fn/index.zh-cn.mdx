@@ -1,0 +1,68 @@
+---
+category: Utilities
+---
+
+# useDebouncedFn
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个创建防抖函数的 React Hook。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const debouncedFn = useDebouncedFn(fn, options)
+```
+
+### 目标函数 Fn \{#fn}
+
+要进行防抖的函数。
+
+### 选项 Options \{#options}
+
+```tsx
+export type DebounceOptions = {
+  /**
+   * 调用函数前等待的时间
+   *
+   * @defaultValue 0
+   */
+  wait?: number
+  /**
+   * 在超时前立即调用
+   *
+   * @defaultValue false
+   */
+  leading?: boolean
+  /**
+   * 在超时后调用函数
+   *
+   * @defaultValue true
+   */
+  trailing?: boolean
+}
+
+export type UseDebouncedFnOptions = DebounceOptions & {}
+```
+
+### 返回值 Returns \{#returns}
+
+与输入函数相同的带有防抖特性的函数。

@@ -1,28 +1,39 @@
+---
+category: State
+---
+
 # useSafeState
 
 import Admonition from '@theme/Admonition'
 import { HooksType } from '@/components'
 
-<HooksType category="State" />
+<HooksType {...frontmatter} />
 
-A React Hook similar to [React.useState](https://react.dev/reference/react/useState), including an optional deep comparison feature (`false` by default).
+A React Hook similar to [React.useState](https://react.dev/reference/react/useState), but suppresses false warning reports in `React <= 17` and includes an optional deep comparison feature (`deep`, default is `false`). It is designed as a safe and efficient alternative to `React.useState`.
 
-For a detailed explanation on the advantages of `useSafeState`, please refer to the [Safe State](/docs/optimization/safe-state) documentation.
+For a detailed explanation of the advantages of `useSafeState`, see [Safe State](/docs/optimization/safe-state).
 
-## Demo
+## Scenes \{#scenes}
+
+- **State Management**: Used as a replacement for `React.useState`, to avoid false warning reports in `React <= 17`.
+- **Performance Optimization**: Avoids unnecessary re-renders by deeply comparing new and old states (`deep` option, off by default).
+
+## Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## Usage \{#usage}
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
+```tsx
+const [info, setInfo] = useSafeState({ name: 'Bob' }, { deep: true })
 
-<RawCode>{source}</RawCode>
+setInfo({ name: 'Amy' }) // Setting a new value will trigger a re-render
+setInfo({ name: 'Amy' }) // Setting the "same" value again will not trigger a re-render when the deep option is enabled
+```
 
-## Source
+## Source \{#source}
 
 import { Source } from '@/components'
 
@@ -34,17 +45,18 @@ import { Source } from '@/components'
 const [state, setState] = useSafeState(initialState, options)
 ```
 
-### InitialState
+### InitialState \{#initial-state}
 
-The initial state of the state.
+The initial value of the state, the same as [React.useState](https://react.dev/reference/react/useState).
 
-### Options
+### Options \{#options}
 
 ```tsx
 export type UseSafeStateOptions = {
   /**
-   * Deeply compare the new state with the old state before updating.
-   * If true, only update the state when the new state is different from the old state.
+   * Deeply compares the new state with the old one before updating.
+   * 
+   * The state is only updated when the new state is "different" from the old one, to reduce unnecessary re-renders.
    *
    * @defaultValue false
    */
@@ -52,6 +64,6 @@ export type UseSafeStateOptions = {
 }
 ```
 
-### Returns
+### Returns \{#returns}
 
-Same as [React.useState](https://react.dev/reference/react/useState).
+The same as [React.useState](https://react.dev/reference/react/useState).

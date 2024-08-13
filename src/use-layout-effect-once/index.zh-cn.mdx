@@ -1,0 +1,38 @@
+---
+category: Lifecycle
+---
+
+# useLayoutEffectOnce
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+这是一个 React 钩子（Hook），其作用类似于 [useEffectOnce](/reference/use-effect-once)，但是内部使用了 [useIsomorphicLayoutEffect](/reference/use-isomorphic-layout-effect)。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+// 这是 `useIsomorphicLayoutEffect(callback, [])` 的别名，提供了更具语义的名称
+useLayoutEffectOnce(callback)
+```
+
+### 回调 Callback \{#callback}
+
+与 [React.useLayoutEffect](https://react.dev/reference/react/useLayoutEffect) 相同。

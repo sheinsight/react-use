@@ -1,8 +1,13 @@
+---
+category: Lifecycle
+features: ['DevOnly']
+---
+
 # useTrackedEffect
 
 import { HooksType } from '@/components'
 
-<HooksType category="Lifecycle" devOnly />
+<HooksType {...frontmatter} />
 
 A React Hook for detecting dependencies that have **actually changed** between renders.
 
@@ -16,10 +21,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 

@@ -1,8 +1,12 @@
+---
+category: Lifecycle
+---
+
 # useEffectOnce
 
 import { HooksType } from '@/components'
 
-<HooksType category="Lifecycle" />
+<HooksType {...frontmatter} />
 
 A React Hook like [React.useEffect](https://react.dev/reference/react/useEffect) but only run once, equivalent to `useEffect(callback, [])`, but with more **semantic** name. It's merely an alias to `useEffect` with an empty dependency array.
 
@@ -14,10 +18,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 

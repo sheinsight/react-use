@@ -1,7 +1,0 @@
-export * from './input'
-export * from './button'
-export * from './label-input'
-export * from './key-value'
-export * from './key'
-export * from './card'
-export * from './zone'

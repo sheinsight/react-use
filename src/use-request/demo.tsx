@@ -1,6 +1,5 @@
-import { Button, Card, KeyValue, OTP, Zone, cn, wait } from '@/components'
+import { Button, Card, KeyValue, OTP, Toaster, Zone, cn, toast, wait } from '@/components'
 import { mutate, useCounter, useRequest } from '@shined/react-use'
-import { Toaster, toast } from 'react-hot-toast'
 
 export function App() {
   return (

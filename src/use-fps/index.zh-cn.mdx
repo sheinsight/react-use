@@ -1,0 +1,62 @@
+---
+category: Sensors
+features: ['Pausable']
+---
+
+# useFps
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个 React 钩子，用于返回浏览器当前的每秒帧数（Frames Per Second，FPS）。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const { fps, ...controls } = useFps(options)
+```
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseFpsOptions = {
+  /**
+   * 每 x 帧计算一次 FPS。
+   *
+   * @defaultValue 10
+   */
+  every?: number
+}
+```
+
+### 返回值 Returns \{#returns}
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+```tsx
+export type UseFpsReturns = Pausable & {
+  /**
+   * 当前 FPS
+   */
+  fps: number
+}
+```

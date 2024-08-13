@@ -1,0 +1,93 @@
+---
+category: Sensors
+features: ['Pausable', 'IsSupported']
+---
+
+# useGeolocation
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个 React 钩子（Hook），提供了一种简单的方法来获取用户的 [地理位置](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation)。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const geo = useGeolocation(options)
+```
+
+### 选项 Options \{#options}
+
+```tsx
+/**
+ * DOM 内置的地理位置 API 选项
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition#options
+ */
+interface PositionOptions {
+  enableHighAccuracy?: boolean  // 是否启用高精度
+  maximumAge?: number  // 位置信息的最大缓存时间
+  timeout?: number  // 获取位置信息的超时时间
+}
+
+export type UseGeolocationOptions = PositionOptions & {
+  /**
+   * 是否立即开始观察地理位置。
+   *
+   * @defaultValue true
+   */
+  immediate?: boolean
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UseGeolocationReturns = Pausable & {
+  /**
+   * 是否支持地理位置 API。
+   */
+  isSupported: boolean
+  /**
+   * 当前的纬度。
+   */
+  latitude: number
+  /**
+   * 当前的经度。
+   */
+  longitude: number
+  /**
+   * 当前地理位置状态。
+   */
+  isLocating: boolean
+  /**
+   * 地理位置最后更新的时间戳。
+   */
+  locatedAt: number | null
+  /**
+   * 若有的话，错误对象。
+   */
+  error: GeolocationPositionError | null
+  /**
+   * 当前地理位置坐标。
+   */
+  coords: GeolocationPosition['coords']
+}
+```

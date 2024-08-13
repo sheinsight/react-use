@@ -1,8 +1,13 @@
+---
+category: Browser
+features: ['Pausable', 'IsSupported', 'LowLevel']
+---
+
 # usePerformanceObserver
 
 import { HooksType } from '@/components'
 
-<HooksType category="Browser" pausable isSupported lowLevel />
+<HooksType {...frontmatter} />
 
 A React Hook that helps to use [PerformanceObserver API](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver) with ease.
 
@@ -16,10 +21,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 

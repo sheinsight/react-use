@@ -6,92 +6,82 @@ import { useUpdateDeepCompareEffect } from '../use-update-deep-compare-effect'
 import { useUpdateEffect } from '../use-update-effect'
 import { clamp } from '../utils/basic'
 
-export interface UseCounterOptions {
+export type UseCounterOptions = {
   /**
-   * the maximum value of the counter
+   * The maximum value of the counter
    */
   max?: number
   /**
-   * the minimum value of the counter
+   * The minimum value of the counter
    */
   min?: number
 }
 
-export type Count = number
-
 export interface UseCounterReturnsAction {
   /**
-   * increment the counter
-   *
-   * @param {number} [delta=1] - The increment value
+   * Increment the counter
    */
   inc: (delta?: number) => void
   /**
-   * decrement the counter
-   *
-   * @param {number} [delta=1] - The decrement value
+   * Decrement the counter
    */
   dec: (delta?: number) => void
   /**
-   * set the counter
-   *
-   * @param {number} value - The new value
+   * Set the counter
    */
   set: (value: number) => void
   /**
-   * get the counter
-   *
-   * @returns {number} The current value of the counter
+   * Get the counter
    */
   get(): number
   /**
-   * reset the counter
-   *
-   * @param {number} [n] - The reset value
+   * Reset the counter
    */
   reset: (n?: number) => void
+}
+
+export interface UseCounterState {
+  /**
+   * The value of the counter
+   */
+  count: number
+  /**
+   * The maximum value of the counter
+   */
+  max: number
+  /**
+   * The minimum value of the counter
+   */
+  min: number
+  /**
+   * The initial value of the counter
+   */
+  initialCount: number
 }
 
 export type UseCounterReturns = readonly [
   /**
    * The count state of the counter
    */
-  Count,
+  number,
   /**
-   * The actions to control the counter
+   * Functions to control the counter
    */
   UseCounterReturnsAction,
   /**
-   * The whole state of the counter
+   * The full internal state of the counter
    */
-  {
-    /**
-     * The current count of the counter
-     */
-    count: number
-    /**
-     * The maximum value of the counter
-     */
-    max: number
-    /**
-     * The minimum value of the counter
-     */
-    min: number
-    /**
-     * The initial count of the counter
-     */
-    initialCount: number
-  },
+  UseCounterState,
 ]
 
 /**
- * A React Hook that provides a counter with increment, decrement and reset functions.
+ * A React hook that provides a counter with increment, decrement, and reset functionalities.
  *
  * @param {number} [initialCount=0] - `number`, The initial value of the counter
  * @param {UseCounterOptions} [options] - `UseCounterOptions`, The options of the counter, see {@link UseCounterOptions}
  */
 export function useCounter(initialCount?: number, options: UseCounterOptions = {}): UseCounterReturns {
-  const [state, setState] = useSetState(
+  const [state, setState] = useSetState<UseCounterState>(
     {
       initialCount: initialCount ?? 0,
       count: initialCount ?? 0,

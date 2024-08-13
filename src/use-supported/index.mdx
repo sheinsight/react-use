@@ -1,8 +1,13 @@
+---
+category: Utilities
+features: ['IsSupported', 'LowLevel']
+---
+
 # useSupported
 
 import { HooksType } from '@/components'
 
-<HooksType category="Utilities" isSupported lowLevel />
+<HooksType {...frontmatter} />
 
 A React Hook that helps to check if browser supports a feature in both client and Server-side Rendering (SSR).
 
@@ -14,10 +19,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 

@@ -1,0 +1,90 @@
+---
+category: Animation
+features: ['Pausable']
+---
+
+# useSpringValue
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个返回 **spring 值** 的 React 钩子。
+
+> Spring 值：随时间变化模拟弹簧物理特性的动态值。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const spring = useSpringValue(start, end, options)
+```
+
+### 起始值 Start \{#start}
+
+`number`, 弹簧的起始值。
+
+### 终止值 End \{#end}
+
+`number`, 弹簧的终止值。
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseSpringValueConfig = {
+  /**
+   * 弹簧的刚度。
+   */
+  stiffness?: number
+  /**
+   * 弹簧的阻尼。
+   */
+  damping?: number
+  /**
+   * 弹簧的质量。
+   */
+  mass?: number
+  /**
+   * 是否立即触发。
+   */
+  immediate?: boolean
+  /**
+   * 弹簧动画的精度。
+   */
+  precision?: number
+}
+```
+
+### 返回值 Returns \{#returns}
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+```tsx
+export type UseSpringValueReturns = Pausable & {
+  /**
+   * 弹簧的当前值。
+   */
+  value: number
+  /**
+   * 重启弹簧。
+   */
+  restart(): void
+}
+```

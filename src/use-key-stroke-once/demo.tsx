@@ -1,6 +1,5 @@
-import { Card, Key, KeyValue } from '@/components'
+import { Card, Key, KeyValue, Toaster, toast } from '@/components'
 import { useCounter, useKeyStatus, useKeyStrokeOnce, useUnmount } from '@shined/react-use'
-import { Toaster, toast } from 'react-hot-toast'
 
 export function App() {
   const [times, actions] = useCounter()

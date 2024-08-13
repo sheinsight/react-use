@@ -1,8 +1,13 @@
+---
+category: Sensors
+features: ['Pausable']
+---
+
 # useFps
 
 import { HooksType } from '@/components'
 
-<HooksType category="Sensors" pausable />
+<HooksType {...frontmatter} />
 
 A React Hook that returns the current frames per second (FPS) of the browser.
 
@@ -14,10 +19,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 

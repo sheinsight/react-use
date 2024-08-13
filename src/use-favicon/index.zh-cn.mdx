@@ -1,0 +1,95 @@
+---
+category: Browser
+---
+
+# useFavicon
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个用于改变页面 favicon 的 React Hook。
+
+## 演示 Demo \{#deno}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const [favicon, actions] = useFavicon(iconLink, options)
+```
+
+### 图标链接 IconLink \{#icon-link}
+
+`string | null | undefined`，favicon 的 URL （如果设置了 `baseUrl`，则为路径）。
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseFaviconOptions = {
+  /**
+   * favicon 的基础 URL
+   *
+   * @defaultValue ''
+   */
+  baseUrl?: string
+  /**
+   * favicon 链接元素的 rel 属性
+   *
+   * @defaultValue 'icon'
+   */
+  rel?: string
+  /**
+   * 在挂载时同步 document `<link rel='icon' />` 中的 favicon 到 hooks 状态
+   *
+   * @defaultValue true
+   */
+  syncOnMount?: boolean
+  /**
+   * 在卸载时恢复到之前的 favicon
+   *
+   * @defaultValue false
+   */
+  restoreOnUnmount?: boolean
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export interface UseFaviconReturns {
+  /**
+   * 当前 favicon 的 URL
+   */
+  href: string | null
+  /**
+   * 设置 favicon 的 URL
+   */
+  setFavicon: ReactSetState<string | null>
+  /**
+   * 同步 document 中的 `<link rel='icon' />` 到 hooks 状态中的 favicon
+   */
+  syncFavicon(): void
+  /**
+   * 将 favicon 设置为一个 emoji
+   */
+  setEmojiFavicon: (emoji: string) => void
+  /**
+   * 将 favicon 设置回之前的 favicon
+   */
+  setPreviousFavicon(): void
+}
+```

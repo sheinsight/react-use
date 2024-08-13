@@ -1,0 +1,77 @@
+---
+category: Browser
+features: ['IsSupported']
+---
+
+# useBrowserMemory
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+这是一个用于获取浏览器内存信息的 React 钩子。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const memory = useBrowserMemory(options)
+```
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseBrowserMemoryOptions = UseIntervalFnOptions & {
+  interval?: number
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UseBrowserMemoryReturns = {
+  /**
+   * 最后一次更新内存信息的时间戳。
+   */
+  timestamp: number
+  /**
+   * 内存信息。
+   */
+  memory: MemoryInfo | undefined
+  /**
+   * 可以提供给上下文的堆的最大大小，以字节为单位。
+   */
+  jsHeapSizeLimit: number
+  /**
+   * 总分配堆大小，以字节为单位。
+   */
+  totalJSHeapSize: number
+  /**
+   * 已使用堆大小，以字节为单位。
+   */
+  usedJSHeapSize: number
+  /**
+   * 浏览器是否支持 `Performance.memory` API。
+   */
+  isSupported: boolean
+  /**
+   * 更新内存信息。
+   */
+  update(): void
+}
+```

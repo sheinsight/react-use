@@ -1,0 +1,59 @@
+---
+category: Browser
+features: ['LowLevel']
+---
+
+# useMediaQuery
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个用于跟踪 CSS 媒体查询/多个媒体查询状态的 React Hook。
+
+## 演示 Demo \{#demo}
+
+尝试调整窗口大小以查看效果。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const query = useMediaQuery(queryString, options)
+const [...queries] = useMediaQuery([...queryStrings], options)
+```
+
+### 查询字符串 QueryString \{#query-string}
+
+一个媒体查询 `字符串`，或多个媒体查询 `字符串` 的数组。
+
+### 选项 Options \{#options}
+
+`AddEventListenerOptions` 是 `useEventListener` 的选项，请查看 [useEventListener#options](/reference/use-event-listener/#options) 了解更多细节。
+
+```tsx
+export type UseMediaQueryOptions = AddEventListenerOptions & {}
+```
+
+### 返回值 Returns \{#returns}
+
+如果 `queryString` 是一个 `字符串`，返回一个 `布尔` 值，指示媒体查询是否匹配。
+
+如果 `queryString` 是一个数组，返回一个 `布尔` 值数组，指示媒体查询是否匹配。
+
+```tsx
+export type UseMediaQueryReturns<T, R> = R extends T[] ? boolean[] : boolean
+```

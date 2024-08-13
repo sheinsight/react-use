@@ -1,8 +1,13 @@
+---
+category: Utilities
+features: ['Pausable']
+---
+
 # useTimeAgo
 
 import { HooksType } from '@/components'
 
-<HooksType category="Utilities" pausable />
+<HooksType {...frontmatter} />
 
 A React Hook that helps to format a date to a human-readable time ago string. It will automatically update the time ago string every 30 seconds by default.
 
@@ -14,10 +19,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 

@@ -1,0 +1,99 @@
+---
+category: Utilities
+---
+
+# useControlledComponent
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个 React Hook，帮助你管理受控组件，这些组件接收满足以下类型的 `value` 和 `onChange` 属性。
+
+
+```tsx
+export interface ControlledComponentProps<T> = {
+  /**
+   * 受控组件的值
+   */
+  value: T
+  /**
+   * 当受控组件的值发生变化时调用的回调
+   */
+  onChange: (eventOrValue: T | { target: { value: T } }) => void
+}
+```
+
+## 演示 Demo \{#demo}
+
+尝试清除输入并输入一些内容。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const input = useControlledComponent(initialValue, options)
+```
+
+### 初始值 InitialValue \{#initial-value}
+
+组件的初始值，可以是 `string`、`number`、`boolean`、`object`、`array` 等。
+
+### 选项 Options \{#options}
+
+```tsx
+export interface UseControlledComponentOptions<T = string, P extends object = object> extends UseSafeStateOptions {
+  /**
+   * 当受控组件的值发生变化时调用的回调
+   */
+  onChange?: (value: T, preValue?: T) => void
+  /**
+   * 当受控组件的值被重置时调用的回调
+   */
+  onReset?: (initialValue: T) => void
+  /**
+   * 受控组件的 props
+   */
+  props?: P
+  /**
+   * 受控组件的备用值
+   */
+  fallbackValue?: T
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export interface UseControlledComponentReturns<T> {
+  /**
+   * 受控组件的值
+   */
+  value: T
+  /**
+   * 应传递给受控组件的 props
+   */
+  props: ControlledComponentProps<T>
+  /**
+   * 将受控组件的值重置为初始值
+   */
+  reset(): void
+  /**
+   * 设置受控组件的值
+   */
+  setValue: (value: T) => void
+}
+```

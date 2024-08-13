@@ -1,8 +1,13 @@
+---
+category: Animation
+features: ['Pausable']
+---
+
 # useRafLoop
 
 import { HooksType } from '@/components'
 
-<HooksType category="Animation" pausable />
+<HooksType {...frontmatter} />
 
 A React Hook that helps to run a function on every frame using [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame).
 
@@ -14,10 +19,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 

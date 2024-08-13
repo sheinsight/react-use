@@ -1,0 +1,55 @@
+---
+category: Utilities
+---
+
+# useAsyncLock
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个 React 钩子（Hook），用于创建一个函数，以确保**每次只有一个在运行**，并且提供了一个额外的无效操作回调函数。
+
+## 演示 Demo \{#demo}
+
+快速并重复点击按钮以检查。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const lockedFn = useAsyncLock(asyncFn, onMeetLock)
+```
+
+### 异步函数 AsyncFn \{#async-fn}
+
+一个返回 promise 的函数。
+
+### 遇到锁的回调 OnMeetLock \{#on-meet-lock}
+
+当函数被锁定并再次被调用时将调用的函数。
+
+### 返回值 Returns \{#returns}
+
+一个可以用来确保**每次只有一个在运行**，返回一个 promise，该 promise 解析异步函数的返回值或无效操作回调函数的返回值。
+
+```tsx
+export type UseAsyncLockReturns<T extends AnyFunc, R extends AnyFunc> = (
+  ...args: Parameters<T>
+) => R extends undefined
+  ? Promise<Awaited<ReturnType<T>> | undefined>
+  : Promise<Awaited<ReturnType<T>> | Awaited<ReturnType<R>>>Promise<ReturnType<T>>
+```

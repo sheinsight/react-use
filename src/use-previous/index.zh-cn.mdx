@@ -1,0 +1,67 @@
+---
+category: State
+---
+
+# usePrevious
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个用于保留状态上次一渲染的「**不同的**」值的 React Hook。
+
+## 场景 Scenes \{#scenes}
+
+- **记录上一状态：** 用于记录状态的变化，以便在下一次渲染时进行相关操作。
+- ...
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+```tsx
+const prevState = usePrevious(state)
+
+// 当 state 从 1 变为 2 时，prevState 的值为 1（即 state 变化前的值）
+```
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const previous = usePrevious(state, options)
+```
+
+### 状态 State \{#state}
+
+你希望保持前一个值的状态，可以是任意合法的 JavaScript 类型。
+
+### 选项 Options \{#options}
+
+```tsx
+interface UsePreviousOptions {
+  /**
+   * 一个 `isEqual` 函数，用于比较前一个值和当前值是否相等，默认使用 `Object.is`。
+   *
+   * @param previous 前一个值。
+   * @param current 当前值。
+   * @returns 如果相等则返回 `true`，否则返回 `false`。
+   * 
+   * @defaultValue `Object.is`
+   */
+  isEqual?(previous: any, current: any): boolean
+}
+```
+
+### 返回值 Returns \{#returns}
+
+状态上次一渲染时的不同值。

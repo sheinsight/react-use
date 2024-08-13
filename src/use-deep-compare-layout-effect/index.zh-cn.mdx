@@ -1,0 +1,42 @@
+---
+category: Lifecycle
+features: ['LowLevel']
+---
+
+# useDeepCompareLayoutEffect
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+与 [useDeepCompareEffect](/reference/use-deep-compare-effect) 相同，但是使用 `useLayoutEffect` 替代 `useEffect`。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+useDeepCompareLayoutEffect(callback, deps)
+```
+
+### 回调 Callback \{#callback}
+
+与 [React.useLayoutEffect](https://react.dev/reference/react/useLayoutEffect) 相同。
+
+### 依赖 Deps \{#deps}
+
+与 [React.useLayoutEffect](https://react.dev/reference/react/useLayoutEffect) 相同。

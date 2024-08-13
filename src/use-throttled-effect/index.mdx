@@ -1,8 +1,13 @@
+---
+category: Lifecycle
+features: ['LowLevel']
+---
+
 # useThrottledEffect
 
 import { HooksType } from '@/components'
 
-<HooksType category="Lifecycle" lowLevel />
+<HooksType {...frontmatter} />
 
 A React Hook like [React.useEffect](https://react.dev/reference/react/useEffect), but throttled.
 
@@ -14,10 +19,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 
@@ -41,6 +43,4 @@ Same as [React.useEffect](https://react.dev/reference/react/useEffect).
 
 ### Options
 
-import Link from '@docusaurus/Link'
-
-See <Link to="/reference/use-throttled-fn/#options">Options of `useThrottledFn`</Link>.
+See [Options](/reference/use-throttled-fn/#options) of `useThrottledFn`.

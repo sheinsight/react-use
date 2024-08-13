@@ -1,6 +1,5 @@
-import { Button, Card, Input, Zone } from '@/components'
+import { Button, Card, Input, Toaster, Zone, toast } from '@/components'
 import { useControlledComponent, useUnmount } from '@shined/react-use'
-import { Toaster, toast } from 'react-hot-toast'
 
 // biome-ignore format: no wrap
 interface Item {

@@ -1,0 +1,97 @@
+---
+category: Utilities
+---
+
+# useMemoize
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个 React 钩子，其返回一个函数，该函数对值进行缓存（对于相同的参数返回相同的缓存值）。
+
+## 演示 Demo \{#demo}
+
+尝试多次点击以获取数据，您将看到第一次获取将实际获取数据，但其余的将返回缓存值。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const cachedFn = useMemoize(fnToBeCached, options)
+```
+
+### 被缓存函数 FnToBeCached \{#fn-to-be-cached}
+
+将要被缓存的函数。
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseMemoizeCache<Key, Value> = {
+  get: (key: Key) => Value | undefined
+  set: (key: Key, value: Value) => void
+  has: (key: Key) => boolean
+  delete: (key: Key) => void
+  clear(): void
+}
+
+export type UseMemoizeOptions<Result, Args extends unknown[]> = {
+  /**
+   * 自定义缓存键生成器
+   *
+   * @defaultValue JSON.stringify(args)
+   */
+  getKey?: (...args: Args) => string | number
+  /**
+   * 自定义缓存，可以是 Map 或其他实现了缓存接口的对象
+   *
+   * @defaultValue new Map()
+   */
+  cache?: UseMemoizeCache<CacheKey, Result>
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UseMemoizeReturns<Result, Args extends unknown[]> = {
+  /**
+   * 记忆化函数
+   */
+  (...args: Args): Result
+  /**
+   * 加载数据并用新值替换缓存
+   */
+  load: (...args: Args) => Result
+  /**
+   * 通过参数删除缓存
+   */
+  delete: (...args: Args) => void
+  /**
+   * 清除所有缓存
+   */
+  clear(): void
+  /**
+   * 通过参数获取缓存键
+   */
+  getKey: (...args: Args) => CacheKey
+  /**
+   * 类似于 Map 的缓存对象，您可以直接操作缓存
+   */
+  cache: UseMemoizeCache<CacheKey, Result>
+}
+```

@@ -1,0 +1,65 @@
+---
+category: Element
+features: ['LowLevel']
+---
+
+# useTargetElement
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个 React Hook，通过选择器、ref、元素等方式帮助获取目标元素，SSR 友好。
+
+## 演示 Demo \{#demo}
+
+打开开发者工具以查看日志。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+export function useTargetElement<T extends GlobalTarget>(
+  target: Getterable<T>,
+  options?: UseTargetElementOptions,
+): RefObject<T>
+export function useTargetElement<T extends Element | null>(
+  target: Getterable<T>,
+  options?: UseTargetElementOptions,
+): RefObject<T>
+export function useTargetElement<T extends keyof HTMLElementTagNameMap>(
+  target: Getterable<T>,
+  options?: UseTargetElementOptions,
+): RefObject<HTMLElementTagNameMap[T]>
+export function useTargetElement<T extends keyof SVGElementTagNameMap>(
+  target: Getterable<T>,
+  options?: UseTargetElementOptions,
+): RefObject<SVGElementTagNameMap[T]>
+export function useTargetElement<A extends AtomBaseTarget, T extends ElementTarget<A> = ElementTarget<A>>(
+  target: Getterable<T>,
+  options?: UseTargetElementOptions,
+): RefObject<A>
+export function useTargetElement<
+  R extends GlobalTarget | Element,
+  T extends string | null | undefined | false | MutableRefObject<AtomBaseTarget | undefined> | R,
+>(target: Getterable<T>, options?: UseTargetElementOptions): RefObject<R>
+```
+
+### 元素目标 ElementTarget \{#element-target}
+
+import { Tip } from '@/components'
+
+<Tip type="target" />

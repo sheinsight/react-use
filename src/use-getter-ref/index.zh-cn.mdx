@@ -1,0 +1,57 @@
+---
+category: Lifecycle
+features: ['LowLevel']
+---
+
+# useGetterRef
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个创建可获取 ref 的 React 钩子，一种获取 ref 最新值的函数方式，常用来避免过期闭包问题，同时 ref 不带来额外渲染。
+
+## 演示 Demo \{#demo}
+
+尝试增加计数器，然后弹出最新的 ref 值。
+
+> 注意：ref 值的更改不会触发重新渲染，您应该调用 `render` 来更新 UI。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const [ref, getter] = useGetterRef(initialValue)
+```
+
+### 初始值 InitialValue \{#initial-value}
+
+ref 的初始值。
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UseGetterRefReturns<T> = [
+  /**
+   * 一个可变的 ref 对象，可用于存储值。
+   */
+  ref: React.MutableRefObject<T>,
+  /**
+   * 一个 getter 函数，返回 ref 的当前值。
+   */
+  getter: () => T,
+]
+```

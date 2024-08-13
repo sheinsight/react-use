@@ -1,6 +1,5 @@
-import { Card } from '@/components'
+import { Card, Toaster, toast } from '@/components'
 import { useReConnect } from '@shined/react-use'
-import { Toaster, toast } from 'react-hot-toast'
 
 export function App() {
   useReConnect(() => {

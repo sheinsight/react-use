@@ -1,8 +1,13 @@
+---
+category: Utilities
+features: ['LowLevel']
+---
+
 # useRafFn
 
 import { HooksType } from '@/components'
 
-<HooksType category="Utilities" lowLevel />
+<HooksType {...frontmatter} />
 
 A React Hook that run a function only once on the next frame using [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame).
 
@@ -16,10 +21,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 

@@ -1,8 +1,12 @@
+---
+category: Sensors
+---
+
 # useKeyPress
 
 import { HooksType } from '@/components'
 
-<HooksType category="Sensors" />
+<HooksType {...frontmatter} />
 
 A React Hook that helps to handle `keypress` event.
 
@@ -16,10 +20,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 
@@ -29,9 +30,7 @@ import { Source } from '@/components'
 
 ## API
 
-import Link from '@docusaurus/Link'
-
-It's derivated from `useKeyStroke`, see <Link to="/reference/use-key-stroke">`useKeyStroke`</Link> for more details.
+It's derivated from `useKeyStroke`, see [useKeyStroke](/reference/use-key-stroke) for more details.
 
 ```tsx
 // same as `useKeyStroke(keyFilter, handler, {...options, eventName: 'keypress'})`

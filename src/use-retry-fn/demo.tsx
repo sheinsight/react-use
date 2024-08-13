@@ -1,6 +1,5 @@
-import { Button, Card, wait as mockFetch } from '@/components'
+import { Button, Card, Toaster, wait as mockFetch, toast } from '@/components'
 import { useRetryFn } from '@shined/react-use'
-import { Toaster, toast } from 'react-hot-toast'
 
 export function App() {
   const retryFn = useRetryFn(

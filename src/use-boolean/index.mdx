@@ -1,39 +1,50 @@
+---
+category: State
+---
+
 # useBoolean
 
 import { HooksType, Since } from '@/components'
 
-<HooksType category="State" />
+<HooksType {...frontmatter} />
 
 <Since version="v1.3.0" />
 
-A React Hook that helps to manage a `boolean` state.
+A React Hook for managing `boolean` state.
 
-:::tip
-
-If you need to manage a state that alternates among several values, consider utilizing [useCircularList](/reference/use-circular-list) as an alternative.
-
+:::tip Tip
+If you need to manage the alternating states of multiple values (such as toggling between multiple languages, themes, etc.), it is recommended to use [useCircularList](/reference/use-circular-list).
 :::
 
-## Demo
+## Scenes \{#scenes}
+
+- **Controlling element visibility:** For toggling the visibility of page elements like dialogs and dropdown menus
+- **Form toggle inputs:** Manages the state of toggle-type inputs (e.g., checkboxes) in forms
+- ...
+
+## Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## Usage \{#usage}
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
+```tsx
+const [bool, actions] = useBoolean(false);
 
-<RawCode>{source}</RawCode>
+actions.toggle();
+actions.setTrue();
+actions.setFalse();
+```
 
-## Source
+## Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const [bool, actions] = useBoolean(initialBool)
@@ -41,26 +52,26 @@ const [bool, actions] = useBoolean(initialBool)
 
 ### InitialBool \{#initial-bool}
 
-A `boolean` value that represents the initial state.
+Represents the initial `boolean` value of the state.
 
-### Returns
+### Returns \{#returns}
 
 ```tsx
 export type UseBooleanActions = {
   /**
-   * Set the boolean state to `true`.
+   * Sets the boolean state to `true`.
    */
   setTrue: () => void
   /**
-   * Set the boolean state to `false`.
+   * Sets the boolean state to `false`.
    */
   setFalse: () => void
   /**
-   * Set the boolean state to the given value.
+   * Sets the boolean state to the given value.
    */
   setState: ReactSetState<boolean>
   /**
-   * Toggle the boolean state.
+   * Toggles the boolean state.
    */
   toggle: () => void
 }

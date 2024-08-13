@@ -1,27 +1,53 @@
+---
+category: State
+---
+
 # useClamp
 
 import { HooksType } from '@/components'
 
-<HooksType category="State" />
+<HooksType {...frontmatter} />
 
-A React Hook that clamps a number between a minimum and maximum value.
+A React Hook that clamps a number between a minimum and maximum value, supporting dynamic changes to the value, minimum, and maximum.
 
-It's just a alias of [useCounter](/reference/use-counter) with min and max options.
+Essentially, it's a more semantic version of [useCounter](/reference/use-counter) with `min` and `max` options set.
 
-## Demo
+## Scenes \{#scenes}
+
+- **Handling Count Calculations:** Provides functionality for increasing, decreasing, setting, getting, and resetting counters.
+- **UI Interaction Scenarios:** Implements dynamic updates and displays of quantities on user interfaces, such as the number of items in a shopping cart or carousel sliding.
+- **Form Input Limitations:** Used for limiting the number range within forms or input fields.
+- ...
+
+## Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## Usage \{#usage}
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
+```tsx
+const [count, countActions] = useCount(20)
+// The value to process is 20, the minimum is 1, and the maximum is 16
+const [result, actions] = useClamp(count, 1, 16) 
 
-<RawCode>{source}</RawCode>
+// The result of count is 16 because 20 exceeds the maximum of 16
+console.log(result)
 
-## Source
+// No matter the operations performed by countActions, the returned value of result always stays between 1 and 16
+
+// Also supports all operations of useCounter for direct modification but is likewise constrained by min and max
+actions.inc() 
+actions.inc(2)
+actions.dec()
+actions.dec(2)
+actions.set(10)
+actions.reset()
+actions.reset(12)
+```
+
+## Source \{#source}
 
 import { Source } from '@/components'
 
@@ -29,4 +55,8 @@ import { Source } from '@/components'
 
 ## API
 
-See [useCounter](/reference/use-counter) for more details.
+```tsx
+const [result, actions] = useClamp(count, min, max);
+```
+
+Essentially, it's a more semantic version of [useCounter](/reference/use-counter) with `min` and `max` options set. For more details, refer to [useCounter](/reference/use-counter).

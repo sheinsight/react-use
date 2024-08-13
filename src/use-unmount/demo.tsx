@@ -1,6 +1,5 @@
-import { Button, Card, Zone, wait } from '@/components'
+import { Button, Card, Toaster, Zone, toast, wait } from '@/components'
 import { useToggle, useUnmount } from '@shined/react-use'
-import { Toaster, toast } from 'react-hot-toast'
 
 export function App() {
   const [show, { toggle }] = useToggle(true)

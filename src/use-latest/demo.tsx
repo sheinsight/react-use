@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone, wait as mockFetch } from '@/components'
+import { Button, Card, KeyValue, Toaster, Zone, wait as mockFetch, toast } from '@/components'
 import {
   useCounter,
   useEffectOnce,
@@ -8,7 +8,6 @@ import {
   useUnmount,
   useUpdateEffect,
 } from '@shined/react-use'
-import { Toaster, toast } from 'react-hot-toast'
 
 export function App() {
   const [count, actions] = useCounter(0)

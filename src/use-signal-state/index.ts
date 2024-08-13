@@ -10,7 +10,7 @@ export interface UseSignalStateOptions extends UseSafeStateOptions {}
 export type UseSignalStateReturns<T> = readonly [() => T, ReactSetState<T>]
 
 /**
- * A React Hook that use state like `createSignal` of [Solid](https://www.solidjs.com), **without closure issues**.
+ * A React Hook similar to `createSignal` from [Solid](https://www.solidjs.com), which allows reading the state value via the `state()` method, **avoiding closure issues**.
  */
 export function useSignalState<T>(state: Gettable<T>, options: UseSignalStateOptions = {}): UseSignalStateReturns<T> {
   const [_state, setState] = useSafeState(state, options)

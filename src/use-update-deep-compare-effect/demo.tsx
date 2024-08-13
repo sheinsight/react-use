@@ -1,7 +1,6 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, Card, KeyValue, Toaster, Zone, toast } from '@/components'
 import { useDeepCompareEffect, useUnmount, useUpdateDeepCompareEffect } from '@shined/react-use'
 import { useState } from 'react'
-import { Toaster, toast } from 'react-hot-toast'
 
 export function App() {
   const [state, setState] = useState({ count: 0 })

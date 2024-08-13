@@ -1,44 +1,58 @@
+---
+category: State
+---
+
 # useSetState
 
 import { HooksType } from '@/components'
 
-<HooksType category="State" />
+<HooksType {...frontmatter} />
 
-A React Hook that helps to use state like `this.setState` method of React's legacy class component.
+A React Hook that uses the React Class Component's `this.setState` method for state management.
 
-## Demo
+## Scenes \{#scenes}
+
+- **Closer to Developer Habits:** Similar to the `this.setState` in Class Components, more aligned with developers' previous habits
+- **State Management Scenes:** Implements incremental updates to the component's state without needing to replace the entire state object
+- **Form Handling Scenes:** Manages the state of form items, supports updates to specific fields, facilitating the implementation of complex form logic
+- ...
+
+## Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## Usage \{#usage}
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
+```tsx
+const [info, setInfo] = useSetState({ name: 'Bob', age: 18 }, { deep: true })
 
-<RawCode>{source}</RawCode>
+setInfo({ name: 'Amy' }) // Set new value, only updates the name field, the age field remains unchanged
+setInfo({ age: 20 }) // Set new value, only updates the age field, the name field remains unchanged
+setInfo({ name: 'Amy' }) // Setting the 'same' value again will not trigger a re-render. Reference to options in useSafeState.
+```
 
-## Source
+## Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const [state, setState] = useSetState(initialState, options)
 ```
 
-### InitialState
+### Initial State \{#initial-state}
 
-Same as [React.useState](https://react.dev/reference/react/useState).
+The same as [React.useState](https://react.dev/reference/react/useState).
 
-### Options
+### Options \{#options}
 
-See [useSafeState#options](/reference/use-safe-state/#options) for more details.
+For more details, refer to [useSafeState#options](/reference/use-safe-state/#options).
 
-### Returns
+### Returns \{#returns}
 
-Same as [React.useState](https://react.dev/reference/react/useState).
+The same as [React.useState](https://react.dev/reference/react/useState).

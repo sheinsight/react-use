@@ -1,0 +1,146 @@
+---
+category: ProUtilities
+---
+
+# useManualStateHistory
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个 React 钩子 (Hook)，允许您手动管理状态的历史记录。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API  \{#api}
+
+```tsx
+const history = useManualStateHistory(state, options)
+```
+
+### 状态 State \{#state}
+
+任何可序列化的源状态值，用于记录在历史中。
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseManualStateHistoryOptions<Raw, Serialized = Raw> = {
+  /**
+   * 历史记录的容量
+   *
+   * @defaultValue Number.POSITIVE_INFINITY
+   */
+  capacity?: number
+  /**
+   * 是否克隆源状态
+   *
+   * @defaultValue false
+   */
+  clone?: boolean | CloneFn<Raw>
+  /**
+   * 节流选项
+   *
+   * @defaultValue undefined
+   */
+  throttle?: number | UseThrottledFnOptions
+  /**
+   * 防抖选项
+   *
+   * @defaultValue undefined
+   */
+  debounce?: number | UseDebouncedFnOptions
+  /**
+   * 序列化源状态的转储函数
+   *
+   * @defaultValue (v) => v
+   */
+  dump?: (v: Raw) => Serialized
+  /**
+   * 反序列化序列化状态的解析函数
+   *
+   * @defaultValue (v) => v
+   */
+  parse?: (v: Serialized) => Raw
+}
+```
+
+`UseThrottledFnOptions` 是 `useThrottledFn` 的选项，参见 [useThrottledFn](/reference/use-throttled-fn/#options)。
+
+`UseDebouncedFnOptions` 是 `useDebouncedFn` 的选项，参见 [useDebouncedFn](/reference/use-debounced-fn/#options)。
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UseRefHistoryRecord<T> = {
+  /**
+   * 序列化快照
+   */
+  snapshot: T
+  /**
+   * 时间戳
+   */
+  timestamp: number
+}
+
+export type UseManualStateHistoryReturns<Raw, Serialized> = {
+  /**
+   * 源状态
+   */
+  source: Raw
+  /**
+   * 历史记录
+   */
+  history: UseRefHistoryRecord<Serialized>[]
+  /**
+   * 最后的历史记录
+   */
+  last: UseRefHistoryRecord<Serialized>
+  /**
+   * 可撤销的栈
+   */
+  undoStack: UseRefHistoryRecord<Serialized>[]
+  /**
+   * 可重做的栈
+   */
+  redoStack: UseRefHistoryRecord<Serialized>[]
+  /**
+   * 是否能撤销或重做
+   */
+  canUndo: boolean
+  /**
+   * 是否能重做或撤销
+   */
+  canRedo: boolean
+  /**
+   * 撤销最后的变更
+   */
+  undo(): void
+  /**
+   * 重做最后的变更
+   */
+  redo(): void
+  /**
+   * 清除所有历史记录
+   */
+  clear(): void
+  /**
+   * 将当前源状态提交到历史记录中
+   */
+  commit(): void
+}
+```

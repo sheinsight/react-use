@@ -28,7 +28,7 @@ export function App() {
       <div
         id="drag-me"
         style={draggable.style}
-        className="grid w-48 h-24 text-lg text-white rounded z-100 place-content-center cursor-grabbing bg-primary/80"
+        className="z-99999999999 grid w-48 h-24 text-lg text-white rounded z-100 place-content-center cursor-grabbing bg-primary/80"
       >
         <div>{draggable.isDragging ? 'Yolo!!!' : 'Drag to move'}</div>
         <div>
@@ -40,7 +40,7 @@ export function App() {
         <div
           id="drag-me-inner"
           style={draggableInner.style}
-          className="grid w-48 h-24 text-lg text-white rounded z-100 place-content-center cursor-grabbing bg-primary/80"
+          className="z-99999999999 grid w-48 h-24 text-lg text-white rounded z-100 place-content-center cursor-grabbing bg-primary/80"
         >
           <div>{draggableInner.isDragging ? 'Yolo (inner)!!!' : 'Drag to move (inner)'}</div>
           <div>

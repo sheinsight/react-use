@@ -1,0 +1,79 @@
+---
+category: Browser
+features: ['Pausable', 'IsSupported', 'LowLevel']
+---
+
+# useReportingObserver
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个 React 钩子（Hook），帮助您方便地使用 [ReportingObserver API](https://developer.mozilla.org/en-US/docs/Web/API/ReportingObserver) 报告错误和警告。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const { observerRef, isSupported, ...controls } = useReportingObserver(callback, options)
+```
+
+### 回调函数 Callback \{#callback}
+
+`ReportingObserverCallback` 函数，当观测器被触发时会调用此函数。
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseWebObserverOptions = {
+  /**
+   * 调用此函数后立即启动观测器
+   *
+   * @defaultValue true
+   */
+  immediate?: boolean
+}
+
+interface ReportingObserverOptions {
+  buffered?: boolean
+  types?: string[]
+}
+
+export interface UseReportingObserverOptions extends UseWebObserverOptions, ReportingObserverOptions {}
+```
+
+### 返回值 Returns \{#returns}
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+```tsx
+export type UseWebObserverReturns<Observer> = Pausable & {
+  /**
+   * 保存观测器实例的 ref
+   */
+  observerRef: React.MutableRefObject<Observer | null>
+  /**
+   * 检查当前环境是否支持观测器
+   */
+  isSupported: boolean
+}
+
+export interface UseReportingObserverReturns extends UseWebObserverReturns<ReportingObserver> {}
+```

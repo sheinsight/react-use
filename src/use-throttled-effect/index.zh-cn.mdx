@@ -1,0 +1,46 @@
+---
+category: Lifecycle
+features: ['LowLevel']
+---
+
+# useThrottledEffect
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个像 [React.useEffect](https://react.dev/reference/react/useEffect) 的 React 钩子，但是进行了节流。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+useThrottledEffect(callback, deps, options)
+```
+
+### 回调函数 Callback \{#callback}
+
+与 [React.useEffect](https://react.dev/reference/react/useEffect) 相同。
+
+### 依赖项 Deps \{#deps}
+
+与 [React.useEffect](https://react.dev/reference/react/useEffect) 相同。
+
+### 选项 Options \{#options}
+
+参见 `useThrottledFn` 的 [Options](/reference/use-throttled-fn/#options)。

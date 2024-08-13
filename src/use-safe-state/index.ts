@@ -13,6 +13,7 @@ export type ReactSetState<T> = Dispatch<SetStateAction<T>>
 export type UseSafeStateOptions = {
   /**
    * Deeply compare the new state with the old state before updating.
+   *
    * If true, only update the state when the new state is different from the old state.
    *
    * @defaultValue false
@@ -21,12 +22,15 @@ export type UseSafeStateOptions = {
 }
 
 /**
- * A React Hook similar to [React.useState](https://react.dev/reference/react/useState), including an optional deep comparison feature (`false` by default).
+ * A React Hook similar to [React.useState](https://react.dev/reference/react/useState), but suppresses false warning reports in `React <= 17`
  *
- * For a detailed explanation on the advantages of `useSafeState`, please refer to the [Safe State](https://sheinsight.github.io/react-use/docs/optimization/safe-state) documentation.
+ * And includes an optional deep comparison feature (`deep`, default is `false`). It is designed as a safe and efficient alternative to `React.useState`.
  */
-export function useSafeState<T>(initialState: Gettable<T>, options?: UseSafeStateOptions): [T, ReactSetState<T>]
-export function useSafeState<T = undefined>(): [T | undefined, ReactSetState<T | undefined>]
+export function useSafeState<T>(
+  initialState: Gettable<T>,
+  options?: UseSafeStateOptions,
+): readonly [T, ReactSetState<T>]
+export function useSafeState<T = undefined>(): readonly [T | undefined, ReactSetState<T | undefined>]
 export function useSafeState<T>(initialState?: Gettable<T>, options?: UseSafeStateOptions) {
   const { deep = false } = options ?? {}
   const isUnmounted = useUnmounted()

@@ -1,0 +1,85 @@
+---
+category: State
+---
+
+# useToggle
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个用于管理可切换（togglable）的状态的 React Hook。
+
+:::tip 小提示
+如果你需要管理多个值的循环交替状态（如切换多语言、多主题等），建议使用 [useCircularList](/reference/use-circular-list)。
+:::
+
+## 场景 Scenes \{#scenes}
+
+- **状态切换场景：** 快速在两个状态间切换，如主题切换（暗模式/亮模式）
+- **表单项选择：** 在选项中管理状态，如性别选择（男/女）
+- **开闭/启用禁用：** 切换开/闭状态，启用/禁用等（推荐直接使用 [useBoolean](/reference/use-boolean)）
+- ...
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+```tsx
+const [value, actions] = useToggle(['value 1', 'value 2'])
+
+actions.toggle() // 切换状态
+actions.setLeft() // 设置状态为左值
+actions.setRight() // 设置状态为右值
+actions.setState('value 1') // 设置状态为一个具体值
+```
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const [bool, actions] = useToggle(bool)
+const [value, actions] = useToggle([one, theOther])
+```
+
+### 参数 Parameters \{#parameters}
+
+它接受一个或两个参数：
+
+- `bool`：一个 `boolean` 值，是状态的初始值，将在 `true` 和 `false` 之间切换。
+
+- `one`, `theOther`：状态切换的两个值。
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export interface UseToggleReturnsActions<O, T> {
+  /**
+   * 切换状态。
+   */
+  toggle(): void
+  /**
+   * 设置状态为左值。
+   */
+  setLeft(): void
+  /**
+   * 设置状态为右值。
+   */
+  setRight(): void
+  /**
+   * 设置状态为一个新值。
+   */
+  setState: ReactSetState<O | T>
+}
+
+export type UseToggleReturns<O, T> = [O | T, UseToggleReturnsActions<O, T>]
+```

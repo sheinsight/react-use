@@ -1,0 +1,107 @@
+---
+category: Utilities
+features: ['Pausable']
+---
+
+# useTimeAgo
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个 React Hook，可帮助将日期格式化为易读的多久之前字符串。默认情况下，它会每 30 秒自动更新一次这个多久之前的字符串。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const timeAgo = useTimeAgo(dateLike, options)
+const { timeAgo, ...pausable } = useTimeAgo(dateLike, { controls: true, ...otherOptions })
+```
+
+### 元素目标 ElementTarget \{#element-target}
+
+```tsx
+// 类似于 new Date(), 1_612_137_600_000, '2021-01-01', undefined, null
+export type DateLike = Date | number | string | undefined | null
+```
+
+### 选项 Options \{#options}
+
+```tsx
+export type FormatTimeAgoOptions<UnitNames extends string = TimeAgoUnitNamesDefault> = {
+  /**
+   * 最大单位（毫秒差异），超过则显示完整日期而非相对时间
+   *
+   * @defaultValue undefined
+   */
+  max?: UnitNames | number
+  /**
+   * 完整日期的格式化器
+   */
+  fullDateFormatter?: TimeAgeFullDateFormatter
+  /**
+   * 格式化字符串的消息
+   */
+  messages?: TimeAgoMessages<UnitNames>
+  /**
+   * 最小显示时间单位（默认是分钟）
+   *
+   * @defaultValue false
+   */
+  showSecond?: boolean
+  /**
+   * 应用的舍入方法。
+   *
+   * @defaultValue 'round'
+   */
+  rounding?: 'round' | 'ceil' | 'floor' | number
+  /**
+   * 自定义单位
+   */
+  units?: TimeAgoUnit<UnitNames>[]
+}
+
+export interface UseTimeAgoOptions<Controls extends boolean, UnitNames extends string = TimeAgoUnitNamesDefault>
+  extends FormatTimeAgoOptions<UnitNames> {
+  /**
+   * 公开更多控制项
+   *
+   * @defaultValue false
+   */
+  controls?: Controls
+  /**
+   * 更新间隔，设为 0 禁用自动更新
+   *
+   * @defaultValue 30_000
+   */
+  updateInterval?: number
+}
+```
+
+### 返回值 Returns \{#returns}
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+```tsx
+export type UseTimeAgoReturns<Controls extends boolean = false> = Controls extends true
+  ? { timeAgo: string } & Pausable
+  : string
+```

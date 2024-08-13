@@ -1,0 +1,71 @@
+---
+category: Lifecycle
+---
+
+# useAsyncEffect
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个类似于 [React.useEffect](https://react.dev/reference/react/useEffect) 的 React Hook，但支持**可取消**的**异步**函数。
+
+:::warning 注意
+它不应该返回一个清理函数，因为它是 `async` 的，无法同步返回清理函数并按预期进行清理。
+
+如果你需要清理一些东西，请在 `UseAsyncEffectCallback` 中使用 `isCancelled()` 来检查 Effect 的状态。
+:::
+
+## 场景 Scenes \{#scenes}
+
+- **异步数据请求场景：** 实现页面加载时或依赖项更改时的异步数据请求
+- **状态更新监控场景：** 在依赖项状态更新后执行异步状态同步更新操作
+- **资源清理及取消操作场景：** 通过 `isCancelled()` 实现 Effect 结束时的异步操作取消和资源清理
+- ...
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+```tsx
+useAsyncEffect(async () => {}, [state])
+
+
+useAsyncEffect(async (isCancelled) => {
+  // do something async
+
+  if(isCancelled()) return
+  
+  // do something when effect is not cancelled
+}, [state])
+```
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+useAsyncEffect(asyncCallback, deps)
+```
+
+### 异步回调 AsyncCallback \{#async-callback}
+
+一个 Effect 回调，支持**异步**函数，但不支持返回清理函数。
+
+```tsx
+export type AsyncEffectCallback = (isCancelled: () => boolean) => void
+
+export type UseAsyncEffectCallback = AsyncEffectCallback
+```
+
+### 依赖项 Deps \{#deps}
+
+与 [React.useEffect](https://react.dev/reference/react/useEffect) 相同。

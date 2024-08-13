@@ -25,18 +25,23 @@ export function App() {
     <Card>
       <KeyValue label="Loading">{loading}</KeyValue>
       <Zone>
-        {/* biome-ignore format: for demo */}
-        <Button disabled={loading} onClick={fetchUser.run}>fetchUser</Button>
-        {/* biome-ignore format: for demo */}
-        <Button disabled={loading} onClick={fetchPost.run}>fetchPost</Button>
-        {/* biome-ignore format: for demo */}
-        <Button disabled={loading} onClick={fetchComment.run}>fetchComment</Button>
-        {/* biome-ignore format: for demo */}
-        <Button disabled={loading} onClick={fnWithError.run}>Fetch with Error</Button>
+        <Button disabled={loading} onClick={fetchUser.run}>
+          fetchUser
+        </Button>
+        <Button disabled={loading} onClick={fetchPost.run}>
+          fetchPost
+        </Button>
+        <Button disabled={loading} onClick={fetchComment.run}>
+          fetchComment
+        </Button>
+        <Button disabled={loading} onClick={fnWithError.run}>
+          Fetch with Error
+        </Button>
       </Zone>
       <Zone>
-        {/* biome-ignore format: for demo */}
-        <Button disabled={loading} onClick={() => fetchOutsideReact(OTP())}>Fetch outside React</Button>
+        <Button disabled={loading} onClick={() => fetchOutsideReact(OTP())}>
+          Fetch outside React
+        </Button>
         <Button onClick={() => fetchUser.setLoading(!loading)}>Toggle via Hook</Button>
         <Button onClick={() => pageLoading.set(!loading)}>Toggle via instance</Button>
       </Zone>

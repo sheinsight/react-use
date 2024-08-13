@@ -1,0 +1,93 @@
+---
+category: Sensors
+---
+
+# useMousePressed
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个用于跟踪鼠标按压状态的 React Hook。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { pressed, sourceType } = useMousePressed(elementTarget, options)
+```
+
+### 元素目标 ElementTarget \{#element-target}
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### 选项 Options \{#options}
+
+```tsx
+export type MousePressedOptions = {
+  /**
+   * 是否监听触摸事件
+   *
+   * @defaultValue true
+   */
+  touch?: boolean
+  /**
+   * 是否监听拖拽事件
+   *
+   * @defaultValue true
+   */
+  drag?: boolean
+  /**
+   * 是否使用事件捕获
+   *
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#capture MDN - addEventListener#capture}
+   *
+   * @defaultValue false
+   */
+  capture?: boolean
+  /**
+   * 鼠标按压的初始值
+   *
+   * @defaultValue false
+   */
+  initialValue?: boolean
+  /**
+   * 目标元素
+   *
+   * @defaultValue () => window
+   */
+  target?: ElementTarget
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UseMousePressedReturns = {
+  /**
+   * 鼠标是否被按压
+   */
+  pressed: boolean
+  /**
+   * 鼠标按压的来源类型
+   */
+  sourceType: UseMouseSourceType
+}
+```

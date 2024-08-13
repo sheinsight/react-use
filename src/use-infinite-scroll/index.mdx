@@ -1,8 +1,12 @@
+---
+category: ProUtilities
+---
+
 # useInfiniteScroll
 
 import { HooksType } from '@/components'
 
-<HooksType category="ProUtilities" />
+<HooksType {...frontmatter} />
 
 A React Hook that allows you to use infinite scroll in your components.
 
@@ -14,10 +18,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 
@@ -38,8 +39,6 @@ import { Tip } from '@/components'
 <Tip type="target" />
 
 ### Options
-
-import Link from '@docusaurus/Link'
 
 ```tsx
 export type UseInfiniteScrollOptions<T extends HTMLElement = HTMLElement> = {

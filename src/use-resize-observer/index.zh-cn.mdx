@@ -1,0 +1,81 @@
+---
+category: Element
+features: ['LowLevel']
+---
+
+# useResizeObserver
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个 React 钩子（Hook），用来利用 [ResizeObserver API](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver) 观察元素大小的变化。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const { observerRef, isSupported, ...controls } = useResizeObserver(callback, options)
+```
+
+### 回调函数 Callback \{#callback}
+
+`ResizeObserverCallback` 函数，当观察者被触发时将被调用。
+
+### 选项 Options \{#options}
+
+```tsx
+export interface UseWebObserverOptions {
+  /**
+   * 在调用此函数后立即开始观察
+   *
+   * @defaultValue true
+   */
+  immediate?: boolean
+}
+
+interface ResizeObserverOptions {
+  box?: ResizeObserverBoxOptions
+}
+
+export interface UseResizeObserverOptions extends UseWebObserverOptions, ResizeObserverOptions {
+  /** @defaultValue 'content-box' */
+  box?: ResizeObserverBoxOptions
+}
+```
+
+### 返回值 Returns \{#returns}
+
+import { Tip } from '@/components'
+
+<Tip type="pausable" />
+
+```tsx
+export type UseWebObserverReturns<Observer> = Pausable & {
+  /**
+   * 保存观察者实例的 ref
+   */
+  observerRef: React.MutableRefObject<Observer | null>
+  /**
+   * 检查当前环境是否支持观察者
+   */
+  isSupported: boolean
+}
+
+export interface UseResizeObserverReturns extends Pausable, UseWebObserverReturns<ResizeObserver> {}
+```

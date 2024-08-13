@@ -1,8 +1,12 @@
+---
+category: Browser
+---
+
 # useBeforeUnload
 
 import { HooksType } from '@/components'
 
-<HooksType category="Browser" />
+<HooksType {...frontmatter} />
 
 A React Hook to perform actions **before the page is unloaded** (e.g., closing, refreshing the page) and optionally trigger a browser-native confirmation dialog. set `preventDefault` to `true` to show the confirm leave dialog.
 
@@ -16,10 +20,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 

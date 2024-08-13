@@ -1,8 +1,13 @@
+---
+category: Lifecycle
+features: ['LowLevel']
+---
+
 # useAsyncUpdateEffect
 
 import { HooksType } from '@/components'
 
-<HooksType category="Lifecycle" lowLevel />
+<HooksType {...frontmatter} />
 
 A React Hook which is like [useAsyncEffect](/reference/use-async-effect) but **ignore the execution at first mount**.
 
@@ -22,10 +27,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 

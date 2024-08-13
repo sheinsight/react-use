@@ -1,8 +1,13 @@
+---
+category: Lifecycle
+features: ['Pausable', 'LowLevel']
+---
+
 # usePausableLayoutEffect
 
 import { HooksType } from '@/components'
 
-<HooksType category="Lifecycle" pausable lowLevel />
+<HooksType {...frontmatter} />
 
 A React Hook like [React.useLayoutEffect](https://react.dev/reference/react/useLayoutEffect), but pausable.
 
@@ -14,10 +19,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 

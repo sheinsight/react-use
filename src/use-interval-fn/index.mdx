@@ -1,8 +1,13 @@
+---
+category: Animation
+features: ['Pausable']
+---
+
 # useIntervalFn
 
 import { HooksType } from '@/components'
 
-<HooksType category="Animation" pausable />
+<HooksType {...frontmatter} />
 
 A React Hook that create a function that will be called every `interval` milliseconds.
 
@@ -14,10 +19,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 

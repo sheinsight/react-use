@@ -1,0 +1,111 @@
+---
+category: Element
+---
+
+# useElementBounding
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+`useElementBounding` 是一个 React 钩子（Hook），它返回一个元素的 [边界客户端矩形（bounding client rect）](https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect)。
+
+## 演示 Demo \{#demo}
+
+尝试滚动页面或调整 textarea 的大小，以查看状态的变化。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const { update, ...bounding } = useElementBounding(elementTarget, options)
+```
+
+### 元素目标 ElementTarget \{#element-target}
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseElementBoundingOptions = {
+  /**
+   * 当找不到元素时重置边界框
+   *
+   * @defaultValue true
+   */
+  reset?: boolean
+  /**
+   * 当窗口大小调整时更新边界框
+   *
+   * @defaultValue true
+   */
+  windowResize?: boolean
+  /**
+   * 当窗口滚动时更新边界框
+   *
+   * @defaultValue true
+   */
+  windowScroll?: boolean
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UseElementBoundingReturns = [
+  {
+    /**
+     * 元素的高度
+     */
+    height: number
+    /**
+     * 元素的底部位置
+     */
+    bottom: number
+    /**
+     * 元素的左侧位置
+     */
+    left: number
+    /**
+     * 元素的右侧位置
+     */
+    right: number
+    /**
+     * 元素的顶部位置
+     */
+    top: number
+    /**
+     * 元素的宽度
+     */
+    width: number
+    /**
+     * 元素的 x 位置
+     */
+    x: number
+    /**
+     * 元素的 y 位置
+     */
+    y: number
+  },
+  /**
+   * 更新元素的边界框
+   */
+  update: () => void,
+]
+```

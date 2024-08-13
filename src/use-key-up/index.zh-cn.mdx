@@ -1,0 +1,38 @@
+---
+category: Sensors
+---
+
+# useKeyUp
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个 React 钩子（Hook），用于处理 `keyup` 事件。
+
+## 演示 Demo \{#demo}
+
+尝试按 `Enter` 键来增加计数器。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+它是从 `useKeyStroke` 派生的，有关更多详情，请参见 [useKeyStroke](/reference/use-key-stroke)。
+
+```tsx
+// 与 `useKeyStroke(keyFilter, handler, {...options, eventName: 'keyup'})` 相同
+const stop = useKeyUp(keyFilter, handler, options)
+```

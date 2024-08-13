@@ -1,8 +1,13 @@
+---
+category: Browser
+features: ['IsSupported']
+---
+
 # useEyeDropper
 
 import { HooksType } from '@/components'
 
-<HooksType category="Browser" isSupported />
+<HooksType {...frontmatter} />
 
 A React Hook that allows you to use the eye dropper tool to get the color of a pixel on the screen.
 
@@ -14,10 +19,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 

@@ -1,8 +1,13 @@
+---
+category: Browser
+features: ['IsSupported']
+---
+
 # useClipboardItems
 
 import { HooksType } from '@/components'
 
-<HooksType category="Browser" isSupported />
+<HooksType {...frontmatter} />
 
 Almost same as [useClipboard](/reference/use-clipboard), but support multiple items via [ClipboardItem](https://developer.mozilla.org/en-US/docs/Web/API/ClipboardItem).
 
@@ -14,10 +19,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 

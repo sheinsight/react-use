@@ -1,0 +1,112 @@
+---
+category: Browser
+---
+
+# useBreakpoints
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个 React 钩子（Hook），提供了一个简单的 API，用于与视口断点进行交互。
+
+## 演示 Demo \{#demo}
+
+调整窗口大小以检查。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const bps = useBreakpoints(breakpoints, options)
+```
+
+### 断点 Breakpoints \{#breakpoints}
+
+```tsx
+/**
+ * 一个包含不同断点的对象
+ */
+export type Breakpoints<K extends string = string> = Record<K, number | string>
+```
+
+### 选项 Options \{#options}
+
+```tsx
+export interface UseBreakpointsOptions {
+  /**
+   * 用于生成快捷方法（如 `.lg`）的查询策略
+   *
+   * 'min-width' - 当视口大于或等于 lg 断点时，`.lg` 将为 true （移动端优先）
+   * 'max-width' - 当视口小于 xl 断点时，`.lg` 将为 true （桌面端优先）
+   *
+   * @defaultValue "min-width"
+   */
+  strategy?: 'min-width' | 'max-width'
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UseBreakpointsReturns<K extends string> = Record<K, boolean> & {
+  /**
+   * 当前断点状态
+   */
+  breakpoints: Record<K, boolean>
+  /**
+   * 检查视口是否大于给定断点
+   *
+   * @param {K} k - `K`，断点键
+   * @returns {boolean} `boolean`，视口是否大于给定断点
+   */
+  isGreater: (k: K) => boolean
+  /**
+   * 检查视口是否大于或等于给定断点
+   *
+   * @param {K} k - `K`，断点键
+   * @returns {boolean} `boolean`，视口是否大于或等于给定断点
+   */
+  isGreaterOrEqual: (k: K) => boolean
+  /**
+   * 检查视口是否小于给定断点
+   *
+   * @param {K} k - `K`，断点键
+   * @returns {boolean} `boolean`，视口是否小于给定断点
+   */
+  isSmaller: (k: K) => boolean
+  /**
+   * 检查视口是否小于或等于给定断点
+   *
+   * @param {K} k - `K`，断点键
+   * @returns {boolean} `boolean`，视口是否小于或等于给定断点
+   */
+  isSmallerOrEqual: (k: K) => boolean
+  /**
+   * 检查视口是否处于给定的两个断点之间
+   *
+   * @param {K} a - `K`，断点键
+   * @param {K} b - `K`，断点键
+   * @returns {boolean} `boolean`，视口是否处于两个断点之间
+   */
+  isInBetween: (a: K, b: K) => boolean
+  /**
+   * 当前匹配的断点
+   */
+  currents: K[]
+}
+
+```

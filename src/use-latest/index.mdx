@@ -1,8 +1,13 @@
+---
+category: Lifecycle
+features: ['LowLevel']
+---
+
 # useLatest
 
 import { HooksType } from '@/components'
 
-<HooksType category="Lifecycle" lowLevel />
+<HooksType {...frontmatter} />
 
 A React Hook that returns a ref to the latest value. It can be useful to prevent **stale state** in timer callback or async context.
 
@@ -14,10 +19,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 

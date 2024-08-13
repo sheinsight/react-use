@@ -1,0 +1,49 @@
+---
+category: Browser
+---
+
+# useDocumentVisibility
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个 React Hook，返回 `document.visibilityState`， 即文档的可见性状态。
+
+## 演示 Demo \{#demo}
+
+尝试切换到另一个标签页或最小化窗口以查看标题更改。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const visibility = useDocumentVisibility(callback)
+```
+
+### 回调函数 Callback \{#callback}
+
+当可见性状态发生变化时将被调用的回调函数。
+
+```tsx
+export type UseDocumentVisibilityCallback = (state: DocumentVisibilityState, event: Event) => void
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type DocumentVisibilityState = 'hidden' | 'visible'
+```

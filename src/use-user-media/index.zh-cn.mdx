@@ -1,0 +1,77 @@
+---
+category: Sensors
+features: ['IsSupported']
+---
+
+# useUserMedia
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个用于管理用户媒体的 React 钩子。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const { stream, isSupported } = useUserMedia(options)
+```
+
+### 选项 Options \{#options}
+
+```tsx
+export interface UseUserMediaOptions {
+  /**
+   * 当 MediaStream 准备就绪时的回调
+   */
+  onStart?: (stream: MediaStream) => void
+  /**
+   * 当 MediaStream 停止时的回调
+   */
+  onStop?(): void
+  /**
+   * 当 deviceIds 或 constraints 改变时重新创建流
+   *
+   * @defaultValue true
+   */
+  autoSwitch?: boolean
+  /**
+   * 将应用于请求的 MediaStream 的 MediaStreamConstraints
+   * 如果提供，constraints 会覆盖 videoDeviceId 和 audioDeviceId
+   *
+   * @defaultValue {}
+   */
+  constraints?: MediaStreamConstraints
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export interface UseUserMediaReturns extends Pausable {
+  /**
+   * 当前的 MediaStream
+   */
+  stream: MutableRefObject<MediaStream | null>
+  /**
+   * 浏览器是否支持 getUserMedia
+   */
+  isSupported: boolean
+}
+```

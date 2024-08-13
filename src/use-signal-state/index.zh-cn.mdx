@@ -1,0 +1,58 @@
+---
+category: State
+---
+
+# useSignalState
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个类似于 [Solid](https://www.solidjs.com) 中 `createSignal` 的 React Hook，以 `state()` 方式读取状态值，**避免了闭包问题**。
+
+## 场景 Scenes \{#scenes}
+
+- **防止闭包问题：** 有效解决传统 `useState` 在闭包场景下可能遇到的过期闭包问题
+- ...
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+```tsx
+const [state, setState] = useSignalState(0)
+
+console.log(state()) // 调用函数读取状态值，能确保始终拿到最新值
+
+setState(1) // 设置新值
+```
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const [state, setState] = useSignalState(initialState)
+```
+
+### 初始状态 InitialState \{#initial-state}
+
+与 [React.useState](https://react.dev/reference/react/useState) 相同。
+
+### 选项 Options \{#options}
+
+见 [useSafeState#options](/reference/use-safe-state/#options)。
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UseSignalStateReturns = [() => T, ReactSetState<T>]
+```

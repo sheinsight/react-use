@@ -1,8 +1,13 @@
+---
+category: Browser
+features: ['IsSupported']
+---
+
 # useBrowserMemory
 
 import { HooksType } from '@/components'
 
-<HooksType category="Browser" isSupported />
+<HooksType {...frontmatter} />
 
 A React Hook that helps to get the memory info of the browser.
 
@@ -14,10 +19,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 

@@ -1,0 +1,47 @@
+---
+category: Element
+---
+
+# useParentElement
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个用于追踪元素的父元素的 React Hook。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const parentElement = useParentElement(elementTarget)
+```
+
+### 元素目标 ElementTarget \{#element-target}
+
+import { Tip } from '@/components'
+
+<Tip type="target" />
+
+### 返回值 Returns \{#returns}
+
+一个 `HTMLElement` 或 `null`。
+
+```tsx
+export type UseParentElementReturns = HTMLElement | null
+```

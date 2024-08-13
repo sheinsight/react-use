@@ -1,0 +1,60 @@
+---
+category: Sensors
+---
+
+# useKeyStatus
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+这是一个 React Hook，用于跟踪按键的按下状态。
+
+## 演示 Demo \{#demo}
+
+尝试按 `-`/`=` 键以检查键的状态。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const isPressed = useKeyStatus(keyFilter, handler, options)
+```
+
+### 键过滤器 KeyFilter \{#key-filter}
+
+
+请参见 `useKeyStroke` 的 [KeyFilter](/reference/use-key-stroke/#key-filter) 了解更多详细信息。
+
+### 处理函数 Handler \{#handler}
+
+```tsx
+export type UseKeyStatusHandler = UseKeyStrokeHandler;
+```
+
+请参见 `useKeyStroke` 的 [Handler](/reference/use-key-stroke/#handler) 了解更多详细信息。
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseKeyStatusOptions = Omit<UseKeyStrokeOptions, 'eventName' | 'dedupe'>;
+```
+
+请参见 `useKeyStroke` 的 [Options](/reference/use-key-stroke/#options) 了解更多详细信息。
+
+### 返回值 Returns \{#returns}
+
+一个 `boolean` 值，表示按键的按下状态。

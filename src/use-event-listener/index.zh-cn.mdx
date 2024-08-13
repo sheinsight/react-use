@@ -1,0 +1,76 @@
+---
+category: Browser
+---
+
+# useEventListener
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个轻松使用 `EventListener` 的 React Hook。
+
+在装载时使用 `addEventListener` 注册，卸载时自动使用 `removeEventListener` 移除。
+
+## 演示 Demo \{#demo}
+
+双击窗口上的任何地方，或者在下方虚线框内单击以查看 Toast 提示。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+// 默认的 target 为 `window`
+useEventListener(eventName, handler, options)
+
+// 显式指定 target
+useEventListener(eventTarget, eventName, handler, options)
+```
+
+### 元素目标 ElementTarget \{#element-target}
+
+目标可以是：
+
+> "⚛️" 前缀表示它还可以是包含此目标的 [React Ref](https://react.dev/learn/referencing-values-with-refs)。
+
+- `window`（默认）
+- `document`
+- ⚛️ 原生 [EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget)
+- ⚛️ DOM 元素
+- ⚛️ 实现 `EventTarget` 接口 (`addEventListener` 和 `removeEventListener`) 的对象
+- ⚛️ `null` 或 `undefined`
+
+### 事件名称 EventName \{#event-name}
+
+`string | string[]`，一个 `string` 或 `string` 列表，代表要监听的事件类型。它将会从 `EventTarget` 类型自动推断出来。
+
+### 处理函数 Handler \{#handler}
+
+`Function | Functions[]`，一个 `function` 或 `functions` 列表，在指定类型的事件发生时接收通知。`Event` 也会自动推断。
+
+### 选项 Options \{#options}
+
+将会传递给 `addEventListener` 和 `removeEventListener` 的选项。
+
+```tsx
+export type Options = boolean | AddEventListenerOptions | undefined
+```
+
+更多详细选项，请参见 [EventTarget.addEventListener#options](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#options)
+
+### 返回值 Returns \{#returns}
+
+一个 **移除** 事件监听器的 `function`。

@@ -1,8 +1,13 @@
+---
+category: Lifecycle
+features: ['LowLevel']
+---
+
 # useDeepCompareEffect
 
 import { HooksType } from '@/components'
 
-<HooksType category="Lifecycle" lowLevel />
+<HooksType {...frontmatter} />
 
 A React Hook like [React.useEffect](https://react.dev/reference/react/useEffect), but with [deep comparison](https://github.com/sheinsight/react-use/blob/main/src/utils/equal.ts#L29) of dependencies.
 
@@ -14,10 +19,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 

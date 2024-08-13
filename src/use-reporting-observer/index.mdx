@@ -1,8 +1,13 @@
+---
+category: Browser
+features: ['Pausable', 'IsSupported', 'LowLevel']
+---
+
 # useReportingObserver
 
 import { HooksType } from '@/components'
 
-<HooksType category="Browser" pausable isSupported lowLevel />
+<HooksType {...frontmatter} />
 
 A React Hook that helps to use [ReportingObserver API](https://developer.mozilla.org/en-US/docs/Web/API/ReportingObserver) to report errors and warnings with ease.
 
@@ -14,10 +19,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 

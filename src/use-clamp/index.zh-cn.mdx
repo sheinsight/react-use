@@ -1,0 +1,62 @@
+---
+category: State
+---
+
+# useClamp
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个用于将数字限制在最小值和最大值之间的 React Hook，待处理值、最小值和最大值支持动态变化。
+
+本质上，它只是设置了 `min` 和 `max` 选项的 [useCounter](/reference/use-counter) 的更加语意化的版本。
+
+## 场景 Scenes \{#scenes}
+
+- **处理数量计算场景：** 提供增加、减少、设置、获取、重置计数器的功能
+- **界面交互场景：** 实现用户界面上数量的动态更新和显示，如购物车商品数量、轮播图切换
+- **表单输入限制场景：** 用于限制表单或输入框中的数字范围
+- ...
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+```tsx
+const [count, countActions] = useCount(20)
+// 待处理的值为 20，最小值为 1，最大值为 16
+const [result, actions] = useClamp(count, 1, 16) 
+
+// result 结果为 16，因为 20 超出了最大值 16
+console.log(result)
+
+// 无论 countActions 进行任何操作，result 始终返回的值始终介于 1 和 16 之间
+
+// 也支持 useCounter 的所有操作直接修改，但是同样受限于 min 和 max
+actions.inc() 
+actions.inc(2)
+actions.dec()
+actions.dec(2)
+actions.set(10)
+actions.reset()
+actions.reset(12)
+```
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const [result, actions] = useClamp(count, min, max);
+```
+
+本质上，它只是设置了 `min` 和 `max` 选项的 [useCounter](/reference/use-counter) 的更加语意化的版本，更多请参考 [useCounter](/reference/use-counter)。

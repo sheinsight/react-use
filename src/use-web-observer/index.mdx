@@ -1,8 +1,13 @@
+---
+category: Browser
+features: ['Pausable', 'IsSupported', 'LowLevel']
+---
+
 # useWebObserver
 
 import { HooksType } from '@/components'
 
-<HooksType category="Browser" pausable isSupported lowLevel />
+<HooksType {...frontmatter} />
 
 A low level React Hooks that helps to use Observer with ease. Available Observer:
 
@@ -31,10 +36,7 @@ import { App } from './demo'
 
 ## Usage
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
-
-<RawCode>{source}</RawCode>
+See API for more details.
 
 ## Source
 

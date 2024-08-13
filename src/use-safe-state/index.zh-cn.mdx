@@ -1,0 +1,67 @@
+---
+category: State
+---
+
+# useSafeState
+
+import Admonition from '@theme/Admonition'
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个类似于 [React.useState](https://react.dev/reference/react/useState) 的 React Hook，但抑制了 `React <= 17` 时误报的警告，并包含一个可选的深度比较功能（`deep`, 默认值为 `false`），它被设计为 `React.useState` 的安全和高效的替代品。
+
+有关 `useSafeState` 优势的详细解释，请参阅 [安全状态](/docs/optimization/safe-state)。
+
+## 场景 Scenes \{#scenes}
+
+- **状态管理**: 用于替代 `React.useState`，以避免 `React <= 17` 时的误报警告。
+- **性能优化**: 通过深度比较新旧状态（`deep` 选项，默认关闭），避免不必要的重渲染。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+```tsx
+const [info, setInfo] = useSafeState({ name: '张三' }, { deep: true })
+
+setInfo({ name: '李四' }) // 设置新的值，会触发重渲染
+setInfo({ name: '李四' }) // 再次设置「相同」的值，在开启 deep 选项的情况下将不会触发重渲染
+```
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const [state, setState] = useSafeState(initialState, options)
+```
+
+### 初始状态 InitialState \{#initial-state}
+
+状态的初始值，与 [React.useState](https://react.dev/reference/react/useState) 相同。
+
+### 选项 Options \{#options}
+
+```tsx
+export type UseSafeStateOptions = {
+  /**
+   * 在更新前深度比较新旧状态，只有当新状态与旧状态「不同」时，才更新状态，以减少不必要的重渲染。
+   *
+   * @defaultValue false
+   */
+  deep?: boolean
+}
+```
+
+### 返回值 Returns \{#returns}
+
+与 [React.useState](https://react.dev/reference/react/useState) 相同。

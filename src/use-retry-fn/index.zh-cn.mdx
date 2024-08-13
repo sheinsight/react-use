@@ -1,0 +1,77 @@
+---
+category: Utilities
+features: ['LowLevel']
+---
+
+# useRetryFn
+
+import { HooksType, Since } from '@/components'
+
+<HooksType {...frontmatter} />
+
+<Since version="v1.4.0" />
+
+一个 React Hook，用于帮助实现带有重试机制的函数运行。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+请查看 API。
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API API \{#api}
+
+```tsx
+const fnWithRetry = useRetryFn(fn, options)
+```
+
+### 函数 Fn \{#fn}
+
+将使用重试机制调用的函数。
+
+### 选项 Options \{#options}
+
+```tsx
+export interface UseRetryFnOptions<E = unknown> {
+  /**
+   * 重试次数。
+   *
+   * @defaultValue 3
+   */
+  count?: number
+  /**
+   * 重试间隔。ms
+   *
+   * @defaultValue defaultRetryInterval
+   */
+  interval?: number | ((currentCount: number) => number)
+  /**
+   * 错误回调。
+   *
+   * @defaultValue undefined
+   */
+  onError?: (error: E | undefined) => void
+  /**
+   * 错误重试回调。
+   *
+   * @defaultValue undefined
+   */
+  onErrorRetry?: (error: E | undefined, state: UseRetryFnRetryState) => void
+  /**
+   * 所有重试失败的回调。
+   *
+   * @defaultValue undefined
+   */
+  onRetryFailed?: (error: E | undefined, state: UseRetryFnRetryState) => void
+}
+```

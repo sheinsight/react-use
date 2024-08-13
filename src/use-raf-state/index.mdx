@@ -1,44 +1,57 @@
+---
+category: State
+---
+
 # useRafState
 
 import { HooksType } from '@/components'
 
-<HooksType category="State" />
+<HooksType {...frontmatter} />
 
-A React Hook like [React.useState](https://react.dev/reference/react/useState), but the state will only update on the next frame using [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) for better performance.
+A React Hook that uses [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) to update the state in the next frame for better performance. This Hook works similarly to [React.useState](https://react.dev/reference/react/useState), except for the timing of updates.
 
-## Demo
+## Scenarios \{#scenes}
+
+- **Animation Scenario Optimization**: Used to improve performance in animations or frame rendering, updating the state only in the next frame
+- **High-frequency Event Handling**: For example, reducing the state update frequency during scrolling or dragging to prevent performance degradation
+- ...
+
+## Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## Usage \{#usage}
 
-import { RawCode } from '@/components'
-import source from '!!raw-loader!./demo'
+```tsx
+// Use in scenarios where performance optimization is needed
+const [state, setState] = useRafState({ isScrolling: false })
 
-<RawCode>{source}</RawCode>
+// You can use the `deep` option inherited from `useSafeState` to further reduce rendering and thus optimize performance
+const [{ x, y }, setPosition] = useRafState({ x: 0, y: 0 }, { deep: true })
+```
 
-## Source
+## Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const [state, setState] = useRafState(initialState, options)
 ```
 
-### InitialState
+### Initial State \{#initial-state}
 
 Same as [React.useState](https://react.dev/reference/react/useState).
 
-### Options
+### Options \{#options}
 
-See [useSafeState#options](/reference/use-safe-state/#options) for more details.
+For more details, refer to [useSafeState#options](/reference/use-safe-state/#options).
 
-### Returns
+### Returns \{#returns}
 
 Same as [React.useState](https://react.dev/reference/react/useState).
