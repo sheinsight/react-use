@@ -113,7 +113,7 @@ export default defineConfig({
     exclude: ['**/{components,hooks,utils}/**/*'],
     cleanUrls: true,
   },
-  plugins: [hooksDocPlugin(), pluginGoogleAnalytics({ id: 'G-M3K3LXN4J9' })],
+  plugins: [hooksDocPlugin()],
   themeConfig: {
     darkMode: true,
     socialLinks: [
@@ -126,6 +126,7 @@ export default defineConfig({
     locales: [locale.en, locale.zhCN],
   },
   outDir: 'build',
+  builderPlugins: [pluginGoogleAnalytics({ id: 'G-M3K3LXN4J9' })],
   builderConfig: {
     source: {
       alias: {
