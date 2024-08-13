@@ -3,6 +3,7 @@ import path from 'node:path'
 import { camelCase, kebabCase } from 'change-case'
 import gm from 'gray-matter'
 import { rimrafSync } from 'rimraf'
+import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics'
 import { defineConfig } from 'rspress/config'
 
 import i18n from './i18n.json'
@@ -11,7 +12,7 @@ import { locale } from './locale'
 import type { RspressPlugin } from '@rspress/shared'
 
 // disable cache to avoid dev cache not match error
-rimrafSync(path.join(__dirname, './dist'))
+rimrafSync(path.join(__dirname, './build'))
 
 const hooksDocPlugin = (): RspressPlugin => {
   const ignoredDirs = ['utils']
@@ -112,7 +113,7 @@ export default defineConfig({
     exclude: ['**/{components,hooks,utils}/**/*'],
     cleanUrls: true,
   },
-  plugins: [hooksDocPlugin()],
+  plugins: [hooksDocPlugin(), pluginGoogleAnalytics({ id: 'G-M3K3LXN4J9' })],
   themeConfig: {
     darkMode: true,
     socialLinks: [
@@ -124,7 +125,7 @@ export default defineConfig({
     ],
     locales: [locale.en, locale.zhCN],
   },
-  outDir: 'dist',
+  outDir: 'build',
   builderConfig: {
     source: {
       alias: {

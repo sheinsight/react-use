@@ -31,6 +31,7 @@
     "esno": "^4.7.0",
     "gray-matter": "^4.0.3",
     "rimraf": "^6.0.1",
+    "rsbuild-plugin-google-analytics": "^1.0.2",
     "unocss": "^0.61.9"
   }
 }
