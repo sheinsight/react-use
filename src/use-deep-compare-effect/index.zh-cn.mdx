@@ -1,8 +1,13 @@
+---
+category: Lifecycle
+features: ['LowLevel']
+---
+
 # useDeepCompareEffect
 
 import { HooksType } from '@/components'
 
-<HooksType {...frontmatter} lowLevel />
+<HooksType {...frontmatter} />
 
 一个类似于 [React.useEffect](https://react.dev/reference/react/useEffect) 的 React 钩子，但是对依赖进行了 [深度比较](https://github.com/sheinsight/react-use/blob/main/src/utils/equal.ts#L29)。
 

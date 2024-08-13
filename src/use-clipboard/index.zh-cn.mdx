@@ -1,8 +1,13 @@
+---
+category: Browser
+features: ['IsSupported']
+---
+
 # useClipboard
 
 import { HooksType } from '@/components'
 
-<HooksType {...frontmatter} isSupported />
+<HooksType {...frontmatter} />
 
 一个 React 钩子，用于使用 [Clipboard API](https://developer.mozilla.org/zh-CN/docs/Web/API/Clipboard_API) 复制文本，在 API 不可用时回退到 `document.execCommand('copy')`。
 

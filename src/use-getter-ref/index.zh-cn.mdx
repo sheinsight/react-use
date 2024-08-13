@@ -1,8 +1,13 @@
+---
+category: Lifecycle
+features: ['LowLevel']
+---
+
 # useGetterRef
 
 import { HooksType } from '@/components'
 
-<HooksType {...frontmatter} lowLevel />
+<HooksType {...frontmatter} />
 
 一个创建可获取 ref 的 React 钩子，一种获取 ref 最新值的函数方式，常用来避免过期闭包问题，同时 ref 不带来额外渲染。
 
