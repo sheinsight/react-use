@@ -1,10 +1,15 @@
+---
+category: Lifecycle
+features: ['LowLevel']
+---
+
 # useLatest
 
 import { HooksType } from '@/components'
 
-<HooksType {...frontmatter} lowLevel />
+<HooksType {...frontmatter} />
 
-`useLatest` 是一个 React 钩子（Hook），它返回一个指向最新值的 ref。它可以用来避免在定时器回调或异步上下文中出现 **陈旧状态**。
+一个返回一个指向最新值的 ref 的 React Hook，它可以用来避免在定时器回调或异步上下文中出现**过期闭包**。
 
 ## 演示 Demo \{#demo}
 
@@ -14,7 +19,7 @@ import { App } from './demo'
 
 ## 用法 Usage \{#usage}
 
-
+请查看 API。
 
 ## 源码 Source \{#source}
 
