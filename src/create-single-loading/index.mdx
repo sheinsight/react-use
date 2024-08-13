@@ -5,9 +5,11 @@ deprecated: true
 
 # createSingleLoading
 
-import { HooksType } from '@/components'
+import { HooksType, Deprecated } from '@/components'
 
 <HooksType {...frontmatter} />
+
+<Deprecated version="1.4.0" />
 
 A utility that provide a way to manage single (or global) loading state via multiple Hooks or loading instance, using [Reactive](https://sheinsight.github.io/reactive/) under the hood.
 
