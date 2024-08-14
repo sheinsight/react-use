@@ -5,6 +5,7 @@ import { useSetState } from '../use-set-state'
 import { useStableFn } from '../use-stable-fn'
 import { useSupported } from '../use-supported'
 import { useTimeoutFn } from '../use-timeout-fn'
+import { isDefined } from '../utils/basic'
 import { unwrapGettable } from '../utils/unwrap'
 
 import type { UsePermissionReturns } from '../use-permission'
@@ -27,6 +28,14 @@ export interface UseClipboardOptions<Source> {
    * @defaultValue 1_500
    */
   copiedDuration?: number
+  /**
+   * Callback when the text is copied
+   */
+  onCopy?: (text: string) => void
+  /**
+   * Callback when the `copied` state is reset
+   */
+  onCopiedReset?: () => void
 }
 
 export interface UseClipboardReturns<HasSource> {
@@ -60,14 +69,20 @@ export function useClipboard(options: UseClipboardOptions<Gettable<string>>): Us
 export function useClipboard(
   options: UseClipboardOptions<Gettable<string> | undefined> = {},
 ): UseClipboardReturns<boolean> {
-  const { read = false, source, copiedDuration = 1500 } = options
+  const { read = false, source, onCopy, onCopiedReset, copiedDuration = 1500 } = options
 
   const [state, setState] = useSetState({ text: '', copied: false }, { deep: true })
   const isSupported = useSupported(() => 'clipboard' in navigator)
-  const { resume: startTimeout } = useTimeoutFn(() => setState({ copied: false }), copiedDuration)
+
+  const { resume: startTimeout } = useTimeoutFn(() => {
+    setState({ copied: false })
+    latest.current.onCopiedReset?.()
+  }, copiedDuration)
 
   const latest = useLatest({
     read,
+    onCopy,
+    onCopiedReset,
     isSupported,
     sourceValue: unwrapGettable(source),
   })
@@ -94,16 +109,17 @@ export function useClipboard(
   })
 
   const copy = useStableFn(async (value = latest.current.sourceValue) => {
-    if (latest.current.isSupported && value) {
-      if (latest.current.isSupported && isAllowed(permissionWrite)) {
-        await navigator.clipboard.writeText(value)
-      } else {
-        legacyCopy(value)
-      }
+    if (!isDefined(value)) return
 
-      setState({ text: value, copied: true })
-      startTimeout()
+    if (latest.current.isSupported && isAllowed(permissionWrite)) {
+      await navigator.clipboard.writeText(value)
+    } else {
+      legacyCopy(value)
     }
+
+    setState({ text: value, copied: true })
+    startTimeout()
+    onCopy?.(value)
   })
 
   const clear = useStableFn(() => {
