@@ -17,6 +17,10 @@ export interface UseWebObserverOptions {
    * @defaultValue true
    */
   immediate?: boolean
+  /**
+   * Additional `isSupported` judgement
+   */
+  supported?: () => boolean
 }
 
 export interface UseWebObserverReturns<Observer> extends Pausable {
@@ -104,9 +108,12 @@ export function useWebObserver(
 ): UseWebObserverReturns<ReportingObserver>
 export function useWebObserver(...args: any[]): any {
   const [observer, target, callback, options = {}, initOptions = {}, observerOptions = {}] = args
-  const { immediate = true } = options
 
-  const isSupported = useSupported(() => observer in window)
+  const { immediate = true, supported = () => true } = options
+
+  const latest = useLatest({ target, supported, callback, initOptions, observerOptions })
+
+  const isSupported = useSupported(() => observer in window && latest.current.supported())
   const observerRef = useRef<any | null>(null)
 
   const stopObserver = () => {
@@ -136,8 +143,6 @@ export function useWebObserver(...args: any[]): any {
       }
     }
   })
-
-  const latest = useLatest({ target, callback, initOptions, observerOptions })
 
   useEffect(() => {
     immediate && pausable.resume()
