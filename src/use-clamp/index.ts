@@ -12,15 +12,15 @@ export type UseClampReturns = readonly [number, UseCounterReturnsAction]
  *
  * Essentially, it's a more semantic version of [useCounter](/reference/use-counter) with `min` and `max` options set.
  */
-export function useClamp(value: Gettable<number>, min: Gettable<number>, max: Gettable<number>): UseClampReturns {
-  const inputNumber = unwrapGettable(value)
+export function useClamp(input: Gettable<number>, min: Gettable<number>, max: Gettable<number>): UseClampReturns {
+  const inputValue = unwrapGettable(input)
 
-  const [result, actions] = useCounter(inputNumber, {
+  const [result, actions] = useCounter(inputValue, {
     max: unwrapGettable(max),
     min: unwrapGettable(min),
   })
 
-  useUpdateEffect(() => void actions.set(inputNumber), [inputNumber])
+  useUpdateEffect(() => void actions.set(inputValue), [inputValue])
 
   return [result, actions] as const
 }

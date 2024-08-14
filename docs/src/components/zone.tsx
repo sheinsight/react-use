@@ -9,10 +9,10 @@ const colors = {
 }
 
 const borderTypes = {
-  solid: 'border-solid',
-  dashed: 'border-dashed',
-  dotted: 'border-dotted',
-  double: 'border-double',
+  solid: 'border border-solid',
+  dashed: 'border border-dashed',
+  dotted: 'border border-dotted',
+  double: 'border border-double',
 }
 
 interface Props {
