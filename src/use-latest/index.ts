@@ -14,12 +14,12 @@ import type { MutableRefObject } from 'react'
  * @see https://github.com/alibaba/hooks/issues/2495#issuecomment-1988915570
  */
 export function useLatest<T>(value: T): MutableRefObject<T> {
-  const ref = useRef<T>(value)
+  const latestRef = useRef<T>(value)
 
   // Prevent frequent updates when the value has not actually changed
-  if (!Object.is(ref.current, value)) {
-    ref.current = value
+  if (!Object.is(latestRef.current, value)) {
+    latestRef.current = value
   }
 
-  return ref
+  return latestRef
 }

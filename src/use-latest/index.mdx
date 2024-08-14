@@ -19,7 +19,14 @@ import { App } from './demo'
 
 ## Usage
 
-See API for more details.
+```tsx
+const latest = useLatest(count)
+console.log(latest.current) // latest count
+
+const latest = useLatest({ callback, options })
+console.log(latest.current.callback) // latest callback
+console.log(latest.current.options) // latest options
+```
 
 ## Source
 
@@ -30,7 +37,7 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const latestRef = useLatest(value)
+const latest = useLatest(value)
 ```
 
 ### Value
