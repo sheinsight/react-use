@@ -208,7 +208,7 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = an
 
     if (valueChanged) {
       refItem.value = newValue
-      refItem.used && valueChanged && render()
+      refItem.used && render()
     }
   }
 
