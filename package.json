@@ -80,9 +80,6 @@
     "react-dom": {
       "optional": true
     },
-    "@shined/reactive": {
-      "optional": true
-    },
     "@types/react": {
       "optional": true
     },
@@ -94,7 +91,6 @@
     }
   },
   "peerDependencies": {
-    "@shined/reactive": "^0.1.2",
     "@types/react": "^16.8.0 || ^17.0.0 || ^18.0.0",
     "@types/react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0",
     "@types/web-bluetooth": "*",
