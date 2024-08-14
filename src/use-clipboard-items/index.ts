@@ -1,11 +1,11 @@
 import { useEventListener } from '../use-event-listener'
+import { useLatest } from '../use-latest'
 import { usePermission } from '../use-permission'
 import { useSetState } from '../use-set-state'
 import { useStableFn } from '../use-stable-fn'
 import { useSupported } from '../use-supported'
 import { useTimeoutFn } from '../use-timeout-fn'
 
-import { useLatest } from '../use-latest'
 import type { UsePermissionReturns } from '../use-permission'
 
 export interface UseClipboardItemsOptions<Source> {
@@ -20,11 +20,19 @@ export interface UseClipboardItemsOptions<Source> {
    */
   source?: Source
   /**
-   * Milliseconds to reset state of `copied` ref
+   * Milliseconds to reset state of `copied` state
    *
-   * @defaultValue 1500
+   * @defaultValue 1_500
    */
   copiedDuration?: number
+  /**
+   * Callback when the text is copied
+   */
+  onCopy?: (text: string) => void
+  /**
+   * Callback when the `copied` state is reset
+   */
+  onCopiedReset?: () => void
 }
 
 export interface UseClipboardItemsReturns<Optional> {
@@ -62,16 +70,21 @@ export function useClipboardItems(options: UseClipboardItemsOptions<ClipboardIte
 export function useClipboardItems(
   options: UseClipboardItemsOptions<ClipboardItems | undefined> = {},
 ): UseClipboardItemsReturns<boolean> {
-  const { read = false, source, copiedDuration = 1500 } = options
+  const { read = false, source, onCopy, onCopiedReset, copiedDuration = 1500 } = options
 
   const isSupported = useSupported(() => 'clipboard' in navigator)
 
   const permissionRead = usePermission('clipboard-read')
   const permissionWrite = usePermission('clipboard-write')
 
+  const latest = useLatest({ isSupported, onCopy, onCopiedReset })
+
   const [state, setState] = useSetState({ content: [] as ClipboardItems, copied: false })
-  const { resume: startTimeout } = useTimeoutFn(() => setState({ copied: false }), copiedDuration)
-  const latest = useLatest({ isSupported })
+
+  const { resume: startTimeout } = useTimeoutFn(() => {
+    setState({ copied: false })
+    latest.current.onCopiedReset?.()
+  }, copiedDuration)
 
   const updateContent = useStableFn(async () => {
     if (latest.current.isSupported && isAllowed(permissionRead)) {
@@ -84,15 +97,16 @@ export function useClipboardItems(
 
   const copy = useStableFn(async (value = source) => {
     if (latest.current.isSupported && value && isAllowed(permissionWrite)) {
-      await navigator?.clipboard.write(value)
+      await navigator.clipboard.write(value)
       setState({ content: value, copied: true })
       startTimeout()
+      latest.current.onCopy?.(value)
     }
   })
 
   const clear = useStableFn(async () => {
     if (latest.current.isSupported && isAllowed(permissionWrite)) {
-      await navigator?.clipboard.write([])
+      await navigator.clipboard.write([])
       setState({ content: [] })
     }
   })
