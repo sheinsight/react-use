@@ -2,12 +2,13 @@ import { Button, Card, KeyValue, LabelInput, Zone } from '@/components'
 import { useControlledComponent, usePagination } from '@shined/react-use'
 
 const TOTAL = 100
+const DATA = Array.from({ length: TOTAL }, (_, i) => i + 1)
 
 export function App() {
   const pageSizeInput = useControlledComponent('20')
   const targetPageInput = useControlledComponent('1')
 
-  const [state, actions] = usePagination({ pageSize: +pageSizeInput.value, total: TOTAL })
+  const [state, actions] = usePagination({ list: DATA, pageSize: +pageSizeInput.value, total: TOTAL })
 
   return (
     <Card>
@@ -18,6 +19,15 @@ export function App() {
       <Zone>
         <KeyValue label="Current page" value={state.currentPage} />
         <KeyValue label="Page count" value={state.pageCount} />
+      </Zone>
+      <Zone border="primary">
+        {state.list.map((item) => {
+          return (
+            <div className="text-amber-5/80 font-bold" key={item}>
+              {item}
+            </div>
+          )
+        })}
       </Zone>
       <Zone>
         <Button onClick={actions.prev} disabled={state.isFirstPage}>

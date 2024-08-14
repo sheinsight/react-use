@@ -1,10 +1,11 @@
+import { useMemo } from 'react'
 import { useClamp } from '../use-clamp'
 import { useCreation } from '../use-creation'
 import { useLatest } from '../use-latest'
 import { useStableFn } from '../use-stable-fn'
 import { useUpdateEffect } from '../use-update-effect'
 
-export interface UsePaginationOptions {
+export interface UsePaginationOptions<T> {
   /**
    * Total number of items.
    *
@@ -23,6 +24,10 @@ export interface UsePaginationOptions {
    * @defaultValue 1
    */
   page?: number
+  /**
+   * The original list to be paginated.
+   */
+  list?: T[]
   /**
    * Callback when the `page` change.
    *
@@ -46,7 +51,7 @@ export interface UsePaginationOptions {
   onPageCountChange?: (pagination: UsePaginationReturnsState) => void
 }
 
-export interface UsePaginationReturnsState {
+export interface UsePaginationReturnsState<T = any> {
   /**
    * Total number of items.
    */
@@ -64,6 +69,14 @@ export interface UsePaginationReturnsState {
    */
   pageCount: number
   /**
+   * The start index of the displayed list (helpful to slice the list).
+   */
+  indexStart: number
+  /**
+   * The end index of the displayed list (helpful to slice the list).
+   */
+  indexEnd: number
+  /**
    * Whether the current page is the first page.
    */
   isFirstPage: boolean
@@ -71,6 +84,10 @@ export interface UsePaginationReturnsState {
    * Whether the current page is the last page.
    */
   isLastPage: boolean
+  /**
+   * The sliced list to display.
+   */
+  list: T[]
 }
 
 export interface UsePaginationReturnsActions {
@@ -102,12 +119,12 @@ export interface UsePaginationReturnsActions {
   setPageSize: (size: number) => void
 }
 
-export type UsePaginationReturns = readonly [UsePaginationReturnsState, UsePaginationReturnsActions]
+export type UsePaginationReturns<T> = readonly [UsePaginationReturnsState<T>, UsePaginationReturnsActions]
 
 /**
  * A React Hook that manage pagination state.
  */
-export function usePagination(options: UsePaginationOptions = {}): UsePaginationReturns {
+export function usePagination<T = any>(options: UsePaginationOptions<T> = {}): UsePaginationReturns<T> {
   const {
     total = Number.POSITIVE_INFINITY,
     page = 1,
@@ -127,13 +144,23 @@ export function usePagination(options: UsePaginationOptions = {}): UsePagination
   const next = useStableFn(() => pageActions.inc())
   const setPageSize = useStableFn((size: number) => sizeActions.set(size))
 
+  const [indexStart, indexEnd] = [(currentPage - 1) * currentPageSize, Math.min(currentPage * currentPageSize, total)]
+
+  const slicedList = useMemo(
+    () => (options.list ?? []).slice(indexStart, indexEnd),
+    [options.list, indexStart, indexEnd],
+  )
+
   const pagination = {
     total,
     currentPage,
     currentPageSize,
     pageCount,
+    indexStart,
+    indexEnd,
     isFirstPage: currentPage === 1,
     isLastPage: isInfinity ? false : currentPage === pageCount,
+    list: slicedList,
   }
 
   const latest = useLatest({ pagination, onPageChange, onPageCountChange, onPageSizeChange })
