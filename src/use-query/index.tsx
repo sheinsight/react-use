@@ -288,7 +288,8 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
   })
 
   const refreshWithCache = useStableFn(async (params?: Parameters<T> | []) => {
-    const actualParams = (params ?? service.params) || []
+    const outerParams = cacheActions.isCacheEnabled() ? latest.current.cache.params : service.params
+    const actualParams = params ?? (outerParams || [])
     return service.refresh(actualParams)
   })
 

@@ -181,6 +181,9 @@ function Demo5() {
         <Button mono disabled={fetch.loading} onClick={() => fetch.run()}>
           run()
         </Button>
+        <Button mono disabled={fetch.loading} onClick={() => fetch.refresh()}>
+          refresh()
+        </Button>
         <Button mono disabled={fetch.loading} onClick={() => fetch.run(OTP())}>
           run(OTP())
         </Button>
@@ -188,6 +191,9 @@ function Demo5() {
       <Zone>
         <Button mono disabled={fetch2.loading} onClick={() => fetch2.run()}>
           run2()
+        </Button>
+        <Button mono disabled={fetch2.loading} onClick={() => fetch2.refresh()}>
+          refresh2()
         </Button>
         <Button mono disabled={fetch2.loading} onClick={() => fetch2.run(OTP())}>
           run2(OTP())
