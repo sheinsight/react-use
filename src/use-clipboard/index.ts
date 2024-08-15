@@ -1,10 +1,10 @@
 import { useEventListener } from '../use-event-listener'
 import { useLatest } from '../use-latest'
 import { usePermission } from '../use-permission'
-import { useSetState } from '../use-set-state'
 import { useStableFn } from '../use-stable-fn'
 import { useSupported } from '../use-supported'
 import { useTimeoutFn } from '../use-timeout-fn'
+import { useTrackedRefState } from '../use-tracked-ref-state'
 import { isDefined } from '../utils/basic'
 import { unwrapGettable } from '../utils/unwrap'
 
@@ -71,11 +71,15 @@ export function useClipboard(
 ): UseClipboardReturns<boolean> {
   const { read = false, source, onCopy, onCopiedReset, copiedDuration = 1500 } = options
 
-  const [state, setState] = useSetState({ text: '', copied: false }, { deep: true })
+  const [refState, actions] = useTrackedRefState({
+    text: '',
+    copied: false,
+  })
+
   const isSupported = useSupported(() => 'clipboard' in navigator)
 
   const { resume: startTimeout } = useTimeoutFn(() => {
-    setState({ copied: false })
+    actions.updateRefState('copied', false)
     latest.current.onCopiedReset?.()
   }, copiedDuration)
 
@@ -101,10 +105,10 @@ export function useClipboard(
       // => Failed to execute 'readText' on 'Clipboard': Document is not focused.
       if (document.hasFocus()) {
         const value = await navigator.clipboard.readText()
-        setState({ text: value })
+        actions.updateRefState('text', value)
       }
     } else {
-      setState({ text: legacyRead() })
+      actions.updateRefState('text', legacyRead())
     }
   })
 
@@ -117,23 +121,29 @@ export function useClipboard(
       legacyCopy(value)
     }
 
-    setState({ text: value, copied: true })
+    actions.updateRefState('text', value)
+    actions.updateRefState('copied', true)
     startTimeout()
     onCopy?.(value)
   })
 
   const clear = useStableFn(() => {
-    setState({ text: '' })
+    actions.updateRefState('text', '')
     navigator.clipboard.writeText('')
   })
 
   useEventListener(isSupported && read ? ['copy', 'cut', 'focus'] : [], updateText)
 
   return {
-    ...state,
     isSupported,
     copy,
     clear,
+    get text() {
+      return refState.text
+    },
+    get copied() {
+      return refState.copied
+    },
   }
 }
 
