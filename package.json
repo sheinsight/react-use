@@ -100,7 +100,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.8.1",
     "@shined/reactive": "^0.1.4",
-    "@swc/core": "^1.7.10",
+    "@swc/core": "^1.7.11",
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^15.0.7",
     "@types/node": "^20.14.15",
@@ -121,6 +121,6 @@
     "tsup": "^8.2.4",
     "typescript": "^5.5.4",
     "unocss": "^0.59.4",
-    "vitest": "^1.6.0"
+    "vitest": "^2.0.5"
   }
 }
