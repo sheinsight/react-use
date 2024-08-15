@@ -1,10 +1,10 @@
 import { useEventListener } from '../use-event-listener'
 import { useLatest } from '../use-latest'
 import { usePermission } from '../use-permission'
-import { useSetState } from '../use-set-state'
 import { useStableFn } from '../use-stable-fn'
 import { useSupported } from '../use-supported'
 import { useTimeoutFn } from '../use-timeout-fn'
+import { useTrackedRefState } from '../use-tracked-ref-state'
 
 import type { UsePermissionReturns } from '../use-permission'
 
@@ -79,17 +79,20 @@ export function useClipboardItems(
 
   const latest = useLatest({ isSupported, onCopy, onCopiedReset })
 
-  const [state, setState] = useSetState({ content: [] as ClipboardItems, copied: false })
+  const [refState, actions] = useTrackedRefState({
+    content: [] as ClipboardItems,
+    copied: false,
+  })
 
   const { resume: startTimeout } = useTimeoutFn(() => {
-    setState({ copied: false })
+    actions.updateRefState('copied', false)
     latest.current.onCopiedReset?.()
   }, copiedDuration)
 
   const updateContent = useStableFn(async () => {
     if (latest.current.isSupported && isAllowed(permissionRead)) {
       const items = (await navigator?.clipboard.read()) || []
-      setState({ content: items })
+      actions.updateRefState('content', items)
     }
   })
 
@@ -98,7 +101,8 @@ export function useClipboardItems(
   const copy = useStableFn(async (value = source) => {
     if (latest.current.isSupported && value && isAllowed(permissionWrite)) {
       await navigator.clipboard.write(value)
-      setState({ content: value, copied: true })
+      actions.updateRefState('content', value)
+      actions.updateRefState('copied', true)
       startTimeout()
       latest.current.onCopy?.(value)
     }
@@ -107,14 +111,19 @@ export function useClipboardItems(
   const clear = useStableFn(async () => {
     if (latest.current.isSupported && isAllowed(permissionWrite)) {
       await navigator.clipboard.write([])
-      setState({ content: [] })
+      actions.updateRefState('content', [])
     }
   })
 
   return {
-    ...state,
     isSupported,
     copy,
     clear,
+    get copied() {
+      return refState.copied
+    },
+    get content() {
+      return refState.content
+    },
   }
 }
