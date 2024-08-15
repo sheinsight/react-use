@@ -23,6 +23,10 @@ export const sidebar = {
         text: '✨ Features',
         items: [
           {
+            text: '🕸 Dependencies Collection',
+            link: '/docs/features/dependencies-collection',
+          },
+          {
             text: '🎯 ElementTarget',
             link: '/docs/features/element-target',
           },
@@ -80,6 +84,10 @@ export const sidebar = {
       {
         text: '✨ 功能特性',
         items: [
+          {
+            text: '🕸 依赖收集（Dependencies Collection）',
+            link: `/${langSlug.zhCN}/docs/features/dependencies-collection`,
+          },
           {
             text: '🎯 元素目标（ElementTarget）',
             link: `/${langSlug.zhCN}/docs/features/element-target`,
