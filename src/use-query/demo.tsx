@@ -22,11 +22,13 @@ export function App() {
 function Demo1() {
   const [count, actions] = useCounter(0)
   const { run, data, loading, error } = useQuery(wait, { refreshDependencies: [count] })
+
   return (
     <>
       <KeyValue label="Data" value={error ? 'Error!' : loading ? 'Loading...' : data ?? 'Not loaded'} />
       <Zone>
-        <Button mono disabled={loading} onClick={() => run()}>
+        {data}
+        <Button mono onClick={() => run()}>
           run()
         </Button>
         <Button mono onClick={() => actions.inc()}>

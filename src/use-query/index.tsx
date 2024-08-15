@@ -189,12 +189,12 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
 
   const service = useLoadingSlowFn<T, D, E>(
     useRetryFn<T, E>(
-      (async (...args) => {
+      ((...args) => {
         const prePromise = cacheActions.getPromiseCache()
         if (prePromise) return prePromise
         const promise = latest.current.fetcher(...args)
         cacheActions.setPromiseCache(promise)
-        return await promise
+        return promise
       }) as T,
       {
         count: options.errorRetryCount,
