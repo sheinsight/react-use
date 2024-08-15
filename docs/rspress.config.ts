@@ -102,6 +102,7 @@ export default defineConfig({
   icon: '/icon.svg',
   title: '@shined/react-use',
   description: i18n['homepage.tagline'].en,
+  outDir: process.env.IS_SODOC ? '../docs-dist' : 'build',
   logo: {
     dark: '/logo-dark.svg',
     light: '/logo-light.svg',
@@ -113,7 +114,7 @@ export default defineConfig({
     exclude: ['**/{components,hooks,utils}/**/*'],
     cleanUrls: true,
   },
-  plugins: [hooksDocPlugin()],
+  plugins: [hooksDocPlugin(), process.env.IS_SODOC ? require('@shein/rspress-plugin-sodoc')() : null].filter(Boolean),
   themeConfig: {
     darkMode: true,
     socialLinks: [
@@ -125,7 +126,6 @@ export default defineConfig({
     ],
     locales: [locale.en, locale.zhCN],
   },
-  outDir: 'build',
   builderPlugins: [pluginGoogleAnalytics({ id: 'G-M3K3LXN4J9' })],
   builderConfig: {
     source: {
