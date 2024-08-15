@@ -85,19 +85,19 @@ export const sidebar = {
         text: '✨ 功能特性',
         items: [
           {
-            text: '🕸 依赖收集（Dependencies Collection）',
+            text: '🕸 依赖收集',
             link: `/${langSlug.zhCN}/docs/features/dependencies-collection`,
           },
           {
-            text: '🎯 元素目标（ElementTarget）',
+            text: '🎯 元素目标',
             link: `/${langSlug.zhCN}/docs/features/element-target`,
           },
           {
-            text: '🚥 Ref 获取函数（Ref Getter）',
+            text: '🚥 Ref 获取函数',
             link: `/${langSlug.zhCN}/docs/features/ref-getter`,
           },
           {
-            text: '⏸️ 可暂停（Pausable）',
+            text: '⏸️ 可暂停',
             link: `/${langSlug.zhCN}/docs/features/pausable`,
           },
         ],
@@ -107,15 +107,15 @@ export const sidebar = {
         text: '⚡️ 内部优化',
         items: [
           {
-            text: '🔒 安全状态（Safe State）',
+            text: '🔒 安全状态',
             link: `/${langSlug.zhCN}/docs/optimization/safe-state`,
           },
           {
-            text: '📌 函数稳定化（Stabilization）',
+            text: '📌 函数稳定化',
             link: `/${langSlug.zhCN}/docs/optimization/stabilization`,
           },
           {
-            text: '🪄 最新值（Latest State）',
+            text: '🪄 最新值',
             link: `/${langSlug.zhCN}/docs/optimization/latest-state`,
           },
         ],
