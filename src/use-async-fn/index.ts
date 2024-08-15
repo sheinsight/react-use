@@ -1,11 +1,10 @@
-import { useRef } from 'react'
 import { useLatest } from '../use-latest'
 import { useMount } from '../use-mount'
-import { useRender } from '../use-render'
 import { useStableFn } from '../use-stable-fn'
+import { useTrackedRefState } from '../use-tracked-ref-state'
 import { useUnmount } from '../use-unmount'
+import { useVersionedAction } from '../use-versioned-action'
 import { isFunction } from '../utils/basic'
-import { shallowEqual } from '../utils/equal'
 
 import type { AnyFunc, Gettable, Promisable } from '../utils/basic'
 
@@ -154,11 +153,6 @@ export interface UseAsyncFnReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>
   params: Parameters<T> | []
 }
 
-interface RefItem<T> {
-  used: boolean
-  value: T
-}
-
 export function resolveMutateActions<D, P>(actions: UseAsyncFnMutateAction<D, P>, prevData: D, prevParams: P): [D, P] {
   return (isFunction(actions[0]) ? actions[0](prevData, prevParams) : (actions as [D, P])) as [D, P]
 }
@@ -188,33 +182,14 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = an
     onFinally,
   } = options
 
-  const render = useRender()
+  const [incVersion, runVersionedAction] = useVersionedAction()
 
-  const stateRef = useRef({
-    version: 0,
-    error: { used: false, value: undefined as E | undefined },
-    loading: { used: false, value: Boolean(immediate) },
-    value: { used: false, value: options.initialValue },
-    params: { used: false, value: [] as Parameters<T> | [] },
+  const [refState, actions, stateRef] = useTrackedRefState({
+    error: undefined as E | undefined,
+    loading: Boolean(immediate),
+    value: options.initialValue,
+    params: [] as Parameters<T> | [],
   })
-
-  function updateRefValue<T>(
-    refItem: RefItem<T>,
-    newValue: T,
-    compare: (prevData: T, nextData: T) => boolean = shallowEqual,
-  ) {
-    if (shallowEqual(refItem.value, newValue)) return
-    const valueChanged = !compare(refItem.value, newValue)
-
-    if (valueChanged) {
-      refItem.value = newValue
-      refItem.used && render()
-    }
-  }
-
-  function runWhenVersionMatch(version: number, fu: AnyFunc) {
-    version === stateRef.current.version && fu()
-  }
 
   const latest = useLatest({
     fn,
@@ -231,64 +206,64 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = an
   })
 
   const cancel = useStableFn(() => {
-    stateRef.current.version++
-    updateRefValue(stateRef.current.loading, false)
-    latest.current.onCancel?.(stateRef.current.value.value, stateRef.current.params.value)
+    incVersion()
+    actions.updateRefState('loading', false)
+    latest.current.onCancel?.(stateRef.value.value, stateRef.params.value)
   })
 
   const run = useStableFn(async (...args: Parameters<T> | []) => {
-    updateRefValue(stateRef.current.params, args)
+    actions.updateRefState('params', args)
 
-    const version = ++stateRef.current.version
+    const version = incVersion()
 
     let result: D | undefined = undefined
 
     try {
-      latest.current.onBefore?.(stateRef.current.value.value, stateRef.current.params.value)
+      latest.current.onBefore?.(stateRef.value.value, stateRef.params.value)
 
       if (latest.current.clearBeforeRun) {
-        updateRefValue(stateRef.current.value, undefined)
+        actions.updateRefState('value', undefined)
       }
 
-      updateRefValue(stateRef.current.loading, true)
+      actions.updateRefState('loading', true)
 
       result = await latest.current.fn(...args)
 
-      runWhenVersionMatch(version, () => {
-        latest.current.onSuccess?.(result as D, stateRef.current.params.value)
-        updateRefValue(stateRef.current.value, result, latest.current.compare)
-        updateRefValue(stateRef.current.error, undefined)
+      runVersionedAction(version, () => {
+        latest.current.onSuccess?.(result as D, stateRef.params.value)
+        actions.updateRefState('value', result, latest.current.compare)
+        actions.updateRefState('error', undefined)
       })
     } catch (error) {
-      runWhenVersionMatch(version, () => {
+      runVersionedAction(version, () => {
         latest.current.onError?.(error as E | undefined)
-        updateRefValue(stateRef.current.error, error)
+        actions.updateRefState('error', error as E | undefined)
       })
     } finally {
-      runWhenVersionMatch(version, () => {
-        latest.current.onFinally?.(result, stateRef.current.params.value)
-        updateRefValue(stateRef.current.loading, false)
+      runVersionedAction(version, () => {
+        latest.current.onFinally?.(result, stateRef.params.value)
+        actions.updateRefState('loading', false)
       })
     }
 
     return result
   }) as T
 
-  const mutate = useStableFn((...actions: UseAsyncFnMutateAction<D | undefined, Parameters<T> | []>) => {
+  const mutate = useStableFn((...mutateActions: UseAsyncFnMutateAction<D | undefined, Parameters<T> | []>) => {
     const [nextValue, nextParams] = resolveMutateActions<D | undefined, Parameters<T> | []>(
-      actions,
-      stateRef.current.value.value,
-      stateRef.current.params.value,
+      mutateActions,
+      stateRef.value.value,
+      stateRef.params.value,
     )
 
-    updateRefValue(stateRef.current.value, nextValue)
-    updateRefValue(stateRef.current.params, nextParams)
+    actions.updateRefState('value', nextValue)
+    actions.updateRefState('params', nextParams)
 
     latest.current.onMutate?.(nextValue, nextParams ?? [])
   })
 
   const refresh = useStableFn(async (params?: Parameters<T> | []) => {
-    const actualParams = (params ?? stateRef.current.params.value) || []
+    const actualParams = (params ?? stateRef.params.value) || []
     const result = await run(...actualParams)
     latest.current.onRefresh?.(result, actualParams)
     return result
@@ -308,21 +283,17 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = an
     refresh,
     mutate,
     cancel,
-    get params() {
-      stateRef.current.params.used = true
-      return stateRef.current.params.value
-    },
     get loading() {
-      stateRef.current.loading.used = true
-      return stateRef.current.loading.value
+      return refState.loading
     },
     get error() {
-      stateRef.current.error.used = true
-      return stateRef.current.error.value
+      return refState.error
     },
     get value() {
-      stateRef.current.value.used = true
-      return stateRef.current.value.value
+      return refState.value
+    },
+    get params() {
+      return refState.params
     },
   }
 }
