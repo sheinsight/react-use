@@ -5,7 +5,7 @@ import gm from 'gray-matter'
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname)
 const hooksSrc = path.resolve(__dirname, '../../src')
-const ignoredDirs = ['utils']
+const ignoredDirs = ['utils', 'use-track-ref-state', 'use-versioned-action']
 
 const hooksDirents = fs
   .readdirSync(hooksSrc, { withFileTypes: true })
