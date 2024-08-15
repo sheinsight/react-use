@@ -33,8 +33,10 @@ export function usePerformanceObserver(
     {
       immediate,
       supported() {
+        const isSupportedEntryTypesSupported = 'supportedEntryTypes' in PerformanceObserver
+
         return options.entryTypes.every((e) => {
-          return PerformanceObserver.supportedEntryTypes.includes(e)
+          return isSupportedEntryTypesSupported && PerformanceObserver.supportedEntryTypes.includes(e)
         })
       },
     },
