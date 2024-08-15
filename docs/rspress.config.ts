@@ -126,7 +126,7 @@ export default defineConfig({
     ],
     locales: [locale.en, locale.zhCN],
   },
-  builderPlugins: [pluginGoogleAnalytics({ id: 'G-M3K3LXN4J9' })],
+  builderPlugins: process.env.IS_SODOC ? [] : [pluginGoogleAnalytics({ id: 'G-M3K3LXN4J9' })],
   builderConfig: {
     source: {
       alias: {

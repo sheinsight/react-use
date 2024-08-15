@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.2",
+    "@shein/rspress-plugin-sodoc": "^0.0.1",
     "@shined/react-use": "workspace:*",
     "@shined/reactive": "^0.1.4",
     "change-case": "^5.4.4",
