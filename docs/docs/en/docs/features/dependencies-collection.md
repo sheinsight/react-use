@@ -1,80 +1,82 @@
 # 🕸 Dependencies Collection
 
-`@shined/react-use` serves as a fundamental utility library where performance is paramount. To ensure flexibility and a rich set of features while minimizing performance overhead as much as possible, we've introduced the concept of Dependencies Collection.
+`@shined/react-use` serves as a basic underlying tool library where performance is paramount. To ensure flexibility and richness of features while minimizing performance overhead as much as possible, we have introduced the concept of "Dependencies Collection".
 
-> The idea of Dependency Collection originally came from [SWR](https://swr.vercel.app/docs/advanced/performance#dependency-collection). We have made some improvements and optimizations on this basis.
+> The idea of dependency collection originally comes from [SWR](https://swr.vercel.app/docs/advanced/performance#dependency-collection), based on which we have made some improvements and optimizations.
 
 ## TL; DR {#tl-dr}
 
-- To provide flexible and rich features, many Hooks internally need to manage and return numerous states
-- Users may not need to consume all of the states, only a portion, but any state change can lead to re-rendering
-- To reduce unnecessary rendering overhead, we introduced the concept of "Dependencies Collection"
-- Only the states that are used and changed will trigger rendering, which is imperceptible to users but can significantly improve performance
+- To provide flexible and rich features, many Hooks internally manage and return many states.
+- Users may not need to consume all states, only using part of them, but any change in the state leads to re-rendering.
+- To reduce unnecessary rendering overhead, we introduced the concept of "Dependencies Collection".
+- Only the change of the used state triggers rendering, which is imperceptible to users but can significantly enhance performance.
 
 ## Motivation
 
-Inside `@shined/react-use`, there's a `useQuery` that returns various states including, but not limited to, `data`, `loading`, `error` for implementing multiple features. Normally, regardless of whether the returned states are used or not, any change in the corresponding states would invoke operations like `setState(loading)` to update the state.
+Many Hooks internally manage and return a lot of states. Users may only need one or some of these states, but any change in state causes re-rendering, leading to unnecessary performance overhead.
 
-This operational logic is not problematic in itself. The issue arises when updates are still made even if certain states are not actually used by the user, leading to unnecessary rendering overhead and greatly decreasing rendering performance.
+For instance, in `@shined/react-use` there's a `useQuery`, which, for implementing numerous feature characteristics, returns multiple states including but not limited to `data`, `loading`, `error`, etc. Normally, regardless of whether the returned states are used, any change in the corresponding state causes internal calls like `setState(loading)` to update the state.
 
-```tsx
-// The user actually only needs the run operation and the loading state, not caring about error or data
-const { run, data } = useQuery(requestSomething, options)
-
-// The user performs the run operation
-run()
-
-// When data, error, loading changes, internal `setState` operation will cause the component to re-render
-```
-
-In some scenarios (like above), we might only need one of the states, such as `data`, and not the others. To achieve this, we introduced the concept of dependency collection, allowing users to inform `@shined/react-use` which states they care about and which they do not through the passing of dependencies.
+This operation logic is not problematic in itself. The problem arises when updates occur despite the user not actually using some of the states, leading to unnecessary rendering overhead and significantly reducing rendering performance.
 
 ```tsx
-// Users take what they need from the return values
+// Users actually only need the run operation and this one state of loading; they're not really concerned about error or data
 const { run, data } = useQuery(requestSomething, options)
 
-// The user performs the run operation
+// User executes the run operation
 run()
 
-// When data changes, internal `setState` operation will cause the component to re-render
-
-// As for error, loading, even if they change, it will not trigger re-rendering because the user did not actually use them
+// When `data`, `error`, or `loading` changes, an internal `setState` operation is triggered causing the component to re-render
 ```
 
-A component that originally needed to render 4~5 times may now only need to render 1~2 times, which undoubtedly represents a substantial improvement in performance.
+In certain scenarios (as above), we might only need one of the states, such as `data`, and not the other states. To achieve this, we introduced the concept of dependency collection, which is imperceptible to users but can significantly enhance performance.
 
-## Hooks That Implemented Dependency Collection {#hooks-that-implemented-dependencies-collection}
+```tsx
+// Users take what they need from the return value
+const { run, data } = useQuery(requestSomething, options)
+
+// User executes the run operation
+run()
+
+// When data changes, an internal `setState` operation is triggered causing the component to re-render
+
+// However, for `error` or `loading`, even if they change, it doesn't trigger re-rendering because the user hasn't actually used them
+```
+
+In other words, users take whatever state they need, and unrelated states don't trigger re-rendering. This way, a component that originally needed to render 4~5 times now might only need to render 1~2 times. This represents a significant performance improvement.
+
+## Hooks That Implemented Dependencies Collection {#hooks-that-implemented-dependencies-collection}
 
 - [useAsyncFn](/reference/use-async-fn)
 - [useClipboard](/reference/use-clipboard)
 - [useClipboardItems](/reference/use-clipboard-items)
 - [useLoadingSlowFn](/reference/use-loading-slow-fn)
 - [useQuery](/reference/use-query)
-- [~~useRequest (Deprecated, please use useQuest)~~](/reference/use-request)
+- [~~useRequest (deprecated, please use useQuest)~~](/reference/use-request)
 
-Due to the substantial amount of work involved, we've only optimized some Hooks for dependency collection so far. We plan to gradually optimize other Hooks in the future.
+Due to the immense amount of work involved, we have only optimized the dependencies collection for some Hooks for now, planning to gradually optimize other Hooks in the future.
 
 ## Implementation {#implementation}
 
-The implementation principle is actually quite simple. It only requires maintaining a `ref` internally while marking the returned state through `getter` functions during exposure. When a user uses a certain state, mark that state as "used". When changing, determine whether rerendering should be triggered.
+The underlying principle of implementation is actually quite simple. It only requires maintaining a `ref` internally and marking the state as "used" through the `getter` function when exposing return values. When a user uses a state, this state is marked as "used", and during changes, it is determined whether re-rendering is needed.
 
 Below is a simple pseudocode to demonstrate the underlying principle of dependency collection:
 
 ```tsx
-// Use useRef instead of useState to define status because we want to manually control the update of the state
+// Use useRef instead of useState to define states because we want to manually control the state's update
 const stateRef = useRef({
   name: { used: false, value: 'react-use' },
   age: { used: false, value: 18 },
 })
 
-// Use the setState function to manually update the status, while determining whether rerendering is required
+// Use the setState function to manually update the state, while determining if re-rendering is needed
 function setState(key: string, value: any) {
   if(stateRef.current[key].value === value) return
   stateRef.current[key].value = value
   if (stateRef.current[key].used) render()
 }
 
-// The return value is exposed through a getter function, which also marks whether the state is used in the getter function
+// Return values are exposed through getter functions, while marking whether the state is used in the getter function
 const returnedState = {
   get name() {
     stateRef.current.name.used = true
@@ -87,4 +89,4 @@ const returnedState = {
 }
 ```
 
-Through such means, we can implement a simple dependency collection system, where only the states that are used by the user will trigger re-rendering. Internally in `@shine/react-use`, this whole logic is integrated into the `useTrackedRefState()` Hook (not yet exposed externally), used to implement the functionality of dependency collection.
+Through such methods, we can implement a simple dependency collection system, where re-rendering is only triggered when the user uses a particular state. Within `@shined/react-use`, this entire set of logic has been integrated into the `useTrackedRefState()` Hook (not yet publicly exposed), to implement the dependencies collection feature.
