@@ -9,6 +9,7 @@
     "dev": "rspress dev",
     "prebuild": "pnpm run update:hooks",
     "build": "esno ./scripts/build-documentation.ts",
+    "release": "esno ./scripts/release-documentation.ts",
     "preview": "rspress preview"
   },
   "dependencies": {

@@ -10,7 +10,7 @@
       "i18n": ["./i18n.json"]
     }
   },
-  "include": ["./src", "./docs"],
+  "include": ["./src", "./docs", "./scripts"],
   "mdx": {
     "checkMdx": true
   }

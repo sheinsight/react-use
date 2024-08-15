@@ -1,36 +1,42 @@
-import fs from 'node:fs'
-import path from 'node:path'
-import { camelCase } from 'change-case'
-import gm from 'gray-matter'
+import 'zx/globals'
 
-const __dirname = path.dirname(new URL(import.meta.url).pathname)
-const hooksSrc = path.resolve(__dirname, '../../src')
+import { dirname, join, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { camelCase } from 'change-case'
+import grayMatter from 'gray-matter'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+const hooksSrc = resolve(__dirname, '../../src')
 const ignoredDirs = ['utils', 'use-track-ref-state', 'use-versioned-action']
 
-const hooksDirents = fs
-  .readdirSync(hooksSrc, { withFileTypes: true })
-  .filter((d) => d.isDirectory() && ignoredDirs.every((e) => e !== d.name))
+const dirents = await fs.readdir(hooksSrc, { withFileTypes: true })
+const hooksDirents = dirents.filter((d) => d.isDirectory() && ignoredDirs.every((e) => e !== d.name))
 
-const hooks = hooksDirents
-  .map((e) => {
-    const mdxPath = path.resolve(hooksSrc, e.name, 'index.mdx')
+const hooks = []
 
-    if (!fs.existsSync(mdxPath)) return null
+for (const e of hooksDirents) {
+  const mdxPath = join(hooksSrc, e.name, 'index.mdx')
 
-    const { data } = gm(fs.readFileSync(mdxPath, 'utf-8'))
+  if (await fs.exists(mdxPath)) {
+    const contents = await fs.readFile(mdxPath, 'utf-8')
+    const { data } = grayMatter(contents)
+
     const category = data.type || data.category || 'Uncategorized'
     const features = data.features || []
     const deprecated = data.deprecated || false
 
-    return {
+    hooks.push({
       name: camelCase(e.name),
       slug: e.name,
       category,
       features,
       deprecated,
-    }
-  })
-  .filter(Boolean)
-  .sort((a, b) => a?.deprecated - b?.deprecated)
+    })
+  }
+}
 
-fs.writeFileSync(path.resolve(__dirname, '../hooks.json'), JSON.stringify(hooks))
+hooks.sort((a, b) => a?.deprecated - b?.deprecated)
+
+await fs.writeJson(resolve(__dirname, '../../docs/hooks.json'), hooks)

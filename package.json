@@ -59,6 +59,7 @@
     "test:ci": "pnpm run build && pnpm run lint && vitest",
     "docs:dev": "pnpm run build && pnpm -C docs run dev",
     "docs:build": "pnpm run build && pnpm -C docs run build",
+    "docs:release": "pnpm -C docs run release",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "typecheck": "tsc",
     "prepare": "is-ci || husky"
