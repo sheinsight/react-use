@@ -1,10 +1,11 @@
 import { useRef } from 'react'
 import { useAsyncFn } from '../use-async-fn'
 import { useLatest } from '../use-latest'
-import { useRender } from '../use-render'
-import { shallowEqual } from '../utils/equal'
+import { useTrackedRefState } from '../use-tracked-ref-state'
+import { useVersionedAction } from '../use-versioned-action'
 
 import type { UseAsyncFnOptions, UseAsyncFnReturns } from '../use-async-fn'
+import { useCreation } from '../use-creation'
 import type { AnyFunc } from '../utils/basic'
 
 export interface UseLoadingSlowFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
@@ -42,36 +43,23 @@ export function useLoadingSlowFn<T extends AnyFunc, D = Awaited<ReturnType<T>>, 
 ): UseLoadingSlowFnReturns<T, D, E> {
   const { loadingTimeout = 0, onLoadingSlow, ...useAsyncFnOptions } = options
 
-  const render = useRender()
   const latest = useLatest({ fn, loadingTimeout })
+  const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>()
 
-  const stateRef = useRef({
-    version: 0,
-    timer: undefined as ReturnType<typeof setTimeout> | undefined,
-    loadingSlow: { used: false, value: false },
-  })
+  const [refState, actions] = useTrackedRefState({ loadingSlow: false })
+  const [incVersion, runVersionedAction] = useVersionedAction()
 
-  function updateRefValue<T>(refItem: { used: boolean; value: T }, newValue: T) {
-    if (shallowEqual(refItem.value, newValue)) return
-    refItem.value = newValue
-    refItem.used && render()
-  }
-
-  function runWhenVersionMatch(version: number, fu: AnyFunc) {
-    version === stateRef.current.version && fu()
-  }
-
-  const asyncFn = useAsyncFn<T, D, E>(
+  const asyncFnReturns = useAsyncFn<T, D, E>(
     (async (...args) => {
-      updateRefValue(stateRef.current.loadingSlow, false)
+      actions.updateRefState('loadingSlow', false)
 
-      const version = ++stateRef.current.version
+      const version = incVersion()
 
       if (latest.current.loadingTimeout) {
-        stateRef.current.timer = setTimeout(() => {
-          runWhenVersionMatch(version, () => {
-            stateRef.current.timer = undefined
-            updateRefValue(stateRef.current.loadingSlow, true)
+        timerRef.current = setTimeout(() => {
+          runVersionedAction(version, () => {
+            timerRef.current = undefined
+            actions.updateRefState('loadingSlow', true)
             onLoadingSlow?.()
           })
         }, latest.current.loadingTimeout)
@@ -79,12 +67,12 @@ export function useLoadingSlowFn<T extends AnyFunc, D = Awaited<ReturnType<T>>, 
 
       const result = await latest.current.fn(...args)
 
-      runWhenVersionMatch(version, () => {
-        if (stateRef.current.timer) {
-          clearTimeout(stateRef.current.timer)
+      runVersionedAction(version, () => {
+        if (timerRef.current) {
+          clearTimeout(timerRef.current)
         }
 
-        updateRefValue(stateRef.current.loadingSlow, false)
+        actions.updateRefState('loadingSlow', false)
       })
 
       return result
@@ -92,33 +80,24 @@ export function useLoadingSlowFn<T extends AnyFunc, D = Awaited<ReturnType<T>>, 
     {
       ...useAsyncFnOptions,
       onCancel(...args) {
-        stateRef.current.version++
-        updateRefValue(stateRef.current.loadingSlow, false)
+        incVersion()
+        actions.updateRefState('loadingSlow', false)
         useAsyncFnOptions.onCancel?.(...args)
       },
     },
   )
 
-  return {
-    mutate: asyncFn.mutate,
-    run: asyncFn.run,
-    cancel: asyncFn.cancel,
-    refresh: asyncFn.refresh,
-    get params() {
-      return asyncFn.params
-    },
-    get value() {
-      return asyncFn.value
-    },
-    get error() {
-      return asyncFn.error
-    },
-    get loading() {
-      return asyncFn.loading
-    },
-    get loadingSlow() {
-      stateRef.current.loadingSlow.used = true
-      return stateRef.current.loadingSlow.value
-    },
-  }
+  const result = useCreation(() => {
+    const result = asyncFnReturns as UseLoadingSlowFnReturns<T, D, E>
+
+    Object.defineProperty(result, 'loadingSlow', {
+      get() {
+        return refState.loadingSlow
+      },
+    })
+
+    return result
+  })
+
+  return result
 }
