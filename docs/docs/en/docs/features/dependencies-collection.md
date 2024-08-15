@@ -21,7 +21,7 @@ This operation logic is not problematic in itself. The problem arises when updat
 
 ```tsx
 // Users actually only need the run operation and this one state of loading; they're not really concerned about error or data
-const { run, data } = useQuery(requestSomething, options)
+const { run, loading } = useQuery(requestSomething, options)
 
 // User executes the run operation
 run()
@@ -29,7 +29,7 @@ run()
 // When `data`, `error`, or `loading` changes, an internal `setState` operation is triggered causing the component to re-render
 ```
 
-In certain scenarios (as above), we might only need one of the states, such as `data`, and not the other states. To achieve this, we introduced the concept of dependency collection, which is imperceptible to users but can significantly enhance performance.
+In certain scenarios (as above), we might only need one of the states, such as `loading`, and not the other states. To achieve this, we introduced the concept of dependency collection, which is imperceptible to users but can significantly enhance performance.
 
 ```tsx
 // Users take what they need from the return value

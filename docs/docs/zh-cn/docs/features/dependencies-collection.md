@@ -21,7 +21,7 @@
 
 ```tsx
 // 用户实际上只需要 run 操作和 loading 这一个状态，对于 error、data 其实并不关心
-const { run, data } = useQuery(requestSomething, options)
+const { run, loading } = useQuery(requestSomething, options)
 
 // 用户执行 run 操作
 run()
@@ -29,7 +29,7 @@ run()
 // 当 data、error、loading 改变时，内部会触发 `setState` 操作导致组件重新渲染
 ```
 
-在某些场景下（如上），我们可能只需要其中的一个状态，比如 `data`，而不需要其他状态。为了实现这一点，我们引入了依赖收集的概念，这对用户是无感的，但是可以显著提升性能。
+在某些场景下（如上），我们可能只需要其中的一个状态，比如 `loading`，而不需要其他状态。为了实现这一点，我们引入了依赖收集的概念，这对用户是无感的，但是可以显著提升性能。
 
 ```tsx
 // 用户需要什么，就从返回值里面取什么
