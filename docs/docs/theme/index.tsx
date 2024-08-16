@@ -1,3 +1,5 @@
+import '@unocss/reset/tailwind.css'
+
 import './style.css'
 
 import Theme from 'rspress/theme'

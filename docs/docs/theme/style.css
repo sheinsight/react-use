@@ -1,5 +1,14 @@
 @unocss;
 
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 :root {
   --rp-c-text-code: var(--rp-c-brand-dark);
   --rp-c-text-code-bg: #90998e1a;

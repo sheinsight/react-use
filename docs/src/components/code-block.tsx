@@ -53,8 +53,11 @@ export function CodeBlock(props: Props) {
       >
         <div className="py-1 px-2 text-sm text-gray-5! dark:text-white!">{clipboard.copied ? 'Copied' : 'Copy'}</div>
       </button>
-      {/* biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
-      <div className={cn('m-0 overflow-scroll', codeClassName)} dangerouslySetInnerHTML={{ __html: html }} />
+      <div
+        className={cn('m-0 overflow-scroll hide-scrollbar', codeClassName)}
+        /* biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
     </div>
   )
 }

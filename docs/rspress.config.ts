@@ -127,7 +127,9 @@ export default defineConfig({
   },
   plugins,
   themeConfig: {
-    darkMode: true,
+    enableContentAnimation: true,
+    enableScrollToTop: true,
+    darkMode: !process.env.IS_SODOC,
     socialLinks: [
       {
         icon: 'github',
@@ -139,6 +141,9 @@ export default defineConfig({
   },
   builderPlugins,
   builderConfig: {
+    html: {
+      tags: [{ tag: 'script', children: "window.RSPRESS_THEME = 'light';" }],
+    },
     output: {
       cleanDistPath: true,
     },
