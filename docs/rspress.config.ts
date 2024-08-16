@@ -12,9 +12,11 @@ import { locale } from './locale'
 import type { RspressPlugin } from '@rspress/shared'
 
 // disable cache to avoid dev cache not match error
-rimrafSync(path.join(__dirname, './build'))
+if (process.env.NODE_ENV === 'development') {
+  rimrafSync(path.join(__dirname, './build'))
+}
 
-const hooksDocPlugin = (): RspressPlugin => {
+const reactUseRspressPlugin = (): RspressPlugin => {
   const ignoredDirs = ['utils']
 
   const categories = new Map<string, string[]>([
@@ -95,6 +97,15 @@ const hooksDocPlugin = (): RspressPlugin => {
   }
 }
 
+const plugins = [reactUseRspressPlugin()]
+const builderPlugins = []
+
+if (process.env.IS_SODOC) {
+  plugins.push(require('@shein/rspress-plugin-sodoc')())
+} else {
+  builderPlugins.push(pluginGoogleAnalytics({ id: 'G-M3K3LXN4J9' }))
+}
+
 export default defineConfig({
   root: path.resolve(__dirname, './docs'),
   base: '/react-use/',
@@ -114,7 +125,7 @@ export default defineConfig({
     exclude: ['**/{components,hooks,utils}/**/*'],
     cleanUrls: true,
   },
-  plugins: [hooksDocPlugin(), process.env.IS_SODOC ? require('@shein/rspress-plugin-sodoc')() : null].filter(Boolean),
+  plugins,
   themeConfig: {
     darkMode: true,
     socialLinks: [
@@ -126,7 +137,7 @@ export default defineConfig({
     ],
     locales: [locale.en, locale.zhCN],
   },
-  builderPlugins: process.env.IS_SODOC ? [] : [pluginGoogleAnalytics({ id: 'G-M3K3LXN4J9' })],
+  builderPlugins,
   builderConfig: {
     output: {
       cleanDistPath: true,
