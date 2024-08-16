@@ -14,18 +14,17 @@
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.2",
-    "@shein/rspress-plugin-sodoc": "^0.0.1",
     "@shined/react-use": "workspace:*",
     "@shined/reactive": "^0.1.4",
     "change-case": "^5.4.4",
     "classnames": "^2.5.1",
     "react-hot-toast": "^2.4.1",
-    "rspress": "1.27.1",
+    "rspress": "1.25.2",
     "shiki": "^1.13.0"
   },
   "devDependencies": {
     "@iconify-json/mdi": "^1.1.68",
-    "@rspress/shared": "1.27.1",
+    "@rspress/shared": "1.25.2",
     "@types/node": "^22.3.0",
     "@unocss/postcss": "^0.61.9",
     "@unocss/reset": "^0.61.9",

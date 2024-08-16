@@ -128,6 +128,9 @@ export default defineConfig({
   },
   builderPlugins: process.env.IS_SODOC ? [] : [pluginGoogleAnalytics({ id: 'G-M3K3LXN4J9' })],
   builderConfig: {
+    output: {
+      cleanDistPath: true,
+    },
     source: {
       alias: {
         '@': path.resolve(__dirname, './src'),
