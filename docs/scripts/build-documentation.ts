@@ -1,6 +1,7 @@
 import 'zx/globals'
 
 const isSoDoc = process.env.PIPLINENAME === 'SODOC'
+const __dirname = new URL('.', import.meta.url).pathname
 
 if (isSoDoc) {
   process.env.IS_SODOC = 'true'
@@ -9,3 +10,7 @@ if (isSoDoc) {
 }
 
 await $`rspress build`
+
+if (isSoDoc) {
+  await $({ cwd: __dirname })`cp -r ../docs-dist ../../docs-dist`
+}

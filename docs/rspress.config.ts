@@ -101,12 +101,7 @@ const plugins: RspressPlugin[] = [reactUseRspressPlugin()]
 const builderPlugins = []
 
 if (process.env.IS_SODOC) {
-  plugins.push(require('@shein/rspress-plugin-sodoc')(), {
-    name: 'change-output-dir',
-    // biome-ignore lint/suspicious/noAssignInExpressions: for build
-    // biome-ignore lint/style/noCommaOperator: for build
-    config: (c) => ((c.outDir = path.resolve(__dirname, '../docs-dist')), c),
-  })
+  plugins.push(require('@shein/rspress-plugin-sodoc')())
 } else {
   builderPlugins.push(pluginGoogleAnalytics({ id: 'G-M3K3LXN4J9' }))
 }
@@ -118,7 +113,7 @@ export default defineConfig({
   icon: '/icon.svg',
   title: '@shined/react-use',
   description: i18n['homepage.tagline'].en,
-  outDir: process.env.IS_SODOC ? '../docs-dist' : 'build',
+  outDir: 'build',
   logo: {
     dark: '/logo-dark.svg',
     light: '/logo-light.svg',
