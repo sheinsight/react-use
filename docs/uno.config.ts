@@ -11,6 +11,9 @@ export default defineConfig({
     presetIcons({
       extraProperties: {
         display: 'inline-block',
+        'mask-image': 'var(--un-icon)',
+        'mask-size': '100% 100%',
+        'mask-repeat': 'no-repeat',
       },
     }),
   ],
