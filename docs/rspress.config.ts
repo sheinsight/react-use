@@ -6,6 +6,7 @@ import { rimrafSync } from 'rimraf'
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics'
 import { defineConfig } from 'rspress/config'
 
+import hooks from './hooks.json'
 import i18n from './i18n.json'
 import { locale } from './locale'
 
@@ -17,8 +18,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const reactUseRspressPlugin = (): RspressPlugin => {
-  const ignoredDirs = ['utils']
-
   const categories = new Map<string, string[]>([
     ['State', []],
     ['Lifecycle', []],
@@ -31,26 +30,20 @@ const reactUseRspressPlugin = (): RspressPlugin => {
     ['ProUtilities', []],
   ])
 
-  const hooks = fs
-    .readdirSync(path.resolve(__dirname, '../src'), { withFileTypes: true })
-    .filter((d) => d.isDirectory() && ignoredDirs.every((e) => e !== d.name))
+  const routes = hooks.flatMap((hook) => {
+    const enPath = path.resolve(__dirname, '../src', hook.slug, 'index.mdx')
+    const zhCNPath = path.resolve(__dirname, '../src', hook.slug, 'index.zh-cn.mdx')
 
-  const routes = hooks.flatMap((dir) => {
-    const enPath = path.resolve(__dirname, '../src', dir.name, 'index.mdx')
-    const zhCNPath = path.resolve(__dirname, '../src', dir.name, 'index.zh-cn.mdx')
-
-    if (!fs.existsSync(enPath)) {
-      return []
-    }
+    if (!fs.existsSync(enPath)) return []
 
     const { data } = gm(fs.readFileSync(enPath, 'utf-8'))
     const category = data.type || data.category || 'Uncategorized'
-    categories.set(category, (categories.get(category) ?? []).concat(dir.name))
+    categories.set(category, (categories.get(category) ?? []).concat(hook.slug))
 
     // currently only `en` & `zh-cn` supported
     return [
-      { routePath: `/en/reference/${dir.name}`, filepath: enPath },
-      { routePath: `/zh-cn/reference/${dir.name}`, filepath: fs.existsSync(zhCNPath) ? zhCNPath : enPath },
+      { routePath: `/en/reference/${hook.slug}`, filepath: enPath },
+      { routePath: `/zh-cn/reference/${hook.slug}`, filepath: fs.existsSync(zhCNPath) ? zhCNPath : enPath },
     ]
   })
 
@@ -97,18 +90,34 @@ const reactUseRspressPlugin = (): RspressPlugin => {
   }
 }
 
+const base = '/react-use/'
+const { COLUMNID = '', VERSION = '' } = process.env
+const assetsPrefix = process.env.IS_SODOC ? `/api/web/independent/${COLUMNID}/${VERSION}/` : base
 const plugins: RspressPlugin[] = [reactUseRspressPlugin()]
-const builderPlugins = []
+const builderPlugins: ReturnType<typeof pluginGoogleAnalytics>[] = []
 
 if (process.env.IS_SODOC) {
-  plugins.push(require('@shein/rspress-plugin-sodoc')())
+  plugins.push(require('@shein/rspress-plugin-sodoc')(), {
+    name: 'replace-assets-prefix',
+    config(config) {
+      config.icon = `${assetsPrefix}${config.icon?.replace(/^\/+/, '') ?? ''}`
+      config.logo = typeof config.logo === 'string' ? { dark: config.logo, light: config.logo } : config.logo
+
+      config.logo = {
+        dark: `${assetsPrefix}/${config.logo?.dark ?? ''}`,
+        light: `${assetsPrefix}/${config.logo?.light ?? ''}`,
+      }
+
+      return config
+    },
+  })
 } else {
   builderPlugins.push(pluginGoogleAnalytics({ id: 'G-M3K3LXN4J9' }))
 }
 
 export default defineConfig({
   root: path.resolve(__dirname, './docs'),
-  base: '/react-use/',
+  base,
   lang: 'en',
   icon: '/icon.svg',
   title: '@shined/react-use',
@@ -151,6 +160,9 @@ export default defineConfig({
       alias: {
         '@': path.resolve(__dirname, './src'),
         '@@': path.resolve(__dirname, './'),
+      },
+      define: {
+        'process.env.ASSETS_PREFIX': JSON.stringify(assetsPrefix),
       },
     },
   },

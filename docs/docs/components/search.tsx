@@ -1,7 +1,8 @@
-import { type HooksTypeProps, Labels, cn, iconMap, useNormalizedPath } from '@/components'
+import { Labels, cn, iconMap, useRoutePath } from '@/components'
 import hooks from '@@/hooks.json'
 import { useControlledComponent, useCreation, useUrlSearchParams } from '@shined/react-use'
-import { camelCase } from 'change-case'
+
+import type { HooksTypeProps } from '@/components'
 
 const filterLabelCls =
   'transition will-change-auto inline-flex gap-1 items-center rounded border border-solid text-xs border-gray/20 px-2 py-1 rounded-full cursor-pointer'
@@ -129,7 +130,7 @@ export function SearchHooks() {
               >
                 <div>
                   <a
-                    href={useNormalizedPath(`/reference/${hook.slug}`)}
+                    href={useRoutePath(`/reference/${hook.slug}`)}
                     className={cn(
                       'text-primary dark:text-primary',
                       hook.deprecated ? 'line-through' : 'hover:underline',

@@ -1,5 +1,5 @@
-import { normalizeImagePath } from 'rspress/runtime'
+import { useAssetsPath } from '@/utils'
 
 export function ReactUseIcon() {
-  return <img alt="react-use-icon" src={normalizeImagePath('/icon.svg')} className="size-24" />
+  return <img alt="react-use-icon" src={useAssetsPath('/icon.svg')} className="size-24" />
 }

@@ -1,4 +1,4 @@
-import { Button, CodeBlock, ReactUseIcon, useI18n, useNormalizedPath } from '@/components'
+import { Button, CodeBlock, ReactUseIcon, useI18n, useRoutePath } from '@/components'
 import { useDark } from 'rspress/runtime'
 
 export function Main() {
@@ -26,13 +26,13 @@ export function Main() {
         theme={isDark ? 'one-dark-pro' : 'one-light'}
       />
       <div className="flex gap-4 md:gap-6 items-center">
-        <a href={useNormalizedPath('/docs/introduction')}>
+        <a href={useRoutePath('/docs/introduction')}>
           <Button className="md:w-120px">{t('homepage.introduction')}</Button>
         </a>
-        <a className="user-link" href={useNormalizedPath('/docs/get-started')}>
+        <a className="user-link" href={useRoutePath('/docs/get-started')}>
           {t('homepage.get-started')}
         </a>
-        <a className="user-link" href={useNormalizedPath('/reference')}>
+        <a className="user-link" href={useRoutePath('/reference')}>
           {t('homepage.reference')}
         </a>
       </div>
