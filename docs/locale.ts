@@ -147,6 +147,10 @@ export const navbar = {
       link: '/reference',
     },
     {
+      text: 'Roadmap',
+      link: '/roadmap',
+    },
+    {
       text: `v${version}`,
       items: [
         {
@@ -173,6 +177,10 @@ export const navbar = {
     {
       text: 'Hooks 列表',
       link: `/${langSlug.zhCN}/reference`,
+    },
+    {
+      text: '后期规划',
+      link: `/${langSlug.zhCN}/roadmap`,
     },
     {
       text: `v${version}`,
