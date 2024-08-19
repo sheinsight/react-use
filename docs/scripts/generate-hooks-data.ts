@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 const hooksSrc = resolve(__dirname, '../../src')
-const ignoredDirs = ['utils', 'use-track-ref-state', 'use-versioned-action']
+const ignoredDirs = ['utils', 'use-track-ref-state', 'use-versioned-action', 'use-web-observer']
 
 const dirents = await fs.readdir(hooksSrc, { withFileTypes: true })
 const hooksDirents = dirents.filter((d) => d.isDirectory() && ignoredDirs.every((e) => e !== d.name))
