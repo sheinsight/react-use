@@ -17,7 +17,72 @@ if (process.env.NODE_ENV === 'development') {
   rimrafSync(path.join(__dirname, './build'))
 }
 
-const reactUseRspressPlugin = (): RspressPlugin => {
+const base = '/react-use/'
+const { COLUMNID = '', VERSION = '' } = process.env
+const runtimeAssetsPrefix = process.env.IS_SODOC ? `/api/web/independent/${COLUMNID}/${VERSION}/` : base
+const plugins: RspressPlugin[] = [reactUseRspressPlugin()]
+const builderPlugins: ReturnType<typeof pluginGoogleAnalytics>[] = []
+
+if (process.env.IS_SODOC) {
+  plugins.push(require('@shein/rspress-plugin-sodoc')(), replaceAssetsPrefixPlugin())
+} else {
+  builderPlugins.push(pluginGoogleAnalytics({ id: 'G-M3K3LXN4J9' }))
+}
+
+export default defineConfig({
+  root: path.resolve(__dirname, './docs'),
+  base,
+  lang: 'en',
+  icon: '/icon.svg',
+  title: '@shined/react-use',
+  description: i18n['homepage.tagline'].en,
+  outDir: 'build',
+  logo: {
+    dark: '/logo-dark.svg',
+    light: '/logo-light.svg',
+  },
+  search: {
+    versioned: true,
+  },
+  route: {
+    exclude: ['**/{components,hooks,utils}/**/*'],
+    cleanUrls: true,
+  },
+  plugins,
+  themeConfig: {
+    enableContentAnimation: true,
+    enableScrollToTop: true,
+    darkMode: !process.env.IS_SODOC,
+    socialLinks: [
+      {
+        icon: 'github',
+        mode: 'link',
+        content: 'https://github.com/sheinsight/react-use',
+      },
+    ],
+    locales: [locale.en, locale.zhCN],
+  },
+  builderPlugins,
+  builderConfig: {
+    html: {
+      tags: [{ tag: 'script', children: "window.RSPRESS_THEME = 'light';" }],
+    },
+    output: {
+      cleanDistPath: true,
+    },
+    source: {
+      alias: {
+        '@': path.resolve(__dirname, './src'),
+        '@@': path.resolve(__dirname, './'),
+      },
+      define: {
+        'process.env.ASSETS_PREFIX': JSON.stringify(runtimeAssetsPrefix),
+      },
+    },
+  },
+})
+
+function reactUseRspressPlugin(): RspressPlugin {
   const categories = new Map<string, string[]>([
     ['State', []],
     ['Lifecycle', []],
@@ -90,80 +155,21 @@ const reactUseRspressPlugin = (): RspressPlugin => {
   }
 }
 
-const base = '/react-use/'
-const { COLUMNID = '', VERSION = '' } = process.env
-const assetsPrefix = process.env.IS_SODOC ? `/api/web/independent/${COLUMNID}/${VERSION}/` : base
-const plugins: RspressPlugin[] = [reactUseRspressPlugin()]
-const builderPlugins: ReturnType<typeof pluginGoogleAnalytics>[] = []
-
-if (process.env.IS_SODOC) {
-  plugins.push(require('@shein/rspress-plugin-sodoc')(), {
+function replaceAssetsPrefixPlugin(): RspressPlugin {
+  return {
     name: 'replace-assets-prefix',
     config(config) {
-      config.icon = `${assetsPrefix}${config.icon?.replace(/^\/+/, '') ?? ''}`
+      const addPrefix = (url?: string) => `${process.env.ASSETS_PREFIX}${url?.replace(/^\/+/, '') ?? ''}`
+
+      config.icon = addPrefix(config.icon)
       config.logo = typeof config.logo === 'string' ? { dark: config.logo, light: config.logo } : config.logo
 
       config.logo = {
-        dark: `${assetsPrefix}/${config.logo?.dark ?? ''}`,
-        light: `${assetsPrefix}/${config.logo?.light ?? ''}`,
+        dark: addPrefix(config.logo?.dark),
+        light: addPrefix(config.logo?.light),
       }
 
       return config
     },
-  })
-} else {
-  builderPlugins.push(pluginGoogleAnalytics({ id: 'G-M3K3LXN4J9' }))
+  }
 }
-
-export default defineConfig({
-  root: path.resolve(__dirname, './docs'),
-  base,
-  lang: 'en',
-  icon: '/icon.svg',
-  title: '@shined/react-use',
-  description: i18n['homepage.tagline'].en,
-  outDir: 'build',
-  logo: {
-    dark: '/logo-dark.svg',
-    light: '/logo-light.svg',
-  },
-  search: {
-    versioned: true,
-  },
-  route: {
-    exclude: ['**/{components,hooks,utils}/**/*'],
-    cleanUrls: true,
-  },
-  plugins,
-  themeConfig: {
-    enableContentAnimation: true,
-    enableScrollToTop: true,
-    darkMode: !process.env.IS_SODOC,
-    socialLinks: [
-      {
-        icon: 'github',
-        mode: 'link',
-        content: 'https://github.com/sheinsight/react-use',
-      },
-    ],
-    locales: [locale.en, locale.zhCN],
-  },
-  builderPlugins,
-  builderConfig: {
-    html: {
-      tags: [{ tag: 'script', children: "window.RSPRESS_THEME = 'light';" }],
-    },
-    output: {
-      cleanDistPath: true,
-    },
-    source: {
-      alias: {
-        '@': path.resolve(__dirname, './src'),
-        '@@': path.resolve(__dirname, './'),
-      },
-      define: {
-        'process.env.ASSETS_PREFIX': JSON.stringify(assetsPrefix),
-      },
-    },
-  },
-})
