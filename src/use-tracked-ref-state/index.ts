@@ -50,6 +50,7 @@ export function useTrackedRefState<S extends object, Keys extends keyof S = keyo
     const result = {} as S
     for (const key in stateRef.current) {
       Object.defineProperty(result, key, {
+        enumerable: true,
         get() {
           markKeyAsUsed(key as unknown as Keys)
           return stateRef.current[key].value

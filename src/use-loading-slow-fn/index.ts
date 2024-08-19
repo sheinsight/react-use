@@ -91,6 +91,7 @@ export function useLoadingSlowFn<T extends AnyFunc, D = Awaited<ReturnType<T>>, 
     const result = asyncFnReturns as UseLoadingSlowFnReturns<T, D, E>
 
     Object.defineProperty(result, 'loadingSlow', {
+      enumerable: true,
       get() {
         return refState.loadingSlow
       },
