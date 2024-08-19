@@ -7,6 +7,7 @@ import { useTimeoutFn } from '../use-timeout-fn'
 import { useTrackedRefState } from '../use-tracked-ref-state'
 import { isDefined } from '../utils/basic'
 import { unwrapGettable } from '../utils/unwrap'
+import { legacyCopy, legacyRead } from './legacy'
 
 import type { UsePermissionReturns } from '../use-permission'
 import type { Gettable } from '../utils/basic'
@@ -124,7 +125,7 @@ export function useClipboard(
     actions.updateRefState('text', value)
     actions.updateRefState('copied', true)
     startTimeout()
-    onCopy?.(value)
+    latest.current.onCopy?.(value)
   })
 
   const clear = useStableFn(() => {
@@ -145,22 +146,6 @@ export function useClipboard(
       return refState.copied
     },
   }
-}
-
-function legacyCopy(value: string) {
-  const textarea = document.createElement('textarea')
-  textarea.value = value
-  textarea.style.position = 'absolute'
-  textarea.style.opacity = '0'
-  textarea.style.zIndex = '-999999999'
-  document.body.appendChild(textarea)
-  textarea.select()
-  document.execCommand('copy')
-  textarea.remove()
-}
-
-function legacyRead() {
-  return document.getSelection()?.toString() ?? ''
 }
 
 function isAllowed(status: UsePermissionReturns<false>) {
