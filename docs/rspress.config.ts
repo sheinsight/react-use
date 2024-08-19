@@ -18,8 +18,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const base = '/react-use/'
-const { COLUMNID = '', VERSION = '' } = process.env
-const runtimeAssetsPrefix = process.env.IS_SODOC ? `/api/web/independent/${COLUMNID}/${VERSION}/` : base
+const assetsPrefix = 'https://sheinsight.github.io/react-use/'
 const plugins: RspressPlugin[] = [reactUseRspressPlugin()]
 const builderPlugins: ReturnType<typeof pluginGoogleAnalytics>[] = []
 
@@ -76,7 +75,7 @@ export default defineConfig({
         '@@': path.resolve(__dirname, './'),
       },
       define: {
-        'process.env.ASSETS_PREFIX': JSON.stringify(runtimeAssetsPrefix),
+        'process.env.ASSETS_PREFIX': JSON.stringify(assetsPrefix),
       },
     },
   },
@@ -159,7 +158,7 @@ function replaceAssetsPrefixPlugin(): RspressPlugin {
   return {
     name: 'replace-assets-prefix',
     config(config) {
-      const addPrefix = (url?: string) => `https://sheinsight.github.io/react-use/${url?.replace(/^\/+/, '') ?? ''}`
+      const addPrefix = (url?: string) => `${assetsPrefix}${url?.replace(/^\/+/, '') ?? ''}`
 
       config.icon = addPrefix(config.icon)
       config.logo = typeof config.logo === 'string' ? { dark: config.logo, light: config.logo } : config.logo
