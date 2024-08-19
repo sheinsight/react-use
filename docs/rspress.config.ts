@@ -159,7 +159,7 @@ function replaceAssetsPrefixPlugin(): RspressPlugin {
   return {
     name: 'replace-assets-prefix',
     config(config) {
-      const addPrefix = (url?: string) => `${process.env.ASSETS_PREFIX}${url?.replace(/^\/+/, '') ?? ''}`
+      const addPrefix = (url?: string) => `https://sheinsight.github.io/react-use/${url?.replace(/^\/+/, '') ?? ''}`
 
       config.icon = addPrefix(config.icon)
       config.logo = typeof config.logo === 'string' ? { dark: config.logo, light: config.logo } : config.logo
