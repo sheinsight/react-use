@@ -49,7 +49,7 @@ export default defineConfig({
   },
   plugins,
   themeConfig: {
-    enableContentAnimation: true,
+    // enableContentAnimation: true,
     enableScrollToTop: true,
     darkMode: !process.env.IS_SODOC,
     socialLinks: [

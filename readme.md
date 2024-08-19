@@ -6,7 +6,7 @@
 @shined/react-use
 </h1>
 <p align="center">
-A SSR-friendly, comprehensive, standardized and highly optimized React Hooks library.
+A New Programming Paradigm to Reshape React Development.
 <p>
 <p align="center">
   <a href="https://www.npmjs.com/package/@shined/react-use"><img src="https://img.shields.io/npm/v/%40shined%2Freact-use?style=flat&labelColor=%23ffffff&color=%232e8555"></a>

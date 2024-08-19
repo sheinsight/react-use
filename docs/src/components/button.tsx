@@ -31,7 +31,7 @@ export function Button(
         className,
         variantCls,
         mono && 'font-mono',
-        'transition will-change-auto enabled:hover:shadow-md rounded-4px text-white border-none cursor-pointer text-1rem disabled:cursor-not-allowed px-12px py-4px enabled:active:pb-3px enabled:active:pt-5px',
+        'transition will-change-auto enabled:hover:shadow-md rounded-4px text-white border-none cursor-pointer text-1rem disabled:cursor-not-allowed px-4 py-2 enabled:active:pb-6px enabled:active:pt-10px',
       )}
       {...rest}
     />

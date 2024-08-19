@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 
 interface UsePreviousOptions {
   /**
@@ -22,12 +22,10 @@ export function usePrevious<T = undefined>(state: T, options: UsePreviousOptions
 
   const { isEqual = Object.is } = options
 
-  useEffect(() => {
-    if (!isEqual(curRef.current, state)) {
-      preRef.current = curRef.current
-      curRef.current = state
-    }
-  })
+  if (!isEqual(curRef.current, state)) {
+    preRef.current = curRef.current
+    curRef.current = state
+  }
 
   return preRef.current
 }

@@ -42,7 +42,7 @@ export function SearchHooks() {
   const hasFilter = params.category || params.feature
 
   return (
-    <div className="flex flex-col gap-4 mt-12 p-4 w-full md:w-640px">
+    <div className="flex flex-col gap-4 mt-12 p-4 w-full md:w-42vw md:max-w-800px">
       <div>
         <input
           {...input.props}
@@ -115,7 +115,7 @@ export function SearchHooks() {
         <span className="ml-2 text-gray">{filteredHooks.length} Hooks or utils found.</span>
       </div>
 
-      <div className="overflow-y-scroll md:pt-2 md:h-46vh">
+      <div className="overflow-y-scroll md:pt-2 md:h-48vh">
         <div className="flex flex-col gap-2">
           {filteredHooks.map((hook) => {
             const props = {

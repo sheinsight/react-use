@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.4.0",
   "packageManager": "pnpm@9.6.0",
-  "description": "A SSR-friendly, comprehensive, standardized and highly optimized React Hooks library.",
+  "description": "A New Programming Paradigm to Reshape React Development.",
   "author": "Viki <hi@viki.moe> (https://github.com/vikiboss)",
   "license": "MIT",
   "main": "./dist/index.js",

@@ -9,6 +9,13 @@
   }
 }
 
+.colorful-title {
+  background-image: linear-gradient(90deg, #2e8555, #f59e0b);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 :root {
   --rp-c-text-code: var(--rp-c-brand-dark);
   --rp-c-text-code-bg: #90998e1a;
