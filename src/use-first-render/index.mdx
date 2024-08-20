@@ -1,0 +1,47 @@
+---
+category: Lifecycle
+---
+
+# useFirstRender
+
+import { HooksType, Since } from '@/components'
+
+<HooksType {...frontmatter} />
+
+<Since version="1.5.0" />
+
+A React Hook for determining whether the component is currently in its initial render phase.
+
+## Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## Usage \{#usage}
+
+```tsx
+const isFirstRender = useFirstRender()
+
+// when component first renders
+console.log(isFirstRender) // true
+
+// when component re-renders
+console.log(isFirstRender) // false
+```
+
+## Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const isFirstRender = useFirstRender()
+```
+
+### Returns \{#returns}
+
+A `boolean` value indicating whether the component is currently in its first render phase.

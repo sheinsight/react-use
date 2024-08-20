@@ -1,0 +1,47 @@
+---
+category: Lifecycle
+---
+
+# useFirstRender
+
+import { HooksType, Since } from '@/components'
+
+<HooksType {...frontmatter} />
+
+<Since version="1.5.0" />
+
+一个用来获取组件当前是否是在第一次渲染阶段内的 React Hooks。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+```tsx
+const isFirstRender = useFirstRender()
+
+// when component first render
+console.log(isFirstRender) // true
+
+// when component re-render
+console.log(isFirstRender) // false
+```
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const isFirstRender = useFirstRender()
+```
+
+### 返回值 Returns \{#returns}
+
+一个 `boolean` 值，表示当前是否在第一次渲染阶段内。
