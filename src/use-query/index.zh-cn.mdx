@@ -23,7 +23,7 @@ import { App } from './demo'
 
 ### 基础用法 \{#basic}
 
-组件挂载时，自动触发数据获取，同时返回数据、加载状态和错误信息。
+组件挂载时，自动触发数据获取，同时返回数据、加载状态和错误信息，由 [useAsyncFn](/reference/use-async-fn) 提供支持。
 
 ```tsx
 // fetchData 是请求库无关的，可以是任意返回 Promise 的异步函数，可由 fetch、axios、graphql 等实现
@@ -40,6 +40,8 @@ return <div>{data}</div>
 ### 手动触发 \{#manual}
 
 当设置 `manual` 为 `true` 时，所有内置的自动行为（默认都没开启，包括轮询加载、聚焦重加载、网路重连重加载）将失效。同时 `immediate` 的**默认值**被指定为 `false`。
+
+`immediate` 由 [useMount](/reference/use-mount) 提供支持。
 
 ```ts
 const { run, loading, data, error, params, mutate refresh } = useQuery(fetchData, {
@@ -60,10 +62,43 @@ mutate('newData')
 // mutate('newData', ['newPrams'])
 ```
 
+### 操作取消 \{#cancel}
+
+使用 `cancel` 可以取消当前请求，同时重置所有状态。请注意，`cancel` **无法阻止 Promise 执行**，只是终止了后续状态更新逻辑，由 [useAsyncFn](/reference/use-async-fn) 提供支持
+
+```ts
+const { cancel, loading, data, error } = useQuery(fetchData)
+
+// 取消请求
+cancel()
+```
+
+### 生命周期 \{#lifecycle}
+
+`useQuery` 提供了丰富的生命周期，由 [useAsyncFn](/reference/use-async-fn) 提供支持，包括：
+
+```ts
+const { loading, data, error } = useQuery(fetchData, {
+  // 操作执行前
+  onBefore: (data, params) => console.log('before', data, params),
+  // 操作执行后
+  onSuccess: (data, params) => console.log('success', data, params),
+  // 操作失败
+  onError: (error, params) => console.log('error', error, params),
+  // 操作完成
+  onFinally: (data, params) => console.log('finally', data, error, params),
+  // 操作取消
+  onCancel: (data, params) => console.log('cancel', data, error, params),
+  // 手动修改数据或参数
+  onMutate: (data, params) => console.log('mutate', data, params),
+  // 刷新操作
+  onRefresh: (data, params) => console.log('refresh', data, params),
+})
+```
 
 ### 慢加载状态 \{#loading-slow}
 
-使用 `loadingSlow` 可以获取当前操作是否处于慢加载状态，即操作时间超过预期阈值，通过这个状态条件渲染不同的 UI，可以改善用户体验。
+使用 `loadingSlow` 可以获取当前操作是否处于慢加载状态，即操作时间超过预期阈值，通过这个状态条件渲染不同的 UI，可以改善用户体验，由 [useLoadingSlowFn](/reference/use-loading-slow-fn) 提供支持。
 
 ```ts
 const { loading, loadingSlow, data, error } = useQuery(fetchData, {
@@ -99,7 +134,7 @@ return <div>{data}{refreshing && <Loading />}</div>
 
 ### 参数和刷新 \{#params-refresh}
 
-使用 `params` 可以获取上次请求的参数，使用 `refresh` 可以使用上次请求的参数重新请求。
+使用 `params` 可以获取上次请求的参数，使用 `refresh` 可以使用上次请求的参数重新请求，由 [useAsyncFn](/reference/use-async-fn) 提供支持。
 
 ```ts
 const { params, refresh } = useQuery(fetchData)
@@ -112,7 +147,7 @@ refresh()
 
 ### 防抖和节流 \{#debounce-throttle}
 
-使用 `throttle` 和 `debounce` 选项可以控制**手动触发**的频率。
+使用 `throttle` 和 `debounce` 选项可以控制**手动触发**的频率，由 [useThrottledFn](/reference/use-throttled-fn) 和 [useDebouncedFn](/reference/use-debounced-fn) 提供支持。
 
 ```ts
 const { run, loading, data, error } = useQuery(fetchData, {
@@ -125,7 +160,7 @@ const { run, loading, data, error } = useQuery(fetchData, {
 
 ### 数据和参数修改 \{#mutate}
 
-使用 `mutate` 可以直接修改数据和请求参数，同时触发重新渲染，但不触发额外的请求。
+使用 `mutate` 可以直接修改数据和请求参数，同时触发重新渲染，但不触发额外的请求，由 [useAsyncFn](/reference/use-async-fn) 提供支持。
 
 ```ts
 const { data, mutate } = useQuery(fetchData)
@@ -146,7 +181,7 @@ mutate((key) => key === 'cacheKey', 'newData')
 
 ### 轮询加载 \{#polling}
 
-设置 `refreshInterval` 为一个大于 0 的数字，将启用自动刷新功能，每隔指定时间重新获取数据。
+设置 `refreshInterval` 为一个大于 0 的数字，将启用自动刷新功能，每隔指定时间重新获取数据，由 [useIntervalFn](/reference/use-interval-fn) 提供支持。
 
 ```ts
 const { loading, data, error } = useQuery(fetchData, {
@@ -158,7 +193,7 @@ const { loading, data, error } = useQuery(fetchData, {
 
 ### 重聚焦和重连重加载 \{#re-focus-re-connect}
 
-设置 `refreshOnFocus` 和 `refreshOnReconnect` 为 `true`，将在页面聚焦和网络重连时重新获取数据。
+设置 `refreshOnFocus` 和 `refreshOnReconnect` 为 `true`，将在页面聚焦和网络重连时重新获取数据，由 [useReFocusFn](/reference/use-re-focus-fn) 和 [useReConnectFn](/reference/use-re-connect-fn) 提供支持。
 
 ```ts
 const { loading, data, error } = useQuery(fetchData, {
@@ -182,9 +217,28 @@ const { loading, data, error } = useQuery(fetchData, {
 })
 ```
 
+### 可暂停 (Pasuable) \{#pausable}
+
+当然不指定 `manual` 为 `false` 时，如果也想控制内部自动行为，可以使用 Hooks 里对外暴露的 [Pausable](/docs/features/pausable) 实例属性，由 [usePausable](/reference/use-pausable) 提供支持。
+
+```tsx
+const { pause, resume, isActive } = useQuery(fetchData, {
+  refreshInterval: 5_000, // 指定每 5 秒刷新一次
+})
+
+// 暂停自动行为
+pause() 
+
+// 恢复自动行为
+resume()
+
+// 判断是否处于活跃状态
+console.log(isActive())
+```
+
 ### 错误重试 \{#error-retry}
 
-设置 `errorRetryCount` 和 `errorRetryInterval` 为大于 0 的数字，将在请求失败时自动重试。
+设置 `errorRetryCount` 和 `errorRetryInterval` 为大于 0 的数字，将在请求失败时自动重试，由 [useRetryFn](/reference/use-retry-fn) 提供支持。
 
 ```ts
 const { loading, data, error } = useQuery(fetchData, {
@@ -284,7 +338,7 @@ console.log(data, params) // 'newData', ['newParams']
 
 ### 依赖刷新 \{#refresh-dependencies}
 
-使用 `refreshDependencies` 可以设置刷新操作的依赖项，当依赖项改变时，将触发刷新 (`refresh()`) 操作。
+使用 `refreshDependencies` 可以设置刷新操作的依赖项，当依赖项改变时，将触发刷新 (`refresh()`) 操作，由 [useUpdateEffect](/reference/use-update-effect) 提供支持。
 
 ```ts
 const { loading, data, error } = useQuery(fetchData, {
@@ -294,7 +348,7 @@ const { loading, data, error } = useQuery(fetchData, {
 
 ### 依赖收集 \{#dependencies-collection}
 
-`useQuery` 实现了依赖收集策略，实现了按需渲染，最大限度优化性能。
+`useQuery` 实现了依赖收集策略，实现了按需渲染，最大限度优化性能，由内部的 [useTrackedRefState](/reference/use-tracked-ref-state) 提供支持。
 
 ```ts
 // 所有状态变化都会触发重新渲染，不推荐！！！
