@@ -10,7 +10,7 @@ import type { AnyFunc } from '../utils/basic'
  *
  * Usually, you should use `useLayoutMount` instead of `useMount` if you want to run some code that may affect the layout in the next frame.
  *
- * **Strict Once** option is **NOT** recommended as it [damages](https://react.dev/learn/synchronizing-with-effects#dont-use-refs-to-prevent-effects-from-firing) the original intention of React 18's strict mode.
+ * `strictOnce` option is **NOT** recommended as it [damages](https://react.dev/learn/synchronizing-with-effects#dont-use-refs-to-prevent-effects-from-firing) the original intention of the **Strict Mode** of React 18.
  *
  * @param callback The callback to run when the component is mounted (useLayoutEffect).
  * @param strictOnce If `true`, the callback will only be executed once. NOTE: **NOT** recommended.

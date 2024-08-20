@@ -8,7 +8,7 @@ import type { AnyFunc } from '../utils/basic'
 /**
  * A React Hook that runs a function only once when the component mounts.
  *
- * **Strict Once** option is **NOT** recommended as it [damages](https://react.dev/learn/synchronizing-with-effects#dont-use-refs-to-prevent-effects-from-firing) the original intention of React 18's strict mode.
+ * `strictOnce` option is **NOT** recommended as it [damages](https://react.dev/learn/synchronizing-with-effects#dont-use-refs-to-prevent-effects-from-firing) the original intention of the **Strict Mode** of React 18.
  *
  * @param callback The callback to run when the component is mounted.
  * @param strictOnce If `true`, the callback will only be executed once. NOTE: **NOT** recommended.
