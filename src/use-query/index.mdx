@@ -11,25 +11,312 @@ import { HooksType, Since } from '@/components'
 
 <Since version="v1.5.0" />
 
-A basic React Hook for data fetching, supports cache, automatic refresh, and many awesome features.
+A basic React hook for data fetching that supports caching, automatic refreshing, and many other powerful features.
 
-## Demo
+## Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## Usage \{#usage}
 
-See API for more details.
+### Basic Usage \{#basic}
 
-## Source
+Automatically triggers data fetching when the component mounts, returning data, loading status, and error information.
+
+```tsx
+// fetchData is independent of the request library; it can be any async function returning a Promise, implemented with fetch, axios, graphql, etc.
+const { loading, data, error } = useQuery(fetchData)
+
+// Loading and error UI handling
+if (loading) return <Loading />
+if (error) return <Error />
+
+// Rendering data
+return <div>{data}</div>
+```
+
+### Manual Trigger \{#manual}
+
+When `manual` is set to `true`, all built-in automatic behaviors (which are not enabled by default, including polling, focus reloading, and network reconnection reloading) will be disabled. Also, the **default value** of `immediate` is set to `false`.
+
+```ts
+const { run, loading, data, error, params, mutate, refresh } = useQuery(fetchData, {
+  manual: true,
+  initialParams: ['params'],
+  initialData: 'initialData',
+})
+
+// Manually triggering, will update the params state
+run('newParams')
+
+// Use the previous parameters to request again, i.e., ‘refresh’, equivalent to `run(params)`
+refresh()
+
+// Update existing data without triggering a request
+mutate('newData')
+// mutate((preData) => 'newData')
+// mutate('newData', ['newParams'])
+```
+
+### Slow Loading State \{#loading-slow}
+
+Use `loadingSlow` to get whether the current operation is in a slow loading state, i.e., the operation time exceeds the expected threshold. By rendering different UIs under this state, user experience can be improved.
+
+```ts
+const { loading, loadingSlow, data, error } = useQuery(fetchData, {
+  loadingTimeout: 3_000, // Defaults to 0, set to 3 seconds here
+  onLoadingSlow: () => console.log('loading slow'), // Callback for slow loading
+})
+
+// Display the slow loading UI during slow loading
+if (loading) return <Loading slow={loadingSlow} />
+```
+
+### Initializing and Refreshing \{#initializing-refreshing}
+
+Use `initializing` and `refreshing` to get whether it is in initializing and refreshing states.
+
+These two states are actually derived states of `loading` and `data`, as shown below in pseudo-code:
+
+```ts
+const initializing = !data && loading
+const refreshing = data && loading
+```
+
+```ts
+const { initializing, refreshing, data, error } = useQuery(fetchData)
+
+// Show initializing UI
+if (initializing) return <Loading />;
+
+// Display existing data, changing the UI and other styles based on the refreshing state
+return <div>{data}{refreshing && <Loading />}</div>
+```
+
+### Parameters and Refreshing \{#params-refresh}
+
+Use `params` to get the parameters of the last request, use `refresh` to request again using the last parameters.
+
+```ts
+const { params, refresh } = useQuery(fetchData)
+
+// Get the parameters of the last request
+console.log(params)
+// Use the last parameters to request again, i.e., ‘refresh’, equivalent to `run(params)`
+refresh()
+```
+
+### Debouncing and Throttling \{#debounce-throttle}
+
+Use `throttle` and `debounce` options to control the frequency of **manual triggers**.
+
+```ts
+const { run, loading, data, error } = useQuery(fetchData, {
+  throttle: 1_000, // Under frequent triggers, limit to only trigger once per second
+  // throttle: { wait: 1_000 }, // Or specify the entire UseThrottledFnOptions object
+  debounce: 1_000, // Under frequent triggers, wait 1 second after stopping operations to trigger
+  // debounce: { wait: 1_000 }, // Or specify the entire UseDebouncedFnOptions object
+})
+```
+
+### Data and Parameters Modification \{#mutate}
+
+Use `mutate` to directly modify data and request parameters, triggering a rerender but not an additional request.
+
+```ts
+const { data, mutate } = useQuery(fetchData)
+
+// Update data
+mutate('newData')
+// mutate((preData) => 'newData') // Supports setState style updates
+
+// Update both data and parameters
+mutate('newData', ['newParams'])
+// Parameters also support setState style updates
+// mutate((preData) => 'newData', (preParams) => ['newParams'])
+
+// Modify global cache
+import { mutate } from '@shined/react-use'
+mutate((key) => key === 'cacheKey', 'newData')
+```
+
+### Polling \{#polling}
+
+Setting `refreshInterval` to a number greater than 0 will enable automatic refresh functionality, re-fetching data at specified intervals.
+
+```ts
+const { loading, data, error } = useQuery(fetchData, {
+  refreshInterval: 5_000, // Polling interval, default 0, off
+  refreshWhenHidden: true, // Whether to poll when the page is not visible, default false
+  refreshWhenOffline: true, // Whether to poll when offline, default false
+})
+```
+
+### Re-focus and Reconnect Reloading \{#re-focus-re-connect}
+
+Set `refreshOnFocus` and `refreshOnReconnect` to `true` to re-fetch data on page focus and network reconnection.
+
+```ts
+const { loading, data, error } = useQuery(fetchData, {
+  refreshOnFocus: true,
+  refreshOnReconnect: true,
+  refreshOnFocusThrottleWait: 3_000, // Throttle time for focus refresh, default 5_000 milliseconds, only effective when refreshOnFocus is true
+})
+```
+
+For use in **non-Web environments** such as [React Native](https://reactnative.dev/), [Ink](https://term.ink), custom visibility and network status logic can be manually specified.
+
+```ts
+import { createReactNativeReFocusRegister } from '@shined/react-use'
+import { AppState } from 'react-native'
+
+const { loading, data, error } = useQuery(fetchData, {
+  isVisible: () => true, // Custom visibility judgment function
+  isOnline: () => true, // Custom online judgment function
+  registerReConnect: createReactNativeReFocusRegister(AppState), // Built-in React Native network reconnect registration function
+  registerReFocus: (callback) => {}, // Custom focus event registration function
+})
+```
+
+### Error Retry \{#error-retry}
+
+Set `errorRetryCount` and `errorRetryInterval` to numbers greater than 0 to automatically retry after a failed request.
+
+```ts
+const { loading, data, error } = useQuery(fetchData, {
+  errorRetryCount: 3, // Number of error retries, default 0, off
+  errorRetryInterval: 1_000, // Error retry interval, default 0, immediate retry
+  onErrorRetry: (error) => console.log(error), // Callback on error retry
+  onErrorRetryFailed: (error) => console.log(error), // Callback when error retry fails
+})
+```
+
+### Cache and SWR \{#cache-swr}
+
+Setting `cacheKey` will enable caching functionality; the cache contents include data and param, and when cached data exists and has not expired (expired cache will be cleared), cached data will be returned first, and a request will be triggered simultaneously, updating cached data to ensure data freshness, namely the SWR (Stale-While-Revalidate) strategy.
+
+```ts
+const { loading, data, error } = useQuery(fetchData, {
+  cacheKey: 'cacheKey', // Cache key, can be a string or a function returning a string
+  cacheExpirationTime: 5 * 60 * 1000, // Max cache time, default 5 minutes, set `false` to disable
+})
+```
+
+`provider` can be specified as an external storage (like [Reactive](https://sheinsight.github.io/reactive)), `localStorage`, etc., to share cache across different parts or implement more detailed local caching. A `Provider` needs to conform to the following interface definition (essentially a `Map`-type interface):
+
+```ts
+export interface UseQueryCacheLike<Data> {
+  get(key: string): Data | undefined
+  set(key: string, value: Data): void
+  delete(key: string): void
+  keys(): IterableIterator<string>
+}
+```
+
+For instance, sharing data using independent `Map` caches in some parts:
+
+```ts
+const cache = new Map<string, any>()
+
+// Component A
+const { loading, data, error } = useQuery(fetchData, {
+  cacheKey: 'cacheKeyA', 
+  provider: cache, // Using an independent Map as cache provider
+})
+
+// Component B
+const { loading, data, error } = useQuery(fetchData, {
+  cacheKey: 'cacheKeyB', 
+  provider: cache, // Using an independent Map as cache provider
+})
+
+// Component C, though its cacheKey is the same as A's, it does not share the cache because the provider is different
+const { loading, data, error } = useQuery(fetchData, {
+  cacheKey: 'cacheKeyA', // No provider specified, using the default global shared Map
+})
+```
+
+Or using `localStorage` as cache provider for persistent data across page refreshes.
+
+```ts
+const localStorageProvider = {
+  get: (key: string) => {
+    const value = localStorage.getItem(key)
+    return value ? JSON.parse(value) : undefined
+  },
+  set: (key: string, value: string) => localStorage.setItem(key, JSON.stringify(value)),
+  delete: (key: string) => localStorage.removeItem(key),
+  keys: () => Object.keys(localStorage)[Symbol.iterator](),
+}
+
+const { loading, data, error } = useQuery(fetchData, {
+  cacheKey: 'cacheKey',
+  provider: localStorageProvider, // Using localStorage as cache provider
+})
+```
+
+If `cacheKey` and `provider` are the same, it will be considered the same cache. **Any status, data, or request change in the same cache will be synchronized elsewhere**.
+
+This scenario often occurs when multiple components use the same data, such as user information, which may be used in nav components, header components, sidebar components, etc. In this case, `cacheKey` and `provider` can be used to share data.
+
+```ts
+// Component A
+const { loading, data, mutate, refresh } = useQuery(fetchData, {
+  cacheKey: 'cacheKey',
+})
+
+// Component B
+const { data, params } = useQuery(fetchData, {
+  cacheKey: 'cacheKey',
+})
+
+// Execute refresh or mutate operations in Component A
+refresh()
+mutate('newData', ['newParams'])
+
+// In Component B, data and params will be synchronized
+console.log(data, params) // 'newData', ['newParams']
+```
+
+### Refresh Dependencies \{#refresh-dependencies}
+
+Use `refreshDependencies` to set dependencies for the refresh operation, triggering a refresh (`refresh()`) when dependencies change.
+
+```ts
+const { loading, data, error } = useQuery(fetchData, {
+  refreshDependencies: [dep1, dep2], 
+})
+```
+
+### Dependencies Collection \{#dependencies-collection}
+
+`useQuery` implements a dependency collection strategy, achieving on-demand rendering to maximize performance optimization.
+
+```ts
+// All state changes trigger re-rendering, not recommended！！！
+const fn = useQuery(fetchData)
+
+// When loading, data, error states change, re-rendering is triggered
+const { loading, data, error } = useQuery(fetchData)
+
+// Only when the loading state changes, will trigger re-rendering, data and error states changes will not trigger
+const { loading } = useQuery(fetchData)
+
+// All support dependency collection state properties
+const { loading, data, error, params, loadingSlow, initializing, refreshing } = useQuery(fetchData)
+```
+
+Visit [Dependencies Collection](/docs/features/dependencies-collection) for more details.
+
+## Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const {
@@ -38,13 +325,26 @@ const {
 } = useQuery(fetcher, options)
 ```
 
-### Fetcher
+### Fetcher \{#fetcher}
 
-A async function that fetch data, return a Promise.
+An asynchronous function for data fetching that returns a Promise, independent of request libraries. The following are valid Fetcher functions:
 
-### Options
+```tsx
+// Native Fetch request
+const fetchData = async () => await (await fetch('https://api.example.com/data').json())
+// Axios request
+const fetchData = () => axios.get('https://api.example.com/data').then(res => res.data)
+// GraphQL request
+const fetchData = () => graphqlClient.query({ query: gql`{ data }` }).then(res => res.data)
+// Custom Promise function
+const fetchData = () => new Promise(resolve => setTimeout(() => resolve('data'), 1000))
+// Can throw errors
+const fetchData = () => new Promise((_, reject) => setTimeout(() => reject('error'), 1000))
+```
 
-See [UseLoadingSlowFnOptions](/reference/use-loading-slow-fn#options), [UseReConnectOptions](/reference/use-re-connect#options), [UseReFocusOptions](/reference/use-re-focus#options), [UseThrottledFnOptions](/reference/use-throttled-fn#options), [UseDebouncedFnOptions](/reference/use-debounced-fn#options), [UseIntervalFnInterval](/reference/use-interval-fn#interval) and [UseRetryFnOptions](/reference/use-retry-fn#options) for more details.
+### Options \{#options}
+
+For more details, see [UseLoadingSlowFnOptions](/reference/use-loading-slow-fn#options), [UseReConnectOptions](/reference/use-re-connect#options), [UseReFocusOptions](/reference/use-re-focus#options), [UseThrottledFnOptions](/reference/use-throttled-fn#options), [UseDebouncedFnOptions](/reference/use-debounced-fn#options), [UseIntervalFnInterval](/reference/use-interval-fn#interval) and [UseRetryFnOptions](/reference/use-retry-fn#options).
 
 ```tsx
 export interface UseQueryOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
