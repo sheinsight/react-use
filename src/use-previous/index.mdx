@@ -26,7 +26,7 @@ import { App } from './demo'
 ```tsx
 const prevState = usePrevious(state)
 
-// When the state changes from 1 to 2, the value of prevState will be 1 (i.e., the value of state before the change)
+// When the state changes from 1 to 2, the value of prevState will be 1
 ```
 
 ## Source \{#source}
@@ -55,12 +55,20 @@ interface UsePreviousOptions {
    * @param previous The previous value.
    * @param current The current value.
    * @returns Returns `true` if equal, otherwise returns `false`.
-   * 
+   *
    * @defaultValue `Object.is`
    */
   isEqual?(previous: any, current: any): boolean
+  /**
+   * Whether to compare deeply, defaults to `false`.
+   *
+   * @defaultValue false
+   */
+  deep?: boolean
 }
 ```
+
+if `deep` is `true`, `isEqual` will be ignored and the built-in deep comparison strategy will be used instead.
 
 ### Returns \{#returns}
 

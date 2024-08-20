@@ -1,4 +1,6 @@
 import { useRef } from 'react'
+import { useFirstRender } from '../use-first-render'
+import { deepEqual } from '../utils/equal'
 
 interface UsePreviousOptions {
   /**
@@ -11,6 +13,12 @@ interface UsePreviousOptions {
    * @defaultValue `Object.is`
    */
   isEqual?(previous: any, current: any): boolean
+  /**
+   * Whether to compare deeply, defaults to `false`.
+   *
+   * @defaultValue false
+   */
+  deep?: boolean
 }
 
 /**
@@ -19,11 +27,17 @@ interface UsePreviousOptions {
 export function usePrevious<T = undefined>(state: T, options: UsePreviousOptions = {}): T | undefined {
   const preRef = useRef<T>()
   const curRef = useRef<T>()
+  const isFirstRender = useFirstRender()
 
-  const { isEqual = Object.is } = options
+  const { deep = false, isEqual = deep ? deepEqual : Object.is } = options
 
-  if (!isEqual(curRef.current, state)) {
+  // ignore the first render & update the previous `different` value
+  if (!isFirstRender && !isEqual(curRef.current, state)) {
     preRef.current = curRef.current
+  }
+
+  // reduce unnecessary reassignment
+  if (!Object.is(curRef.current, state)) {
     curRef.current = state
   }
 

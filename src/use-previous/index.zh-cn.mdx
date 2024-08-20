@@ -26,7 +26,7 @@ import { App } from './demo'
 ```tsx
 const prevState = usePrevious(state)
 
-// 当 state 从 1 变为 2 时，prevState 的值为 1（即 state 变化前的值）
+// 当 state 从 1 变为 2 时，prevState 的值为 1
 ```
 
 ## 源码 Source \{#source}
@@ -59,8 +59,16 @@ interface UsePreviousOptions {
    * @defaultValue `Object.is`
    */
   isEqual?(previous: any, current: any): boolean
+  /**
+   * 是否深度比较。
+   *
+   * @defaultValue false
+   */
+  deep?: boolean
 }
 ```
+
+如果 `deep` 为 `true`，则会忽略自定义的 `isEqual` 函数，转而采用内置的深比较的策略。
 
 ### 返回值 Returns \{#returns}
 
