@@ -76,6 +76,7 @@ export default defineConfig({
       },
       define: {
         'process.env.ASSETS_PREFIX': JSON.stringify(assetsPrefix),
+        'process.env.IS_SODOC': JSON.stringify(process.env.IS_SODOC),
       },
     },
   },
