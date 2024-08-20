@@ -1,9 +1,16 @@
 import { Button, CodeBlock, ReactUseIcon, useI18n, useRoutePath } from '@/components'
-import { useDark } from 'rspress/runtime'
+import { useDark, useNavigate } from 'rspress/runtime'
 
 export function Main() {
   const t = useI18n()
-  const isDark = useDark()
+  const navigate = useNavigate()
+  // const isDark = useDark()
+
+  const [intro, started, reference] = [
+    useRoutePath('/docs/introduction'),
+    useRoutePath('/docs/get-started'),
+    useRoutePath('/reference'),
+  ]
 
   return (
     <div className="flex flex-col items-center md:items-start gap-4 pt-20vh md:pt-12vh">
@@ -20,13 +27,27 @@ export function Main() {
         theme={isDark ? 'one-dark-pro' : 'one-light'}
       /> */}
       <div className="flex gap-4 mt-8 md:gap-6 items-center">
-        <a href={useRoutePath('/docs/introduction')}>
-          <Button className="md:w-120px">{t('homepage.introduction')}</Button>
-        </a>
-        <a className="user-link" href={useRoutePath('/docs/get-started')}>
+        <Button className="md:w-120px" onClick={() => navigate(intro)}>
+          {t('homepage.introduction')}
+        </Button>
+        <a
+          className="user-link"
+          onClick={(e) => {
+            e.preventDefault()
+            navigate(started)
+          }}
+          href={started}
+        >
           {t('homepage.get-started')}
         </a>
-        <a className="user-link" href={useRoutePath('/reference')}>
+        <a
+          className="user-link"
+          onClick={(e) => {
+            e.preventDefault()
+            navigate(reference)
+          }}
+          href={reference}
+        >
           {t('homepage.reference')}
         </a>
       </div>
