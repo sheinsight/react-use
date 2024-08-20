@@ -8,7 +8,7 @@ import { defineConfig } from 'rspress/config'
 
 import hooks from './hooks.json'
 import i18n from './i18n.json'
-import { locale } from './locale'
+import { locale, version } from './locale'
 
 import type { RspressPlugin } from '@rspress/shared'
 
@@ -77,6 +77,7 @@ export default defineConfig({
       define: {
         'process.env.ASSETS_PREFIX': JSON.stringify(assetsPrefix),
         'process.env.IS_SODOC': JSON.stringify(process.env.IS_SODOC),
+        'process.env.REACT_USE_VERSION': JSON.stringify(version),
       },
     },
   },

@@ -8,6 +8,8 @@ const langSlug = {
   zhCN: 'zh-cn',
 }
 
+export { version }
+
 export const sidebar = {
   en: {
     '/docs': [
