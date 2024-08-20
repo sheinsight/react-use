@@ -102,9 +102,9 @@ export interface UseQueryOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>, 
    */
   refreshOnFocus?: boolean
   /**
-   * Throttle time when obtaining focus, default 0, off
+   * Throttle time when obtaining focus, default 5_000 (ms), only valid when `refreshOnFocus` is true
    *
-   * @defaultValue 0
+   * @defaultValue 5_000
    */
   refreshOnFocusThrottleWait?: number
   /**

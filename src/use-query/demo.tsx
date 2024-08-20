@@ -4,15 +4,15 @@ import { mutate, useCounter, useQuery } from '@shined/react-use'
 export function App() {
   return (
     <Card>
-      <h3>Immediate + Trigger by user + Dependencies</h3>
+      <h3 className="font-bold text-xl">Immediate + Trigger by user + Dependencies</h3>
       <Demo1 />
-      <h3>Lifecycle + Refresh + Params + Mutate + Cancel</h3>
+      <h3 className="font-bold text-xl">Lifecycle + Refresh + Params + Mutate + Cancel</h3>
       <Demo2 />
-      <h3>Throttle + Debounce</h3>
+      <h3 className="font-bold text-xl">Throttle + Debounce</h3>
       <Demo3 />
-      <h3>ReFocus + ReConnect + AutoRefresh + Loading Slow</h3>
+      <h3 className="font-bold text-xl">ReFocus + ReConnect + AutoRefresh + Loading Slow</h3>
       <Demo4 />
-      <h3>Error Retry + Cache (SWR)</h3>
+      <h3 className="font-bold text-xl">Error Retry + Cache (SWR)</h3>
       <Demo5 />
       <Toaster />
     </Card>

@@ -1,5 +1,8 @@
 import { useRef } from 'react'
 
+/**
+ * A React Hook for determining whether the component is currently in its initial render.
+ */
 export function useFirstRender() {
   const firstRenderRef = useRef(true)
 

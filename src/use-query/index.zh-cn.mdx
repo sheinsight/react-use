@@ -21,7 +21,296 @@ import { App } from './demo'
 
 ## 用法 Usage \{#usage}
 
-请查看 API。
+### 基础用法 \{#basic}
+
+组件挂载时，自动触发数据获取，同时返回数据、加载状态和错误信息。
+
+```tsx
+// fetchData 是请求库无关的，可以是任意返回 Promise 的异步函数，可由 fetch、axios、graphql 等实现
+const { loading, data, error } = useQuery(fetchData)
+
+// 加载中、错误 UI 处理
+if (loading) return <Loading />
+if (error) return <Error />
+
+// 渲染数据
+return <div>{data}</div>
+```
+
+### 手动触发 \{#manual}
+
+当设置 `manual` 为 `true` 时，所有内置的自动行为（默认都没开启，包括轮询加载、聚焦重加载、网路重连重加载）将失效。同时 `immediate` 的**默认值**被指定为 `false`。
+
+```ts
+const { run, loading, data, error, params, mutate refresh } = useQuery(fetchData, {
+  manual: true,
+  initialParams: ['params'],
+  initialData: 'initialData',
+})
+
+// 手动触发，会触发 params 状态的更新
+run('newParams')
+
+// 使用上一次的参数重新请求，即「刷新」，等价于 `run(params)`
+refresh()
+
+// 更新现有数据，不会触发请求
+mutate('newData')
+// mutate((preData) => 'newData')
+// mutate('newData', ['newPrams'])
+```
+
+
+### 慢加载状态 \{#loading-slow}
+
+使用 `loadingSlow` 可以获取当前操作是否处于慢加载状态，即操作时间超过预期阈值，通过这个状态条件渲染不同的 UI，可以改善用户体验。
+
+```ts
+const { loading, loadingSlow, data, error } = useQuery(fetchData, {
+  loadingTimeout: 3_000, // 默认为 0，这里设置为 3 秒
+  onLoadingSlow: () => console.log('loading slow'), // 慢加载时的回调
+})
+
+// 慢加载时显示慢加载 UI
+if (loading) return <Loading slow={loadingSlow} />
+```
+
+### 初始化和刷新中 \{#initializing-refreshing}
+
+使用 `initializing` 和 `refreshing` 可以获取当前是否处于初始化和刷新中。
+
+这两个状态其实是 `loading` 和 `data` 的衍生状态，以下是伪代码：
+
+```ts
+const initializing = !data && loading
+const refreshing = data && loading
+```
+
+```ts
+const { initializing, refreshing, data, error } = useQuery(fetchData)
+
+// 显示初始化中 UI
+if (initializing) return <Loading />;
+
+// 显示已有数据，同时根据 refreshing 状态来改变 UI 与其他样式
+return <div>{data}{refreshing && <Loading />}</div>
+```
+
+
+### 参数和刷新 \{#params-refresh}
+
+使用 `params` 可以获取上次请求的参数，使用 `refresh` 可以使用上次请求的参数重新请求。
+
+```ts
+const { params, refresh } = useQuery(fetchData)
+
+// 获取上次请求的参数
+console.log(params)
+// 使用上一次的参数重新请求，即「刷新」，等价于 `run(params)`
+refresh()
+```
+
+### 防抖和节流 \{#debounce-throttle}
+
+使用 `throttle` 和 `debounce` 选项可以控制**手动触发**的频率。
+
+```ts
+const { run, loading, data, error } = useQuery(fetchData, {
+  throttle: 1_000, // 在频繁触发的情况下，限制每秒只触发一次
+  // throttle: { wait: 1_000 }, // 或者指定整个 UseThrottledFnOptions 对象
+  debounce: 1_000, // 在频繁触发的情况下，等待操作停止的 1 秒后触发
+  // debounce: { wait: 1_000 }, // 或者指定整个 UseDebouncedFnOptions 对象
+})
+```
+
+### 数据和参数修改 \{#mutate}
+
+使用 `mutate` 可以直接修改数据和请求参数，同时触发重新渲染，但不触发额外的请求。
+
+```ts
+const { data, mutate } = useQuery(fetchData)
+
+// 更新数据
+mutate('newData')
+// mutate((preData) => 'newData') // 支持 setState 风格的更新
+
+// 同时更新数据和参数
+mutate('newData', ['newPrams'])
+// 参数也支持 setState 风格的更新
+// mutate((preData) => 'newData', (preParams) => ['newPrams'])
+
+// 修改全局缓存
+import { mutate } from '@shined/react-use'
+mutate((key) => key === 'cacheKey', 'newData')
+```
+
+### 轮询加载 \{#polling}
+
+设置 `refreshInterval` 为一个大于 0 的数字，将启用自动刷新功能，每隔指定时间重新获取数据。
+
+```ts
+const { loading, data, error } = useQuery(fetchData, {
+  refreshInterval: 5_000, // 轮询时间间隔，默认 0，关闭
+  refreshWhenHidden: true, // 是否在页面不可见时轮询，默认 false
+  refreshWhenOffline: true, // 是否在离线时轮询，默认 false
+})
+```
+
+### 重聚焦和重连重加载 \{#re-focus-re-connect}
+
+设置 `refreshOnFocus` 和 `refreshOnReconnect` 为 `true`，将在页面聚焦和网络重连时重新获取数据。
+
+```ts
+const { loading, data, error } = useQuery(fetchData, {
+  refreshOnFocus: true,
+  refreshOnReconnect: true,
+  refreshOnFocusThrottleWait: 3_000, // 聚焦刷新的节流时间，默认 5_000，仅 refreshOnFocus 为 true 时生效
+})
+```
+
+如果需要在 [React Native](https://reactnative.dev/)、[Ink](https://term.ink) 等**非 Web 环境**中使用，可以手动指定相关的可见性和网络状况的逻辑。
+
+```ts
+import { createReactNativeReFocusRegister } from '@shined/react-use'
+import { AppState } from 'react-native'
+
+const { loading, data, error } = useQuery(fetchData, {
+  isVisible: () => true, // 自定义可见性判断函数
+  isOnline: () => true, // 自定义是否在线判断函数
+  registerReConnect: createReactNativeReFocusRegister(AppState), // 内置了 React Native 的网络重连注册函数
+  registerReFocus: (callback) => {}, // 自定义聚焦事件的注册函数
+})
+```
+
+### 错误重试 \{#error-retry}
+
+设置 `errorRetryCount` 和 `errorRetryInterval` 为大于 0 的数字，将在请求失败时自动重试。
+
+```ts
+const { loading, data, error } = useQuery(fetchData, {
+  errorRetryCount: 3, // 错误重试次数，默认 0，关闭
+  errorRetryInterval: 1_000, // 错误重试间隔，默认 0，立即重试
+  onErrorRetry: (error) => console.log(error), // 错误重试时的回调
+  onErrorRetryFailed: (error) => console.log(error), // 错误重试失败时的回调
+})
+```
+
+### 缓存与 SWR \{#cache-swr}
+
+设置 `cacheKey` 可以启用缓存功能，缓存的内容包括 data 与 param，当存在缓存数据且未过期时（过期会被清空），会优先返回缓存数据，同时触发请求，更新缓存数据，以保证数据的最新性，也就是 SWR（Stale-While-Revalidate）策略。
+
+```ts
+const { loading, data, error } = useQuery(fetchData, {
+  cacheKey: 'cacheKey', // 缓存键，可以是字符串或返回字符串的函数
+  cacheExpirationTime: 5 * 60 * 1000, // 最大缓存时间，默认 5 分钟，设置 `false` 以禁用
+})
+```
+
+可以指定 `provider` 为一个外部存储（如 [Reactive](https://sheinsight.github.io/reactive)）、`localStorage` 等，以实现多处共享缓存或者更加精细化的局部缓存。一个 `Provider` 需要符合以下接口定义（基本就是 `Map` 类型的接口）：
+
+```ts
+export interface UseQueryCacheLike<Data> {
+  get(key: string): Data | undefined
+  set(key: string, value: Data): void
+  delete(key: string): void
+  keys(): IterableIterator<string>
+}
+```
+
+比如某些部分使用独立的 `Map` 缓存来共享数据：
+
+```ts
+const cache = new Map<string, any>()
+
+// 组件 A
+const { loading, data, error } = useQuery(fetchData, {
+  cacheKey: 'cacheKeyA', 
+  provider: cache, // 使用独立的 Map 作为缓存提供者
+})
+
+// 组件 B
+const { loading, data, error } = useQuery(fetchData, {
+  cacheKey: 'cacheKeyB', 
+  provider: cache, // 使用独立的 Map 作为缓存提供者
+})
+
+// 组件 C， 虽然 cacheKey 与 A 一样，但是 provider 不一样，所以不会共享缓存
+const { loading, data, error } = useQuery(fetchData, {
+  cacheKey: 'cacheKeyA', // 不指定 provider，使用默认的全局共享 Map
+})
+```
+
+或者使用 `localStorage` 作为缓存提供者，以实现页面刷新后的数据持久化。
+
+```ts
+const localStorageProvider = {
+  get: (key: string) => {
+    const value = localStorage.getItem(key)
+    return value ? JSON.parse(value) : undefined
+  },
+  set: (key: string, value: string) => localStorage.setItem(key, JSON.stringify(value)),
+  delete: (key: string) => localStorage.removeItem(key),
+  keys: () => Object.keys(localStorage)[Symbol.iterator](),
+}
+
+const { loading, data, error } = useQuery(fetchData, {
+  cacheKey: 'cacheKey',
+  provider: localStorageProvider, // 使用 localStorage 作为缓存提供者
+})
+```
+
+如果 `cacheKey` 与 `provider` 均相同，则其会被认为是同一个缓存。**同一缓存的任一处状态、数据、请求变更，都会同步到其他处**。
+
+这种情况常见于多个组件使用同一份数据，比如用户信息，可能在 nav 组件、header 组件、sidebar 组件等多处使用，这时候可以使用 `cacheKey` 和 `provider` 来实现数据的共享。
+
+```ts
+// 组件 A
+const { loading, data, mutate, refresh } = useQuery(fetchData, {
+  cacheKey: 'cacheKey',
+})
+
+// 组件 B
+const { data, params } = useQuery(fetchData, {
+  cacheKey: 'cacheKey',
+})
+
+// 在组件 A 中执行 refresh 或者 mutate 操作
+refresh()
+mutate('newData', ['newParams'])
+
+// 在组件 B 里，data 和 params 会同步更新
+console.log(data, params) // 'newData', ['newParams']
+```
+
+### 依赖刷新 \{#refresh-dependencies}
+
+使用 `refreshDependencies` 可以设置刷新操作的依赖项，当依赖项改变时，将触发刷新 (`refresh()`) 操作。
+
+```ts
+const { loading, data, error } = useQuery(fetchData, {
+  refreshDependencies: [dep1, dep2], 
+})
+```
+
+### 依赖收集 \{#dependencies-collection}
+
+`useQuery` 实现了依赖收集策略，实现了按需渲染，最大限度优化性能。
+
+```ts
+// 所有状态变化都会触发重新渲染，不推荐！！！
+const fn = useQuery(fetchData)
+
+// 当 loading、data、error 状态变化时，都会触发重新渲染
+const { loading, data, error } = useQuery(fetchData)
+
+// 仅当 loading 状态变化时，才会触发重新渲染，data 和 error 状态变化不会触发
+const { loading } = useQuery(fetchData)
+
+// 所有支持依赖收集的状态属性
+const { loading, data, error, params, loadingSlow, initializing, refreshing } = useQuery(fetchData)
+```
+
+更多详情参考 [依赖收集](/docs/features/dependencies-collection)。
 
 ## 源码 Source \{#source}
 
@@ -40,7 +329,20 @@ const {
 
 ### 数据获取函数 Fetcher \{#fetcher}
 
-一个异步函数，用于数据获取，返回一个 Promise。
+一个异步函数，用于数据获取，返回一个 Promise，与请求库无关。例如以下都是有效的 Fetcher 函数：
+
+```tsx
+// 原生 Fetch 请求
+const fetchData = async () => await (await fetch('https://api.example.com/data').json())
+// Axios 请求
+const fetchData = () => axios.get('https://api.example.com/data').then(res => res.data)
+// GraphQL 请求
+const fetchData = () => graphqlClient.query({ query: gql`{ data }` }).then(res => res.data)
+// 自定义 Promise 函数
+const fetchData = () => new Promise(resolve => setTimeout(() => resolve('data'), 1000))
+// 可以抛出错误
+const fetchData = () => new Promise((_, reject) => setTimeout(() => reject('error'), 1000))
+```
 
 ### 选项 Options \{#options}
 
@@ -102,9 +404,9 @@ export interface UseQueryOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>, 
    */
   refreshOnFocus?: boolean
   /**
-   * 获取焦点时的节流时间，默认 0，关闭
+   * 获取焦点时的节流时间，默认 5_000 （毫秒），只有在 refreshOnFocus 为 true 时生效
    *
-   * @defaultValue 0
+   * @defaultValue 5_000
    */
   refreshOnFocusThrottleWait?: number
   /**
@@ -164,9 +466,15 @@ export interface UseQueryOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>, 
   /**
    * 是否在每次请求前清除缓存
    *
-   * @defaultValue false
+   * @defaultValue undefined
    */
   onErrorRetry?: UseRetryFnOptions<E>['onErrorRetry']
+  /**
+   * 错误重试失败时的回调
+   * 
+   * @defaultValue undefined
+   */
+  onErrorRetryFailed?: UseRetryFnOptions<E>['onRetryFailed']
 }
 ```
 
