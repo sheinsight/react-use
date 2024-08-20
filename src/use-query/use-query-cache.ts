@@ -139,7 +139,7 @@ function createMutate(dataCache: UseQueryCacheLike<unknown>, paramsCache: Map<st
   return (
     keyFilter: Arrayable<string> | ((key: string) => boolean),
     value: SetStateAction<unknown> = undefined,
-    params: unknown[] = [],
+    params: SetStateAction<unknown[]> = [],
   ) => {
     const keys = isFunction(keyFilter)
       ? Array.from(dataCache.keys()).filter(keyFilter)
@@ -149,9 +149,12 @@ function createMutate(dataCache: UseQueryCacheLike<unknown>, paramsCache: Map<st
       const prevData = dataCache.get(key)
       const nextData = isFunction(value) ? value(prevData) : value
 
+      const prevParams = paramsCache.get(key) ?? []
+      const nextParams = isFunction(params) ? params(prevParams) : params
+
       if (isDefined(key)) {
         dataCache.set(key, nextData)
-        paramsCache.set(key, params)
+        paramsCache.set(key, nextParams)
       } else {
         dataCache.delete(key)
         paramsCache.delete(key)
