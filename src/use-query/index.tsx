@@ -88,9 +88,9 @@ export interface UseQueryOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>, 
    */
   refreshOnFocus?: boolean
   /**
-   * Throttle time when obtaining focus, default 0, off
+   * Throttle time when obtaining focus, default 5_000 (ms), only valid when `refreshOnFocus` is true
    *
-   * @defaultValue 0
+   * @defaultValue 5_000
    */
   refreshOnFocusThrottleWait?: number
   /**
@@ -150,9 +150,15 @@ export interface UseQueryOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>, 
   /**
    * Whether to clear the cache before each request
    *
-   * @defaultValue false
+   * @defaultValue undefined
    */
   onErrorRetry?: UseRetryFnOptions<E>['onErrorRetry']
+  /**
+   * Callback executed when the request is canceled
+   *
+   * @defaultValue undefined
+   */
+  onErrorRetryFailed?: UseRetryFnOptions<E>['onRetryFailed']
 }
 
 export interface UseQueryReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
@@ -200,6 +206,7 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
         count: options.errorRetryCount,
         interval: options.errorRetryInterval,
         onErrorRetry: options.onErrorRetry,
+        onRetryFailed: options.onErrorRetryFailed,
         onError(...args) {
           cacheActions.clearPromiseCache()
           return latest.current.onError?.(...args)
@@ -207,7 +214,7 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
       },
     ),
     {
-      immediate: options.immediate ?? true,
+      immediate: options.immediate ?? !options.manual,
       initialParams: options.initialParams,
       initialValue: options.initialData ?? cache.data,
       clearBeforeRun: options.clearBeforeRun,
@@ -266,7 +273,7 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
 
   useReFocus(() => options.refreshOnFocus && serviceWithStatusCheck(), {
     registerReFocus: options.registerReFocus,
-    wait: options.refreshOnFocusThrottleWait ?? 5000,
+    wait: options.refreshOnFocusThrottleWait ?? 5_000,
   })
 
   const pausable = usePausable(
