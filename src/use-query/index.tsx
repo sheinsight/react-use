@@ -234,7 +234,7 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
         return latest.current.onSuccess?.(nextData, params, ...rest)
       },
       onBefore(...args) {
-        if (latest.current.clearBeforeRun) cacheActions.setCache(undefined)
+        if (latest.current.clearBeforeRun) cacheActions.setCache(undefined, [])
         intervalPausable.resume()
         return latest.current.onBefore?.(...args)
       },
@@ -288,14 +288,14 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
   useUpdateEffect(() => void serviceWithStatusCheck(), [...(options.refreshDependencies ?? [])])
 
   const mutateWithCache = useStableFn((...actions: UseAsyncFnMutateAction<D | undefined, Parameters<T> | []>) => {
-    const data = cacheActions.isCacheEnabled() ? latest.current.cache.data : service.value
-    const params = cacheActions.isCacheEnabled() ? latest.current.cache.params : service.params
+    const data = cacheActions.isCacheEnabled ? latest.current.cache.data : service.value
+    const params = cacheActions.isCacheEnabled ? latest.current.cache.params : service.params
     const [nextData, nextParams] = resolveMutateActions<D | undefined, Parameters<T> | []>(actions, data, params)
     return service.mutate(nextData, nextParams)
   })
 
   const refreshWithCache = useStableFn(async (params?: Parameters<T> | []) => {
-    const outerParams = cacheActions.isCacheEnabled() ? latest.current.cache.params : service.params
+    const outerParams = cacheActions.isCacheEnabled ? latest.current.cache.params : service.params
     const actualParams = params ?? (outerParams || [])
     return service.refresh(actualParams)
   })
@@ -307,13 +307,13 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
     run: serviceWithRateControl,
     cancel: service.cancel,
     get params() {
-      return cacheActions.isCacheEnabled() ? cache.params : service.params
+      return cacheActions.isCacheEnabled ? cache.params : service.params
     },
     get loadingSlow() {
       return service.loadingSlow
     },
     get data() {
-      return cacheActions.isCacheEnabled() ? cache.data : service.value
+      return cacheActions.isCacheEnabled ? cache.data : service.value
     },
     get error() {
       return service.error
@@ -322,11 +322,11 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
       return service.loading
     },
     get refreshing() {
-      const data = cacheActions.isCacheEnabled() ? cache.data : service.value
+      const data = cacheActions.isCacheEnabled ? cache.data : service.value
       return Boolean(data && service.loading)
     },
     get initializing() {
-      const data = cacheActions.isCacheEnabled() ? cache.data : service.value
+      const data = cacheActions.isCacheEnabled ? cache.data : service.value
       return Boolean(!data && service.loading)
     },
   }

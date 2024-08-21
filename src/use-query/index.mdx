@@ -46,22 +46,24 @@ When `manual` is set to `true`, all built-in automatic behaviors (none of which 
 `immediate` is supported by [useMount](/reference/use-mount).
 
 ```ts
-const { run, loading, data, error, params, mutate, refresh } = useQuery(fetchData, {
+const { run, loading, data, error, params } = useQuery(fetchData, {
   manual: true,
   initialParams: ['params'],
   initialData: 'initialData',
 })
 
-// Manually triggered, which will trigger the update of the params state
+// Manually triggered, which will trigger the update of the params
 run('newParams')
+```
 
-// Use the last parameters to make the request again, equivalent to `run(params)`
-refresh()
+### Refresh Dependencies \{#refresh-dependencies}
 
-// Update existing data without triggering a request
-mutate('newData')
-// mutate((preData) => 'newData')
-// mutate('newData', ['newPrams'])
+Using `refreshDependencies`, you can set the dependencies for the refresh operation. When any of these dependencies change, a refresh (`refresh()`) operation will be triggered, supported by [useUpdateEffect](/reference/use-update-effect).
+
+```ts
+const { loading, data, error } = useQuery(fetchData, {
+  refreshDependencies: [dep1, dep2], 
+})
 ```
 
 ### Cancellation \{#cancel}
@@ -119,8 +121,8 @@ Using `initializing` and `refreshing` can determine whether it is in the initial
 These two states are actually derived from `loading` and `data`, here is pseudocode:
 
 ```ts
-const initializing = !data && loading
-const refreshing = data && loading
+const initializing = Boolean(!data && loading)
+const refreshing = Boolean(data && loading)
 ```
 
 ```ts
@@ -133,17 +135,28 @@ if (initializing) return <Loading />;
 return <div>{data}{refreshing && <Loading />}</div>
 ```
 
-### Parameters and Refresh \{#parameters-refresh}
+### Parameters and Refreshing \{#params-refresh}
 
-Using `params` can get the parameters of the last request, using `refresh` can make a request again with the last request's parameters, supported by [useAsyncFn](/reference/use-async-fn).
+The `params` can be used to retrieve the parameters of the last request, and `refresh` can be used to re-request with the parameters of the last request, supported by [useAsyncFn](/reference/use-async-fn).
 
 ```ts
-const { params, refresh } = useQuery(fetchData)
+const { run, params, refresh } = useQuery(fetchData)
 
-// Get the parameters of the last request
+// Retrieve the parameters of the last request, which will be `initialParams` on the first call if it exists, otherwise it will be [] on the first call
 console.log(params)
-// Use the last parameters to make the request again, equivalent to `run(params)`
+// Re-request with the last parameters, i.e., 'refresh', equivalent to `run(params)`
 refresh()
+```
+
+### Automatic Clearing and Cancellation \{#automatic-clearing-and-cancellation}
+
+The `clearBeforeRun` can be used to clear the data before each request, and `cancelOnUnmount` can be used to automatically cancel the request logic when the component is unmounted (but cannot prevent the Promise from executing), supported by [useAsyncFn](/reference/use-async-fn).
+
+```ts
+const { loading, data, error } = useQuery(fetchData, {
+  clearBeforeRun: true,  // Clear data before each request, default is false
+  cancelOnUnmount: false,  // Do not cancel the request when the component is unmounted, default is true
+})
 ```
 
 ### Debounce and Throttle \{#debounce-throttle}
@@ -337,13 +350,22 @@ mutate('newData', ['newParams'])
 console.log(data, params) // 'newData', ['newParams']
 ```
 
-### Refresh Dependencies \{#refresh-dependencies}
+### Custom Data Update \{#custom-data-update}
 
-Using `refreshDependencies`, you can set the dependencies for the refresh operation. When any of these dependencies change, a refresh (`refresh()`) operation will be triggered, supported by [useUpdateEffect](/reference/use-update-effect).
+By using `compare`, you can customize the logic for data updates to prevent frequent refreshes. This is particularly useful in dealing with some **pseudo-differences** in data, such as timestamps. It can reduce unnecessary rendering, supported by [useAsyncFn](/reference/use-async-fn).
 
 ```ts
 const { loading, data, error } = useQuery(fetchData, {
-  refreshDependencies: [dep1, dep2], 
+  compare: (preData, nextData) => {
+    // Compare whether the data is the same, return true to not update, return false to update, shallowEqual is used by default
+    return preData === nextData
+
+    // Or compare a certain field of data, for example, the timestamp might be different, but the actual effective data is the same
+    return deepCompare(preData?.data, nextData?.data)
+
+    // But please note, when the data size is too large, deep comparison will affect performance, so use it judiciously
+  },
+  }
 })
 ```
 

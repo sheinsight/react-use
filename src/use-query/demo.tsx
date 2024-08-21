@@ -152,9 +152,6 @@ function Demo5() {
     },
     {
       immediate: false,
-      compare() {
-        return true
-      },
       cacheKey: 'cacheKeyForDemo5',
       // provider: localStorageProvider,
       onErrorRetry: (error, { currentCount }) => toast.error(`Retry ${currentCount} failed.`),

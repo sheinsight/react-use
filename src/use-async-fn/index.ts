@@ -104,7 +104,7 @@ export interface UseAsyncFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>
    */
   onRefresh?: (value: D | undefined, params: Parameters<T> | []) => void
   /**
-   * Custom cache comparison function, true means the cache is the same
+   * Custom cache comparison function, `true` means the cache is the same
    *
    * @defaultValue shallowEqual
    *

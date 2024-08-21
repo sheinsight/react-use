@@ -118,7 +118,7 @@ export function useQueryCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     promiseCache.delete(cacheKeyValue)
   })
 
-  const isCacheEnabled = useStableFn(() => Boolean(latest.current.cacheKeyValue))
+  const isCacheEnabled = Boolean(latest.current.cacheKeyValue)
 
   const actions = useCreation(() => ({
     setCache,

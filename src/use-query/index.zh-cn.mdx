@@ -44,22 +44,24 @@ return <div>{data}</div>
 `immediate` 由 [useMount](/reference/use-mount) 提供支持。
 
 ```ts
-const { run, loading, data, error, params, mutate refresh } = useQuery(fetchData, {
+const { run, loading, data, error, params } = useQuery(fetchData, {
   manual: true,
   initialParams: ['params'],
   initialData: 'initialData',
 })
 
-// 手动触发，会触发 params 状态的更新
+// 手动触发，会触发 params 更新
 run('newParams')
+```
 
-// 使用上一次的参数重新请求，即「刷新」，等价于 `run(params)`
-refresh()
+### 依赖刷新 \{#refresh-dependencies}
 
-// 更新现有数据，不会触发请求
-mutate('newData')
-// mutate((preData) => 'newData')
-// mutate('newData', ['newPrams'])
+使用 `refreshDependencies` 可以设置刷新操作的依赖项，当依赖项改变时，将触发刷新 (`refresh()`) 操作，由 [useUpdateEffect](/reference/use-update-effect) 提供支持。
+
+```ts
+const { loading, data, error } = useQuery(fetchData, {
+  refreshDependencies: [dep1, dep2], 
+})
 ```
 
 ### 操作取消 \{#cancel}
@@ -117,8 +119,8 @@ if (loading) return <Loading slow={loadingSlow} />
 这两个状态其实是 `loading` 和 `data` 的衍生状态，以下是伪代码：
 
 ```ts
-const initializing = !data && loading
-const refreshing = data && loading
+const initializing = Boolean(!data && loading)
+const refreshing = Boolean(data && loading)
 ```
 
 ```ts
@@ -131,18 +133,28 @@ if (initializing) return <Loading />;
 return <div>{data}{refreshing && <Loading />}</div>
 ```
 
-
 ### 参数和刷新 \{#params-refresh}
 
 使用 `params` 可以获取上次请求的参数，使用 `refresh` 可以使用上次请求的参数重新请求，由 [useAsyncFn](/reference/use-async-fn) 提供支持。
 
 ```ts
-const { params, refresh } = useQuery(fetchData)
+const { run, params, refresh } = useQuery(fetchData)
 
-// 获取上次请求的参数
+// 获取上次请求的参数，存在 initialParams 时第一次为 initialParams，否则第一次为 []
 console.log(params)
 // 使用上一次的参数重新请求，即「刷新」，等价于 `run(params)`
 refresh()
+```
+
+### 自动清空与取消 \{#automatic-clearing-and-cancellation}
+
+使用 `clearBeforeRun` 可以在每次请求前清空数据，使用 `cancelOnUnmount` 可以在组件卸载时自动取消请求逻辑（但无法阻止 Promise 执行），由 [useAsyncFn](/reference/use-async-fn) 提供支持。
+
+```ts
+const { loading, data, error } = useQuery(fetchData, {
+  clearBeforeRun: true, // 每次请求前清空数据，默认 false
+  cancelOnUnmount: false, // 组件卸载时不取消请求，默认 true
+})
 ```
 
 ### 防抖和节流 \{#debounce-throttle}
@@ -336,13 +348,22 @@ mutate('newData', ['newParams'])
 console.log(data, params) // 'newData', ['newParams']
 ```
 
-### 依赖刷新 \{#refresh-dependencies}
+### 自定义数据更新 \{#custom-data-update}
 
-使用 `refreshDependencies` 可以设置刷新操作的依赖项，当依赖项改变时，将触发刷新 (`refresh()`) 操作，由 [useUpdateEffect](/reference/use-update-effect) 提供支持。
+使用 `compare` 可以自定义数据更新逻辑，防止频繁刷新，这在处理某些**伪不同**的数据的情况下非常有用，比如时间戳，可以降低不必要的渲染，由 [useAsyncFn](/reference/use-async-fn) 提供支持。
 
 ```ts
 const { loading, data, error } = useQuery(fetchData, {
-  refreshDependencies: [dep1, dep2], 
+  compare: (preData, nextData) => {
+    // 比较数据是否相同，返回 true 则不更新，返回 false 则更新，默认使用 shallowEqual，即只比较一层
+    return preData === nextData
+
+    // 或者比较数据的某个字段，比如 timestamp 可能不同，但实际有效数据是一样的
+    return deepCompare(preData?.data, nextData?.data)
+
+    // 但请注意，数据量太大时，深比较会影响性能，请权衡使用
+  },
+  }
 })
 ```
 
