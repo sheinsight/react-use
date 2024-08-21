@@ -8,9 +8,9 @@
 
 在涉及延迟响应的场景中，这一特性尤其重要，例如在网络请求或超时中，状态可能在此期间发生变化。通过始终提供最新值，开发者可以避免手动管理闭包以捕获更新状态的复杂性和潜在错误。
 
-## `@shined/react-use` 中的 Hooks 状态 {#hooks-states-in-shined-react-use}
+## 本库中的 State {#hooks-states-in-shined-react-use}
 
-`@shined/react-use` 确保任何陈旧数据问题都在内部得到管理，允许开发者专注于更广泛的应用逻辑，而不是异步回调中状态管理的细节。∑
+`@shined/react-use` 确保任何陈旧数据问题都在内部得到管理，允许开发者专注于更广泛的应用逻辑，而不是异步回调中状态管理的细节。
 
 ## 在您的代码库中确保最新状态 {#ensure-latest-state-in-your-codebase}
 

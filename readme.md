@@ -11,7 +11,7 @@ A New Programming Paradigm to Reshape React Development.
 <p align="center">
   <a href="https://www.npmjs.com/package/@shined/react-use"><img src="https://img.shields.io/npm/v/%40shined%2Freact-use?style=flat&labelColor=%23ffffff&color=%232e8555"></a>
   <a href="https://biomejs.dev/"><img src="https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome"></a>
-  <a href="https://pkg-size.dev/@shined/react-use"><img src="https://pkg-size.dev/badge/bundle/108293"></a>
+  <a href="https://pkg-size.dev/@shined/react-use"><img src="https://pkg-size.dev/badge/bundle/125650"></a>
 <p>
 
 <p align="center">
@@ -25,9 +25,12 @@ A New Programming Paradigm to Reshape React Development.
 
 ## 🎉 Introduction
 
-`@shined/react-use` is a new Programming Paradigm to reshape React development. It's essentially an **SSR-friendly**, **comprehensive**, and **highly optimized** React Hooks library that delivers flexible and efficient hook solutions. Fully developed with **TypeScript**, it comes equipped with an interactive documentation filled with rich examples 🔥.
 
-Primarily inspired by [VueUse](https://vueuse.org/), along with influences from [react-use](https://github.com/streamich/react-use), [ahooks](https://ahooks.js.org/), and many other excellent libraries within the community. Huge thanks to the Open Source community, especially the authors of the libraries mentioned above, for their great work and inspiration.
+`@shined/react-use` aims to **reshape the new programming paradigm of React development**. It enhances development efficiency, fosters better programming habits, and reduces the reliance on `useEffect` and `useState` by offering a multitude of high-quality, semantic Hooks. It encourages developers to gradually adapt to a React development (programming) paradigm that prioritizes '**Hooks first**'.
+
+Fundamentally, it's a **SSR (Server-Side Rendering) friendly**, **comprehensive**, and **highly optimized** React Hooks library that provides flexible and efficient Hook solutions, entirely developed in **TypeScript**, and comes with interactive documentation filled with rich examples 🔥.
+
+It's primarily inspired by [VueUse](https://vueuse.org/), while also drawing from [react-use](https://github.com/streamich/react-use), [ahooks](https://ahooks.js.org/), and many other outstanding libraries within the community. Special thanks to the open-source community, especially the authors of the aforementioned libraries, for their exceptional work and inspiration.
 
 
 ## 🚀 Features

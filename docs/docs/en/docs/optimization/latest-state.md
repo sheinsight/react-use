@@ -10,7 +10,7 @@ This feature is particularly vital in scenarios involving delayed responses, suc
 
 ## Hooks States in `@shined/react-use` {#hooks-states-in-shined-react-use}
 
-`@shined/react-use` ensures that any stale data issues are internally managed, allowing developers to focus on broader application logic rather than the nuances of state management within asynchronous callbacks. ∑
+`@shined/react-use` ensures that any stale data issues are internally managed, allowing developers to focus on broader application logic rather than the nuances of state management within asynchronous callbacks.
 
 ## Ensure Latest State in Your Codebase {#ensure-latest-state-in-your-codebase}
 

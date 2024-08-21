@@ -1,30 +1,36 @@
-# 📌 Stabilization {#stabilization}
+# 📌 Stabilization
 
-## Overview {#overview}
+## Overview \{#overview}
 
-The Stabilization feature ensures that function references remain constant across component re-renders unless explicitly triggered by dependency changes. This stability is crucial for optimizing rendering behavior in React, particularly when integrating with performance-sensitive patterns like `React.memo` or `shouldComponentUpdate`.
+In many cases, the re-rendering of React components is caused by changes in function references. Such changes can be due to the redeclaration of the function or changes in the dependencies of the function. In some cases, this re-rendering is necessary, but in other cases, it may be unnecessary or even harmful.
 
-## useStableFn {#use-stable-fn}
+Stabilization ensures that function references remain unchanged during the component re-rendering process, unless explicitly triggered by dependency changes. This stabilization is crucial for optimizing rendering behavior in React, especially when integrating with performance-sensitive patterns like `React.memo` or `shouldComponentUpdate`.
 
-We implement stabilization in `@shined/react-use` through the [useStableFn](/reference/use-stable-fn) Hook, which memoizes callback functions to prevent unnecessary re-renders. By stabilizing functions, developers can avoid performance bottlenecks and ensure that components only update when necessary.
+## useStableFn \{#use-stable-fn}
 
-Every functions exported from `@shined/react-use` are stabilized by default, ensuring that they do not cause unnecessary re-renders unless their dependencies change. Stabilizing callback functions minimizes the risk of it, leading to improved performance and user experience.
+We introduced [useStableFn](/reference/use-stable-fn) to implement and unify internal function stabilization operations. It prevents unnecessary re-renders by memorizing callback functions. With the stabilized function, developers can avoid performance bottlenecks and ensure components are updated only when necessary. Additionally, `useStableFn` utilizes [useLatest](/reference/use-latest) internally to ensure the executed function is always the latest, avoiding closure traps.
 
-## Example Usage {#example-usage}
+Every function exported by `@shined/react-use` is by default stabilized to ensure they do not cause unnecessary re-renders due to reasons other than changes in dependencies. Stabilizing callback functions minimizes the risk of causing them, thus improving performance and user experience.
+
+## Example Usage \{#example-usage}
+
+In fact, when you are using any function exposed by `@shined/react-use`, you are already using the stabilization feature. Here is a simple example showing how to use `useStableFn` to ensure the stability of callback functions:
 
 ```javascript
 import { useStableFn } from '@shined/react-use'
 
 function App() {
   const stableHandleClick = useStableFn(() => {
-    // do something
+    // Do something
   })
 
-  // `stableHandleClick` is stable across re-renders, will not cause re-renders unless dependencies change
+  // `stableHandleClick` remains stable during re-renders, it will not cause re-render unless dependencies change
   return <AwesomeComponent onClick={stableHandleClick} />
 }
 ```
 
-In this example, `useStableFn` from `@shined/react-use` is used to ensure that the `onClick` function does not cause re-renders. For more usage see [useStableFn](/reference/use-stable-fn).
+In this example, `useStableFn` from `@shined/react-use` is used to ensure that the function passed to `onClick` does not cause re-rendering. For more usage, see [useStableFn](/reference/use-stable-fn).
 
-This approach not only makes the component more efficient but also prevents potential bugs related to re-rendering cycles. The Hook abstracts the complexity involved in memoizing functions, making it straightforward for developers to implement.
+## Real-World Implications \{#real-world-implications}
+
+Stabilization is a key part of React optimization that ensures the performance and stability of components. Through stabilization, `@shined/react-use` offers developers a simple way to ensure the performance and stability of components while avoiding unnecessary re-renders.

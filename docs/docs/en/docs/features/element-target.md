@@ -1,68 +1,67 @@
-# 🎯 ElementTarget {#element-target}
+# 🎯 Element Target {#element-target}
 
-`ElementTarget` is a union type that represents the various types of elements that can be targeted in React.
+`ElementTarget` is a union type that represents various kinds of elements that can be targeted in `@shined/react-use`.
 
 ## TL; DR {#tl-dr}
 
-- It's common to access elements in React for actions like clicking, hovering, etc.
-- Traditional methods include using `Ref` or DOM queries, which can be challenging in Server-side Rendering (SSR) environments.
-- To enhance Developer Experience (DX) and support for SSR, we introduce `useTargetElement`.
-- It's a SSR friendly React Hook that simplifies the process of targeting elements.
+- Accessing elements for clicks, hovering, and other interactions is very common and reasonable in React.
+- Traditional methods of using `Ref` or DOM queries face challenges in a Server-Side Rendering (SSR) environment.
+- To improve Developer Experience (DX) while supporting SSR, we introduced `useTargetElement`.
+- It simplifies the process of accessing different types of elements, ensuring consistency in the developer experience by abstracting the different ways of element access.
 
-If you are looking for `ElementTarget` types, please refer to [ElementTarget Types](#element-target-types).
+If you are looking for the `ElementTarget` type, please refer to [ElementTarget Types](#element-target-types).
 
 ## Motivation {#motivation}
 
-Frequently, React Hooks require access to DOM elements to perform actions such as clicking outside a component (`useClickAway`), hovering (`useHover`), or scrolling (`useScroll`).
+React Hooks often require access to DOM elements to perform operations like clicking outside a component (`useClickAway`), hovering (`useHover`), or scrolling (`useScroll`).
 
-Traditionally, there are mainly two methods to access HTML elements in React:
+Traditionally, accessing HTML elements in React is mainly done in two ways:
 
-- **React Ref**: Attach a `Ref` to an element using `ref={ref}` and access it via `ref.current`.
-- **DOM Query**: Directly obtain the element using the `document`'s method, like `querySelector`.
+- **React Ref**: Attaching a `Ref` to an element using `ref={ref}` and accessing it in `useEffect` and similar places via `ref.current`.
+- **DOM Queries**: Directly using instance methods on the `document` object to obtain elements in `useEffect` and similar places, like `querySelector`.
 
 ```tsx
 // React Ref
 useEffect(() => {
   if (ref.current) {
-    // do something with ref.current
+    // Perform some operations on ref.current
   }
 }, [])
 
-// DOM Query
+// Direct DOM query during rendering phase
+const body = document.querySelector('body') // Not SSR friendly, not recommended
+
+// DOM query inside useEffect
 useEffect(() => {
   const el = document.getElementById('target')
-  // do something with el
+  // Perform some operations on el
 }, [])
 ```
 
-While these approaches work well, they introduce challenges in SSR environments where direct access to elements or browser-specific objects during the render stage isn't possible. Instead, developers must utilize `useEffect` or `Ref` to access these elements or objects on the client side.
+While these methods are effective, they pose challenges in an SSR environment, as direct access to elements or browser-specific objects during rendering is not possible. Instead, developers must access these elements or objects on the client-side using `useEffect` or `Ref`. Moreover, developers often wish to access elements directly via passing `Ref`, which is a common requirement in many Hooks and daily use scenarios.
 
-Additionally, it is often desirable to access an element directly by passing a `Ref`, a common requirement in many Hooks and daily use scenarios.
+## useTargetElement {#use-target-element}
 
-## Introducing `useTargetElement` {#introducing-use-target-element}
-
-To address these issues, we've created the `useTargetElement` Hook, which simplifies the process of obtaining a target element. This Hook returns a React `Ref` containing the target element:
+To address these issues, we created the `useTargetElement` Hook, which simplifies the process of obtaining the target element. This Hook returns a React `Ref` containing the target element:
 
 ```tsx
 const targetRef = useTargetElement(elementTarget)
 ```
 
-It accepts a getter function as input to avoid SSR-related errors and also supports a `Ref` containing the element to enhance DX and accommodate a broad range of use cases.
+It can accept a Getter function as input to avoid SSR-related errors and also supports a `Ref` containing the element to enhance Developer Experience (DX) and accommodate a wide range of scenarios.
 
-This Hook has found its place in numerous Hooks that require element targeting. It represents a best practice for developers needing to access elements within their Hooks.
+This Hook has been used in many core functionalities of `@shined/react-use`, such as `useClickAway`, `useHover`, and `useScroll`, representing best practices for developers needing to access elements within their Hooks.
 
 ### ElementTarget Types {#element-target-types}
 
-:::tip
-
-A "🚥" prefix indicates that the target can be a `getter` function, which is particularly useful in SSR contexts. The "⚛️" prefix denotes that the target can be a `Ref` that contains it.
-
+:::tip Tip
+The "🚥" prefix indicates it can be a Getter function, especially useful in SSR. The "⚛️" prefix indicates it can be a `Ref` containing it.
 :::
 
 - 🚥 ⚛️ **window/document**: The global window or document object.
 - 🚥 ⚛️ **Element**: Any HTML element.
 - 🚥 ⚛️ **Element Selector**: A CSS selector string, such as `#id`, `.class.subclass`, `tag`, etc.
-- 🚥 ⚛️ **null/undefined**: These indicate the absence of a target, simplifying error handling while ensuring smooth integration with TypeScript.
+- 🚥 ⚛️ **null/undefined**: Indicates no target, simplifying error handling while ensuring smooth integration with TypeScript.
 
 ### Valid Examples {#valid-examples}
 
@@ -76,8 +75,8 @@ const targetRef = useTargetElement('#my-div .container')
 const targetRef = useTargetElement(() => window)
 const targetRef = useTargetElement(() => document.getElementById('my-div'))
 
-// NOT recommended, will cause SSR issues
+// Not recommended, may cause SSR issues
 const targetRef = useTargetElement(window)
-// NOT recommended, will cause SSR issues
+// Not recommended, may cause SSR issues
 const targetRef = useTargetElement(document.getElementById('my-div'))
 ```

@@ -2,19 +2,21 @@
 
 ## Overview {#overview}
 
-`@shined/react-use` implement [useSafeState](/reference/use-safe-state) for all state management operations within components. This method ensures that state updates are controlled and secure, especially in scenarios that involve asynchronous operations or potential unexpected component unmounts. It's designed as a replacement for `React.useState`.
+`@shined/react-use` implements the [useSafeState](/reference/use-safe-state) method for all internal state management operations. This method ensures that state updates are controlled and safe, especially in scenarios involving asynchronous operations or possible accidental component unmounting. It is designed to be a replacement for `React.useState`.
 
-In essence, the behavior of `useSafeState` adapts based on the React version used:
+The behavior of `useSafeState` varies depending on the version of React used:
 
-- **React 17 and earlier**: The state updates only if the component is still mounted, a behavior ensured by the `useUnmounted` Hook. This approach effectively suppresses the common React warnings related to setting state on unmounted components.
-- **React 18 and later**: It functions identically to `React.useState`, leveraging React’s internal mechanisms for handling state updates more gracefully on unmounted components.
+- **React 17 and earlier versions**: Updates the state only when the component is still mounted. This behavior is achieved through the [useUnmounted](/reference/use-unmounted) Hook. This method effectively suppresses the common React warning related to "setting state on unmounted components".
+- **React 18 and later versions**: Its functionality is the same as `React.useState`, following React's internal mechanisms to handle state updates on unmounted components more gracefully.
 
 ## Handling `setState` Calls on Unmounted Components {#handling-set-state-calls-on-unmounted-components}
 
-It is a common misconception that calling `setState` on an unmounted component leads to memory leaks. This warning primarily serves as a reminder to developers to terminate any ongoing operations such as timers and subscriptions after a component unmounts.
+There is a common misconception among developers that calling `setState` on an unmounted component will lead to memory leaks, but this is not the case.
 
-Moreover, during a component's lifecycle, if `setState` is invoked after the component has unmounted, it becomes a no-operation (noop). In practical terms, this means that such calls are harmlessly ignored; thus, they do not contribute to memory leaks or trigger undesired state updates.
+This warning primarily serves as a reminder for developers to timely clean up related operations, such as timers and subscriptions, after the component is unmounted. In the lifecycle of the component, if `setState` is called after the component has been unmounted, it becomes a no-operation function (`noop`). Practically, this means such calls will be harmlessly ignored. Therefore, they will not cause memory leaks or trigger unwanted state updates.
 
-Future updates to React, based on discussions for React 18, such as [discussion#82](https://github.com/reactwg/react-18/discussions/82), hint at potential changes in how state updates on unmounted components are handled. It suggests that avoiding state updates on unmounted components might be more problematic than permitting them, pointing towards a shift in best practices for future React versions.
+According to [discussion #82](https://github.com/reactwg/react-18/discussions/82) of React 18, it points out that the future updates of React and the handling of state updates on unmounted components might undergo potential changes. The official statement indicates that "avoiding state updates on unmounted components" may be more problematic than "allowing these updates," implying that the best practices for state updates in future versions of React may shift.
 
-Through this approach, `useSafeState` ensures compatibility and resilient state management across various versions of React, addressing both current and potential future behaviors concerning state updates on unmounted components.
+## Real-World Implications {#real-world-implications}
+
+Internally, `@shined/react-use` utilizes `useSafeState` in this manner to ensure compatibility and resilience in state management across different versions of React. By avoiding easily misunderstood warnings while also preparing for future changes in React versions, it guarantees the safety of state updates.
