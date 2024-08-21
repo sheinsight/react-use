@@ -352,12 +352,12 @@ console.log(data, params) // 'newData', ['newParams']
 
 ### Custom Data Update \{#custom-data-update}
 
-By using `compare`, you can customize the logic for data updates to prevent frequent refreshes. This is particularly useful in dealing with some **pseudo-differences** in data, such as timestamps. It can reduce unnecessary rendering, supported by [useAsyncFn](/reference/use-async-fn).
+By using `compare`, you can customize the logic for data updates to prevent frequent refreshes. This is particularly useful in dealing with some **pseudo-differences** in data, such as timestamps, and it can reduce unnecessary rendering, shallowEqual is used by default, supported by [useAsyncFn](/reference/use-async-fn).
 
 ```ts
 const { loading, data, error } = useQuery(fetchData, {
   compare: (preData, nextData) => {
-    // Compare whether the data is the same, return true to not update, return false to update, shallowEqual is used by default
+    // Compare whether the data is the same, return true to not update, return false to update
     return preData === nextData
 
     // Or compare a certain field of data, for example, the timestamp might be different, but the actual effective data is the same
@@ -365,7 +365,6 @@ const { loading, data, error } = useQuery(fetchData, {
 
     // But please note, when the data size is too large, deep comparison will affect performance, so use it judiciously
   },
-  }
 })
 ```
 

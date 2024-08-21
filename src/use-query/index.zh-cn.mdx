@@ -350,12 +350,12 @@ console.log(data, params) // 'newData', ['newParams']
 
 ### 自定义数据更新 \{#custom-data-update}
 
-使用 `compare` 可以自定义数据更新逻辑，防止频繁刷新，这在处理某些**伪不同**的数据的情况下非常有用，比如时间戳，可以降低不必要的渲染，由 [useAsyncFn](/reference/use-async-fn) 提供支持。
+使用 `compare` 可以自定义数据更新逻辑，防止频繁刷新，这在处理某些**伪不同**的数据的情况下非常有用，比如时间戳，可以降低不必要的渲染，默认使用 `shallowEqual`，即只比较一层，由 [useAsyncFn](/reference/use-async-fn) 提供支持。
 
 ```ts
 const { loading, data, error } = useQuery(fetchData, {
   compare: (preData, nextData) => {
-    // 比较数据是否相同，返回 true 则不更新，返回 false 则更新，默认使用 shallowEqual，即只比较一层
+    // 比较数据是否相同，返回 true 则不更新，返回 false 则更新
     return preData === nextData
 
     // 或者比较数据的某个字段，比如 timestamp 可能不同，但实际有效数据是一样的
@@ -363,7 +363,6 @@ const { loading, data, error } = useQuery(fetchData, {
 
     // 但请注意，数据量太大时，深比较会影响性能，请权衡使用
   },
-  }
 })
 ```
 
