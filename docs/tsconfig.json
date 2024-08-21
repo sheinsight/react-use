@@ -7,8 +7,8 @@
     "resolveJsonModule": true,
     "paths": {
       "@@/*": ["./*"],
-      "@/components": ["./src/components"],
       "@shined/react-use": ["./node_modules/@shined/react-use"],
+      "@/components": ["./src/components"],
       "@/*": ["./src/*"],
       "i18n": ["./i18n.json"]
     }

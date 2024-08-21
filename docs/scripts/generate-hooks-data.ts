@@ -14,7 +14,13 @@ const ignoredDirs = ['utils', 'use-track-ref-state', 'use-versioned-action', 'us
 const dirents = await fs.readdir(hooksSrc, { withFileTypes: true })
 const hooksDirents = dirents.filter((d) => d.isDirectory() && ignoredDirs.every((e) => e !== d.name))
 
-const hooks = []
+const hooks: {
+  name: string
+  slug: string
+  category: string
+  features: string[]
+  deprecated: boolean
+}[] = []
 
 for (const e of hooksDirents) {
   const mdxPath = join(hooksSrc, e.name, 'index.mdx')
@@ -37,6 +43,6 @@ for (const e of hooksDirents) {
   }
 }
 
-hooks.sort((a, b) => a?.deprecated - b?.deprecated)
+hooks.sort((a, b) => Number(a?.deprecated) - Number(b?.deprecated))
 
-await fs.writeJson(resolve(__dirname, '../../docs/hooks.json'), hooks)
+await fs.writeJson(resolve(__dirname, '../hooks.json'), hooks)

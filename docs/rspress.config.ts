@@ -71,8 +71,8 @@ export default defineConfig({
     },
     source: {
       alias: {
-        '@': path.resolve(__dirname, './src'),
         '@@': path.resolve(__dirname, './'),
+        '@': path.resolve(__dirname, './src'),
       },
       define: {
         'process.env.ASSETS_PREFIX': JSON.stringify(assetsPrefix),

@@ -7,9 +7,12 @@
     "esModuleInterop": true,
     "allowJs": false,
     "noEmit": true,
-    "strict": true
+    "strict": true,
+    "paths": {
+      "@/test": ["./testing"]
+    }
   },
-  "include": ["./src/**/*"],
-  "exclude": ["./src/**/demo.tsx", "./src/**/*.test.ts", "./src/**/*.test.tsx"],
-  "references": [{ "path": "./docs/tsconfig.json" }, { "path": "./tsconfig.test.json" }]
+  "include": ["./src/**/*", "./testing/**/*"],
+  "exclude": ["./src/**/demo.tsx"],
+  "references": [{ "path": "./docs/tsconfig.json" }]
 }
