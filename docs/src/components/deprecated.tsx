@@ -2,6 +2,7 @@ import { useLang } from 'rspress/runtime'
 
 interface Props {
   version: string
+  tip?: string
 }
 
 function ColorText(props: { children: string }) {
@@ -17,12 +18,12 @@ export function Deprecated(props: Props) {
 
       {isZhCN ? (
         <span>
-          这个 Hook 自<ColorText>{props.version}</ColorText>版本起被标记为弃用，请尽快迁移。
+          这个 Hook 自<ColorText>{props.version}</ColorText>版本起被标记为弃用。{props.tip ?? ''}
         </span>
       ) : (
         <span>
           This Hook is marked as<ColorText>deprecated</ColorText>since
-          <ColorText>{props.version}</ColorText>, please migrate as soon as possible.
+          <ColorText>{props.version}</ColorText>. {props.tip ?? ''}
         </span>
       )}
     </div>
