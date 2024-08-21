@@ -7,11 +7,9 @@
     "esModuleInterop": true,
     "allowJs": false,
     "noEmit": true,
-    "strict": true,
-    "paths": {
-      "@/test": ["./testing"],
-      "@shined/react-use": ["./src"],
-      "@/components": ["./docs/src/components"]
-    }
-  }
+    "strict": true
+  },
+  "include": ["./src/**/*"],
+  "exclude": ["./src/**/demo.tsx", "./src/**/*.test.ts", "./src/**/*.test.tsx"],
+  "references": [{ "path": "./docs/tsconfig.json" }, { "path": "./tsconfig.test.json" }]
 }

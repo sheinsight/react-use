@@ -1,2 +1,2 @@
 // for UnoCSS vscode extension intellisense
-export { default } from './website/uno.config'
+export { default } from './docs/uno.config'

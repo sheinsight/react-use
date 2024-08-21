@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "jsx": "react-jsx",
+    "module": "esnext",
+    "target": "esnext",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "allowJs": false,
+    "strict": true,
+    "paths": {
+      "@/test": ["./testing"]
+    }
+  },
+  "include": ["./src/**/*.text.ts", "./src/**/*.text.tsx"]
+}
