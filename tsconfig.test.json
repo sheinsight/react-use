@@ -12,5 +12,6 @@
       "@/test": ["./testing"]
     }
   },
-  "include": ["./src/**/*.text.ts", "./src/**/*.text.tsx"]
+  "include": ["./testing/**/*", "./src/**/*", "./src/**/*.test.ts", "./src/**/*.test.tsx"],
+  "exclude": ["./src/**/demo.tsx"]
 }
