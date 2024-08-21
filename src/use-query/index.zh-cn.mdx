@@ -231,7 +231,7 @@ const { loading, data, error } = useQuery(fetchData, {
 
 ### 可暂停 (Pasuable) \{#pausable}
 
-当然不指定 `manual` 为 `false` 时，如果也想控制内部自动行为，可以使用 Hooks 里对外暴露的 [Pausable](/docs/features/pausable) 实例属性，由 [usePausable](/reference/use-pausable) 提供支持。
+当不指定 `manual` 为 `false` 时，如果也想控制内部自动行为，可以使用 Hooks 里对外暴露的 [Pausable](/docs/features/pausable) 实例属性，由 [usePausable](/reference/use-pausable) 提供支持。
 
 ```tsx
 const { pause, resume, isActive } = useQuery(fetchData, {
