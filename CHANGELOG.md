@@ -1,3 +1,34 @@
+# [1.5.0](https://github.com/sheinsight/react-use/compare/v1.4.0...v1.5.0) (2024-08-21)
+
+
+### Bug Fixes
+
+* **useQuery:** fix global mutate params error ([3d35a3b](https://github.com/sheinsight/react-use/commit/3d35a3b4c942b00b3d826a0806c649839aa9e29f))
+
+
+### Features
+
+* add internal `useTrackedRefState` & `useVersionedAction` hooks ([783fa7c](https://github.com/sheinsight/react-use/commit/783fa7c8057dd1a8bffb6fa8102b629f5333bf48))
+* add new Hook `useFirstRender` to check whether it's the first render. ([aee59cd](https://github.com/sheinsight/react-use/commit/aee59cdd0a7d0f5bc068123af8cc5d9d2facd8ed))
+* **useAsyncFn:** rewrite to use auto-tracked state to improve performance ([3ec255e](https://github.com/sheinsight/react-use/commit/3ec255eb7ab3dfe902b04446679f0fdb79065193))
+* **useClipboard:** enhance `legacyCopy` behavior ([bccfecb](https://github.com/sheinsight/react-use/commit/bccfecbe720b0cee99fd8192ac4edf9ead2b137f))
+* **useClipboardItems:** rewrite to use auto-tracked state to improve performance ([2d91adb](https://github.com/sheinsight/react-use/commit/2d91adb23941ddafb8bcbb461890eb4b2e45558f))
+* **useClipboardItems:** support `onCopy` & `onCopiedReset` callback ([0d1e70d](https://github.com/sheinsight/react-use/commit/0d1e70d4f43dff6874edc4c691524b1f19aff64d))
+* **useClipboard:** rewrite to use auto-tracked state to improve performance ([5ce34da](https://github.com/sheinsight/react-use/commit/5ce34dacfc24fa18dadc6433cfd8476866efdcc9))
+* **useClipboard:** support `onCopy` & `onCopiedReset` callback ([3871844](https://github.com/sheinsight/react-use/commit/3871844f3ce88dd8c17a2094a54838b21ff3be1a))
+* **useLatest:** reduce unnecessary  assignment ([3cad80a](https://github.com/sheinsight/react-use/commit/3cad80a7ed95588aedc0da152d3f632bebee16a2))
+* **useLoadingSlowFn:** rewrite to use auto-tracked state to improve performance ([972264a](https://github.com/sheinsight/react-use/commit/972264ac8b1905197d70f9d0713d58c8864e724c))
+* **usePagination:** support return sliced list directly (pass `list` in options), add `indexStart`, `indexEnd` in returns ([2ed32ff](https://github.com/sheinsight/react-use/commit/2ed32ffbf400d6156aea458c5da027f0e7d0c002))
+* **usePerformance:** support `entryTypes` check ([d9f39e4](https://github.com/sheinsight/react-use/commit/d9f39e462ab5248f4770f19d59de8633e9d5b489))
+* **usePrevious:** support `deep` option to deep compare previous state ([204b4b6](https://github.com/sheinsight/react-use/commit/204b4b6c35d74d7f04fc5aa845111af6701b233f))
+* **useQuery:** add new Hook `useQuery` renamed from `useRequest` ([11f65e7](https://github.com/sheinsight/react-use/commit/11f65e780622ec1dae662ec48d3a0ead5a577101))
+* **useQuery:** rewrite to use auto-tracked state to improve performance ([72adce9](https://github.com/sheinsight/react-use/commit/72adce9c2909d1e7a228a674d5423c9b76a430b4))
+* **useQuery:** support `onErrorRetryFailed` option ([357e77a](https://github.com/sheinsight/react-use/commit/357e77ac9f5829932d57c662a296b2f19b1e834a))
+* **useRequest:** deprecated `useRequest`, please use `useQuery` instead. ([26c516c](https://github.com/sheinsight/react-use/commit/26c516c2ac5b3e44bb06b71b48dab0a5772f39fd))
+* **useWebObserver:** support additional `supported` check for specific observer ([d30a906](https://github.com/sheinsight/react-use/commit/d30a906add884d1a5dac8881bfe826aac27b7ae3))
+
+
+
 # [1.4.0](https://github.com/sheinsight/react-use/compare/v1.3.0...v1.4.0) (2024-08-09)
 
 
