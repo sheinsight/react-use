@@ -2,7 +2,7 @@
 
 ## 📦 安装 \{#installation}
 
-要安装，您可以使用以下您偏好的包管理工具：
+使用你喜欢的包管理器进行安装：
 
 import { PackageManagerTabs } from 'rspress/theme'
 
@@ -17,7 +17,23 @@ import { PackageManagerTabs } from 'rspress/theme'
 
 ## 🎨 使用 \{#usage}
 
-下面是一个如何使用 [useAsyncFn](/reference/use-async-fn) Hook 的例子。访问 [API 文档](/reference) 部分以查看所有可用的 Hooks。
+下面是一个如何使用 [useAsyncFn](/reference/use-async-fn) Hook 的例子。访问 [Hooks 列表](/reference) 部分以查看所有可用的 Hooks。
+
+
+```tsx
+function App() {
+  const { loading, error, run } = useAsyncFn(fetchData)
+
+  return (
+    <div>
+      <div>{data}</div>
+      <button onClick={run} disabled={loading}>
+        {loading ? 'Loading...' : 'Fetch'}
+      </button>
+    </div>
+  )
+}
+```
 
 import { App } from '@/../../src/use-async-fn/demo'
 

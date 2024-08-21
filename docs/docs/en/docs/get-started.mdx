@@ -19,6 +19,21 @@ import { PackageManagerTabs } from 'rspress/theme'
 
 Here is an example of how you can use the [useAsyncFn](/reference/use-async-fn) Hook. Visit [reference](/reference) section to see all available Hooks.
 
+```tsx
+function App() {
+  const { loading, error, run } = useAsyncFn(fetchData)
+
+  return (
+    <div>
+      <div>{data}</div>
+      <button onClick={run} disabled={loading}>
+        {loading ? 'Loading...' : 'Fetch'}
+      </button>
+    </div>
+  )
+}
+```
+
 import { App } from '@/../../src/use-async-fn/demo'
 
 <App />
