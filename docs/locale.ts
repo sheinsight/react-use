@@ -22,6 +22,10 @@ export const sidebar = {
         link: '/docs/get-started',
       },
       {
+        text: '🧭 Usage Guide',
+        link: '/docs/guide',
+      },
+      {
         text: '✨ Features',
         items: [
           {
@@ -82,6 +86,10 @@ export const sidebar = {
       {
         text: '🏃 起步',
         link: `/${langSlug.zhCN}/docs/get-started`,
+      },
+      {
+        text: '🧭 使用指引',
+        link: `/${langSlug.zhCN}/docs/guide`,
       },
       {
         text: '✨ 功能特性',

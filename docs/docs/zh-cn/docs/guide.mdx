@@ -1,0 +1,217 @@
+# 🧭 使用指引 \{#usage-guide}
+
+`@shined/react-use` 旨在**引导一种重塑 React 开发的新编程范式**。它通过提供众多高质量、语意化的 Hooks 来帮助开发者提高开发效率、养成更好的编程习惯，减少对 `useEffect` 和 `useState` 等的直接依赖，同时期望开发者能够逐渐适应「**Hooks 优先**」的 React 开发（编程）范式。
+
+以下是一些常见场景的使用指引，以帮助你更好地使用 `@shined/react-use`。
+
+## 替换 useState \{#replace-use-state}
+
+`useState` 是 React 中用来管理组件状态的 Hook，基本上每个 React 开发者都会用到。
+
+但是低版本 React 中的 `useState` 可能导致非预期的行为。比如在 React &lt;= 17 时，当组件卸载后，调用 `setState` 会**抛出令人困惑的警告**（参考 [安全状态](/docs/optmization/safe-state)）。此外，React 内部使用浅比较来判断状态是否改变，这可能会**导致组件进行不必要的重渲染，从而影响性能**。
+
+### useSafeState
+
+`useSafeState` 被设计为 `useState` 的直接替代方案，用于规避低版本 React 下的警告问题，并遵循官方做法在高版本 React 下与 `useState` 行为保持一致。
+
+同时它还具备可选的性能优化特性（`deep` 选项，深度比较状态，确认变更再更新，默认 `false`）。
+
+更多详情请参考 [安全状态](/docs/optimization/safe-state) 和 [useSafeState](/reference/use-safe-state)。
+
+```tsx
+const [name, setName] = useState('react')
+
+// 替换为
+const [name, setName] = useSafeState('react')
+```
+
+```tsx
+const [state, setState] = useState({ count: 0 })
+setState({ count: 0 }) // 触发重新渲染
+setState({ count: 0 }) // 触发重新渲染
+setState({ count: 0 }) // 触发重新渲染
+
+// 替换为
+const [state, setState] = useSafeState({ count: 0 }, { deep: true })
+setState({ count: 0 }) // 不会触发重新渲染
+setState({ count: 0 }) // 不会触发重新渲染
+setState({ count: 0 }) // 不会触发重新渲染
+
+// deep 为可选项，当状态简单、可控，且状态值的地址频繁变动，但实际值未改变时，将显著降低渲染次数
+```
+
+### useBoolean
+
+`useBoolean` 用于管理布尔值状态，提供了一系列语意化的操作函数，例如 `toggle`、`setTrue`、`setFalse` 等，底层使用 `useSafeState` 以确保状态安全。
+
+详情参考 [useBoolean](/reference/use-boolean)。
+
+```tsx
+const [bool, actions] = useBoolean(false)
+
+actions.toggle() // true
+actions.setTrue() // true
+actions.setFalse() // false
+```
+
+### useCounter
+
+`useCounter` 用于管理 number 类型状态，提供了一系列语意化的操作函数，例如 `inc`、`dec`、`set` 等，底层使用 `useSafeState` 以确保状态安全。
+
+详情参考 [useCounter](/reference/use-counter)。
+
+```tsx
+const [count, actions] = useCounter(0)
+
+actions.inc() // 1
+actions.inc(10) // 11
+actions.dec() // 10
+actions.set(20) // 20
+```
+
+## 减少 useEffect \{#reduce-use-effect}
+
+`useEffect` 是 React 中最基础、最常用的 Hook 之一，但一般情况下，我们并不推荐直接使用。因为它的使用方式相对较为原始，且容易出现**副作用难以控制，或副作用与预期不符**等问题。
+
+`@shined/react-use` 提供了一系列高质量、语意化的 Hooks 来等价替换部分 `useEffect` 调用场景。
+
+### useMount
+
+我们可能会这样使用 `useEffect`，功能上等同于组件挂载时执行一次 `doSomething()`。
+
+```tsx
+// 不推荐
+useEffect(() => {
+  doSomething()
+}, [])
+```
+
+或者，当我们需要在挂载时执行一些异步操作且需要拿到结时果，我们通常会包一层 async 函数来执行异步操作。
+
+```tsx
+// 不推荐
+useEffect(() => {
+  async function asyncWrapper() {
+    const result = await doSomethingAsync()
+    const.log(result)
+  }
+
+  asyncWrapper()
+}, [])
+```
+
+以上代码在逻辑上完全没问题，但是存在**代码可读性差、缺乏语意化、后期难以维护、可能意外返回清理函数**等诸多问题和隐患，同时对异步函数支持不够友好。推荐替换为更加语义化的 `useMount`，支持异步函数。
+
+详情参考 [useMount](/reference/use-mount)。
+
+```tsx
+// 推荐
+useMount(doSomething)
+
+// 推荐
+useMount(async () => {
+  const result = await doSomethingAsync()
+  const.log(result)
+})
+```
+
+### useUnmount
+
+`useUnmount` 用于在组件卸载时执行一些操作，例如清理副作用，基本与 `useMount` 类似，但执行时机不同。
+
+详情参考 [useUnmount](/reference/use-unmount)。
+
+```tsx
+// 不推荐
+useEffect(() => {
+  return () => {
+    doSomething()
+  }
+}, [])
+
+// 推荐
+useUnmount(doSomething)
+```
+
+### useUpdateEffect
+
+`useUpdateEffect` 用于在组件更新时执行一些操作，例如监听某些状态的变化并执行操作，但是**忽略首次渲染**，适用于不需要立即执行副作用的场景。
+
+详情参考 [useUpdateEffect](/reference/use-update-effect)。
+
+```tsx
+// 不推荐
+const isMount = useRef(false)
+
+useEffect(() => {
+  if (isMount.current) {
+    doSomething()
+  } else {
+    isMount.current = true
+  }
+}, [state])
+```
+
+```tsx
+// 推荐
+useUpdateEffect(() => {
+  doSomething()
+}, [state])
+```
+
+### useEffectOnce
+
+`useEffectOnce` 用于在组件挂载时执行一次操作，在组件卸载时也执行一次操作，适用于只需要执行一次副作用的场景，本质上 `useEffectOnce` 是 `useMount` 和 `useUnmount` 的组合。
+
+详情参考 [useEffectOnce](/reference/use-effect-once)。
+
+```tsx
+// 不推荐
+useEffect(() => {
+  doSomething()
+  return () => clearSomething()
+}, [])
+```
+
+```tsx
+// 推荐
+useEffectOnce(() => {
+  doSomething()
+  return () => clearSomething()
+})
+```
+
+### useAsyncEffect
+
+`useAsyncEffect` 用于在状态变更时执行异步操作，适用于需要监听状态变化并执行异步操作的场景。
+
+详情参考 [useAsyncEffect](/reference/use-async-effect)。
+
+```tsx
+// 不推荐
+useEffect(() => {
+  async function asyncWrapper() {
+    const result = await doSomethingAsync()
+    // 当前 Effect 执行结束后，可能仍然执行后续逻辑，存在内存泄漏等安全风险
+    doSomethingAfter(result)
+  }
+
+  asyncWrapper()
+}, [state])
+```
+
+```tsx
+// 推荐
+useAsyncEffect(async (isCancelled) => {
+  const result = await doSomethingAsync()
+  
+  if(isCancelled()) {
+    // 如果当前 Effect 执行结束，不会执行后续逻辑
+    clearSomething()
+    return
+  }
+
+  doSomethingAfter(result)
+}, [state])
+```
+
