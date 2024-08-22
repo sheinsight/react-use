@@ -447,7 +447,7 @@ const dynamicResult = useCreation(() => doHeavyWorkToCreate(), [dependency])
 
 If you need to encapsulate a custom Hook, or require more advanced features, please refer to the following advanced guide.
 
-### useStableFu \{#use-stable-fn}
+### useStableFn \{#use-stable-fn}
 
 `useStableFn` is used to ensure the stability of function references, suitable for scenarios where it is necessary to keep function references stable, such as callbacks passed to child components. Functions exposed by Hooks should ideally be wrapped with `useStableFn`.
 

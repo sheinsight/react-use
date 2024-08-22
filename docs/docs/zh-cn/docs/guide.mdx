@@ -447,7 +447,7 @@ const dynamicResult = useCreation(() => doHeavyWorkToCreate(), [dependency])
 
 如果你需要封装自定义 Hook，或者需要更多高级功能，可以参考以下进阶指引。
 
-### useStabelFn \{#use-stable-fn}
+### useStableFn \{#use-stable-fn}
 
 `useStableFn` 用于确保函数引用稳定，适用于需要确保函数引用稳定的场景，例如传递给子组件的回调函数，通常 Hooks 暴露的函数最好使用 `useStableFn` 包裹。
 
