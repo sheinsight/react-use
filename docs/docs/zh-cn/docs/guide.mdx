@@ -4,13 +4,17 @@
 
 以下是一些常见场景的使用指引，以帮助你更好地使用 `@shined/react-use`。
 
+:::tip 提示
+以下仅包含部分常见场景的使用指引，部分建议带有个人偏好，具体使用请根据实际情况选择。
+:::
+
 ## 替换 useState \{#replace-use-state}
 
 `useState` 是 React 中用来管理组件状态的 Hook，基本上每个 React 开发者都会用到。
 
 但是低版本 React 中的 `useState` 可能导致非预期的行为。比如在 React &lt;= 17 时，当组件卸载后，调用 `setState` 会**抛出令人困惑的警告**（参考 [安全状态](/docs/optmization/safe-state)）。此外，React 内部使用浅比较来判断状态是否改变，这可能会**导致组件进行不必要的重渲染，从而影响性能**。
 
-### useSafeState
+### useSafeState \{#use-safe-state}
 
 `useSafeState` 被设计为 `useState` 的直接替代方案，用于规避低版本 React 下的警告问题，并遵循官方做法在高版本 React 下与 `useState` 行为保持一致。
 
@@ -40,7 +44,7 @@ setState({ count: 0 }) // 不会触发重新渲染
 // deep 为可选项，当状态简单、可控，且状态值的地址频繁变动，但实际值未改变时，将显著降低渲染次数
 ```
 
-### useBoolean
+### useBoolean \{#use-boolean}
 
 `useBoolean` 用于管理布尔值状态，提供了一系列语意化的操作函数，例如 `toggle`、`setTrue`、`setFalse` 等，底层使用 `useSafeState` 以确保状态安全。
 
@@ -54,7 +58,7 @@ actions.setTrue() // true
 actions.setFalse() // false
 ```
 
-### useCounter
+### useCounter \{#use-counter}
 
 `useCounter` 用于管理 number 类型状态，提供了一系列语意化的操作函数，例如 `inc`、`dec`、`set` 等，底层使用 `useSafeState` 以确保状态安全。
 
@@ -75,7 +79,7 @@ actions.set(20) // 20
 
 `@shined/react-use` 提供了一系列高质量、语意化的 Hooks 来等价替换部分 `useEffect` 调用场景。
 
-### useMount
+### useMount \{#use-mount}
 
 我们可能会这样使用 `useEffect`，功能上等同于组件挂载时执行一次 `doSomething()`。
 
@@ -115,7 +119,7 @@ useMount(async () => {
 })
 ```
 
-### useUnmount
+### useUnmount \{#use-unmount}
 
 `useUnmount` 用于在组件卸载时执行一些操作，例如清理副作用，基本与 `useMount` 类似，但执行时机不同。
 
@@ -133,7 +137,7 @@ useEffect(() => {
 useUnmount(doSomething)
 ```
 
-### useUpdateEffect
+### useUpdateEffect \{#use-update-effect}
 
 `useUpdateEffect` 用于在组件更新时执行一些操作，例如监听某些状态的变化并执行操作，但是**忽略首次渲染**，适用于不需要立即执行副作用的场景。
 
@@ -159,7 +163,7 @@ useUpdateEffect(() => {
 }, [state])
 ```
 
-### useEffectOnce
+### useEffectOnce \{#use-effect-once}
 
 `useEffectOnce` 用于在组件挂载时执行一次操作，在组件卸载时也执行一次操作，适用于只需要执行一次副作用的场景，本质上 `useEffectOnce` 是 `useMount` 和 `useUnmount` 的组合。
 
@@ -181,7 +185,7 @@ useEffectOnce(() => {
 })
 ```
 
-### useAsyncEffect
+### useAsyncEffect \{#use-async-effect}
 
 `useAsyncEffect` 用于在状态变更时执行异步操作，适用于需要监听状态变化并执行异步操作的场景。
 
@@ -215,3 +219,314 @@ useAsyncEffect(async (isCancelled) => {
 }, [state])
 ```
 
+## 常见场景 \{#common-scenarios}
+
+### 防抖和节流 \{#debounce-and-throttle}
+
+推荐使用 `useDebouncedFn` 和 `useThrottledFn` 两个 Hook 来处理常见的防抖和节流功能，当然也有 [useDebouncedEffect](/reference/use-debounced-effect) 和 [useDebouncedEffect](/reference/use-debounced-effect) 两个 Hook，用于处理防抖和节流的副作用，但一般情况下，我们更推荐前者。
+
+详情参考 [useDebouncedFn](/reference/use-debounced-fn) 和 [useThrottledFn](/reference/use-throttled-fn)。
+
+```tsx
+const handleSubmit = (value) => console.log(value)
+const debouncedHandleSubmit = useDebouncedFn(handleSubmit, 500)
+
+const handleScroll = (event) => console.log('scroll')
+const throttledHandleScroll = useThrottledFn(handleScroll, 500)
+```
+
+### 处理事件 \{#handle-events}
+
+`useEventListener` 用于在组件挂载时添加事件监听器，组件卸载时自动移除事件监听器，适用于需要添加事件监听器的场景。任何实现了 `EventTarget` 接口的对象都可以作为第一个参数传入，例如 `window`、`document`、`ref.current` 等。
+
+```tsx
+// 符合以下接口的对象都可以作为第一个参数传入，SSR 下支持 `() => window` 的写法
+export interface InferEventTarget<Events> {
+  addEventListener: (event: Events, fn?: any, options?: any) => any
+  removeEventListener: (event: Events, fn?: any, options?: any) => any
+}
+```
+
+详情参考 [useEventListener](/reference/use-event-listener)。
+
+```tsx
+// 不推荐
+useEffect(() => {
+  const handler = () =>  doSomething()
+  window.addEventListener('resize', handler, { passive: true })
+  return () => {
+    window.removeEventListener('resize', handler)
+  }
+}, [])
+```
+
+
+```tsx
+// 推荐，且 SSR 友好
+useEventListener('resize', doSomething, { passive: true })
+// useEventListener(() => window, 'resize', doSomething, { passive: true })
+```
+
+### 复制到剪贴板 \{#copy-to-clipboard}
+
+`useClipboard` 用于复制文本到剪贴板，适用于需要复制文本到剪贴板的场景，默认情况下使用 Clipboard API，如果浏览器不支持，则自动优雅降级到 `document.execCommand('copy')`。
+
+详情参考 [useClipboard](/reference/use-clipboard)。
+
+```tsx
+// 不推荐
+const copyToClipboard = () => {
+  const input = document.createElement('input')
+  document.body.appendChild(input)
+  input.value = 'Hello, React'
+  input.select()
+  document.execCommand('copy')
+  document.body.removeChild(input)
+}
+
+// 不推荐，引入了额外依赖，使用体验割裂
+import copy from 'copy-to-clipboard'
+import CopyToClipboard from 'react-copy-to-clipboard'
+```
+
+```tsx
+// 推荐
+const clipboard = useClipboard()
+
+clipboard.copy('Hello, React')
+```
+
+### 时间格式化 \{#date-format}
+
+`useDateFormat` 用于格式化时间，**轻量、灵活、使用体验统一**，适用于需要格式化时间的场景，支持自定义格式化字符串。
+
+详情参考 [useDateFormat](/reference/use-date-format)。
+
+```tsx
+// 不推荐，引入了额外依赖，使用体验割裂
+import dayjs from 'dayjs' // 使用约定式格式化 tokens
+dayjs('2024/09/01').format('YYYY-MM-DD HH:mm:ss') 
+
+// 不推荐，引入了额外依赖，使用体验割裂
+import moment from 'moment' // 使用约定式格式化 tokens
+moment('2024/09/01').format('YYYY-MM-DD HH:mm:ss')
+
+// 不推荐，引入了额外依赖，使用体验割裂
+import dateFns from 'date-fns' // date-fns v2 开始使用 unicode 标准的格式化 tokens
+dateFns.format(new Date(), 'yyyy-MM-dd HH:mm:ss')
+```
+
+```tsx
+// 推荐
+// 默认使用约定式的格式化 tokens
+const time = useDateFormat('2024/09/01', 'YYYY-MM-DD HH:mm:ss')
+const time = useDateFormat(1724315857591, 'YYYY-MM-DD HH:mm:ss')
+// 同时支持 Unicode 标准的格式化 tokens
+const time = useDateFormat(new Date(), 'yyyy-MM-dd HH:mm:ss', { unicodeSymbols: true })
+```
+
+### 定时器 \{#timer}
+
+日常开发中经常使用 `setTimeout` 和 `setInterval` 来处理定时任务，直接**使用相对繁琐**，且要求开发者**手动清理定时器**，容易出现**忘记清理、清理不及时**等问题。
+
+```tsx
+// 不推荐
+useEffect(() => {
+  const timer = setTimeout(() => {
+    doSomething()
+  }, 1000)
+
+  return () => clearTimeout(timer)
+}, [])
+```
+
+`@shined/react-use` 提供了 `useTimeoutFn` 和 `useIntervalFn` 两个 Hook 来处理定时任务，自动清理定时器，避免出现**忘记清理、清理不及时**等问题。
+
+详情参考 [useTimeoutFn](/reference/use-timeout-fn) 和 [useIntervalFn](/reference/use-interval-fn)。
+
+```tsx
+// 推荐
+useTimeoutFn(doSomething, 1000, { immediate: true })
+useIntervalFn(doSomething, 1000, { immediate: true })
+```
+
+## 浏览器 API \{#browser-api}
+
+我们经常需要调用浏览器 API 来实现一些功能，包括但远不限于：
+
+- 使用 [Fullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API) 进行全屏操作
+- 使用 [ResizeObserver API](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver) 监听元素尺寸变化
+- 使用 [Network Information API](https://developer.mozilla.org/en-US/docs/Web/API/Network_Information_API) 获取网络状态
+- 使用 [EyeDropper API](https://developer.mozilla.org/en-US/docs/Web/API/EyeDropper_API) 获取屏幕颜色
+- 使用 [Geolocation API](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API) 获取用户地理位置
+- 使用 [Battery Status API](https://developer.mozilla.org/en-US/docs/Web/API/Battery_Status_API) 获取设备电量
+
+直接操作 API 可能会**让代码变得复杂、难以维护**，由于 API 的兼容性问题，开发者在处理这些问题时不仅**增加了识别兼容情况的心智负担**，还可能需要在识别后，**增加代码复杂度以实现兼容**（如使用历史遗留的 API 实现尽可能兼容）。此外，还需注意许多细节以适应 React 组件化开发。
+
+> 例如，[Fullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API)在不同浏览器及其版本中的实现有所不同，[Battery Status API](https://developer.mozilla.org/en-US/docs/Web/API/Battery_Status_API)只在部分浏览器中得到支持，而[EyeDropper API](https://developer.mozilla.org/en-US/docs/Web/API/EyeDropper_API)目前仅在最新的Chrome和Edge浏览器中可用。
+
+幸运的是，`@shined/react-use` 已经封装了许多常用的浏览器 API 以提供更好的使用体验，同时许多浏览器 API 相关的 Hooks 内部使用了 [useSupported](/reference/use-supported) 统一返回了 API 的支持情况，使得开发者可以更加方便地使用浏览器 API。
+
+想了解更多可用的浏览器 API Hooks，请访问 [Hooks 列表页](/reference) 的 Browser 分类。
+
+## SSR 相关
+
+`@shined/react-use` 旨在提供更好的服务端渲染支持，所有 Hooks 都兼容服务端渲染，且不会产生副作用。
+
+### useIsomorphicLayoutEffect \{#use-isomorphic-layout-effect}
+
+`useIsomorphicLayoutEffect` 用于在服务端渲染时使用 `useLayoutEffect`，在客户端渲染时使用 `useEffect`，适用于需要在服务端渲染时执行同步副作用的场景。
+
+详情参考 [useIsomorphicLayoutEffect](/reference/use-isomorphic-layout-effect)。
+
+```tsx
+// 不推荐，SSR 时会抛出警告
+useLayoutEffect(() => {
+  doSomething()
+}, [state])
+```
+
+```tsx
+// 推荐，在运行时自动决定使用 `useLayoutEffect` 或 `useEffect`
+useIsomorphicLayoutEffect(() => {
+  doSomething()
+}, [state])
+```
+
+## useCallback 与 useMemo \{#use-callback-and-use-memo}
+
+`useCallback` 和 `useMemo` 是 React 中用于性能优化的 Hook，常用来缓存函数和值，避免不必要的重复计算。
+
+但是在实际开发中，我们除了性能优化外，可能还需要确保引用稳定性，以避免不必要的副作用等问题。而根据官方文档，`useCallback` 和 `useMemo` 仅供用于性能优化，并不保证引用稳定，因此在某些场景下可能会导致不稳定的行为。
+
+如果你需要优化性能的同时还想确保函数、结果的稳定，那么你可以尝试 `useStableFn` 与 `useCreation`。
+
+### useStableFn \{#use-stable-fn}
+
+`useStableFn` 用于确保函数引用稳定，适用于需要确保函数引用稳定的场景，例如传递给子组件的回调函数。
+
+详情参考 [useStableFn](/reference/use-stable-fn)。
+
+```tsx
+// 不推荐
+const handleClick = () => {
+  console.log('click')
+}
+
+return <HeavyComponent onClick={handleClick} />
+```
+
+```tsx
+// 推荐
+const handleClick = useStableFn(() => {
+  console.log('click')
+})
+
+return <HeavyComponent onClick={handleClick} />
+```
+
+### useCreation \{#use-creation}
+
+`useCreation` 用于初始化操作，适用于需要确保初始化操作只执行一次的场景，例如初始化复杂对象、耗时操作等，`useCreation` 除了性能优化外，还能确保结果在不同渲染周期间保持引用稳定。
+
+详情参考 [useCreation](/reference/use-creation)。
+
+```tsx
+// 不推荐
+const heavyResult = useMemo(() => doHeavyWorkToInit(), [])
+const dynamicResult = useMemo(() => doHeavyWorkToCreate(), [dependency])
+```
+
+```tsx
+// 推荐
+const heavyResult = useCreation(() => doHeavyWorkToInit())
+const dynamicResult = useCreation(() => doHeavyWorkToCreate(), [dependency])
+```
+
+## 进阶指引 \{#advanced-guide}
+
+如果你需要封装自定义 Hook，或者需要更多高级功能，可以参考以下进阶指引。
+
+### useStabelFn \{#use-stable-fn}
+
+`useStableFn` 用于确保函数引用稳定，适用于需要确保函数引用稳定的场景，例如传递给子组件的回调函数，通常 Hooks 暴露的函数最好使用 `useStableFn` 包裹。
+
+详情参考 [useStableFn](/reference/use-stable-fn)。
+
+```tsx
+const fn = useStableFn(() => {
+  console.log('click')
+})
+```
+
+### useLatest \{#use-latest}
+
+`useLatest` 用于获取最新的值，适用于需要获取最新值的场景，例如在异步操作中获取最新的状态，通常搭配 `useStableFn` 使用，以实现缓存稳定的回调函数同时获取最新状态。
+
+详情参考 [useLatest](/reference/use-latest)。
+
+```tsx
+const latest = useLatest(value)
+```
+
+### useTargetElement \{#use-target-element}
+
+`useTargetElement` 用于获取目标元素，适用于需要获取目标元素的场景，例如在自定义 Hook 中获取目标元素，确保使用体验的一致性。
+
+详情参考 [useTargetElement](/reference/use-target-element) 和 [ElementTarget](/docs/features/element-target)。
+
+```tsx
+const ref = useRef<HTMLDivElement>(null) // <div ref={ref} />
+const targetRef = useTargetElement(ref)
+
+const targetRef = useTargetElement('#my-div')
+const targetRef = useTargetElement('#my-div .container')
+
+const targetRef = useTargetElement(() => window)
+const targetRef = useTargetElement(() => document.getElementById('my-div'))
+
+// 不推荐，会引起 SSR 问题
+const targetRef = useTargetElement(window)
+// 不推荐，会引起 SSR 问题
+const targetRef = useTargetElement(document.getElementById('my-div'))
+```
+
+### useCreation \{#use-creation}
+
+`useCreation` 用于初始化操作，适用于需要确保初始化操作只执行一次的场景，例如初始化复杂对象、耗时操作等，`useCreation` 除了性能优化外，还能确保结果在不同渲染周期间保持引用稳定。
+
+详情参考 [useCreation](/reference/use-creation)。
+
+```tsx
+const initResult = useCreation(() => doHeavyWorkToInit())
+```
+
+### useSupported \{#use-supported}
+
+`useSupported` 用于获取浏览器 API 的支持情况，适用于需要判断浏览器 API 支持情况的场景。
+
+详情参考 [useSupported](/reference/use-supported)。
+
+```tsx
+const supported = useSupported('BatteryStatus')
+```
+
+### usePausable \{#use-pausable}
+
+`usePausable` 用于创建一个 [Pausable](/docs/features/pausable) 实例，以赋予 Hooks 可暂停的能力，适用于需要暂停和恢复的场景。
+
+详情参考 [usePausable](/reference/use-pausable)。
+
+```tsx
+const pausable = usePausable(false, pauseCallback, resumeCallback)
+```
+
+### useGetterRef \{#use-getter-ref}
+
+`useGetterRef` 暴露了一个函数以获取 `ref.current` 的最新值，适用于需要存储状态但不想触发重新渲染，同时需要获取最新值的场景。
+
+详情参考 [useGetterRef](/reference/use-getter-ref)。
+
+```tsx
+const [isActive, isActiveRef] = useGetterRef(false)
+```
