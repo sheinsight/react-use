@@ -1,0 +1,532 @@
+# 🧭 Usage Guide \{#usage-guide}
+
+`@shined/react-use` aims to **guide a new programming paradigm in reshaping React development**. It helps developers improve development efficiency and foster better programming habits by providing numerous high-quality, semantic Hooks. This reduces the direct reliance on `useEffect` and `useState`, while also encouraging developers to gradually adapt to a "Hooks first" React development (programming) paradigm.
+
+Below are some common usage guidelines to help you better utilize `@shined/react-use`.
+
+:::tip Note
+The following includes only a part of the common scenarios, following best practices. Please choose according to the specific situation.
+:::
+
+## Replace useState \{#replace-use-state}
+
+`useState` is a Hook used in React for managing component state, and it's something almost every React developer will use.
+
+However, in lower versions of React, `useState` may lead to unexpected behavior. For instance, in React &lt;= 17, calling `setState` after a component has unmounted will **throw confusing warnings** (please refer to [Safe State](/docs/optimization/safe-state)). Moreover, React uses shallow comparison internally to determine if the state has changed, which could **lead to unnecessary component re-renders, thereby affecting performance**.
+
+### useSafeState \{#use-safe-state}
+
+`useSafeState` is designed as a direct replacement for `useState`, aimed at avoiding the warning issues in lower versions of React and following the official practices to keep consistent behavior with `useState` in higher versions of React.
+
+At the same time, it also has an optional performance optimization feature (`deep` option, deep compares states to confirm changes before updating, default `false`).
+
+For more details, please refer to [Safe State](/docs/optimization/safe-state) and [useSafeState](/reference/use-safe-state).
+
+```tsx
+const [name, setName] = useState('react')
+
+// Replace with
+const [name, setName] = useSafeState('react')
+```
+
+```tsx
+const [state, setState] = useState({ count: 0 })
+setState({ count: 0 }) // Triggers re-render
+setState({ count: 0 }) // Triggers re-render
+setState({ count: 0 }) // Triggers re-render
+
+// Replace with
+const [state, setState] = useSafeState({ count: 0 }, { deep: true })
+setState({ count: 0 }) // Does not trigger re-render
+setState({ count: 0 }) // Does not trigger re-render
+setState({ count: 0 }) // Does not trigger re-render
+
+// deep is an optional feature. When the state is simple and controlled, and the state's address changes frequently but the actual value does not change, it will significantly reduce the number of renders.
+```
+
+### useBoolean \{#use-boolean}
+
+`useBoolean` is used for managing boolean state, providing a series of semantic operation functions, such as `toggle`, `setTrue`, `setFalse`, etc., using `useSafeState` underneath to ensure state safety.
+
+For more details, see [useBoolean](/reference/use-boolean).
+
+```tsx
+const [bool, actions] = useBoolean(false)
+
+actions.toggle() // true
+actions.setTrue() // true
+actions.setFalse() // false
+```
+
+### useCounter \{#use-counter}
+
+`useCounter` is used to manage number type states, offering a series of semantic operation functions, such as `inc`, `dec`, `set`, etc., using `useSafeState` underneath to ensure state safety.
+
+For more details, see [useCounter](/reference/use-counter).
+
+```tsx
+const [count, actions] = useCounter(0)
+
+actions.inc() // 1
+actions.inc(10) // 11
+actions.dec() // 10
+actions.set(20) // 20
+```
+
+## Reduce useEffect \{#reduce-use-effect}
+
+`useEffect` is one of the most basic and commonly used Hooks in React. However, in general, we do not recommend using it directly. This is because its usage is relatively primitive and it’s prone to issues such as **difficulty in controlling side effects or side effects not meeting expectations**.
+
+`@shined/react-use` provides a series of high-quality, semantic Hooks to replace some use cases of `useEffect`.
+
+### useMount \{#use-mount}
+
+We might use `useEffect` like this, which is functionally equivalent to executing `doSomething()` once when the component is mounted.
+
+```tsx
+// Not recommended
+useEffect(() => {
+  doSomething()
+}, [])
+```
+
+Or, when we need to perform some asynchronous operations at mount time and need to obtain the result, we would usually wrap it in an async function to execute the asynchronous operation.
+
+```tsx
+// Not recommended
+useEffect(() => {
+  async function asyncWrapper() {
+    const result = await doSomethingAsync()
+    console.log(result)
+  }
+
+  asyncWrapper()
+}, [])
+```
+
+The above code is logically sound, but it has many issues and hidden dangers, such as **poor code readability, lack of semantics, difficult to maintain in the future, and possible accidental return of cleanup functions**, and it also does not support asynchronous functions well. It is recommended to replace it with the more semantic `useMount`, which supports asynchronous functions.
+
+For more details, see [useMount](/reference/use-mount).
+
+```tsx
+// Recommended
+useMount(doSomething)
+
+// Recommended
+useMount(async () => {
+  const result = await doSomethingAsync()
+  console.log(result)
+})
+```
+
+### useUnmount \{#use-unmount}
+
+`useUnmount` is used to perform some operations when the component is unmounted, such as cleaning up side effects. It is similar to `useMount` but executes at a different time.
+
+For more details, see [useUnmount](/reference/use-unmount).
+
+```tsx
+// Not recommended
+useEffect(() => {
+  return () => {
+    doSomething()
+  }
+}, [])
+
+// Recommended
+useUnmount(doSomething)
+```
+
+### useUpdateEffect \{#use-update-effect}
+
+`useUpdateEffect` is used to perform some operations when the component updates, such as listening for changes in certain states and performing operations, but **ignores the initial render**. It is suitable for scenarios where immediate execution of side effects is not necessary.
+
+For more details, see [useUpdateEffect](/reference/use-update-effect).
+
+```tsx
+// Not recommended
+const isMount = useRef(false)
+
+useEffect(() => {
+  if (isMount.current) {
+    doSomething()
+  } else {
+    isMount.current = true
+  }
+}, [state])
+```
+
+```tsx
+// Recommended
+useUpdateEffect(() => {
+  doSomething()
+}, [state])
+```
+
+### useEffectOnce \{#use-effect-once}
+
+`useEffectOnce` is used to perform an operation once when the component mounts and once when it unmounts. It is suitable for scenarios where only a single side effect execution is required. Essentially, `useEffectOnce` is a combination of `useMount` and `useUnmount`.
+
+For more details, see [useEffectOnce](/reference/use-effect-once).
+
+```tsx
+// Not recommended
+useEffect(() => {
+  doSomething()
+  return () => clearSomething()
+}, [])
+```
+
+```tsx
+// Recommended
+useEffectOnce(() => {
+  doSomething()
+  return () => clearSomething()
+})
+```
+
+### useAsyncEffect \{#use-async-effect}
+
+`useAsyncEffect` is used to perform asynchronous operations when the state changes. It is suitable for scenarios where you need to listen to state changes and perform asynchronous operations.
+
+For more details, see [useAsyncEffect](/reference/use-async-effect).
+
+```tsx
+// Not recommended
+useEffect(() => {
+  async function asyncWrapper() {
+    const result = await doSomethingAsync()
+    // After the current Effect finishes, subsequent logic might still be executed, posing security risks such as memory leaks
+    doSomethingAfter(result)
+  }
+
+  asyncWrapper()
+}, [state])
+```
+
+```tsx
+// Recommended
+useAsyncEffect(async (isCancelled) => {
+  const result = await doSomethingAsync()
+  
+  if(isCancelled()) {
+    // If the current Effect is finished, subsequent logic will not be executed
+    clearSomething()
+    return
+  }
+
+  doSomethingAfter(result)
+}, [state])
+```
+
+## Common Scenarios \{#common-scenarios}
+
+### Debounce and Throttle \{#debounce-and-throttle}
+
+We recommend using the `useDebouncedFn` and `useThrottledFn` hooks for handling common debounce and throttle functionalities. There are also [useDebouncedEffect](/reference/use-debounced-effect) and [useThrottledEffect](/reference/use-throttled-effect) hooks available for managing debounce and throttle side effects. However, we generally prefer the former.
+
+For more details, see [useDebouncedFn](/reference/use-debounced-fn) and [useThrottledFn](/reference/use-throttled-fn).
+
+```tsx
+const handleSubmit = (value) => console.log(value)
+const debouncedHandleSubmit = useDebouncedFn(handleSubmit, 500)
+
+const handleScroll = (event) => console.log('scroll')
+const throttledHandleScroll = useThrottledFn(handleScroll, 500)
+```
+
+### Handling Events \{#handle-events}
+
+`useEventListener` is used to add an event listener when a component mounts and automatically remove it when the component unmounts. It is suitable for scenarios that require adding event listeners. Any object that implements the `EventTarget` interface can be passed as the first parameter, such as `window`, `document`, `ref.current`, etc.
+
+```tsx
+// Objects conforming to the following interface can be passed as the first argument, SSR supports the `() => window` format
+export interface InferEventTarget<Events> {
+  addEventListener: (event: Events, fn?: any, options?: any) => any
+  removeEventListener: (event: Events, fn?: any, options?: any) => any
+}
+```
+
+For more details, see [useEventListener](/reference/use-event-listener).
+
+```tsx
+// Not recommended
+useEffect(() => {
+  const handler = () =>  doSomething()
+  window.addEventListener('resize', handler, { passive: true })
+  return () => {
+    window.removeEventListener('resize', handler)
+  }
+}, [])
+```
+
+
+```tsx
+// Recommended, and SSR friendly
+useEventListener('resize', doSomething, { passive: true })
+// useEventListener(() => window, 'resize', doSomething, { passive: true })
+```
+
+### Copy to Clipboard \{#copy-to-clipboard}
+
+`useClipboard` is used to copy text to the clipboard. It is suitable for scenarios that require copying text to the clipboard. By default, it uses the Clipboard API. If the browser does not support it, it will gracefully downgrade to `document.execCommand('copy')`.
+
+For more details, see [useClipboard](/reference/use-clipboard).
+
+```tsx
+// Not recommended
+const copyToClipboard = () => {
+  const input = document.createElement('input')
+  document.body.appendChild(input)
+  input.value = 'Hello, React'
+  input.select()
+  document.execCommand('copy')
+  document.body.removeChild(input)
+}
+
+// Not recommended, introduces additional dependencies leading to fragmented experience
+import copy from 'copy-to-clipboard'
+import CopyToClipboard from 'react-copy-to-clipboard'
+```
+
+```tsx
+// Recommended
+const clipboard = useClipboard()
+
+clipboard.copy('Hello, React')
+```
+
+### Date Format \{#date-format}
+
+`useDateFormat` is used for formatting dates. It is **lightweight, flexible, and offers a uniform user experience**. It supports custom formatting strings and is suitable for scenarios that require date formatting.
+
+For more details, see [useDateFormat](/reference/use-date-format).
+
+```tsx
+// Not recommended, introduces additional dependencies leading to fragmented experience
+import dayjs from 'dayjs' // Uses conventional formatting tokens
+dayjs('2024/09/01').format('YYYY-MM-DD HH:mm:ss') 
+
+// Not recommended, introduces additional dependencies leading to fragmented experience
+import moment from 'moment' // Uses conventional formatting tokens
+moment('2024/09/01').format('YYYY-MM-DD HH:mm:ss')
+
+// Not recommended, introduces additional dependencies leading to fragmented experience
+import dateFns from 'date-fns' // date-fns v2 starts using Unicode standard formatting tokens
+dateFns.format(new Date(), 'yyyy-MM-dd HH:mm:ss')
+```
+
+```tsx
+// Recommended
+// By default uses conventional formatting tokens
+const time = useDateFormat('2024/09/01', 'YYYY-MM-DD HH:mm:ss')
+const time = useDateFormat(1724315857591, 'YYYY-MM-DD HH:mm:ss')
+// Also supports Unicode standard formatting tokens
+const time = useDateFormat(new Date(), 'yyyy-MM-dd HH:mm:ss', { unicodeSymbols: true })
+```
+
+### Timer \{#timer}
+
+In day-to-day development, we often use `setTimeout` and `setInterval` to handle timing tasks. Direct **use can be relatively cumbersome** and requires developers to **manually clear timers**, which can easily lead to issues like **forgetting to clear or not clearing in time**.
+
+```tsx
+// Not recommended
+useEffect(() => {
+  const timer = setTimeout(() => {
+    doSomething()
+  }, 1000)
+
+  return () => clearTimeout(timer)
+}, [])
+```
+
+`@shined/react-use` provides the `useTimeoutFn` and `useIntervalFn` hooks to handle timing tasks, automatically clearing timers to avoid issues related to **forgetting or not clearing timers in time**.
+
+For more details, see [useTimeoutFn](/reference/use-timeout-fn) and [useIntervalFn](/reference/use-interval-fn).
+
+```tsx
+// Recommended
+useTimeoutFn(doSomething, 1000, { immediate: true })
+useIntervalFn(doSomething, 1000, { immediate: true })
+```
+
+## Browser API \{#browser-api}
+
+We often need to call browser APIs to implement certain functionalities, including but not limited to:
+
+- Using the [Fullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API) for fullscreen operations
+- Using the [ResizeObserver API](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver) to monitor element size changes
+- Using the [Network Information API](https://developer.mozilla.org/en-US/docs/Web/API/Network_Information_API) to obtain network status
+- Using the [EyeDropper API](https://developer.mozilla.org/en-US/docs/Web/API/EyeDropper_API) to pick screen colors
+- Using the [Geolocation API](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API) to obtain user geographic location
+- Using the [Battery Status API](https://developer.mozilla.org/en-US/docs/Web/API/Battery_Status_API) to get device battery status
+
+Direct operation of APIs can **make the code complex and hard to maintain**. Due to the compatibility issues of APIs, developers not only **have more cognitive load in identifying compatibility situations** but may also need to **increase the complexity of code to achieve compatibility** (e.g., using legacy APIs for as much compatibility as possible). Additionally, numerous details must be considered to adapt to React component-based development.
+
+> For example, the [Fullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API) is implemented differently in various browsers and versions, the [Battery Status API](https://developer.mozilla.org/en-US/docs/Web/API/Battery_Status_API) is only supported in some browsers, and the [EyeDropper API](https://developer.mozilla.org/en-US/docs/Web/API/EyeDropper_API) is currently only available in the latest versions of Chrome and Edge.
+
+Fortunately, `@shined/react-use` has packaged many common browser APIs to provide a better user experience. Many browser API-related Hooks internally use [useSupported](/reference/use-supported) to uniformly return the API's support status, making it more convenient for developers to use browser APIs.
+
+To learn more about available browser API Hooks, please visit the Browser category on the [Hooks List page](/reference).
+
+## SSR Related
+
+`@shined/react-use` aims to provide better server-side rendering support. All Hooks are server-side rendering compatible and do not produce side effects.
+
+### useIsomorphicLayoutEffect \{#use-isomorphic-layout-effect}
+
+`useIsomorphicLayoutEffect` is used to switch between `useLayoutEffect` during server-side rendering and `useEffect` during client-side rendering. It is suitable for scenarios that require executing synchronous side effects during server-side rendering.
+
+For more details, see [useIsomorphicLayoutEffect](/reference/use-isomorphic-layout-effect).
+
+```tsx
+// Not recommended, will throw a warning during SSR
+useLayoutEffect(() => {
+  doSomething()
+}, [state])
+```
+
+```tsx
+// Recommended, automatically decides to use `useLayoutEffect` or `useEffect` at runtime
+useIsomorphicLayoutEffect(() => {
+  doSomething()
+}, [state])
+```
+
+## useCallback and useMemo \{#use-callback-and-use-memo}
+
+`useCallback` and `useMemo` are Hooks in React used for performance optimization, commonly used to cache functions and values to avoid unnecessary recalculations.
+
+However, in practice, besides performance optimization, we may also need to ensure the stability of references to avoid unnecessary side effects and other issues. According to the official documentation, `useCallback` and `useMemo` are intended for performance optimization and do not guarantee stability of references, which may lead to unstable behavior in some scenarios.
+
+If you need to optimize performance while ensuring the stability of functions and results, you might want to try `useStableFn` and `useCreation`.
+
+### useStableFn \{#use-stable-fn}
+
+`useStableFn` is used to ensure the stability of function references. It is suitable for scenarios that require stable function references, such as callbacks passed to child components.
+
+For more details, see [useStableFn](/reference/use-stable-fn).
+
+```tsx
+// Not recommended
+const handleClick = () => {
+  console.log('click')
+}
+
+return <HeavyComponent onClick={handleClick} />
+```
+
+```tsx
+// Recommended
+const handleClick = useStableFn(() => {
+  console.log('click')
+})
+
+return <HeavyComponent onClick={handleClick} />
+```
+
+### useCreation \{#use-creation}
+
+`useCreation` is used for initialization operations. It is suitable for scenarios that require initialization operations to be performed only once, such as initializing complex objects, lengthy operations, etc. Besides performance optimization, `useCreation` also ensures that the result remains stable across different rendering cycles.
+
+For more details, see [useCreation](/reference/use-creation).
+
+```tsx
+// Not recommended
+const heavyResult = useMemo(() => doHeavyWorkToInit(), [])
+const dynamicResult = useMemo(() => doHeavyWorkToCreate(), [dependency])
+```
+
+```tsx
+// Recommended
+const heavyResult = useCreation(() => doHeavyWorkToInit())
+const dynamicResult = useCreation(() => doHeavyWorkToCreate(), [dependency])
+```
+
+## Advanced Guide \{#advanced-guide}
+
+If you need to encapsulate a custom Hook, or require more advanced features, please refer to the following advanced guide.
+
+### useStableFu \{#use-stable-fn}
+
+`useStableFn` is used to ensure the stability of function references, suitable for scenarios where it is necessary to keep function references stable, such as callbacks passed to child components. Functions exposed by Hooks should ideally be wrapped with `useStableFn`.
+
+For more details, refer to [useStableFn](/reference/use-stable-fn).
+
+```tsx
+const fn = useStableFn(() => {
+  console.log('click')
+})
+```
+
+### useLatest \{#use-latest}
+
+`useLatest` is used to access the most recent value, suitable for scenarios where obtaining the latest state is needed, such as in asynchronous operations. It is commonly used in conjunction with `useStableFn` to achieve caching of stable callback functions while obtaining the latest state.
+
+For more details, refer to [useLatest](/reference/use-latest).
+
+```tsx
+const latest = useLatest(value)
+```
+
+### useTargetElement \{#use-target-element}
+
+`useTargetElement` is used to obtain the target element, suitable for scenarios where accessing a target element is needed, such as in custom Hooks to ensure a consistent user experience.
+
+For more details, refer to [useTargetElement](/reference/use-target-element) and [ElementTarget](/docs/features/element-target).
+
+```tsx
+const ref = useRef<HTMLDivElement>(null) // <div ref={ref} />
+const targetRef = useTargetElement(ref)
+
+const targetRef = useTargetElement('#my-div')
+const targetRef = useTargetElement('#my-div .container')
+
+const targetRef = useTargetElement(() => window)
+const targetRef = useTargetElement(() => document.getElementById('my-div'))
+
+// Not recommended, may cause SSR issues
+const targetRef = useTargetElement(window)
+// Not recommended, may cause SSR issues
+const targetRef = useTargetElement(document.getElementById('my-div'))
+```
+
+### useCreation \{#use-creation}
+
+`useCreation` is used for initialization operations, suitable for scenarios where it's necessary to ensure that initialization operations are performed only once, such as initializing complex objects or time-consuming operations. In addition to performance optimization, `useCreation` also ensures that results remain stable across different render cycles.
+
+For more details, refer to [useCreation](/reference/use-creation).
+
+```tsx
+const initResult = useCreation(() => doHeavyWorkToInit())
+```
+
+### useSupported \{#use-supported}
+
+`useSupported` is used to check the support status of browser APIs, suitable for scenarios where it's necessary to determine browser API support.
+
+For more details, refer to [useSupported](/reference/use-supported).
+
+```tsx
+const supported = useSupported('BatteryStatus')
+```
+
+### usePausable \{#use-pausable}
+
+`usePausable` is used to create a [Pausable](/docs/features/pausable) instance, giving Hooks the capability to be paused and resumed, suitable for scenarios where pausing and resuming is needed.
+
+For more details, refer to [usePausable](/reference/use-pausable).
+
+```tsx
+const pausable = usePausable(false, pauseCallback, resumeCallback)
+```
+
+### useGetterRef \{#use-getter-ref}
+
+`useGetterRef` exposes a function to access the latest value of `ref.current`, suitable for scenarios where it's necessary to store state without triggering re-renders, while still needing to access the most recent value.
+
+For more details, refer to [useGetterRef](/reference/use-getter-ref).
+
+```tsx
+const [isActive, isActiveRef] = useGetterRef(false)
+```
