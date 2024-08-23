@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "target": "esnext",
+    "resolveJsonModule": true
+  },
+  "include": ["./scripts/**/*", "./locale.ts", "./rspress.config.ts"]
+}

@@ -1,19 +1,20 @@
 {
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "composite": true,
     "lib": ["DOM", "ESNext"],
-    "jsx": "react-jsx",
-    "esModuleInterop": true,
+    "target": "ES2020",
     "resolveJsonModule": true,
     "paths": {
-      "@@/*": ["./*"],
       "@shined/react-use": ["./node_modules/@shined/react-use"],
       "@/components": ["./src/components"],
       "@/*": ["./src/*"],
+      "@@/*": ["./*"],
       "i18n": ["./i18n.json"]
     }
   },
-  "include": ["./src/**/*", "./docs/**/*", "../src/**/demo.tsx"],
+  "include": ["./src/**/*", "./docs/**/*", "../src/**/demo.tsx", "../src/**/*.mdx"],
+  "references": [{ "path": "./tsconfig.node.json" }],
   "mdx": {
     "checkMdx": true
   }

@@ -1,18 +1,11 @@
 {
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "module": "esnext",
-    "target": "esnext",
-    "moduleResolution": "bundler",
-    "esModuleInterop": true,
-    "allowJs": false,
-    "noEmit": true,
-    "strict": true,
-    "paths": {
-      "@/test": ["./testing"]
-    }
-  },
-  "include": ["./src/**/*", "./testing/**/*"],
-  "exclude": ["./src/**/demo.tsx"],
-  "references": [{ "path": "./docs/tsconfig.json" }]
+  // to get rid of `Referenced project may not disable emit.`
+  // @see https://github.com/microsoft/TypeScript/issues/49844#issuecomment-1365585171
+  "files": [],
+  "include": [],
+  "references": [
+    { "path": "./tsconfig.src.json" },
+    { "path": "./tsconfig.test.json" },
+    { "path": "./docs/tsconfig.json" }
+  ]
 }
