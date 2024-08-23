@@ -508,7 +508,7 @@ const initResult = useCreation(() => doHeavyWorkToInit())
 For more details, refer to [useSupported](/reference/use-supported).
 
 ```tsx
-const supported = useSupported('BatteryStatus')
+const isSupported = useSupported(() => 'geolocation' in navigator)
 ```
 
 ### usePausable \{#use-pausable}
