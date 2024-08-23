@@ -13,7 +13,7 @@
       "i18n": ["./i18n.json"]
     }
   },
-  "include": ["./src/**/*", "./docs/**/*", "../src/**/demo.tsx", "../src/**/*.mdx"],
+  "include": ["./global.d.ts", "./src/**/*", "./docs/**/*", "../src/**/demo.tsx", "../src/**/*.mdx"],
   "references": [{ "path": "./tsconfig.node.json" }],
   "mdx": {
     "checkMdx": true

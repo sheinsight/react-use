@@ -64,7 +64,7 @@ export default defineConfig({
   builderPlugins,
   builderConfig: {
     html: {
-      tags: [{ tag: 'script', children: "window.RSPRESS_THEME = 'light';" }],
+      tags: process.env.IS_SODOC ? [{ tag: 'script', children: "window.RSPRESS_THEME = 'light';" }] : [],
     },
     output: {
       cleanDistPath: true,
