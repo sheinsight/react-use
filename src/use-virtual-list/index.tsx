@@ -2,7 +2,9 @@ import { useRef } from 'react'
 import { useCreation } from '../use-creation'
 import { useElementSize } from '../use-element-size'
 import { useEventListener } from '../use-event-listener'
+import { useLatest } from '../use-latest'
 import { useSafeState } from '../use-safe-state'
+import { useStableFn } from '../use-stable-fn'
 import { useTargetElement } from '../use-target-element'
 import { useUpdateEffect } from '../use-update-effect'
 import { isNumber } from '../utils/basic'
@@ -54,15 +56,15 @@ export interface UseVirtualListReturnsActions {
    *
    * @param {Number} index The index of the item to scroll to.
    */
-  scrollTo: (index: number, options?: ScrollOptions) => void
+  scrollTo: (index: number) => void
   /**
    * Scroll to the start of the list, automatically use vertical or horizontal scrolling based on the options.
    */
-  scrollToStart: (options?: ScrollOptions) => void
+  scrollToStart: () => void
   /**
    * Scroll to the end of the list, automatically use vertical or horizontal scrolling based on the options.
    */
-  scrollToEnd: (options?: ScrollOptions) => void
+  scrollToEnd: () => void
 }
 
 export interface UseVirtualListReturnsListItem<D> {
@@ -138,7 +140,7 @@ export function useVirtualList<D = any>(list: D[], options: UseVirtualListOption
 
   const totalSize = useCreation(() => getOffsetSize(list.length), [list])
 
-  function calculateRange() {
+  function calculateVirtualOffset() {
     const containerEl = containerRef.current
     const wrapperEl = wrapperRef.current
 
@@ -160,7 +162,7 @@ export function useVirtualList<D = any>(list: D[], options: UseVirtualListOption
     }))
 
     setWrapperStyle({
-      [isVerticalLayout ? 'width' : 'height']: '100%',
+      // [isVerticalLayout ? 'width' : 'height']: '100%',
       [isVerticalLayout ? 'height' : 'width']: `${totalSize - offsetSize}px`,
       [isVerticalLayout ? 'marginTop' : 'marginLeft']: `${offsetSize}px`,
     })
@@ -168,17 +170,24 @@ export function useVirtualList<D = any>(list: D[], options: UseVirtualListOption
     setRenderList(renderList)
   }
 
+  const latest = useLatest({
+    list,
+    itemSize,
+    getOffsetSize,
+    calculateVirtualOffset,
+  })
+
   useEventListener(containerRef, 'scroll', () => {
     if (isTriggeredInternallyRef.current) {
       isTriggeredInternallyRef.current = false
       return
     }
 
-    calculateRange()
+    calculateVirtualOffset()
   })
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: The effect should only run when the container size changes.
-  useUpdateEffect(() => void calculateRange(), [containerSize.height, containerSize.width, list])
+  useUpdateEffect(() => void calculateVirtualOffset(), [containerSize.height, containerSize.width, list])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: The effect should only run when wrapper styles change.
   useUpdateEffect(() => {
@@ -188,27 +197,28 @@ export function useVirtualList<D = any>(list: D[], options: UseVirtualListOption
     }
   }, [wrapperStyle])
 
-  const actions = useCreation(() => ({
-    scrollTo(index: number, scrollOptions?: ScrollOptions) {
-      const containerEl = containerRef.current
-      if (!containerEl) return
+  const scrollTo = useStableFn((index: number) => {
+    const containerEl = containerRef.current
+    if (!containerEl) return
 
-      isTriggeredInternallyRef.current = true
-      const offsetSize = isNumber(itemSize) ? index * itemSize : getOffsetSize(index)
-      containerEl[isVerticalLayout ? 'scrollTop' : 'scrollLeft'] = offsetSize
+    isTriggeredInternallyRef.current = true
 
-      // Manually trigger the `calculateRange` instantly, use ref to mark the manual trigger,
-      // because subscription of `useEventListener` will not be triggered in the same frame.
-      // This is useful to prevent layout jittering when scrolling.
-      calculateRange()
-    },
-    scrollToStart(scrollOptions?: ScrollToOptions) {
-      this.scrollTo(0, scrollOptions)
-    },
-    scrollToEnd(scrollOptions?: ScrollToOptions) {
-      this.scrollTo(list.length - 1, scrollOptions)
-    },
-  }))
+    const offsetSize = isNumber(latest.current.itemSize)
+      ? index * latest.current.itemSize
+      : latest.current.getOffsetSize(index)
+
+    containerEl[isVerticalLayout ? 'scrollTop' : 'scrollLeft'] = offsetSize
+
+    // Manually trigger the `calculateVirtualOffset` instantly, use ref to mark the manual trigger,
+    // because subscription of `useEventListener` will not be triggered in the same frame.
+    // This is useful to prevent layout jittering when scrolling.
+    latest.current.calculateVirtualOffset()
+  })
+
+  const scrollToStart = useStableFn(() => scrollTo(0))
+  const scrollToEnd = useStableFn(() => scrollTo(latest.current.list.length - 1))
+
+  const actions = useCreation(() => ({ scrollTo, scrollToStart, scrollToEnd }))
 
   return [renderList, actions] as const
 }

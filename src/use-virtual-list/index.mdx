@@ -4,30 +4,158 @@ category: ProUtilities
 
 # useVirtualList
 
-import { HooksType } from '@/components'
+import { HooksType, Since } from '@/components'
 
 <HooksType {...frontmatter} />
 
-A React Hook that helps to render large lists more efficiently by only rendering the items that are visible to the user.
+<Since version="v1.6.0" />
 
-## Demo
+A React Hook that helps to render large lists (known as **Virtual List**) more efficiently by rendering only the items that are visible to the user, supporting dynamic heights, horizontal and vertical scrolling, and more.
+
+## Scenes \{#scenes}
+
+- Long list performance optimization: By only rendering the elements within the visible area, the scrolling performance of long lists is optimized.
+- Dynamic content size handling: Supports dynamically calculating and rendering the items within the visible area based on the content size.
+
+## Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## Usage \{#usage}
 
-See API for more details.
+```tsx
+const containerRef = useRef(null)
+const wrapperRef = useRef(null)
 
-## Source
+const [list, actions] = useVirtualList(largeList, {
+  // or use `querySelector` string directly: `#scroll-container`
+  containerTarget: containerRef,
+  // or use `querySelector` string directly: `#scroll-wrapper`
+  wrapperTarget: wrapperRef,
+  // ensure that the height of each item is 48 (including margin, padding, etc.)
+  // or a function that returns the height of each item
+  itemHeight: 48,
+})
+
+// actions.scrollTo(1000)
+// actions.scrollToStart()
+// actions.scrollToEnd()
+
+// use `list[0].data` and `list[0].index` to render the item
+
+return (
+  <div ref={containerRef} style={{ height: 300, overflow: 'auto' }}>
+    <div ref={wrapperRef}>
+      {list.map((item) => (
+        <div key={item.index} style={{ height: 48 }}>
+          {item.data}
+        </div>
+      ))}
+    </div>
+  </div>
+)
+```
+
+## Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
+const [list, actions] = useVirtualList(largeList, options)
+```
 
+### LargeList \{#large-list}
+
+An arbitrary valid array containing a large amount of data.
+
+### Options \{#options}
+
+```tsx
+interface UseVirtualListBaseOptions {
+  /**
+   * The container element, of type ElementTarget, typically the scrollable element.
+   */
+  containerTarget: NonNullable<ElementTarget<HTMLElement>>
+  /**
+   * The wrapper element, of type ElementTarget, typically the element containing all items.
+   *
+   * MarginTop and height (marginLeft and width for horizontal scrolling) will be set to the total height (width) of all items.
+   */
+  wrapperTarget: NonNullable<ElementTarget<HTMLElement>>
+  /**
+   * The number of items to additionally render outside the viewport (above and below for vertical scrolling, left and right for horizontal).
+   * 
+   * @defaultValue 5
+   */
+  overscan?: number
+}
+
+interface UseVerticalVirtualListOptions<D> extends UseVirtualListBaseOptions {
+  /**
+   * The height of each item, or a function returning the height of each item, accepting parameters index and item.
+   *
+   * When `itemHeight` is set, the list is in vertical rendering mode, with higher priority than `itemWidth`.
+   */
+  itemHeight: number | ((index: number, item: D) => number)
+}
+
+interface UseHorizontalVirtualListOptions<D> extends UseVirtualListBaseOptions {
+  /**
+   * The width of each item, or a function returning the width of each item, accepting parameters index and item.
+   *
+   * When `itemWidth` is set and `itemHeight` is not, the list is in horizontal rendering mode.
+   */
+  itemWidth: number | ((index: number, item: D) => number)
+}
+
+export type UseVirtualListOptions<D> = UseVerticalVirtualListOptions<D> | UseHorizontalVirtualListOptions<D>
+```
+
+### Returns \{#returns}
+
+```tsx
+export interface UseVirtualListReturnsActions {
+  /**
+   * Scrolls to the item at the specified index.
+   *
+   * @param {Number} index The index of the item to scroll to.
+   */
+  scrollTo: (index: number) => void
+  /**
+   * Scrolls to the start of the list, automatically using vertical or horizontal scrolling based on the options.
+   */
+  scrollToStart: () => void
+  /**
+   * Scrolls to the end of the list, automatically using vertical or horizontal scrolling based on the options.
+   */
+  scrollToEnd: () => void
+}
+
+export interface UseVirtualListReturnsListItem<D> {
+  /**
+   * The original data item of the project.
+   */
+  data: D
+  /**
+   * The original array index of the project.
+   */
+  index: number
+}
+
+export type UseVirtualListReturns<D> = readonly [
+  /**
+   * The array of items of the virtual list, i.e., the actual items that are being rendered, including the visible area and the additional rendering area.
+   */
+  list: UseVirtualListReturnsListItem<D>[],
+  /**
+   * A collection of methods for operating the virtual list.
+   */
+  UseVirtualListReturnsActions,
+]
 ```

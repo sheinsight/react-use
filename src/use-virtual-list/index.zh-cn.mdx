@@ -4,23 +4,61 @@ category: ProUtilities
 
 # useVirtualList
 
-import { HooksType } from '@/components'
+import { HooksType, Since } from '@/components'
 
 <HooksType {...frontmatter} />
 
-A React Hook that helps to render large lists more efficiently by only rendering the items that are visible to the user.
+<Since version="v1.6.0" />
 
-## Demo
+一个通过只渲染用户可见项目来帮助更高效地渲染大型列表的 React Hook，即**虚拟列表**，支持动态高度，横向、纵向滚动等场景。
+
+## 场景
+
+- 长列表性能优化： 通过只渲染可视区域内的元素，优化长列表的滚动性能
+- 动态内容尺寸处理： 支持基于内容尺寸动态计算并渲染可视区内的项目
+
+## Demo 演示
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## Usage 用法
 
-See API for more details.
+```tsx
+const containerRef = useRef(null)
+const wrapperRef = useRef(null)
 
-## Source
+const [list, actions] = useVirtualList(largeList, {
+  // 或者直接使用 `querySelector` 的字符串: `#scroll-container`
+  containerTarget: containerRef,
+  // 或者直接使用 `querySelector` 的字符串: `#scroll-wrapper`
+  wrapperTarget: wrapperRef,
+  // 确保每个项目的高度为 48（包括 margin、padding 等），或者一个返回每个项目高度的函数
+  itemHeight: 48,
+})
+
+// actions.scrollTo(1000)
+// actions.scrollToStart()
+// actions.scrollToEnd()
+
+// 使用 `list[0].data` 和 `list[0].index` 来渲染项目
+
+return (
+  <div ref={containerRef} style={{ height: 300, overflow: 'auto' }}>
+    <div ref={wrapperRef}>
+      {list.map((item) => (
+        <div key={item.index} style={{ height: 48 }}>
+          {item.data}
+        </div>
+      ))}
+    </div>
+  </div>
+)
+```
+
+
+## Source 源码
 
 import { Source } from '@/components'
 
@@ -29,5 +67,95 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
+const [list, actions] = useVirtualList(largeList, options)
+```
 
+### LargeList
+
+一个包含大量数据的任意合法数组。
+
+### Options
+
+```tsx
+interface UseVirtualListBaseOptions {
+  /**
+   * 容器元素，ElementTarget 类型，通常是可滚动的元素。
+   */
+  containerTarget: NonNullable<ElementTarget<HTMLElement>>
+  /**
+   * Wrapper 元素，ElementTarget 类型，通常是包含所有项目的元素。
+   *
+   * marginTop 和 height（横向滚动时为 marginLeft 和 width）将被设置为所有项目的总高度（宽度）。
+   */
+  wrapperTarget: NonNullable<ElementTarget<HTMLElement>>
+  /**
+   * 在视野外（竖直滚动时为上下，横向为左右）分别额外渲染的项目数量。默认为 5。
+   * 
+   * @defaultValue 5
+   */
+  overscan?: number
+}
+
+interface UseVerticalVirtualListOptions<D> extends UseVirtualListBaseOptions {
+  /**
+   * 每个项目的高度，或者返回每个项目高度的函数，接受参数为 index 和 item。
+   *
+   * 当设置了 `itemHeight` 时，列表为纵向渲染模式，优先级高于 `itemWidth`。
+   */
+  itemHeight: number | ((index: number, item: D) => number)
+}
+
+interface UseHorizontalVirtualListOptions<D> extends UseVirtualListBaseOptions {
+  /**
+   * 每个项目的宽度，或者返回每个项目宽度的函数，接受参数为 index 和 item。
+   *
+   * 当设置了 `itemWidth` 且未设置 `itemHeight` 时，列表为横向渲染模式。
+   */
+  itemWidth: number | ((index: number, item: D) => number)
+}
+
+export type UseVirtualListOptions<D> = UseVerticalVirtualListOptions<D> | UseHorizontalVirtualListOptions<D>
+```
+
+### Returns
+
+```tsx
+export interface UseVirtualListReturnsActions {
+  /**
+   * 滚动到指定索引的项目。
+   *
+   * @param {Number} index 想要滚动到的项目索引。
+   */
+  scrollTo: (index: number) => void
+  /**
+   * 滚动到列表的开始，根据选项自动使用纵向或横向滚动。
+   */
+  scrollToStart: () => void
+  /**
+   * 滚动到列表的结束，根据选项自动使用纵向或横向滚动。
+   */
+  scrollToEnd: () => void
+}
+
+export interface UseVirtualListReturnsListItem<D> {
+  /**
+   * 项目的原始数据项。
+   */
+  data: D
+  /**
+   * 项目的原始数组索引。
+   */
+  index: number
+}
+
+export type UseVirtualListReturns<D> = readonly [
+  /**
+   * 虚拟列表的项目数组，即实际被渲染的项目列表，包含可视区域和额外渲染区域。
+   */
+  list: UseVirtualListReturnsListItem<D>[],
+  /**
+   * 操作虚拟列表的方法集合。
+   */
+  UseVirtualListReturnsActions,
+]
 ```
