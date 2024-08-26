@@ -17,6 +17,8 @@ interface UsePreviousOptions {
    * Whether to compare deeply, defaults to `false`.
    *
    * @defaultValue false
+   *
+   * @since 1.5.0
    */
   deep?: boolean
 }
