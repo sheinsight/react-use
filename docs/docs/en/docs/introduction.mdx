@@ -37,3 +37,42 @@ Visit the [Get Started](/docs/get-started) section to explore how it can be inte
 - **Stable functions**: Every exported function benefits from [stabilization](/docs/optimization/stabilization) by default.
 - **Latest State**: Avoids the expired closure issues by using [latest](/docs/optimization/latest-state) state internally.
 - **Reduced Unnecessary Rerenders**: Use [Pausable](/docs/features/pausable) instance to control the behavior of some Hooks optionally.
+
+## 📦 Installation \{#installation}
+
+Install using your favorite package manager:
+
+import { PackageManagerTabs } from 'rspress/theme'
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm install @shined/react-use',
+    yarn: 'yarn add @shined/react-use',
+    pnpm: 'pnpm add @shined/react-use',
+    bun: 'bun add @shined/react-use',
+  }}
+/>
+
+## 🎨 Usage Examples \{#usage}
+
+Below is an example of how to use the [useAsyncFn](/reference/use-async-fn) Hook:
+
+```tsx
+function App() {
+  const { loading, error, run } = useAsyncFn(fetchData)
+  return (
+    <>
+      <div>{data}</div>
+      <button onClick={run} disabled={loading}>Fetch</button>
+    </>
+  )
+}
+```
+
+import { App } from '@/../../src/use-async-fn/demo'
+
+<App />
+
+Next, it is recommended to read [Getting Started](/docs/get-started) to understand how to use this library.
+
+Then you can proceed to the [Usage Guide](/docs/guide) to learn how to improve existing code, or visit the [Hooks List](/reference) to see all available Hooks.

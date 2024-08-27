@@ -1,40 +1,35 @@
 # 🏃 起步 \{#get-started}
 
-## 📦 安装 \{#installation}
+## 💬 前言 \{#preface}
 
-使用你喜欢的包管理器进行安装：
+为了应对各种复杂多样的业务场景，本库提供了大量**高质量、高效率**的 React Hooks 来帮助你更快地构建应用，涵盖了从基础的 `副作用处理`、`数据请求`、`状态管理`、`UI 状态`、`实用工具` 到偏业务的 `浏览器 API`、`常见场景`、`高频业务逻辑` 等各个方面。
 
-import { PackageManagerTabs } from 'rspress/theme'
+**请你不必慌张，并非所有的 Hooks 都需要掌握。**
 
-<PackageManagerTabs
-  command={{
-    npm: 'npm install @shined/react-use',
-    yarn: 'yarn add @shined/react-use',
-    pnpm: 'pnpm add @shined/react-use',
-    bun: 'bun add @shined/react-use',
-  }}
-/>
+接下来，本文将引导你快速了解本库的主要内容，让你对整体有一个大致的了解。这样你在实际开发场景中就能快速回忆起这里也许有相应 Hooks 可以解决问题，然后再来翻阅具体的使用文档即可。
 
-## 🎨 使用 \{#usage}
+## 🔖 按类型分类
 
-下面是一个如何使用 [useAsyncFn](/reference/use-async-fn) Hook 的例子。访问 [Hooks 列表](/reference) 部分以查看所有可用的 Hooks。
+本库按照**类型**组织了各种 Hooks，分为以下九个部分，首页的导航也是按照这个分类来的：
 
+- **Lifecycle**：与 React 的生命周期相关，比如 `useMount`、`useUnmount`、`useUpdateEffect` 等。
+- **State**：与状态管理相关，比如 `useSafeState`、`useRafState`、`useSetState` 等衍生状态。
+- **Element**：与 DOM 元素相关，比如 `useElementSize`、`useFocus`、`useScroll`、`useDropZone` 等。
+- **Browser**：与浏览器 API 相关，比如 `useClipboard`、`useFullscreen`、`useBattery`、`useBluetooth`、`useEyeDropper`、`useResizeObserver` 等。
+- **Sensors**：与传感器相关，比如 `useKeyPress`、`useGeolocation`、`useFps`、`useMouse`、`useUserIdle` 等。
+- **Animation**：不做动画，但与定时器、动画相关，比如 `useIntervalFn`、`useTimeoutFn`、`useRafFn` 等。
+- **Network**：与网络相关，目前比较少，只有 `useOnline` 和 `useNetwork`。
+- **Utilities**：一些实用工具，比如 `useAsyncFn`、`useCountdown`、`useDateFormat`、`useDebouncedFn`、`useRetryFn`、`useTimeAgo`、`useEventBus` 等。
+- **ProUtilities**：强业务场景，比如 `useQuery`、`useDynamicList`、`usePagination`、`useVirtualList` 等。
 
-```tsx
-function App() {
-  const { loading, error, run } = useAsyncFn(fetchData)
+## 🍱 按功能分类
 
-  return (
-    <div>
-      <div>{data}</div>
-      <button onClick={run} disabled={loading}>
-        {loading ? 'Loading...' : 'Fetch'}
-      </button>
-    </div>
-  )
-}
-```
+本库按照**功能和应用场景**组织了各种 Hooks，大致分为以下几个部分：
 
-import { App } from '@/../../src/use-async-fn/demo'
-
-<App />
+- **基础 Hooks**：包括处理**副作用**、**状态管理**等基本需求的 Hooks，是每个 React 开发者都应该熟练掌握的工具，如 `useMount`、`useUnmount`、`useUpdateEffect`、`useSafeState` 等。
+- **数据处理与请求**：提供了从简单的数据请求，到复杂的数据处理逻辑的 Hooks，支持轮询刷新、自动请求、缓存等高级特性，让**异步操作**和**数据管理**变得更简单，如 `useAsyncFn`、`useQuery` 等。
+- **UI 状态管理**：针对 UI 状态（如**加载中**、**错误处理**）提供了丰富的 Hooks 帮助管理组件状态，提升用户体验，如 `useAsyncFn`、`useHover`、`useFocus`、`useRetryFn` 等。
+- **浏览器 API**：提供对浏览器 API 的封装，让你更方便地使用浏览器提供的功能，同时支持检测浏览器支持情况，并尽可能降级处理，如 `useClipboard`、`useFullscreen`、`useBattery`、`useBluetooth`、`useEyeDropper`、`useResizeObserver` 等。
+- **实用工具**：提供了一系列**实用工具** Hooks，帮助你更方便地处理数据、事件等，如 `useEventListener`、`useNow`、`useDateFormat`、`useTimeAgo`、`useCountdown`、`useAsyncLock`、`useEventBus` 等。
+- **业务逻辑相关**：涵盖一系列特定业务场景（如**动态列表**、**虚拟列表**、**分页状态**）的 Hooks 帮助快速实现复杂业务逻辑，如 `useVirtualList`、`useDynamicList`、`usePagination` 等。
+- **常见场景解决方案**：提供解决高频问题的 Hooks 集合，无论**性能优化**、**频率限制**还是其他常见问题，都有解决方案，如 `useSafeState`, `useRafState`， `useDebouncedFn`、`useThrottledFn` 等。

@@ -19,7 +19,7 @@ import { ReactUseIcon } from '@/components'
 
 它主要受到 [VueUse](https://vueuse.org/) 的启发，同时也吸取了 [react-use](https://github.com/streamich/react-use)、[ahooks](https://ahooks.js.org/) 以及社区内许多其他优秀库的影响。特别感谢开源社区，尤其是上述库的作者们，感谢他们的杰出工作和灵感。
 
-## 🚀 特性 \{#features}
+## 🚀 功能特性 \{#features}
 
 - **足够灵活**：特性包括 [依赖收集 Dependencies Collection](/docs/features/dependencies-collection)、[元素目标 ElementTarget](/docs/features/element-target)、[Ref 获取函数 Ref Getter](/docs/features/ref-getter)、[可暂停 Pausable](/docs/features/pausable) 等。
 - **支持 Tree Shaking**：采用 [ESM](https://nodejs.org/api/esm.html) 设计和交付，只导入你需要的内容。
@@ -29,12 +29,50 @@ import { ReactUseIcon } from '@/components'
 - **一流的 TypeScript 支持**：用 [TypeScript](https://www.typescriptlang.org/) 编写，拥有命名良好的类型定义和 [JSDoc](https://jsdoc.app/) 注释。
 - **~~全面测试~~**：（正在进行中……）
 
-访问 [快速开始](/docs/get-started) 部分，探索如何将其集成到你的项目中。
-
-## ⚡️ 优化 \{#optimizations}
+## ⚡️ 内部优化 \{#optimizations}
 
 - **性能优化**：通过 [依赖收集 Dependencies Collection](/docs/features/dependencies-collection) 特性，减少不必要的重渲染。
 - **安全状态**：为所有有状态的 Hooks 实现了 [安全状态](/docs/optimization/safe-state) 策略，减少了 bug 和不希望的行为。
 - **函数稳定**：默认情况下，Hooks 里的每个导出函数都受益于 [稳定化](/docs/optimization/stabilization)。
 - **最新状态**：通过内部使用 [最新](/docs/optimization/latest-state) 状态，避免了过期闭包问题。
-- **减少不必要的重渲染**：使用 [可暂停 Pausable](/docs/features/pausable) 实例可选地控制某些 Hooks 的行为。
+- **可暂停状态**：使用 [可暂停 Pausable](/docs/features/pausable) 实例可选地控制某些 Hooks 的行为。
+
+## 📦 安装 \{#installation}
+
+使用你喜欢的包管理器进行安装：
+
+import { PackageManagerTabs } from 'rspress/theme'
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm install @shined/react-use',
+    yarn: 'yarn add @shined/react-use',
+    pnpm: 'pnpm add @shined/react-use',
+    bun: 'bun add @shined/react-use',
+  }}
+/>
+
+## 🎨 使用示例 \{#usage}
+
+下面是一个如何使用 [useAsyncFn](/reference/use-async-fn) Hook 的例子：
+
+
+```tsx
+function App() {
+  const { loading, error, run } = useAsyncFn(fetchData)
+  return (
+    <>
+      <div>{data}</div>
+      <button onClick={run} disabled={loading}>Fetch</button>
+    </>
+  )
+}
+```
+
+import { App } from '@/../../src/use-async-fn/demo'
+
+<App />
+
+接下来，建议阅读 [起步](/docs/get-started) 了解如何使用本库。
+
+然后你可以前往 [使用指引](/docs/guide) 了解如何改进现有代码，或访问 [Hooks 列表](/reference) 查看所有可用的 Hooks。
