@@ -262,6 +262,7 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
   })
 
   const serviceWithRateControl = useThrottledFn(useDebouncedFn(service.run, debounceOptions), throttleOptions)
+  const refreshWithRateControl = useThrottledFn(useDebouncedFn(service.refresh, debounceOptions), throttleOptions)
 
   const intervalPausable = useIntervalFn(serviceWithStatusCheck, options.refreshInterval ?? 0, {
     immediate: Boolean(options.refreshInterval && !options.manual),
@@ -294,16 +295,16 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
     return service.mutate(nextData, nextParams)
   })
 
-  const refreshWithCache = useStableFn(async (params?: Parameters<T> | []) => {
+  const refreshWithCacheAndRateControl = useStableFn(async (params?: Parameters<T> | []) => {
     const outerParams = cacheActions.isCacheEnabled ? latest.current.cache.params : service.params
     const actualParams = params ?? (outerParams || [])
-    return service.refresh(actualParams)
+    return refreshWithRateControl(actualParams)
   })
 
   return {
     ...pausable,
     mutate: mutateWithCache,
-    refresh: refreshWithCache,
+    refresh: refreshWithCacheAndRateControl,
     run: serviceWithRateControl,
     cancel: service.cancel,
     get params() {
