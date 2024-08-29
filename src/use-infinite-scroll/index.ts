@@ -78,18 +78,16 @@ export function useInfiniteScroll<R = any, T extends HTMLElement = HTMLElement>(
   const el = useTargetElement<T>(target)
   const previousReturn = useRef<R | undefined>(undefined)
   const [state, setState] = useRafState({ isLoading: false, isLoadDone: false }, { deep: true })
-  const latest = useLatest({ state, direction, onScroll, onLoadMore, interval })
+  const latest = useLatest({ state, canLoadMore, direction, onScroll, onLoadMore, interval })
 
   const calculate = useStableFn(async () => {
-    if (!canLoadMore(previousReturn.current)) return
+    if (!latest.current.canLoadMore(previousReturn.current)) return
 
-    const { state, direction, onLoadMore, interval } = latest.current
-
-    if (!el.current || state.isLoading) return
+    if (!el.current || latest.current.state.isLoading) return
 
     const { scrollHeight, scrollTop, clientHeight, scrollWidth, clientWidth } = el.current
 
-    const isYScroll = direction === 'bottom' || direction === 'top'
+    const isYScroll = latest.current.direction === 'bottom' || latest.current.direction === 'top'
     const isScrollNarrower = isYScroll ? scrollHeight <= clientHeight : scrollWidth <= clientWidth
     const isAlmostBottom = scrollHeight - scrollTop <= clientHeight + distance
 
@@ -98,15 +96,15 @@ export function useInfiniteScroll<R = any, T extends HTMLElement = HTMLElement>(
     setState({ isLoadDone: false, isLoading: true })
 
     const [result, _] = await Promise.all([
-      onLoadMore(previousReturn.current),
-      new Promise((resolve) => setTimeout(resolve, interval)),
+      latest.current.onLoadMore(previousReturn.current),
+      new Promise((resolve) => setTimeout(resolve, latest.current.interval)),
     ])
 
     previousReturn.current = result
 
     setState({
       isLoading: false,
-      isLoadDone: !canLoadMore(previousReturn.current),
+      isLoadDone: !latest.current.canLoadMore(previousReturn.current),
     })
   })
 
