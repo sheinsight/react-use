@@ -1,3 +1,19 @@
+# [1.6.0](https://github.com/sheinsight/react-use/compare/v1.5.0...v1.6.0) (2024-08-29)
+
+
+### Bug Fixes
+
+* **useInfiniteScroll:** fix `isLoading` & `isLoadDone` state not update expectedly ([3ef21b9](https://github.com/sheinsight/react-use/commit/3ef21b9c5f7f8999ae2dd13e2b74d28e865f245a))
+* **useQuery:** fix `refresh` not controlled by `debounce` and `throttle` options ([701c7d0](https://github.com/sheinsight/react-use/commit/701c7d0f1d4383dedeb23d04e0cf5507131fbff8))
+
+
+### Features
+
+* add exports for `package.json` ([df08736](https://github.com/sheinsight/react-use/commit/df0873616db1dcc2165f633c7b2ed89abbeb5efb))
+* add new Hook `useVirtualList` to improve large list render performance, support both vertical and horizontal mode. ([429cc3c](https://github.com/sheinsight/react-use/commit/429cc3cbdb1e77867f3222eb47957fd1c5501e8c))
+
+
+
 # [1.5.0](https://github.com/sheinsight/react-use/compare/v1.4.0...v1.5.0) (2024-08-21)
 
 
