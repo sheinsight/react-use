@@ -55,7 +55,7 @@ export interface UseInfiniteScrollReturns {
   /**
    * calculate the current scroll position to determine whether to load more
    */
-  calculate(event: Event): void
+  calculate(): void
 }
 
 /**
@@ -80,16 +80,12 @@ export function useInfiniteScroll<R = any, T extends HTMLElement = HTMLElement>(
   const [state, setState] = useRafState({ isLoading: false, isLoadDone: false }, { deep: true })
   const latest = useLatest({ state, direction, onScroll, onLoadMore, interval })
 
-  const calculate = useStableFn(async (event: Event) => {
-    const { state, direction, onLoadMore, interval, onScroll } = latest.current
+  const calculate = useStableFn(async () => {
+    if (!canLoadMore(previousReturn.current)) return
 
-    onScroll?.(event)
+    const { state, direction, onLoadMore, interval } = latest.current
 
-    if (!canLoadMore(previousReturn.current)) {
-      return setState({ ...state, isLoadDone: true })
-    }
-
-    if (!el.current) return
+    if (!el.current || state.isLoading) return
 
     const { scrollHeight, scrollTop, clientHeight, scrollWidth, clientWidth } = el.current
 
@@ -97,25 +93,34 @@ export function useInfiniteScroll<R = any, T extends HTMLElement = HTMLElement>(
     const isScrollNarrower = isYScroll ? scrollHeight <= clientHeight : scrollWidth <= clientWidth
     const isAlmostBottom = scrollHeight - scrollTop <= clientHeight + distance
 
-    if (state.isLoading) return
-
     if (!isScrollNarrower && !isAlmostBottom) return
 
-    setState({ ...state, isLoading: true })
+    setState({ isLoadDone: false, isLoading: true })
 
-    const [res, _] = await Promise.all([
+    const [result, _] = await Promise.all([
       onLoadMore(previousReturn.current),
       new Promise((resolve) => setTimeout(resolve, interval)),
     ])
 
-    setState({ ...latest.current.state, isLoading: false })
+    previousReturn.current = result
 
-    previousReturn.current = res
+    setState({
+      isLoading: false,
+      isLoadDone: !canLoadMore(previousReturn.current),
+    })
   })
 
   useMount(immediate && calculate)
 
-  useEventListener(el, 'scroll', calculate, { passive: true })
+  useEventListener(
+    el,
+    'scroll',
+    (event) => {
+      latest.current.onScroll?.(event)
+      calculate()
+    },
+    { passive: true },
+  )
 
   return {
     ...state,
