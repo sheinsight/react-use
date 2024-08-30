@@ -76,7 +76,7 @@ export function clamp(n: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, n))
 }
 
-export function notNullish<T>(val: T | null): val is T {
+export function noNullish<T>(val: T | null): val is T {
   return val !== null && val !== undefined
 }
 

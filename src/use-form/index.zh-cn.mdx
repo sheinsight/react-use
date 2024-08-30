@@ -1,0 +1,210 @@
+---
+category: Element
+---
+
+# useForm
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个用来管理表单状态的 React Hook。
+
+## 演示 Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 Usage \{#usage}
+
+```tsx
+const {
+  props,
+  submit,
+  reset,
+  submitting,
+  setValue,
+  setFieldValue
+  nativeProps,
+} = useForm(options)
+
+// 示例使用
+const form = useForm({
+  initialValues: {
+    name: 'John Doe',
+    email: 'hi@john.doe',
+  },
+  onSubmit: (form) => {
+    console.log(form)
+  },
+})
+
+// form.props 用来传递给组件库的属性
+// form.nativeProps 用来传递给原生表单元素的属性
+
+// form.submitting 用来判断表单是否正在提交中
+
+// form.submit() 用来提交表单
+// form.reset() 用来重置表单
+// form.setValue() 用来修改整个表单值
+// form.setFieldValue() 用来设置单个表单值
+
+// 使用组件库，比如 shineout
+// 需要确保 Form 支持接收 value、defaultValue、onChange、onSubmit、onReset 属性
+return (
+  <Form {...form.props}>
+    <Form.Item label="姓名"><Input type="text" name="name" /></Form.Item>
+    <Form.Item label="邮箱"><Input type="email" name="email" /></Form.Item>
+    <Form.Submit loading={form.submitting}>提交</Form.Submit>
+    <Form.Reset>重置</Form.Reset>
+  </Form>
+)
+
+// 使用原生表单元素，非受控模式，但是内部控制了 form 的 ref
+// 通过内置机制来保证执行 setValue 和 setFieldValue 操作时，UI 状态能够同步
+return (
+  <form {...form.nativeProps}>
+    <label>姓名:<input type="text" name="name" /></label>
+    <label>邮箱:<input type="email" name="email" /></label>
+    <button disabled={form.submitting} type="submit">提交</button>
+    <button type="reset">重置</button>
+  </form>
+)
+```
+
+## 源码 Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const form = useForm(options)
+```
+
+### 选项 Options \{#options}
+
+```tsx
+export interface UseFormOptions<FormState extends object> {
+  /**
+   * 表单的初始值
+   *
+   * @defaultValue {}
+   */
+  initialValue?: FormState
+  /**
+   * 表单项发生变化时的回调
+   *
+   * @defaultValue undefined
+   */
+  onChange?(form: FormState): void
+  /**
+   * 表单提交时的回调
+   *
+   * @defaultValue undefined
+   */
+  onSubmit?(form: FormState): void
+  /**
+   * 表单重置时的回调
+   *
+   * @defaultValue undefined
+   */
+  onReset?(): void
+  /**
+   * 当使用 `nativeProps` 时，提交表单是否阻止默认行为
+   *
+   * @defaultValue true
+   */
+  preventDefaultWhenSubmit?: boolean
+  /**
+   * 当重置时，是否触发 onChange 回调
+   *
+   * @defaultValue false
+   */
+  triggerOnChangeWhenReset?: boolean
+}
+```
+
+### 返回值 Returns \{#returns}
+
+```tsx
+export type UseFormReturnsProps<FormState extends object> = {
+  /**
+   * 表单的当前值
+   */
+  value: FormState
+  /**
+   * 表单的默认值
+   */
+  defaultValue: FormState
+  /**
+   * 表单项发生变化时的回调
+   */
+  onChange(form: FormState): void
+  /**
+   * 表单提交时的回调
+   */
+  onSubmit(form: FormState): void
+  /**
+   * 表单重置时的回调
+   */
+  onReset(): void
+}
+
+export type UseFormReturnsNativeProps = {
+  /**
+   * 表单元素 form 的 ref
+   */
+  ref: RefObject<HTMLFormElement>
+  /**
+   * 表单原生的 onChange 回调
+   */
+  onChange(e: React.ChangeEvent<HTMLFormElement>): void
+  /**
+   * 表单原生的 onSubmit 回调
+   */
+  onSubmit(e: React.ChangeEvent<HTMLFormElement>): void
+  /**
+   * 表单原生的 onReset 回调
+   */
+  onReset(e: React.ChangeEvent<HTMLFormElement>): void
+}
+
+export interface UseFormReturns<FormState extends object> {
+  /**
+   * 表单是否正在提交中
+   */
+  submitting: boolean
+  /**
+   * 设置表单的值
+   */
+  setValue: ReactSetState<FormState>
+  /**
+   * 设置表单项的值
+   */
+  setFieldValue<Name extends keyof FormState>(name: Name, value: FormState[Name]): void
+  /**
+   * 重置表单
+   */
+  reset(): void
+  /**
+   * 提交表单
+   */
+  submit(): void
+  /**
+   * 表单的当前值
+   */
+  value: FormState
+  /**
+   * 传递给组件库的 Form 组件的属性
+   */
+  props: UseFormReturnsProps<FormState>
+  /**
+   * 传递给原生表单元素的属性
+   */
+  nativeProps: UseFormReturnsNativeProps
+}
+```
