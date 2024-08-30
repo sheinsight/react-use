@@ -73,6 +73,7 @@ export default defineConfig({
       alias: {
         '@@': path.resolve(__dirname, './'),
         '@': path.resolve(__dirname, './src'),
+        '@shined/react-use': path.resolve(__dirname, './node_modules/@shined/react-use'),
       },
       define: {
         'process.env.ASSETS_PREFIX': JSON.stringify(assetsPrefix),

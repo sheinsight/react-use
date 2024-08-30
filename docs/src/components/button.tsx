@@ -26,7 +26,7 @@ export function Button(
 
   return (
     <button
-      type="button"
+      type={props.type || 'button'}
       className={cn(
         className,
         variantCls,
