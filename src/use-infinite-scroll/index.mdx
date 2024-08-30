@@ -29,7 +29,7 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const { isLoading, isLoadDone } = useInfiniteScroll(elementTarget, options)
+const { isLoading, isLoadDone } = useInfiniteScroll(elementTarget, onLoadMore, options)
 ```
 
 ### ElementTarget
@@ -37,6 +37,14 @@ const { isLoading, isLoadDone } = useInfiniteScroll(elementTarget, options)
 import { Tip } from '@/components'
 
 <Tip type="target" />
+
+### onLoadMore
+
+A function that will be called when the scroll event is triggered.
+
+```tsx
+(previousReturn: R | undefined) => R | Promise<R>
+```
 
 ### Options
 

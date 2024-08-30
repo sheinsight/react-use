@@ -2,7 +2,7 @@ import { useIntervalFn } from '../use-interval-fn'
 import { useLatest } from '../use-latest'
 import { useSafeState } from '../use-safe-state'
 import { useSupported } from '../use-supported'
-import { notNullish } from '../utils/basic'
+import { noNullish } from '../utils/basic'
 
 import type { UseIntervalFnInterval } from '../use-interval-fn'
 import type { Pausable } from '../use-pausable'
@@ -59,7 +59,7 @@ export function useElementByPoint<
       if (!isSupported) return
       const { x, y, multiple } = latest.current
       const result = document?.[multiple ? 'elementsFromPoint' : 'elementFromPoint'](x, y)
-      const element = Array.isArray(result) ? result.filter(notNullish) : result
+      const element = Array.isArray(result) ? result.filter(noNullish) : result
       setElement((element ?? (multiple ? [] : null)) as E | null)
     },
     interval,

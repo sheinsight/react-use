@@ -29,7 +29,7 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const { isLoading, isLoadDone } = useInfiniteScroll(elementTarget, options)
+const { isLoading, isLoadDone } = useInfiniteScroll(elementTarget, onLoadMore, options)
 ```
 
 ### 元素目标 ElementTarget \{#element-target}
@@ -37,6 +37,14 @@ const { isLoading, isLoadDone } = useInfiniteScroll(elementTarget, options)
 import { Tip } from '@/components'
 
 <Tip type="target" />
+
+### 当加载更多时 onLoadMore \{#onloadmore}
+
+当滚动事件被触发时将会调用的函数。
+
+```tsx
+type OnLoadMoreCallback = (previousReturn: R | undefined) => R | Promise<R>
+```
 
 ### 选项 Options \{#options}
 

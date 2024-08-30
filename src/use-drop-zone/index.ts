@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { useEventListener } from '../use-event-listener'
 import { useSetState } from '../use-set-state'
 import { useTargetElement } from '../use-target-element'
-import { isFunction, notNullish } from '../utils/basic'
+import { isFunction, noNullish } from '../utils/basic'
 
 import type { ElementTarget } from '../use-target-element'
 
@@ -65,7 +65,7 @@ export function useDropZone(
 
     const types = Array.from(event?.dataTransfer?.items || [])
       .map((i) => (i.kind === 'file' ? i.type : null))
-      .filter(notNullish)
+      .filter(noNullish)
 
     if (dataTypes && event.dataTransfer) {
       const dataTypes = _options.dataTypes

@@ -1,11 +1,13 @@
 import { useRef } from 'react'
 import { useStableFn } from '../use-stable-fn'
 
+import type { MutableRefObject } from 'react'
+
 export type UseGetterRefReturns<T> = [
   /**
    * A mutable ref object that can be used to store a value.
    */
-  ref: React.MutableRefObject<T>,
+  ref: MutableRefObject<T>,
   /**
    * A getter function that returns the current value of the ref.
    */

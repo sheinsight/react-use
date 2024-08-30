@@ -6,7 +6,7 @@ import { useStableFn } from '../use-stable-fn'
 import { useSupported } from '../use-supported'
 import { useTargetElement } from '../use-target-element'
 import { useUnmount } from '../use-unmount'
-import { isDefined, isFunction, notNullish } from '../utils/basic'
+import { isDefined, isFunction, noNullish } from '../utils/basic'
 import { EventHandlerList, getCompatibleAttr } from './compatible-attributes'
 
 import type { ElementTarget } from '../use-target-element'
@@ -80,10 +80,10 @@ export function useFullscreen(
     const { fsEnabled } = getCompatibleAttr(el.current)
 
     if (fsEnabled) {
-      if (document && notNullish(document[fsEnabled as 'fullscreen'])) {
+      if (document && noNullish(document[fsEnabled as 'fullscreen'])) {
         return document[fsEnabled as 'fullscreen']
       }
-      if (el.current && notNullish(el.current[fsEnabled as never])) {
+      if (el.current && noNullish(el.current[fsEnabled as never])) {
         return Boolean(el.current[fsEnabled as never])
       }
     }

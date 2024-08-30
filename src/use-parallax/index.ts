@@ -3,6 +3,7 @@ import { useLatest } from '../use-latest'
 import { useMouseInElement } from '../use-mouse-in-element'
 import { useStableFn } from '../use-stable-fn'
 
+import type { CSSProperties } from 'react'
 import type { Pausable } from '../use-pausable'
 import type { ElementTarget } from '../use-target-element'
 
@@ -29,11 +30,11 @@ export interface UseParallaxReturns extends Pausable {
   /**
    * Container style presets
    */
-  containerStyle: (perspective?: number) => React.CSSProperties
+  containerStyle: (perspective?: number) => CSSProperties
   /**
    * Element style presets
    */
-  elementStyle: (rotateRatio?: number, duration?: number) => React.CSSProperties
+  elementStyle: (rotateRatio?: number, duration?: number) => CSSProperties
 }
 
 /**
@@ -71,14 +72,14 @@ export function useParallax(target: ElementTarget, options: UseParallaxOptions =
 
   const latestReturn = useLatest({ roll, tilt })
 
-  const containerStyle = useStableFn((perspective = 240): React.CSSProperties => {
+  const containerStyle = useStableFn((perspective = 240): CSSProperties => {
     return {
       perspective: `${perspective}px`,
       overflow: 'hidden',
     }
   })
 
-  const elementStyle = useStableFn((rotateRatio = 20, duration = 360): React.CSSProperties => {
+  const elementStyle = useStableFn((rotateRatio = 20, duration = 360): CSSProperties => {
     const { tilt, roll } = latestReturn.current
 
     return {

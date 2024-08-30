@@ -3,9 +3,10 @@ import { useLatest } from '../use-latest'
 import { usePausable } from '../use-pausable'
 import { useSupported } from '../use-supported'
 import { normalizeElement } from '../use-target-element'
-import { notNullish } from '../utils/basic'
+import { noNullish } from '../utils/basic'
 import { unwrapArrayable } from '../utils/unwrap'
 
+import type { MutableRefObject } from 'react'
 import type { Pausable } from '../use-pausable'
 import type { ElementTarget } from '../use-target-element'
 import type { Arrayable } from '../utils/basic'
@@ -27,7 +28,7 @@ export interface UseWebObserverReturns<Observer> extends Pausable {
   /**
    * ref that holds the observer instance
    */
-  observerRef: React.MutableRefObject<Observer | null>
+  observerRef: MutableRefObject<Observer | null>
   /**
    * Check if the observer is supported in the current environment
    */
@@ -42,7 +43,7 @@ export type WebObserverType =
   | 'ReportingObserver'
 
 function getElements(target: Arrayable<ElementTarget>) {
-  return unwrapArrayable(target).map(normalizeElement).filter(notNullish)
+  return unwrapArrayable(target).map(normalizeElement).filter(noNullish)
 }
 
 /**
