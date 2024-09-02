@@ -1,60 +1,138 @@
+import { useRef } from 'react'
 import { useForm } from '../use-form'
+import { useLatest } from '../use-latest'
+import { useMultiSelect } from '../use-multi-select'
+import { usePagination } from '../use-pagination'
+import { usePrevious } from '../use-previous'
 import { useQuery } from '../use-query'
+import { useSafeState } from '../use-safe-state'
+import { useStableFn } from '../use-stable-fn'
 
 import type { UseFormOptions } from '../use-form'
+import type { UsePaginationOptions } from '../use-pagination'
 import type { UseQueryOptions } from '../use-query'
 import type { AnyFunc } from '../utils/basic'
 
 export interface UseProListOptions<Fetcher extends AnyFunc, FormState extends object> {
   form?: UseFormOptions<FormState>
-  query?: UseQueryOptions<Fetcher>
+  query?: Omit<UseQueryOptions<Fetcher>, 'initialParams' | 'initialData'>
+  pagination?: UsePaginationOptions<ReturnType<Fetcher>>
+  immediateQueryKeys?: (keyof FormState)[]
 }
 
-export interface UseProListFetcherParams<FormState extends object> {
+export interface UseProListFetcherParams<FormState extends object, Data> {
+  previousData: undefined | Data
   page: number
   pageSize: number
   form: FormState
 }
 
-export type UseProListFetcher<FormState extends object> = (params: UseProListFetcherParams<FormState>) => any
+export type UseProListFetcher<FormState extends object, Data> = (
+  params: UseProListFetcherParams<FormState, Data>,
+) => Data
 
-// useForm
+// useProList => useForm + useMultiSelect + usePagination + useQuery
 
-// useProList => useForm + usePagination + useQuery
-
-export function useProList<FormState extends object, Fetcher extends UseProListFetcher<FormState>>(
+export function useProList<FormState extends object, Data, Fetcher extends UseProListFetcher<FormState, Data>>(
   fetcher: Fetcher,
   options: UseProListOptions<Fetcher, FormState> = {},
 ) {
-  const form = useForm(options.form)
+  const previousData = useRef<Data | undefined>(undefined)
+  const [list, setList] = useSafeState<Data[]>([])
 
-  const query = useQuery(fetcher, {
-    // default query options
-    ...options.query,
+  const form = useForm<FormState>({
+    ...options.form,
+    onReset(...args) {
+      startNewQuery()
+      latest.current.options.form?.onReset?.(...args)
+    },
+    onSubmit(...args) {
+      startNewQuery()
+      latest.current.options.form?.onSubmit?.(...args)
+    },
+    onChange(...args) {
+      const keys = options.immediateQueryKeys || []
+      for (const key of keys) {
+        if (form.value[key] !== previousFormValue?.[key]) {
+          startNewQuery()
+          break
+        }
+      }
+      latest.current.options.form?.onChange?.(...args)
+    },
   })
 
+  const previousFormValue = usePrevious(form.value)
+
+  const [paginationState, paginationActions] = usePagination<Data>({
+    ...options.pagination,
+    onPageChange(state) {
+      query.run({
+        previousData: previousData.current,
+        page: state.page,
+        pageSize: state.pageSize,
+        form: form.value,
+      })
+      latest.current.options.pagination?.onPageChange?.(state)
+    },
+    onPageSizeChange(state) {
+      startNewQuery()
+      latest.current.options.pagination?.onPageSizeChange?.(state)
+    },
+  })
+
+  const startNewQuery = useStableFn((resetPageSize = false) => {
+    setList([])
+    previousData.current = undefined
+    paginationActions.go(1)
+
+    let pageSize = paginationState.pageSize
+
+    if (resetPageSize) {
+      paginationActions.setPageSize(options.pagination?.pageSize ?? 10)
+      pageSize = options.pagination?.pageSize ?? 10
+    }
+
+    query.run({
+      previousData: previousData.current,
+      page: 1,
+      pageSize,
+      form: form.value,
+    })
+  })
+
+  const query = useQuery(fetcher, {
+    ...options.query,
+    initialParams: [
+      {
+        previousData: undefined,
+        page: paginationState.page,
+        pageSize: paginationState.pageSize,
+        form: form.value,
+      },
+    ] as Parameters<Fetcher>,
+    onSuccess(data, ...reset) {
+      previousData.current = data
+      setList((prevDataList) => [...prevDataList, data].filter(Boolean))
+      latest.current.options.query?.onSuccess?.(data, ...reset)
+    },
+  })
+
+  const [select, selectActions] = useMultiSelect<Data>(list, [])
+
+  const latest = useLatest({ options, paginationState })
+
   return {
-    form: {
-      setValue: form.setValue,
-      setFieldValue: form.setFieldValue,
-      reset: form.reset,
-      submit: form.submit,
-      initialValue: form.initialValue,
-
-      get value() {
-        return form.value
-      },
-      get submitting() {
-        return form.submitting
-      },
-
-      handleChange: form.handleChange,
-      handleSubmit: form.handleSubmit,
-      handleReset: form.handleReset,
-
-      checkValidity: form.checkValidity,
-      reportValidity: form.reportValidity,
-      nativeProps: form.nativeProps,
+    list,
+    form,
+    query,
+    selection: {
+      ...select,
+      ...selectActions,
+    },
+    pagination: {
+      ...paginationState,
+      ...paginationActions,
     },
   }
 }
