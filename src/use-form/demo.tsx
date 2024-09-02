@@ -27,7 +27,7 @@ export function App() {
     onSubmit: async (form) => {
       toast.loading('Submitting...', { id: 'submit' })
       console.log('submit', form)
-      await mockFetch()
+      await mockFetch(1000)
       toast.success(`Hello, ${form.name ?? 'Unknown User'}!`, { id: 'submit' })
     },
     onChange: (form) => console.log('form change', form),
