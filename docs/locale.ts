@@ -23,7 +23,7 @@ export const sidebar = {
       },
       {
         text: '🧭 Usage Guide',
-        link: '/docs/guide',
+        link: '/docs/usage-guide',
       },
       {
         text: '✨ Features',
@@ -89,7 +89,7 @@ export const sidebar = {
       },
       {
         text: '🧭 使用指引',
-        link: `/${langSlug.zhCN}/docs/guide`,
+        link: `/${langSlug.zhCN}/docs/usage-guide`,
       },
       {
         text: '✨ 功能特性',
