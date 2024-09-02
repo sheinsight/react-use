@@ -16,13 +16,13 @@ import { HooksType } from '@/components'
 - **高频事件处理**: 例如滚动、拖拽时减少状态更新频率，防止性能损耗
 - ...
 
-## 演示 Demo \{#demo}
+## 演示 \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## 用法 Usage \{#usage}
+## 用法 \{#usage}
 
 ```tsx
 // 在需要优化性能的场景中使用
@@ -32,7 +32,7 @@ const [state, setState] = useRafState({ isScrolling: false })
 const [{ x, y }, setPosition] = useRafState({ x: 0, y: 0 }, { deep: true })
 ```
 
-## 源码 Source \{#source}
+## 源码 \{#source}
 
 import { Source } from '@/components'
 
@@ -52,6 +52,6 @@ const [state, setState] = useRafState(initialState, options)
 
 更多详情参见 [useSafeState#options](/reference/use-safe-state/#options)。
 
-### 返回值 Returns \{#returns}
+### 返回值 \{#returns}
 
 与 [React.useState](https://react.dev/reference/react/useState) 相同。

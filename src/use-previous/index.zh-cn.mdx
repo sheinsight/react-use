@@ -15,13 +15,13 @@ import { HooksType } from '@/components'
 - **记录上一状态：** 用于记录状态的变化，以便在下一次渲染时进行相关操作。
 - ...
 
-## 演示 Demo \{#demo}
+## 演示 \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## 用法 Usage \{#usage}
+## 用法 \{#usage}
 
 ```tsx
 const prevState = usePrevious(state)
@@ -29,7 +29,7 @@ const prevState = usePrevious(state)
 // 当 state 从 1 变为 2 时，prevState 的值为 1
 ```
 
-## 源码 Source \{#source}
+## 源码 \{#source}
 
 import { Source } from '@/components'
 
@@ -70,6 +70,6 @@ interface UsePreviousOptions {
 
 如果 `deep` 为 `true`，则会忽略自定义的 `isEqual` 函数，转而采用内置的深比较的策略。
 
-### 返回值 Returns \{#returns}
+### 返回值 \{#returns}
 
 状态上次一渲染时的不同值。

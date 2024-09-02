@@ -17,13 +17,13 @@ import { HooksType } from '@/components'
 - **表单处理场景：** 管理表单项的状态，支持部分字段的更新，便于实现复杂表单逻辑
 - ...
 
-## 演示 Demo \{#demo}
+## 演示 \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## 用法 Usage \{#usage}
+## 用法 \{#usage}
 
 ```tsx
 const [info, setInfo] = useSetState({ name: '张三', age: 18 }, { deep: true })
@@ -33,7 +33,7 @@ setInfo({ age: 20 }) // 设置新的值，只更新 age 字段，name 字段保�
 setInfo({ name: '李四' }) // 再次设置「相同」的值，将不会触发重渲染。 参考 useSafeState 的 options。
 ```
 
-## 源码 Source \{#source}
+## 源码 \{#source}
 
 import { Source } from '@/components'
 
@@ -53,6 +53,6 @@ const [state, setState] = useSetState(initialState, options)
 
 更多详情参见 [useSafeState#options](/reference/use-safe-state/#options)。
 
-### 返回值 Returns \{#returns}
+### 返回值 \{#returns}
 
 与 [React.useState](https://react.dev/reference/react/useState) 相同。

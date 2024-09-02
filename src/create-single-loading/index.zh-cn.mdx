@@ -9,7 +9,7 @@ import { HooksType, Deprecated } from '@/components'
 
 <HooksType {...frontmatter} />
 
-<Deprecated version="v1.4.0" tip='将会被迁移至 @shined/reactive。' />
+<Deprecated version="v1.4.0" tip='已被迁移至 @shined/reactive。' />
 
 这是一个 Util，提供一种通过多个 Hooks 或 loading 实例管理单个（全局）加载状态的方法，底层使用了 [Reactive](https://sheinsight.github.io/reactive/)。
 
@@ -17,17 +17,17 @@ import { HooksType, Deprecated } from '@/components'
 使用此 Util 需要安装 `@shined/reactive`。
 :::
 
-## 演示 Demo \{#demo}
+## 演示 \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## 用法 Usage \{#usage}
+## 用法 \{#usage}
 
 请查看 API。
 
-## 源码 Source \{#source}
+## 源码 \{#source}
 
 import { Source } from '@/components'
 
@@ -60,7 +60,7 @@ export interface CreateSingleLoadingOptions {
 }
 ```
 
-### 返回值 Returns \{#returns}
+### 返回值 \{#returns}
 
 ```tsx
 export interface UseAsyncFnExtendReturns<T extends AnyFunc> extends UseAsyncFnReturns<T> {

@@ -15,13 +15,13 @@ import { HooksType } from '@/components'
 - **防止闭包问题：** 有效解决传统 `useState` 在闭包场景下可能遇到的过期闭包问题
 - ...
 
-## 演示 Demo \{#demo}
+## 演示 \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## 用法 Usage \{#usage}
+## 用法 \{#usage}
 
 ```tsx
 const [state, setState] = useSignalState(0)
@@ -31,7 +31,7 @@ console.log(state()) // 调用函数读取状态值，能确保始终拿到最�
 setState(1) // 设置新值
 ```
 
-## 源码 Source \{#source}
+## 源码 \{#source}
 
 import { Source } from '@/components'
 
@@ -51,7 +51,7 @@ const [state, setState] = useSignalState(initialState)
 
 见 [useSafeState#options](/reference/use-safe-state/#options)。
 
-### 返回值 Returns \{#returns}
+### 返回值 \{#returns}
 
 ```tsx
 export type UseSignalStateReturns = [() => T, ReactSetState<T>]
