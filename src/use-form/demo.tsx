@@ -39,8 +39,10 @@ export function App() {
       <form {...form.nativeProps}>
         <Zone>
           <Zone>
-            <span className="text-right inline-block w-80px">Name:</span>
-            <Input placeholder="Input your name" name="name" required />
+            <label title="Name" className="flex gap-2 items-center">
+              <span className="text-right inline-block w-80px">Name:</span>
+              <Input placeholder="Input your name" name="name" required />
+            </label>
           </Zone>
           <Zone>
             <span className="text-right inline-block w-80px">Gender:</span>
@@ -52,8 +54,10 @@ export function App() {
             ))}
           </Zone>
           <Zone>
-            <span className="text-right inline-block w-80px">Age:</span>
-            <Input placeholder="Input your age" name="age" type="number" />
+            <label title="Age" className="flex gap-2 items-center">
+              <span className="text-right inline-block w-80px">Age:</span>
+              <Input placeholder="Input your age" name="age" type="number" />
+            </label>
           </Zone>
           <Zone>
             <span className="text-right inline-block w-80px">Color:</span>
@@ -65,26 +69,30 @@ export function App() {
             ))}
           </Zone>
           <Zone>
-            <span className="text-right inline-block w-80px">Nation:</span>
-            <Select name="nation">
-              {nations.map((color) => (
-                <option key={color} value={color}>
-                  {color}
-                </option>
-              ))}
-            </Select>
+            <label title="Nation" className="flex gap-2 items-center">
+              <span className="text-right inline-block w-80px">Nation:</span>
+              <Select name="nation">
+                {nations.map((color) => (
+                  <option key={color} value={color}>
+                    {color}
+                  </option>
+                ))}
+              </Select>
+            </label>
           </Zone>
           <Zone>
-            <span className="text-right inline-block w-80px" />
-            <label>
-              <input required name="confirm" type="checkbox" />
-              <span>
-                <span className="ml-1">I have read and agree to the </span>
-                <a href="#term" className="text-blue-6 underline">
-                  Terms of Service
-                </a>
-                .
-              </span>
+            <label title="Confirm" className="flex gap-2 items-center">
+              <span className="text-right inline-block w-80px" />
+              <label>
+                <input required name="confirm" type="checkbox" />
+                <span>
+                  <span className="ml-1">I have read and agree to the </span>
+                  <a href="#term" className="text-blue-6 underline">
+                    Terms of Service
+                  </a>
+                  .
+                </span>
+              </label>
             </label>
           </Zone>
           <Zone className="pl-88px">
