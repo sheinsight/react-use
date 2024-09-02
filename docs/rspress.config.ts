@@ -98,8 +98,8 @@ function reactUseRspressPlugin(): RspressPlugin {
   ])
 
   const routes = hooks.flatMap((hook) => {
-    const enPath = path.resolve(__dirname, '../src', hook.slug, 'index.mdx')
-    const zhCNPath = path.resolve(__dirname, '../src', hook.slug, 'index.zh-cn.mdx')
+    const enPath = path.resolve(__dirname, '../packages/react-use/src', hook.slug, 'index.mdx')
+    const zhCNPath = path.resolve(__dirname, '../packages/react-use/src', hook.slug, 'index.zh-cn.mdx')
 
     if (!fs.existsSync(enPath)) return []
 
