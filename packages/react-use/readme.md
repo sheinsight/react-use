@@ -1,17 +1,30 @@
-# 🏃 Get Started \{#get-started}
+<p align="center">
+<img src="https://sheinsight.github.io/react-use/logo.svg" height="150">
+</p>
 
-import { ReactUseIcon } from '@/components'
+<h1 align="center">
+@shined/react-use
+</h1>
+<p align="center">
+A New Programming Paradigm to Reshape React Development.
+<p>
+<p align="center">
+  <a href="https://www.npmjs.com/package/@shined/react-use"><img src="https://img.shields.io/npm/v/%40shined%2Freact-use?style=flat&labelColor=%23ffffff&color=%232e8555"></a>
+  <a href="https://biomejs.dev/"><img src="https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome"></a>
+  <a href="https://pkg-size.dev/@shined/react-use"><img src="https://pkg-size.dev/badge/bundle/125650"></a>
+<p>
 
-<ReactUseIcon />
+<p align="center">
+ <a href="https://sheinsight.github.io/react-use">Documentation</a> | <a href="https://sheinsight.github.io/react-use/docs/get-started">Get Started</a> | <a href="https://sheinsight.github.io/react-use/reference">Reference</a>
+</p>
+<p align="center">
+<a href="https://sheinsight.github.io/react-use/zh-cn/">中文文档</a>
+</p>
 
-<div className="flex gap-2 mt-4">
-  <img
-  alt="NPM Version"
-  src="https://img.shields.io/npm/v/%40shined%2Freact-use?style=flat&labelColor=%23ffffff&color=%232e8555"
-  />
-  <img src="https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome" alt="Biome Badge" />
-  <img src="https://pkg-size.dev/badge/bundle/125650" alt="Version Badge" />
-</div>
+<br>
+
+## 🎉 Introduction
+
 
 `@shined/react-use` aims to **reshape the new programming paradigm of React development**. It enhances development efficiency, fosters better programming habits, and reduces the reliance on `useEffect` and `useState` by offering a multitude of high-quality, semantic Hooks. It encourages developers to gradually adapt to a React development (programming) paradigm that prioritizes '**Hooks first**'.
 
@@ -19,9 +32,10 @@ Fundamentally, it's a **SSR (Server-Side Rendering) friendly**, **comprehensive*
 
 It's primarily inspired by [VueUse](https://vueuse.org/), while also drawing from [react-use](https://github.com/streamich/react-use), [ahooks](https://ahooks.js.org/), and many other outstanding libraries within the community. Special thanks to the open-source community, especially the authors of the aforementioned libraries, for their exceptional work and inspiration.
 
-## 🚀 Features \{#features}
 
-- **Flexibility**: [Dependencies Collection](/docs/features/dependencies-collection)、[ElementTarget](/docs/features/element-target), [Ref Getter](/docs/features/ref-getter), [Pausable](/docs/features/pausable), and more.
+## 🚀 Features
+
+- **Flexibility**: [Dependencies Collection](https://sheinsight.github.io/react-use/docs/features/dependencies-collection), [ElementTarget](https://sheinsight.github.io/react-use/docs/features/element-target), [Ref Getter](https://sheinsight.github.io/react-use/docs/features/ref-getter), [Pausable](https://sheinsight.github.io/react-use/docs/features/pausable), and [more](https://sheinsight.github.io/react-use/docs/introduction#features).
 - **Tree-shakable**: Designed and delivered with [ESM](https://nodejs.org/api/esm.html), import only what you need.
 - **Interactive Documentation**: Interactive documentation with live examples and [Playground](https://react-online.vercel.app/#code=aW1wb3J0IHsgY3JlYXRlIH0gZnJvbSAnQHNoaW5lZC9yZWFjdGl2ZScKaW1wb3J0IHsgY3JlYXRlUm9vdCB9IGZyb20gJ3JlYWN0LWRvbS9jbGllbnQnCmltcG9ydCB7IHVzZU1vdXNlLCB1c2VSZWFjdGl2ZSB9IGZyb20gJ0BzaGluZWQvcmVhY3QtdXNlJwoKCmZ1bmN0aW9uIEFwcCgpIHsKICBjb25zdCB7IHgsIHkgfSA9IHVzZU1vdXNlKCkKICBjb25zdCBbeyBjb3VudCB9LCBtdXRhdGVdID0gdXNlUmVhY3RpdmUoeyBjb3VudDogMCB9LCB7IGNyZWF0ZSB9KQoKICBjb25zdCBhZGRPbmUgPSAoKSA9PiBtdXRhdGUuY291bnQrKwoKICByZXR1cm4gKAogICAgPGRpdj4KICAgICAgPGRpdj4oeCwgeSk6ICh7eH0sIHt5fSk8L2Rpdj4KICAgICAgPGJ1dHRvbiBvbkNsaWNrPXthZGRPbmV9PkNvdW50OiB7Y291bnR9PC9idXR0b24%2BCiAgICA8L2Rpdj4KICApCn0KCmNyZWF0ZVJvb3QoZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3Jvb3QnKSEpLnJlbmRlcig8QXBwIC8%2BKQo%3D).
 - **Lightweight**: Boasts [zero dependencies](https://github.com/sheinsight/react-use/blob/main/package.json).
@@ -29,50 +43,15 @@ It's primarily inspired by [VueUse](https://vueuse.org/), while also drawing fro
 - **First-class TypeScript Support**: Written in [TypeScript](https://www.typescriptlang.org/) with well-named type definitions and [JSDoc](https://jsdoc.app/) Comment.
 - **~~Comprehensive Testing~~**: (Coming soon...)
 
-Visit the [Get Started](/docs/get-started) section to explore how it can be integrated into your project.
+Visit the [Get Started](https://sheinsight.github.io/react-use/docs/get-started) section to explore how it can be integrated into your project.
 
-## ⚡️ Optimizations \{#optimizations}
+## ⚡️ Optimizations
 
-- **Safe State**: Implements a [safe state](/docs/optimization/safe-state) strategy for all stateful Hooks, reducing bugs and unwanted behaviors.
-- **Stable functions**: Every exported function benefits from [stabilization](/docs/optimization/stabilization) by default.
-- **Latest State**: Avoids the expired closure issues by using [latest](/docs/optimization/latest-state) state internally.
-- **Reduced Unnecessary Rerenders**: Use [Pausable](/docs/features/pausable) instance to control the behavior of some Hooks optionally.
+- **Safe State**: Implements a [safe state](https://sheinsight.github.io/react-use/docs/optimization/safe-state) strategy for all stateful Hooks, reducing bugs and unwanted behaviors.
+- **Stable functions**: Every exported function benefits from [stabilization](https://sheinsight.github.io/react-use/docs/optimization/stabilization) by default.
+- **Latest State**: Avoids the expired closure issues by using [latest](https://sheinsight.github.io/react-use/docs/optimization/latest-state) state internally.
+- **Reduced Unnecessary Rerenders**: Use [Pausable](https://sheinsight.github.io/react-use/docs/features/pausable) instance to control the behavior of some Hooks optionally.
 
-## 📦 Installation \{#installation}
+## 🪪 License
 
-Install using your favorite package manager:
-
-import { PackageManagerTabs } from 'rspress/theme'
-
-<PackageManagerTabs
-  command={{
-    npm: 'npm install @shined/react-use',
-    yarn: 'yarn add @shined/react-use',
-    pnpm: 'pnpm add @shined/react-use',
-    bun: 'bun add @shined/react-use',
-  }}
-/>
-
-## 🎨 Usage Examples \{#usage}
-
-Below is an example of how to use the [useAsyncFn](/reference/use-async-fn) Hook:
-
-```tsx
-function App() {
-  const { loading, error, run } = useAsyncFn(fetchData)
-  return (
-    <>
-      <div>{data}</div>
-      <button onClick={run} disabled={loading}>Fetch</button>
-    </>
-  )
-}
-```
-
-import { App } from '../../../../packages/react-use/src/use-async-fn/demo'
-
-<App />
-
-Next, it is recommended to read [Getting Started](/docs/get-started) to understand how to use this library.
-
-Then you can proceed to the [Usage Guide](/docs/usage-guide) to learn how to improve existing code, or visit the [Hooks List](/reference) to see all available Hooks.
+MIT © @shined

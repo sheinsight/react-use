@@ -16,7 +16,7 @@ export function generateLoremIpsum(length = 1, sentenceEnds = defaultEnds): stri
         return Math.random() < change ? [pickRandom(words), ','] : pickRandom(words)
       })
       .join(' ')
-      .replaceAll(' , ', ', ')
+      .replace(/\s,\s/g, ', ')
 
     return sentence.charAt(0).toUpperCase() + sentence.slice(1) + pickRandom(sentenceEnds)
   }

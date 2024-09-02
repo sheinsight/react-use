@@ -1,64 +1,25 @@
 {
-  "name": "@shined/react-use",
+  "name": "shined-react-use-monorepo",
   "type": "module",
+  "private": true,
   "version": "1.6.0",
-  "packageManager": "pnpm@9.6.0",
-  "description": "A New Programming Paradigm to Reshape React Development.",
-  "author": "Viki <hi@viki.moe> (https://github.com/vikiboss)",
+  "packageManager": "pnpm@9.9.0",
   "license": "MIT",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": {
-        "import": "./dist/index.d.ts",
-        "require": "./dist/index.d.cts"
-      },
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    },
-    "./package.json": "./package.json"
-  },
-  "keywords": [
-    "react",
-    "react-use",
-    "react-hooks",
-    "shined"
-  ],
-  "files": [
-    "dist"
-  ],
-  "homepage": "https://sheinsight.github.io/react-use/",
-  "sideEffects": false,
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sheinsight/react-use.git"
-  },
-  "bugs": "https://github.com/sheinsight/react-use/issues",
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./dist/*"
-      ]
-    }
-  },
   "scripts": {
-    "dev": "tsup --watch",
-    "build": "tsup",
-    "lint": "biome check && oxlint && pnpm run typecheck",
+    "dev": "pnpm -r --filter='@shined/*' dev",
+    "build": "pnpm -r --filter='@shined/*' build",
+    "lint": "biome check && oxlint && pnpm typecheck",
     "lint:fix": "biome check --write --unsafe && oxlint --fix",
-    "prepack": "clean-pkg-json",
-    "prerelease": "pnpm run lint",
+    "prerelease": "pnpm lint",
     "release": "bumpp",
-    "postrelease": "pnpm run changelog && git add CHANGELOG.md && git commit -m 'chore: update changelog' && git push",
+    "postrelease": "pnpm changelog && git add CHANGELOG.md && git commit -m 'chore: update changelog' && git push",
     "test": "vitest",
-    "test:ci": "pnpm run build && pnpm run lint && vitest",
-    "docs:dev": "pnpm run build && pnpm -C docs run dev",
-    "docs:build": "pnpm install && pnpm run build && pnpm -C docs run build",
-    "docs:release": "pnpm -C docs run release",
+    "test:ci": "pnpm build && pnpm lint && vitest",
+    "docs:dev": "pnpm build && pnpm -C docs dev",
+    "docs:build": "pnpm install && pnpm build && pnpm -C docs build",
+    "docs:release": "pnpm -C docs release",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "pnpm -r typecheck",
     "prepare": "is-ci || husky"
   },
   "lint-staged": {
@@ -66,47 +27,15 @@
       "biome check --write --unsafe --no-errors-on-unmatched"
     ]
   },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/",
-    "provenance": true
-  },
-  "peerDependenciesMeta": {
-    "react": {
-      "optional": true
-    },
-    "react-dom": {
-      "optional": true
-    },
-    "@types/react": {
-      "optional": true
-    },
-    "@types/react-dom": {
-      "optional": true
-    },
-    "@types/web-bluetooth": {
-      "optional": true
-    }
-  },
-  "peerDependencies": {
-    "@types/react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-    "@types/react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0",
-    "@types/web-bluetooth": "*",
-    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
-  },
   "devDependencies": {
     "@biomejs/biome": "1.8.1",
     "@shined/reactive": "^0.1.4",
-    "@swc/core": "^1.7.11",
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^15.0.7",
     "@types/node": "^20.14.15",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@types/web-bluetooth": "^0.0.20",
     "bumpp": "^9.5.1",
-    "clean-pkg-json": "^1.2.0",
     "conventional-changelog-cli": "^5.0.0",
     "esno": "^4.7.0",
     "husky": "^9.1.4",
@@ -116,9 +45,7 @@
     "oxlint": "^0.4.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "tsup": "^8.2.4",
     "typescript": "^5.5.4",
-    "unocss": "^0.59.4",
     "vitest": "^2.0.5"
   }
 }

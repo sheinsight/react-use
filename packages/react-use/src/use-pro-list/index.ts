@@ -35,15 +35,25 @@ export function useProList<FormState extends object, Fetcher extends UseProListF
 
   return {
     form: {
-      value: form.value,
       setValue: form.setValue,
       setFieldValue: form.setFieldValue,
       reset: form.reset,
       submit: form.submit,
+      initialValue: form.initialValue,
+
+      get value() {
+        return form.value
+      },
       get submitting() {
         return form.submitting
       },
-      props: form.props,
+
+      handleChange: form.handleChange,
+      handleSubmit: form.handleSubmit,
+      handleReset: form.handleReset,
+
+      checkValidity: form.checkValidity,
+      reportValidity: form.reportValidity,
       nativeProps: form.nativeProps,
     },
   }

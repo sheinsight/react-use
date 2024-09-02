@@ -5,5 +5,5 @@
     "target": "esnext",
     "resolveJsonModule": true
   },
-  "include": ["./scripts/**/*", "./locale.ts", "./rspress.config.ts"]
+  "include": ["./scripts/**/*"]
 }

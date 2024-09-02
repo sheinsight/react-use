@@ -1,0 +1,77 @@
+{
+  "name": "@shined/react-use",
+  "type": "module",
+  "version": "1.6.0",
+  "description": "A New Programming Paradigm to Reshape React Development.",
+  "author": "Viki <hi@viki.moe> (https://github.com/vikiboss)",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": {
+        "import": "./dist/index.d.ts",
+        "require": "./dist/index.d.cts"
+      },
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "keywords": ["react", "react-use", "react-hooks", "shined"],
+  "files": ["dist"],
+  "homepage": "https://sheinsight.github.io/react-use/",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sheinsight/react-use.git"
+  },
+  "bugs": "https://github.com/sheinsight/react-use/issues",
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "prepack": "clean-pkg-json",
+    "typecheck": "tsc --noEmit"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "provenance": true
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    },
+    "@types/react": {
+      "optional": true
+    },
+    "@types/react-dom": {
+      "optional": true
+    },
+    "@types/web-bluetooth": {
+      "optional": true
+    }
+  },
+  "peerDependencies": {
+    "@types/react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "@types/react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "@types/web-bluetooth": "*",
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+  },
+  "devDependencies": {
+    "@swc/core": "^1.7.11",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@types/web-bluetooth": "^0.0.20",
+    "clean-pkg-json": "^1.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tsup": "^8.2.4",
+    "typescript": "^5.5.4"
+  }
+}

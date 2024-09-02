@@ -9,7 +9,7 @@ import { defineConfig } from 'rspress/config'
 
 import hooks from './hooks.json'
 import i18n from './i18n.json'
-import { locale, version } from './locale'
+import { locale } from './locale'
 
 import type { RspressPlugin } from '@rspress/shared'
 
@@ -72,14 +72,13 @@ export default defineConfig({
     },
     source: {
       alias: {
+        '@shined/react-use': path.resolve(__dirname, './node_modules/@shined/react-use'),
+        '@/components': path.resolve(__dirname, './src/components'),
         '@@': path.resolve(__dirname, './'),
         '@': path.resolve(__dirname, './src'),
-        '@shined/react-use': path.resolve(__dirname, './node_modules/@shined/react-use'),
       },
       define: {
         'process.env.ASSETS_PREFIX': JSON.stringify(assetsPrefix),
-        'process.env.IS_SODOC': JSON.stringify(process.env.IS_SODOC),
-        'process.env.REACT_USE_VERSION': JSON.stringify(version),
       },
     },
   },

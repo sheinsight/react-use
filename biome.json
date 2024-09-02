@@ -10,8 +10,8 @@
     "enabled": true
   },
   "files": {
-    "include": ["./src/**/*", "./docs/**/*", "./testing/**/*"],
-    "ignore": ["./src/utils/react-fast-compare.ts", "./docs/hooks.json"],
+    "include": ["./packages/**/*", "./docs/**/*", "./testing/**/*", "./*.ts"],
+    "ignore": ["./**/react-fast-compare.ts", "hooks.json", "./**/.next"],
     "ignoreUnknown": true
   },
   "linter": {
