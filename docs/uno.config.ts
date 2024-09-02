@@ -2,7 +2,7 @@ import { defineConfig, presetIcons, presetUno } from 'unocss'
 
 export default defineConfig({
   content: {
-    filesystem: ['{docs,src}/**/*', '../package/**/demo.tsx'],
+    filesystem: ['{docs,src}/**/*', '../packages/**/demo.tsx'],
   },
   presets: [
     presetUno({
