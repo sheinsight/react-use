@@ -110,11 +110,11 @@ export interface UseFormReturns<FormState extends object> {
    */
   handleReset(): void
   /**
-   * Check and report the native form validity
+   * Check and report the native form validity, only valid for native form
    */
   reportValidity(): boolean
   /**
-   * Check the native form validity
+   * Check the native form validity, only valid for native form
    */
   checkValidity(): boolean
   /**
@@ -142,17 +142,17 @@ export function useForm<FormState extends object>(options: UseFormOptions<FormSt
   const formRef = useRef<HTMLFormElement>(null)
   const formValueRef = useRef<FormState>(initialValue)
 
-  const setFormValue = useStableFn((value: FormState) => {
-    formValueRef.current = value
-    !formRef.current && render()
-  })
-
   const latest = useLatest({
     initialValue,
     triggerOnChangeWhenReset,
     preventDefaultWhenSubmit,
     onChange,
     onReset,
+  })
+
+  const setFormValue = useStableFn((value: FormState) => {
+    formValueRef.current = value
+    !formRef.current && render()
   })
 
   const submitFn = useAsyncFn(onSubmit)
@@ -235,7 +235,7 @@ export function useForm<FormState extends object>(options: UseFormOptions<FormSt
 
   useMount(() => {
     if (formRef.current) {
-      syncFormStateToDom(formRef.current, formValueRef.current, latest.current.initialValue)
+      syncFormStateToDom(formRef.current, formValueRef.current, initialValue)
     }
   })
 

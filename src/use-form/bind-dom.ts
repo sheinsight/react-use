@@ -27,7 +27,11 @@ export function syncFormStateToDom<FormState extends object>(
             case 'checkbox': {
               const checkbox = element
 
-              checkbox.defaultChecked = defaultForm[name] === checkbox.value
+              if (Array.isArray(defaultForm[name])) {
+                checkbox.defaultChecked = defaultForm[name].includes(checkbox.value)
+              } else {
+                checkbox.defaultChecked = defaultForm[name] && checkbox.value === 'on'
+              }
 
               if (Array.isArray(value)) {
                 checkbox.checked = value.includes(checkbox.value)
@@ -45,9 +49,10 @@ export function syncFormStateToDom<FormState extends object>(
               break
             }
 
+            // range / date / time / number / text / password / email / tel / url / search
             default: {
               element.defaultValue = defaultForm[name] as string
-              element.value = (value ?? '').toString()
+              element.value = String(value ?? '')
               break
             }
           }
@@ -57,14 +62,24 @@ export function syncFormStateToDom<FormState extends object>(
 
         // <select />
         case element instanceof HTMLSelectElement: {
-          const select = element as HTMLSelectElement
+          const select = element
 
-          if (Array.isArray(value)) {
+          if (Array.isArray(value) && Array.isArray(defaultForm[name])) {
+            select.multiple = true
+
             for (const option of Array.from(select.options)) {
+              option.defaultSelected = defaultForm[name].includes(option.value)
               option.selected = value.includes(option.value)
             }
           } else {
-            select.value = (value ?? '').toString()
+            select.multiple = false
+
+            for (const option of Array.from(select.options)) {
+              option.defaultSelected = defaultForm[name] === option.value
+              option.selected = value === option.value
+            }
+
+            select.value = String(value ?? '')
           }
 
           break
@@ -72,8 +87,9 @@ export function syncFormStateToDom<FormState extends object>(
 
         // <textarea />
         case element instanceof HTMLTextAreaElement: {
-          element.defaultValue = defaultForm[name] as string
-          element.value = (value ?? '').toString()
+          element.defaultValue = String(defaultForm[name]) as string
+          element.value = String(value ?? '')
+
           break
         }
       }
@@ -97,6 +113,7 @@ export function getFormStateFromDom<FormState extends object>(formEl: HTMLFormEl
           switch (element.type) {
             case 'checkbox': {
               const checkbox = element
+
               if (Array.isArray(formValue[name])) {
                 if (checkbox.checked) {
                   formValue[name] = [...new Set([...formValue[name], checkbox.value])] as FormState[typeof name]
@@ -106,18 +123,26 @@ export function getFormStateFromDom<FormState extends object>(formEl: HTMLFormEl
               } else {
                 formValue[name] = checkbox.checked as FormState[typeof name]
               }
+
               break
             }
 
             case 'radio': {
               const radio = element
-              formValue[name] = (radio.checked ? radio.value : formValue[name]) as FormState[typeof name]
+
+              if (radio.checked) {
+                formValue[name] = radio.value as FormState[typeof name]
+              }
+
               break
             }
 
-            default:
+            // range / date / time / number / text / password / email / tel / url / search
+            default: {
               formValue[name] = element.value as FormState[typeof name]
+
               break
+            }
           }
 
           break
@@ -126,13 +151,12 @@ export function getFormStateFromDom<FormState extends object>(formEl: HTMLFormEl
         // <select />
         case element instanceof HTMLSelectElement: {
           const select = element
+          const opts = Array.from(select.options)
 
           if (select.multiple) {
-            formValue[name] = Array.from(select.options)
-              .filter((option) => option.selected)
-              .map((option) => option.value) as FormState[typeof name]
+            formValue[name] = opts.filter((op) => op.selected).map((op) => op.value) as FormState[typeof name]
           } else {
-            formValue[name] = select.value as FormState[typeof name]
+            formValue[name] = (opts.find((op) => op.selected)?.value || select.value) as FormState[typeof name]
           }
 
           break
@@ -141,8 +165,12 @@ export function getFormStateFromDom<FormState extends object>(formEl: HTMLFormEl
         // <textarea />
         case element instanceof HTMLTextAreaElement: {
           formValue[name] = element.value as FormState[typeof name]
+
           break
         }
+
+        default:
+          break
       }
     }
   }

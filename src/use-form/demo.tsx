@@ -19,16 +19,16 @@ export function App() {
     initialValue: {
       name: '',
       age: '20',
-      gender: genders[0],
-      color: [colors[0]],
-      nation: nations[0],
+      gender: genders[1],
+      color: [colors[1]],
+      nation: nations[1],
       confirm: true,
     } as FormState,
     onSubmit: async (form) => {
       toast.loading('Submitting...', { id: 'submit' })
       console.log('submit', form)
       await mockFetch()
-      toast.success(`Hello, ${form.name}!`, { id: 'submit' })
+      toast.success(`Hello, ${form.name ?? 'Unknown User'}!`, { id: 'submit' })
     },
     onChange: (form) => console.log('form change', form),
     onReset: () => console.log('reset done'),
