@@ -8,7 +8,10 @@ import { HooksType } from '@/components'
 
 <HooksType {...frontmatter} />
 
-A React hook for managing form state.
+A React Hook for managing form state.
+
+- When used with the native `<form />`, it operates in **uncontrolled mode**, meaning changes to the form do not trigger component re-renders. (Ultimate performance)
+- When used with third-party component libraries, it works well in the regular **controlled mode**, such as with [shineout](https://shineout.js.org/) and [antd](https://ant.design/).
 
 ## Demo \{#demo}
 

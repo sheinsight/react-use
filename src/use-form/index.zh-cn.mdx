@@ -10,6 +10,9 @@ import { HooksType } from '@/components'
 
 一个用来管理表单状态的 React Hook。
 
+- 与原生 `<form />` 搭配使用时，使用**非受控模式**，表单的修改不会触发组件重渲染。（极致的性能）
+- 与第三方的组件库搭配使用时，以常规的**受控模式**运行良好，比如 [shineout](https://shineout.js.org/) 和 [antd](https://ant.design/) 等。
+
 ## 演示 \{#demo}
 
 import { App } from './demo'

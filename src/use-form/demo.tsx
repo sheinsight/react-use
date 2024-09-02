@@ -18,10 +18,11 @@ export function App() {
   const form = useForm({
     initialValue: {
       name: '',
+      age: '20',
       gender: genders[0],
       color: [colors[0]],
       nation: nations[0],
-      confirm: false,
+      confirm: true,
     } as FormState,
     onSubmit: async (form) => {
       toast.loading('Submitting...', { id: 'submit' })
@@ -39,13 +40,13 @@ export function App() {
         <Zone>
           <Zone>
             <span className="text-right inline-block w-80px">Name:</span>
-            <Input placeholder="Input your name" name="name" />
+            <Input placeholder="Input your name" name="name" required />
           </Zone>
           <Zone>
             <span className="text-right inline-block w-80px">Gender:</span>
             {genders.map((gender) => (
               <label key={gender}>
-                <input name="gender" type="radio" value={gender} />
+                <input name="gender" type="radio" required value={gender} />
                 <span className="ml-1">{gender}</span>
               </label>
             ))}
@@ -76,7 +77,7 @@ export function App() {
           <Zone>
             <span className="text-right inline-block w-80px" />
             <label>
-              <input name="confirm" type="checkbox" />
+              <input required name="confirm" type="checkbox" />
               <span>
                 <span className="ml-1">I have read and agree to the </span>
                 <a href="#term" className="text-blue-6 underline">
@@ -99,7 +100,7 @@ export function App() {
 
       <Zone className="mt-8">
         <Button
-          onClick={() =>
+          onClick={() => {
             form.setValue({
               name: OTP(),
               gender: genders[1],
@@ -108,7 +109,7 @@ export function App() {
               nation: nations[1],
               confirm: true,
             })
-          }
+          }}
         >
           Set form
         </Button>

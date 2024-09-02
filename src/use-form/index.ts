@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { useAsyncFn } from '../use-async-fn'
 import { useLatest } from '../use-latest'
 import { useMount } from '../use-mount'
-import { useSafeState } from '../use-safe-state'
+import { useRender } from '../use-render'
 import { useStableFn } from '../use-stable-fn'
 import { isFunction, noop } from '../utils/basic'
 import { getFormStateFromDom, isInvalidFormChildElement, syncFormStateToDom } from './bind-dom'
@@ -141,11 +141,16 @@ export function useForm<FormState extends object>(options: UseFormOptions<FormSt
     onSubmit = noop,
   } = options
 
+  const render = useRender()
   const formRef = useRef<HTMLFormElement>(null)
-  const [formValue, setFormValue] = useSafeState<FormState>(initialValue as FormState)
+  const formValueRef = useRef<FormState>(initialValue as FormState)
+
+  const setFormValue = useStableFn((value: FormState) => {
+    formValueRef.current = value
+    !formRef.current && render()
+  })
 
   const latest = useLatest({
-    formValue,
     initialValue: initialValue as FormState,
     triggerOnChangeWhenReset,
     preventDefaultWhenSubmit,
@@ -165,7 +170,7 @@ export function useForm<FormState extends object>(options: UseFormOptions<FormSt
   })
 
   const submit = useStableFn(() => {
-    handleSubmit(latest.current.formValue)
+    handleSubmit(formValueRef.current)
   })
 
   const handleReset = useStableFn(() => {
@@ -194,7 +199,7 @@ export function useForm<FormState extends object>(options: UseFormOptions<FormSt
       e.stopPropagation()
     }
 
-    handleSubmit(latest.current.formValue)
+    handleSubmit(formValueRef.current)
   })
 
   const handleNativeReset = useStableFn((e: FormEvent<HTMLFormElement>) => {
@@ -202,7 +207,7 @@ export function useForm<FormState extends object>(options: UseFormOptions<FormSt
   })
 
   const setValue = useStableFn((form: SetStateAction<FormState>) => {
-    const nextForm = isFunction(form) ? form(latest.current.formValue) : form
+    const nextForm = isFunction(form) ? form(formValueRef.current) : form
 
     // for uncontrollable form (by using nativeProps)
     formRef.current && syncFormStateToDom(formRef.current, nextForm, latest.current.initialValue)
@@ -211,10 +216,10 @@ export function useForm<FormState extends object>(options: UseFormOptions<FormSt
   })
 
   const setFieldValue = useStableFn(<Name extends keyof FormState>(name: Name, value: FormState[Name]) => {
-    if (latest.current.formValue[name] === value) return
+    if (formValueRef.current[name] === value) return
 
     const nextForm = {
-      ...latest.current.formValue,
+      ...formValueRef.current,
       [name]: value,
     }
 
@@ -223,21 +228,25 @@ export function useForm<FormState extends object>(options: UseFormOptions<FormSt
 
   useMount(() => {
     if (formRef.current) {
-      syncFormStateToDom(formRef.current, latest.current.formValue, latest.current.initialValue)
+      syncFormStateToDom(formRef.current, formValueRef.current, latest.current.initialValue)
     }
   })
 
   return {
     reset,
     submit,
-    value: formValue,
     setValue,
     setFieldValue,
+    get value() {
+      // use `getter` to prevent expiring state
+      return formValueRef.current
+    },
     get submitting() {
+      // for dependencies collection
       return submitFn.loading
     },
     props: {
-      value: formValue,
+      value: formValueRef.current,
       defaultValue: initialValue as FormState,
       onChange: handleChange,
       onSubmit: handleSubmit,
