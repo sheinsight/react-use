@@ -23,12 +23,15 @@ import { App } from './demo'
 
 ```tsx
 const {
-  props,
+  value,
+  setValue,
+  setFieldValue
   submit,
   reset,
   submitting,
-  setValue,
-  setFieldValue,
+  initialValue,
+  checkValidity,
+  reportValidity,
   nativeProps,
 } = useForm(options)
 
@@ -43,9 +46,7 @@ const form = useForm({
   },
 })
 
-// form.props are used to pass down properties to the component library
 // form.nativeProps are used to pass down properties to the native form element
-
 // form.submitting is used to check if the form is currently submitting
 
 // form.submit() is used to submit the form
@@ -53,18 +54,11 @@ const form = useForm({
 // form.setValue() is used to modify the entire form value
 // form.setFieldValue() is used to set a single form field value
 
-// When using a component library, e.g., shineout, make sure that the Form supports receiving value, defaultValue, onChange, onSubmit, onReset properties
-return (
-  <Form {...form.props}>
-    <Form.Item label="Name"><Input type="text" name="name" /></Form.Item>
-    <Form.Item label="Email"><Input type="email" name="email" /></Form.Item>
-    <Form.Submit loading={form.submitting}>Submit</Form.Submit>
-    <Form.Reset>Reset</Form.Reset>
-  </Form>
-)
+// form.checkValidity() validates the form's validity, underlyingly calling the native form's checkValidity method, only valid for native forms
+// form.reportValidity() validates and reports the form's validity, underlyingly calling the native form's reportValidity method, only valid for native forms
 
 // When using native form elements in uncontrolled mode, but internally controlling the form's ref
-// An internal mechanism ensures that executing setValue and setFieldValue operations synchronizes with UI state
+// An internal mechanism ensures that executing `setValue` and `setFieldValue` operations synchronizes with UI state
 return (
   <form {...form.nativeProps}>
     <label>Name:<input type="text" name="name" /></label>
@@ -72,6 +66,22 @@ return (
     <button disabled={form.submitting} type="submit">Submit</button>
     <button type="reset">Reset</button>
   </form>
+)
+
+// When using a component library, controlled mode, e.g., shineout
+return (
+  <Form
+    value={form.value}
+    onChange={form.onChange}
+    onSubmit={form.onSubmit}
+    onReset={form.onReset}
+    defaultValue={form.initialValue}
+  >
+    <Form.Item label="姓名"><Input type="text" name="name" /></Form.Item>
+    <Form.Item label="邮箱"><Input type="email" name="email" /></Form.Item>
+    <Form.Submit loading={form.submitting}>提交</Form.Submit>
+    <Form.Reset>重置</Form.Reset>
+  </Form>
 )
 ```
 

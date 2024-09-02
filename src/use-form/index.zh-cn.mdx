@@ -11,7 +11,7 @@ import { HooksType } from '@/components'
 一个用来管理表单状态的 React Hook。
 
 - 与原生 `<form />` 搭配使用时，使用**非受控模式**，表单的修改不会触发组件重渲染。（极致性能）
-- 与第三方的组件库搭配使用时，以常规的**受控模式**运行良好，比如 [shineout](https://github.com/sheinsight/shineout-next) 等。
+- 与第三方的组件库搭配时，在常规的**受控模式**下运行良好，比如 [shineout](https://github.com/sheinsight/shineout-next) 等。
 
 ## 演示 \{#demo}
 
@@ -23,12 +23,15 @@ import { App } from './demo'
 
 ```tsx
 const {
-  props,
+  value,
+  setValue,
+  setFieldValue
   submit,
   reset,
   submitting,
-  setValue,
-  setFieldValue
+  initialValue,
+  checkValidity,
+  reportValidity,
   nativeProps,
 } = useForm(options)
 
@@ -43,9 +46,7 @@ const form = useForm({
   },
 })
 
-// form.props 用来传递给组件库的属性
 // form.nativeProps 用来传递给原生表单元素的属性
-
 // form.submitting 用来判断表单是否正在提交中
 
 // form.submit() 用来提交表单
@@ -53,19 +54,11 @@ const form = useForm({
 // form.setValue() 用来修改整个表单值
 // form.setFieldValue() 用来设置单个表单值
 
-// 使用组件库，比如 shineout
-// 需要确保 Form 支持接收 value、defaultValue、onChange、onSubmit、onReset 属性
-return (
-  <Form {...form.props}>
-    <Form.Item label="姓名"><Input type="text" name="name" /></Form.Item>
-    <Form.Item label="邮箱"><Input type="email" name="email" /></Form.Item>
-    <Form.Submit loading={form.submitting}>提交</Form.Submit>
-    <Form.Reset>重置</Form.Reset>
-  </Form>
-)
+// form.checkValidity() 验证表单，底层调用原生表单的 checkValidity 方法，仅对原生表单有效
+// form.reportValidity() 验证并报告，底层调用原生表单的 reportValidity 方法，仅对原生表单有效
 
 // 使用原生表单元素，非受控模式，但是内部控制了 form 的 ref
-// 通过内置机制来保证执行 setValue 和 setFieldValue 操作时，UI 状态能够同步
+// 通过内置机制来保证执行 `setValue` 和 `setFieldValue` 操作时，UI 状态能够同步
 return (
   <form {...form.nativeProps}>
     <label>姓名:<input type="text" name="name" /></label>
@@ -73,6 +66,22 @@ return (
     <button disabled={form.submitting} type="submit">提交</button>
     <button type="reset">重置</button>
   </form>
+)
+
+// 使用组件库，受控模式，比如 shineout
+return (
+  <Form
+    value={form.value}
+    onChange={form.onChange}
+    onSubmit={form.onSubmit}
+    onReset={form.onReset}
+    defaultValue={form.initialValue}
+  >
+    <Form.Item label="姓名"><Input type="text" name="name" /></Form.Item>
+    <Form.Item label="邮箱"><Input type="email" name="email" /></Form.Item>
+    <Form.Submit loading={form.submitting}>提交</Form.Submit>
+    <Form.Reset>重置</Form.Reset>
+  </Form>
 )
 ```
 
