@@ -1,35 +1,78 @@
-# 🏃 起步 \{#get-started}
+# 🏃 快速开始 \{#get-started}
 
-## 💬 前言 \{#preface}
+import { ReactUseIcon } from '@/components'
 
-为了应对各种复杂多样的业务场景，本库提供了大量**高质量、高效率**的 React Hooks 来帮助你更快地构建应用，涵盖了从基础的 `副作用处理`、`数据请求`、`状态管理`、`UI 状态`、`实用工具` 到偏业务的 `浏览器 API`、`常见场景`、`高频业务逻辑` 等各个方面。
+<ReactUseIcon />
 
-**无需慌张，并非所有的 Hooks 都需要掌握。**
+<div className="flex gap-2 mt-4">
+  <img
+  alt="NPM Version"
+  src="https://img.shields.io/npm/v/%40shined%2Freact-use?style=flat&labelColor=%23ffffff&color=%232e8555"
+  />
+  <img src="https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome" alt="Biome Badge" />
+  <img src="https://pkg-size.dev/badge/bundle/125650" alt="Version Badge" />
+</div>
 
-接下来，本文将引导你快速了解本库的主要内容，让你对整体有一个大致的了解。这样你在实际开发场景中就能快速回忆起这里也许有相应 Hooks 可以解决问题，然后再来翻阅具体的使用文档即可。
+`@shined/react-use` 旨在**重塑 React 开发的新编程范式**。它通过提供众多高质量、语意化的 Hooks 来帮助开发者提高开发效率、养成更好的编程习惯，减少对 `useEffect` 和 `useState` 的直接依赖，同时期望开发者能够逐渐适应「**Hooks 优先**」的 React 开发（编程）范式。
 
-## 🔖 按类型分类
+它本质上是一个对 **SSR（服务端渲染）友好**、**全面**且**高度优化**的 React Hooks 库，提供了灵活且高效的 Hooks 解决方案，并完全采用 **TypeScript** 开发，配备了包含丰富示例的交互式文档 🔥。
 
-本库按照**类型**组织了各种 Hooks，分为以下九个部分，首页的导航也是按照这个分类来的：
+它主要受到 [VueUse](https://vueuse.org/) 的启发，同时也吸取了 [react-use](https://github.com/streamich/react-use)、[ahooks](https://ahooks.js.org/) 以及社区内许多其他优秀库的影响。特别感谢开源社区，尤其是上述库的作者们，感谢他们的杰出工作和灵感。
 
-- **Lifecycle**：与 React 的生命周期相关，比如 `useMount`、`useUnmount`、`useUpdateEffect` 等。
-- **State**：与状态管理相关，比如 `useSafeState`、`useRafState`、`useSetState` 等衍生状态。
-- **Element**：与 DOM 元素相关，比如 `useElementSize`、`useFocus`、`useScroll`、`useDropZone` 等。
-- **Browser**：与浏览器 API 相关，比如 `useClipboard`、`useFullscreen`、`useBattery`、`useBluetooth`、`useEyeDropper`、`useResizeObserver` 等。
-- **Sensors**：与传感器相关，比如 `useKeyPress`、`useGeolocation`、`useFps`、`useMouse`、`useUserIdle` 等。
-- **Animation**：不做动画，但与定时器、动画相关，比如 `useIntervalFn`、`useTimeoutFn`、`useRafFn` 等。
-- **Network**：与网络相关，目前比较少，只有 `useOnline` 和 `useNetwork`。
-- **Utilities**：一些实用工具，比如 `useAsyncFn`、`useCountdown`、`useDateFormat`、`useDebouncedFn`、`useRetryFn`、`useTimeAgo`、`useEventBus` 等。
-- **ProUtilities**：强业务场景，比如 `useQuery`、`useDynamicList`、`usePagination`、`useVirtualList` 等。
+## 🚀 功能特性 \{#features}
 
-## 🍱 按功能分类
+- **足够灵活**：特性包括 [依赖收集 Dependencies Collection](/docs/features/dependencies-collection)、[元素目标 ElementTarget](/docs/features/element-target)、[Ref 获取函数 Ref Getter](/docs/features/ref-getter)、[可暂停 Pausable](/docs/features/pausable) 等。
+- **支持 Tree Shaking**：采用 [ESM](https://nodejs.org/api/esm.html) 设计和交付，只导入你需要的内容。
+- **交互式文档**：具有在线示例和 [演练场](https://react-online.vercel.app/#code=aW1wb3J0IHsgY3JlYXRlIH0gZnJvbSAnQHNoaW5lZC9yZWFjdGl2ZScKaW1wb3J0IHsgY3JlYXRlUm9vdCB9IGZyb20gJ3JlYWN0LWRvbS9jbGllbnQnCmltcG9ydCB7IHVzZU1vdXNlLCB1c2VSZWFjdGl2ZSB9IGZyb20gJ0BzaGluZWQvcmVhY3QtdXNlJwoKCmZ1bmN0aW9uIEFwcCgpIHsKICBjb25zdCB7IHgsIHkgfSA9IHVzZU1vdXNlKCkKICBjb25zdCBbeyBjb3VudCB9LCBtdXRhdGVdID0gdXNlUmVhY3RpdmUoeyBjb3VudDogMCB9LCB7IGNyZWF0ZSB9KQoKICBjb25zdCBhZGRPbmUgPSAoKSA9PiBtdXRhdGUuY291bnQrKwoKICByZXR1cm4gKAogICAgPGRpdj4KICAgICAgPGRpdj4oeCwgeSk6ICh7eH0sIHt5fSk8L2Rpdj4KICAgICAgPGJ1dHRvbiBvbkNsaWNrPXthZGRPbmV9PkNvdW50OiB7Y291bnR9PC9idXR0b24%2BCiAgICA8L2Rpdj4KICApCn0KCmNyZWF0ZVJvb3QoZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3Jvb3QnKSEpLnJlbmRlcig8QXBwIC8%2BKQo%3D)。
+- **轻量级**：自豪地宣布 [零依赖](https://github.com/sheinsight/react-use/blob/main/package.json)。
+- **对 SSR 友好**：确保所有 Hooks 与服务端渲染（SSR）兼容。
+- **一流的 TypeScript 支持**：用 [TypeScript](https://www.typescriptlang.org/) 编写，拥有命名良好的类型定义和 [JSDoc](https://jsdoc.app/) 注释。
+- **~~全面测试~~**：（正在进行中……）
 
-本库按照**功能和应用场景**组织了各种 Hooks，大致分为以下几个部分：
+## ⚡️ 内部优化 \{#optimizations}
 
-- **基础 Hooks**：包括处理**副作用**、**状态管理**等基本需求的 Hooks，是每个 React 开发者都应该熟练掌握的工具，如 `useMount`、`useUnmount`、`useUpdateEffect`、`useSafeState` 等。
-- **数据处理与请求**：提供了从简单的数据请求，到复杂的数据处理逻辑的 Hooks，支持轮询刷新、自动请求、缓存等高级特性，让**异步操作**和**数据管理**变得更简单，如 `useAsyncFn`、`useQuery` 等。
-- **UI 状态管理**：针对 UI 状态（如**加载中**、**错误处理**）提供了丰富的 Hooks 帮助管理组件状态，提升用户体验，如 `useAsyncFn`、`useHover`、`useFocus`、`useRetryFn` 等。
-- **浏览器 API**：提供对浏览器 API 的封装，让你更方便地使用浏览器提供的功能，同时支持检测浏览器支持情况，并尽可能降级处理，如 `useClipboard`、`useFullscreen`、`useBattery`、`useBluetooth`、`useEyeDropper`、`useResizeObserver` 等。
-- **实用工具**：提供了一系列**实用工具** Hooks，帮助你更方便地处理数据、事件等，如 `useEventListener`、`useNow`、`useDateFormat`、`useTimeAgo`、`useCountdown`、`useAsyncLock`、`useEventBus` 等。
-- **业务逻辑相关**：涵盖一系列特定业务场景（如**动态列表**、**虚拟列表**、**分页状态**）的 Hooks 帮助快速实现复杂业务逻辑，如 `useVirtualList`、`useDynamicList`、`usePagination` 等。
-- **常见场景解决方案**：提供解决高频问题的 Hooks 集合，无论**性能优化**、**频率限制**还是其他常见问题，都有解决方案，如 `useSafeState`, `useRafState`， `useDebouncedFn`、`useThrottledFn` 等。
+- **性能优化**：通过 [依赖收集 Dependencies Collection](/docs/features/dependencies-collection) 特性，减少不必要的重渲染。
+- **安全状态**：为所有有状态的 Hooks 实现了 [安全状态](/docs/optimization/safe-state) 策略，减少了 bug 和不希望的行为。
+- **函数稳定**：默认情况下，Hooks 里的每个导出函数都受益于 [稳定化](/docs/optimization/stabilization)。
+- **最新状态**：通过内部使用 [最新](/docs/optimization/latest-state) 状态，避免了过期闭包问题。
+- **可暂停状态**：使用 [可暂停 Pausable](/docs/features/pausable) 实例可选地控制某些 Hooks 的行为。
+
+## 📦 安装 \{#installation}
+
+使用你喜欢的包管理器进行安装：
+
+import { PackageManagerTabs } from 'rspress/theme'
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm install @shined/react-use',
+    yarn: 'yarn add @shined/react-use',
+    pnpm: 'pnpm add @shined/react-use',
+    bun: 'bun add @shined/react-use',
+  }}
+/>
+
+## 🎨 使用示例 \{#usage}
+
+下面是一个如何使用 [useAsyncFn](/reference/use-async-fn) Hook 的例子：
+
+
+```tsx
+function App() {
+  const { loading, error, run } = useAsyncFn(fetchData)
+  return (
+    <>
+      <div>{data}</div>
+      <button onClick={run} disabled={loading}>Fetch</button>
+    </>
+  )
+}
+```
+
+import { App } from '@/../../src/use-async-fn/demo'
+
+<App />
+
+接下来，建议阅读 [起步](/docs/get-started) 了解如何使用本库。
+
+然后你可以前往 [使用指引](/docs/guide) 了解如何改进现有代码，或访问 [Hooks 列表](/reference) 查看所有可用的 Hooks。
