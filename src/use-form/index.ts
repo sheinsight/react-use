@@ -49,29 +49,6 @@ export interface UseFormOptions<FormState extends object> {
   triggerOnChangeWhenReset?: boolean
 }
 
-export type UseFormReturnsProps<FormState extends object> = {
-  /**
-   * Current value of the form
-   */
-  value: FormState
-  /**
-   * Initial value of the form
-   */
-  defaultValue: FormState
-  /**
-   * Callback to be called when the form value changes
-   */
-  onChange(form: FormState): void
-  /**
-   * Callback to be called when the form is submitted
-   */
-  onSubmit(form: FormState): void
-  /**
-   * Callback to be called when the form is reset
-   */
-  onReset(): void
-}
-
 export type UseFormReturnsNativeProps = {
   /**
    * Ref of the form element
@@ -117,9 +94,29 @@ export interface UseFormReturns<FormState extends object> {
    */
   value: FormState
   /**
-   * Form related props
+   * Initial value of the form
    */
-  props: UseFormReturnsProps<FormState>
+  initialValue: FormState
+  /**
+   * handle form value changes
+   */
+  handleChange(form: FormState): void
+  /**
+   * handle form submit
+   */
+  handleSubmit(form: FormState): void
+  /**
+   * handle form reset
+   */
+  handleReset(): void
+  /**
+   * Check and report the native form validity
+   */
+  reportValidity(): boolean
+  /**
+   * Check the native form validity
+   */
+  checkValidity(): boolean
   /**
    * Native form related props
    */
@@ -133,7 +130,7 @@ export interface UseFormReturns<FormState extends object> {
  */
 export function useForm<FormState extends object>(options: UseFormOptions<FormState> = {}): UseFormReturns<FormState> {
   const {
-    initialValue = {},
+    initialValue = {} as FormState,
     triggerOnChangeWhenReset = false,
     preventDefaultWhenSubmit = true,
     onChange = noop,
@@ -143,7 +140,7 @@ export function useForm<FormState extends object>(options: UseFormOptions<FormSt
 
   const render = useRender()
   const formRef = useRef<HTMLFormElement>(null)
-  const formValueRef = useRef<FormState>(initialValue as FormState)
+  const formValueRef = useRef<FormState>(initialValue)
 
   const setFormValue = useStableFn((value: FormState) => {
     formValueRef.current = value
@@ -151,7 +148,7 @@ export function useForm<FormState extends object>(options: UseFormOptions<FormSt
   })
 
   const latest = useLatest({
-    initialValue: initialValue as FormState,
+    initialValue,
     triggerOnChangeWhenReset,
     preventDefaultWhenSubmit,
     onChange,
@@ -170,7 +167,7 @@ export function useForm<FormState extends object>(options: UseFormOptions<FormSt
   })
 
   const submit = useStableFn(() => {
-    handleSubmit(formValueRef.current)
+    return submitFn.run(formValueRef.current)
   })
 
   const handleReset = useStableFn(() => {
@@ -226,6 +223,16 @@ export function useForm<FormState extends object>(options: UseFormOptions<FormSt
     setValue(nextForm)
   })
 
+  const checkValidity = useStableFn(() => {
+    if (!formRef.current) return false
+    return formRef.current.checkValidity()
+  })
+
+  const reportValidity = useStableFn(() => {
+    if (!formRef.current) return false
+    return formRef.current.reportValidity()
+  })
+
   useMount(() => {
     if (formRef.current) {
       syncFormStateToDom(formRef.current, formValueRef.current, latest.current.initialValue)
@@ -233,10 +240,6 @@ export function useForm<FormState extends object>(options: UseFormOptions<FormSt
   })
 
   return {
-    reset,
-    submit,
-    setValue,
-    setFieldValue,
     get value() {
       // use `getter` to prevent expiring state
       return formValueRef.current
@@ -245,13 +248,16 @@ export function useForm<FormState extends object>(options: UseFormOptions<FormSt
       // for dependencies collection
       return submitFn.loading
     },
-    props: {
-      value: formValueRef.current,
-      defaultValue: initialValue as FormState,
-      onChange: handleChange,
-      onSubmit: handleSubmit,
-      onReset: handleReset,
-    },
+    initialValue,
+    reset,
+    submit,
+    setValue,
+    setFieldValue,
+    handleReset,
+    handleSubmit,
+    handleChange,
+    checkValidity,
+    reportValidity,
     nativeProps: {
       ref: formRef,
       onChange: handleNativeChange,

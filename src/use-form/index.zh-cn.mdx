@@ -11,7 +11,7 @@ import { HooksType } from '@/components'
 一个用来管理表单状态的 React Hook。
 
 - 与原生 `<form />` 搭配使用时，使用**非受控模式**，表单的修改不会触发组件重渲染。（极致的性能）
-- 与第三方的组件库搭配使用时，以常规的**受控模式**运行良好，比如 [shineout](https://shineout.js.org/) 和 [antd](https://ant.design/) 等。
+- 与第三方的组件库搭配使用时，以常规的**受控模式**运行良好，比如 [shineout](https://github.com/sheinsight/shineout-next) 等。
 
 ## 演示 \{#demo}
 
@@ -134,59 +134,36 @@ export interface UseFormOptions<FormState extends object> {
 ### 返回值 \{#returns}
 
 ```tsx
-export type UseFormReturnsProps<FormState extends object> = {
-  /**
-   * 表单的当前值
-   */
-  value: FormState
-  /**
-   * 表单的默认值
-   */
-  defaultValue: FormState
-  /**
-   * 表单项发生变化时的回调
-   */
-  onChange(form: FormState): void
-  /**
-   * 表单提交时的回调
-   */
-  onSubmit(form: FormState): void
-  /**
-   * 表单重置时的回调
-   */
-  onReset(): void
-}
-
 export type UseFormReturnsNativeProps = {
   /**
-   * 表单元素 form 的 ref
+   * form 元素的 ref
    */
   ref: RefObject<HTMLFormElement>
   /**
-   * 表单原生的 onChange 回调
+   * 表单项发生变化时的回调
    */
-  onChange(e: React.ChangeEvent<HTMLFormElement>): void
+  onChange(e: ChangeEvent<HTMLFormElement>): void
   /**
-   * 表单原生的 onSubmit 回调
+   * 表单提交时的回调
    */
-  onSubmit(e: React.ChangeEvent<HTMLFormElement>): void
+  onSubmit(e: ChangeEvent<HTMLFormElement>): void
   /**
-   * 表单原生的 onReset 回调
+   * 表单重置时的回调
    */
-  onReset(e: React.ChangeEvent<HTMLFormElement>): void
+  onReset(e: ChangeEvent<HTMLFormElement>): void
 }
 
 export interface UseFormReturns<FormState extends object> {
   /**
-   * 表单是否正在提交中
+   * 表单是否正在提交操作中
    */
   submitting: boolean
   /**
-   * 设置表单的值
+   * 设置整个表单的值
    */
   setValue: ReactSetState<FormState>
   /**
-   * 设置表单项的值
+   * 设置单个表单项的值
    */
   setFieldValue<Name extends keyof FormState>(name: Name, value: FormState[Name]): void
   /**
@@ -198,15 +175,35 @@ export interface UseFormReturns<FormState extends object> {
    */
   submit(): void
   /**
-   * 表单的当前值
+   * 当前表单的值
    */
   value: FormState
   /**
-   * 传递给组件库的 Form 组件的属性
+   * 表单元素的原生属性
    */
-  props: UseFormReturnsProps<FormState>
+  initialValue: FormState
   /**
-   * 传递给原生表单元素的属性
+   * 表单项发生变化时的回调
+   */
+  handleChange(form: FormState): void
+  /**
+   * 表单提交时的回调
+   */
+  handleSubmit(form: FormState): void
+  /**
+   * 表单重置时的回调
+   */
+  handleReset(): void
+  /**
+   * 表单元素的原生属性
+   */
+  reportValidity(): boolean
+  /**
+   * 检查表单的有效性
+   */
+  checkValidity(): boolean
+  /**
+   * 表单元素的原生属性
    */
   nativeProps: UseFormReturnsNativeProps
 }

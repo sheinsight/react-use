@@ -11,7 +11,7 @@ import { HooksType } from '@/components'
 A React Hook for managing form state.
 
 - When used with the native `<form />`, it operates in **uncontrolled mode**, meaning changes to the form do not trigger component re-renders. (Ultimate performance)
-- When used with third-party component libraries, it works well in the regular **controlled mode**, such as with [shineout](https://shineout.js.org/) and [antd](https://ant.design/).
+- When used with third-party component libraries, it works well in the regular **controlled mode**, such as with [shineout](https://github.com/sheinsight/shineout-next) and so on.
 
 ## Demo \{#demo}
 
@@ -92,37 +92,37 @@ const form = useForm(options)
 ```tsx
 export interface UseFormOptions<FormState extends object> {
   /**
-   * Initial form values
+   * Initial value of the form
    *
    * @defaultValue {}
    */
   initialValue?: FormState
   /**
-   * Callback for when a form item changes
+   * Callback to be called when the form value changes
    *
    * @defaultValue undefined
    */
   onChange?(form: FormState): void
   /**
-   * Callback for when the form is submitted
+   * Callback to be called when the form is submitted
    *
    * @defaultValue undefined
    */
   onSubmit?(form: FormState): void
   /**
-   * Callback for when the form is reset
+   * Callback to be called when the form is reset
    *
    * @defaultValue undefined
    */
   onReset?(): void
   /**
-   * When using `nativeProps`, whether to prevent the default behavior on form submission
+   * When use `nativeProps`, whether to prevent default when the form is submitted
    *
    * @defaultValue true
    */
   preventDefaultWhenSubmit?: boolean
   /**
-   * Whether to trigger the onChange callback when resetting
+   * Whether to emit change event when the form is reset
    *
    * @defaultValue false
    */
@@ -133,79 +133,76 @@ export interface UseFormOptions<FormState extends object> {
 ### Returns \{#returns}
 
 ```tsx
-export type UseFormReturnsProps<FormState extends object> = {
-  /**
-   * The current value of the form
-   */
-  value: FormState
-  /**
-   * The default value of the form
-   */
-  defaultValue: FormState
-  /**
-   * Callback for when a form item changes
-   */
-  onChange(form: FormState): void
-  /**
-   * Callback for when the form is submitted
-   */
-  onSubmit(form: FormState): void
-  /**
-   * Callback for when the form is reset
-   */
-  onReset(): void
-}
-
 export type UseFormReturnsNativeProps = {
   /**
-   * The form element's ref
+   * Ref of the form element
    */
   ref: RefObject<HTMLFormElement>
   /**
-   * The native onChange callback of the form
+   * Callback to be called when the form value changes
    */
-  onChange(e: React.ChangeEvent<HTMLFormElement>): void
+  onChange(e: ChangeEvent<HTMLFormElement>): void
   /**
-   * The native onSubmit callback of the form
+   * Callback to be called when the form is submitted
    */
-  onSubmit(e: React.ChangeEvent<HTMLFormElement>): void
+  onSubmit(e: ChangeEvent<HTMLFormElement>): void
   /**
-   * The native onReset callback of the form
+   * Callback to be called when the form is reset
    */
-  onReset(e: React.ChangeEvent<HTMLFormElement>): void
+  onReset(e: ChangeEvent<HTMLFormElement>): void
 }
 
 export interface UseFormReturns<FormState extends object> {
   /**
-   * Whether the form is currently submitting
+   * Whether the form is submitting
    */
   submitting: boolean
   /**
-   * Sets the value of the form
+   * Set the new value of the whole form
    */
   setValue: ReactSetState<FormState>
   /**
-   * Sets the value of a single form field
+   * Set a field value of the form
    */
   setFieldValue<Name extends keyof FormState>(name: Name, value: FormState[Name]): void
   /**
-   * Resets the form
+   * Reset the form to its initial value
    */
   reset(): void
   /**
-   * Submits the form
+   * Submit the form
    */
   submit(): void
   /**
-   * The current value of the form
+   * Current value of the form
    */
   value: FormState
   /**
-   * Properties passed to the component library's Form component
+   * Initial value of the form
    */
-  props: UseFormReturnsProps<FormState>
+  initialValue: FormState
   /**
-   * Properties passed to the native form element
+   * handle form value changes
+   */
+  handleChange(form: FormState): void
+  /**
+   * handle form submit
+   */
+  handleSubmit(form: FormState): void
+  /**
+   * handle form reset
+   */
+  handleReset(): void
+  /**
+   * Check and report the native form validity
+   */
+  reportValidity(): boolean
+  /**
+   * Check the native form validity
+   */
+  checkValidity(): boolean
+  /**
+   * Native form related props
    */
   nativeProps: UseFormReturnsNativeProps
 }
