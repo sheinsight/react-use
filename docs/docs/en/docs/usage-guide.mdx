@@ -221,6 +221,48 @@ useAsyncEffect(async (isCancelled) => {
 
 ## Common Scenarios \{#common-scenarios}
 
+### Asynchronous Operations \{#async-operation}
+
+It's recommended to use `useAsyncFn` for handling asynchronous operations. It automatically manages states like loading and has a complete lifecycle.
+
+For more details, see [useAsyncFn](/reference/use-async-fn).
+
+```tsx
+// Not recommended
+const [loading, setLoading] = useState(false)
+const [error, setError] = useState(null)
+
+const handleClick = async (post) => {
+  setLoading(true)
+
+  try {
+    await createPost(post)
+  } catch (error) {
+    setError(error)
+    console.error(error)
+  } finally {
+    setLoading(false)
+  }
+}
+
+return (
+  <button disabled={loading} onClick={() => handleClick({ title: 'Hello' })}>
+    Create Post
+  </button>
+)
+```
+
+```tsx
+// Recommended
+const { run, loading, error } = useAsyncFn(createPost, { onError: (error) => console.error(error) })
+
+return (
+  <button disabled={loading} onClick={() => run({ title: 'Hello' })}>
+    Create Post
+  </button>
+)
+```
+
 ### Debounce and Throttle \{#debounce-and-throttle}
 
 We recommend using the `useDebouncedFn` and `useThrottledFn` hooks for handling common debounce and throttle functionalities. There are also [useDebouncedEffect](/reference/use-debounced-effect) and [useThrottledEffect](/reference/use-throttled-effect) hooks available for managing debounce and throttle side effects. However, we generally prefer the former.
@@ -235,36 +277,46 @@ const handleScroll = (event) => console.log('scroll')
 const throttledHandleScroll = useThrottledFn(handleScroll, 500)
 ```
 
-### Handling Events \{#handle-events}
+### Data Pagination \{#pagination}
 
-`useEventListener` is used to add an event listener when a component mounts and automatically remove it when the component unmounts. It is suitable for scenarios that require adding event listeners. Any object that implements the `EventTarget` interface can be passed as the first parameter, such as `window`, `document`, `ref.current`, etc.
+It is recommended to use `usePagination` for handling pagination logic. This hook provides a series of semantic operations functions such as `next`, `prev`, `go`, etc., and it supports customization of the page number, number of items per page, and total number of items.
 
-```tsx
-// Objects conforming to the following interface can be passed as the first argument, SSR supports the `() => window` format
-export interface InferEventTarget<Events> {
-  addEventListener: (event: Events, fn?: any, options?: any) => any
-  removeEventListener: (event: Events, fn?: any, options?: any) => any
-}
-```
-
-For more details, see [useEventListener](/reference/use-event-listener).
+For more details, see [usePagination](/reference/use-pagination).
 
 ```tsx
 // Not recommended
-useEffect(() => {
-  const handler = () =>  doSomething()
-  window.addEventListener('resize', handler, { passive: true })
-  return () => {
-    window.removeEventListener('resize', handler)
-  }
-}, [])
+const [total, setTotal] = useState(100)
+const [page, setPage] = useState(1)
+const [pageSize, setPageSize] = useState(10)
+const pageCount = Math.ceil(total / pageSize)
+
+const handlePageChange = (page) => {
+  console.log(page, pageSize, pageCount, total)
+}
+
+useUpdateEffect(() => {
+  handlePageChange(page)
+}, [page])
 ```
 
-
 ```tsx
-// Recommended, and SSR friendly
-useEventListener('resize', doSomething, { passive: true })
-// useEventListener(() => window, 'resize', doSomething, { passive: true })
+// Recommended
+const [state, actions] = usePagination({
+  total: 100,
+  pageSize: 10,
+  onPageChange: (state) => {
+    console.log(state.page, state.pageSize, state.pageCount, state.total)
+  }
+})
+
+// `state` includes various pagination states
+const { page, pageSize, pageCount, total, isFirstPage, isLastPage } = state 
+
+// `actions` can perform various pagination operations
+actions.next() // Go to next page
+actions.prev() // Go to previous page
+actions.go(3) // Jump to page 3
+actions.setPageSize(20) // Set number of items per page to 20
 ```
 
 ### Copy to Clipboard \{#copy-to-clipboard}
@@ -298,20 +350,20 @@ clipboard.copy('Hello, React')
 
 ### Date Format \{#date-format}
 
-`useDateFormat` is used for formatting dates. It is **lightweight, flexible, and offers a uniform user experience**. It supports custom formatting strings and is suitable for scenarios that require date formatting.
+`useDateFormat` is for formatting time, offering an extra lightweight, flexible, unified user experience solution choice, suitable for scenarios that require time formatting and supports unicode standard tokens.
 
 For more details, see [useDateFormat](/reference/use-date-format).
 
 ```tsx
-// Not recommended, introduces additional dependencies leading to fragmented experience
+// introduces additional dependencies leading to fragmented experience
 import dayjs from 'dayjs' // Uses conventional formatting tokens
 dayjs('2024/09/01').format('YYYY-MM-DD HH:mm:ss') 
 
-// Not recommended, introduces additional dependencies leading to fragmented experience
+// introduces additional dependencies leading to fragmented experience
 import moment from 'moment' // Uses conventional formatting tokens
 moment('2024/09/01').format('YYYY-MM-DD HH:mm:ss')
 
-// Not recommended, introduces additional dependencies leading to fragmented experience
+// introduces additional dependencies leading to fragmented experience
 import dateFns from 'date-fns' // date-fns v2 starts using Unicode standard formatting tokens
 dateFns.format(new Date(), 'yyyy-MM-dd HH:mm:ss')
 ```
@@ -348,6 +400,37 @@ For more details, see [useTimeoutFn](/reference/use-timeout-fn) and [useInterval
 // Recommended
 useTimeoutFn(doSomething, 1000, { immediate: true })
 useIntervalFn(doSomething, 1000, { immediate: true })
+```
+
+### Handling Events \{#handle-events}
+
+`useEventListener` is used to add an event listener when a component mounts and automatically remove it when the component unmounts. It is suitable for scenarios that require adding event listeners. Any object that implements the `EventTarget` interface can be passed as the first parameter, such as `window`, `document`, `ref.current`, etc.
+
+```tsx
+// Objects conforming to the following interface can be passed as the first argument, SSR supports the `() => window` format
+export interface InferEventTarget<Events> {
+  addEventListener: (event: Events, fn?: any, options?: any) => any
+  removeEventListener: (event: Events, fn?: any, options?: any) => any
+}
+```
+
+For more details, see [useEventListener](/reference/use-event-listener).
+
+```tsx
+// Not recommended
+useEffect(() => {
+  const handler = () =>  doSomething()
+  window.addEventListener('resize', handler, { passive: true })
+  return () => {
+    window.removeEventListener('resize', handler)
+  }
+}, [])
+```
+
+```tsx
+// Recommended, and SSR friendly
+useEventListener('resize', doSomething, { passive: true })
+// useEventListener(() => window, 'resize', doSomething, { passive: true })
 ```
 
 ## Browser API \{#browser-api}

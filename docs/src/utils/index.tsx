@@ -5,7 +5,7 @@ export * from 'react-hot-toast'
 export * from '@formkit/auto-animate/react'
 export * from './hooks'
 
-export const repoBase = 'https://github.com/sheinsight/react-use/blob/main/src'
+export const repoBase = 'https://github.com/sheinsight/react-use/blob/main/packages/react-use/src'
 export const defaultLang = 'en'
 
 export const OTP = (): string => Math.random().toString(16).slice(-6).toUpperCase()

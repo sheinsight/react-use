@@ -41,18 +41,16 @@ export default defineConfig({
     dark: '/logo-dark.svg',
     light: '/logo-light.svg',
   },
-  search: {
-    versioned: true,
-  },
   route: {
     exclude: ['**/{components,hooks,utils}/**/*'],
     cleanUrls: true,
   },
   plugins,
   themeConfig: {
-    // enableContentAnimation: true,
+    enableContentAnimation: true,
     enableScrollToTop: true,
     darkMode: !process.env.IS_SODOC,
+    search: !process.env.IS_SODOC,
     socialLinks: [
       {
         icon: 'github',

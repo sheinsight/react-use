@@ -221,6 +221,88 @@ useAsyncEffect(async (isCancelled) => {
 
 ## 常见场景 \{#common-scenarios}
 
+### 异步操作 \{#async-operation}
+
+推荐使用 `useAsyncFn` 来处理异步操作，内部自动处理 loading 等状态，拥有完善的生命周期。
+
+详情参考 [useAsyncFn](/reference/use-async-fn)。
+
+```tsx
+// 不推荐
+const [loading, setLoading] = useState(false)
+const [error, setError] = useState(null)
+
+const handleClick = async (post) => {
+  setLoading(true)
+
+  try {
+    await createPost(post)
+  } catch (error) {
+    setError(error)
+    console.error(error)
+  } finally {
+    setLoading(false)
+  }
+}
+
+return (
+  <button disabled={loading} onClick={() => handleClick({ title: 'Hello' })}>
+    Create Post
+  </button>
+)
+```
+
+```tsx
+// 推荐
+const { run, loading, error } = useAsyncFn(createPost, { onError: (error) => console.error(error) })
+
+return (
+  <button disabled={loading} onClick={() => run({ title: 'Hello' })}>
+    Create Post
+  </button>
+)
+```
+
+### 数据请求 \{#data-fetching}
+
+推荐使用 `useQuery` 来处理数据请求，它提供了一系列语意化的操作函数，例如 `run`、`cancel`、`refresh` 等，同时支持自动处理 loading、error、data 等状态。
+
+详情参考 [useQuery](/reference/use-query)。
+
+```tsx
+// 不推荐
+const [loading, setLoading] = useState(false)
+const [error, setError] = useState(null)
+const [data, setData] = useState(null)
+
+useEffect(() => {
+  setLoading(true)
+  fetch('https://api.example.com/data')
+    .then((res) => res.json())
+    .then((data) => {
+      setData(data)
+      setLoading(false)
+    })
+    .catch((error) => {
+      setError(error)
+      setLoading(false)
+    })
+}, [])
+```
+
+```tsx
+// 推荐
+const { loading, error, data, run, cancel, refresh } = useQuery({
+  async asyncFn() {
+    return await fetch('https://api.example.com/data').then((res) => res.json())
+  },
+  { refreshInterval: 1000 }
+})
+
+// 可以通过 run、cancel、refresh 等操作函数来控制数据请求
+run()
+```
+
 ### 防抖和节流 \{#debounce-and-throttle}
 
 推荐使用 `useDebouncedFn` 和 `useThrottledFn` 两个 Hook 来处理常见的防抖和节流功能，当然也有 [useDebouncedEffect](/reference/use-debounced-effect) 和 [useDebouncedEffect](/reference/use-debounced-effect) 两个 Hook，用于处理防抖和节流的副作用，但一般情况下，我们更推荐前者。
@@ -235,36 +317,46 @@ const handleScroll = (event) => console.log('scroll')
 const throttledHandleScroll = useThrottledFn(handleScroll, 500)
 ```
 
-### 处理事件 \{#handle-events}
+### 数据分页 \{#pagination}
 
-`useEventListener` 用于在组件挂载时添加事件监听器，组件卸载时自动移除事件监听器，适用于需要添加事件监听器的场景。任何实现了 `EventTarget` 接口的对象都可以作为第一个参数传入，例如 `window`、`document`、`ref.current` 等。
+推荐使用 `usePagination` 来处理分页逻辑，它提供了一系列语意化的操作函数，例如 `next`、`prev`、`go` 等，同时支持自定义页码、每页条数、总条数等。
 
-```tsx
-// 符合以下接口的对象都可以作为第一个参数传入，SSR 下支持 `() => window` 的写法
-export interface InferEventTarget<Events> {
-  addEventListener: (event: Events, fn?: any, options?: any) => any
-  removeEventListener: (event: Events, fn?: any, options?: any) => any
-}
-```
-
-详情参考 [useEventListener](/reference/use-event-listener)。
+详情参考 [usePagination](/reference/use-pagination)。
 
 ```tsx
 // 不推荐
-useEffect(() => {
-  const handler = () =>  doSomething()
-  window.addEventListener('resize', handler, { passive: true })
-  return () => {
-    window.removeEventListener('resize', handler)
-  }
-}, [])
+const [total, setTotal] = useState(100)
+const [page, setPage] = useState(1)
+const [pageSize, setPageSize] = useState(10)
+const pageCount = Math.ceil(total / pageSize)
+
+const handlePageChange = (page) => {
+  console.log(page, pageSize, pageCount, total)
+}
+
+useUpdateEffect(() => {
+  handlePageChange(page)
+}, [page])
 ```
 
-
 ```tsx
-// 推荐，且 SSR 友好
-useEventListener('resize', doSomething, { passive: true })
-// useEventListener(() => window, 'resize', doSomething, { passive: true })
+// 推荐
+const [state, actions] = usePagination({
+  total: 100,
+  pageSize: 10,
+  onPageChange: (state) => {
+    console.log(state.page, state.pageSize, state.pageCount, state.total)
+  }
+})
+
+// state 包含了各种分页状态
+const { page, pageSize, pageCount, total, isFirstPage, isLastPage } = state
+
+// actions 可以进行各种分页操作
+actions.next() // 下一页
+actions.prev() // 上一页
+actions.go(3) // 跳转到第 3 页
+actions.setPageSize(20) // 设置每页条数为 20
 ```
 
 ### 复制到剪贴板 \{#copy-to-clipboard}
@@ -298,20 +390,20 @@ clipboard.copy('Hello, React')
 
 ### 时间格式化 \{#date-format}
 
-`useDateFormat` 用于格式化时间，**轻量、灵活、使用体验统一**，适用于需要格式化时间的场景，支持自定义格式化字符串。
+`useDateFormat` 用于格式化时间，提供了一种额外的**轻量、灵活、使用体验统一**的格式化方案选择，适用于需要格式化时间的场景，支持 unicode 标准格式化 token。
 
 详情参考 [useDateFormat](/reference/use-date-format)。
 
 ```tsx
-// 不推荐，引入了额外依赖，使用体验割裂
+// 引入了额外依赖，使用体验割裂
 import dayjs from 'dayjs' // 使用约定式格式化 tokens
 dayjs('2024/09/01').format('YYYY-MM-DD HH:mm:ss') 
 
-// 不推荐，引入了额外依赖，使用体验割裂
+// 引入了额外依赖，使用体验割裂
 import moment from 'moment' // 使用约定式格式化 tokens
 moment('2024/09/01').format('YYYY-MM-DD HH:mm:ss')
 
-// 不推荐，引入了额外依赖，使用体验割裂
+// 引入了额外依赖，使用体验割裂
 import dateFns from 'date-fns' // date-fns v2 开始使用 unicode 标准的格式化 tokens
 dateFns.format(new Date(), 'yyyy-MM-dd HH:mm:ss')
 ```
@@ -350,6 +442,37 @@ useTimeoutFn(doSomething, 1000, { immediate: true })
 useIntervalFn(doSomething, 1000, { immediate: true })
 ```
 
+### 处理事件 \{#handle-events}
+
+`useEventListener` 用于在组件挂载时添加事件监听器，组件卸载时自动移除事件监听器，适用于需要添加事件监听器的场景。任何实现了 `EventTarget` 接口的对象都可以作为第一个参数传入，例如 `window`、`document`、`ref.current` 等。
+
+```tsx
+// 符合以下接口的对象都可以作为第一个参数传入，SSR 下支持 `() => window` 的写法
+export interface InferEventTarget<Events> {
+  addEventListener: (event: Events, fn?: any, options?: any) => any
+  removeEventListener: (event: Events, fn?: any, options?: any) => any
+}
+```
+
+详情参考 [useEventListener](/reference/use-event-listener)。
+
+```tsx
+// 不推荐
+useEffect(() => {
+  const handler = () =>  doSomething()
+  window.addEventListener('resize', handler, { passive: true })
+  return () => {
+    window.removeEventListener('resize', handler)
+  }
+}, [])
+```
+
+```tsx
+// 推荐，且 SSR 友好
+useEventListener('resize', doSomething, { passive: true })
+// useEventListener(() => window, 'resize', doSomething, { passive: true })
+```
+
 ## 浏览器 API \{#browser-api}
 
 我们经常需要调用浏览器 API 来实现一些功能，包括但远不限于：
@@ -363,7 +486,7 @@ useIntervalFn(doSomething, 1000, { immediate: true })
 
 直接操作 API 可能会**让代码变得复杂、难以维护**，由于 API 的兼容性问题，开发者在处理这些问题时不仅**增加了识别兼容情况的心智负担**，还可能需要在识别后，**增加代码复杂度以实现兼容**（如使用历史遗留的 API 实现尽可能兼容）。此外，还需注意许多细节以适应 React 组件化开发。
 
-> 例如，[Fullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API)在不同浏览器及其版本中的实现有所不同，[Battery Status API](https://developer.mozilla.org/en-US/docs/Web/API/Battery_Status_API)只在部分浏览器中得到支持，而[EyeDropper API](https://developer.mozilla.org/en-US/docs/Web/API/EyeDropper_API)目前仅在最新的Chrome和Edge浏览器中可用。
+> 例如，[Fullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API) 在不同浏览器及其版本中的实现有所不同，[Battery Status API](https://developer.mozilla.org/en-US/docs/Web/API/Battery_Status_API) 只在部分浏览器中得到支持，而 [EyeDropper API](https://developer.mozilla.org/en-US/docs/Web/API/EyeDropper_API) 目前仅在最新的 Chrome 和 Edge 浏览器中可用。
 
 幸运的是，`@shined/react-use` 已经封装了许多常用的浏览器 API 以提供更好的使用体验，同时许多浏览器 API 相关的 Hooks 内部使用了 [useSupported](/reference/use-supported) 统一返回了 API 的支持情况，使得开发者可以更加方便地使用浏览器 API。
 
@@ -375,7 +498,7 @@ useIntervalFn(doSomething, 1000, { immediate: true })
 
 ### useIsomorphicLayoutEffect \{#use-isomorphic-layout-effect}
 
-`useIsomorphicLayoutEffect` 用于在服务端渲染时使用 `useLayoutEffect`，在客户端渲染时使用 `useEffect`，适用于需要在服务端渲染时执行同步副作用的场景。
+`useIsomorphicLayoutEffect` 在服务端渲染时使用 `useLayoutEffect`，在客户端渲染时使用 `useEffect`，适用于需要在服务端渲染时执行同步副作用的场景。
 
 详情参考 [useIsomorphicLayoutEffect](/reference/use-isomorphic-layout-effect)。
 
@@ -397,9 +520,9 @@ useIsomorphicLayoutEffect(() => {
 
 `useCallback` 和 `useMemo` 是 React 中用于性能优化的 Hook，常用来缓存函数和值，避免不必要的重复计算。
 
-但是在实际开发中，我们除了性能优化外，可能还需要确保引用稳定性，以避免不必要的副作用等问题。而根据官方文档，`useCallback` 和 `useMemo` 仅供用于性能优化，并不保证引用稳定，因此在某些场景下可能会导致不稳定的行为。
+实际开发中我们除了性能优化外，可能还需要确保引用稳定性以避免不必要的副作用等问题。但是根据官方文档，`useCallback` 和 `useMemo` 仅供用于性能优化，并不保证引用稳定，因此在某些场景下并不符合需求。
 
-如果你需要优化性能的同时还想确保函数、结果的稳定，那么你可以尝试 `useStableFn` 与 `useCreation`。
+针对上述情况，`useStableFn` 和 `useCreation` 在提供性能优化的同时，还确保了引用稳定性。
 
 ### useStableFn \{#use-stable-fn}
 
