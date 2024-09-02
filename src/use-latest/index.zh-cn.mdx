@@ -11,13 +11,13 @@ import { HooksType } from '@/components'
 
 一个返回一个指向最新值的 ref 的 React Hook，它可以用来避免在定时器回调或异步上下文中出现**过期闭包**。
 
-## 演示 Demo \{#demo}
+## 演示 \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## 用法 Usage \{#usage}
+## 用法 \{#usage}
 
 ```tsx
 const latest = useLatest(count)
@@ -28,7 +28,7 @@ console.log(latest.current.callback) // 最新的 callback
 console.log(latest.current.options) // 最新的 options
 ```
 
-## 源码 Source \{#source}
+## 源码 \{#source}
 
 import { Source } from '@/components'
 
@@ -44,6 +44,6 @@ const latest = useLatest(value)
 
 你想要追踪的任何值。
 
-### 返回值 Returns \{#returns}
+### 返回值 \{#returns}
 
 一个 React ref (`React.MutableRefObject<T>`)

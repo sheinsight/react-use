@@ -6,10 +6,10 @@ export function Main() {
   const navigate = useNavigate()
   // const isDark = useDark()
 
-  const [intro, started, reference] = [
-    useRoutePath('/docs/introduction'),
+  const [start, reference, github] = [
     useRoutePath('/docs/get-started'),
     useRoutePath('/reference'),
+    useRoutePath('/docs/overview'),
   ]
 
   return (
@@ -27,19 +27,9 @@ export function Main() {
         theme={isDark ? 'one-dark-pro' : 'one-light'}
       /> */}
       <div className="flex gap-4 mt-8 md:gap-6 items-center">
-        <Button className="md:w-120px" onClick={() => navigate(intro)}>
-          {t('homepage.introduction')}
-        </Button>
-        <a
-          className="user-link"
-          onClick={(e) => {
-            e.preventDefault()
-            navigate(started)
-          }}
-          href={started}
-        >
+        <Button className="md:w-120px" onClick={() => navigate(start)}>
           {t('homepage.get-started')}
-        </a>
+        </Button>
         <a
           className="user-link"
           onClick={(e) => {
@@ -49,6 +39,16 @@ export function Main() {
           href={reference}
         >
           {t('homepage.reference')}
+        </a>
+        <a
+          className="user-link"
+          onClick={(e) => {
+            e.preventDefault()
+            navigate(github)
+          }}
+          href={github}
+        >
+          {t('homepage.github')}
         </a>
       </div>
     </div>

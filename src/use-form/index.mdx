@@ -1,0 +1,209 @@
+---
+category: ProUtilities
+---
+
+# useForm
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+A React hook for managing form state.
+
+## Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## Usage \{#usage}
+
+```tsx
+const {
+  props,
+  submit,
+  reset,
+  submitting,
+  setValue,
+  setFieldValue,
+  nativeProps,
+} = useForm(options)
+
+// Example usage
+const form = useForm({
+  initialValues: {
+    name: 'John Doe',
+    email: 'hi@john.doe',
+  },
+  onSubmit: (form) => {
+    console.log(form)
+  },
+})
+
+// form.props are used to pass down properties to the component library
+// form.nativeProps are used to pass down properties to the native form element
+
+// form.submitting is used to check if the form is currently submitting
+
+// form.submit() is used to submit the form
+// form.reset() is used to reset the form
+// form.setValue() is used to modify the entire form value
+// form.setFieldValue() is used to set a single form field value
+
+// When using a component library, e.g., shineout, make sure that the Form supports receiving value, defaultValue, onChange, onSubmit, onReset properties
+return (
+  <Form {...form.props}>
+    <Form.Item label="Name"><Input type="text" name="name" /></Form.Item>
+    <Form.Item label="Email"><Input type="email" name="email" /></Form.Item>
+    <Form.Submit loading={form.submitting}>Submit</Form.Submit>
+    <Form.Reset>Reset</Form.Reset>
+  </Form>
+)
+
+// When using native form elements in uncontrolled mode, but internally controlling the form's ref
+// An internal mechanism ensures that executing setValue and setFieldValue operations synchronizes with UI state
+return (
+  <form {...form.nativeProps}>
+    <label>Name:<input type="text" name="name" /></label>
+    <label>Email:<input type="email" name="email" /></label>
+    <button disabled={form.submitting} type="submit">Submit</button>
+    <button type="reset">Reset</button>
+  </form>
+)
+```
+
+## Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const form = useForm(options)
+```
+
+### Options \{#options}
+
+```tsx
+export interface UseFormOptions<FormState extends object> {
+  /**
+   * Initial form values
+   *
+   * @defaultValue {}
+   */
+  initialValue?: FormState
+  /**
+   * Callback for when a form item changes
+   *
+   * @defaultValue undefined
+   */
+  onChange?(form: FormState): void
+  /**
+   * Callback for when the form is submitted
+   *
+   * @defaultValue undefined
+   */
+  onSubmit?(form: FormState): void
+  /**
+   * Callback for when the form is reset
+   *
+   * @defaultValue undefined
+   */
+  onReset?(): void
+  /**
+   * When using `nativeProps`, whether to prevent the default behavior on form submission
+   *
+   * @defaultValue true
+   */
+  preventDefaultWhenSubmit?: boolean
+  /**
+   * Whether to trigger the onChange callback when resetting
+   *
+   * @defaultValue false
+   */
+  triggerOnChangeWhenReset?: boolean
+}
+```
+
+### Returns \{#returns}
+
+```tsx
+export type UseFormReturnsProps<FormState extends object> = {
+  /**
+   * The current value of the form
+   */
+  value: FormState
+  /**
+   * The default value of the form
+   */
+  defaultValue: FormState
+  /**
+   * Callback for when a form item changes
+   */
+  onChange(form: FormState): void
+  /**
+   * Callback for when the form is submitted
+   */
+  onSubmit(form: FormState): void
+  /**
+   * Callback for when the form is reset
+   */
+  onReset(): void
+}
+
+export type UseFormReturnsNativeProps = {
+  /**
+   * The form element's ref
+   */
+  ref: RefObject<HTMLFormElement>
+  /**
+   * The native onChange callback of the form
+   */
+  onChange(e: React.ChangeEvent<HTMLFormElement>): void
+  /**
+   * The native onSubmit callback of the form
+   */
+  onSubmit(e: React.ChangeEvent<HTMLFormElement>): void
+  /**
+   * The native onReset callback of the form
+   */
+  onReset(e: React.ChangeEvent<HTMLFormElement>): void
+}
+
+export interface UseFormReturns<FormState extends object> {
+  /**
+   * Whether the form is currently submitting
+   */
+  submitting: boolean
+  /**
+   * Sets the value of the form
+   */
+  setValue: ReactSetState<FormState>
+  /**
+   * Sets the value of a single form field
+   */
+  setFieldValue<Name extends keyof FormState>(name: Name, value: FormState[Name]): void
+  /**
+   * Resets the form
+   */
+  reset(): void
+  /**
+   * Submits the form
+   */
+  submit(): void
+  /**
+   * The current value of the form
+   */
+  value: FormState
+  /**
+   * Properties passed to the component library's Form component
+   */
+  props: UseFormReturnsProps<FormState>
+  /**
+   * Properties passed to the native form element
+   */
+  nativeProps: UseFormReturnsNativeProps
+}
+```

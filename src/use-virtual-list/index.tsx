@@ -9,6 +9,7 @@ import { useTargetElement } from '../use-target-element'
 import { useUpdateEffect } from '../use-update-effect'
 import { isNumber } from '../utils/basic'
 
+import type { CSSProperties } from 'react'
 import type { ElementTarget } from '../use-target-element'
 
 interface UseVirtualListBaseOptions {
@@ -98,7 +99,7 @@ export function useVirtualList<D = any>(list: D[], options: UseVirtualListOption
   const wrapperRef = useTargetElement<HTMLElement>(options.wrapperTarget)
   const containerSize = useElementSize(containerRef)
 
-  const [wrapperStyle, setWrapperStyle] = useSafeState<React.CSSProperties>({})
+  const [wrapperStyle, setWrapperStyle] = useSafeState<CSSProperties>({})
   const [renderList, setRenderList] = useSafeState<{ data: D; index: number }[]>([])
 
   const isTriggeredInternallyRef = useRef(false)

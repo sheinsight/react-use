@@ -1,0 +1,33 @@
+# 🔍 Overview \{#overview}
+
+To address a variety of complex and diverse business scenarios, this library provides a large number of **high-quality, efficient** React Hooks to help you build applications faster. It covers aspects ranging from basic `effect handling`, `data fetching`, `state management`, `UI state`, `utility tools` to more business-oriented uses like `browser API`, `common scenes`, `high-frequency business logic`, and more.
+
+**Please, don't panic. Not all Hooks need to be mastered.**
+
+Next, this article will guide you to quickly understand the main contents of this library, giving you a general overview. This way, you can quickly recall in actual development scenarios that there might be corresponding Hooks here to solve problems, and then you can refer to the specific usage documentation.
+
+## 🔖 Categorized by Type
+
+This library organizes various Hooks **by type**, divided into the following nine parts, and the homepage navigation is also based on this classification:
+
+- **Lifecycle**: Related to React's lifecycle, such as `useMount`, `useUnmount`, `useUpdateEffect`, etc.
+- **State**: Related to state management, such as `useSafeState`, `useRafState`, `useSetState`, etc., and derived states.
+- **Element**: Related to DOM elements, such as `useElementSize`, `useFocus`, `useScroll`, `useDropZone`, etc.
+- **Browser**: Related to browser API, such as `useClipboard`, `useFullscreen`, `useBattery`, `useBluetooth`, `useEyeDropper`, `useResizeObserver`, etc.
+- **Sensors**: Related to sensors, such as `useKeyPress`, `useGeolocation`, `useFps`, `useMouse`, `useUserIdle`, etc.
+- **Animation**: Not for animations but related to timers, animations, such as `useIntervalFn`, `useTimeoutFn`, `useRafFn`, etc.
+- **Network**: Related to networking, currently quite limited, only `useOnline` and `useNetwork`.
+- **Utilities**: Some utility tools, such as `useAsyncFn`, `useCountdown`, `useDateFormat`, `useDebouncedFn`, `useRetryFn`, `useTimeAgo`, `useEventBus`, etc.
+- **ProUtilities**: Strong business scenarios, such as `useQuery`, `useDynamicList`, `usePagination`, `useVirtualList`, etc.
+
+## 🍱 Categorized by Functionality
+
+This library organizes various Hooks **by functionality and application scenarios**, roughly divided into the following parts:
+
+- **Basic Hooks**: Includes Hooks for handling **side effects**, **state management**, and other basic needs, which every React developer should master, such as `useMount`, `useUnmount`, `useUpdateEffect`, `useSafeState`, etc.
+- **Data Handling and Fetching**: Provides Hooks for everything from simple data fetching to complex data handling logic, supporting advanced features like polling refresh, automatic requests, caching, etc., making **asynchronous operations** and **data management** simpler, such as `useAsyncFn`, `useQuery`, etc.
+- **UI State Management**: Offers a wealth of Hooks to help manage component states for UI states (like **loading**, **error handling**), enhancing the user experience, such as `useAsyncFn`, `useHover`, `useFocus`, `useRetryFn`, etc.
+- **Browser API**: Provides wrappers for browser APIs, making it more convenient to use the functionalities provided by the browser while supporting detection of browser support situations, and degrading gracefully wherever possible, such as `useClipboard`, `useFullscreen`, `useBattery`, `useBluetooth`, `useEyeDropper`, `useResizeObserver`, etc.
+- **Utility Tools**: Provides a series of **utility tool** Hooks, helping you handle data, events, etc., more conveniently, such as `useEventListener`, `useNow`, `useDateFormat`, `useTimeAgo`, `useCountdown`, `useAsyncLock`, `useEventBus`, etc.
+- **Business Logic Related**: Covers a series of specific business scenarios (like **dynamic lists**, **virtual lists**, **pagination status**) Hooks to help quickly implement complex business logic, such as `useVirtualList`, `useDynamicList`, `usePagination`, etc.
+- **Common Scene Solutions**: Provides a collection of Hooks to solve high-frequency problems, whether it's **performance optimization**, **rate limiting**, or other common issues, such as `useSafeState`, `useRafState`, `useDebouncedFn`, `useThrottledFn`, etc.

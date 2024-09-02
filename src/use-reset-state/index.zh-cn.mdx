@@ -16,13 +16,13 @@ import { HooksType } from '@/components'
 - **交互元素状态管理：** 用于得分、步数等需要可重置的状态管理
 - ...
 
-## 演示 Demo \{#demo}
+## 演示 \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## 用法 Usage \{#usage}
+## 用法 \{#usage}
 
 ```tsx
 const [name, setName, resetName, initialName] = useResetState('张三')
@@ -39,7 +39,7 @@ resetName('王五')
 console.log(name, initialName) // 王五, 王五
 ```
 
-## 源码 Source \{#source}
+## 源码 \{#source}
 
 import { Source } from '@/components'
 
@@ -59,7 +59,7 @@ const [state, setState, reset, initialState] = useResetState(initialState, optio
 
 有关更多详情，请参见 [useSafeState#options](/reference/use-safe-state/#options)。
 
-### 返回值 Returns \{#returns}
+### 返回值 \{#returns}
 
 ```tsx
 type UseResetStateReturns = readonly [T, ReactSetState<T>, (initialState?: T) => void, T]

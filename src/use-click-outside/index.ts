@@ -2,7 +2,7 @@ import { useEventListener } from '../use-event-listener'
 import { useLatest } from '../use-latest'
 import { useStableFn } from '../use-stable-fn'
 import { normalizeElement, useTargetElement } from '../use-target-element'
-import { isString, notNullish } from '../utils/basic'
+import { isString, noNullish } from '../utils/basic'
 
 import type { ElementTarget } from '../use-target-element'
 
@@ -31,7 +31,7 @@ export function useClickOutside(
     const elements = latest.current.ignore
       .flatMap((el) => (isString(el) ? Array.from(document.querySelectorAll(el)) : el))
       .map(normalizeElement)
-      .filter(notNullish)
+      .filter(noNullish)
       .filter(Boolean)
 
     return elements.some((el) => evt.target === el || evt.composedPath().includes(el))

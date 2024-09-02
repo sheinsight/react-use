@@ -7,6 +7,7 @@ import { normalizeElement, useTargetElement } from '../use-target-element'
 import { isFunction } from '../utils/basic'
 import { unwrapGettable } from '../utils/unwrap'
 
+import type { SetStateAction } from 'react'
 import type { ReactSetState } from '../use-safe-state'
 import type { ElementTarget } from '../use-target-element'
 import type { Gettable } from '../utils/basic'
@@ -52,7 +53,7 @@ export function useCssVar<T extends HTMLElement = HTMLElement>(
     }
   })
 
-  const setVariable = useStableFn((value: React.SetStateAction<string>) => {
+  const setVariable = useStableFn((value: SetStateAction<string>) => {
     const { propName, variable } = latest.current
     const newValue = isFunction(value) ? value(variable) : value
 

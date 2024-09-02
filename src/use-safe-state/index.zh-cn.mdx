@@ -18,13 +18,13 @@ import { HooksType } from '@/components'
 - **状态管理**: 用于替代 `React.useState`，以避免 `React <= 17` 时的误报警告。
 - **性能优化**: 通过深度比较新旧状态（`deep` 选项，默认关闭），避免不必要的重渲染。
 
-## 演示 Demo \{#demo}
+## 演示 \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## 用法 Usage \{#usage}
+## 用法 \{#usage}
 
 ```tsx
 const [info, setInfo] = useSafeState({ name: '张三' }, { deep: true })
@@ -33,7 +33,7 @@ setInfo({ name: '李四' }) // 设置新的值，会触发重渲染
 setInfo({ name: '李四' }) // 再次设置「相同」的值，在开启 deep 选项的情况下将不会触发重渲染
 ```
 
-## 源码 Source \{#source}
+## 源码 \{#source}
 
 import { Source } from '@/components'
 
@@ -62,6 +62,6 @@ export type UseSafeStateOptions = {
 }
 ```
 
-### 返回值 Returns \{#returns}
+### 返回值 \{#returns}
 
 与 [React.useState](https://react.dev/reference/react/useState) 相同。

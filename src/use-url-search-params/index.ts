@@ -3,7 +3,7 @@ import { useMount } from '../use-mount'
 import { usePausableUpdateDeepCompareEffect } from '../use-pausable-update-deep-compare-effect'
 import { useSetState } from '../use-set-state'
 import { useStableFn } from '../use-stable-fn'
-import { isDefined, notNullish } from '../utils/basic'
+import { isDefined, noNullish } from '../utils/basic'
 
 import type { UseSetStateSetMergedState } from '../use-set-state'
 import type { Arrayable, Noop, PureObject } from '../utils/basic'
@@ -74,7 +74,7 @@ export function useUrlSearchParams<
       const allValue = params.getAll(key)
       const isArray = (key in initialValue && Array.isArray(initialValue[key])) || allValue.length > 1
       const value = params[isArray ? 'getAll' : 'get'](key)
-      if (notNullish(value)) nextState[key] = value
+      if (noNullish(value)) nextState[key] = value
       unusedKeys.delete(key)
     }
 
@@ -190,7 +190,7 @@ function obj2URLSearchParams(obj: PureObject, rmNullish = false, rmFalsy = false
           sp.append(key, item.toString())
         }
       }
-    } else if (rmNullish && !notNullish(value)) {
+    } else if (rmNullish && !noNullish(value)) {
       sp.delete(key)
     } else if (rmFalsy && !value) {
       sp.delete(key)

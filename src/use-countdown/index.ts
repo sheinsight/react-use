@@ -4,7 +4,7 @@ import { useLatest } from '../use-latest'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
 import { useUpdateEffect } from '../use-update-effect'
-import { notNullish, now } from '../utils/basic'
+import { noNullish, now } from '../utils/basic'
 import { unwrapGettable } from '../utils/unwrap'
 
 import type { DateLike } from '../use-date-format'
@@ -56,7 +56,7 @@ export type UseCountdownReturns<Controls extends boolean> = Controls extends tru
 function calRemainingTime(date: Gettable<DateLike>) {
   const dateValue = unwrapGettable(date)
 
-  if (notNullish(dateValue)) {
+  if (noNullish(dateValue)) {
     return Math.max(0, normalizeDate(dateValue).getTime() - now())
   }
   return 0

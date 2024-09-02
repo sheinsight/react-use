@@ -14,16 +14,16 @@ export const sidebar = {
   en: {
     '/docs': [
       {
-        text: '🎉 Introduction',
-        link: '/docs/introduction',
-      },
-      {
         text: '🏃 Get Started',
         link: '/docs/get-started',
       },
       {
+        text: '🔍 Overview',
+        link: '/docs/overview',
+      },
+      {
         text: '🧭 Usage Guide',
-        link: '/docs/guide',
+        link: '/docs/usage-guide',
       },
       {
         text: '✨ Features',
@@ -80,16 +80,16 @@ export const sidebar = {
   zhCN: {
     '/zh-cn/docs': [
       {
-        text: '🎉 介绍',
-        link: `/${langSlug.zhCN}/docs/introduction`,
-      },
-      {
         text: '🏃 起步',
         link: `/${langSlug.zhCN}/docs/get-started`,
       },
       {
+        text: '🔍 概览',
+        link: `/${langSlug.zhCN}/docs/overview`,
+      },
+      {
         text: '🧭 使用指引',
-        link: `/${langSlug.zhCN}/docs/guide`,
+        link: `/${langSlug.zhCN}/docs/usage-guide`,
       },
       {
         text: '✨ 功能特性',

@@ -6,7 +6,7 @@ import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
 import { useTargetElement } from '../use-target-element'
 
-import type { DependencyList } from 'react'
+import type { DependencyList, RefObject } from 'react'
 import type { ElementTarget } from '../use-target-element'
 
 export interface UseAdaptiveTextareaOptions<T extends HTMLElement = HTMLElement> {
@@ -52,7 +52,7 @@ export interface UseAdaptiveTextareaReturns {
   /**
    * a React ref that should be passed to the `textarea` element
    */
-  ref: React.RefObject<HTMLTextAreaElement>
+  ref: RefObject<HTMLTextAreaElement>
   /**
    * the current height of the `textarea` element
    */
