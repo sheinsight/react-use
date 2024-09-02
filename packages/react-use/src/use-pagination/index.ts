@@ -58,12 +58,24 @@ export interface UsePaginationReturnsState<T = any> {
   total: number
   /**
    * The current page number.
+   *
+   * @deprecated Use `page` instead.
    */
   currentPage: number
   /**
    * The number of items to display per page.
+   *
+   * @deprecated Use `pageSize` instead.
    */
   currentPageSize: number
+  /**
+   * The current page number.
+   */
+  page: number
+  /**
+   * The number of items to display per page.
+   */
+  pageSize: number
   /**
    * The total number of pages.
    */
@@ -125,41 +137,36 @@ export type UsePaginationReturns<T> = readonly [UsePaginationReturnsState<T>, Us
  * A React Hook that manage pagination state.
  */
 export function usePagination<T = any>(options: UsePaginationOptions<T> = {}): UsePaginationReturns<T> {
-  const {
-    total = Number.POSITIVE_INFINITY,
-    page = 1,
-    pageSize = 10,
-    onPageChange,
-    onPageSizeChange,
-    onPageCountChange,
-  } = options
+  const total = options.list ? options.list.length : Number.POSITIVE_INFINITY
+  const { list = [] as T[], page = 1, pageSize = 10, onPageChange, onPageSizeChange, onPageCountChange } = options
 
   const isInfinity = total === Number.POSITIVE_INFINITY
-  const [currentPageSize, sizeActions] = useClamp(pageSize, 1, Number.POSITIVE_INFINITY)
+  const [currentPageSize, pageSizeActions] = useClamp(pageSize, 1, Number.POSITIVE_INFINITY)
   const pageCount = Math.max(1, Math.ceil(total / currentPageSize))
   const [currentPage, pageActions] = useClamp(page, 1, pageCount)
 
   const go = useStableFn((page: number) => pageActions.set(page))
   const prev = useStableFn(() => pageActions.dec())
   const next = useStableFn(() => pageActions.inc())
-  const setPageSize = useStableFn((size: number) => sizeActions.set(size))
+  const setPageSize = useStableFn((size: number) => pageSizeActions.set(size))
 
   const [indexStart, indexEnd] = [(currentPage - 1) * currentPageSize, Math.min(currentPage * currentPageSize, total)]
 
-  const slicedList = useMemo(
-    () => (options.list ?? []).slice(indexStart, indexEnd),
-    [options.list, indexStart, indexEnd],
-  )
+  const slicedList = useMemo(() => list.slice(indexStart, indexEnd), [list, indexStart, indexEnd])
+  const isFirstPage = currentPage === 1
+  const isLastPage = isInfinity ? false : currentPage === pageCount
 
   const pagination = {
     total,
     currentPage,
+    page: currentPage,
     currentPageSize,
+    pageSize: currentPageSize,
     pageCount,
     indexStart,
     indexEnd,
-    isFirstPage: currentPage === 1,
-    isLastPage: isInfinity ? false : currentPage === pageCount,
+    isFirstPage,
+    isLastPage,
     list: slicedList,
   }
 

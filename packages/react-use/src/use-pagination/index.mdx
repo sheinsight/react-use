@@ -79,12 +79,28 @@ export interface UsePaginationReturnsState {
   total: number
   /**
    * The current page number.
+   *
+   * @deprecated Use `page` instead.
    */
   currentPage: number
   /**
    * The number of items to display per page.
+   *
+   * @deprecated Use `pageSize` instead.
    */
   currentPageSize: number
+  /**
+   * The current page number.
+   * 
+   * @since 1.7.0
+   */
+  page: number
+  /**
+   * The number of items to display per page.
+   * 
+   * @since 1.7.0
+   */
+  pageSize: number
   /**
    * The total number of pages.
    */

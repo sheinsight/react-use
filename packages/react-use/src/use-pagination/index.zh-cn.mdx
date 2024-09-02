@@ -79,12 +79,28 @@ export interface UsePaginationReturnsState {
   total: number
   /**
    * 当前页码。
+   *
+   * @deprecated 请使用 `page` 代替。
    */
   currentPage: number
   /**
    * 每页展示的项目数。
+   *
+   * @deprecated 请使用 `pageSize` 代替。
    */
   currentPageSize: number
+  /**
+   * 当前页码。
+   * 
+   * @since 1.7.0
+   */
+  page: number
+  /**
+   * 每页展示的项目数。
+   * 
+   * @since 1.7.0
+   */
+  pageSize: number
   /**
    * 总页数。
    */
