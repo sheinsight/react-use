@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import { pluginShiki } from '@rspress/plugin-shiki'
 import { camelCase, kebabCase } from 'change-case'
 import gm from 'gray-matter'
 import { rimrafSync } from 'rimraf'
@@ -19,7 +20,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const base = '/react-use/'
 const assetsPrefix = 'https://sheinsight.github.io/react-use/'
-const plugins: RspressPlugin[] = [reactUseRspressPlugin()]
+const plugins: RspressPlugin[] = [reactUseRspressPlugin(), pluginShiki({ theme: 'one-dark-pro' })]
 const builderPlugins: ReturnType<typeof pluginGoogleAnalytics>[] = []
 
 if (process.env.IS_SODOC) {
