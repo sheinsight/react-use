@@ -1,0 +1,217 @@
+---
+category: Network
+features: ['Pausable']
+---
+
+# useWebSocket
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+一个简化 WebSocket 使用的 React Hook，是原生 WebSocket API 的包装，支持自动重连、心跳检测等。
+
+## 场景 \{#scenes}
+
+- **持久连接场景**: 用于需要与服务器保持长时间连接的场景，如即时通讯
+- **实时数据更新**: 实现股票、交易等实时数据的推送更新
+- **游戏开发中的实时交互**: 在多人在线游戏中同步玩家状态、游戏进度
+- **心跳检测与自动重连**: 确保连接稳定，自动处理连接中断和重连
+
+## 演示 \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 \{#usage}
+
+```tsx
+const ws = useWebSocket(wsUrl, options)
+
+const ws = useWebSocket('wss://ws.postman-echo.com/raw', {
+  reconnect: {
+    count: 3,
+    interval: 3 * 1000,
+  },
+  heartbeat: {
+    message: 'ping',
+    interval: 30 * 1000,
+  },
+  onOpen() {
+    console.log('WebSocket 连接已打开')
+  },
+  onMessage(message) {
+    console.log('收到消息', message)
+  },
+  onError(error) {
+    console.error('WebSocket 连接发生错误', error)
+  },
+  onClose(event) {
+    console.log('WebSocket 连接已关闭', event)
+  },
+})
+
+// ws.readyState // => 0 (CONNECTING), 1 (OPEN), 2 (CLOSING), 3 (CLOSED)
+
+// ws.send(data)
+// ws.close()
+// ws.open()
+
+// ws.wsRef.current // => WebSocket 实例
+```
+
+## 源码 \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const ws = useWebSocket(wsUrl, options)
+
+// 或者
+const ws = useWebSocket(options)
+ws.open(wsUrl)
+```
+
+### WsUrl 连接字符串 \{#ws-url}
+
+一个 WebSocket URL 字符串。
+
+### Options 选项 \{#options}
+
+```tsx
+export type UseWebSocketSendable = string | ArrayBufferLike | Blob | ArrayBufferView
+
+export interface UseWebSocketOptionsHeartbeat {
+  /**
+   * 用来发送心跳的消息。
+   *
+   * @defaultValue 'ping' (发送 'ping' 到服务器，并等待 'ping' 响应)
+   */
+  message?: UseWebSocketSendable | { send: UseWebSocketSendable; response: UseWebSocketSendable }
+  /**
+   * 发送心跳消息的间隔时间。
+   *
+   * @defaultValue 3_000
+   */
+  interval?: number
+  /**
+   * 心跳消息的响应超时时间，超过此时间没有收到响应则断开连接，如果设置了重连则会尝试重连。
+   *
+   * @defaultValue 10_000
+   */
+  responseTimeout?: number
+}
+
+export interface UseWebSocketOptionsReconnect
+  extends Omit<UseRetryFnOptions, 'onError' | 'onErrorRetry' | 'onRetryFailed'> {
+  /**
+   * 当连接断开时，尝试重连的回调函数。
+   *
+   * @defaultValue undefined
+   */
+  onReconnect: UseRetryFnOptions['onErrorRetry']
+  /**
+   * 当重连失败时的回调函数。
+   *
+   * @defaultValue undefined
+   */
+  onReconnectFailed: UseRetryFnOptions['onRetryFailed']
+}
+
+export interface UseWebSocketOptions {
+  /**
+   * 当 WebSocket 的 open 事件被触发时，调用的回调函数。
+   *
+   * @defaultValue undefined
+   */
+  onOpen?: (event: Event, ws: WebSocket) => void
+  /**
+   * 当 WebSocket 的 close 事件被触发时，调用的回调函数。
+   *
+   * @defaultValue undefined
+   */
+  onClose?: (event: CloseEvent, ws: WebSocket) => void
+  /**
+   * 当 WebSocket 的 error 事件被触发时，调用的回调函数。
+   *
+   * @defaultValue undefined
+   */
+  onError?: (event: Event, ws: WebSocket) => void
+  /**
+   * 当 WebSocket 的 message 事件被触发时，调用的回调函数。
+   *
+   * @defaultValue undefined
+   */
+  onMessage?: (event: MessageEvent, ws: WebSocket) => void
+  /**
+   * 心跳检测配置，默认关闭。
+   * 
+   * 如果为 `true`，则默认心跳消息为 `'ping'`，默认间隔时间为 `3_000` 毫秒。
+   *
+   * @defaultValue false
+   */
+  heartbeat?: boolean | UseWebSocketOptionsHeartbeat
+  /**
+   * 重连配置，默认关闭。
+   *
+   * @defaultValue false
+   */
+  reconnect?: boolean | UseWebSocketOptionsReconnect
+  /**
+   * 是否立即连接 WebSocket。
+   *
+   * @defaultValue true
+   */
+  immediate?: boolean
+  /**
+   * 当组件卸载时，是否关闭 WebSocket 连接。
+   *
+   * @defaultValue true
+   */
+  closeOnUnmount?: boolean
+  /**
+   * 连接 WebSocket 的额外子协议。
+   *
+   * @defaultValue []
+   */
+  protocols?: string | string[]
+  /**
+   * 当 wsUrl 变化时重连的防抖时间。
+   *
+   * @defaultValue 0
+   */
+  debounce?: number
+}
+```
+
+### 返回值 \{#returns}
+
+```tsx
+export interface UseWebSocketReturns<HasURL extends boolean> extends Pausable {
+  /**
+   * WebSocket 实例的引用。
+   */
+  wsRef: RefObject<WebSocket | null>
+  /**
+   * 发送消息到 WebSocket 服务器。
+   */
+  send: (data: UseWebSocketSendable) => void
+  /**
+   * WebSocket 连接的当前状态。
+   */
+  readyState: UseWebSocketReturnsReadyState
+  /**
+   * 关闭 WebSocket 连接。
+   */
+  close: () => void
+  /**
+   * 打开 WebSocket 连接。
+   */
+  open: HasURL extends true ? () => void : (wsUrl?: string, protocols?: string | string[]) => void
+}
+```

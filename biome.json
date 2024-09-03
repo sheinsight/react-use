@@ -37,6 +37,7 @@
               { "name": "useStableFn", "stableResult": true },
               { "name": "useLatest", "stableResult": true },
               { "name": "useIntervalFn", "stableResult": true },
+              { "name": "useRetryFn", "stableResult": true },
               { "name": "useRafLoop", "stableResult": true },
               { "name": "useAsyncLock", "stableResult": true },
               {

@@ -1,0 +1,217 @@
+---
+category: Network
+features: ['Pausable']
+---
+
+# useWebSocket
+
+import { HooksType } from '@/components'
+
+<HooksType {...frontmatter} />
+
+A simplified React Hook for using WebSocket, which is a wrapper around the native WebSocket API, supporting error retries, heartbeat checks, timeout reconnections, and more.
+
+## Scenes \{#scenes}
+
+- **Persistent connection scenarios**: For scenarios that require maintaining a long connection with the server, such as instant messaging.
+- **Real-time data updates**: To implement push updates of real-time data such as stocks, transactions.
+- **Real-time interaction in game development**: To synchronize player states, game progress in multiplayer online games.
+- **Heartbeat detection and automatic reconnection**: To ensure stable connections, automatically handle connection interruptions, and reconnections.
+
+## Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## Usage \{#usage}
+
+```tsx
+const ws = useWebSocket(wsUrl, options)
+
+const ws = useWebSocket('wss://ws.postman-echo.com/raw', {
+  reconnect: {
+    count: 3,
+    interval: 3 * 1000,
+  },
+  heartbeat: {
+    message: 'ping',
+    interval: 30 * 1000,
+  },
+  onOpen() {
+    console.log('WebSocket connection opened')
+  },
+  onMessage(message) {
+    console.log('Message received', message)
+  },
+  onError(error) {
+    console.error('WebSocket connection error', error)
+  },
+  onClose(event) {
+    console.log('WebSocket connection closed', event)
+  },
+})
+
+// ws.readyState // => 0 (CONNECTING), 1 (OPEN), 2 (CLOSING), 3 (CLOSED)
+
+// ws.send(data)
+// ws.close()
+// ws.open()
+
+// ws.wsRef.current // => WebSocket instance
+```
+
+## Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const ws = useWebSocket(wsUrl, options)
+
+// Or
+const ws = useWebSocket(options)
+ws.open(wsUrl)
+```
+
+### WsUrl Connection String \{#ws-url}
+
+A WebSocket URL string.
+
+### Options \{#options}
+
+```tsx
+export type UseWebSocketSendable = string | ArrayBufferLike | Blob | ArrayBufferView
+
+export interface UseWebSocketOptionsHeartbeat {
+  /**
+   * The message sent for heartbeat.
+   *
+   * @defaultValue 'ping' (send 'ping' to the server and wait for a 'ping' response)
+   */
+  message?: UseWebSocketSendable | { send: UseWebSocketSendable; response: UseWebSocketSendable }
+  /**
+   * The interval to send heartbeat messages.
+   *
+   * @defaultValue 3_000
+   */
+  interval?: number
+  /**
+   * The response timeout for heartbeat messages. If no response is received within this time, the connection is disconnected, and if reconnection is set, an attempt will be made to reconnect.
+   *
+   * @defaultValue 10_000
+   */
+  responseTimeout?: number
+}
+
+export interface UseWebSocketOptionsReconnect
+  extends Omit<UseRetryFnOptions, 'onError' | 'onErrorRetry' | 'onRetryFailed'> {
+  /**
+   * Callback function to attempt reconnection when disconnected.
+   *
+   * @defaultValue undefined
+   */
+  onReconnect: UseRetryFnOptions['onErrorRetry']
+  /**
+   * Callback function when reconnection fails.
+   *
+   * @defaultValue undefined
+   */
+  onReconnectFailed: UseRetryFnOptions['onRetryFailed']
+}
+
+export interface UseWebSocketOptions {
+  /**
+   * Callback function when the WebSocket's open event is triggered.
+   *
+   * @defaultValue undefined
+   */
+  onOpen?: (event: Event, ws: WebSocket) => void
+  /**
+   * Callback function when the WebSocket's close event is triggered.
+   *
+   * @defaultValue undefined
+   */
+  onClose?: (event: CloseEvent, ws: WebSocket) => void
+  /**
+   * Callback function when the WebSocket's error event is triggered.
+   *
+   * @defaultValue undefined
+   */
+  onError?: (event: Event, ws: WebSocket) => void
+  /**
+   * Callback function when the WebSocket's message event is triggered.
+   *
+   * @defaultValue undefined
+   */
+  onMessage?: (event: MessageEvent, ws: WebSocket) => void
+  /**
+   * Configures heartbeat detection, off by default.
+   * 
+   * If `true`, the default heartbeat message is `'ping'`, with the default interval being `3_000` milliseconds.
+   *
+   * @defaultValue false
+   */
+  heartbeat?: boolean | UseWebSocketOptionsHeartbeat
+  /**
+   * Configures reconnection, off by default.
+   *
+   * @defaultValue false
+   */
+  reconnect?: boolean | UseWebSocketOptionsReconnect
+  /**
+   * Whether to connect to WebSocket immediately.
+   *
+   * @defaultValue true
+   */
+  immediate?: boolean
+  /**
+   * Whether to close the WebSocket connection when the component unmounts.
+   *
+   * @defaultValue true
+   */
+  closeOnUnmount?: boolean
+  /**
+   * Additional sub-protocols for connecting to WebSocket.
+   *
+   * @defaultValue []
+   */
+  protocols?: string | string[]
+  /**
+   * Debounce time for reconnecting when wsUrl changes.
+   *
+   * @defaultValue 0
+   */
+  debounce?: number
+}
+```
+
+### Returns \{#returns}
+
+```tsx
+export interface UseWebSocketReturns<HasURL extends boolean> extends Pausable {
+  /**
+   * A reference to the WebSocket instance.
+   */
+  wsRef: RefObject<WebSocket | null>
+  /**
+   * Send a message to the WebSocket server.
+   */
+  send: (data: UseWebSocketSendable) => void
+  /**
+   * The current state of the WebSocket connection.
+   */
+  readyState: UseWebSocketReturnsReadyState
+  /**
+   * Close the WebSocket connection.
+   */
+  close: () => void
+  /**
+   * Open the WebSocket connection.
+   */
+  open: HasURL extends true ? () => void : (wsUrl?: string, protocols?: string | string[]) => void
+}
+```
