@@ -11,7 +11,7 @@ export function App() {
 }
 
 export function PassedUrl() {
-  const wsUrl = useControlledComponent('wss://ws.postman-echo.com/raw')
+  const wsUrl = useControlledComponent('wss://echo.websocket.org')
   const [messageList, setMessageList] = useSafeState<string[]>([])
 
   const ws = useWebSocket(wsUrl.value, {
@@ -20,7 +20,7 @@ export function PassedUrl() {
       setMessageList([])
     },
     onMessage(message) {
-      setMessageList((list) => [...list, message.data])
+      setMessageList((list) => [...list, `Server: ${message.data}`])
     },
   })
 
@@ -69,7 +69,7 @@ export function DynamicUrl() {
     },
     onMessage(message) {
       console.log('message', message)
-      setMessageList((list) => [...list, message.data])
+      setMessageList((list) => [...list, `Server: ${message.data}`])
     },
   })
 
