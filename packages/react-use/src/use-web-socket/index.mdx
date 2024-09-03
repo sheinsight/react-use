@@ -5,9 +5,11 @@ features: ['Pausable']
 
 # useWebSocket
 
-import { HooksType } from '@/components'
+import { HooksType, Since } from '@/components'
 
 <HooksType {...frontmatter} />
+
+<Since version="v1.7.0" />
 
 A simplified React Hook for using WebSocket, which is a wrapper around the native WebSocket API, supporting error retries, heartbeat checks, timeout reconnections, and more.
 

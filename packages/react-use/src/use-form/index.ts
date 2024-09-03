@@ -127,6 +127,8 @@ export interface UseFormReturns<FormState extends object> {
  * A React Hook to manage form state with ease
  *
  * @param {UseFormOptions} options Options to customize the form behavior
+ *
+ * @since 1.7.0
  */
 export function useForm<FormState extends object>(options: UseFormOptions<FormState> = {}): UseFormReturns<FormState> {
   const {

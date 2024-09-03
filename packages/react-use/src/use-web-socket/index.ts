@@ -154,6 +154,11 @@ export type UseWebSocketReturnsReadyState =
 
 const defaultHeartbeatMessage = 'ping'
 
+/**
+ * A simplified React Hook for using WebSocket, which is a wrapper around the native WebSocket API, supporting error retries, heartbeat checks, timeout reconnections, and more.
+ *
+ * @since 1.7.0
+ */
 export function useWebSocket(wsUrl?: string, options?: UseWebSocketOptions): UseWebSocketReturns<true>
 export function useWebSocket(options?: Omit<UseWebSocketOptions, 'immediate'>): UseWebSocketReturns<false>
 export function useWebSocket(

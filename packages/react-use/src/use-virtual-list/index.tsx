@@ -90,6 +90,11 @@ export type UseVirtualListReturns<D> = readonly [
   UseVirtualListReturnsActions,
 ]
 
+/**
+ * A React Hook that helps to render large lists (known as **Virtual List**) more efficiently by rendering only the items that are visible to the user, supporting dynamic heights, horizontal and vertical scrolling, and more.
+ *
+ * @since 1.6.0
+ */
 export function useVirtualList<D = any>(list: D[], options: UseVirtualListOptions<D>): UseVirtualListReturns<D> {
   const overscanCount = options.overscan ?? 5
   const isVerticalLayout = 'itemHeight' in options
