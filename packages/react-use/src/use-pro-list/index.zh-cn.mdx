@@ -1,24 +1,94 @@
 ---
 category: ProUtilities
+features: ['Pausable', 'DepCollect']
 ---
 
 # useProList
 
-import { HooksType } from '@/components'
+import { HooksType, Since } from '@/components'
 
 <HooksType {...frontmatter} />
 
-## Demo
+<Since version='v1.7.0' />
+
+一个用来处理列表的 Hook，集成了 [useQuery](/reference/use-query)、[useForm](/reference/use-form)、[useMultiSelect](/reference/use-multi-select)、[usePagination](/reference/use-pagination) 等的功能。
+
+拥有以下特性：
+
+- 基于 `useQuery`，内置了 [众多数据请求功能](/reference/use-query#usage)，可按需开启
+- 使用 `useForm` 自动管理表单状态，提供诸多状态和生命周期，自动请求等
+- 使用 `usePagination` 自动管理分页状态，提供分页事件和操作，内置状态监听，自动重请求
+- 使用 `useMultiSelect` 针对列表数据进行多选，支持全选、反选、清空等
+
+## 场景 \{#scenes}
+
+- **表单关联查询:** 利用表单状态触发列表数据的重新查询
+- **分页管理应用:** 在数据列表中实现分页功能，提供页码切换、设定每页显示数据量
+- **选中状态管理:** 管理数据列表中条目的选中状态，支持多选功能
+
+## 演示 \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## 用法 \{#usage} 
 
-See API for more details.
+```tsx
+const {
+  form,
+  query,
+  pagination,
+  selection,
+  list,
+  setTotal,
+  loading
+} = useProList(fetcher, options)
 
-## Source
+// 穿入一个接受 page, pageSize 分页参数的函数，它需要返回一个数据列表
+// 在这个函数里面使用 setTotal 来设置数据总数，以便分页器能够正确显示总数
+const { form, query, pagination, selection, list, setTotal, loading } = useProList(
+    async (params) => {
+      const { page, pageSize, form } = params
+      const { list, total } = await fetchPaginationList({ page, pageSize })
+      setTotal(total)
+      return list
+    },
+    {
+      // 传入 useQuery 的配置项，如 refreshInterval 进行定时刷新
+      query: { refreshInterval: 3_000 },
+      // 传入 useForm 的配置项，如 initialValues 进行表单初始化
+      form: { initialValues: { name: '', select: '' } },
+      // 传入 usePagination 的配置项，如设置默认页码和每页显示数量
+      pagination: { page: 1, pageSize: 10 },
+      // 声明立即查询的表单字段，当表单字段变化时，会自动触发查询
+      immediateQueryKeys: ['select'],
+    },
+)
+
+// useForm 返回的 form 对象，参考 useForm 文档
+// form
+
+// useQuery 返回的 query 对象，参考 useQuery 文档
+// query
+
+// usePagination 返回的 pagination 对象，合并了 state 和 actions，参考 usePagination 文档
+// pagination
+
+// useMultiSelect 返回的 selection 对象，合并了 state 和 actions，参考 useMultiSelect 文档
+// selection
+
+// 数据列表
+// list
+
+// 设置数据总数
+// setTotal
+
+// 是否正在加载
+// loading
+```
+
+## 源码 \{#source}
 
 import { Source } from '@/components'
 
@@ -27,4 +97,117 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
+const {
+  form,
+  query,
+  pagination,
+  selection,
+  list,
+  setTotal,
+  loading
+} = useProList(fetcher, options)
+```
+
+### 数据获取函数 Fetcher \{#fetcher}
+
+一个接受 `params` 参数的异步函数，返回一个数据列表，需要在内部调用 `setTotal` 来设置数据总数。
+
+```tsx
+export interface UseProListFetcherParams<FormState extends object, Data> {
+  /**
+   * 上次请求的数据
+   */
+  previousData: undefined | Data
+  /**
+   * 当前页码
+   */
+  page: number
+  /**
+   * 每页显示数量
+   */
+  pageSize: number
+  /**
+   * 表单状态
+   */
+  form: FormState
+  /**
+   * 设置数据总数
+   */
+  setTotal: ReactSetState<number>
+}
+
+export type UseProListFetcher<FormState extends object, Data> = (
+  params: UseProListFetcherParams<FormState, Data>,
+) => Promise<Data>
+```
+
+### 配置项 Options \{#options}
+
+```tsx
+export interface UseProListOptions<Fetcher extends AnyFunc, FormState extends object> {
+  /**
+   * 数据获取函数
+   *
+   * @defaultValue undefined
+   */
+  form?: UseFormOptions<FormState>
+  /**
+   * `useQuery` 的配置项，参考 `useQuery` 文档
+   *
+   * @defaultValue undefined
+   */
+  query?: Omit<UseQueryOptions<Fetcher>, 'initialParams' | 'initialData'>
+  /**
+   * `usePagination` 的配置项，参考 `usePagination` 文档
+   *
+   * @defaultValue undefined
+   */
+  pagination?: UsePaginationOptions<ReturnType<Fetcher>>
+  /**
+   * 立即查询的表单字段，当表单字段变化时，会自动触发查询
+   *
+   * @defaultValue []
+   */
+  immediateQueryKeys?: (keyof FormState)[]
+}
+```
+
+### 返回值 \{#returns}
+
+```tsx
+export interface UseProListReturns<
+  Item,
+  FormState extends object,
+  Data extends Item[],
+  Fetcher extends UseProListFetcher<FormState, Data>,
+> {
+  /**
+   * 是否正在加载
+   */
+  loading: boolean
+  /**
+   * 数据列表
+   */
+  list: Data
+  /**
+   * form 实例，参考 useForm 文档
+   */
+  form: UseFormReturns<FormState>
+  /**
+   * query 实例，参考 useQuery 文档
+   */
+  query: UseQueryOptions<Fetcher>
+  /**
+   * 设置数据总数
+   */
+  setTotal: ReactSetState<number>
+  /**
+   * 选中状态和操作，参考 useMultiSelect 文档
+   */
+  selection: UseMultiSelectReturnsState<Item> & UseMultiSelectReturns<Item>
+  /**
+   * 分页状态和操作，参考 usePagination 文档
+   */
+  pagination: UsePaginationReturnsState<Data> & UsePaginationReturnsActions
+}
 ```

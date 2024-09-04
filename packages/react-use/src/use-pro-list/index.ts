@@ -3,42 +3,118 @@ import { useForm } from '../use-form'
 import { useLatest } from '../use-latest'
 import { useMultiSelect } from '../use-multi-select'
 import { usePagination } from '../use-pagination'
-import { usePrevious } from '../use-previous'
 import { useQuery } from '../use-query'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
+import { shallowEqual } from '../utils/equal'
 
-import type { UseFormOptions } from '../use-form'
-import type { UsePaginationOptions } from '../use-pagination'
+import type { UseFormOptions, UseFormReturns } from '../use-form'
+import type { UseMultiSelectReturns, UseMultiSelectReturnsState } from '../use-multi-select'
+import type { UsePaginationOptions, UsePaginationReturnsActions, UsePaginationReturnsState } from '../use-pagination'
 import type { UseQueryOptions } from '../use-query'
+import type { ReactSetState } from '../use-safe-state'
 import type { AnyFunc } from '../utils/basic'
 
 export interface UseProListOptions<Fetcher extends AnyFunc, FormState extends object> {
+  /**
+   * options for `useForm`, see `useForm` for more details
+   *
+   * @defaultValue undefined
+   */
   form?: UseFormOptions<FormState>
+  /**
+   * options for `useQuery`, see `useQuery` for more details
+   *
+   * @defaultValue undefined
+   */
   query?: Omit<UseQueryOptions<Fetcher>, 'initialParams' | 'initialData'>
+  /**
+   * options for `usePagination`, see `usePagination` for more details
+   *
+   * @defaultValue undefined
+   */
   pagination?: UsePaginationOptions<ReturnType<Fetcher>>
+  /**
+   * keys of form state that will trigger a new query when changed
+   *
+   * @defaultValue []
+   */
   immediateQueryKeys?: (keyof FormState)[]
 }
 
 export interface UseProListFetcherParams<FormState extends object, Data> {
+  /**
+   * previous data
+   */
   previousData: undefined | Data
+  /**
+   * current page
+   */
   page: number
+  /**
+   * page size
+   */
   pageSize: number
+  /**
+   * form state
+   */
   form: FormState
+  /**
+   * set total count
+   */
+  setTotal: ReactSetState<number>
 }
 
 export type UseProListFetcher<FormState extends object, Data> = (
   params: UseProListFetcherParams<FormState, Data>,
-) => Data
+) => Promise<Data>
 
-// useProList => useForm + useMultiSelect + usePagination + useQuery
+export interface UseProListReturns<
+  Item,
+  FormState extends object,
+  Data extends Item[],
+  Fetcher extends UseProListFetcher<FormState, Data>,
+> {
+  /**
+   * loading status
+   */
+  loading: boolean
+  /**
+   * list data
+   */
+  list: Data
+  /**
+   * form state
+   */
+  form: UseFormReturns<FormState>
+  /**
+   * query instance
+   */
+  query: UseQueryOptions<Fetcher>
+  /**
+   * set total count
+   */
+  setTotal: ReactSetState<number>
+  /**
+   * selection state
+   */
+  selection: UseMultiSelectReturnsState<Item> & UseMultiSelectReturns<Item>
+  /**
+   * pagination state
+   */
+  pagination: UsePaginationReturnsState<Data> & UsePaginationReturnsActions
+}
 
-export function useProList<FormState extends object, Data, Fetcher extends UseProListFetcher<FormState, Data>>(
-  fetcher: Fetcher,
-  options: UseProListOptions<Fetcher, FormState> = {},
-) {
-  const previousData = useRef<Data | undefined>(undefined)
-  const [list, setList] = useSafeState<Data[]>([])
+export function useProList<
+  Item,
+  FormState extends object,
+  Data extends Item[] = Item[],
+  Fetcher extends UseProListFetcher<FormState, Data> = UseProListFetcher<FormState, Data>,
+>(fetcher: Fetcher, options: UseProListOptions<Fetcher, FormState> = {}) {
+  const previousDataRef = useRef<Data | undefined>(undefined)
+  const previousFormRef = useRef<FormState>((options.form?.initialValue || {}) as FormState)
+  const previousSelectedRef = useRef<Item[]>([])
+  const [total, setTotal] = useSafeState<number>(10)
 
   const form = useForm<FormState>({
     ...options.form,
@@ -51,39 +127,26 @@ export function useProList<FormState extends object, Data, Fetcher extends UsePr
       latest.current.options.form?.onSubmit?.(...args)
     },
     onChange(...args) {
+      const nextForm = args[0]
       const keys = options.immediateQueryKeys || []
+
       for (const key of keys) {
-        if (form.value[key] !== previousFormValue?.[key]) {
+        const isChanged = !shallowEqual(previousFormRef.current[key], nextForm[key])
+
+        if (isChanged) {
           startNewQuery()
           break
         }
       }
+
+      previousFormRef.current = nextForm
+
       latest.current.options.form?.onChange?.(...args)
     },
   })
 
-  const previousFormValue = usePrevious(form.value)
-
-  const [paginationState, paginationActions] = usePagination<Data>({
-    ...options.pagination,
-    onPageChange(state) {
-      query.run({
-        previousData: previousData.current,
-        page: state.page,
-        pageSize: state.pageSize,
-        form: form.value,
-      })
-      latest.current.options.pagination?.onPageChange?.(state)
-    },
-    onPageSizeChange(state) {
-      startNewQuery()
-      latest.current.options.pagination?.onPageSizeChange?.(state)
-    },
-  })
-
   const startNewQuery = useStableFn((resetPageSize = false) => {
-    setList([])
-    previousData.current = undefined
+    previousDataRef.current = undefined
     paginationActions.go(1)
 
     let pageSize = paginationState.pageSize
@@ -94,11 +157,32 @@ export function useProList<FormState extends object, Data, Fetcher extends UsePr
     }
 
     query.run({
-      previousData: previousData.current,
+      previousData: previousDataRef.current,
       page: 1,
       pageSize,
       form: form.value,
+      setTotal,
     })
+  })
+
+  const [paginationState, paginationActions] = usePagination<Data>({
+    ...options.pagination,
+    list: undefined,
+    total,
+    onPageChange(state) {
+      query.run({
+        previousData: previousDataRef.current,
+        page: state.page,
+        pageSize: state.pageSize,
+        form: form.value,
+        setTotal,
+      })
+      latest.current.options.pagination?.onPageChange?.(state)
+    },
+    onPageSizeChange(state) {
+      startNewQuery()
+      latest.current.options.pagination?.onPageSizeChange?.(state)
+    },
   })
 
   const query = useQuery(fetcher, {
@@ -111,21 +195,43 @@ export function useProList<FormState extends object, Data, Fetcher extends UsePr
         form: form.value,
       },
     ] as Parameters<Fetcher>,
+    onBefore(...args) {
+      if (select.selected.length) {
+        previousSelectedRef.current = select.selected
+      }
+      latest.current.options.query?.onBefore?.(...args)
+    },
     onSuccess(data, ...reset) {
-      previousData.current = data
-      setList((prevDataList) => [...prevDataList, data].filter(Boolean))
+      previousDataRef.current = data
+
+      if (previousSelectedRef.current.length) {
+        const selected = []
+
+        for (const item of previousSelectedRef.current) {
+          const matchedSelectedItem = data.find((d) => shallowEqual(d, item))
+          matchedSelectedItem && selected.push(matchedSelectedItem)
+        }
+
+        selectActions.setSelected(selected)
+        previousSelectedRef.current = []
+      }
+
       latest.current.options.query?.onSuccess?.(data, ...reset)
     },
   })
 
-  const [select, selectActions] = useMultiSelect<Data>(list, [])
+  const [select, selectActions] = useMultiSelect<Item>(query.data ?? [], [])
 
   const latest = useLatest({ options, paginationState })
 
   return {
-    list,
+    get loading() {
+      return query.loading
+    },
+    list: query.data ?? [],
     form,
     query,
+    setTotal,
     selection: {
       ...select,
       ...selectActions,

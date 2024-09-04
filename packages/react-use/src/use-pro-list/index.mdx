@@ -1,24 +1,94 @@
 ---
 category: ProUtilities
+features: ['Pausable', 'DepCollect']
 ---
 
 # useProList
 
-import { HooksType } from '@/components'
+import { HooksType, Since } from '@/components'
 
 <HooksType {...frontmatter} />
 
-## Demo
+<Since version='v1.7.0' />
+
+A hook for handling lists that integrates the functionalities of [useQuery](/reference/use-query), [useForm](/reference/use-form), [useMultiSelect](/reference/use-multi-select), and [usePagination](/reference/use-pagination).
+
+It has the following features:
+
+- Based on `useQuery`, it includes [numerous data request functionalities](/reference/use-query#usage) that can be enabled as needed.
+- Uses `useForm` to automatically manage form states, providing various states and lifecycles, with automatic requests, etc.
+- Uses `usePagination` to automatically manage pagination states, providing pagination events and operations, built-in state monitoring, and automatic re-requests.
+- Uses `useMultiSelect` for multi-select on list data, supporting select all, deselect, clear, etc.
+
+## Scenes \{#scenes}
+
+- **Form-associated Query:** Utilize form state to trigger re-queries of list data.
+- **Pagination Management Application:** Implement pagination functionality within the data list, providing page switching, setting per page data amount.
+- **Selection State Management:** Manage the selection state of list items, supporting multi-select functionality.
+
+## Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## Usage \{#usage} 
 
-See API for more details.
+```tsx
+const {
+  form,
+  query,
+  pagination,
+  selection,
+  list,
+  setTotal,
+  loading
+} = useProList(fetcher, options)
 
-## Source
+// Pass a function that accepts page, pageSize pagination parameters, which needs to return a data list
+// Use setTotal inside this function to set the total data amount, so the paginator can display the total correctly
+const { form, query, pagination, selection, list, setTotal, loading } = useProList(
+    async (params) => {
+      const { page, pageSize, form } = params
+      const { list, total } = await fetchPaginationList({ page, pageSize })
+      setTotal(total)
+      return list
+    },
+    {
+      // Pass in the configuration for useQuery, like refreshInterval for periodic refreshes
+      query: { refreshInterval: 3_000 },
+      // Pass in the configuration for useForm, like initialValues for form initialization
+      form: { initialValues: { name: '', select: '' } },
+      // Pass in the configuration for usePagination, like setting default page number and items per page
+      pagination: { page: 1, pageSize: 10 },
+      // Declare form fields for immediate query, when form field changes, it automatically triggers a query
+      immediateQueryKeys: ['select'],
+    },
+)
+
+// useForm returns the form object, refer to useForm documentation
+// form
+
+// useQuery returns the query object, refer to useQuery documentation
+// query
+
+// usePagination returns the pagination object, merging state and actions, refer to usePagination documentation
+// pagination
+
+// useMultiSelect returns the selection object, merging state and actions, refer to useMultiSelect documentation
+// selection
+
+// Data list
+// list
+
+// Set total data amount
+// setTotal
+
+// Whether it is loading
+// loading
+```
+
+## Source \{#source}
 
 import { Source } from '@/components'
 
@@ -27,4 +97,117 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
+const {
+  form,
+  query,
+  pagination,
+  selection,
+  list,
+  setTotal,
+  loading
+} = useProList(fetcher, options)
+```
+
+### Data Fetch Function Fetcher \{#fetcher}
+
+An asynchronous function that takes `params` parameter and returns a data list, which requires calling `setTotal` internally to set the total data amount.
+
+```tsx
+export interface UseProListFetcherParams<FormState extends object, Data> {
+  /**
+   * Data from the last request
+   */
+  previousData: undefined | Data
+  /**
+   * Current page number
+   */
+  page: number
+  /**
+   * Number of items displayed per page
+   */
+  pageSize: number
+  /**
+   * Form state
+   */
+  form: FormState
+  /**
+   * Set total data amount
+   */
+  setTotal: ReactSetState<number>
+}
+
+export type UseProListFetcher<FormState extends object, Data> = (
+  params: UseProListFetcherParams<FormState, Data>,
+) => Promise<Data>
+```
+
+### Options \{#options}
+
+```tsx
+export interface UseProListOptions<Fetcher extends AnyFunc, FormState extends object> {
+  /**
+   * Data fetch function
+   *
+   * @defaultValue undefined
+   */
+  form?: UseFormOptions<FormState>
+  /**
+   * `useQuery` configuration, refer to `useQuery` documentation
+   *
+   * @defaultValue undefined
+   */
+  query?: Omit<UseQueryOptions<Fetcher>, 'initialParams' | 'initialData'> 
+  /**
+   * `usePagination` configuration, refer to `usePagination` document
+   *
+   * @defaultValue undefined
+   */
+  pagination?: UsePaginationOptions<ReturnType<Fetcher>>
+  /**
+   * Form fields for immediate query, automatically triggers a query when form field changes
+   *
+   * @defaultValue []
+   */
+  immediateQueryKeys?: (keyof FormState)[]
+}
+```
+
+### Returns \{#returns}
+
+```tsx
+export interface UseProListReturns<
+  Item,
+  FormState extends object,
+  Data extends Item[],
+  Fetcher extends UseProListFetcher<FormState, Data>,
+> {
+  /**
+   * Whether it is loading
+   */
+  loading: boolean
+  /**
+   * Data list
+   */
+  list: Data
+  /**
+   * form instance, refer to useForm documentation
+   */
+  form: UseFormReturns<FormState>
+  /**
+   * query instance, refer to useQuery documentation
+   */
+  query: UseQueryOptions<Fetcher>
+  /**
+   * Set total data amount
+   */
+  setTotal: ReactSetState<number>
+  /**
+   * Selection state and operations, refer to useMultiSelect documentation
+   */
+  selection: UseMultiSelectReturnsState<Item> & UseMultiSelectReturns<Item>
+  /**
+   * Pagination state and operations, refer to usePagination documentation
+   */
+  pagination: UsePaginationReturnsState<Data> & UsePaginationReturnsActions
+}
 ```
