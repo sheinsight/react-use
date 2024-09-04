@@ -193,6 +193,7 @@ export function useProList<
         page: paginationState.page,
         pageSize: paginationState.pageSize,
         form: form.value,
+        setTotal,
       },
     ] as Parameters<Fetcher>,
     onBefore(...args) {
