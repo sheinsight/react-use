@@ -1,8 +1,9 @@
-import { Button, CodeBlock, ReactUseIcon, useI18n, useRoutePath } from '@/components'
-import { useDark, useNavigate } from 'rspress/runtime'
+import { Button, CodeBlock, ReactUseIcon, cn, useI18n, useRoutePath } from '@/components'
+import { useDark, useLang, useNavigate } from 'rspress/runtime'
 
 export function Main() {
   const t = useI18n()
+  const isZhCN = useLang() === 'zh-cn'
   const navigate = useNavigate()
   // const isDark = useDark()
 
@@ -16,7 +17,12 @@ export function Main() {
     <div className="flex flex-col items-center md:items-start gap-4 pt-20vh md:pt-12vh">
       <ReactUseIcon />
       <h1 className="font-mono font-bold text-2xl md:text-4xl colorful-title">@shined/react-use</h1>
-      <p className="text-wrap font-bold text-center text-lg md:text-4xl max-w-320px md:w-36vw md:max-w-600px md:text-left mb-0">
+      <p
+        className={cn(
+          'text-pretty font-bold text-center max-w-320px md:w-36vw md:max-w-600px md:text-left mb-0',
+          isZhCN ? 'text-4xl md:text-6xl' : 'text-3xl md:text-5xl',
+        )}
+      >
         {t('homepage.tagline')}
       </p>
       {/* <CodeBlock
