@@ -245,7 +245,7 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
     },
   )
 
-  const serviceWithStatusCheck = useStableFn(async () => {
+  const refreshWithStatusCheck = useStableFn(async () => {
     if (!pausable.isActive() || latest.current.manual) return
 
     const {
@@ -258,21 +258,23 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
     const isVisibleMatch = (await isVisible()) || refreshWhenHidden
     const isOnlineMatch = (await isOnline()) || refreshWhenOffline
 
-    if (isVisibleMatch && isOnlineMatch) return service.run()
+    const params = cacheActions.isCacheEnabled ? latest.current.cache.params : service.params
+
+    if (isVisibleMatch && isOnlineMatch) return service.refresh(params)
   })
 
   const serviceWithRateControl = useThrottledFn(useDebouncedFn(service.run, debounceOptions), throttleOptions)
   const refreshWithRateControl = useThrottledFn(useDebouncedFn(service.refresh, debounceOptions), throttleOptions)
 
-  const intervalPausable = useIntervalFn(serviceWithStatusCheck, options.refreshInterval ?? 0, {
+  const intervalPausable = useIntervalFn(refreshWithStatusCheck, options.refreshInterval ?? 0, {
     immediate: Boolean(options.refreshInterval && !options.manual),
   })
 
-  useReConnect(() => options.refreshOnReconnect && serviceWithStatusCheck(), {
+  useReConnect(() => options.refreshOnReconnect && refreshWithStatusCheck(), {
     registerReConnect: options.registerReConnect,
   })
 
-  useReFocus(() => options.refreshOnFocus && serviceWithStatusCheck(), {
+  useReFocus(() => options.refreshOnFocus && refreshWithStatusCheck(), {
     registerReFocus: options.registerReFocus,
     wait: options.refreshOnFocusThrottleWait ?? 5_000,
   })
@@ -286,7 +288,7 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
     () => intervalPausable.resume(),
   )
 
-  useUpdateEffect(() => void serviceWithStatusCheck(), [...(options.refreshDependencies ?? [])])
+  useUpdateEffect(() => void refreshWithStatusCheck(), [...(options.refreshDependencies ?? [])])
 
   const mutateWithCache = useStableFn((...actions: UseAsyncFnMutateAction<D | undefined, Parameters<T> | []>) => {
     const data = cacheActions.isCacheEnabled ? latest.current.cache.data : service.value
