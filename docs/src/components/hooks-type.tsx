@@ -1,4 +1,4 @@
-import { cn } from '@/utils'
+import { cn, useRoutePath } from '@/utils'
 
 export interface HooksTypeProps {
   category?: string
@@ -116,9 +116,10 @@ interface LabelProps {
 export function Label(props: LabelProps) {
   const { bgColor = 'primary', to, children } = props
   const color = colors(!!to)[bgColor]
+  const route = useRoutePath(props.to || '')
 
   return (
-    <a href={to}>
+    <a href={route}>
       <div className={cn(color, 'inline-flex items-center gap-1 transition-all rounded text-white px-2 py-1 text-sm')}>
         {children}
       </div>
