@@ -44,12 +44,24 @@ export type UseMultiSelectReturns<T> = readonly [
     selectAll(): void
     /**
      * Unselect the item
+     *
+     * @deprecated Use `unselect` instead
      */
     unSelect: (item: T) => void
     /**
      * Unselect all items
+     *
+     * @deprecated Use `unselectAll` instead
      */
     unSelectAll(): void
+    /**
+     * Unselect the item
+     */
+    unselect: (item: T) => void
+    /**
+     * Unselect all items
+     */
+    unselectAll(): void
     /**
      * Toggle the item
      */
@@ -66,13 +78,15 @@ export type UseMultiSelectReturns<T> = readonly [
  */
 export function useMultiSelect<T>(items: T[], defaultSelected: T[] = []): UseMultiSelectReturns<T> {
   const [selected, setSelected] = useSafeState<T[]>(defaultSelected)
-  const set = useCreation(() => new Set(selected), [selected])
-  const latest = useLatest({ set })
+
+  const set = useMemo(() => new Set(selected), [selected])
 
   const isNoneSelected = useMemo(() => items.every((o) => !set.has(o)), [items, set])
   const isAllSelected = useMemo(() => items.every((o) => set.has(o)) && !isNoneSelected, [items, set, isNoneSelected])
 
-  const isPartiallySelected = useMemo(() => {
+  const latest = useLatest({ set })
+
+  const isPartiallySelected = useCreation(() => {
     return !isNoneSelected && !isAllSelected
   }, [isNoneSelected, isAllSelected])
 
@@ -81,7 +95,7 @@ export function useMultiSelect<T>(items: T[], defaultSelected: T[] = []): UseMul
     setSelected(Array.from(latest.current.set))
   })
 
-  const unSelect = useStableFn((item: T) => {
+  const unselect = useStableFn((item: T) => {
     latest.current.set.delete(item)
     setSelected(Array.from(latest.current.set))
   })
@@ -93,7 +107,7 @@ export function useMultiSelect<T>(items: T[], defaultSelected: T[] = []): UseMul
     setSelected(Array.from(latest.current.set))
   })
 
-  const unSelectAll = useStableFn(() => {
+  const unselectAll = useStableFn(() => {
     for (const item of items) {
       latest.current.set.delete(item)
     }
@@ -102,11 +116,11 @@ export function useMultiSelect<T>(items: T[], defaultSelected: T[] = []): UseMul
 
   const toggleAll = useStableFn(() => {
     for (const item of items) {
-      isItemSelected(item) ? unSelect(item) : select(item)
+      isItemSelected(item) ? unselect(item) : select(item)
     }
   })
 
-  const toggle = useStableFn((item: T) => (isItemSelected(item) ? unSelect(item) : select(item)))
+  const toggle = useStableFn((item: T) => (isItemSelected(item) ? unselect(item) : select(item)))
   const isItemSelected = useStableFn((item: T) => latest.current.set.has(item))
 
   const state = {
@@ -123,8 +137,10 @@ export function useMultiSelect<T>(items: T[], defaultSelected: T[] = []): UseMul
     setSelected,
     toggle,
     toggleAll,
-    unSelect,
-    unSelectAll,
+    unselect,
+    unselectAll,
+    unSelect: unselect,
+    unSelectAll: unselectAll,
   }))
 
   return [state, actions] as const
