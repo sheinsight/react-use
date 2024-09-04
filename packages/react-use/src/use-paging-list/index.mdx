@@ -3,7 +3,7 @@ category: ProUtilities
 features: ['Pausable', 'DepCollect']
 ---
 
-# useProList
+# usePagingList
 
 import { HooksType, Since } from '@/components'
 
@@ -43,11 +43,11 @@ const {
   list,
   setTotal,
   loading
-} = useProList(fetcher, options)
+} = usePagingList(fetcher, options)
 
 // Pass a function that accepts page, pageSize pagination parameters, which needs to return a data list
 // Use setTotal inside this function to set the total data amount, so the paginator can display the total correctly
-const { form, query, pagination, selection, list, setTotal, loading } = useProList(
+const { form, query, pagination, selection, list, setTotal, loading } = usePagingList(
     async (params) => {
       const { page, pageSize, form } = params
       const { list, total } = await fetchPaginationList({ page, pageSize })
@@ -105,7 +105,7 @@ const {
   list,
   setTotal,
   loading
-} = useProList(fetcher, options)
+} = usePagingList(fetcher, options)
 ```
 
 ### Data Fetch Function Fetcher \{#fetcher}
@@ -113,7 +113,7 @@ const {
 An asynchronous function that takes `params` parameter and returns a data list, which requires calling `setTotal` internally to set the total data amount.
 
 ```tsx
-export interface UseProListFetcherParams<FormState extends object, Data> {
+export interface UsePagingListFetcherParams<FormState extends object, Data> {
   /**
    * Data from the last request
    */
@@ -136,15 +136,15 @@ export interface UseProListFetcherParams<FormState extends object, Data> {
   setTotal: ReactSetState<number>
 }
 
-export type UseProListFetcher<FormState extends object, Data> = (
-  params: UseProListFetcherParams<FormState, Data>,
+export type UsePagingListFetcher<FormState extends object, Data> = (
+  params: UsePagingListFetcherParams<FormState, Data>,
 ) => Promise<Data>
 ```
 
 ### Options \{#options}
 
 ```tsx
-export interface UseProListOptions<Fetcher extends AnyFunc, FormState extends object> {
+export interface UsePagingListOptions<Fetcher extends AnyFunc, FormState extends object> {
   /**
    * Data fetch function
    *
@@ -175,11 +175,11 @@ export interface UseProListOptions<Fetcher extends AnyFunc, FormState extends ob
 ### Returns \{#returns}
 
 ```tsx
-export interface UseProListReturns<
+export interface UsePagingListReturns<
   Item,
   FormState extends object,
   Data extends Item[],
-  Fetcher extends UseProListFetcher<FormState, Data>,
+  Fetcher extends UsePagingListFetcher<FormState, Data>,
 > {
   /**
    * Whether it is loading

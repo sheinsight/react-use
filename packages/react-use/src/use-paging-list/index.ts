@@ -15,7 +15,7 @@ import type { UseQueryOptions } from '../use-query'
 import type { ReactSetState } from '../use-safe-state'
 import type { AnyFunc } from '../utils/basic'
 
-export interface UseProListOptions<Fetcher extends AnyFunc, FormState extends object> {
+export interface UsePagingListOptions<Fetcher extends AnyFunc, FormState extends object> {
   /**
    * options for `useForm`, see `useForm` for more details
    *
@@ -42,7 +42,7 @@ export interface UseProListOptions<Fetcher extends AnyFunc, FormState extends ob
   immediateQueryKeys?: (keyof FormState)[]
 }
 
-export interface UseProListFetcherParams<FormState extends object, Data> {
+export interface UsePagingListFetcherParams<FormState extends object, Data> {
   /**
    * previous data
    */
@@ -65,15 +65,15 @@ export interface UseProListFetcherParams<FormState extends object, Data> {
   setTotal: ReactSetState<number>
 }
 
-export type UseProListFetcher<FormState extends object, Data> = (
-  params: UseProListFetcherParams<FormState, Data>,
+export type UsePagingListFetcher<FormState extends object, Data> = (
+  params: UsePagingListFetcherParams<FormState, Data>,
 ) => Promise<Data>
 
-export interface UseProListReturns<
+export interface UsePagingListReturns<
   Item,
   FormState extends object,
   Data extends Item[],
-  Fetcher extends UseProListFetcher<FormState, Data>,
+  Fetcher extends UsePagingListFetcher<FormState, Data>,
 > {
   /**
    * loading status
@@ -105,12 +105,12 @@ export interface UseProListReturns<
   pagination: UsePaginationReturnsState<Data> & UsePaginationReturnsActions
 }
 
-export function useProList<
+export function usePagingList<
   Item,
   FormState extends object,
   Data extends Item[] = Item[],
-  Fetcher extends UseProListFetcher<FormState, Data> = UseProListFetcher<FormState, Data>,
->(fetcher: Fetcher, options: UseProListOptions<Fetcher, FormState> = {}) {
+  Fetcher extends UsePagingListFetcher<FormState, Data> = UsePagingListFetcher<FormState, Data>,
+>(fetcher: Fetcher, options: UsePagingListOptions<Fetcher, FormState> = {}) {
   const previousDataRef = useRef<Data | undefined>(undefined)
   const previousFormRef = useRef<FormState>((options.form?.initialValue || {}) as FormState)
   const previousSelectedRef = useRef<Item[]>([])
