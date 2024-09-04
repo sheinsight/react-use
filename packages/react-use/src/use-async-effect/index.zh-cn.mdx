@@ -10,10 +10,12 @@ import { HooksType } from '@/components'
 
 一个类似于 [React.useEffect](https://react.dev/reference/react/useEffect) 的 React Hook，但支持**可取消**的**异步**函数。
 
-:::warning 注意
+:::note 注意
+
 它不应该返回一个清理函数，因为它是 `async` 的，无法同步返回清理函数并按预期进行清理。
 
 如果你需要清理一些东西，请在 `UseAsyncEffectCallback` 中使用 `isCancelled()` 来检查 Effect 的状态。
+
 :::
 
 ## 场景 Scenes \{#scenes}

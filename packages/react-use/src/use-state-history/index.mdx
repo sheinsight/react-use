@@ -31,9 +31,9 @@ import { Source } from '@/components'
 
 Almost the same as [useManualStateHistory](/reference/use-manual-state-history), but with an additional [Pausable](/docs/features/pausable) instance return.
 
-import { Tip } from '@/components'
+Retuerns contain [Pausable](/docs/features/pausable) instance that can be paused, resumed.
 
-<Tip type="pausable" />
+See [Pausable](/docs/features/pausable) for more details.
 
 ```tsx
 const { ...history, ...pausable } = useStateHistory(state, options)

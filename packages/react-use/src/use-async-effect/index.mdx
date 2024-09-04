@@ -10,10 +10,12 @@ import { HooksType } from '@/components'
 
 A React Hook similar to [React.useEffect](https://react.dev/reference/react/useEffect), but supports **cancellable** **asynchronous** functions.
 
-:::warning Warning
+:::note Note
+
 It should not return a cleanup function, as it is `async` and cannot synchronously return a cleanup function to be executed as expected.
 
 If you need to clean up something, please use `isCancelled()` within `UseAsyncEffectCallback` to check the status of the Effect.
+
 :::
 
 ## Scenes \{#scenes}

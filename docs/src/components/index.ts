@@ -11,7 +11,6 @@ export * from './react-use-icon'
 export * from './select'
 export * from './since'
 export * from './source'
-export * from './tip'
 export * from './zone'
 
 export * from '../utils'

@@ -31,9 +31,9 @@ import { Source } from '@/components'
 
 几乎与 [useManualStateHistory](/reference/use-manual-state-history) 相同，但额外返回了一个 [可暂停](/docs/features/pausable) 实例。
 
-import { Tip } from '@/components'
+返回值中包含可暂停、恢复的 [Pausable](/docs/features/pausable) 实例。
 
-<Tip type="pausable" />
+更多详情，请参见 [Pausable](/docs/features/pausable)。
 
 ```tsx
 const { ...history, ...pausable } = useStateHistory(state, options)

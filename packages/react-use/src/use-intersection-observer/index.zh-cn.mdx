@@ -37,9 +37,9 @@ const obsererReturn = useIntersectionObserver(elementTarget, options)
 
 ### 元素目标 ElementTarget \{#element-target}
 
-import { Tip } from '@/components'
+`ElementTarget` 是一个联合类型，代表可以被定位的各种元素。
 
-<Tip type="target" />
+更多详情，请参见 [ElementTarget](/docs/fearetus/element-target) 或 [ElementTarget 类型](/docs/fearetus/element-target#element-target-types)。
 
 ### 选项 Options \{#options}
 
@@ -69,7 +69,9 @@ export type UseIntersectionObserverOptions = UseWebObserverOptions & Intersectio
 
 ### 返回值 \{#returns}
 
-<Tip type="pausable" />
+Retuerns contain [Pausable](/docs/react-use/pausable) instance that can be paused, resumed.
+
+See [Pausable](/docs/react-use/pausable) for more details.
 
 ```tsx
 export interface UseWebObserverReturns<Observer> extends Pausable {

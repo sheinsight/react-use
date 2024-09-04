@@ -75,9 +75,9 @@ export type UseCountdownOptions<Controls extends boolean = false> = {
 
 ### Returns
 
-import { Tip } from '@/components'
+Retuerns contain [Pausable](/docs/react-use/pausable) instance that can be paused, resumed.
 
-<Tip type="pausable" />
+See [Pausable](/docs/react-use/pausable) for more details.
 
 ```tsx
 export type UseCountdownReturns<Controls extends boolean> = Controls extends true ? { ms: number } & Pausable : number

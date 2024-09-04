@@ -19,9 +19,11 @@ A Ref Getter is a function specially designed to access the current value of a R
 It's important to note that **components will not re-render when the Ref value changes**, so please do not use the Ref Getter for UI rendering. If you need to trigger re-renders based on changes, it's recommended to use `useState` or `useReducer`.
 
 :::tip Tip
+
 Choosing to use Ref and its Getter is fundamentally a performance trade-off, allowing developers to effectively manage state while avoiding unnecessary re-renders. However, it is critical to use this pattern cautiously, as overuse or misuse can lead to complexity or unintended behaviors in React applications.
 
 This delicate balance ensures that your application retains its performance while still being able to respond to dynamic demands without sacrificing React's principles of reactivity.
+
 :::
 
 ## useGetterRef {#use-getter-ref}

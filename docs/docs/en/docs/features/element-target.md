@@ -55,7 +55,9 @@ This Hook has been used in many core functionalities of `@shined/react-use`, suc
 ### ElementTarget Types {#element-target-types}
 
 :::tip Tip
+
 The "🚥" prefix indicates it can be a Getter function, especially useful in SSR. The "⚛️" prefix indicates it can be a `Ref` containing it.
+
 :::
 
 - 🚥 ⚛️ **window/document**: The global window or document object.
