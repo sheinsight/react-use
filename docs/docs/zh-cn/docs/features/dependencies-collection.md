@@ -52,7 +52,7 @@ run()
 - [useClipboardItems](/reference/use-clipboard-items)
 - [useForm](/reference/use-form)
 - [useLoadingSlowFn](/reference/use-loading-slow-fn)
-- [useProList](/reference/use-pro-list)
+- [usePagingList](/reference/use-paging-list)
 - [useQuery](/reference/use-query)
 
 由于工作量巨大，我们目前只对部分 Hooks 进行了依赖收集的优化，未来会逐步对其他 Hooks 进行优化。

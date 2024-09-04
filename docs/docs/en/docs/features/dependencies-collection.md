@@ -52,7 +52,7 @@ In other words, users take whatever state they need, and unrelated states don't 
 - [useClipboardItems](/reference/use-clipboard-items)
 - [useForm](/reference/use-form)
 - [useLoadingSlowFn](/reference/use-loading-slow-fn)
-- [useProList](/reference/use-pro-list)
+- [usePagingList](/reference/use-paging-list)
 
 Due to the immense amount of work involved, we have only optimized the dependencies collection for some Hooks for now, planning to gradually optimize other Hooks in the future.
 

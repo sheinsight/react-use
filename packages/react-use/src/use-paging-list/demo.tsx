@@ -1,5 +1,5 @@
 import { Button, Card, Input, KeyValue, Zone, cn, wait } from '@/components'
-import { useProList, useUpdateEffect } from '@shined/react-use'
+import { usePagingList, useUpdateEffect } from '@shined/react-use'
 
 const genders = ['Boy', 'Girl'] as const
 const colors = ['Red', 'Orange', 'Yellow', 'Green', 'Cyan', 'Blue', 'Violet'] as const
@@ -16,7 +16,7 @@ interface Item {
 }
 
 export function App() {
-  const { list, loading, form, query, pagination, selection } = useProList<Item, FormState>(
+  const { list, loading, form, query, pagination, selection } = usePagingList<Item, FormState>(
     async (params) => {
       const { page, pageSize, form, setTotal } = params
       const { data, total } = await fetchPagination({ page, pageSize })
