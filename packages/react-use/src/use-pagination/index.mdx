@@ -72,7 +72,7 @@ export type UsePaginationOptions = {
 ### Returns
 
 ```tsx
-export interface UsePaginationReturnsState {
+export interface UsePaginationReturnsState<T = any> {
   /**
    * Total number of items.
    */
@@ -91,20 +91,32 @@ export interface UsePaginationReturnsState {
   currentPageSize: number
   /**
    * The current page number.
-   * 
-   * @since 1.7.0
    */
   page: number
   /**
    * The number of items to display per page.
-   * 
-   * @since 1.7.0
    */
   pageSize: number
   /**
    * The total number of pages.
    */
   pageCount: number
+  /**
+   * The start index of the displayed list (helpful to slice the list).
+   */
+  indexStart: number
+  /**
+   * The end index of the displayed list (helpful to slice the list).
+   */
+  indexEnd: number
+  /**
+   * The start count of the displayed list.
+   */
+  countStart: number
+  /**
+   * The end count of the displayed list.
+   */
+  countEnd: number
   /**
    * Whether the current page is the first page.
    */
@@ -113,6 +125,10 @@ export interface UsePaginationReturnsState {
    * Whether the current page is the last page.
    */
   isLastPage: boolean
+  /**
+   * The sliced list to display.
+   */
+  list: T[]
 }
 
 export interface UsePaginationReturnsActions {

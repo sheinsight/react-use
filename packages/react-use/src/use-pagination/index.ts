@@ -89,6 +89,14 @@ export interface UsePaginationReturnsState<T = any> {
    */
   indexEnd: number
   /**
+   * The start count of the displayed list.
+   */
+  countStart: number
+  /**
+   * The end count of the displayed list.
+   */
+  countEnd: number
+  /**
    * Whether the current page is the first page.
    */
   isFirstPage: boolean
@@ -137,7 +145,7 @@ export type UsePaginationReturns<T> = readonly [UsePaginationReturnsState<T>, Us
  * A React Hook that manage pagination state.
  */
 export function usePagination<T = any>(options: UsePaginationOptions<T> = {}): UsePaginationReturns<T> {
-  const total = options.list ? options.list.length : Number.POSITIVE_INFINITY
+  const total = options.list ? options.list.length : options.total ?? Number.POSITIVE_INFINITY
   const { list = [] as T[], page = 1, pageSize = 10, onPageChange, onPageSizeChange, onPageCountChange } = options
 
   const isInfinity = total === Number.POSITIVE_INFINITY
@@ -151,6 +159,7 @@ export function usePagination<T = any>(options: UsePaginationOptions<T> = {}): U
   const setPageSize = useStableFn((size: number) => pageSizeActions.set(size))
 
   const [indexStart, indexEnd] = [(currentPage - 1) * currentPageSize, Math.min(currentPage * currentPageSize, total)]
+  const [countStart, countEnd] = [indexStart + 1, indexEnd]
 
   const slicedList = useMemo(() => list.slice(indexStart, indexEnd), [list, indexStart, indexEnd])
   const isFirstPage = currentPage === 1
@@ -165,6 +174,8 @@ export function usePagination<T = any>(options: UsePaginationOptions<T> = {}): U
     pageCount,
     indexStart,
     indexEnd,
+    countStart,
+    countEnd,
     isFirstPage,
     isLastPage,
     list: slicedList,

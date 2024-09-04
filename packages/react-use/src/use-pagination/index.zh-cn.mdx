@@ -72,39 +72,51 @@ export type UsePaginationOptions = {
 ### 返回值 \{#returns}
 
 ```tsx
-export interface UsePaginationReturnsState {
+export interface UsePaginationReturnsState<T = any> {
   /**
-   * 总项目数。
+   * 列表总项目数。
    */
   total: number
   /**
    * 当前页码。
-   *
+   * 
    * @deprecated 请使用 `page` 代替。
    */
   currentPage: number
   /**
-   * 每页展示的项目数。
+   * 当前每页展示的项目数。
    *
    * @deprecated 请使用 `pageSize` 代替。
    */
   currentPageSize: number
   /**
    * 当前页码。
-   * 
-   * @since 1.7.0
    */
   page: number
   /**
-   * 每页展示的项目数。
-   * 
-   * @since 1.7.0
+   * 当前每页展示的项目数。
    */
   pageSize: number
   /**
    * 总页数。
    */
   pageCount: number
+  /**
+   * 当前列表数据的起始索引。
+   */
+  indexStart: number
+  /**
+   * 当前列表数据的结束索引。
+   */
+  indexEnd: number
+  /**
+   * 当前展示的列表的起始计数。
+   */
+  countStart: number
+  /**
+   * 当前展示的列表的结束计数。
+   */
+  countEnd: number
   /**
    * 是否为第一页。
    */
@@ -113,6 +125,10 @@ export interface UsePaginationReturnsState {
    * 是否为最后一页。
    */
   isLastPage: boolean
+  /**
+   * 分页后的列表数据。
+   */
+  list: T[]
 }
 
 export interface UsePaginationReturnsActions {
