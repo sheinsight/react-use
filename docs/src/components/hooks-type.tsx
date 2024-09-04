@@ -2,7 +2,7 @@ import { cn } from '@/utils'
 
 export interface HooksTypeProps {
   category?: string
-  features?: ('Pausable' | 'IsSupported' | 'LowLevel' | 'DevOnly')[]
+  features?: ('Pausable' | 'IsSupported' | 'LowLevel' | 'DevOnly' | 'DepCollect')[]
   pausable?: boolean
   isSupported?: boolean
   lowLevel?: boolean
@@ -22,6 +22,7 @@ export const iconMap = {
   IsSupported: <div className="i-mdi:checkbox-outline size-1em" />,
   LowLevel: <div className="i-mdi:power-plug-outline size-1em" />,
   DevOnly: <div className="i-mdi:dev-to size-1em" />,
+  DepCollect: <div className="i-mdi:package size-1em" />,
   Network: <div className="i-mdi:internet size-1em" />,
   Reactive: <div className="i-mdi:rotate-orbit size-1em" />,
   SelectAll: <div className="i-mdi:check-all size-1em" />,
@@ -81,6 +82,13 @@ export function Labels(
         <Label bgColor="amber" to="/?feature=Pausable">
           {iconMap.Pausable}
           Pausable
+        </Label>
+      )}
+
+      {features.includes('DepCollect') && (
+        <Label bgColor="purple" to="/?feature=DepCollect">
+          {iconMap.DepCollect}
+          DepCollect
         </Label>
       )}
 

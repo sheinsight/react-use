@@ -50,9 +50,9 @@ In other words, users take whatever state they need, and unrelated states don't 
 - [useAsyncFn](/reference/use-async-fn)
 - [useClipboard](/reference/use-clipboard)
 - [useClipboardItems](/reference/use-clipboard-items)
+- [useForm](/reference/use-form)
 - [useLoadingSlowFn](/reference/use-loading-slow-fn)
-- [useQuery](/reference/use-query)
-- [~~useRequest (deprecated, please use useQuest)~~](/reference/use-request)
+- [useProList](/reference/use-pro-list)
 
 Due to the immense amount of work involved, we have only optimized the dependencies collection for some Hooks for now, planning to gradually optimize other Hooks in the future.
 

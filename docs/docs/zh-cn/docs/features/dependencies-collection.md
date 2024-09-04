@@ -50,9 +50,10 @@ run()
 - [useAsyncFn](/reference/use-async-fn)
 - [useClipboard](/reference/use-clipboard)
 - [useClipboardItems](/reference/use-clipboard-items)
+- [useForm](/reference/use-form)
 - [useLoadingSlowFn](/reference/use-loading-slow-fn)
+- [useProList](/reference/use-pro-list)
 - [useQuery](/reference/use-query)
-- [~~useRequest（已弃用，请使用 useQuest）~~](/reference/use-request)
 
 由于工作量巨大，我们目前只对部分 Hooks 进行了依赖收集的优化，未来会逐步对其他 Hooks 进行优化。
 

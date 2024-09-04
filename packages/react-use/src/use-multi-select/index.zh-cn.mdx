@@ -43,58 +43,71 @@ const [state, actions] = useMultiSelect(list, defaultSelected)
 ### 返回值 \{#returns}
 
 ```tsx
-export type UseMultiSelectReturns<T> = readonly [
-  {
-    /**
-     * 被选中的项目
-     */
-    selected: T[]
-    /**
-     * 没有项目被选中
-     */
-    isNoneSelected: boolean
-    /**
-     * 所有项目都被选中
-     */
-    isAllSelected: boolean
-    /**
-     * 一些项目被选中
-     */
-    isPartiallySelected: boolean
-  },
-  {
-    /**
-     * 项目是否被选中
-     */
-    isItemSelected: (item: T) => boolean
-    /**
-     * 设置被选中的项目
-     */
-    setSelected: ReactSetState<T[]>
-    /**
-     * 选中项目
-     */
-    select: (item: T) => void
-    /**
-     * 选中所有项目
-     */
-    selectAll(): void
-    /**
-     * 取消选中项目
-     */
-    unSelect: (item: T) => void
-    /**
-     * 取消选中所有项目
-     */
-    unSelectAll(): void
-    /**
-     * 切换项目的选中状态
-     */
-    toggle: (item: T) => void
-    /**
-     * 切换所有项目的选中状态
-     */
-    toggleAll(): void
-  },
-]
+export interface UseMultiSelectReturnsState<T> {
+  /**
+   * 选中的项目
+   */
+  selected: T[]
+  /**
+   * 是否没有选中任何项目
+   */
+  isNoneSelected: boolean
+  /**
+   * 是否所有项目都被选中
+   */
+  isAllSelected: boolean
+  /**
+   * 是否部分选中
+   */
+  isPartiallySelected: boolean
+}
+
+export interface UseMultiSelectActions<T> {
+  /**
+   * 检查项目是否被选中
+   */
+  isItemSelected: (item: T) => boolean
+  /**
+   * 设置选中的项目
+   */
+  setSelected: ReactSetState<T[]>
+  /**
+   * 选中项目
+   */
+  select: (item: T) => void
+  /**
+   * 选中所有项目
+   */
+  selectAll(): void
+  /**
+   * 取消选中项目
+   *
+   * @deprecated 请使用 `unselectAll` 代替
+   */
+  unSelect: (item: T) => void
+  /**
+   * 取消选中所有项目
+   *
+   * @deprecated 请使用 `unselectAll` 代替
+   */
+  unSelectAll(): void
+  /**
+   * 取消选中项目
+   */
+  unselect: (item: T) => void
+  /**
+   * 取消选中所有项目
+   */
+  unselectAll(): void
+  /**
+   * 切换项目的选中状态
+   */
+  toggle: (item: T) => void
+  /**
+   * 切换所有项目的选中状态
+   */
+  toggleAll(): void
+}
+
+export type UseMultiSelectReturns<T> = readonly [UseMultiSelectReturnsState<T>, UseMultiSelectActions<T>]
 ```

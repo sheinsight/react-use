@@ -6,72 +6,73 @@ import { useStableFn } from '../use-stable-fn'
 
 import type { ReactSetState } from '../use-safe-state'
 
-export type UseMultiSelectReturns<T> = readonly [
-  {
-    /**
-     * The selected items
-     */
-    selected: T[]
-    /**
-     * Whether none of the items are selected
-     */
-    isNoneSelected: boolean
-    /**
-     * Whether all of the items are selected
-     */
-    isAllSelected: boolean
-    /**
-     * Whether some of the items are selected
-     */
-    isPartiallySelected: boolean
-  },
-  {
-    /**
-     * Whether the item is selected
-     */
-    isItemSelected: (item: T) => boolean
-    /**
-     * Set the selected items
-     */
-    setSelected: ReactSetState<T[]>
-    /**
-     * Select the item
-     */
-    select: (item: T) => void
-    /**
-     * Select all items
-     */
-    selectAll(): void
-    /**
-     * Unselect the item
-     *
-     * @deprecated Use `unselect` instead
-     */
-    unSelect: (item: T) => void
-    /**
-     * Unselect all items
-     *
-     * @deprecated Use `unselectAll` instead
-     */
-    unSelectAll(): void
-    /**
-     * Unselect the item
-     */
-    unselect: (item: T) => void
-    /**
-     * Unselect all items
-     */
-    unselectAll(): void
-    /**
-     * Toggle the item
-     */
-    toggle: (item: T) => void
-    /**
-     * Toggle all items
-     */
-    toggleAll(): void
-  },
-]
+export interface UseMultiSelectReturnsState<T> {
+  /**
+   * The selected items
+   */
+  selected: T[]
+  /**
+   * Whether none of the items are selected
+   */
+  isNoneSelected: boolean
+  /**
+   * Whether all of the items are selected
+   */
+  isAllSelected: boolean
+  /**
+   * Whether some of the items are selected
+   */
+  isPartiallySelected: boolean
+}
+
+export interface UseMultiSelectActions<T> {
+  /**
+   * Whether the item is selected
+   */
+  isItemSelected: (item: T) => boolean
+  /**
+   * Set the selected items
+   */
+  setSelected: ReactSetState<T[]>
+  /**
+   * Select the item
+   */
+  select: (item: T) => void
+  /**
+   * Select all items
+   */
+  selectAll(): void
+  /**
+   * Unselect the item
+   *
+   * @deprecated Use `unselect` instead
+   */
+  unSelect: (item: T) => void
+  /**
+   * Unselect all items
+   *
+   * @deprecated Use `unselectAll` instead
+   */
+  unSelectAll(): void
+  /**
+   * Unselect the item
+   */
+  unselect: (item: T) => void
+  /**
+   * Unselect all items
+   */
+  unselectAll(): void
+  /**
+   * Toggle the item
+   */
+  toggle: (item: T) => void
+  /**
+   * Toggle all items
+   */
+  toggleAll(): void
+}
+
+export type UseMultiSelectReturns<T> = readonly [UseMultiSelectReturnsState<T>, UseMultiSelectActions<T>]
 
 /**
  * A React Hook that manages multi-select state.
