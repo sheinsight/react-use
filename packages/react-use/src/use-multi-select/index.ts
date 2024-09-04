@@ -56,10 +56,14 @@ export interface UseMultiSelectActions<T> {
   unSelectAll(): void
   /**
    * Unselect the item
+   *
+   * @since 1.7.0
    */
   unselect: (item: T) => void
   /**
    * Unselect all items
+   *
+   * @since 1.7.0
    */
   unselectAll(): void
   /**

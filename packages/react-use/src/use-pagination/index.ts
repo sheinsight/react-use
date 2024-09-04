@@ -70,10 +70,14 @@ export interface UsePaginationReturnsState<T = any> {
   currentPageSize: number
   /**
    * The current page number.
+   *
+   * @since 1.7.0
    */
   page: number
   /**
    * The number of items to display per page.
+   *
+   * @since 1.7.0
    */
   pageSize: number
   /**
@@ -90,10 +94,14 @@ export interface UsePaginationReturnsState<T = any> {
   indexEnd: number
   /**
    * The start count of the displayed list.
+   *
+   * @since 1.7.0
    */
   countStart: number
   /**
    * The end count of the displayed list.
+   *
+   * @since 1.7.0
    */
   countEnd: number
   /**

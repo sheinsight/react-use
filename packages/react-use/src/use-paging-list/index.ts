@@ -105,6 +105,11 @@ export interface UsePagingListReturns<
   pagination: UsePaginationReturnsState<Data> & UsePaginationReturnsActions
 }
 
+/**
+ * A hook for handling paging lists that integrates the functionalities of `useQuery`, `useForm`, `useMultiSelect`, and `usePagination`.
+ *
+ * @since 1.7.0
+ */
 export function usePagingList<
   Item,
   FormState extends object,
