@@ -178,6 +178,7 @@ export function useWebSocket(
 
   const [wsRef, ws] = useGetterRef<WebSocket | null>(null)
   const isClosedIntentionally = useRef<boolean>(false)
+  const messageQueue = useRef<UseWebSocketSendable[]>([])
   const [incVersion, runVersionedAction] = useVersionedAction()
 
   const [readyState, setReadyState] = useSafeState<UseWebSocketReturnsReadyState>(WebSocket.CLOSED)
@@ -269,7 +270,7 @@ export function useWebSocket(
     { immediate: false },
   )
 
-  const heartbeatInterval = useIntervalFn(() => {
+  useIntervalFn(() => {
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN && latest.current.heartbeat) {
       const message =
         latest.current.heartbeat === true
@@ -289,9 +290,7 @@ export function useWebSocket(
       if (wsRef.current.readyState === WebSocket.OPEN) {
         wsRef.current.send(data)
       } else {
-        if (isDev) {
-          console.error('WebSocket is not open, unable to send data:', data)
-        }
+        messageQueue.current.push(data)
       }
     }
   })
@@ -323,6 +322,15 @@ export function useWebSocket(
   useUpdateEffect(() => {
     openWithRetry()
   }, [_url])
+
+  useUpdateEffect(() => {
+    if (readyState === WebSocket.OPEN) {
+      if (messageQueue.current.length) {
+        for (const message of messageQueue.current) send(message)
+        messageQueue.current = []
+      }
+    }
+  }, [readyState])
 
   return {
     ws,
