@@ -46,7 +46,7 @@ export interface UsePagingListFetcherParams<FormState extends object, Data> {
   /**
    * previous data
    */
-  previousData: undefined | Data
+  previousData: Data | undefined
   /**
    * current page
    */

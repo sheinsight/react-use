@@ -46,9 +46,9 @@ const {
   loading
 } = usePagingList(fetcher, options)
 
-// 穿入一个接受 page, pageSize 分页参数的函数，它需要返回一个数据列表
+// 传入一个接受 page, pageSize 分页参数的函数，它需要返回一个数据列表
 // 在这个函数里面使用 setTotal 来设置数据总数，以便分页器能够正确显示总数
-const { form, query, pagination, selection, list, setTotal, loading } = usePagingList(
+const { form, query, pagination, selection, list, refresh, setTotal, loading } = usePagingList(
     async (params) => {
       const { page, pageSize, form } = params
       const { list, total } = await fetchPaginationList({ page, pageSize })
@@ -68,25 +68,28 @@ const { form, query, pagination, selection, list, setTotal, loading } = usePagin
 )
 
 // useForm 返回的 form 对象，参考 useForm 文档
-// form
+form
 
 // useQuery 返回的 query 对象，参考 useQuery 文档
-// query
+query
 
 // usePagination 返回的 pagination 对象，合并了 state 和 actions，参考 usePagination 文档
-// pagination
+pagination
 
 // useMultiSelect 返回的 selection 对象，合并了 state 和 actions，参考 useMultiSelect 文档
-// selection
+selection
 
 // 数据列表
-// list
+list
+
+// 刷新数据
+refresh
 
 // 设置数据总数
-// setTotal
+setTotal
 
 // 是否正在加载
-// loading
+loading
 ```
 
 ## 源码 \{#source}
@@ -104,6 +107,7 @@ const {
   pagination,
   selection,
   list,
+  refresh,
   setTotal,
   loading
 } = usePagingList(fetcher, options)
@@ -118,7 +122,7 @@ export interface UsePagingListFetcherParams<FormState extends object, Data> {
   /**
    * 上次请求的数据
    */
-  previousData: undefined | Data
+  previousData: Data | undefined
   /**
    * 当前页码
    */
@@ -147,7 +151,7 @@ export type UsePagingListFetcher<FormState extends object, Data> = (
 ```tsx
 export interface UsePagingListOptions<Fetcher extends AnyFunc, FormState extends object> {
   /**
-   * 数据获取函数
+   * `useForm` 的配置项，参考 useForm 文档
    *
    * @defaultValue undefined
    */
