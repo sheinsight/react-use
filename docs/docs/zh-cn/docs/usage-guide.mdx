@@ -294,12 +294,11 @@ useEffect(() => {
 
 ```tsx
 // 推荐
-const { loading, error, data, run, cancel, refresh } = useQuery({
-  async asyncFn() {
-    return await fetch('https://api.example.com/data').then((res) => res.json())
-  },
-  { refreshInterval: 1000 }
-})
+const fetcher = () => fetch('https://api.example.com/data').then((res) => res.json())
+
+const { loading, error, data, run, cancel, refresh } = useQuery(fetcher, {
+  refreshInterval: 1000
+});
 
 // 可以通过 run、cancel、refresh 等操作函数来控制数据请求
 run()

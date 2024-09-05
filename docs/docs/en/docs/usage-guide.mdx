@@ -265,6 +265,45 @@ return (
 )
 ```
 
+### Data Fetching \{#data-fetching}
+
+We recommend using `useQuery` for handling data fetching. It provides a series of semantic operations such as `run`, `cancel`, `refresh`, etc., while also supporting the automatic management of `loading`, `error`, and `data` states.
+
+For more details, see [useQuery](/reference/use-query).
+
+```tsx
+// Not recommended
+const [loading, setLoading] = useState(false)
+const [error, setError] = useState(null)
+const [data, setData] = useState(null)
+
+useEffect(() => {
+  setLoading(true)
+  fetch('https://api.example.com/data')
+    .then((res) => res.json())
+    .then((data) => {
+      setData(data)
+      setLoading(false)
+    })
+    .catch((error) => {
+      setError(error)
+      setLoading(false)
+    })
+}, [])
+```
+
+```tsx
+// Recommended
+const fetcher = () => fetch('https://api.example.com/data').then((res) => res.json())
+
+const { loading, error, data, run, cancel, refresh } = useQuery(fetcher, {
+  refreshInterval: 1000
+});
+
+// The data fetching can be controlled by operations such as run, cancel, and refresh
+run()
+```
+
 ### Debounce and Throttle \{#debounce-and-throttle}
 
 We recommend using the `useDebouncedFn` and `useThrottledFn` hooks for handling common debounce and throttle functionalities. There are also [useDebouncedEffect](/reference/use-debounced-effect) and [useThrottledEffect](/reference/use-throttled-effect) hooks available for managing debounce and throttle side effects. However, we generally prefer the former.
