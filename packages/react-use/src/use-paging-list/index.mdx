@@ -41,6 +41,7 @@ const {
   pagination,
   selection,
   list,
+  refresh,
   setTotal,
   loading
 } = usePagingList(fetcher, options)
@@ -197,6 +198,10 @@ export interface UsePagingListReturns<
    * query instance, refer to useQuery documentation
    */
   query: UseQueryOptions<Fetcher>
+  /**
+   * refresh query
+   */
+  refresh: () => void
   /**
    * Set total data amount
    */

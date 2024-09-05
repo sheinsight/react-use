@@ -16,7 +16,7 @@ interface Item {
 }
 
 export function App() {
-  const { list, loading, form, query, pagination, selection } = usePagingList<Item, FormState>(
+  const { list, loading, form, refresh, query, pagination, selection } = usePagingList<Item, FormState>(
     async (params) => {
       const { page, pageSize, form, setTotal } = params
       const { data, total } = await fetchPagination({ page, pageSize })
@@ -27,16 +27,16 @@ export function App() {
       form: {
         initialValue: {
           name: '',
-          gender: 'Girl',
-          color: ['Cyan'],
+          gender: 'Boy',
+          color: ['Red'],
         },
       },
       query: {
-        refreshInterval: 3_000,
+        refreshInterval: 6_000,
       },
       pagination: {
-        page: 2,
-        pageSize: 10,
+        page: 1,
+        pageSize: 50,
       },
       immediateQueryKeys: ['color', 'gender'],
     },
@@ -56,6 +56,8 @@ export function App() {
             <span className="text-right inline-block w-80px">Name:</span>
             <Input name="name" placeholder="Name" />
             <Button type="submit">Search</Button>
+            <Button type="reset">Reset</Button>
+            <Button onClick={() => refresh()}>Refresh</Button>
           </Zone>
           <Zone>
             <span className="text-right inline-block w-80px">Gender:</span>

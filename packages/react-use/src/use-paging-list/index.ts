@@ -92,6 +92,10 @@ export interface UsePagingListReturns<
    */
   query: UseQueryOptions<Fetcher>
   /**
+   * refresh query
+   */
+  refresh: () => void
+  /**
    * set total count
    */
   setTotal: ReactSetState<number>
@@ -125,10 +129,19 @@ export function usePagingList<
     ...options.form,
     onReset(...args) {
       startNewQuery()
-      latest.current.options.form?.onReset?.(...args)
+      return latest.current.options.form?.onReset?.(...args)
     },
     onSubmit(...args) {
-      startNewQuery()
+      const form = args[0]
+
+      query.run({
+        previousData: previousDataRef.current,
+        page: paginationState.page,
+        pageSize: paginationState.pageSize,
+        form,
+        setTotal,
+      })
+
       latest.current.options.form?.onSubmit?.(...args)
     },
     onChange(...args) {
@@ -146,7 +159,7 @@ export function usePagingList<
 
       previousFormRef.current = nextForm
 
-      latest.current.options.form?.onChange?.(...args)
+      return latest.current.options.form?.onChange?.(...args)
     },
   })
 
@@ -230,6 +243,8 @@ export function usePagingList<
 
   const latest = useLatest({ options, paginationState })
 
+  const refresh = useStableFn(() => query.refresh())
+
   return {
     get loading() {
       return query.loading
@@ -238,6 +253,7 @@ export function usePagingList<
     form,
     query,
     setTotal,
+    refresh,
     selection: {
       ...select,
       ...selectActions,

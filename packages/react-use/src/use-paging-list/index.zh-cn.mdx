@@ -41,6 +41,7 @@ const {
   pagination,
   selection,
   list,
+  refresh,
   setTotal,
   loading
 } = usePagingList(fetcher, options)
@@ -197,6 +198,10 @@ export interface UsePagingListReturns<
    * query 实例，参考 useQuery 文档
    */
   query: UseQueryOptions<Fetcher>
+  /**
+   * 使用上次请求参数（表单状态等），刷新数据
+   */
+  refresh: () => void
   /**
    * 设置数据总数
    */
