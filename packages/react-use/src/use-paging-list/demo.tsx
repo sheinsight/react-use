@@ -36,7 +36,7 @@ export function App() {
       },
       pagination: {
         page: 1,
-        pageSize: 50,
+        pageSize: 5,
       },
       immediateQueryKeys: ['color', 'gender'],
     },
@@ -91,8 +91,25 @@ export function App() {
           />
           <span className="ml-1">Select All</span>
         </label>
+        <Button
+          disabled={loading}
+          onClick={() => {
+            selection.unselectAll()
+            const [item1, _, item3] = list
+            item1 && selection.select(item1)
+            item3 && selection.select(item3)
+          }}
+        >
+          Select 1, 3
+        </Button>
+        <Button disabled={loading} onClick={() => selection.selectAll()}>
+          Select All
+        </Button>
+        <Button disabled={loading} onClick={() => selection.unselectAll()}>
+          Unselect All
+        </Button>
       </Zone>
-      <Zone row={false} border="primary" className={cn('min-h-330px justify-start!', loading ? 'opacity-60' : '')}>
+      <Zone row={false} border="primary" className={cn('min-h-180px justify-start!', loading ? 'opacity-60' : '')}>
         {list.map((item, idx) => (
           <div
             key={item.id}
@@ -132,6 +149,18 @@ export function App() {
           // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
           <Button disabled={loading || pagination.page === i + 1} key={i} onClick={() => pagination.go(i + 1)}>
             {i + 1}
+          </Button>
+        ))}
+      </Zone>
+      <Zone>
+        <span>Page Size:</span>
+        {[5, 10, 20].map((pageSize) => (
+          <Button
+            key={pageSize}
+            disabled={loading || pagination.pageSize === pageSize}
+            onClick={() => pagination.setPageSize(pageSize)}
+          >
+            {pageSize}
           </Button>
         ))}
       </Zone>
