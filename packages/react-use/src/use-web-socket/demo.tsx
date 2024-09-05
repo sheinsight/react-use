@@ -15,7 +15,12 @@ export function PassedUrl() {
   const [messageList, setMessageList] = useSafeState<string[]>([])
 
   const ws = useWebSocket(wsUrl.value, {
-    debounce: 1000,
+    heartbeat: {
+      interval: 3000,
+      message: 'ping',
+      responseTimeout: 5000,
+    },
+    filter: (event) => event.data === 'ping',
     onOpen() {
       setMessageList([])
     },

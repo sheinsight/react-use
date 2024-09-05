@@ -15,6 +15,10 @@ export type UseIntervalFnInterval = Gettable<number> | 'requestAnimationFrame'
 
 /**
  * A React Hook that create a function that will be called every `interval` milliseconds.
+ *
+ * @param callback The function to call.
+ * @param interval The interval in milliseconds. If `0`, the interval is disabled.
+ * @param options The options.
  */
 export function useIntervalFn(
   callback: AnyFunc,
@@ -39,6 +43,7 @@ export function useIntervalFn(
   const intervalPausable = usePausable(false, clearTime, () => {
     clearTime()
 
+    // `0` means disabled
     if (isString(intervalValue) || intervalValue <= 0) return
 
     immediateCallback && callback()

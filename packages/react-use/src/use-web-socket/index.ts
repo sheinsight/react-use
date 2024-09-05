@@ -1,6 +1,5 @@
 import { useRef } from 'react'
-import { useCreation } from '../use-creation'
-import { useDebouncedFn } from '../use-debounced-fn'
+import { useGetterRef } from '../use-getter-ref'
 import { useIntervalFn } from '../use-interval-fn'
 import { useLatest } from '../use-latest'
 import { useMount } from '../use-mount'
@@ -11,33 +10,38 @@ import { useTimeoutFn } from '../use-timeout-fn'
 import { useUnmount } from '../use-unmount'
 import { useUpdateEffect } from '../use-update-effect'
 import { useVersionedAction } from '../use-versioned-action'
-import { isBoolean, isDev, isString, noop } from '../utils/basic'
+import { isDev, isObject, isString, noop } from '../utils/basic'
 
-import type { RefObject } from 'react'
-import type { Pausable } from '../use-pausable'
+import type { UseGetterRefReturnsGetter } from '../use-getter-ref'
 import type { UseRetryFnOptions } from '../use-retry-fn'
 
 export type UseWebSocketSendable = string | ArrayBufferLike | Blob | ArrayBufferView
 
 export interface UseWebSocketOptionsHeartbeat {
   /**
-   * The message to send to the server, or an object containing the message to send and the expected response.
+   * The heartbeat message to send to the server.
    *
-   * @defaultValue 'ping' (send 'ping' to the server, and expect 'ping' in response by default)
+   * @defaultValue 'ping'
    */
-  message?: UseWebSocketSendable | { send: UseWebSocketSendable; response: UseWebSocketSendable }
+  message?: UseWebSocketSendable
   /**
-   * The interval in milliseconds to send the message to the server.
+   * The interval at which to send a heartbeat message to the server, disabled when set to `0`.
    *
-   * @defaultValue 3_000
+   * @defaultValue 1_000
    */
   interval?: number
   /**
-   * The timeout in milliseconds to wait for the response from the server.
+   * The timeout for the server to respond to the heartbeat message, set false to disable.
    *
-   * @defaultValue 10_000
+   * @defaultValue 1_000
    */
   responseTimeout?: number
+  /**
+   * The expected response heartbeat message from the server, `true` means any message.
+   *
+   * @defaultValue true
+   */
+  responseMessage?: true | UseWebSocketSendable | ((data: UseWebSocketSendable) => boolean)
 }
 
 export interface UseWebSocketOptionsReconnect
@@ -47,13 +51,13 @@ export interface UseWebSocketOptionsReconnect
    *
    * @defaultValue undefined
    */
-  onReconnect: UseRetryFnOptions['onErrorRetry']
+  onReconnect?: UseRetryFnOptions['onErrorRetry']
   /**
    * The callback function that is called when the WebSocket connection fails to reconnect.
    *
    * @defaultValue undefined
    */
-  onReconnectFailed: UseRetryFnOptions['onRetryFailed']
+  onReconnectFailed?: UseRetryFnOptions['onRetryFailed']
 }
 
 export interface UseWebSocketOptions {
@@ -84,21 +88,19 @@ export interface UseWebSocketOptions {
   /**
    * Whether to send a heartbeat message to the server.
    *
-   * If `true`, the default heartbeat message is `'ping'`, and the default interval is `3_000` milliseconds.
-   *
    * @defaultValue false
    */
   heartbeat?: boolean | UseWebSocketOptionsHeartbeat
   /**
    * Whether to reconnect when the connection is closed.
    *
-   * @defaultValue false
+   * @defaultValue true
    */
   reconnect?: boolean | UseWebSocketOptionsReconnect
   /**
    * Whether to connect to the server immediately.
    *
-   * @defaultValue true
+   * @defaultValue true when `wsUrl` is provided, otherwise false
    */
   immediate?: boolean
   /**
@@ -114,18 +116,20 @@ export interface UseWebSocketOptions {
    */
   protocols?: string | string[]
   /**
-   * reset connection debounce interval when the WebSocket URL changes.
+   * Filter the message to `onMessage` callback, return `true` to ignore the message.
    *
-   * @defaultValue 0
+   * Useful for filtering out heartbeat messages.
+   *
+   * @defaultValue undefined
    */
-  debounce?: number
+  filter?: (event: MessageEvent, ws: WebSocket) => boolean
 }
 
-export interface UseWebSocketReturns<HasURL extends boolean> extends Pausable {
+export interface UseWebSocketReturns<HasURL extends boolean> {
   /**
-   * A ref object that holds the WebSocket instance.
+   * A Ref Getter for the WebSocket instance.
    */
-  wsRef: RefObject<WebSocket | null>
+  ws: UseGetterRefReturnsGetter<WebSocket | null>
   /**
    * A function to send data to the server.
    */
@@ -153,9 +157,12 @@ export type UseWebSocketReturnsReadyState =
   | typeof WebSocket.CLOSED
 
 const defaultHeartbeatMessage = 'ping'
+const defaultResponseTimeout = 1_000
+const defaultHeartbeatInterval = 1_000
+const defaultReconnectOptions = { count: 3, interval: 1_000 }
 
 /**
- * A simplified React Hook for using WebSocket, which is a wrapper around the native WebSocket API, supporting error retries, heartbeat checks, timeout reconnections, and more.
+ * A simplified React Hook for using WebSockets, wrapping the native WebSocket API. It supports features such as automatic reconnection and heartbeat.
  *
  * @since 1.7.0
  */
@@ -169,46 +176,29 @@ export function useWebSocket(
 
   const { immediate = !!_url, closeOnUnmount = true } = _options
 
-  const wsRef = useRef<WebSocket | null>(null)
+  const [wsRef, ws] = useGetterRef<WebSocket | null>(null)
   const isClosedIntentionally = useRef<boolean>(false)
   const [incVersion, runVersionedAction] = useVersionedAction()
-
-  const heartbeatOptions = useCreation(() => {
-    return isBoolean(_options.heartbeat)
-      ? _options.heartbeat === true
-        ? { interval: 3_000, message: 'ping', serverTimeout: 10_000 }
-        : undefined
-      : _options.heartbeat
-  }, [_options.heartbeat]) as UseWebSocketOptionsHeartbeat | undefined
-
-  const reconnectOptions = useCreation(() => {
-    return isBoolean(_options.reconnect)
-      ? _options.reconnect
-        ? { count: 3, interval: 1000 }
-        : undefined
-      : _options.reconnect
-  }, [_options.reconnect]) as UseWebSocketOptionsReconnect | undefined
 
   const [readyState, setReadyState] = useSafeState<UseWebSocketReturnsReadyState>(WebSocket.CLOSED)
 
   const latest = useLatest({
     wsUrl: _url,
-    heartbeatOptions,
-    reconnectOptions,
+    heartbeat: _options.heartbeat,
+    reconnect: _options.reconnect ?? true,
     onOpen: _options.onOpen ?? noop,
     onClose: _options.onClose ?? noop,
     onError: _options.onError ?? noop,
     onMessage: _options.onMessage ?? noop,
     protocols: _options.protocols ?? [],
-    debounce: _options.debounce ?? 0,
+    filter: _options.filter ?? (() => true),
   })
 
   function open(
     wsUrl: string | undefined = latest.current.wsUrl,
     protocols: string | string[] | undefined = latest.current.protocols,
   ) {
-    let url = wsUrl
-    if (latest.current.wsUrl) url = latest.current.wsUrl
+    const url = latest.current.wsUrl || wsUrl
 
     if (!url) {
       if (isDev) console.error('The WebSocket URL is required.')
@@ -216,94 +206,83 @@ export function useWebSocket(
     }
 
     close()
-
     const version = incVersion()
-
     setReadyState(WebSocket.CONNECTING)
-
     isClosedIntentionally.current = false
-
     wsRef.current = new WebSocket(url, protocols)
 
     wsRef.current.onopen = (event) => {
       runVersionedAction(version, () => {
         setReadyState(WebSocket.OPEN)
-        latest.current.onOpen(event, wsRef.current as WebSocket)
+        latest.current.onOpen(event, ws() as WebSocket)
       })
     }
 
     wsRef.current.onclose = (event) => {
       runVersionedAction(version, () => {
         setReadyState(WebSocket.CLOSED)
-        latest.current.onClose(event, wsRef.current as WebSocket)
-
-        if (!isClosedIntentionally.current && reconnectOptions) {
-          openWithRetry()
-        }
+        latest.current.onClose(event, ws() as WebSocket)
+        const shouldReopen = !isClosedIntentionally.current && latest.current.reconnect
+        shouldReopen && openWithRetry()
       })
     }
 
     wsRef.current.onerror = (event) => {
       runVersionedAction(version, () => {
         setReadyState(WebSocket.CLOSED)
-        latest.current?.onError?.(event, wsRef.current as WebSocket)
+        latest.current?.onError?.(event, ws() as WebSocket)
       })
     }
 
     wsRef.current.onmessage = (event) => {
       runVersionedAction(version, () => {
-        const { heartbeatOptions } = latest.current
+        const { heartbeat } = latest.current
 
-        if (heartbeatOptions) {
-          responsePausable.pause()
-
-          const response = isWebSocketSendable(heartbeatOptions.message)
-            ? heartbeatOptions.message
-            : heartbeatOptions.message?.response ?? defaultHeartbeatMessage
-
-          if (event.data === response) return
+        if (heartbeat) {
+          const checkHeartbeatResponse = resolveCheckHeartbeatResponse(heartbeat)
+          checkHeartbeatResponse(event.data) && responseTimeout.pause()
         }
 
-        latest.current.onMessage(event, wsRef.current as WebSocket)
+        if (latest.current.filter(event, ws() as WebSocket)) return
+
+        latest.current.onMessage(event, ws() as WebSocket)
       })
     }
   }
 
   const openWithRetry = useRetryFn(open, {
-    ...reconnectOptions,
+    ...resolveReconnectOptions(latest.current.reconnect),
     onRetryFailed(...args) {
       setReadyState(WebSocket.CLOSED)
-      latest.current.reconnectOptions?.onReconnectFailed?.(...args)
+
+      if (isObject(latest.current.reconnect)) {
+        latest.current.reconnect?.onReconnectFailed?.(...args)
+      }
     },
   })
 
-  const openWithRetryAndDebounce = useDebouncedFn(openWithRetry, {
-    wait: latest.current.debounce,
-  })
-
-  // it means the server is timeout to response the heartbeat message, will try to reconnect
-  const responsePausable = useTimeoutFn(
+  const responseTimeout = useTimeoutFn(
     () => {
-      // don't intentionally close the connection, and it will trigger reconnect if necessary
-      internalClose(1000, 'Server did not respond to the heartbeat message', false)
+      conditionClose(1000, 'Server did not respond to the heartbeat message', false)
     },
-    heartbeatOptions?.responseTimeout ?? 10_000,
+    resolveTimeout(latest.current.heartbeat),
     { immediate: false },
   )
 
-  const heartbeatPausable = useIntervalFn(() => {
-    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN && heartbeatOptions) {
-      const message = isWebSocketSendable(heartbeatOptions.message)
-        ? heartbeatOptions.message
-        : heartbeatOptions.message?.send ?? defaultHeartbeatMessage
+  const heartbeatInterval = useIntervalFn(() => {
+    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN && latest.current.heartbeat) {
+      const message =
+        latest.current.heartbeat === true
+          ? defaultHeartbeatMessage
+          : latest.current.heartbeat.message ?? defaultHeartbeatMessage
 
       wsRef.current.send(message)
 
-      if (!responsePausable.isActive()) {
-        responsePausable.resume()
+      if (latest.current.heartbeat && !responseTimeout.isActive()) {
+        responseTimeout.resume()
       }
     }
-  }, heartbeatOptions?.interval)
+  }, resolveInterval(latest.current.heartbeat))
 
   const send = useStableFn((data: UseWebSocketSendable) => {
     if (wsRef.current) {
@@ -317,9 +296,9 @@ export function useWebSocket(
     }
   })
 
-  function internalClose(code?: number, reason?: string, intentional = true) {
+  function conditionClose(code?: number, reason?: string, intentional = true) {
     if (wsRef.current) {
-      responsePausable.pause()
+      responseTimeout.pause()
       setReadyState(WebSocket.CLOSING)
       isClosedIntentionally.current = intentional
       wsRef.current.close(code, reason)
@@ -333,7 +312,7 @@ export function useWebSocket(
    * @see https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent/code#value
    */
   const close = useStableFn((code: number = 1000, reason?: string) => {
-    internalClose(code, reason)
+    conditionClose(code, reason, true)
   })
 
   useMount(immediate && openWithRetry)
@@ -342,22 +321,48 @@ export function useWebSocket(
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: handle url change
   useUpdateEffect(() => {
-    openWithRetryAndDebounce()
+    openWithRetry()
   }, [_url])
 
   return {
-    wsRef,
+    ws,
     readyState,
     send,
     close,
     open,
-    ...heartbeatPausable,
   }
 }
 
-/**
- * Check whether the data is sendable to the server.
- */
 function isWebSocketSendable(data: unknown): data is UseWebSocketSendable {
   return isString(data) || ArrayBuffer.isView(data) || data instanceof ArrayBuffer || data instanceof Blob
+}
+
+function resolveCheckHeartbeatResponse(heartbeat: Exclude<UseWebSocketOptions['heartbeat'], undefined | false>) {
+  return heartbeat === true
+    ? () => true
+    : heartbeat.responseMessage === true
+      ? () => true
+      : isWebSocketSendable(heartbeat.responseMessage)
+        ? (data: UseWebSocketSendable) => data === heartbeat.responseMessage
+        : heartbeat.responseMessage ?? (() => true)
+}
+
+function resolveReconnectOptions(reconnect?: UseWebSocketOptions['reconnect']) {
+  return reconnect ? (reconnect === true ? defaultReconnectOptions : reconnect) : defaultReconnectOptions
+}
+
+function resolveTimeout(heartbeat?: UseWebSocketOptions['heartbeat']) {
+  return heartbeat
+    ? heartbeat === true
+      ? defaultResponseTimeout
+      : heartbeat.responseTimeout ?? defaultResponseTimeout
+    : 0
+}
+
+function resolveInterval(heartbeat?: UseWebSocketOptions['heartbeat']) {
+  return heartbeat
+    ? heartbeat === true
+      ? defaultHeartbeatInterval
+      : heartbeat.interval ?? defaultHeartbeatInterval
+    : 0
 }
