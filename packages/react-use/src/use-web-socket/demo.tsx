@@ -11,17 +11,17 @@ export function App() {
 }
 
 export function PassedUrl() {
-  const wsUrl = useControlledComponent('wss://echo.websocket.org')
+  const wsUrl = 'wss://echo.websocket.org'
   const [messageList, setMessageList] = useSafeState<string[]>([])
 
-  const ws = useWebSocket(wsUrl.value, {
+  const ws = useWebSocket(wsUrl, {
     heartbeat: {
-      interval: 3000,
+      interval: 1000,
       message: 'ping',
-      responseTimeout: 5000,
+      responseTimeout: 3000,
     },
     filter: (event) => event.data === 'ping',
-    onOpen() {
+    onClose() {
       setMessageList([])
     },
     onMessage(message) {
@@ -44,7 +44,7 @@ export function PassedUrl() {
       <p className="opacity-60">
         Edit the WS URL in the input field below and it will automatically reconnect when the URL changes.
       </p>
-      <LabelInput label="WS URL" {...wsUrl.props} className="w-full md:w-420px" />
+      <KeyValue label="WS URL" value={wsUrl} />
       <KeyValue label="Status" value={formatReadyState(ws.readyState)} />
       <Zone>
         <Button disabled={!isConnected} onClick={send}>
@@ -68,8 +68,7 @@ export function DynamicUrl() {
   const [messageList, setMessageList] = useSafeState<string[]>([])
 
   const ws = useWebSocket({
-    onOpen() {
-      console.log('open')
+    onClose() {
       setMessageList([])
     },
     onMessage(message) {
