@@ -189,9 +189,12 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
 ): UseQueryReturns<T, D, E> {
   const [cache, cacheActions] = useQueryCache<T, D>(options)
 
-  const latest = useLatest({ fetcher, cache, ...options })
   const debounceOptions = isNumber(options.debounce) ? { wait: options.debounce } : options.debounce
   const throttleOptions = isNumber(options.throttle) ? { wait: options.throttle } : options.throttle
+
+  const enableRateControl = Boolean(debounceOptions || throttleOptions)
+
+  const latest = useLatest({ fetcher, cache, enableRateControl, ...options })
 
   const service = useLoadingSlowFn<T, D, E>(
     useRetryFn<T, E>(
@@ -297,17 +300,17 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
     return service.mutate(nextData, nextParams)
   })
 
-  const refreshWithCacheAndRateControl = useStableFn(async (params?: Parameters<T> | []) => {
+  const refreshWithCache = useStableFn(async (params?: Parameters<T> | []) => {
     const outerParams = cacheActions.isCacheEnabled ? latest.current.cache.params : service.params
     const actualParams = params ?? (outerParams || [])
-    return refreshWithRateControl(actualParams)
+    return latest.current.enableRateControl ? refreshWithRateControl(actualParams) : service.refresh(actualParams)
   })
 
   return {
     ...pausable,
     mutate: mutateWithCache,
-    refresh: refreshWithCacheAndRateControl,
-    run: serviceWithRateControl,
+    refresh: refreshWithCache,
+    run: enableRateControl ? serviceWithRateControl : service.run,
     cancel: service.cancel,
     get params() {
       return cacheActions.isCacheEnabled ? cache.params : service.params
