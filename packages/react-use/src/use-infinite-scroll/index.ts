@@ -5,6 +5,7 @@ import { useMount } from '../use-mount'
 import { useRafState } from '../use-raf-state'
 import { useStableFn } from '../use-stable-fn'
 import { useTargetElement } from '../use-target-element'
+import { useUpdateEffect } from '../use-update-effect'
 
 import type { ElementTarget } from '../use-target-element'
 
@@ -89,7 +90,10 @@ export function useInfiniteScroll<R = any, T extends HTMLElement = HTMLElement>(
   const latest = useLatest({ state, canLoadMore, direction, onScroll, onLoadMore, interval })
 
   const calculate = useStableFn(async () => {
-    if (!latest.current.canLoadMore(previousReturn.current)) return
+    if (!latest.current.canLoadMore(previousReturn.current)) {
+      setState({ isLoadDone: true, isLoading: false })
+      return
+    }
 
     if (!el.current || latest.current.state.isLoading) return
 
@@ -120,6 +124,10 @@ export function useInfiniteScroll<R = any, T extends HTMLElement = HTMLElement>(
   })
 
   useMount(immediate && calculate)
+
+  useUpdateEffect(() => {
+    if (!state.isLoading) calculate()
+  }, [state.isLoading])
 
   useEventListener(
     el,
