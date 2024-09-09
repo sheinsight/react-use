@@ -45,17 +45,25 @@ export interface UseInfiniteScrollOptions<R> {
 
 export interface UseInfiniteScrollReturns {
   /**
-   * loading state
+   * Loading state
    */
   isLoading: boolean
   /**
-   * load done state
+   * Load done state
    */
   isLoadDone: boolean
   /**
-   * calculate the current scroll position to determine whether to load more
+   * Calculate the current scroll position to determine whether to load more
    */
   calculate(): void
+  /**
+   * Reset the state to the initial state.
+   *
+   * @param {boolean} immediate Whether to trigger the first load immediately, default is true
+   *
+   * @since 1.7.0
+   */
+  reset(immediate?: boolean): void
 }
 
 /**
@@ -89,23 +97,26 @@ export function useInfiniteScroll<R = any, T extends HTMLElement = HTMLElement>(
 
     const isYScroll = latest.current.direction === 'bottom' || latest.current.direction === 'top'
     const isScrollNarrower = isYScroll ? scrollHeight <= clientHeight : scrollWidth <= clientWidth
-    const isAlmostBottom = scrollHeight - scrollTop <= clientHeight + distance
 
-    if (!isScrollNarrower && !isAlmostBottom) return
+    const isAlmostBottom = isYScroll
+      ? scrollHeight - scrollTop <= clientHeight + distance
+      : scrollWidth - scrollTop <= clientWidth + distance
 
-    setState({ isLoadDone: false, isLoading: true })
+    if (isScrollNarrower || isAlmostBottom) {
+      setState({ isLoadDone: false, isLoading: true })
 
-    const [result, _] = await Promise.all([
-      latest.current.onLoadMore(previousReturn.current),
-      new Promise((resolve) => setTimeout(resolve, latest.current.interval)),
-    ])
+      const [result, _] = await Promise.all([
+        latest.current.onLoadMore(previousReturn.current),
+        new Promise((resolve) => setTimeout(resolve, latest.current.interval)),
+      ])
 
-    previousReturn.current = result
+      previousReturn.current = result
 
-    setState({
-      isLoading: false,
-      isLoadDone: !latest.current.canLoadMore(previousReturn.current),
-    })
+      setState({
+        isLoadDone: !latest.current.canLoadMore(previousReturn.current),
+        isLoading: false,
+      })
+    }
   })
 
   useMount(immediate && calculate)
@@ -114,14 +125,21 @@ export function useInfiniteScroll<R = any, T extends HTMLElement = HTMLElement>(
     el,
     'scroll',
     (event) => {
-      latest.current.onScroll?.(event)
       calculate()
+      latest.current.onScroll?.(event)
     },
     { passive: true },
   )
 
+  const reset = useStableFn((immediate = true) => {
+    previousReturn.current = undefined
+    setState({ isLoading: false, isLoadDone: false })
+    immediate && calculate()
+  })
+
   return {
     ...state,
     calculate,
+    reset,
   }
 }
