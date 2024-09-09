@@ -17,6 +17,10 @@ import type { AnyFunc } from '../utils/basic'
 
 export interface UsePagingListOptions<Fetcher extends AnyFunc, FormState extends object> {
   /**
+   * fetcher function that will be called when the query is triggered
+   */
+  fetcher?: Fetcher
+  /**
    * options for `useForm`, see `useForm` for more details
    *
    * @defaultValue undefined
@@ -119,7 +123,7 @@ export function usePagingList<
   FormState extends object,
   Data extends Item[] = Item[],
   Fetcher extends UsePagingListFetcher<FormState, Data> = UsePagingListFetcher<FormState, Data>,
->(fetcher: Fetcher, options: UsePagingListOptions<Fetcher, FormState> = {}) {
+>(options: UsePagingListOptions<Fetcher, FormState> = {}) {
   const previousDataRef = useRef<Data | undefined>(undefined)
   const previousFormRef = useRef<FormState>((options.form?.initialValue || {}) as FormState)
   const previousSelectedRef = useRef<Item[]>([])
@@ -203,7 +207,7 @@ export function usePagingList<
     },
   })
 
-  const query = useQuery(fetcher, {
+  const query = useQuery((options.fetcher ?? (() => {})) as Fetcher, {
     ...options.query,
     initialParams: [
       {
@@ -215,8 +219,8 @@ export function usePagingList<
       },
     ] as Parameters<Fetcher>,
     onBefore(...args) {
-      if (select.selected.length) {
-        previousSelectedRef.current = select.selected
+      if (latest.current.selectState.selected.length) {
+        previousSelectedRef.current = latest.current.selectState.selected
       }
       latest.current.options.query?.onBefore?.(...args)
     },
@@ -239,9 +243,9 @@ export function usePagingList<
     },
   })
 
-  const [select, selectActions] = useMultiSelect<Item>(query.data ?? [], [])
+  const [selectState, selectActions] = useMultiSelect<Item>(query.data ?? [], [])
 
-  const latest = useLatest({ options, paginationState })
+  const latest = useLatest({ options, selectState, paginationState })
 
   const refresh = useStableFn(() => query.refresh())
 
@@ -255,7 +259,7 @@ export function usePagingList<
     setTotal,
     refresh,
     selection: {
-      ...select,
+      ...selectState,
       ...selectActions,
     },
     pagination: {

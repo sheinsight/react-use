@@ -16,31 +16,29 @@ interface Item {
 }
 
 export function App() {
-  const { list, loading, form, refresh, query, pagination, selection } = usePagingList<Item, FormState>(
-    async (params) => {
+  const { list, loading, form, refresh, query, pagination, selection } = usePagingList<Item, FormState>({
+    fetcher: async (params) => {
       const { page, pageSize, form, setTotal } = params
       const { data, total } = await fetchPagination({ page, pageSize })
       setTotal(total)
       return data
     },
-    {
-      form: {
-        initialValue: {
-          name: '',
-          gender: 'Boy',
-          color: ['Red'],
-        },
+    form: {
+      initialValue: {
+        name: '',
+        gender: 'Boy',
+        color: ['Red'],
       },
-      query: {
-        refreshInterval: 6_000,
-      },
-      pagination: {
-        page: 1,
-        pageSize: 5,
-      },
-      immediateQueryKeys: ['color', 'gender'],
     },
-  )
+    query: {
+      refreshInterval: 6_000,
+    },
+    pagination: {
+      page: 1,
+      pageSize: 5,
+    },
+    immediateQueryKeys: ['color', 'gender'],
+  })
 
   // when you use third-party components, you can use `selection.isPartiallySelected` directly
   useUpdateEffect(() => {

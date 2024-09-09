@@ -44,18 +44,18 @@ const {
   refresh,
   setTotal,
   loading
-} = usePagingList(fetcher, options)
+} = usePagingList(options)
 
 // Pass a function that accepts page, pageSize pagination parameters, which needs to return a data list
 // Use setTotal inside this function to set the total data amount, so the paginator can display the total correctly
 const { form, query, pagination, selection, list, refresh, setTotal, loading } = usePagingList(
-    async (params) => {
-      const { page, pageSize, form } = params
-      const { list, total } = await fetchPaginationList({ page, pageSize })
-      setTotal(total)
-      return list
-    },
     {
+      fetcher: async (params) => {
+        const { page, pageSize, form } = params
+        const { list, total } = await fetchPaginationList({ page, pageSize })
+        setTotal(total)
+        return list
+      }.
       // Pass in the configuration for useQuery, like refreshInterval for periodic refreshes
       query: { refreshInterval: 3_000 },
       // Pass in the configuration for useForm, like initialValues for form initialization
@@ -110,12 +110,10 @@ const {
   refresh,
   setTotal,
   loading
-} = usePagingList(fetcher, options)
+} = usePagingList(options)
 ```
 
-### Data Fetch Function Fetcher \{#fetcher}
-
-An asynchronous function that takes `params` parameter and returns a data list, which requires calling `setTotal` internally to set the total data amount.
+### Options \{#options}
 
 ```tsx
 export interface UsePagingListFetcherParams<FormState extends object, Data> {
@@ -144,12 +142,12 @@ export interface UsePagingListFetcherParams<FormState extends object, Data> {
 export type UsePagingListFetcher<FormState extends object, Data> = (
   params: UsePagingListFetcherParams<FormState, Data>,
 ) => Promise<Data>
-```
 
-### Options \{#options}
-
-```tsx
 export interface UsePagingListOptions<Fetcher extends AnyFunc, FormState extends object> {
+  /**
+   * fetcher function that will be called when the query is triggered
+   */
+  fetcher?: Fetcher
   /**
    * `useForm` configuration, refer to `useForm` documentation
    *
