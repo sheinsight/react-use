@@ -9,7 +9,7 @@ import { useStableFn } from '../use-stable-fn'
 import { shallowEqual } from '../utils/equal'
 
 import type { UseFormOptions, UseFormReturns } from '../use-form'
-import type { UseMultiSelectReturns, UseMultiSelectReturnsState } from '../use-multi-select'
+import type { UseMultiSelectReturnsActions, UseMultiSelectReturnsState } from '../use-multi-select'
 import type { UsePaginationOptions, UsePaginationReturnsActions, UsePaginationReturnsState } from '../use-pagination'
 import type { UseQueryOptions } from '../use-query'
 import type { ReactSetState } from '../use-safe-state'
@@ -73,12 +73,7 @@ export type UsePagingListFetcher<FormState extends object, Data> = (
   params: UsePagingListFetcherParams<FormState, Data>,
 ) => Promise<Data>
 
-export interface UsePagingListReturns<
-  Item,
-  FormState extends object,
-  Data extends Item[],
-  Fetcher extends UsePagingListFetcher<FormState, Data>,
-> {
+export interface UsePagingListReturns<Item, FormState extends object, Data extends Item[]> {
   /**
    * loading status
    */
@@ -92,21 +87,13 @@ export interface UsePagingListReturns<
    */
   form: UseFormReturns<FormState>
   /**
-   * query instance
-   */
-  query: UseQueryOptions<Fetcher>
-  /**
    * refresh query
    */
   refresh: () => void
   /**
-   * set total count
-   */
-  setTotal: ReactSetState<number>
-  /**
    * selection state
    */
-  selection: UseMultiSelectReturnsState<Item> & UseMultiSelectReturns<Item>
+  selection: UseMultiSelectReturnsState<Item> & UseMultiSelectReturnsActions<Item>
   /**
    * pagination state
    */
@@ -120,10 +107,10 @@ export interface UsePagingListReturns<
  */
 export function usePagingList<
   Item,
-  FormState extends object,
+  FormState extends object = object,
   Data extends Item[] = Item[],
   Fetcher extends UsePagingListFetcher<FormState, Data> = UsePagingListFetcher<FormState, Data>,
->(options: UsePagingListOptions<Fetcher, FormState> = {}) {
+>(options: UsePagingListOptions<Fetcher, FormState> = {}): UsePagingListReturns<Item, FormState, Data> {
   const previousDataRef = useRef<Data | undefined>(undefined)
   const previousFormRef = useRef<FormState>((options.form?.initialValue || {}) as FormState)
   const previousSelectedRef = useRef<Item[]>([])
@@ -207,7 +194,7 @@ export function usePagingList<
     },
   })
 
-  const query = useQuery((options.fetcher ?? (() => {})) as Fetcher, {
+  const query = useQuery<Fetcher>((options.fetcher ?? (() => {})) as Fetcher, {
     ...options.query,
     initialParams: [
       {
@@ -253,10 +240,8 @@ export function usePagingList<
     get loading() {
       return query.loading
     },
-    list: query.data ?? [],
+    list: (query.data ?? []) as Data,
     form,
-    query,
-    setTotal,
     refresh,
     selection: {
       ...selectState,

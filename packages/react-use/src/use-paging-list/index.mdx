@@ -1,6 +1,6 @@
 ---
 category: ProUtilities
-features: ['Pausable', 'DepCollect']
+features: ['DepCollect']
 ---
 
 # usePagingList
@@ -11,20 +11,18 @@ import { HooksType, Since } from '@/components'
 
 <Since version='v1.7.0' />
 
-A hook for handling paging lists that integrates the functionalities of [useQuery](/reference/use-query), [useForm](/reference/use-form), [useMultiSelect](/reference/use-multi-select), and [usePagination](/reference/use-pagination).
+A Hook for handling pagination lists that integrates functionalities from [useQuery](/reference/use-query), [useForm](/reference/use-form), [useMultiSelect](/reference/use-multi-select), and [usePagination](/reference/use-pagination).
 
-It has the following features:
+It possesses the following features:
 
-- Based on `useQuery`, it includes [numerous data request functionalities](/reference/use-query#usage) that can be enabled as needed.
-- Uses `useForm` to automatically manage form states, providing various states and lifecycles, with automatic requests, etc.
-- Uses `usePagination` to automatically manage pagination states, providing pagination events and operations, built-in state monitoring, and automatic re-requests.
-- Uses `useMultiSelect` for multi-select on list data, supporting select all, deselect, clear, etc.
+- Based on `useQuery`, it is built-in with [multiple data fetching functionalities](/reference/use-query#usage), which can be enabled as needed
+- Uses `useForm` to automatically manage form state, providing various statuses and life cycles, and auto-fetching
+- Uses `usePagination` to automatically manage pagination state, providing pagination events and operations, built-in state monitoring, and auto-re-fetching
+- Uses `useMultiSelect` for multiple selection operations on list data, supporting select all, inverse selection, clear, etc.
 
 ## Scenes \{#scenes}
 
-- **Form-associated Query:** Utilize form state to trigger re-queries of list data.
-- **Pagination Management Application:** Implement pagination functionality within the data list, providing page switching, setting per page data amount.
-- **Selection State Management:** Manage the selection state of list items, supporting multi-select functionality.
+`usePagingList` = UseQuery features + Pagination state and management + Form querying (optional) + Multiple selection operation (optional)
 
 ## Demo \{#demo}
 
@@ -36,60 +34,30 @@ import { App } from './demo'
 
 ```tsx
 const {
-  form,
-  query,
-  pagination,
-  selection,
-  list,
-  refresh,
-  setTotal,
-  loading
+  form, pagination, selection,
+  list, refresh, loading
 } = usePagingList(options)
 
-// Pass a function that accepts page, pageSize pagination parameters, which needs to return a data list
-// Use setTotal inside this function to set the total data amount, so the paginator can display the total correctly
-const { form, query, pagination, selection, list, refresh, setTotal, loading } = usePagingList(
-    {
-      fetcher: async (params) => {
-        const { page, pageSize, form } = params
-        const { list, total } = await fetchPaginationList({ page, pageSize })
-        setTotal(total)
-        return list
-      }.
-      // Pass in the configuration for useQuery, like refreshInterval for periodic refreshes
-      query: { refreshInterval: 3_000 },
-      // Pass in the configuration for useForm, like initialValues for form initialization
-      form: { initialValues: { name: '', select: '' } },
-      // Pass in the configuration for usePagination, like setting default page number and items per page
-      pagination: { page: 1, pageSize: 10 },
-      // Declare form fields for immediate query, when form field changes, it automatically triggers a query
-      immediateQueryKeys: ['select'],
+// Pass in a function that accepts page, pageSize pagination parameters, it should return a data list
+// Use setTotal within this function to set the total number of data, so that the paginator can display the total correctly
+const { form, pagination, selection, list, refresh, loading } = usePagingList(
+  {
+    fetcher: async (params) => {
+      const { page, pageSize, form } = params
+      const { list, total } = await fetchPaginationList({ page, pageSize })
+      setTotal(total)
+      return list
     },
+    // Pass in useQuery configuration, such as refreshInterval for timed refresh
+    query: { refreshInterval: 3_000 },
+    // Pass in useForm configuration, such as initialValues for form initialization
+    form: { initialValues: { name: '', select: '' } },
+    // Pass in usePagination configuration, such as setting default page number and quantity per page
+    pagination: { page: 1, pageSize: 10 },
+    // Declare form fields for immediate querying, changes in these fields will automatically trigger querying
+    immediateQueryKeys: ['select'],
+  },
 )
-
-// useForm returns the form object, refer to useForm documentation
-form
-
-// useQuery returns the query object, refer to useQuery documentation
-query
-
-// usePagination returns the pagination object, merging state and actions, refer to usePagination documentation
-pagination
-
-// useMultiSelect returns the selection object, merging state and actions, refer to useMultiSelect documentation
-selection
-
-// Data list
-list
-
-// Refresh query
-refresh
-
-// Set total data amount
-setTotal
-
-// Whether it is loading
-loading
 ```
 
 ## Source \{#source}
@@ -102,14 +70,8 @@ import { Source } from '@/components'
 
 ```tsx
 const {
-  form,
-  query,
-  pagination,
-  selection,
-  list,
-  refresh,
-  setTotal,
-  loading
+  form, pagination, selection,
+  list, refresh, loading
 } = usePagingList(options)
 ```
 
@@ -126,7 +88,7 @@ export interface UsePagingListFetcherParams<FormState extends object, Data> {
    */
   page: number
   /**
-   * Number of items displayed per page
+   * Quantity per page
    */
   pageSize: number
   /**
@@ -134,7 +96,7 @@ export interface UsePagingListFetcherParams<FormState extends object, Data> {
    */
   form: FormState
   /**
-   * Set total data amount
+   * Set the total number of data
    */
   setTotal: ReactSetState<number>
 }
@@ -145,29 +107,29 @@ export type UsePagingListFetcher<FormState extends object, Data> = (
 
 export interface UsePagingListOptions<Fetcher extends AnyFunc, FormState extends object> {
   /**
-   * fetcher function that will be called when the query is triggered
+   * Data fetcher function
    */
   fetcher?: Fetcher
   /**
-   * `useForm` configuration, refer to `useForm` documentation
+   * `useForm` configuration, see useForm documentation
    *
    * @defaultValue undefined
    */
   form?: UseFormOptions<FormState>
   /**
-   * `useQuery` configuration, refer to `useQuery` documentation
+   * `useQuery` configuration, see `useQuery` documentation
    *
    * @defaultValue undefined
    */
-  query?: Omit<UseQueryOptions<Fetcher>, 'initialParams' | 'initialData'> 
+  query?: Omit<UseQueryOptions<Fetcher>, 'initialParams' | 'initialData'>
   /**
-   * `usePagination` configuration, refer to `usePagination` document
+   * `usePagination` configuration, see `usePagination` documentation
    *
    * @defaultValue undefined
    */
   pagination?: UsePaginationOptions<ReturnType<Fetcher>>
   /**
-   * Form fields for immediate query, automatically triggers a query when form field changes
+   * Form fields for immediate querying, changes in these fields will automatically trigger querying
    *
    * @defaultValue []
    */
@@ -193,27 +155,19 @@ export interface UsePagingListReturns<
    */
   list: Data
   /**
-   * form instance, refer to useForm documentation
+   * Form instance, see useForm documentation
    */
   form: UseFormReturns<FormState>
   /**
-   * query instance, refer to useQuery documentation
-   */
-  query: UseQueryOptions<Fetcher>
-  /**
-   * refresh query
+   * Refresh data using the last request parameters (form state, etc.)
    */
   refresh: () => void
   /**
-   * Set total data amount
-   */
-  setTotal: ReactSetState<number>
-  /**
-   * Selection state and operations, refer to useMultiSelect documentation
+   * Selection status and operations, see useMultiSelect documentation
    */
   selection: UseMultiSelectReturnsState<Item> & UseMultiSelectReturns<Item>
   /**
-   * Pagination state and operations, refer to usePagination documentation
+   * Pagination status and operations, see usePagination documentation
    */
   pagination: UsePaginationReturnsState<Data> & UsePaginationReturnsActions
 }
