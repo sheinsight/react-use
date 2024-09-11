@@ -4,28 +4,173 @@ category: ProUtilities
 
 # useInfiniteList
 
-import { HooksType } from '@/components'
+import { HooksType, Since } from '@/components'
 
 <HooksType {...frontmatter} />
 
-## Demo
+<Since version='v1.7.0' />
+
+A React Hook designed to handle infinite lists, supporting scenarios such as infinite scrolling, click-to-load-more, and equipped with features for data fetching, bottom detection, form management, pagination, multi-selection, and loading status.
+
+`useInfiniteList` is a higher-order encapsulation of the following Hooks:
+
+- [useInfiniteScroll](/reference/use-infinite-scroll) offers bottom detection and data loading completion checks.
+- [useForm](/reference/use-form) provides form management functionalities for search, filtering, etc.
+- [useAsyncFn](/reference/use-async-fn) offers data fetching and lifecycle management functionalities.
+- [usePagination](/reference/use-pagination) manages pagination states and parameters.
+- [useMultiSelect](/reference/use-multi-select) provides multi-selection states, commonly used for batch operations.
+
+## Scenes \{#scenes}
+
+`useInfiniteList` = Infinite Scrolling / Click-to-Load + Automatic Pagination Management + Form Filtering (Optional) + Multi-Select Operations (Optional)
+
+## Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## Usage \{#usage}
 
-See API for more details.
+```tsx
+interface Item { id: number; name: string; }
+interface Data { data: Item[]; total: number; }
+interface FormState { name: string; gender: string; color: string[]; }
 
-## Source
+const ref = useRef<HTMLDivElement>(null) // The target element for bottom detection, needed only for scroll loading
+
+const {
+  list, // The list of return values composed of the data returned by fetcher, Data[]
+  fullList, // The item list formed by unfolding the list in the data returned by fetcher, Item[]
+  form, // Form state and operations
+  selection, // Multi-selection state and operations
+  paginationState, // Pagination state, information of the requested page
+  loading, // Loading state
+  isLoadDone // Whether the loading is completed
+} = useInfiniteList<Data, Item, FormState>({
+  target: ref, // The target element for bottom detection, needed only for scroll loading
+  fetcher: fetchPagination, // Function to fetch data
+  mapFullList: (d) => d.data, // Map function for obtaining data list from every return
+  canLoadMore: (previousData, dataList, fullList) => {
+    if (!previousData) return true // If there is no result from the last request, it means it's the first load
+    // Continue loading if the current list length is less than the total, otherwise stop loading
+    return fullList.length < previousData.total 
+  },
+  form: { // Configure useForm
+    initialValue: {
+      name: '',
+      gender: 'Boy',
+      color: ['Red'],
+    },
+  },
+  pagination: { pageSize: 10 }, // Configure usePagination
+  immediateQueryKeys: ['color', 'gender'], // Form fields for immediate querying
+})
+
+return (
+  <div>
+    <MyForm form={form} />
+    <div ref={ref} className="h-360px overflow-scroll">
+      <MyInfiniteScrollList list={fullList} />
+    </div>
+  </div>
+)
+```
+
+## Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
+const {
+  list, fullList, form, selection,
+  paginationState, loading, isLoadDone
+} = useInfiniteList<Data, Item, FormState>(options)
+```
 
+### Options \{#options}
+
+```tsx
+export interface UseInfiniteListOptions<
+  Data,
+  Item,
+  FormState extends object,
+  Fetcher extends AnyFunc,
+  Container extends HTMLElement,
+> {
+  /**
+   * The container element for bottom detection
+   */
+  target?: ElementTarget<Container>
+  /**
+   * Data fetching function, able to return data similar to { data: Item[], total: number }
+   */
+  fetcher?: Fetcher
+  /**
+   * Data mapping function, for obtaining the data list from each return
+   */
+  mapFullList?: (data: Data) => Item[]
+  /**
+   * Form options, for configuring `useForm`, refer to `useForm` for more details
+   */
+  form?: UseFormOptions<FormState>
+  /**
+   * Asynchronous function options, for configuring `useAsyncFn`, refer to `useAsyncFn` for more details
+   */
+  asyncFn?: Omit<UseAsyncFnOptions<Fetcher, Data, any>, 'initialParams'>
+  /**
+   * Pagination data options, for configuring `usePagination`, refer to `usePagination` for more details
+   */
+  pagination?: UsePaginationOptions<Data>
+  /**
+   * Function to decide whether more items can be loaded
+   */
+  canLoadMore?: (previousData: Data | undefined, dataList: Data[], fullList: Item[]) => boolean
+  /**
+   * Scroll loading options, for configuring `useInfiniteScroll`, refer to `useInfiniteScroll` for more details
+   */
+  infiniteScroll?: Omit<UseInfiniteScrollOptions<Data>, 'canLoadMore'>
+  /**
+   * Immediate query form fields, when form fields change, reset data and start a new round of queries
+   */
+  immediateQueryKeys?: (keyof FormState)[]
+}
+```
+
+### Returns \{#returns}
+
+The return value includes [useInfiniteScroll](/reference/use-infinite-scroll)'s return value, refer to [useInfiniteScroll](/reference/use-infinite-scroll) for more details.
+
+```tsx
+export interface UseInfiniteListReturns<Data, Item, FormState extends object>
+  extends Omit<UseInfiniteScrollReturns, 'reset'> {
+  /**
+   * Resets all states and restarts querying
+   */
+  reset: () => void
+  /**
+   * Form state and operations
+   */
+  form: UseFormReturns<FormState>
+  /**
+   * Loading state
+   */
+  list: Data[]
+  /**
+   * Whether the loading is completed
+   */
+  fullList: Item[]
+  /**
+   * Multi-selection state and operations
+   */
+  selection: UseMultiSelectReturnsState<Item> & UseMultiSelectReturnsActions<Item>
+  /**
+   * Pagination state
+   */
+  paginationState: UsePaginationReturnsState<Data>
+}
 ```
