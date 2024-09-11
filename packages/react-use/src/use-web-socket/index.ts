@@ -192,7 +192,7 @@ export function useWebSocket(
     onError: _options.onError ?? noop,
     onMessage: _options.onMessage ?? noop,
     protocols: _options.protocols ?? [],
-    filter: _options.filter ?? (() => true),
+    filter: _options.filter ?? (() => false),
   })
 
   function open(

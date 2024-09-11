@@ -16,31 +16,29 @@ interface Item {
 }
 
 export function App() {
-  const { list, loading, form, refresh, query, pagination, selection } = usePagingList<Item, FormState>(
-    async (params) => {
+  const { list, loading, form, refresh, pagination, selection } = usePagingList<Item, FormState>({
+    fetcher: async (params) => {
       const { page, pageSize, form, setTotal } = params
       const { data, total } = await fetchPagination({ page, pageSize })
       setTotal(total)
       return data
     },
-    {
-      form: {
-        initialValue: {
-          name: '',
-          gender: 'Boy',
-          color: ['Red'],
-        },
+    form: {
+      initialValue: {
+        name: '',
+        gender: 'Boy',
+        color: ['Red'],
       },
-      query: {
-        refreshInterval: 6_000,
-      },
-      pagination: {
-        page: 1,
-        pageSize: 5,
-      },
-      immediateQueryKeys: ['color', 'gender'],
     },
-  )
+    query: {
+      refreshInterval: 6_000,
+    },
+    pagination: {
+      page: 1,
+      pageSize: 5,
+    },
+    immediateQueryKeys: ['color', 'gender'],
+  })
 
   // when you use third-party components, you can use `selection.isPartiallySelected` directly
   useUpdateEffect(() => {
@@ -113,20 +111,18 @@ export function App() {
         {list.map((item, idx) => (
           <div
             key={item.id}
-            className={cn(selection.isItemSelected(item) && 'text-primary/80')}
+            className={cn(
+              'px-2 py-1 rounded cursor-pointer',
+              selection.isItemSelected(item) ? 'bg-primary/60' : 'hover:bg-primary/20',
+            )}
             onClick={() => selection.toggle(item)}
-            onKeyDown={() => selection.toggle(item)}
           >
             <input
               type="checkbox"
               className="mr-2"
               checked={selection.isItemSelected(item)}
               onChange={(e) => {
-                if (e.target.checked) {
-                  selection.select(item)
-                } else {
-                  selection.unSelect(item)
-                }
+                selection.toggle(item)
               }}
             />
             Index: {idx}, Data: {JSON.stringify(item)}
@@ -146,7 +142,7 @@ export function App() {
       </Zone>
       <Zone>
         {Array.from({ length: pagination.pageCount }).map((_, i) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+          // biome-ignore lint/suspicious/noArrayIndexKey: for demo
           <Button disabled={loading || pagination.page === i + 1} key={i} onClick={() => pagination.go(i + 1)}>
             {i + 1}
           </Button>

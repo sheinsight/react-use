@@ -2,9 +2,11 @@ import { useRef } from 'react'
 import { useEventListener } from '../use-event-listener'
 import { useLatest } from '../use-latest'
 import { useMount } from '../use-mount'
-import { useRafState } from '../use-raf-state'
 import { useStableFn } from '../use-stable-fn'
 import { useTargetElement } from '../use-target-element'
+import { useTrackedRefState } from '../use-tracked-ref-state'
+import { useUpdateEffect } from '../use-update-effect'
+import { useVersionedAction } from '../use-versioned-action'
 
 import type { ElementTarget } from '../use-target-element'
 
@@ -45,17 +47,37 @@ export interface UseInfiniteScrollOptions<R> {
 
 export interface UseInfiniteScrollReturns {
   /**
-   * loading state
+   * Loading state
+   *
+   * @deprecated use `loading` instead
    */
   isLoading: boolean
   /**
-   * load done state
+   * Loading state
+   *
+   * @since 1.7.0
+   */
+  loading: boolean
+  /**
+   * Load done state
    */
   isLoadDone: boolean
   /**
-   * calculate the current scroll position to determine whether to load more
+   * Load more function
+   *
+   * @since 1.7.0
+   */
+  loadMore: () => Promise<void>
+  /**
+   * Calculate the current scroll position to determine whether to load more
    */
   calculate(): void
+  /**
+   * Reset the state to the initial state.
+   *
+   * @since 1.7.0
+   */
+  reset(): void
 }
 
 /**
@@ -77,51 +99,80 @@ export function useInfiniteScroll<R = any, T extends HTMLElement = HTMLElement>(
 
   const el = useTargetElement<T>(target)
   const previousReturn = useRef<R | undefined>(undefined)
-  const [state, setState] = useRafState({ isLoading: false, isLoadDone: false }, { deep: true })
+  const [incVersion, runVersionedAction] = useVersionedAction()
+  const [state, { updateRefState }, stateRef] = useTrackedRefState({
+    version: 0,
+    loading: false,
+    isLoadDone: false,
+  })
+
   const latest = useLatest({ state, canLoadMore, direction, onScroll, onLoadMore, interval })
 
-  const calculate = useStableFn(async () => {
-    if (!latest.current.canLoadMore(previousReturn.current)) return
+  const loadMore = useStableFn(async () => {
+    if (stateRef.isLoadDone.value || stateRef.loading.value) return
 
-    if (!el.current || latest.current.state.isLoading) return
-
-    const { scrollHeight, scrollTop, clientHeight, scrollWidth, clientWidth } = el.current
-
-    const isYScroll = latest.current.direction === 'bottom' || latest.current.direction === 'top'
-    const isScrollNarrower = isYScroll ? scrollHeight <= clientHeight : scrollWidth <= clientWidth
-    const isAlmostBottom = scrollHeight - scrollTop <= clientHeight + distance
-
-    if (!isScrollNarrower && !isAlmostBottom) return
-
-    setState({ isLoadDone: false, isLoading: true })
+    const version = incVersion()
+    updateRefState('loading', true)
 
     const [result, _] = await Promise.all([
       latest.current.onLoadMore(previousReturn.current),
       new Promise((resolve) => setTimeout(resolve, latest.current.interval)),
     ])
 
-    previousReturn.current = result
-
-    setState({
-      isLoading: false,
-      isLoadDone: !latest.current.canLoadMore(previousReturn.current),
+    runVersionedAction(version, () => {
+      previousReturn.current = result
+      updateRefState('loading', false)
+      updateRefState('isLoadDone', !latest.current.canLoadMore(previousReturn.current))
     })
   })
 
+  const calculate = useStableFn(async () => {
+    if (!el.current || stateRef.isLoadDone.value || stateRef.loading.value) return
+
+    const { scrollHeight, scrollTop, clientHeight, scrollWidth, clientWidth } = el.current
+
+    const isYScroll = latest.current.direction === 'bottom' || latest.current.direction === 'top'
+    const isScrollNarrower = isYScroll ? scrollHeight <= clientHeight : scrollWidth <= clientWidth
+
+    const isAlmostBottom = isYScroll
+      ? scrollHeight - scrollTop <= clientHeight + distance
+      : scrollWidth - scrollTop <= clientWidth + distance
+
+    if (isScrollNarrower || isAlmostBottom) {
+      await loadMore()
+    }
+  })
+
   useMount(immediate && calculate)
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: need to detect `isLoadDone` change
+  useUpdateEffect(() => {
+    calculate()
+  }, [state.isLoadDone, state.loading, state.version])
 
   useEventListener(
     el,
     'scroll',
     (event) => {
-      latest.current.onScroll?.(event)
       calculate()
+      latest.current.onScroll?.(event)
     },
     { passive: true },
   )
 
+  const reset = useStableFn(() => {
+    previousReturn.current = undefined
+    incVersion()
+    updateRefState('loading', false)
+    updateRefState('isLoadDone', false)
+    updateRefState('version', stateRef.version.value + 1)
+  })
+
   return {
     ...state,
+    isLoading: state.loading,
+    loadMore,
+    reset,
     calculate,
   }
 }

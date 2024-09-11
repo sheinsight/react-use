@@ -1,0 +1,176 @@
+---
+category: ProUtilities
+---
+
+# useInfiniteList
+
+import { HooksType, Since } from '@/components'
+
+<HooksType {...frontmatter} />
+
+<Since version='v1.7.0' />
+
+一个用来处理无限列表的 React Hook，支持无限滚动、点击加载更多等场景，内置了数据请求、探底检测、表单管理、分页、多选、加载状态等功能。
+
+`useInfiniteList` 是以下几个 Hooks 的上层封装：
+
+- [useInfiniteScroll](/reference/use-infinite-scroll) 提供探底检测、数据是否加载完毕等功能
+- [useForm](/reference/use-form) 提供表单管理功能，用于搜索、筛选等
+- [useAsyncFn](/reference/use-async-fn) 提供数据请求、生命周期等功能
+- [usePagination](/reference/use-pagination) 提供分页状态，管理分页查询参数
+- [useMultiSelect](/reference/use-multi-select) 提供多选状态，常用于多选进行批量操作
+
+## 场景 \{#scenes}
+
+`useInfiniteList` = 无限滚动/点击加载 + 自动管理分页 + 表单查询（可选） + 多选操作（可选）
+
+## 演示 \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 \{#usage}
+
+```tsx
+interface Item { id: number; name: string; }
+interface Data { data: Item[]; total: number; }
+interface FormState { name: string; gender: string; color: string[]; }
+
+const ref = useRef<HTMLDivElement>(null) // 用于探底检测的目标元素，仅滚动加载需要
+
+const {
+  list, // fetcher 返回的数据组成返回值列表，Data[]
+  fullList, // fetcher 返回的数据里的列表展开后组成的项目列表，Item[]
+  form, // 表单状态和操作
+  selection, // 多选状态和操作
+  paginationState, // 分页状态，请求的页码信息
+  loading, // 加载状态
+  isLoadDone // 是否加载完毕
+} = useInfiniteList<Data, Item, FormState>({
+  target: ref, // 用于探底检测的目标元素，仅滚动加载需要
+  fetcher: fetchPagination, // 请求数据的函数
+  mapFullList: (d) => d.data, // 映射数据列表的 map 函数
+  canLoadMore: (previousData, dataList, fullList) => {
+    if (!previousData) return true // 无上次请求结果，则为首次加载
+    // 当前列表长度小于总数时，可以继续加载，否则不再加载
+    return fullList.length < previousData.total 
+  },
+  form: { // 配置 useForm
+    initialValue: {
+      name: '',
+      gender: 'Boy',
+      color: ['Red'],
+    },
+  },
+  pagination: { pageSize: 10 }, // 配置 usePagination
+  immediateQueryKeys: ['color', 'gender'], // 立即查询的表单字段
+})
+
+return (
+  <div>
+    <MyForm form={form} />
+    <div ref={ref} className="h-360px overflow-scroll">
+      <MyInfiniteScrollList list={fullList} />
+    </div>
+  </div>
+)
+```
+
+## 源码 \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API \{#api}
+
+```tsx
+const {
+  list, fullList, form, selection,
+  paginationState, loading, isLoadDone
+} = useInfiniteList<Data, Item, FormState>(options)
+```
+
+### 选项 Options \{#options}
+
+```tsx
+export interface UseInfiniteListOptions<
+  Data,
+  Item,
+  FormState extends object,
+  Fetcher extends AnyFunc,
+  Container extends HTMLElement,
+> {
+  /**
+   * 容器元素，用于探底检测
+   */
+  target?: ElementTarget<Container>
+  /**
+   * 数据获取函数，可返回类似 { data: Item[], total: number } 的数据
+   */
+  fetcher?: Fetcher
+  /**
+   * 数据映射函数，用于获取每一次返回里的数据列表
+   */
+  mapFullList?: (data: Data) => Item[]
+  /**
+   * 表单选项，用于配置 `useForm`，参考 `useForm` 了解更多
+   */
+  form?: UseFormOptions<FormState>
+  /**
+   * 异步函数选项，用于配置 `useAsyncFn`，参考 `useAsyncFn` 了解更多
+   */
+  asyncFn?: Omit<UseAsyncFnOptions<Fetcher, Data, any>, 'initialParams'>
+  /**
+   * 分页数据选项，用于配置 `usePagination`，参考 `usePagination` 了解更多
+   */
+  pagination?: UsePaginationOptions<Data>
+  /**
+   * 是否可以继续加载更多的判断函数
+   */
+  canLoadMore?: (previousData: Data | undefined, dataList: Data[], fullList: Item[]) => boolean
+  /**
+   * 滚动加载选项，用于配置 `useInfiniteScroll`，参考 `useInfiniteScroll` 了解更多
+   */
+  infiniteScroll?: Omit<UseInfiniteScrollOptions<Data>, 'canLoadMore'>
+  /**
+   * 立即查询的表单字段，当表单字段变化时立即重置数据并开启新的一轮查询
+   */
+  immediateQueryKeys?: (keyof FormState)[]
+}
+```
+
+### 返回值 \{#returns}
+
+返回值包含 [useInfiniteScroll](/reference/use-infinite-scroll) 的返回值，参考 [useInfiniteScroll](/reference/use-infinite-scroll) 了解更多。
+
+```tsx
+export interface UseInfiniteListReturns<Data, Item, FormState extends object>
+  extends Omit<UseInfiniteScrollReturns, 'reset'> {
+  /**
+   * 重置所有状态，并重新查询
+   */
+  reset: () => void
+  /**
+   * 表单状态和操作
+   */
+  form: UseFormReturns<FormState>
+  /**
+   * 加载状态
+   */
+  list: Data[]
+  /**
+   * 是否加载完毕
+   */
+  fullList: Item[]
+  /**
+   * 多选状态和操作
+   */
+  selection: UseMultiSelectReturnsState<Item> & UseMultiSelectReturnsActions<Item>
+  /**
+   * 分页状态
+   */
+  paginationState: UsePaginationReturnsState<Data>
+}
+```

@@ -1,0 +1,72 @@
+---
+category: Utilities
+features: ['LowLevel']
+---
+
+# useVersionedAction
+
+import { HooksType, Since } from '@/components'
+
+<HooksType {...frontmatter} />
+
+<Since version='v1.7.0' />
+
+A low-level React Hook designed to facilitate the use of "versioned" actions, commonly employed in asynchronous scenarios for filtering operations to ensure only the latest action is executed.
+
+## Scenes \{#scenes}
+
+- **Asynchronous operation filtering**: Handling multiple asynchronous operations, executing only the latest operation, ignoring "expired" ones.
+
+## Demo \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## Usage \{#usage} 
+
+When `doSomething()` is called consecutively, only the most recent operation is executed, avoiding "expired" operations that could lead to screen flicker or unexpected results.
+
+```tsx
+const [incVersion, runVersionedAction] = useVersionedAction()
+
+const doSomething = async () => {
+  // Increment the version number with incVersion()
+  const version = incVersion()
+
+  // Asynchronous operation, like fetching data
+  const result = await fetchSomething()
+
+  // Ensure only the latest action is executed with runVersionedAction()
+  runVersionedAction(version, async () => {
+    setResult(result)
+  })
+}
+```
+
+## Source \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const [incVersion, runVersionedAction] = useVersionedAction()
+```
+
+### Returns \{#returns}
+
+```tsx
+export type UseVersionedActionReturns = readonly [
+  /**
+   * Increment the version number and return the current version number
+   */
+  incVersion: () => number,
+  /**
+   * Executes the versioned operation, only if the version number matches, ensuring that only the latest action is executed
+   */
+  runVersionedAction: <T extends AnyFunc>(version: number, handler: T) => ReturnType<T> | undefined,
+]
+```
