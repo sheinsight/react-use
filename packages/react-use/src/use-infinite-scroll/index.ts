@@ -2,10 +2,11 @@ import { useRef } from 'react'
 import { useEventListener } from '../use-event-listener'
 import { useLatest } from '../use-latest'
 import { useMount } from '../use-mount'
-import { useRafState } from '../use-raf-state'
 import { useStableFn } from '../use-stable-fn'
 import { useTargetElement } from '../use-target-element'
+import { useTrackedRefState } from '../use-tracked-ref-state'
 import { useUpdateEffect } from '../use-update-effect'
+import { useVersionedAction } from '../use-versioned-action'
 
 import type { ElementTarget } from '../use-target-element'
 
@@ -47,12 +48,26 @@ export interface UseInfiniteScrollOptions<R> {
 export interface UseInfiniteScrollReturns {
   /**
    * Loading state
+   *
+   * @deprecated use `loading` instead
    */
   isLoading: boolean
+  /**
+   * Loading state
+   *
+   * @since 1.7.0
+   */
+  loading: boolean
   /**
    * Load done state
    */
   isLoadDone: boolean
+  /**
+   * Load more function
+   *
+   * @since 1.7.0
+   */
+  loadMore: () => Promise<void>
   /**
    * Calculate the current scroll position to determine whether to load more
    */
@@ -60,11 +75,9 @@ export interface UseInfiniteScrollReturns {
   /**
    * Reset the state to the initial state.
    *
-   * @param {boolean} immediate Whether to trigger the first load immediately, default is true
-   *
    * @since 1.7.0
    */
-  reset(immediate?: boolean): void
+  reset(): void
 }
 
 /**
@@ -86,16 +99,35 @@ export function useInfiniteScroll<R = any, T extends HTMLElement = HTMLElement>(
 
   const el = useTargetElement<T>(target)
   const previousReturn = useRef<R | undefined>(undefined)
-  const [state, setState] = useRafState({ isLoading: false, isLoadDone: false }, { deep: true })
+  const [incVersion, runVersionedAction] = useVersionedAction()
+  const [state, { updateRefState }, stateRef] = useTrackedRefState({
+    version: 0,
+    loading: false,
+    isLoadDone: false,
+  })
+
   const latest = useLatest({ state, canLoadMore, direction, onScroll, onLoadMore, interval })
 
-  const calculate = useStableFn(async () => {
-    if (!latest.current.canLoadMore(previousReturn.current)) {
-      setState({ isLoadDone: true, isLoading: false })
-      return
-    }
+  const loadMore = useStableFn(async () => {
+    if (stateRef.isLoadDone.value || stateRef.loading.value) return
 
-    if (!el.current || latest.current.state.isLoading) return
+    const version = incVersion()
+    updateRefState('loading', true)
+
+    const [result, _] = await Promise.all([
+      latest.current.onLoadMore(previousReturn.current),
+      new Promise((resolve) => setTimeout(resolve, latest.current.interval)),
+    ])
+
+    runVersionedAction(version, () => {
+      previousReturn.current = result
+      updateRefState('loading', false)
+      updateRefState('isLoadDone', !latest.current.canLoadMore(previousReturn.current))
+    })
+  })
+
+  const calculate = useStableFn(async () => {
+    if (!el.current || stateRef.isLoadDone.value || stateRef.loading.value) return
 
     const { scrollHeight, scrollTop, clientHeight, scrollWidth, clientWidth } = el.current
 
@@ -107,27 +139,16 @@ export function useInfiniteScroll<R = any, T extends HTMLElement = HTMLElement>(
       : scrollWidth - scrollTop <= clientWidth + distance
 
     if (isScrollNarrower || isAlmostBottom) {
-      setState({ isLoadDone: false, isLoading: true })
-
-      const [result, _] = await Promise.all([
-        latest.current.onLoadMore(previousReturn.current),
-        new Promise((resolve) => setTimeout(resolve, latest.current.interval)),
-      ])
-
-      previousReturn.current = result
-
-      setState({
-        isLoadDone: !latest.current.canLoadMore(previousReturn.current),
-        isLoading: false,
-      })
+      await loadMore()
     }
   })
 
   useMount(immediate && calculate)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: need to detect `isLoadDone` change
   useUpdateEffect(() => {
-    if (!state.isLoading) calculate()
-  }, [state.isLoading])
+    calculate()
+  }, [state.isLoadDone, state.loading, state.version])
 
   useEventListener(
     el,
@@ -139,15 +160,19 @@ export function useInfiniteScroll<R = any, T extends HTMLElement = HTMLElement>(
     { passive: true },
   )
 
-  const reset = useStableFn((immediate = true) => {
+  const reset = useStableFn(() => {
     previousReturn.current = undefined
-    setState({ isLoading: false, isLoadDone: false })
-    immediate && calculate()
+    incVersion()
+    updateRefState('loading', false)
+    updateRefState('isLoadDone', false)
+    updateRefState('version', stateRef.version.value + 1)
   })
 
   return {
     ...state,
-    calculate,
+    isLoading: state.loading,
+    loadMore,
     reset,
+    calculate,
   }
 }
