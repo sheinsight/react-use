@@ -1,0 +1,74 @@
+---
+category: Utilities
+features: ['LowLevel']
+---
+
+# useVersionedAction
+
+import { HooksType, Since } from '@/components'
+
+<HooksType {...frontmatter} />
+
+<Since version='v1.7.0' />
+
+一个用于帮助使用“带版本”动作的 React Hook，常用于异步场景下进行操作过滤，以保证只执行最新的操作。
+
+## 场景 \{#scenes}
+
+- **异步操作过滤**：处理多个异步操作，只执行最新的操作，忽略“已过期”的操作。
+
+## 演示 \{#demo}
+
+快速点击下面的两个按钮，只有“带版本”的操作会忽略“已过期”的操作，确保只执行最新的操作。
+
+import { App } from './demo'
+
+<App />
+
+## 用法 \{#usage} 
+
+当 `doSomething()` 被连续调用时，只有最新的操作会被执行，而不会出现“过期”的操作导致的「屏闪」或者「非预期结果」。
+
+```tsx
+const [incVersion, runVersionedAction] = useVersionedAction()
+
+const doSomething = async () => {
+  // 通过 incVersion() 来增加版本号
+  const version = incVersion()
+
+  // 异步操作，如请求数据
+  const result = await fetchSomething()
+
+  // 通过 runVersionedAction() 来确保只执行最新的操作
+  runVersionedAction(version, async () => {
+    setResult(result)
+  })
+}
+```
+
+## 源码 \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+const [incVersion, runVersionedAction] = useVersionedAction()
+```
+
+### 返回值 \{#returns}
+
+```tsx
+export type UseVersionedActionReturns = readonly [
+  /**
+   * 增加版本号，并返回当前版本号
+   */
+  incVersion: () => number,
+  /**
+   * 执行带版本号的操作，只有当版本号匹配时才会执行，以确保只执行最新的操作
+   */
+  runVersionedAction: <T extends AnyFunc>(version: number, handler: T) => ReturnType<T> | undefined,
+]
+```
