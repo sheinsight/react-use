@@ -23,5 +23,4 @@ dist-ssr
 *.sln
 *.sw?
 doc_build
-hooks.json
 docs-dist
