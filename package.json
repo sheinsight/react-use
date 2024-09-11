@@ -2,7 +2,7 @@
   "name": "shined-react-use-monorepo",
   "type": "module",
   "private": true,
-  "version": "1.7.0",
+  "version": "1.6.0",
   "packageManager": "pnpm@9.9.0",
   "license": "MIT",
   "scripts": {
@@ -11,7 +11,7 @@
     "lint": "biome check && oxlint && pnpm typecheck",
     "lint:fix": "biome check --write --unsafe && oxlint --fix",
     "prerelease": "pnpm lint",
-    "release": "bumpp",
+    "release": "bumpp -r",
     "postrelease": "pnpm changelog && git add CHANGELOG.md && git commit -m 'chore: update changelog' && git push",
     "test": "vitest",
     "test:ci": "pnpm build && pnpm lint && vitest",
