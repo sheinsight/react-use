@@ -25,7 +25,7 @@ export interface UseMultiSelectReturnsState<T> {
   isPartiallySelected: boolean
 }
 
-export interface UseMultiSelectActions<T> {
+export interface UseMultiSelectReturnsActions<T> {
   /**
    * Whether the item is selected
    */
@@ -76,7 +76,7 @@ export interface UseMultiSelectActions<T> {
   toggleAll(): void
 }
 
-export type UseMultiSelectReturns<T> = readonly [UseMultiSelectReturnsState<T>, UseMultiSelectActions<T>]
+export type UseMultiSelectReturns<T> = readonly [UseMultiSelectReturnsState<T>, UseMultiSelectReturnsActions<T>]
 
 /**
  * A React Hook that manages multi-select state.
