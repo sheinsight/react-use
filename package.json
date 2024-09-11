@@ -2,7 +2,7 @@
   "name": "shined-react-use-monorepo",
   "type": "module",
   "private": true,
-  "version": "1.6.0",
+  "version": "1.7.0",
   "packageManager": "pnpm@9.9.0",
   "license": "MIT",
   "scripts": {
