@@ -1,3 +1,31 @@
+# [1.7.0](https://github.com/sheinsight/react-use/compare/v1.6.0...v1.7.0) (2024-09-11)
+
+
+### Bug Fixes
+
+* **useInfiniteScroll:** fix not loading when it has more space to scroll after first load ([c4036ca](https://github.com/sheinsight/react-use/commit/c4036cade8d9aaee1c4d3d42d199ace63abb74fe))
+* **useInfiniteScroll:** use `useLatest` to avoid expired callbacks ([1e8164e](https://github.com/sheinsight/react-use/commit/1e8164e0b0a5a6379160751c2ca7b6de1a2bca67))
+* **useMultiSelect:** fix returned type definition ([33dfcd6](https://github.com/sheinsight/react-use/commit/33dfcd6db21643a08c1463bb8caa1a5960841b4c))
+* **useQuery:** fix internal behavior params missing bug (should run `refresh`, not `run`) ([3fbfb5e](https://github.com/sheinsight/react-use/commit/3fbfb5e4a4bc00faa8848f77ab8e418f07df3819))
+* **useQuery:** fix useQuery `run` method return value when `throttle` and `debounce` are not set ([2f25b3e](https://github.com/sheinsight/react-use/commit/2f25b3ef5b69b2f2266115b22363ea80598ee866))
+
+
+### Features
+
+* add new Hook `useForm` to handle form state, both for controlled and uncontrolled forms ([44137ff](https://github.com/sheinsight/react-use/commit/44137ffac4090e94457cd195a462d058857b784f))
+* add new Hook `useInfiniteList` to handle infinite list ([1538cf9](https://github.com/sheinsight/react-use/commit/1538cf9e09209f81500f15a0b796b945251301e3))
+* add new Hook `usePagingList` to handle paging list ([a3b1598](https://github.com/sheinsight/react-use/commit/a3b1598daecbec22841511c63dc436571ace84af))
+* add new Hook `useVersionedAction` to run versioned action ([f34bfa7](https://github.com/sheinsight/react-use/commit/f34bfa70702d31b048895c6cd6c98693eecb4f01))
+* add new Hook `useWebSocket` to handle WebSocket connections ([edc568c](https://github.com/sheinsight/react-use/commit/edc568cdaf0bf075f2bab3226282daea54225434))
+* rename `useProList` to `usePagingList` ([574d37f](https://github.com/sheinsight/react-use/commit/574d37f83647b6f991af822b68d894b36efee5c4))
+* **useInfiniteScroll:** add `loadMore` method to load more manually & `reset` to reset, deprecated isLoading, prefer `loading` ([20d4fd8](https://github.com/sheinsight/react-use/commit/20d4fd8c61307dc11496b86738cdc42d31e42b46))
+* **useInfiniteScroll:** add `reset` method to reset state & fix horizontal scroll issue ([37ddd58](https://github.com/sheinsight/react-use/commit/37ddd58a0b05e5dc93f81f416053934676f3eb78))
+* **useMultiSelect:** add `unselect` and `unselectAll`, deprecated `unSelect` and `unSelectAll`. ([26142ff](https://github.com/sheinsight/react-use/commit/26142ffcefb4df615b6fba48d54211e2a0961722))
+* **usePagination:** add `countStart` and `countEnd` to returns ([dcbcad9](https://github.com/sheinsight/react-use/commit/dcbcad9dec99039fd31f407bb52d240ea190808a))
+* **usePagination:** add `page` and `pageSize` in returns ([c2e060c](https://github.com/sheinsight/react-use/commit/c2e060caea6ab70acccc9afb47b70c978e42af4b))
+
+
+
 # [1.6.0](https://github.com/sheinsight/react-use/compare/v1.5.0...v1.6.0) (2024-08-29)
 
 
