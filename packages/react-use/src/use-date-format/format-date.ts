@@ -130,7 +130,7 @@ export const formatDate = (date: Date, formatStr: string, options: FormatDateOpt
 
 export type DateLike = Date | number | string
 
-export function normalizeDate(date: DateLike) {
+export function normalizeDate(date: DateLike | null | undefined): Date {
   if (date === null) return new Date(Number.NaN) // null is invalid
   if (date === undefined) return new Date()
   if (date instanceof Date) return new Date(date)

@@ -26,7 +26,7 @@ export function useDateFormat(
   /**
    * a date object or a date string
    */
-  date: DateLike,
+  date: DateLike | null | undefined,
   /**
    * format string
    *
