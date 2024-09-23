@@ -169,8 +169,15 @@ export function useInfiniteScroll<R = any, T extends HTMLElement = HTMLElement>(
   })
 
   return {
-    ...state,
-    isLoading: state.loading,
+    get isLoadDone() {
+      return state.isLoadDone
+    },
+    get loading() {
+      return state.loading
+    },
+    get isLoading() {
+      return state.loading
+    },
     loadMore,
     reset,
     calculate,
