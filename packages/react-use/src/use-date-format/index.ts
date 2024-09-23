@@ -1,4 +1,5 @@
 import { useCreation } from '../use-creation'
+import { useLatest } from '../use-latest'
 
 import { formatDate, normalizeDate } from './format-date'
 export { formatDate, normalizeDate } from './format-date'
@@ -38,13 +39,14 @@ export function useDateFormat(
    */
   options: UseDateFormatOptions = {},
 ): string {
-  const { fallback: fallbackStr = '' } = options
+  const { fallback: fallbackStr = '', unicodeSymbols, locales } = options
+  const latest = useLatest({ options })
 
   const result = useCreation(() => {
     const nDate = normalizeDate(date)
     const isInvalid = Number.isNaN(nDate.getTime())
-    return isInvalid ? fallbackStr : formatDate(nDate, formatStr, options)
-  }, [date, formatStr, fallbackStr, options])
+    return isInvalid ? fallbackStr : formatDate(nDate, formatStr, latest.current.options)
+  }, [date, formatStr, fallbackStr, unicodeSymbols, locales])
 
   return result
 }
