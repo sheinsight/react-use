@@ -136,6 +136,7 @@ export function useInfiniteList<
 ): UseInfiniteListReturns<Data, Item, FormState> {
   const { target, fetcher = () => {} } = options
 
+  // for instant get the latest state, by ref
   const [{ dataList }, { updateRefState }, stateRef] = useTrackedRefState<{ dataList: Data[] }>({ dataList: [] })
   const previousDataRef = useRef<Data | undefined>(undefined)
   const previousFormRef = useRef<FormState>((options.form?.initialValue || {}) as FormState)
