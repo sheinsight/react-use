@@ -25,7 +25,7 @@ function Demo1() {
 
   return (
     <>
-      <KeyValue label="Data" value={error ? 'Error!' : loading ? 'Loading...' : data ?? 'Not loaded'} />
+      <KeyValue label="Data" value={error ? 'Error!' : loading ? 'Loading...' : (data ?? 'Not loaded')} />
       <Zone>
         {data}
         <Button mono onClick={() => run()}>
@@ -59,7 +59,7 @@ function Demo2() {
       <Zone>
         <KeyValue
           label="Data"
-          value={initializing ? 'Initializing...' : data ?? 'Not loaded'}
+          value={initializing ? 'Initializing...' : (data ?? 'Not loaded')}
           valueClassName={cn(refreshing ? 'opacity-60' : '')}
         />
         <KeyValue label="Params" value={JSON.stringify(params)} valueClassName={cn(refreshing ? 'opacity-60' : '')} />
@@ -99,10 +99,13 @@ function Demo3() {
   return (
     <>
       <Zone>
-        <KeyValue label="Data with debounce" value={error ? 'Error!' : loading ? 'Loading...' : data ?? 'Not loaded'} />
+        <KeyValue
+          label="Data with debounce"
+          value={error ? 'Error!' : loading ? 'Loading...' : (data ?? 'Not loaded')}
+        />
         <KeyValue
           label="Data with throttle"
-          value={error2 ? 'Error!' : loading2 ? 'Loading...' : data2 ?? 'Not loaded'}
+          value={error2 ? 'Error!' : loading2 ? 'Loading...' : (data2 ?? 'Not loaded')}
         />
       </Zone>
       <Zone>

@@ -36,7 +36,7 @@ export function useRequestCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
   const provider = unwrapGettable(options.provider) || dataCache
   const cacheKeyValue = unwrapGettable(options.cacheKey)
   const cachedData = (cacheKeyValue ? provider.get(cacheKeyValue) : undefined) as D | undefined
-  const cachedParams = (cacheKeyValue ? paramsCache.get(cacheKeyValue) ?? [] : []) as Parameters<T> | []
+  const cachedParams = (cacheKeyValue ? (paramsCache.get(cacheKeyValue) ?? []) : []) as Parameters<T> | []
   const cacheExpirationTime = options.cacheExpirationTime ?? 5 * 60_000
 
   const latest = useLatest({

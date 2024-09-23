@@ -275,7 +275,7 @@ export function useWebSocket(
       const message =
         latest.current.heartbeat === true
           ? defaultHeartbeatMessage
-          : latest.current.heartbeat.message ?? defaultHeartbeatMessage
+          : (latest.current.heartbeat.message ?? defaultHeartbeatMessage)
 
       wsRef.current.send(message)
 
@@ -352,7 +352,7 @@ function resolveCheckHeartbeatResponse(heartbeat: Exclude<UseWebSocketOptions['h
       ? () => true
       : isWebSocketSendable(heartbeat.responseMessage)
         ? (data: UseWebSocketSendable) => data === heartbeat.responseMessage
-        : heartbeat.responseMessage ?? (() => true)
+        : (heartbeat.responseMessage ?? (() => true))
 }
 
 function resolveReconnectOptions(reconnect?: UseWebSocketOptions['reconnect']) {
@@ -363,7 +363,7 @@ function resolveTimeout(heartbeat?: UseWebSocketOptions['heartbeat']) {
   return heartbeat
     ? heartbeat === true
       ? defaultResponseTimeout
-      : heartbeat.responseTimeout ?? defaultResponseTimeout
+      : (heartbeat.responseTimeout ?? defaultResponseTimeout)
     : 0
 }
 
@@ -371,6 +371,6 @@ function resolveInterval(heartbeat?: UseWebSocketOptions['heartbeat']) {
   return heartbeat
     ? heartbeat === true
       ? defaultHeartbeatInterval
-      : heartbeat.interval ?? defaultHeartbeatInterval
+      : (heartbeat.interval ?? defaultHeartbeatInterval)
     : 0
 }

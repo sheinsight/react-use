@@ -153,7 +153,7 @@ export type UsePaginationReturns<T> = readonly [UsePaginationReturnsState<T>, Us
  * A React Hook that manage pagination state.
  */
 export function usePagination<T = any>(options: UsePaginationOptions<T> = {}): UsePaginationReturns<T> {
-  const total = options.list ? options.list.length : options.total ?? Number.POSITIVE_INFINITY
+  const total = options.list ? options.list.length : (options.total ?? Number.POSITIVE_INFINITY)
   const { list = [] as T[], page = 1, pageSize = 10, onPageChange, onPageSizeChange, onPageCountChange } = options
 
   const isInfinity = total === Number.POSITIVE_INFINITY

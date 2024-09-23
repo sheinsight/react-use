@@ -85,7 +85,7 @@ export function useControlledComponent<T = string, P extends object = object>(
     latest.current.onReset?.(initialValue)
   })
 
-  const comProps = (isFunction(props) ? props(value) : props ?? {}) as P
+  const comProps = (isFunction(props) ? props(value) : (props ?? {})) as P
 
   return {
     value,

@@ -83,8 +83,8 @@ export function useMouseInElement(
 
     const { left, top, width, height } = el.current.getBoundingClientRect()
 
-    const elementPositionX = left + (mType === 'page' ? window.scrollX ?? window.pageXOffset : 0)
-    const elementPositionY = top + (mType === 'page' ? window.scrollY ?? window.pageYOffset : 0)
+    const elementPositionX = left + (mType === 'page' ? (window.scrollX ?? window.pageXOffset) : 0)
+    const elementPositionY = top + (mType === 'page' ? (window.scrollY ?? window.pageYOffset) : 0)
 
     const elX = x - elementPositionX
     const elY = y - elementPositionY

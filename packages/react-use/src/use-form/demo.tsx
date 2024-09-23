@@ -39,7 +39,7 @@ export function App() {
       <form {...form.nativeProps}>
         <Zone>
           <Zone>
-            <label title="Name" className="flex gap-2 items-center">
+            <label title="Name" className="flex gap-2 items-center" htmlFor="name">
               <span className="text-right inline-block w-80px">Name:</span>
               <Input placeholder="Input your name" name="name" required />
             </label>
@@ -54,7 +54,7 @@ export function App() {
             ))}
           </Zone>
           <Zone>
-            <label title="Age" className="flex gap-2 items-center">
+            <label title="Age" className="flex gap-2 items-center" htmlFor="age">
               <span className="text-right inline-block w-80px">Age:</span>
               <Input placeholder="Input your age" name="age" type="number" />
             </label>
@@ -69,7 +69,7 @@ export function App() {
             ))}
           </Zone>
           <Zone>
-            <label title="Nation" className="flex gap-2 items-center">
+            <label title="Nation" className="flex gap-2 items-center" htmlFor="nation">
               <span className="text-right inline-block w-80px">Nation:</span>
               <Select name="nation">
                 {nations.map((color) => (
