@@ -9,64 +9,97 @@ import { HooksType } from '@/components'
 
 <HooksType {...frontmatter} />
 
-A React Hook that helps to format a date to a human-readable time ago string. It will automatically update the time ago string every 30 seconds by default.
+A React Hook that helps format dates into readable "time ago" strings. By default, it updates this "time ago" string every 30 seconds automatically.
 
-## Demo
+## Demo \{#demo}
 
 import { App } from './demo'
 
 <App />
 
-## Usage
+## Usage \{#usage}
 
-See API for more details.
+```tsx
+const timeAgo = useTimeAgo(dateLike, options)
 
-## Source
+const targetDate = new Date() - 1000 * 60 * 60 * 24 // yesterday
+
+const timeAgo = useTimeAgo(targetDate) 
+console.log(timeAgo) // "yesterday"
+
+// Custom language, here using Simplified Chinese
+import { CHINESE_MESSAGES } from '@shined/react-use'
+const timeAgoInChinese = useTimeAgo(targetDate, { messages: CHINESE_MESSAGES }) 
+console.log(timeAgoInChinese) // "昨天"
+```
+
+Currently, **Simplified Chinese**, **Traditional Chinese**, **English**, and **Japanese** are built in. If needed, you can customize via `options.messages`. Below is a simple example of formatting in Chinese:
+
+```tsx
+/**
+ * Default messages for Chinese Simplified language
+ */
+export const CHINESE_MESSAGES: TimeAgoMessages<TimeAgoUnitNamesDefault> = {
+  justNow: '刚刚',
+  past: (n) => (n.match(/\d/) ? `${n}前` : n),
+  future: (n) => (n.match(/\d/) ? `${n}后` : n),
+  month: (n, past) => (n === 1 ? (past ? '上个月' : '下个月') : `${n} 个月`),
+  year: (n, past) => (n === 1 ? (past ? '去年' : '明年') : `${n} 年`),
+  day: (n, past) => (n === 1 ? (past ? '昨天' : '明天') : `${n} 天`),
+  week: (n, past) => (n === 1 ? (past ? '上周' : '下周') : `${n} 周`),
+  hour: (n) => `${n} 小时`,
+  minute: (n) => `${n} 分钟`,
+  second: (n) => `${n} 秒`,
+  invalid: '',
+}
+```
+
+## Source \{#source}
 
 import { Source } from '@/components'
 
 <Source />
 
-## API
+## API \{#api}
 
 ```tsx
 const timeAgo = useTimeAgo(dateLike, options)
 const { timeAgo, ...pausable } = useTimeAgo(dateLike, { controls: true, ...otherOptions })
 ```
 
-### DateLike
+### ElementTarget \{#element-target}
 
 ```tsx
-// like new Date(), 1_612_137_600_000, '2021-01-01', undefined, null
+// Similar to new Date(), 1_612_137_600_000, '2021-01-01', undefined, null
 export type DateLike = Date | number | string | undefined | null
 ```
 
-### Options
+### Options \{#options}
 
 ```tsx
 export type FormatTimeAgoOptions<UnitNames extends string = TimeAgoUnitNamesDefault> = {
   /**
-   * Maximum unit (of diff in milliseconds) to display the full date instead of relative
+   * Maximum unit (millisecond difference), beyond which will display the full date instead of relative time
    *
    * @defaultValue undefined
    */
   max?: UnitNames | number
   /**
-   * Formatter for full date
+   * Formatter for the full date
    */
   fullDateFormatter?: TimeAgeFullDateFormatter
   /**
-   * Messages for formatting the string
+   * Messages for formatting strings
    */
   messages?: TimeAgoMessages<UnitNames>
   /**
-   * Minimum display time unit (default is minute)
+   * The smallest displayed time unit (default is minute)
    *
    * @defaultValue false
    */
   showSecond?: boolean
   /**
-   * Rounding method to apply.
+   * Rounding method applied.
    *
    * @defaultValue 'round'
    */
@@ -80,13 +113,13 @@ export type FormatTimeAgoOptions<UnitNames extends string = TimeAgoUnitNamesDefa
 export interface UseTimeAgoOptions<Controls extends boolean, UnitNames extends string = TimeAgoUnitNamesDefault>
   extends FormatTimeAgoOptions<UnitNames> {
   /**
-   * Expose more controls
+   * Exposes additional controls
    *
    * @defaultValue false
    */
   controls?: Controls
   /**
-   * Intervals to update, set 0 to disable auto update
+   * Update interval, set to 0 to disable automatic updates
    *
    * @defaultValue 30_000
    */
@@ -94,11 +127,11 @@ export interface UseTimeAgoOptions<Controls extends boolean, UnitNames extends s
 }
 ```
 
-### Returns
+### Returns \{#returns}
 
-Retuerns contain [Pausable](/docs/features/pausable) instance that can be paused, resumed.
+The return value includes a [Pausable](/docs/features/pausable) instance that can be paused and resumed.
 
-See [Pausable](/docs/features/pausable) for more details.
+For more details, please refer to [Pausable](/docs/features/pausable).
 
 ```tsx
 export type UseTimeAgoReturns<Controls extends boolean = false> = Controls extends true

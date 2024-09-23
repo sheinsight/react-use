@@ -19,7 +19,40 @@ import { App } from './demo'
 
 ## 用法 \{#usage}
 
-请查看 API。
+```tsx
+const timeAgo = useTimeAgo(dateLike, options)
+
+const targetDate = new Date() - 1000 * 60 * 60 * 24 // 昨天
+
+const timeAgo = useTimeAgo(targetDate) 
+console.log(timeAgo) // "yesterday"
+
+// 自定义语言，这里使用简体中文
+import { CHINESE_MESSAGES } from '@shined/react-use'
+const timeAgoInChinese = useTimeAgo(targetDate, { messages: CHINESE_MESSAGES }) 
+console.log(timeAgoInChinese) // "昨天"
+```
+
+目前内置了**简体中文**、**繁体中文**、**英文**、**日文**四种语言，如果需要，可以通过 `options.messages` 进行自定义，以下是一个简单的例子，使用中文进行格式化：
+
+```tsx
+/**
+ * Default messages for Chinese Simplified language
+ */
+export const CHINESE_MESSAGES: TimeAgoMessages<TimeAgoUnitNamesDefault> = {
+  justNow: '刚刚',
+  past: (n) => (n.match(/\d/) ? `${n}前` : n),
+  future: (n) => (n.match(/\d/) ? `${n}后` : n),
+  month: (n, past) => (n === 1 ? (past ? '上个月' : '下个月') : `${n} 个月`),
+  year: (n, past) => (n === 1 ? (past ? '去年' : '明年') : `${n} 年`),
+  day: (n, past) => (n === 1 ? (past ? '昨天' : '明天') : `${n} 天`),
+  week: (n, past) => (n === 1 ? (past ? '上周' : '下周') : `${n} 周`),
+  hour: (n) => `${n} 小时`,
+  minute: (n) => `${n} 分钟`,
+  second: (n) => `${n} 秒`,
+  invalid: '',
+}
+```
 
 ## 源码 \{#source}
 

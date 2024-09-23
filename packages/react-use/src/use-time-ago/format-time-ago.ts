@@ -1,3 +1,5 @@
+// mainly from https://github.com/vueuse/vueuse/blob/main/packages/core/useTimeAgo/index.ts
+
 import { isFunction, isNumber } from '../utils/basic'
 
 export type TimeAgoFormatter<T = number> = (value: T, isPast: boolean) => string
@@ -62,7 +64,7 @@ const DEFAULT_UNITS: TimeAgoUnit<TimeAgoUnitNamesDefault>[] = [
   { max: Number.POSITIVE_INFINITY, value: 31536000000, name: 'year' },
 ]
 
-const DEFAULT_MESSAGES: TimeAgoMessages<TimeAgoUnitNamesDefault> = {
+export const DEFAULT_MESSAGES: TimeAgoMessages<TimeAgoUnitNamesDefault> = {
   justNow: 'just now',
   past: (n) => (n.match(/\d/) ? `${n} ago` : n),
   future: (n) => (n.match(/\d/) ? `in ${n}` : n),

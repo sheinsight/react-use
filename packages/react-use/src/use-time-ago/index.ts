@@ -1,16 +1,14 @@
-import { normalizeDate } from '../use-date-format'
 import { useNow } from '../use-now'
-import { unwrapGettable } from '../utils/unwrap'
-
-import { formatTimeAgo } from './format-time-ago'
 export { formatTimeAgo } from './format-time-ago'
-
-import type { FormatTimeAgoOptions, TimeAgoUnitNamesDefault } from './format-time-ago'
-export type { FormatTimeAgoOptions } from './format-time-ago'
+import { normalizeDate } from '../use-date-format'
+import { unwrapGettable } from '../utils/unwrap'
+import { DEFAULT_MESSAGES, formatTimeAgo } from './format-time-ago'
 
 import type { DateLike } from '../use-date-format'
 import type { Pausable } from '../use-pausable'
 import type { Gettable } from '../utils/basic'
+export type { FormatTimeAgoOptions } from './format-time-ago'
+import type { FormatTimeAgoOptions, TimeAgoMessages, TimeAgoUnitNamesDefault } from './format-time-ago'
 
 export type UseTimeAgoReturns<Controls extends boolean = false> = Controls extends true
   ? { timeAgo: string } & Pausable
@@ -54,3 +52,59 @@ export function useTimeAgo<UnitNames extends string = TimeAgoUnitNamesDefault>(
 
   return exposeControls ? { timeAgo, ...controls } : timeAgo
 }
+
+/**
+ * Default messages for Chinese Simplified language
+ */
+export const CHINESE_MESSAGES: TimeAgoMessages<TimeAgoUnitNamesDefault> = {
+  justNow: '刚刚',
+  past: (n) => (n.match(/\d/) ? `${n}前` : n),
+  future: (n) => (n.match(/\d/) ? `${n}后` : n),
+  month: (n, past) => (n === 1 ? (past ? '上个月' : '下个月') : `${n} 个月`),
+  year: (n, past) => (n === 1 ? (past ? '去年' : '明年') : `${n} 年`),
+  day: (n, past) => (n === 1 ? (past ? '昨天' : '明天') : `${n} 天`),
+  week: (n, past) => (n === 1 ? (past ? '上周' : '下周') : `${n} 周`),
+  hour: (n) => `${n} 小时`,
+  minute: (n) => `${n} 分钟`,
+  second: (n) => `${n} 秒`,
+  invalid: '',
+}
+
+/**
+ * Default messages for Chinese Traditional language
+ */
+export const CHINESE_TRADITIONAL_MESSAGES: TimeAgoMessages<TimeAgoUnitNamesDefault> = {
+  justNow: '剛剛',
+  past: (n) => (n.match(/\d/) ? `${n}前` : n),
+  future: (n) => (n.match(/\d/) ? `${n}後` : n),
+  month: (n, past) => (n === 1 ? (past ? '上個月' : '下個月') : `${n} 個月`),
+  year: (n, past) => (n === 1 ? (past ? '去年' : '明年') : `${n} 年`),
+  day: (n, past) => (n === 1 ? (past ? '昨天' : '明天') : `${n} 天`),
+  week: (n, past) => (n === 1 ? (past ? '上週' : '下週') : `${n} 週`),
+  hour: (n) => `${n} 小時`,
+  minute: (n) => `${n} 分鐘`,
+  second: (n) => `${n} 秒`,
+  invalid: '',
+}
+
+/**
+ * Default messages for Japanese language
+ */
+export const JAPANESE_MESSAGES: TimeAgoMessages<TimeAgoUnitNamesDefault> = {
+  justNow: 'たった今',
+  past: (n) => (n.match(/\d/) ? `${n}前` : n),
+  future: (n) => (n.match(/\d/) ? `${n}後` : n),
+  month: (n, past) => (n === 1 ? (past ? '先月' : '来月') : `${n} ヶ月`),
+  year: (n, past) => (n === 1 ? (past ? '去年' : '来年') : `${n} 年`),
+  day: (n, past) => (n === 1 ? (past ? '昨日' : '明日') : `${n} 日`),
+  week: (n, past) => (n === 1 ? (past ? '先週' : '来週') : `${n} 週間`),
+  hour: (n) => `${n} 時間`,
+  minute: (n) => `${n} 分`,
+  second: (n) => `${n} 秒`,
+  invalid: '',
+}
+
+/**
+ * Default messages for English language
+ */
+export const ENGLISH_MESSAGES: TimeAgoMessages<TimeAgoUnitNamesDefault> = DEFAULT_MESSAGES
