@@ -3,12 +3,11 @@ import { useEventListener } from '../use-event-listener'
 import { useLatest } from '../use-latest'
 import { useMount } from '../use-mount'
 import { usePausable } from '../use-pausable'
-import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
 import { useThrottledFn } from '../use-throttled-fn'
+import { useTrackedRefState } from '../use-tracked-ref-state'
 import { timestamp } from '../utils/basic'
 
-import type { MutableRefObject } from 'react'
 import type { Pausable } from '../use-pausable'
 import type { SetTimeoutReturn, WindowEventName } from '../utils/basic'
 
@@ -47,7 +46,7 @@ export interface UseUserIdleReturns extends Pausable<[reset?: boolean], [reset?:
   /**
    * The timestamp of the last user activity
    */
-  lastActive: MutableRefObject<number>
+  lastActive: number
   /**
    * Reset the idle state
    *
@@ -65,10 +64,13 @@ const oneMinute = 60_000
 export function useUserIdle(timeout: number = oneMinute, options: UseUserIdleOptions = {}): UseUserIdleReturns {
   const { immediate = true, initialState = false, watchVisibility = true, events = defaultEvents } = options
 
-  const lastActiveRef = useRef(Date.now())
+  const [state, { updateRefState }] = useTrackedRefState({
+    isIdle: initialState,
+    lastActive: Date.now(),
+  })
+
   const timer = useRef<SetTimeoutReturn | null>(null)
   const latest = useLatest({ timeout })
-  const [isIdle, setIsIdle] = useSafeState(initialState)
 
   const pausable = usePausable(
     false,
@@ -77,14 +79,14 @@ export function useUserIdle(timeout: number = oneMinute, options: UseUserIdleOpt
   )
 
   const resetTimer = useStableFn((restart = true, updateTimestamp = false) => {
-    setIsIdle(false)
+    updateRefState('isIdle', false)
 
-    if (updateTimestamp) lastActiveRef.current = timestamp()
+    if (updateTimestamp) updateRefState('lastActive', timestamp())
 
     timer.current !== null && clearTimeout(timer.current)
 
     if (restart) {
-      timer.current = setTimeout(() => setIsIdle(true), latest.current.timeout)
+      timer.current = setTimeout(() => updateRefState('isIdle', true), latest.current.timeout)
     }
   })
 
@@ -102,8 +104,12 @@ export function useUserIdle(timeout: number = oneMinute, options: UseUserIdleOpt
 
   return {
     ...pausable,
-    isIdle,
-    lastActive: lastActiveRef,
+    get isIdle() {
+      return state.isIdle
+    },
+    get lastActive() {
+      return state.lastActive
+    },
     reset: resetTimer,
   }
 }
