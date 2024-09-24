@@ -58,7 +58,7 @@ export function defaultCloneFn<T>(source: T): T {
 export function useClonedState<T>(source: T, options: UseClonedStateOptions = {}): UseClonedStateReturns<T> {
   const { deep = true, manual = false, clone = defaultCloneFn } = options
 
-  const [cloned, setCloned] = useSafeState(() => defaultCloneFn(source))
+  const [cloned, setCloned] = useSafeState(() => clone(source))
   const latest = useLatest({ manual, deep, source, clone })
 
   const syncSource = useStableFn(() => {
