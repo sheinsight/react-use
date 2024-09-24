@@ -52,9 +52,9 @@ export interface UseDynamicListReturnsActions<T> {
    */
   shift(): void
   /**
-   * sort the list based on the specified result
+   * sort the list in place
    */
-  sort: (result: T[]) => T[]
+  sort: (compare?: (pre: T, next: T) => number) => void
   /**
    * reset the list
    */
@@ -80,19 +80,19 @@ export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturns<
   const listIdxRef = useRef(0)
   const keysRef = useRef<number[]>([])
 
-  function setKey(index: number) {
+  function updateInternalKeyAt(index: number) {
     keysRef.current.splice(index, 0, listIdxRef.current++)
   }
 
   const [list, setList] = useSafeState(() => {
-    initialList.forEach((_, index) => setKey(index))
+    initialList.forEach((_, index) => updateInternalKeyAt(index))
     return initialList
   })
 
   const reset = useStableFn((newList: T[]) => {
     keysRef.current.length = 0
     setList(() => {
-      newList.forEach((_, index) => setKey(index))
+      newList.forEach((_, index) => updateInternalKeyAt(index))
       return newList
     })
   })
@@ -101,7 +101,7 @@ export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturns<
     setList((list) => {
       const temp = [...list]
       temp.splice(index, 0, item)
-      setKey(index)
+      updateInternalKeyAt(index)
       return temp
     })
   })
@@ -112,7 +112,7 @@ export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturns<
   const merge = useStableFn((index: number, items: T[]) => {
     setList((list) => {
       const temp = [...list]
-      items.forEach((_, i) => setKey(index + i))
+      items.forEach((_, i) => updateInternalKeyAt(index + i))
       temp.splice(index, 0, ...items)
       return temp
     })
@@ -139,16 +139,15 @@ export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturns<
     })
   })
 
-  const move = useStableFn((oldIndex: number, newIndex: number) => {
-    if (oldIndex === newIndex) return
-
+  const move = useStableFn((preIndex: number, nextIndex: number) => {
+    if (preIndex === nextIndex) return
     setList((list) => {
       const newList = [...list]
-      const temp = newList.filter((_, index: number) => index !== oldIndex)
-      temp.splice(newIndex, 0, newList[oldIndex])
+      const temp = newList.filter((_, index: number) => index !== preIndex)
+      temp.splice(nextIndex, 0, newList[preIndex])
       try {
-        const keyTemp = keysRef.current.filter((_, index: number) => index !== oldIndex)
-        keyTemp.splice(newIndex, 0, keysRef.current[oldIndex])
+        const keyTemp = keysRef.current.filter((_, index: number) => index !== preIndex)
+        keyTemp.splice(nextIndex, 0, keysRef.current[preIndex])
         keysRef.current = keyTemp
       } catch (e) {
         if (isDev) console.error(e)
@@ -160,7 +159,7 @@ export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturns<
 
   const push = useStableFn((item: T) => {
     setList((list) => {
-      setKey(list.length)
+      updateInternalKeyAt(list.length)
       return list.concat([item])
     })
   })
@@ -177,7 +176,7 @@ export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturns<
 
   const unshift = useStableFn((item: T) => {
     setList((list) => {
-      setKey(0)
+      updateInternalKeyAt(0)
       return [item].concat(list)
     })
   })
@@ -191,13 +190,14 @@ export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturns<
     setList((list) => list.slice(1, list.length))
   })
 
-  const sort = useStableFn((result: T[]) =>
-    result
-      .filter(Boolean)
-      .map((item, index) => ({ key: index, item }))
-      .sort((a, b) => getIndex(a.key) - getIndex(b.key))
-      .map((item) => item.item),
-  )
+  const sort = useStableFn((compare?: (pre: T, next: T) => number) => {
+    setList((list) => {
+      const temp = [...list]
+      const result = temp.sort(compare)
+      result.forEach((_, index) => updateInternalKeyAt(index))
+      return result
+    })
+  })
 
   const actions = useCreation(() => ({
     insert,
