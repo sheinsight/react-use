@@ -35,7 +35,7 @@ export function useSafeState<T>(initialState?: Gettable<T>, options?: UseSafeSta
   const { deep = false } = options ?? {}
   const isUnmounted = useUnmounted()
   const [state, setState] = useState<T | undefined>(initialState)
-  const latest = useLatest({ state, deep })
+  const latest = useLatest({ deep })
 
   const setSafeState: ReactSetState<T | undefined> = useStableFn((action) => {
     /**
@@ -43,13 +43,15 @@ export function useSafeState<T>(initialState?: Gettable<T>, options?: UseSafeSta
      */
     if (!isReact18OrLater && isUnmounted()) return
 
-    const { state, deep } = latest.current
+    const { deep } = latest.current
 
     if (!deep) {
       setState(action)
     } else {
-      const newState = isFunction(action) ? action(state) : action
-      !deepEqual(state, newState) && setState(newState)
+      setState((pre) => {
+        const newState = isFunction(action) ? action(pre) : action
+        return !deepEqual(pre, newState) ? newState : pre
+      })
     }
   })
 
