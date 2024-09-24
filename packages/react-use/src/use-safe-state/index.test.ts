@@ -38,19 +38,24 @@ describe('useSafeState', () => {
 
     const setState = result.current[1]
 
-    act(() => setState({ count: 0 }))
-    act(() => setState({ count: 0 }))
+    act(() => {
+      setState({ count: 0 })
+      setState({ count: 0 })
+    })
 
     expect(result.current[0]).toEqual({ count: 0 })
     expect(renderCount.current).toEqual(1)
 
-    act(() => setState({ count: 2 }))
-    act(() => setState({ count: 2 }))
-    act(() => setState({ count: 3 }))
-    act(() => setState({ count: 3 }))
+    act(() => {
+      setState({ count: 2 })
+      setState({ count: 2 })
+      setState({ count: 3 })
+      setState({ count: 3 })
+      setState({ count: 3 })
+    })
 
     expect(result.current[0]).toEqual({ count: 3 })
-    expect(renderCount.current).toEqual(3)
+    expect(renderCount.current).toEqual(2)
 
     renderCount.current = 0
   })

@@ -8,11 +8,10 @@ describe('useAsyncEffect', () => {
 
     renderHook(() => useAsyncEffect(effectCallback))
 
+    // Wait for the async effect to complete
     await act(async () => {
-      // Wait for the async effect to complete
+      expect(effectCallback).toHaveBeenCalled()
     })
-
-    expect(effectCallback).toHaveBeenCalled()
   })
 
   it('should call the async effect callback when mount with empty dependencies', async () => {
@@ -20,11 +19,10 @@ describe('useAsyncEffect', () => {
 
     renderHook(() => useAsyncEffect(effectCallback, []))
 
+    // Wait for the async effect to complete
     await act(async () => {
-      // Wait for the async effect to complete
+      expect(effectCallback).toHaveBeenCalled()
     })
-
-    expect(effectCallback).toHaveBeenCalled()
   })
 
   it('should call the async effect callback with dependencies', async () => {
@@ -33,11 +31,10 @@ describe('useAsyncEffect', () => {
 
     renderHook(() => useAsyncEffect(effectCallback, dependencies))
 
+    // Wait for the async effect to complete
     await act(async () => {
-      // Wait for the async effect to complete
+      expect(effectCallback).toHaveBeenCalled()
     })
-
-    expect(effectCallback).toHaveBeenCalled()
   })
 
   it('should call the async effect when dependencies change', async () => {
@@ -49,20 +46,18 @@ describe('useAsyncEffect', () => {
       initialProps: deps,
     })
 
+    // Wait for the async effect to complete
     await act(async () => {
-      // Wait for the async effect to complete
+      expect(effectCallback).toHaveBeenCalled()
     })
-
-    expect(effectCallback).toHaveBeenCalled()
 
     const newDeps = [4, 5, 6]
 
     rerender(newDeps)
 
+    // Wait for the async effect to complete
     await act(async () => {
-      // Wait for the async effect to complete
+      expect(effectCallback).toHaveBeenCalledTimes(2)
     })
-
-    expect(effectCallback).toHaveBeenCalledTimes(2)
   })
 })

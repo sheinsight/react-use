@@ -20,7 +20,9 @@ export function useClamp(input: Gettable<number>, min: Gettable<number>, max: Ge
     min: unwrapGettable(min),
   })
 
-  useUpdateEffect(() => void actions.set(inputValue), [inputValue])
+  useUpdateEffect(() => {
+    actions.set(inputValue)
+  }, [inputValue])
 
   return [result, actions] as const
 }
