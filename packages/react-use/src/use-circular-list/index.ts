@@ -78,7 +78,12 @@ export function useCircularList<T, R extends T = T>(
   const { initialValue = list[0], fallbackIndex = 0, getIndexOf } = options
 
   const latest = useLatest({ fallbackIndex, list, getIndexOf })
-  const [state, setState] = useSafeState<T>(initialValue)
+
+  const [state, setState] = useSafeState(() => {
+    const index = getIndexOf ? getIndexOf(initialValue, list) : list.indexOf(initialValue)
+    if (index < 0) return list[fallbackIndex]
+    return list[index]
+  })
 
   const getIndex = useStableFn(() => {
     const { list, getIndexOf, fallbackIndex } = latest.current
