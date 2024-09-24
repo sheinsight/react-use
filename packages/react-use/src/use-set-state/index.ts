@@ -25,7 +25,8 @@ export function useSetState<T extends PureObject>(
   const setState: UseSetStateSetMergedState<T> = useStableFn((patch) => {
     return _setState((prevState) => {
       const newState = isFunction(patch) ? patch(prevState) : patch
-      return newState ? Object.assign({}, prevState, newState) : prevState
+      const isChanged = Boolean(newState && Object.keys(newState).length)
+      return isChanged ? Object.assign({}, prevState, newState) : prevState
     })
   })
 
