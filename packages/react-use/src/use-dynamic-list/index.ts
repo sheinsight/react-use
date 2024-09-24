@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { useCreation } from '../use-creation'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
+import { isDev } from '../utils/basic'
 
 import type { ReactSetState } from '../use-safe-state'
 
@@ -132,7 +133,7 @@ export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturns<
       try {
         keysRef.current.splice(index, 1)
       } catch (e) {
-        console.error(e)
+        if (isDev) console.error(e)
       }
       return temp
     })
@@ -150,7 +151,7 @@ export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturns<
         keyTemp.splice(newIndex, 0, keysRef.current[oldIndex])
         keysRef.current = keyTemp
       } catch (e) {
-        console.error(e)
+        if (isDev) console.error(e)
       }
 
       return temp
@@ -168,7 +169,7 @@ export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturns<
     try {
       keysRef.current = keysRef.current.slice(0, keysRef.current.length - 1)
     } catch (e) {
-      console.error(e)
+      if (isDev) console.error(e)
     }
 
     setList((list) => list.slice(0, list.length - 1))
@@ -185,7 +186,7 @@ export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturns<
     try {
       keysRef.current = keysRef.current.slice(1, keysRef.current.length)
     } catch (e) {
-      console.error(e)
+      if (isDev) console.error(e)
     }
     setList((list) => list.slice(1, list.length))
   })

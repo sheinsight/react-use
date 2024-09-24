@@ -1,3 +1,5 @@
+import { isDev } from './basic'
+
 const hasMap = typeof Map === 'function'
 const hasSet = typeof Set === 'function'
 const hasHTMLElementType = typeof HTMLElement !== 'undefined'
@@ -12,7 +14,7 @@ export function reactFastCompare(objA: unknown, objB: unknown) {
     return equal(objA, objB)
   } catch (error: any) {
     if ((error.message || '').match(/stack|recursion/i)) {
-      console.warn('react-fast-compare cannot handle circular refs')
+      if (isDev) console.warn('react-fast-compare cannot handle circular refs')
       return false
     }
 
