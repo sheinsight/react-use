@@ -30,16 +30,15 @@ export function throttle<T extends AnyFunc>(fn: T, options: ThrottleOptions = {}
 
   const throttled = function (this: ThisParameterType<T>, ...args: Parameters<T>) {
     lastArgs = args
+    const now = Date.now()
+    const leadingCall = leading && !lastInvokeTime
+    const remaining = wait - (now - (lastInvokeTime || 0))
 
     const invoke = () => {
       if (lastArgs) fn.apply(this, lastArgs)
       lastArgs = null
       lastInvokeTime = Date.now()
     }
-
-    const now = Date.now()
-    const leadingCall = leading && !lastInvokeTime
-    const remaining = wait - (now - (lastInvokeTime || 0))
 
     if (remaining <= 0 || remaining > wait) {
       if (timeoutId) {
@@ -59,7 +58,7 @@ export function throttle<T extends AnyFunc>(fn: T, options: ThrottleOptions = {}
   }
 
   throttled.clear = () => {
-    timeoutId && clearTimeout(timeoutId)
+    if (timeoutId) clearTimeout(timeoutId)
     timeoutId = null
     lastArgs = null
     lastInvokeTime = null

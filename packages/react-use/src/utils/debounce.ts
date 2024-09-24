@@ -45,6 +45,7 @@ export function debounce<T extends AnyFunc>(fn: T, options: DebounceOptions = {}
 
     timeoutId = setTimeout(invoke, wait)
 
+    // Ensure invocation if both leading and trailing are false
     // if (!leading && !trailing) {
     //   fn.apply(this, args)
     //   leadingInvoked = false

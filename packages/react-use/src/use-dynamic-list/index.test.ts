@@ -1,122 +1,117 @@
 import { act, renderHook } from '@/test'
-import { describe, expect, test } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { useDynamicList } from './index'
 
 describe('useDynamicList', () => {
-  test('should merge items at the specified index', () => {
-    const { result } = renderHook(() => useDynamicList(['item1', 'item2', 'item3']))
+  let initialList: number[]
 
-    act(() => {
-      result.current[1].merge(1, ['newItem1', 'newItem2'])
-    })
-
-    expect(result.current[0]).toEqual(['item1', 'newItem1', 'newItem2', 'item2', 'item3'])
+  beforeEach(() => {
+    initialList = [1, 2, 3]
   })
 
-  test('should replace an item at the specified index', () => {
-    const { result } = renderHook(() => useDynamicList(['item1', 'item2', 'item3']))
-
-    act(() => {
-      result.current[1].replace(1, 'newItem')
-    })
-
-    expect(result.current[0]).toEqual(['item1', 'newItem', 'item3'])
+  it('should initialize with the provided list', () => {
+    const { result } = renderHook(() => useDynamicList(initialList))
+    expect(result.current[0]).toEqual(initialList)
   })
 
-  test('should remove an item at the specified index', () => {
-    const { result } = renderHook(() => useDynamicList(['item1', 'item2', 'item3']))
+  it('should insert an item at the specified index', () => {
+    const { result } = renderHook(() => useDynamicList(initialList))
+    act(() => {
+      result.current[1].insert(1, 4)
+    })
+    expect(result.current[0]).toEqual([1, 4, 2, 3])
+  })
 
+  it('should merge items at the specified index', () => {
+    const { result } = renderHook(() => useDynamicList(initialList))
+    act(() => {
+      result.current[1].merge(1, [4, 5])
+    })
+    expect(result.current[0]).toEqual([1, 4, 5, 2, 3])
+  })
+
+  it('should replace an item at the specified index', () => {
+    const { result } = renderHook(() => useDynamicList(initialList))
+    act(() => {
+      result.current[1].replace(1, 4)
+    })
+    expect(result.current[0]).toEqual([1, 4, 3])
+  })
+
+  it('should remove an item at the specified index', () => {
+    const { result } = renderHook(() => useDynamicList(initialList))
     act(() => {
       result.current[1].remove(1)
     })
-
-    expect(result.current[0]).toEqual(['item1', 'item3'])
+    expect(result.current[0]).toEqual([1, 3])
   })
 
-  test('should get the key of the item at the specified index', () => {
-    const { result } = renderHook(() => useDynamicList(['item1', 'item2', 'item3']))
-
-    const key = result.current[1].getKey(1)
-
-    expect(key).toBe(1)
+  it('should get the key of the item at the specified index', () => {
+    const { result } = renderHook(() => useDynamicList(initialList))
+    expect(result.current[1].getKey(1)).toBe(1)
   })
 
-  test('should get the index of the item with the specified key', () => {
-    const { result } = renderHook(() => useDynamicList(['item1', 'item2', 'item3']))
-
-    const index = result.current[1].getIndex(1)
-
-    expect(index).toBe(1)
-  })
-
-  test('should move an item from the old index to the new index', () => {
-    const { result } = renderHook(() => useDynamicList(['item1', 'item2', 'item3']))
-
+  it('should move an item from the old index to the new index', () => {
+    const { result } = renderHook(() => useDynamicList(initialList))
     act(() => {
       result.current[1].move(0, 2)
     })
-
-    expect(result.current[0]).toEqual(['item2', 'item3', 'item1'])
+    expect(result.current[0]).toEqual([2, 3, 1])
   })
 
-  test('should push an item to the end of the list', () => {
-    const { result } = renderHook(() => useDynamicList(['item1', 'item2', 'item3']))
-
+  it('should push an item to the end of the list', () => {
+    const { result } = renderHook(() => useDynamicList(initialList))
     act(() => {
-      result.current[1].push('newItem')
+      result.current[1].push(4)
     })
-
-    expect(result.current[0]).toEqual(['item1', 'item2', 'item3', 'newItem'])
+    expect(result.current[0]).toEqual([1, 2, 3, 4])
   })
 
-  test('should pop an item from the end of the list', () => {
-    const { result } = renderHook(() => useDynamicList(['item1', 'item2', 'item3']))
-
+  it('should pop an item from the end of the list', () => {
+    const { result } = renderHook(() => useDynamicList(initialList))
     act(() => {
       result.current[1].pop()
     })
-
-    expect(result.current[0]).toEqual(['item1', 'item2'])
+    expect(result.current[0]).toEqual([1, 2])
   })
 
-  test('should unshift an item to the start of the list', () => {
-    const { result } = renderHook(() => useDynamicList(['item1', 'item2', 'item3']))
-
+  it('should unshift an item to the start of the list', () => {
+    const { result } = renderHook(() => useDynamicList(initialList))
     act(() => {
-      result.current[1].unshift('newItem')
+      result.current[1].unshift(0)
     })
-
-    expect(result.current[0]).toEqual(['newItem', 'item1', 'item2', 'item3'])
+    expect(result.current[0]).toEqual([0, 1, 2, 3])
   })
 
-  test('should shift an item from the start of the list', () => {
-    const { result } = renderHook(() => useDynamicList(['item1', 'item2', 'item3']))
-
+  it('should shift an item from the start of the list', () => {
+    const { result } = renderHook(() => useDynamicList(initialList))
     act(() => {
       result.current[1].shift()
     })
-
-    expect(result.current[0]).toEqual(['item2', 'item3'])
+    expect(result.current[0]).toEqual([2, 3])
   })
 
-  test('should sort the list based on the specified result', () => {
-    const { result } = renderHook(() => useDynamicList(['item3', 'item1', 'item2']))
-
+  it('should sort the list', () => {
+    const { result } = renderHook(() => useDynamicList([2, 1, 5, 3, 7, 6, 4, 9]))
     act(() => {
-      const [_, actions] = result.current
-      actions.setList(actions.sort(['item1', 'item2', 'item3']))
+      result.current[1].sort()
     })
-
-    expect(result.current[0]).toEqual(['item1', 'item2', 'item3'])
+    expect(result.current[0]).toEqual([1, 2, 3, 4, 5, 6, 7, 9])
   })
 
-  test('should reset the list', () => {
-    const { result } = renderHook(() => useDynamicList(['item1', 'item2', 'item3']))
-
+  it('should sort the list with compare', () => {
+    const { result } = renderHook(() => useDynamicList([2, 1, 5, 8, 3, 7, 6, 4, 9]))
     act(() => {
-      result.current[1].reset(['newItem1', 'newItem2'])
+      result.current[1].sort((a, b) => b - a)
     })
+    expect(result.current[0]).toEqual([9, 8, 7, 6, 5, 4, 3, 2, 1])
+  })
 
-    expect(result.current[0]).toEqual(['newItem1', 'newItem2'])
+  it('should reset the list', () => {
+    const { result } = renderHook(() => useDynamicList(initialList))
+    act(() => {
+      result.current[1].reset([4, 5, 6])
+    })
+    expect(result.current[0]).toEqual([4, 5, 6])
   })
 })
