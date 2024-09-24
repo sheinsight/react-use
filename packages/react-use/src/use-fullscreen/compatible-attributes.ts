@@ -43,7 +43,9 @@ export const FullscreenElementAttrList = [
 export function getCompatibleAttr(el?: Element | null) {
   return {
     enter: EnterMethodList.find((m) => (document && m in document) || (el && m in el)),
-    exit: ExitMethodList.find((m) => (document && m in document) || (TextTrackCueList && m in TextTrackCueList)),
+    exit: ExitMethodList.find(
+      (m) => (document && m in document) || (typeof TextTrackCueList !== 'undefined' && m in TextTrackCueList),
+    ),
     fsEnabled: FullscreenEnabledAttrList.find((m) => (document && m in document) || (el && m in el)),
     fsElement: FullscreenElementAttrList.find((m) => document && m in document),
   }

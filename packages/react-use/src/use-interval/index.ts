@@ -21,6 +21,8 @@ export interface UseIntervalOptions<Controls extends boolean> {
   immediate?: boolean
   /**
    * Callback on every interval
+   *
+   * @param count - The current count
    */
   callback?: (count: number) => void
 }
