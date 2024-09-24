@@ -1,6 +1,6 @@
 import { act, renderHook } from '@/test'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { useBeforeUnload } from '../index'
+import { useBeforeUnload } from './index'
 
 describe('useBeforeUnload', () => {
   let addEventListenerSpy: any

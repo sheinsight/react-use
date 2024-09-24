@@ -1,51 +1,101 @@
 import { renderHook } from '@/test'
-import { describe, expect, test } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useCreation } from './index'
 
+import type { DependencyList } from 'react'
+
 describe('useCreation', () => {
-  test('useCreation should return the same value when dependencies do not change', () => {
-    const { result, rerender } = renderHook(() => useCreation(() => Math.random()))
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('should return the created value', () => {
+    const createFn = vi.fn(() => 'test value')
+    const { result } = renderHook(() => useCreation(createFn))
+
+    expect(result.current).toBe('test value')
+    expect(createFn).toHaveBeenCalledTimes(1)
+  })
+
+  it('should not recreate value if dependencies are not provided', () => {
+    const createFn = vi.fn(() => ({ random: Math.random() }))
+    const { result, rerender } = renderHook(() => useCreation(createFn))
 
     const initialValue = result.current
 
     rerender()
 
     expect(result.current).toBe(initialValue)
+    expect(createFn).toHaveBeenCalledTimes(1)
   })
 
-  test('useCreation should re-create the value when dependencies change', () => {
-    const { result, rerender } = renderHook(({ dep }) => useCreation(() => Math.random(), [dep]), {
+  it('should recreate value when dependencies change', () => {
+    const createFn = vi.fn((value: number) => ({ value }))
+    const { result, rerender } = renderHook(({ dep }) => useCreation(() => createFn(dep), [dep]), {
       initialProps: { dep: 1 },
     })
 
-    const initialValue = result.current
+    expect(result.current).toEqual({ value: 1 })
+    expect(createFn).toHaveBeenCalledTimes(1)
 
     rerender({ dep: 2 })
 
-    expect(result.current).not.toBe(initialValue)
+    expect(result.current).toEqual({ value: 2 })
+    expect(createFn).toHaveBeenCalledTimes(2)
   })
 
-  test('useCreation should memoize the value when dependencies do not change', () => {
-    const { result, rerender } = renderHook(({ dep }) => useCreation(() => ({ value: Math.random() }), [dep]), {
+  it('should not recreate value when dependencies are the same', () => {
+    const createFn = vi.fn((value: number) => ({ value }))
+    const { result, rerender } = renderHook(({ dep }) => useCreation(() => createFn(dep), [dep]), {
       initialProps: { dep: 1 },
     })
 
-    const initialValue = result.current
+    expect(result.current).toEqual({ value: 1 })
+    expect(createFn).toHaveBeenCalledTimes(1)
 
     rerender({ dep: 1 })
 
-    expect(result.current).toBe(initialValue)
+    expect(result.current).toEqual({ value: 1 })
+    expect(createFn).toHaveBeenCalledTimes(1)
   })
 
-  test('useCreation should memoize the value when dependencies do not deep compare change', () => {
-    const { result, rerender } = renderHook(({ dep }) => useCreation(() => ({ value: Math.random() }), [dep]), {
-      initialProps: { dep: { value: 1 } },
+  it('should handle complex dependencies', () => {
+    const createFn = vi.fn((obj: { a: number; b: string }) => ({ ...obj }))
+    const { result, rerender } = renderHook(({ dep }) => useCreation(() => createFn(dep), [dep]), {
+      initialProps: { dep: { a: 1, b: 'test' } },
     })
 
-    const initialValue = result.current
+    expect(result.current).toEqual({ a: 1, b: 'test' })
+    expect(createFn).toHaveBeenCalledTimes(1)
 
-    rerender({ dep: { value: 1 } })
+    rerender({ dep: { a: 1, b: 'test' } })
 
-    expect(result.current).toBe(initialValue)
+    expect(result.current).toEqual({ a: 1, b: 'test' })
+    expect(createFn).toHaveBeenCalledTimes(1)
+
+    rerender({ dep: { a: 2, b: 'test' } })
+
+    expect(result.current).toEqual({ a: 2, b: 'test' })
+    expect(createFn).toHaveBeenCalledTimes(2)
+  })
+
+  it('should handle undefined dependencies', () => {
+    const createFn = vi.fn(() => 'test value')
+    const { result, rerender } = renderHook(({ dep }) => useCreation(createFn, dep), {
+      initialProps: { dep: undefined as undefined | DependencyList },
+    })
+
+    expect(result.current).toBe('test value')
+    expect(createFn).toHaveBeenCalledTimes(1)
+
+    rerender({ dep: undefined })
+
+    expect(result.current).toBe('test value')
+    expect(createFn).toHaveBeenCalledTimes(1)
+
+    rerender({ dep: [1] })
+
+    expect(result.current).toBe('test value')
+    expect(createFn).toHaveBeenCalledTimes(2)
   })
 })

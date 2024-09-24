@@ -1,6 +1,6 @@
 import { act, renderHook } from '@/test'
 import { describe, expect, it, vi } from 'vitest'
-import { useClamp } from '../index'
+import { useClamp } from './index'
 
 describe('useClamp', () => {
   it('should initialize with the correct value', () => {

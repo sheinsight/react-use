@@ -1,6 +1,6 @@
 import { act, renderHook } from '@/test'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { useBluetooth } from '../index'
+import { useBluetooth } from './index'
 
 describe('useBluetooth', () => {
   let mockBluetooth: {

@@ -1,5 +1,5 @@
 import { act, renderHook } from '@/test'
-import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useCountdown } from './index'
 
 describe('useCountdown', () => {
@@ -7,47 +7,112 @@ describe('useCountdown', () => {
     vi.useFakeTimers()
   })
 
-  afterEach(() => {
-    vi.useRealTimers()
-  })
+  it('should count down correctly', () => {
+    const future = new Date(Date.now() + 10000) // 10 seconds in the future
+    const { result } = renderHook(() => useCountdown(future))
 
-  test('should start the countdown immediately by default', () => {
-    const { result } = renderHook(() => useCountdown(Date.now() + 1_000))
-    expect(result.current).toBeGreaterThan(0)
-  })
+    expect(result.current).toBeGreaterThan(9000)
+    expect(result.current).toBeLessThanOrEqual(10000)
 
-  test('should start the countdown immediately when immediate option is true', () => {
-    const { result } = renderHook(() => useCountdown(Date.now() + 1_000, { immediate: true }))
-    expect(result.current).toBeGreaterThan(0)
-  })
-
-  test('should not start the countdown immediately when immediate option is false', () => {
-    const { result } = renderHook(() => useCountdown(Date.now() + 1_000, { immediate: false }))
-    expect(result.current).toBe(1000)
-    act(() => vi.advanceTimersByTime(1000))
-    expect(result.current).toBe(1000)
-  })
-
-  test('should update the countdown when the date changes', () => {
-    const { result } = renderHook(({ date }) => useCountdown(date), {
-      initialProps: { date: Date.now() + 1_000 },
+    act(() => {
+      vi.advanceTimersByTime(5000)
     })
-    const initialCountdown = result.current
-    act(() => vi.advanceTimersByTime(100))
-    expect(result.current).toBeLessThan(initialCountdown)
+
+    expect(result.current).toBeGreaterThan(4000)
+    expect(result.current).toBeLessThanOrEqual(6000)
   })
 
-  test('should call onUpdate callback when the countdown is updated', () => {
+  it('should stop at zero', () => {
+    const past = new Date(Date.now() - 1000) // 1 second in the past
+    const { result } = renderHook(() => useCountdown(past))
+
+    expect(result.current).toBe(0)
+  })
+
+  it('should update when date changes', () => {
+    const initialDate = new Date(Date.now() + 5000)
+    const { result, rerender } = renderHook(({ date }) => useCountdown(date), {
+      initialProps: { date: initialDate },
+    })
+
+    expect(result.current).toBeGreaterThan(4000)
+    expect(result.current).toBeLessThanOrEqual(5000)
+
+    const newDate = new Date(Date.now() + 10000)
+    rerender({ date: newDate })
+
+    expect(result.current).toBeGreaterThan(9000)
+    expect(result.current).toBeLessThanOrEqual(10000)
+  })
+
+  it('should respect immediate option', () => {
+    const future = new Date(Date.now() + 10000)
+    const { result } = renderHook(() => useCountdown(future, { immediate: false }))
+
+    expect(result.current).toBe(10000)
+
+    act(() => {
+      vi.advanceTimersByTime(1000)
+    })
+
+    expect(result.current).toBe(10000)
+  })
+
+  it('should expose controls when requested', () => {
+    const future = new Date(Date.now() + 10000)
+    const { result } = renderHook(() => useCountdown(future, { controls: true }))
+
+    expect(result.current).toHaveProperty('ms')
+    expect(result.current).toHaveProperty('isStop')
+    expect(result.current).toHaveProperty('pause')
+    expect(result.current).toHaveProperty('resume')
+  })
+
+  it('should call onUpdate callback', () => {
+    const future = new Date(Date.now() + 10000)
     const onUpdate = vi.fn()
-    renderHook(() => useCountdown(Date.now() + 1_000, { onUpdate }))
-    act(() => vi.advanceTimersByTime(1000))
+    renderHook(() => useCountdown(future, { onUpdate }))
+
+    act(() => {
+      vi.advanceTimersByTime(1000)
+    })
+
+    expect(onUpdate).toHaveBeenCalled()
     expect(onUpdate).toHaveBeenCalledWith(expect.any(Number), expect.any(Number))
   })
 
-  test('should call onStop callback when the countdown is stopped', () => {
+  it('should call onStop callback when countdown reaches zero', () => {
+    const future = new Date(Date.now() + 1000)
     const onStop = vi.fn()
-    renderHook(() => useCountdown(Date.now() + 1_000, { onStop, controls: true }))
-    act(() => vi.advanceTimersByTime(2000))
+    renderHook(() => useCountdown(future, { onStop }))
+
+    act(() => {
+      vi.advanceTimersByTime(1200)
+    })
+
     expect(onStop).toHaveBeenCalled()
+  })
+
+  it('should work with custom interval', () => {
+    const future = new Date(Date.now() + 10000)
+    const { result } = renderHook(() => useCountdown(future, { interval: 2000 }))
+
+    expect(result.current).toBeGreaterThan(9000)
+    expect(result.current).toBeLessThanOrEqual(10000)
+
+    act(() => {
+      vi.advanceTimersByTime(2000)
+    })
+
+    expect(result.current).toBeGreaterThan(7000)
+    expect(result.current).toBeLessThanOrEqual(8000)
+  })
+
+  it('should handle date as a function', () => {
+    const getDate = () => new Date(Date.now() + 5000)
+    const { result } = renderHook(() => useCountdown(getDate))
+
+    expect(result.current).toBeGreaterThan(4000)
+    expect(result.current).toBeLessThanOrEqual(5000)
   })
 })
