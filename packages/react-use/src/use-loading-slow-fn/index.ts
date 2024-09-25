@@ -1,11 +1,11 @@
 import { useRef } from 'react'
 import { useAsyncFn } from '../use-async-fn'
+import { useCreation } from '../use-creation'
 import { useLatest } from '../use-latest'
 import { useTrackedRefState } from '../use-tracked-ref-state'
 import { useVersionedAction } from '../use-versioned-action'
 
 import type { UseAsyncFnOptions, UseAsyncFnReturns } from '../use-async-fn'
-import { useCreation } from '../use-creation'
 import type { AnyFunc } from '../utils/basic'
 
 export interface UseLoadingSlowFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
@@ -43,7 +43,7 @@ export function useLoadingSlowFn<T extends AnyFunc, D = Awaited<ReturnType<T>>, 
 ): UseLoadingSlowFnReturns<T, D, E> {
   const { loadingTimeout = 0, onLoadingSlow, ...useAsyncFnOptions } = options
 
-  const latest = useLatest({ fn, loadingTimeout })
+  const latest = useLatest({ fn, onLoadingSlow, loadingTimeout })
   const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>()
 
   const [refState, actions] = useTrackedRefState({ loadingSlow: false })
@@ -60,7 +60,7 @@ export function useLoadingSlowFn<T extends AnyFunc, D = Awaited<ReturnType<T>>, 
           runVersionedAction(version, () => {
             timerRef.current = undefined
             actions.updateRefState('loadingSlow', true)
-            onLoadingSlow?.()
+            latest.current.onLoadingSlow?.()
           })
         }, latest.current.loadingTimeout)
       }
