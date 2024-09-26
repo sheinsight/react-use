@@ -63,7 +63,7 @@ const ws = useWebSocket('wss://echo.websocket.org', {
 // ws.close()
 // ws.open()
 
-// ws.ws() // => 一个 Ref Getter，调用函数拿到 WebSocket 实例
+// ws.ws // => WebSocket 实例
 ```
 
 ## 源码 \{#source}
@@ -120,20 +120,23 @@ export interface UseWebSocketOptionsHeartbeat {
   responseMessage?: true | UseWebSocketSendable | ((data: UseWebSocketSendable) => boolean)
 }
 
-export interface UseWebSocketOptionsReconnect
-  extends Omit<UseRetryFnOptions, 'onError' | 'onErrorRetry' | 'onRetryFailed'> {
+export interface UseWebSocketOptionsReconnect {
   /**
-   * 重连时的回调函数。
-   *
-   * @defaultValue undefined
+   * 重连的次数，可以为重试次数或者返回 boolean 的函数，函数返回 true 时继续重连，返回 false 时停止重连。
+   * 
+   * @defaultValue () => true
    */
-  onReconnect?: UseRetryFnOptions['onErrorRetry']
+  count: number | (() => boolean)
   /**
-   * 重连失败时的回调函数。
-   *
-   * @defaultValue undefined
+   * 重连的间隔时间。
+   * 
+   * @defaultValue 1_000
    */
-  onReconnectFailed?: UseRetryFnOptions['onRetryFailed']
+  interval: number
+  /**
+   * 当重连失败时的回调函数。
+   */
+  onFailed?: (event: CloseEvent, ws: WebSocket) => void
 }
 
 export interface UseWebSocketOptions {
@@ -168,11 +171,9 @@ export interface UseWebSocketOptions {
    */
   heartbeat?: boolean | UseWebSocketOptionsHeartbeat
   /**
-   * 重连配置，在断开连接或者超时时进行自动重连，设置为 true 时使用默认配置。
-   * 
-   * 默认配置： `{ count: 3, interval: 1_000 }`
+   * 是否在连接断开时自动重连，count 可以为重试次数或者函数，函数返回 true 时继续重连，返回 false 时停止重连。
    *
-   * @defaultValue true
+   * @defaultValue true => { count: () => true, interval: 1_000 }
    */
   reconnect?: boolean | UseWebSocketOptionsReconnect
   /**
@@ -207,9 +208,9 @@ export interface UseWebSocketOptions {
 ```tsx
 export interface UseWebSocketReturns<HasURL extends boolean> {
   /**
-   * 一个 Ref Getter，调用函数拿到 WebSocket 实例。
+   * 创建的 WebSocket 实例.
    */
-  ws: UseGetterRefReturnsGetter<WebSocket | null>
+  ws: WebSocket | null
   /**
    * 发送消息到服务器。
    */

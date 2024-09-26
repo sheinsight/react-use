@@ -3,17 +3,13 @@ import { useGetterRef } from '../use-getter-ref'
 import { useIntervalFn } from '../use-interval-fn'
 import { useLatest } from '../use-latest'
 import { useMount } from '../use-mount'
-import { useRetryFn } from '../use-retry-fn'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
 import { useTimeoutFn } from '../use-timeout-fn'
 import { useUnmount } from '../use-unmount'
 import { useUpdateEffect } from '../use-update-effect'
 import { useVersionedAction } from '../use-versioned-action'
-import { isDev, isObject, isString, noop } from '../utils/basic'
-
-import type { UseGetterRefReturnsGetter } from '../use-getter-ref'
-import type { UseRetryFnOptions } from '../use-retry-fn'
+import { isDev, isFunction, isString, noop } from '../utils/basic'
 
 export type UseWebSocketSendable = string | ArrayBufferLike | Blob | ArrayBufferView
 
@@ -44,20 +40,19 @@ export interface UseWebSocketOptionsHeartbeat {
   responseMessage?: true | UseWebSocketSendable | ((data: UseWebSocketSendable) => boolean)
 }
 
-export interface UseWebSocketOptionsReconnect
-  extends Omit<UseRetryFnOptions, 'onError' | 'onErrorRetry' | 'onRetryFailed'> {
+export interface UseWebSocketOptionsReconnect {
   /**
-   * The callback function that is called when the WebSocket connection is reconnected.
-   *
-   * @defaultValue undefined
+   * The number of times to reconnect, default is `() => true`, reconnect indefinitely.
    */
-  onReconnect?: UseRetryFnOptions['onErrorRetry']
+  count: number | (() => boolean)
   /**
-   * The callback function that is called when the WebSocket connection fails to reconnect.
-   *
-   * @defaultValue undefined
+   * The interval at which to reconnect.
    */
-  onReconnectFailed?: UseRetryFnOptions['onRetryFailed']
+  interval: number
+  /**
+   * A callback function that is called when the WebSocket connection is closed and the reconnection limit is reached.
+   */
+  onFailed?: (event: CloseEvent, ws: WebSocket) => void
 }
 
 export interface UseWebSocketOptions {
@@ -92,9 +87,9 @@ export interface UseWebSocketOptions {
    */
   heartbeat?: boolean | UseWebSocketOptionsHeartbeat
   /**
-   * Whether to reconnect when the connection is closed.
+   * Whether to reconnect when the connection is closed. Count can be a number or a function that returns a boolean.
    *
-   * @defaultValue true
+   * @defaultValue true => { count: () => true, interval: 1_000 }
    */
   reconnect?: boolean | UseWebSocketOptionsReconnect
   /**
@@ -127,9 +122,9 @@ export interface UseWebSocketOptions {
 
 export interface UseWebSocketReturns<HasURL extends boolean> {
   /**
-   * A Ref Getter for the WebSocket instance.
+   * The WebSocket instance.
    */
-  ws: UseGetterRefReturnsGetter<WebSocket | null>
+  ws: WebSocket | null
   /**
    * A function to send data to the server.
    */
@@ -159,7 +154,7 @@ export type UseWebSocketReturnsReadyState =
 const defaultHeartbeatMessage = 'ping'
 const defaultResponseTimeout = 1_000
 const defaultHeartbeatInterval = 1_000
-const defaultReconnectOptions = { count: 3, interval: 1_000 }
+const defaultReconnectOptions = { count: () => true, interval: 1_000 }
 
 /**
  * A simplified React Hook for using WebSockets, wrapping the native WebSocket API. It supports features such as automatic reconnection and heartbeat.
@@ -177,16 +172,16 @@ export function useWebSocket(
   const { immediate = !!_url, closeOnUnmount = true } = _options
 
   const [wsRef, ws] = useGetterRef<WebSocket | null>(null)
-  const isClosedIntentionally = useRef<boolean>(false)
+  const retriesRef = useRef(0)
   const messageQueue = useRef<UseWebSocketSendable[]>([])
+  const isClosedIntentionally = useRef<boolean>(false)
   const [incVersion, runVersionedAction] = useVersionedAction()
-
   const [readyState, setReadyState] = useSafeState<UseWebSocketReturnsReadyState>(WebSocket.CLOSED)
 
   const latest = useLatest({
     wsUrl: _url,
     heartbeat: _options.heartbeat,
-    reconnect: _options.reconnect ?? true,
+    reconnect: resolveReconnectOptions(_options.reconnect ?? true),
     onOpen: _options.onOpen ?? noop,
     onClose: _options.onClose ?? noop,
     onError: _options.onError ?? noop,
@@ -195,72 +190,87 @@ export function useWebSocket(
     filter: _options.filter ?? (() => false),
   })
 
-  function open(
-    wsUrl: string | undefined = latest.current.wsUrl,
-    protocols: string | string[] | undefined = latest.current.protocols,
-  ) {
-    const url = latest.current.wsUrl || wsUrl
+  const initWebSocket = useStableFn(
+    (
+      wsUrl: string | undefined = latest.current.wsUrl,
+      protocols: string | string[] | undefined = latest.current.protocols,
+    ) => {
+      const url = latest.current.wsUrl || wsUrl
 
-    if (!url) {
-      if (isDev) console.error('The WebSocket URL is required.')
-      return
-    }
+      if (!url) {
+        if (isDev) console.error('The WebSocket URL is required.')
+        return
+      }
 
-    close()
-    const version = incVersion()
-    setReadyState(WebSocket.CONNECTING)
-    isClosedIntentionally.current = false
-    wsRef.current = new WebSocket(url, protocols)
+      const version = incVersion()
+      setReadyState(WebSocket.CONNECTING)
+      wsRef.current = new WebSocket(url, protocols)
 
-    wsRef.current.onopen = (event) => {
-      runVersionedAction(version, () => {
-        setReadyState(WebSocket.OPEN)
-        latest.current.onOpen(event, ws() as WebSocket)
-      })
-    }
+      wsRef.current.onopen = (event) => {
+        runVersionedAction(version, () => {
+          retriesRef.current = 0
+          setReadyState(WebSocket.OPEN)
+          latest.current.onOpen(event, ws() as WebSocket)
+        })
+      }
 
-    wsRef.current.onclose = (event) => {
-      runVersionedAction(version, () => {
-        setReadyState(WebSocket.CLOSED)
-        latest.current.onClose(event, ws() as WebSocket)
-        const shouldReopen = !isClosedIntentionally.current && latest.current.reconnect
-        shouldReopen && openWithRetry()
-      })
-    }
+      wsRef.current.onclose = (event) => {
+        runVersionedAction(version, () => {
+          setReadyState(WebSocket.CLOSED)
+          latest.current.onClose(event, ws() as WebSocket)
 
-    wsRef.current.onerror = (event) => {
-      runVersionedAction(version, () => {
-        setReadyState(WebSocket.CLOSED)
-        latest.current?.onError?.(event, ws() as WebSocket)
-      })
-    }
+          const reconnect = latest.current.reconnect
+          if (!reconnect || isClosedIntentionally.current) return
 
-    wsRef.current.onmessage = (event) => {
-      runVersionedAction(version, () => {
-        const { heartbeat } = latest.current
+          const {
+            count = defaultReconnectOptions.count,
+            interval = defaultReconnectOptions.interval,
+            onFailed,
+          } = reconnect
 
-        if (heartbeat) {
-          const checkHeartbeatResponse = resolveCheckHeartbeatResponse(heartbeat)
-          checkHeartbeatResponse(event.data) && responseTimeout.pause()
-        }
+          if (isFunction(count) ? count() : retriesRef.current < count) {
+            retriesRef.current++
+            setTimeout(() => initWebSocket(wsUrl, protocols), interval)
+          } else if (onFailed) {
+            onFailed(event, wsRef.current as WebSocket)
+          }
+        })
+      }
 
-        if (latest.current.filter(event, ws() as WebSocket)) return
+      wsRef.current.onerror = (event) => {
+        runVersionedAction(version, () => {
+          setReadyState(WebSocket.CLOSED)
+          latest.current?.onError?.(event, ws() as WebSocket)
+        })
+      }
 
-        latest.current.onMessage(event, ws() as WebSocket)
-      })
-    }
-  }
+      wsRef.current.onmessage = (event) => {
+        runVersionedAction(version, () => {
+          const { heartbeat } = latest.current
 
-  const openWithRetry = useRetryFn(open, {
-    ...resolveReconnectOptions(latest.current.reconnect),
-    onRetryFailed(...args) {
-      setReadyState(WebSocket.CLOSED)
+          if (heartbeat) {
+            const checkHeartbeatResponse = resolveCheckHeartbeatResponse(heartbeat)
+            checkHeartbeatResponse(event.data) && responseTimeout.pause()
+          }
 
-      if (isObject(latest.current.reconnect)) {
-        latest.current.reconnect?.onReconnectFailed?.(...args)
+          if (latest.current.filter(event, ws() as WebSocket)) return
+
+          latest.current.onMessage(event, ws() as WebSocket)
+        })
       }
     },
-  })
+  )
+
+  const open = useStableFn(
+    (
+      wsUrl: string | undefined = latest.current.wsUrl,
+      protocols: string | string[] | undefined = latest.current.protocols,
+    ) => {
+      retriesRef.current = 0
+      close()
+      initWebSocket(wsUrl, protocols)
+    },
+  )
 
   const responseTimeout = useTimeoutFn(
     () => {
@@ -314,13 +324,13 @@ export function useWebSocket(
     conditionClose(code, reason, true)
   })
 
-  useMount(immediate && openWithRetry)
+  useMount(immediate && open)
 
   useUnmount(closeOnUnmount && close)
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: handle url change
   useUpdateEffect(() => {
-    openWithRetry()
+    open()
   }, [_url])
 
   useUpdateEffect(() => {
@@ -333,7 +343,9 @@ export function useWebSocket(
   }, [readyState])
 
   return {
-    ws,
+    get ws() {
+      return wsRef.current
+    },
     readyState,
     send,
     close,
@@ -355,8 +367,16 @@ function resolveCheckHeartbeatResponse(heartbeat: Exclude<UseWebSocketOptions['h
         : (heartbeat.responseMessage ?? (() => true))
 }
 
-function resolveReconnectOptions(reconnect?: UseWebSocketOptions['reconnect']) {
-  return reconnect ? (reconnect === true ? defaultReconnectOptions : reconnect) : defaultReconnectOptions
+function resolveReconnectOptions(
+  reconnect?: UseWebSocketOptions['reconnect'],
+): Exclude<UseWebSocketOptions['reconnect'], true> {
+  return reconnect
+    ? reconnect === true
+      ? defaultReconnectOptions
+      : typeof reconnect === 'object'
+        ? { ...defaultReconnectOptions, ...reconnect }
+        : (false as const)
+    : (false as const)
 }
 
 function resolveTimeout(heartbeat?: UseWebSocketOptions['heartbeat']) {

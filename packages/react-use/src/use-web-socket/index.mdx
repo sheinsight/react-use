@@ -10,14 +10,14 @@ import { HooksType, Since } from '@/components'
 
 <Since version="v1.7.0" />
 
-A React Hook that simplifies the use of WebSockets, wrapping the native [WebSocket API](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) to support features like automatic reconnection, heartbeat, and message queuing.
+A simplified React Hook for using WebSockets, wrapping the native [WebSocket API](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API), supporting features like automatic reconnection, heartbeat messages, and message queues.
 
 ## Scenes \{#scenes}
 
-- **Persistent Connection Scenarios**: For scenarios that require maintaining a long-term connection with the server, such as instant messaging.
-- **Real-time Data Updates**: For pushing updates on stocks, trading, and other real-time data.
-- **Real-Time Interactions in Game Development**: Synchronizing player statuses and game progress in multiplayer online games.
-- **Heartbeat Checks and Automatic Reconnection**: Ensuring stable connections, automatically dealing with disconnections and reconnections.
+- **Persistent connection scenarios**: For scenarios that require keeping a long-time connection with the server, such as instant messaging
+- **Real-time data updates**: To implement real-time data push updates for stocks, trades, etc.
+- **Real-time interaction in game development**: Syncing player status and game progress in multiplayer online games
+- **Heartbeat detection and automatic reconnection**: Ensuring stable connection, automatically handling disconnections and reconnections
 
 ## Demo \{#demo}
 
@@ -31,32 +31,31 @@ import { App } from './demo'
 const ws = useWebSocket(wsUrl, options)
 
 const ws = useWebSocket('wss://echo.websocket.org', {
-  // By default, it is false. When configured as true, it uses the default heartbeat configuration.
-  // It can also be configured as { interval: 5_000, message: 'ping', responseMessage: 'pong', responseTimeout: 1_000 }
-  heartbeat: true, 
+  // Default is false, when configured to true, use default heartbeat configuration
+  // Can also be configured as { interval: 5_000, message: 'ping', responseMessage: 'pong', responseTimeout: 1_000 }
+  heartbeat: true,
 
-  // By default, it is true. It automatically reconnects when disconnected. When configured as false, it does not reconnect.
-  // It can also be configured as { count: 3, interval: 1_000 } (default configuration)
+  // Default is true, automatically reconnects when disconnected, configure as false to not reconnect
+  // Can also be configured as { count: 3, interval: 1_000 } (default configuration)
   reconnect: true,
 
-  // Filter out the heartbeat messages from the server response
+  // Filters out heartbeat messages responded by the server
   // filter: (event) => event.data === 'ping',
 
   // Lifecycle callbacks
   onOpen() {
-    console.log('WebSocket connection is open')
+    console.log('WebSocket connection opened')
   },
   onMessage(message) {
-    console.log('Message received', message)
+    console.log('Received message', message)
   },
   onError(error) {
-    console.error('An error occurred with the WebSocket connection', error)
+    console.error('WebSocket connection error', error)
   },
   onClose(event) {
-    console.log('WebSocket connection has closed', event)
+    console.log('WebSocket connection closed', event)
   },
 })
-
 
 // ws.readyState // => 0 (CONNECTING), 1 (OPEN), 2 (CLOSING), 3 (CLOSED)
 
@@ -64,7 +63,7 @@ const ws = useWebSocket('wss://echo.websocket.org', {
 // ws.close()
 // ws.open()
 
-// ws.ws() // => A Ref Getter, invokes the function to get a WebSocket instance
+// ws.ws // => WebSocket instance
 ```
 
 ## Source \{#source}
@@ -94,106 +93,107 @@ export type UseWebSocketSendable = string | ArrayBufferLike | Blob | ArrayBuffer
 
 export interface UseWebSocketOptionsHeartbeat {
   /**
-   * The heartbeat message sent.
+   * The heartbeat message to send.
    *
    * @defaultValue 'ping'
    */
   message?: UseWebSocketSendable
   /**
-   * Interval for sending heartbeat messages.
+   * The interval at which to send a heartbeat message.
    *
    * @defaultValue 1_000
    */
   interval?: number
   /**
-   * Server response timeout.
+   * The timeout for the server to respond to the heartbeat message.
    *
    * @defaultValue 1_000
    */
   responseTimeout?: number
   /**
-   * Recognized as a server response to a heartbeat, default is true, meaning any message returned is considered a heartbeat response (regarded as the server being alive).
+   * The message considered as the server's response to the heartbeat, default to true, meaning any message returned is considered a heartbeat response (considered the server is alive)
    * 
-   * Can pass in a message string or a function, when the function returns true, it is considered a heartbeat response. It should be used in conjunction with responseTimeout. When timed out, it is considered that the server has disconnected.
+   * Can pass a message string, or a function that returns true if the message is considered a heartbeat response, to be used with responseTimeout, when timeout occurs, it is considered that the server is disconnected.
    *
    * @defaultValue true
    */
   responseMessage?: true | UseWebSocketSendable | ((data: UseWebSocketSendable) => boolean)
 }
 
-export interface UseWebSocketOptionsReconnect
-  extends Omit<UseRetryFnOptions, 'onError' | 'onErrorRetry' | 'onRetryFailed'> {
+export interface UseWebSocketOptionsReconnect {
   /**
-   * Callback function during reconnection.
-   *
-   * @defaultValue undefined
+   * The number of reconnection attempts, can be the number of retry attempts or a function returning a boolean, the function continues reconnecting when returning true, and stops when returning false.
+   * 
+   * @defaultValue () => true
    */
-  onReconnect?: UseRetryFnOptions['onErrorRetry']
+  count: number | (() => boolean)
   /**
-   * Callback function when reconnection fails.
-   *
-   * @defaultValue undefined
+   * The interval between reconnection attempts.
+   * 
+   * @defaultValue 1_000
    */
-  onReconnectFailed?: UseRetryFnOptions['onRetryFailed']
+  interval: number
+  /**
+   * A callback function when reconnection fails.
+   */
+  onFailed?: (event: CloseEvent, ws: WebSocket) => void
 }
 
 export interface UseWebSocketOptions {
   /**
-   * Callback function when WebSocket's open event is triggered.
+   * A callback function when WebSocket's open event is triggered.
    *
    * @defaultValue undefined
    */
   onOpen?: (event: Event, ws: WebSocket) => void
   /**
-   * Callback function when WebSocket's close event is triggered.
+   * A callback function when WebSocket's close event is triggered.
    *
    * @defaultValue undefined
    */
   onClose?: (event: CloseEvent, ws: WebSocket) => void
   /**
-   * Callback function when WebSocket's error event is triggered.
+   * A callback function when WebSocket's error event is triggered.
    *
    * @defaultValue undefined
    */
   onError?: (event: Event, ws: WebSocket) => void
   /**
-   * Callback function when WebSocket's message event is triggered.
+   * A callback function when WebSocket's message event is triggered.
    *
    * @defaultValue undefined
    */
   onMessage?: (event: MessageEvent, ws: WebSocket) => void
   /**
-   * Configuration for heartbeats, set to true to use the default configuration, as per UseWebSocketOptionsHeartbeat's default configuration.
+   * Heartbeat configuration, set to true to use default configuration, refer to UseWebSocketOptionsHeartbeat's default settings.
    *
    * @defaultValue false
    */
   heartbeat?: boolean | UseWebSocketOptionsHeartbeat
   /**
-   * Configuration for reconnections, automatically attempts to reconnect upon disconnection or timeout. Set to true to use the default configuration.
-   * 
-   * Default configuration: `{ count: 3, interval: 1_000 }`
+   * Whether to automatically reconnect when the connection is dropped, count can be the number of retries or a function, the function continues reconnecting when returning true, and stops when returning false.
    *
-   * @defaultValue true
+   * @defaultValue true => { count: () => true, interval: 1_000 }
    */
   reconnect?: boolean | UseWebSocketOptionsReconnect
   /**
-   * Whether to immediately open the WebSocket connection. If a WS URL is provided, the default is true; otherwise, false.
+   * Whether to immediately open the WebSocket connection, defaults to true when a WS URL is provided, otherwise false.
    */
   immediate?: boolean
   /**
-   * Whether to close the WebSocket connection when the component unmounts.
+   * Whether to close the WebSocket connection when the component is unmounted.
    *
    * @defaultValue true
    */
   closeOnUnmount?: boolean
   /**
-   * Extra subprotocols for WebSocket.
+   * Additional WebSocket subprotocols.
    *
    * @defaultValue []
    */
   protocols?: string | string[]
   /**
-   * Filters the message to the `onMessage` callback, returns `true` to ignore the message.
+   * Filters messages to the `onMessage` callback, return `true` to ignore the message.
    *
    * Useful for filtering out heartbeat messages.
    *
@@ -208,23 +208,23 @@ export interface UseWebSocketOptions {
 ```tsx
 export interface UseWebSocketReturns<HasURL extends boolean> {
   /**
-   * A Ref Getter, invoke the function to get a WebSocket instance.
+   * The created WebSocket instance.
    */
-  ws: UseGetterRefReturnsGetter<WebSocket | null>
+  ws: WebSocket | null
   /**
-   * Sends a message to the server.
+   * Send messages to the server.
    */
   send: (data: UseWebSocketSendable) => void
   /**
-   * The current state of the WebSocket.
+   * The current state of the WebSocket connection.
    */
   readyState: UseWebSocketReturnsReadyState
   /**
-   * Closes the WebSocket connection.
+   * Close the WebSocket connection.
    */
   close: () => void
   /**
-   * Opens the WebSocket connection. If an old connection exists, it will close it first.
+   * Open the WebSocket connection, closes the old connection if it exists.
    */
   open: HasURL extends true ? () => void : (wsUrl?: string, protocols?: string | string[]) => void
 }

@@ -47,11 +47,16 @@ export function PassedUrl() {
       <KeyValue label="WS URL" value={wsUrl} />
       <KeyValue label="Status" value={formatReadyState(ws.readyState)} />
       <Zone>
-        <Button disabled={!isConnected} onClick={send}>
-          Send
-        </Button>
+        <Button onClick={send}>Send</Button>
         <Button onClick={() => ws.close()}>Close</Button>
-        <Button onClick={() => ws.open()}>Open</Button>
+        <Button
+          onClick={() => {
+            setMessageList([])
+            ws.open()
+          }}
+        >
+          Open
+        </Button>
       </Zone>
       <Zone row={false} border="amber" className="min-h-42px">
         {messageList.map((msg) => (
@@ -96,9 +101,7 @@ export function DynamicUrl() {
       <KeyValue label="Status" value={formatReadyState(ws.readyState)} />
       <Zone>
         <Button onClick={() => ws.open(wsUrl.value)}>Open</Button>
-        <Button disabled={!isConnected} onClick={send}>
-          Send
-        </Button>
+        <Button onClick={send}>Send</Button>
         <Button onClick={() => ws.close()}>Close</Button>
       </Zone>
       <Zone row={false} border="amber" className="min-h-42px">
