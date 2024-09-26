@@ -34,8 +34,8 @@ describe('useDateFormat', () => {
   })
 
   it('should format timestamp', () => {
-    const { result } = renderHook(() => useDateFormat(1672531200000, 'YYYY/M/D HH:mm:ss'))
-    const expectedDate = new Date(1672531200000).toLocaleString().slice(0, 17).replace('T', ' ')
+    const { result } = renderHook(() => useDateFormat(1672531200000, 'M/D/YYYY, H:mm:ss'))
+    const expectedDate = new Date(1672531200000).toLocaleString('en-US').slice(0, 17)
     expect(result.current).toBe(expectedDate)
   })
 
