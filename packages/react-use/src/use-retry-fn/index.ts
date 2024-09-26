@@ -64,7 +64,10 @@ export function defaultRetryInterval(currentCount: number) {
  *
  * @since 1.4.0
  */
-export function useRetryFn<T extends AnyFunc, E = any>(fn: T, options: UseRetryFnOptions<E> = {}): T {
+export function useRetryFn<T extends AnyFunc, E = any>(
+  fn: T,
+  options: UseRetryFnOptions<E> = {},
+): T & { cancel: () => void } {
   const { count = 3, interval = defaultRetryInterval, onError, onErrorRetry, onRetryFailed } = options
 
   const [incVersion, runVersionedAction] = useVersionedAction()
@@ -115,7 +118,7 @@ export function useRetryFn<T extends AnyFunc, E = any>(fn: T, options: UseRetryF
       },
   )
 
-  const fnWithRetry = useStableFn(((...args: Parameters<T>) => {
+  const fnWithRetry = (...args: Parameters<T>) => {
     const retryState = {
       currentCount: 0,
       retryCount: latest.current.count,
@@ -123,7 +126,11 @@ export function useRetryFn<T extends AnyFunc, E = any>(fn: T, options: UseRetryF
     }
 
     return runFnWithRetry(retryState, ...args)
-  }) as T)
+  }
 
-  return fnWithRetry
+  const stableFnWithRetry = useStableFn(fnWithRetry as T & { cancel: () => void })
+
+  stableFnWithRetry.cancel = useStableFn(() => void incVersion())
+
+  return stableFnWithRetry
 }
