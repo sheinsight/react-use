@@ -1,3 +1,31 @@
+# [1.8.0](https://github.com/sheinsight/react-use/compare/v1.7.0...v1.8.0) (2024-09-26)
+
+
+### Bug Fixes
+
+* **useCircularList:** fix initial invalid state not fallback to fallback value ([73d6147](https://github.com/sheinsight/react-use/commit/73d614768d334621412392e9b5a313b330359a05))
+* **useClonedState:** fix custom cloneFn not working ([12f4d19](https://github.com/sheinsight/react-use/commit/12f4d1915f93dbeb522eee60208f69e3fc7f52c9))
+* **useCounter:** fix initial count not limited by max & min options ([882562e](https://github.com/sheinsight/react-use/commit/882562e2d60c1f6acb56a02d01c24a4c91847720))
+* **useDateFormat:** fix params type definition ([5b940b2](https://github.com/sheinsight/react-use/commit/5b940b28e1c9a71eb55bdf7aaa74a96be81b0ebd))
+* **useDynamicList:** fix `sort` not working as expected ([d8c548e](https://github.com/sheinsight/react-use/commit/d8c548e91ed5283e8158f560145ad78a8e6591f1))
+* **useInfiniteScroll:** fix dependencies collection not working ([02a0aca](https://github.com/sheinsight/react-use/commit/02a0acaf4123c80e786e58ad5770464da492f6e5))
+* **useSafeState:** fix casual incorrect update after multiple update when using `deep` option in some cases. ([c561168](https://github.com/sheinsight/react-use/commit/c561168166304994da6768180802fbdf8118da8d))
+* **useWebSocket:** fix reconnect (or close retry) ([15ffdfb](https://github.com/sheinsight/react-use/commit/15ffdfbbef8640144de1c76fb30d7eedf5a482e7))
+
+
+### Features
+
+* **useRetryFn:** support `retry.cancel` method to cancel retry ([f50c472](https://github.com/sheinsight/react-use/commit/f50c472550613540e318d876a940ec485ddb5c6c))
+* **useTimeAgo:** support more language messages, by passing internal `messages` to props ([9e0a1e9](https://github.com/sheinsight/react-use/commit/9e0a1e92b0de0ea4daa20043fb1e0c704f5ba4e5))
+* **useUserIdle:** support dependencies collection ([b1db445](https://github.com/sheinsight/react-use/commit/b1db445a03b47b8c4c3582e3dced7a6cead3816f))
+
+
+### Performance Improvements
+
+* **useSetState:** not update state when no key is provided ([007680a](https://github.com/sheinsight/react-use/commit/007680a83f92a15cb9f42fdd5171c7dcb1032e04))
+
+
+
 # [1.7.0](https://github.com/sheinsight/react-use/compare/v1.6.0...v1.7.0) (2024-09-11)
 
 
