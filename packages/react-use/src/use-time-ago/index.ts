@@ -1,3 +1,4 @@
+import { useCreation } from '../use-creation'
 import { useNow } from '../use-now'
 export { formatTimeAgo } from './format-time-ago'
 import { normalizeDate } from '../use-date-format'
@@ -45,10 +46,14 @@ export function useTimeAgo<UnitNames extends string = TimeAgoUnitNamesDefault>(
   time: Gettable<DateLike>,
   options: UseTimeAgoOptions<boolean, UnitNames> = {},
 ) {
-  const { controls: exposeControls = false, updateInterval = 30_000 } = options
-
+  const { controls: exposeControls = false, updateInterval = 30_000, ...restOptions } = options
+  const timeValue = unwrapGettable(time)
   const { now, ...controls } = useNow({ interval: updateInterval, controls: true })
-  const timeAgo = formatTimeAgo(new Date(normalizeDate(unwrapGettable(time))), options, now)
+
+  const timeAgo = useCreation(
+    () => formatTimeAgo(new Date(normalizeDate(timeValue)), restOptions, now),
+    [timeValue, now, restOptions.max, restOptions.showSecond, restOptions.units, restOptions.rounding],
+  )
 
   return exposeControls ? { timeAgo, ...controls } : timeAgo
 }
