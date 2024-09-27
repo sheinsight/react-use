@@ -20,6 +20,14 @@ export function App() {
         {/* biome-ignore format: for demo */}
         <Button disabled={!history.canRedo} onClick={history.redo}>Redo</Button>
         <Button onClick={history.clear}>Clear</Button>
+        <Button
+          onClick={() => {
+            history.commit()
+            history.undo()
+          }}
+        >
+          Test
+        </Button>
       </Zone>
       <Zone border="primary">
         <pre className="mb-0 w-full">{JSON.stringify(history.last, null, 0)}</pre>
