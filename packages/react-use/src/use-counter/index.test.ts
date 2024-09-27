@@ -165,4 +165,23 @@ describe('useCounter', () => {
     })
     expect(result.current[0]).toBe(Number.MIN_SAFE_INTEGER)
   })
+
+  it('should handle multiple manipulations', () => {
+    const { result } = renderHook(() => useCounter(0))
+    act(() => {
+      result.current[1].inc(5)
+      result.current[1].dec(2)
+    })
+    expect(result.current[0]).toBe(3)
+    act(() => {
+      result.current[1].set(10)
+      result.current[1].reset(20)
+    })
+    expect(result.current[0]).toBe(20)
+    act(() => {
+      result.current[1].reset()
+      result.current[1].inc(10)
+    })
+    expect(result.current[0]).toBe(30)
+  })
 })
