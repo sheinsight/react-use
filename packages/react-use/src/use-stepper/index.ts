@@ -102,13 +102,17 @@ export function useStepper<T>(steps: T[], initialIdx?: number): UseStepperReturn
   })
 
   const goToNext = useStableFn(() => {
-    const { isLast } = latest.current
-    !isLast && actions.inc()
+    actions.setState((pre) => {
+      const isLast = pre === steps.length - 1
+      return isLast ? pre : pre + 1
+    })
   })
 
   const goToPrevious = useStableFn(() => {
-    const { isFirst } = latest.current
-    !isFirst && actions.dec()
+    actions.setState((pre) => {
+      const isFirst = pre === 0
+      return isFirst ? pre : pre - 1
+    })
   })
 
   const goBackTo = useStableFn((step: T) => isAfter(step) && goTo(step))
