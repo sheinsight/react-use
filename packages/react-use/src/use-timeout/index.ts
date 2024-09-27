@@ -56,7 +56,10 @@ export function useTimeout<C extends AnyFunc>(interval = 1000, options: UseTimeo
     { immediate: !exposeControls, ...options },
   )
 
-  const reset = useStableFn(() => setIsTimeout(false))
+  const reset = useStableFn(() => {
+    setIsTimeout(false)
+    controls.pause()
+  })
 
   return exposeControls ? { isTimeout, reset, ...controls } : isTimeout
 }
