@@ -152,20 +152,19 @@ export function useManualStateHistory<Raw, Serialized = Raw>(
     redoStack: [] as UseRefHistoryRecord<Serialized>[],
   })
 
-  const latestState = useLatest({ ...state })
-
   const commit = useStableFn(() => {
-    const { last, undoStack } = latestState.current
-    const { capacity } = latest.current
+    _setState((pre) => {
+      const capacity = latest.current.capacity - 1 // history = [last, ...undoStack]
 
-    const addedUndoStack = [last, ...undoStack]
-    const isCapReached = capacity && addedUndoStack.length >= capacity
-    const newUndoStack = isCapReached ? addedUndoStack.slice(0, capacity) : addedUndoStack
+      const addedUndoStack = [pre.last, ...pre.undoStack]
+      const isCapReached = capacity && addedUndoStack.length >= capacity
+      const newUndoStack = isCapReached ? addedUndoStack.slice(0, capacity) : addedUndoStack
 
-    _setState({
-      redoStack: [],
-      undoStack: newUndoStack,
-      last: createHistoryRecord(),
+      return {
+        redoStack: [],
+        undoStack: newUndoStack,
+        last: createHistoryRecord(),
+      }
     })
   })
 
@@ -180,27 +179,29 @@ export function useManualStateHistory<Raw, Serialized = Raw>(
   const clear = useStableFn(() => _setState({ undoStack: [], redoStack: [] }))
 
   const undo = useStableFn(() => {
-    const { undoStack } = latestState.current
-    if (!undoStack.length) return
-    const state = undoStack[0]
+    _setState((pre) => {
+      const state = pre.undoStack[0]
+      if (!state) return pre
 
-    _setState((pre) =>
-      state
-        ? { undoStack: pre.undoStack.slice(1), redoStack: [pre.last, ...pre.redoStack], last: state }
-        : { undoStack: pre.undoStack.slice(1) },
-    )
+      return {
+        undoStack: pre.undoStack.slice(1),
+        redoStack: [pre.last, ...pre.redoStack],
+        last: state,
+      }
+    })
   })
 
   const redo = useStableFn(() => {
-    const { redoStack } = latestState.current
-    if (!redoStack.length) return
-    const state = redoStack[0]
+    _setState((pre) => {
+      const state = pre.redoStack[0]
+      if (!state) return pre
 
-    _setState((pre) =>
-      state
-        ? { redoStack: pre.redoStack.slice(1), undoStack: [pre.last, ...pre.undoStack], last: state }
-        : { redoStack: pre.redoStack.slice(1) },
-    )
+      return {
+        redoStack: pre.redoStack.slice(1),
+        undoStack: [pre.last, ...pre.undoStack],
+        last: state,
+      }
+    })
   })
 
   const history = [state.last, ...state.undoStack]
