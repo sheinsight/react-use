@@ -103,6 +103,12 @@ export interface UseCounterReturnsAction {
    * 重置计数器
    */
   reset: (n?: number) => void
+  /**
+   * 设置计数器，使用 React 的 `setState` 风格，支持函数更新器避免过期值
+   * 
+   * @since 1.9.0
+   */
+  setState: (state: SetStateAction<number>) => void
 }
 
 export interface UseCounterState {

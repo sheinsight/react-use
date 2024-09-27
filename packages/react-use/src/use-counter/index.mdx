@@ -103,6 +103,12 @@ export interface UseCounterReturnsAction {
    * Reset the counter
    */
   reset: (n?: number) => void
+  /**
+   * Set the counter, use React's `setState` style, supports function updater to avoid expired value
+   * 
+   * @since 1.9.0
+   */
+  setState: (state: SetStateAction<number>) => void
 }
 
 export interface UseCounterState {

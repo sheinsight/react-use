@@ -3,7 +3,9 @@ import { useLatest } from '../use-latest'
 import { useSetState } from '../use-set-state'
 import { useStableFn } from '../use-stable-fn'
 import { useUpdateEffect } from '../use-update-effect'
-import { clamp } from '../utils/basic'
+import { clamp, isFunction } from '../utils/basic'
+
+import type { SetStateAction } from 'react'
 
 export type UseCounterOptions = {
   /**
@@ -37,6 +39,12 @@ export interface UseCounterReturnsAction {
    * Reset the counter
    */
   reset: (n?: number) => void
+  /**
+   * Set the counter, use React's `setState` style, supports function updater to avoid expired value
+   *
+   * @since 1.9.0
+   */
+  setState: (state: SetStateAction<number>) => void
 }
 
 export interface UseCounterState {
@@ -82,7 +90,7 @@ export type UseCounterReturns = readonly [
 export function useCounter(initialCount: number = 0, options: UseCounterOptions = {}): UseCounterReturns {
   const { min = Number.MIN_SAFE_INTEGER, max = Number.MAX_SAFE_INTEGER } = options
 
-  const [state, setState] = useSetState<UseCounterState>(
+  const [state, _setState] = useSetState<UseCounterState>(
     {
       initialCount: initialCount,
       count: clamp(initialCount, min, max),
@@ -95,36 +103,42 @@ export function useCounter(initialCount: number = 0, options: UseCounterOptions 
   const latest = useLatest(state)
 
   useUpdateEffect(() => {
-    setState({ initialCount })
+    _setState({ initialCount })
   }, [initialCount])
 
   useUpdateEffect(() => {
     const [max, min] = [options.max ?? Number.MAX_SAFE_INTEGER, options.min ?? Number.MIN_SAFE_INTEGER]
-    setState((pre) => ({ count: clamp(pre.count, min, max), max, min }))
+    _setState((pre) => ({ count: clamp(pre.count, min, max), max, min }))
   }, [options.max, options.min])
 
   const inc = useStableFn((delta = 1) => {
-    setState((pre) => ({ count: clamp(pre.count + delta, pre.min, pre.max) }))
+    _setState((pre) => ({ count: clamp(pre.count + delta, pre.min, pre.max) }))
   })
 
   const dec = useStableFn((delta = 1) => {
-    setState((pre) => ({ count: clamp(pre.count - delta, pre.min, pre.max) }))
+    _setState((pre) => ({ count: clamp(pre.count - delta, pre.min, pre.max) }))
   })
 
   const set = useStableFn((value: number) => {
-    setState((pre) => ({ count: clamp(value, pre.min, pre.max) }))
+    _setState((pre) => ({ count: clamp(value, pre.min, pre.max) }))
   })
 
   const get = useStableFn(() => latest.current.count)
 
   const reset = useStableFn((n = latest.current.initialCount) => {
-    setState({
+    _setState((pre) => ({
       initialCount: n,
       count: clamp(n, latest.current.min, latest.current.max),
-    })
+    }))
   })
 
-  const actions = useCreation(() => ({ inc, dec, set, get, reset }))
+  const setState = useStableFn((state: SetStateAction<number>) => {
+    _setState((pre) => ({
+      count: isFunction(state) ? state(pre.count) : state,
+    }))
+  })
+
+  const actions = useCreation(() => ({ inc, dec, set, get, reset, setState }))
 
   return [state.count, actions, state] as const
 }
