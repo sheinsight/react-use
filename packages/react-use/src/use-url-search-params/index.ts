@@ -8,7 +8,8 @@ import { isDefined, noNullish } from '../utils/basic'
 import type { UseSetStateSetMergedState } from '../use-set-state'
 import type { Arrayable, Noop, PureObject } from '../utils/basic'
 
-export type UrlParams = Record<string, Arrayable<string | number | boolean | undefined>>
+export type UrlParamType = string | number | boolean | null | undefined
+export type UrlParams = Record<string, Arrayable<UrlParamType>>
 export type UseUrlSearchParamsMode = 'history' | 'hash' | 'hash-params'
 
 export interface UseUrlSearchParamsOptions<T> {
@@ -29,7 +30,7 @@ export interface UseUrlSearchParamsOptions<T> {
    *
    * @defaultValue {}
    */
-  initialValue?: T & Record<string, Arrayable<string | number | boolean | undefined>>
+  initialValue?: T & Record<string, Arrayable<UrlParamType>>
   /**
    * Write back to `window.history` automatically
    *
@@ -38,8 +39,11 @@ export interface UseUrlSearchParamsOptions<T> {
   write?: boolean
 }
 
-export type UseUrlSearchParamsReturns<T extends Record<string, Arrayable<string | number | boolean | undefined>>> =
-  readonly [T, UseSetStateSetMergedState<T>, Noop]
+export type UseUrlSearchParamsReturns<T extends Record<string, Arrayable<UrlParamType>>> = readonly [
+  T,
+  UseSetStateSetMergedState<T>,
+  Noop,
+]
 
 /**
  * A React Hook that helps to manage the URL search params.
@@ -48,11 +52,12 @@ export type UseUrlSearchParamsReturns<T extends Record<string, Arrayable<string 
  *
  * - **history**: like `/path/to/page?a=1&b=2`
  * - **hash**: like `/path/to/page#heading?a=1&b=2` (with `?` in hash)
- * - **hash-params**: like `/path/to/page#/a=1&b=2` (without `?` in hash)
+ * - **hash-params**: like `/path/to/page#a=1&b=2` (without `?` in hash)
  */
-export function useUrlSearchParams<
-  T extends Record<string, Arrayable<string | number | boolean | undefined>> = UrlParams,
->(mode: UseUrlSearchParamsMode = 'history', options: UseUrlSearchParamsOptions<T> = {}): UseUrlSearchParamsReturns<T> {
+export function useUrlSearchParams<T extends Record<string, Arrayable<UrlParamType>> = UrlParams>(
+  mode: UseUrlSearchParamsMode = 'history',
+  options: UseUrlSearchParamsOptions<T> = {},
+): UseUrlSearchParamsReturns<T> {
   const {
     initialValue = {} as T,
     removeNullishValues: rmNullish = true,
