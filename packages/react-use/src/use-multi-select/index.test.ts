@@ -23,8 +23,9 @@ describe('useMultiSelect', () => {
     const { result } = renderHook(() => useMultiSelect(items, defaultSelected))
     act(() => {
       result.current[1].select('item1')
+      result.current[1].select('item2')
     })
-    expect(result.current[0].selected).toEqual(['item1'])
+    expect(result.current[0].selected).toEqual(['item1', 'item2'])
     expect(result.current[0].isNoneSelected).toBe(false)
     expect(result.current[0].isAllSelected).toBe(false)
     expect(result.current[0].isPartiallySelected).toBe(true)
@@ -77,6 +78,30 @@ describe('useMultiSelect', () => {
     expect(result.current[0].selected).toEqual(items)
     act(() => {
       result.current[1].toggleAll()
+    })
+    expect(result.current[0].selected).toEqual([])
+  })
+
+  it('should handle multiple operations', () => {
+    const { result } = renderHook(() => useMultiSelect(items, defaultSelected))
+    act(() => {
+      result.current[1].select('item1')
+      result.current[1].select('item2')
+    })
+    expect(result.current[0].selected).toEqual(['item1', 'item2'])
+    act(() => {
+      result.current[1].unselect('item1')
+      result.current[1].select('item3')
+    })
+    expect(result.current[0].selected).toEqual(['item2', 'item3'])
+    act(() => {
+      result.current[1].select('item1')
+      result.current[1].select('item2')
+      result.current[1].select('item3')
+    })
+    expect(result.current[0].selected).toEqual(['item2', 'item3', 'item1'])
+    act(() => {
+      result.current[1].unselectAll()
     })
     expect(result.current[0].selected).toEqual([])
   })
