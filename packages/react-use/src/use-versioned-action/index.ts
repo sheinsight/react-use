@@ -7,19 +7,22 @@ export type UseVersionedActionReturns = readonly [
   /**
    * Increase the version
    */
-  incVersion: () => number,
+  incVersion: () => object,
   /**
    * Run the action with the specified version
    */
-  runVersionedAction: <T extends AnyFunc>(version: number, handler: T) => ReturnType<T> | undefined,
+  runVersionedAction: <T extends AnyFunc>(version: object, handler: T) => ReturnType<T> | undefined,
 ]
 
 export function useVersionedAction(): UseVersionedActionReturns {
-  const versionRef = useRef(0)
+  const versionRef = useRef({})
 
-  const incVersion = useStableFn(() => ++versionRef.current)
+  const incVersion = useStableFn(() => {
+    versionRef.current = {}
+    return versionRef.current
+  })
 
-  const runVersionedAction = useStableFn(<T extends AnyFunc>(version: number, handler: T) => {
+  const runVersionedAction = useStableFn(<T extends AnyFunc>(version: object, handler: T) => {
     if (version !== versionRef.current) return
     return handler() as ReturnType<T>
   })
