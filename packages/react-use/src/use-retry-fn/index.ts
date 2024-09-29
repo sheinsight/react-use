@@ -51,7 +51,7 @@ export interface UseRetryFnRetryState {
   /**
    * Internal unique version to track the latest retry state in multiple concurrent calls conditions.
    */
-  version: number
+  version: object
 }
 
 export function defaultRetryInterval(currentCount: number) {

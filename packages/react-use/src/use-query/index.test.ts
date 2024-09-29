@@ -99,7 +99,7 @@ describe('useQuery', () => {
   })
 
   it('should respect cache expiration', async () => {
-    fetcher.mockResolvedValueOnce('data')
+    fetcher.mockResolvedValue('data')
     options.cacheKey = 'test'
     options.cacheExpirationTime = 100 // 100 ms
     const { result } = renderHook(() => useQuery(fetcher, options))

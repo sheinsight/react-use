@@ -83,10 +83,12 @@ export function useUserMedia(options: UseUserMediaOptions = {}): UseUserMediaRet
   const getDeviceOptions = useStableFn((type: 'video' | 'audio') => {
     const { constraints } = latest.current
     switch (true) {
-      case !!(type === 'video' && constraints):
+      case Boolean(type === 'video' && constraints):
         return constraints.video || false
-      case !!(type === 'audio' && constraints):
+      case Boolean(type === 'audio' && constraints):
         return constraints.audio || false
+      default:
+        return true
     }
   })
 

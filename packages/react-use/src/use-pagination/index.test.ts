@@ -1,5 +1,4 @@
 import { act, renderHook } from '@/test'
-// packages/react-use/src/use-pagination/index.test.ts
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { type UsePaginationOptions, usePagination } from './index'
 

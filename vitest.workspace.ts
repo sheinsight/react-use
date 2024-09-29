@@ -6,6 +6,7 @@ export default defineWorkspace([
   {
     test: {
       environment: 'jsdom',
+      environmentOptions: { jsdom: { pretendToBeVisual: true } },
       include: ['./packages/react-use/**/*.{,ssr.}test.{ts,tsx}'],
       setupFiles: ['./vitest.setup.ts'],
       alias: {

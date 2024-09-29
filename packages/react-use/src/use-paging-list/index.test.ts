@@ -1,5 +1,4 @@
 import { act, renderHook } from '@/test'
-// packages/react-use/src/use-paging-list/index.test.ts
 import { type Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { usePagingList } from './index'
 
