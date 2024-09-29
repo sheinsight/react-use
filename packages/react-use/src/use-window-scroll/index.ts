@@ -102,7 +102,7 @@ function getPositionState() {
   return {
     x: window.scrollX,
     y: window.scrollY,
-    maxX: document.documentElement.scrollWidth - window.innerWidth,
-    maxY: document.documentElement.scrollHeight - window.innerHeight,
+    maxX: Math.max(document.documentElement.scrollWidth - window.innerWidth, 0),
+    maxY: Math.max(document.documentElement.scrollHeight - window.innerHeight, 0),
   }
 }
