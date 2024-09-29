@@ -6,7 +6,7 @@ import { useUpdateEffect } from '../use-update-effect'
 import type { ReactSetState } from '../use-safe-state'
 import type { ElementTarget } from '../use-target-element'
 
-export type UseTextDirectionValue = 'ltr' | 'rtl' | 'auto'
+export type UseTextDirectionValue = 'ltr' | 'rtl' | 'auto' | ''
 
 export interface UseTextDirectionOptions {
   /**
@@ -41,7 +41,7 @@ export function useTextDirection(options: UseTextDirectionOptions = {}): UseText
   const { target = 'html', initialValue = 'ltr' } = options
 
   const el = useTargetElement(target)
-  const [dir, setDir] = useSafeState(initialValue)
+  const [dir, setDir] = useSafeState<UseTextDirectionValue>(initialValue)
 
   useMount(() => setDir(getDirAttribute(el.current, initialValue)))
 
