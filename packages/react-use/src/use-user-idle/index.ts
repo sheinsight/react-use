@@ -52,7 +52,7 @@ export interface UseUserIdleReturns extends Pausable<[reset?: boolean], [reset?:
    *
    * @param restart - Whether to restart the idle timer,`true` by default.
    */
-  reset: (restart?: boolean) => void
+  reset: (restart?: boolean, updateTimestamp?: boolean) => void
 }
 
 const defaultEvents: WindowEventName[] = ['mousemove', 'mousedown', 'resize', 'keydown', 'touchstart', 'wheel']
