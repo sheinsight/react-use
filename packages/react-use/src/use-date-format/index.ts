@@ -21,7 +21,7 @@ export interface UseDateFormatOptions extends FormatDateOptions {
  *
  * By default, the formatting behavior aligns with that of `dayjs`, `momentjs`, and `date-fns@^1`.
  *
- * You can set `unicodeSymbols` option to `true` to use [Unicde Standard Date Symbols](https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table), which is similar to `date-fns@^2` and subsequent versions.
+ * You can set `unicodeSymbols` option to `true` to use [Unicode Standard Date Symbols](https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table), which is similar to `date-fns@^2` and subsequent versions.
  */
 export function useDateFormat(
   /**
