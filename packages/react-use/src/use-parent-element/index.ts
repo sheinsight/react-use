@@ -16,8 +16,7 @@ export function useParentElement<T extends HTMLElement = HTMLElement>(
   const [parent, setParent] = useSafeState<HTMLElement | null>(null)
 
   useEffect(() => {
-    if (!el.current) return
-    setParent(getParentElement(el.current))
+    setParent(el.current ? getParentElement(el.current) : null)
   }, [el.current])
 
   return parent
