@@ -250,12 +250,12 @@ console.log(isActive())
 
 ### 错误重试 \{#error-retry}
 
-设置 `errorRetryCount` 和 `errorRetryInterval` 为大于 0 的数字，将在请求失败时自动重试，由 [useRetryFn](/reference/use-retry-fn) 提供支持。
+设置 `errorRetryCount` 为大于 0 的数字，将在请求失败时自动重试，由 [useRetryFn](/reference/use-retry-fn) 提供支持。
 
 ```ts
 const { loading, data, error } = useQuery(fetchData, {
   errorRetryCount: 3, // 错误重试次数，默认 0，关闭
-  errorRetryInterval: 1_000, // 错误重试间隔，默认 0，立即重试
+  errorRetryInterval: 1_000, // 错误重试间隔，默认使用 `useRetryFn` 的 `defaultRetryInterval`，退避算法
   onErrorRetry: (error) => console.log(error), // 错误重试时的回调
   onErrorRetryFailed: (error) => console.log(error), // 错误重试失败时的回调
 })

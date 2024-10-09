@@ -252,12 +252,12 @@ console.log(isActive())
 
 ### Error Retry \{#error-retry}
 
-Setting `errorRetryCount` and `errorRetryInterval` to numbers greater than 0 will automatically retry the request in case of failure, supported by [useRetryFn](/reference/use-retry-fn).
+Setting `errorRetryCount` to numbers greater than 0 will automatically retry the request in case of failure, supported by [useRetryFn](/reference/use-retry-fn).
 
 ```ts
 const { loading, data, error } = useQuery(fetchData, {
   errorRetryCount: 3, // Number of retries in case of error, default 0, off
-  errorRetryInterval: 1_000, // Interval between retries, default 0, immediate retry
+  errorRetryInterval: 1_000, // Error retry interval, default use 'useRetryFn' 'defaultRetryInterval', retreat algorithm
   onErrorRetry: (error) => console.log(error), // Callback during error retry
   onErrorRetryFailed: (error) => console.log(error), // Callback when error retry fails
 })

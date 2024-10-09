@@ -144,7 +144,7 @@ export interface UseQueryOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>, 
   /**
    * Error retry interval
    *
-   * @defaultValue 0
+   * @defaultValue `defaultRetryInterval` in `useRetryFn`
    */
   errorRetryInterval?: UseRetryFnOptions<E>['interval']
   /**
@@ -206,7 +206,7 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
         return promise
       }) as T,
       {
-        count: options.errorRetryCount,
+        count: options.errorRetryCount ?? 0,
         interval: options.errorRetryInterval,
         onErrorRetry: options.onErrorRetry,
         onRetryFailed: options.onErrorRetryFailed,
