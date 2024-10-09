@@ -1,3 +1,30 @@
+# [1.9.0](https://github.com/sheinsight/react-use/compare/v1.8.0...v1.9.0) (2024-10-09)
+
+
+### Bug Fixes
+
+* **useManualStateHistory:** fix expired state action ([17b44c6](https://github.com/sheinsight/react-use/commit/17b44c63371be16e4ed9c9907018fc11119e88b3))
+* **useQuery:** fix `useQuery` `errorRetryCount` default value, set to 0 ([8521206](https://github.com/sheinsight/react-use/commit/85212068ac15d106c13a1973b591403b00a28d7d))
+* **useStepper:** fix expired action ([3abf4d7](https://github.com/sheinsight/react-use/commit/3abf4d70fbd65d9cd967293e0b842011b35cd5b2))
+* **useThrottledEffect:** fix influence of first render on throttle, first automatic call should not call throttled callback ([2182b37](https://github.com/sheinsight/react-use/commit/2182b37e43d57c403f34c8ae37f7174a997d750a))
+* **useTimeout:** fix `reset` not pause the timer ([d99734c](https://github.com/sheinsight/react-use/commit/d99734ce8cb17a0edd854ce4498eb012d3ab6fc5))
+* **useUserIdle:** fix TS type definition error ([1af1476](https://github.com/sheinsight/react-use/commit/1af1476de81feb5193dd5b59cedb35570b3dd076))
+* **useVersionedAction:** use object instead of counter to prevent overflow ([9229b4b](https://github.com/sheinsight/react-use/commit/9229b4b4c45dd3f9881da78e9e5d9f896d84cde2))
+* **useWindowScroll:** fix maxY & maxX may be negative number ([399d32f](https://github.com/sheinsight/react-use/commit/399d32f486562cd1fb074f8121a1634a6b8c7d3d))
+
+
+### Features
+
+* **useCounter:** support native `setState` to avoid expired state ([5851637](https://github.com/sheinsight/react-use/commit/5851637cd542847a7ed9760dce81855cdf9c6743))
+* **useTextDirection:** support empty string to clear attr ([a6e341a](https://github.com/sheinsight/react-use/commit/a6e341aadc7da3e491b53f873209ee559af527ae))
+
+
+### Performance Improvements
+
+* **useTimeAgo:** use `useCreation` to improve performance, avoid unnecessary re-renders ([ee9bc75](https://github.com/sheinsight/react-use/commit/ee9bc75c64eeaedeeb0db279356aef6db68a7b1c))
+
+
+
 # [1.8.0](https://github.com/sheinsight/react-use/compare/v1.7.0...v1.8.0) (2024-09-26)
 
 
