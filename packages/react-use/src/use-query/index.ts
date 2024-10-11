@@ -209,10 +209,12 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
         count: options.errorRetryCount ?? 0,
         interval: options.errorRetryInterval,
         onErrorRetry: options.onErrorRetry,
-        onRetryFailed: options.onErrorRetryFailed,
+        onRetryFailed(...args) {
+          latest.current.onErrorRetryFailed?.(...args)
+          throw args[0]
+        },
         onError(...args) {
           cacheActions.clearPromiseCache()
-          return latest.current.onError?.(...args)
         },
       },
     ),
@@ -222,29 +224,30 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
       initialValue: options.initialData ?? cache.data,
       clearBeforeRun: options.clearBeforeRun,
       loadingTimeout: options.loadingTimeout,
-      onLoadingSlow: options.onLoadingSlow,
-      onRefresh: options.onRefresh,
-      onCancel(...args) {
-        cacheActions.clearPromiseCache()
-        return latest.current.onCancel?.(...args)
-      },
-      onFinally(...args) {
-        cacheActions.clearPromiseCache()
-        return latest.current.onFinally?.(...args)
-      },
-      onSuccess(nextData, params, ...rest) {
-        cacheActions.setCache(nextData, params)
-        return latest.current.onSuccess?.(nextData, params, ...rest)
-      },
       onBefore(...args) {
         if (latest.current.clearBeforeRun) cacheActions.setCache(undefined, [])
         intervalPausable.resume()
         return latest.current.onBefore?.(...args)
       },
+      onLoadingSlow: options.onLoadingSlow,
+      onCancel(...args) {
+        cacheActions.clearPromiseCache()
+        return latest.current.onCancel?.(...args)
+      },
+      onSuccess(nextData, params, ...rest) {
+        cacheActions.setCache(nextData, params)
+        return latest.current.onSuccess?.(nextData, params, ...rest)
+      },
+      onError: options.onError,
+      onFinally(...args) {
+        cacheActions.clearPromiseCache()
+        return latest.current.onFinally?.(...args)
+      },
       onMutate(nextData, params, ...rest) {
         cacheActions.setCache(nextData, params)
         return latest.current.onMutate?.(nextData, params, ...rest)
       },
+      onRefresh: options.onRefresh,
     },
   )
 
