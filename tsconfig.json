@@ -6,6 +6,7 @@
   "references": [
     { "path": "./docs/tsconfig.json" },
     { "path": "./packages/react-use/tsconfig.json" },
-    { "path": "./packages/react-use/tsconfig.test.json" }
+    { "path": "./packages/react-use/tsconfig.test.json" },
+    { "path": "./packages/react-use/tsconfig.cy.json" }
   ]
 }

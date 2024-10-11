@@ -1,6 +1,5 @@
 {
   "name": "shined-react-use-monorepo",
-  "type": "module",
   "private": true,
   "version": "1.9.0",
   "packageManager": "pnpm@9.9.0",
@@ -14,6 +13,8 @@
     "release": "bumpp -r",
     "postrelease": "pnpm changelog && git add CHANGELOG.md && git commit -m 'chore: update changelog' && git push",
     "test": "vitest",
+    "cy:open": "cypress open --config-file cypress.config.mjs",
+    "cy:run": "cypress run --config-file cypress.config.mjs",
     "test:ci": "pnpm build && pnpm lint && vitest",
     "docs:dev": "pnpm build && pnpm -C docs dev",
     "docs:build": "pnpm install && pnpm build && pnpm -C docs build",
@@ -35,8 +36,10 @@
     "@types/node": "^20.16.5",
     "@types/react": "^18.3.8",
     "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.2",
     "bumpp": "^9.5.2",
     "conventional-changelog-cli": "^5.0.0",
+    "cypress": "^13.15.0",
     "esno": "^4.7.0",
     "husky": "^9.1.6",
     "is-ci": "^3.0.1",
@@ -46,6 +49,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "typescript": "^5.6.2",
+    "vite": "^5.4.7",
     "vitest": "^2.1.1"
   }
 }

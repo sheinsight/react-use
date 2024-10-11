@@ -5,6 +5,13 @@
     "module": "Preserve"
   },
   "include": ["./src/**/*"],
-  "exclude": ["./src/**/demo.tsx", "./src/**/*.mdx", "./src/**/*.test.ts", "./src/**/*.test.tsx"],
+  "exclude": [
+    "./src/**/demo.tsx",
+    "./src/**/*.mdx",
+    "./src/**/*.test.ts",
+    "./src/**/*.test.tsx",
+    "./src/**/*.cy.tsx",
+    "./src/**/*.cy.tsx"
+  ],
   "references": [{ "path": "../../docs/tsconfig.json" }]
 }
