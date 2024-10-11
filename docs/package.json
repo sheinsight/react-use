@@ -22,21 +22,21 @@
     "react-hot-toast": "^2.4.1",
     "rspress": "1.28.2",
     "semver": "^7.6.3",
-    "shiki": "^1.18.0"
+    "shiki": "^1.22.0"
   },
   "devDependencies": {
-    "@iconify-json/mdi": "^1.2.0",
+    "@iconify-json/mdi": "^1.2.1",
     "@rspress/plugin-shiki": "1.28.2",
     "@rspress/shared": "1.28.2",
-    "@types/node": "^22.5.5",
+    "@types/node": "^22.7.5",
     "@types/semver": "^7.5.8",
     "@unocss/postcss": "^0.61.9",
     "@unocss/reset": "^0.61.9",
-    "esno": "^4.7.0",
+    "esno": "^4.8.0",
     "gray-matter": "^4.0.3",
     "rimraf": "^6.0.1",
     "rsbuild-plugin-google-analytics": "^1.0.3",
     "unocss": "^0.61.9",
-    "zx": "^8.1.8"
+    "zx": "^8.1.9"
   }
 }
