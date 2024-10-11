@@ -167,20 +167,7 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = an
   fn: T,
   options: UseAsyncFnOptions<T, D, E> = {},
 ): UseAsyncFnReturns<T, D, E> {
-  const {
-    initialParams = [],
-    immediate = false,
-    clearBeforeRun = false,
-    cancelOnUnmount = true,
-    compare,
-    onError,
-    onMutate,
-    onRefresh,
-    onCancel,
-    onBefore,
-    onSuccess,
-    onFinally,
-  } = options
+  const { initialParams = [], immediate = false, clearBeforeRun = false, cancelOnUnmount = true } = options
 
   const [incVersion, runVersionedAction] = useVersionedAction()
 
@@ -188,22 +175,10 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = an
     error: undefined as E | undefined,
     loading: Boolean(immediate),
     value: options.initialValue,
-    params: [] as Parameters<T> | [],
+    params: initialParams as Parameters<T> | [],
   })
 
-  const latest = useLatest({
-    fn,
-    clearBeforeRun,
-    cancelOnUnmount,
-    onMutate,
-    onCancel,
-    onRefresh,
-    onError,
-    onBefore,
-    onSuccess,
-    onFinally,
-    compare,
-  })
+  const latest = useLatest({ fn, ...options, initialParams, clearBeforeRun, cancelOnUnmount })
 
   const cancel = useStableFn(() => {
     incVersion()
@@ -271,12 +246,16 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = an
 
   useMount(async () => {
     if (immediate) {
-      const params = await (initialParams instanceof Function ? initialParams() : initialParams)
+      const params = await (isFunction(initialParams) ? initialParams() : initialParams)
       await run(...params)
     }
   })
 
-  useUnmount(cancelOnUnmount && cancel)
+  useUnmount(() => {
+    if (latest.current.cancelOnUnmount) {
+      cancel()
+    }
+  })
 
   return {
     run,
