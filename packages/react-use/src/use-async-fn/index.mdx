@@ -81,7 +81,7 @@ export interface UseAsyncFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>
    *
    * @defaultValue undefined
    */
-  onError?: (error: E | undefined) => void
+  onError?: (error: E | undefined, params: Parameters<T> | []) => void
   /**
    * a function to run before the async function
    *

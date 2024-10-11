@@ -54,7 +54,7 @@ export interface UseAsyncFnOptions<T extends AnyFunc, D = Awaited<ReturnType<T>>
    *
    * @since 1.4.0
    */
-  onError?: (error: E | undefined) => void
+  onError?: (error: E | undefined, params: Parameters<T> | []) => void
   /**
    * a function to run before the async function
    *
@@ -236,7 +236,7 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = an
       })
     } catch (error) {
       runVersionedAction(version, () => {
-        latest.current.onError?.(error as E | undefined)
+        latest.current.onError?.(error as E | undefined, stateRef.params.value)
         actions.updateRefState('error', error as E | undefined)
       })
     } finally {
