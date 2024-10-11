@@ -43,7 +43,7 @@ run()
 // However, for `error` or `loading`, even if they change, it doesn't trigger re-rendering because the user hasn't actually used them
 ```
 
-In other words, users take whatever state they need, and unrelated states don't trigger re-rendering. This way, a component that originally needed to render 4~5 times now might only need to render 1~2 times. This represents a significant performance improvement.
+In other words, users take whatever state they need, and unrelated states don't trigger re-rendering. This way, a component that originally needed to render 4\~5 times now might only need to render 1\~2 times. This represents a significant performance improvement.
 
 ## Hooks That Implemented Dependencies Collection {#hooks-that-implemented-dependencies-collection}
 
