@@ -11,7 +11,13 @@ import { HooksType, Since } from '@/components'
 
 <Since version="v1.5.0" />
 
-一个基础的 React 钩子，用于数据获取，支持缓存、自动刷新以及许多其他强大功能。
+一个基础的 React 钩子，用于数据获取，支持自动刷新、错误重试、缓存以及许多其他强大功能。
+
+## 场景 \{#scenes}
+
+- **数据获取**: 绝大多数的数据获取场景，支持任意自定义异步函数作为 Fetcher
+- **刷新、错误重试、缓存**: 需要自动刷新、错误重试、缓存等功能的场景
+- **限制频率、依赖刷新**: 需要控制数据获取的限制频率、支持依赖刷新等场景
 
 ## 演示 \{#demo}
 
@@ -23,10 +29,11 @@ import { App } from './demo'
 
 ### 基础用法 \{#basic}
 
-组件挂载时，自动触发数据获取，同时返回数据、加载状态和错误信息，由 [useAsyncFn](/reference/use-async-fn) 提供支持。
+组件挂载时，会自动触发数据获取（`immediate` 选项默认值为 `true`），同时返回数据、加载状态和错误信息，由 [useAsyncFn](/reference/use-async-fn) 提供支持。
 
 ```tsx
-// fetchData 是请求库无关的，可以是任意返回 Promise 的异步函数，可由 fetch、axios、graphql 等实现
+// 这里的 `fetchData` 被叫做 `Fetcher`，是一个请求库无关、返回任意 Promise 的异步函数
+// Fetcher 函数可以通过 fetch、axios、graphql 等方式进行自定义实现
 const { loading, data, error } = useQuery(fetchData)
 
 // 加载中、错误 UI 处理
@@ -39,34 +46,36 @@ return <div>{data}</div>
 
 ### 手动触发 \{#manual}
 
-当设置 `manual` 为 `true` 时，所有内置的自动行为（默认都没开启，包括轮询加载、聚焦重加载、网路重连重加载）将失效。同时 `immediate` 的**默认值**被指定为 `false`。
+当设置 `manual` 选项为 `true` 时，`useQuery` 的所有内置自动行为（这些行为包括**轮询加载**、**聚焦重加载**、**网络重连重加载**等，均**默认关闭**）将失效，同时 `immediate` 的缺省**默认值**被指定为 `false`。
 
 `immediate` 由 [useMount](/reference/use-mount) 提供支持。
 
 ```ts
 const { run, loading, data, error, params } = useQuery(fetchData, {
-  manual: true,
-  initialParams: ['params'],
-  initialData: 'initialData',
+  manual: true, // 是否手动执行，默认为 false，即会触发自动行为
+  // initialParams: ['params'], // 初始参数，默认为 []
+  // initialData: 'initialData', // 初始数据，默认为 undefined
 })
 
-// 手动触发，会触发 params 更新
+// 需要手动通过 run 函数触发，内部自动维护 loading、data、params 等状态
 run('newParams')
 ```
 
 ### 依赖刷新 \{#refresh-dependencies}
 
-使用 `refreshDependencies` 可以设置刷新操作的依赖项，当依赖项改变时，将触发刷新 (`refresh()`) 操作，由 [useUpdateEffect](/reference/use-update-effect) 提供支持。
+使用 `refreshDependencies` 可以设置刷新操作的依赖项，当依赖项改变时，将触发刷新 (`refresh()`) 操作，由 [useUpdateEffect](/reference/use-update-effect) 提供支持，默认只会进行浅比较，与 `useEffect` 依赖比较的默认行为保持一致。
 
 ```ts
 const { loading, data, error } = useQuery(fetchData, {
-  refreshDependencies: [dep1, dep2], 
+  refreshDependencies: [dep1, dep2], // 自动刷新的依赖项，默认为 []
 })
+
+// 进行 setDep1('newDep1') 或 setDep2('newDep2') 操作时，将触发刷新操作
 ```
 
 ### 操作取消 \{#cancel}
 
-使用 `cancel` 可以取消当前请求，同时重置所有状态。请注意，`cancel` **无法阻止 Promise 执行**，只是终止了后续状态更新逻辑，由 [useAsyncFn](/reference/use-async-fn) 提供支持
+执行返回的 `cancel` 函数可以取消当前请求，同时重置所有状态。请注意，`cancel` **无法阻止 Promise 执行**，它只是终止了后续状态更新逻辑，由 [useAsyncFn](/reference/use-async-fn) 提供支持
 
 ```ts
 const { cancel, loading, data, error } = useQuery(fetchData)
@@ -81,34 +90,45 @@ cancel()
 
 ```ts
 const { loading, data, error } = useQuery(fetchData, {
-  // 操作执行前
+  // 在操作执行前，比如进行乐观 UI 更新
   onBefore: (data, params) => console.log('before', data, params),
-  // 操作执行后
+  // 在操作成功时
   onSuccess: (data, params) => console.log('success', data, params),
-  // 操作失败
+  // 在操作失败时，可以捕获错误、回退 UI 等
   onError: (error, params) => console.log('error', error, params),
-  // 操作完成
-  onFinally: (data, params) => console.log('finally', data, error, params),
-  // 操作取消
-  onCancel: (data, params) => console.log('cancel', data, error, params),
-  // 手动修改数据或参数
+  // 在操作结束时（无论成功或失败）
+  onFinally: (data, params) => console.log('finally', data, params),
+  // 在操作被取消时
+  onCancel: (data, params) => console.log('cancel', data, params),
+  // 在手动修改数据或参数时
   onMutate: (data, params) => console.log('mutate', data, params),
-  // 刷新操作
+  // 在进行刷新操作时
   onRefresh: (data, params) => console.log('refresh', data, params),
+})
+```
+
+这里需要注意的是，在操作失败时，`onError` 会捕获错误，以供用于错误提示、错误上报等。如果你期望它直接抛出错误，可以在这里 `throw`，但是请注意抛出的错误会阻止 `error` 状态更新，以及后续 `onFinally` 的执行。
+
+```ts
+const { loading, data, error } = useQuery(fetchData, {
+  onError: (error) => {
+    console.log('error', error)
+    throw error // 抛出错误，但这会阻止 error 状态按预期更新，以及后续 `onFinally` 的执行。
+  },
 })
 ```
 
 ### 慢加载状态 \{#loading-slow}
 
-使用 `loadingSlow` 可以获取当前操作是否处于慢加载状态，即操作时间超过预期阈值，通过这个状态条件渲染不同的 UI，可以改善用户体验，由 [useLoadingSlowFn](/reference/use-loading-slow-fn) 提供支持。
+使用 `loadingSlow` 可以获取当前操作是否处于慢加载状态，即操作时间（一般是网络请求耗时）超过预期阈值，通过这个状态条件渲染不同的 UI 可以改善用户体验，由 [useLoadingSlowFn](/reference/use-loading-slow-fn) 提供支持。
 
 ```ts
 const { loading, loadingSlow, data, error } = useQuery(fetchData, {
-  loadingTimeout: 3_000, // 默认为 0，这里设置为 3 秒
-  onLoadingSlow: () => console.log('loading slow'), // 慢加载时的回调
+  loadingTimeout: 3_000, // 慢加载阈值，默认为 0，这里设置为 3 秒
+  onLoadingSlow: () => console.log('loading slow'), // 处于慢加载时的回调函数
 })
 
-// 慢加载时显示慢加载 UI
+// 加载时显示加载 UI，并在慢加载时额外显示慢加载 UI
 if (loading) return <Loading slow={loadingSlow} />
 ```
 
@@ -116,21 +136,26 @@ if (loading) return <Loading slow={loadingSlow} />
 
 使用 `initializing` 和 `refreshing` 可以获取当前是否处于初始化和刷新中。
 
+```tsx
+const { initializing, refreshing, data, error } = useQuery(fetchData)
+
+// 显示初始化中 UI
+if (initializing) return <Initializing />;
+
+// 显示已有数据，同时根据 refreshing 状态来改变 UI 与其他样式
+return (
+  <div className={refreshing ? 'opacity-60' : ''}>
+    {data}
+    {refreshing && <Loading />}
+  </div>
+)
+```
+
 这两个状态其实是 `loading` 和 `data` 的衍生状态，以下是伪代码：
 
 ```ts
 const initializing = Boolean(!data && loading)
 const refreshing = Boolean(data && loading)
-```
-
-```ts
-const { initializing, refreshing, data, error } = useQuery(fetchData)
-
-// 显示初始化中 UI
-if (initializing) return <Loading />;
-
-// 显示已有数据，同时根据 refreshing 状态来改变 UI 与其他样式
-return <div>{data}{refreshing && <Loading />}</div>
 ```
 
 ### 参数和刷新 \{#params-refresh}
@@ -140,7 +165,7 @@ return <div>{data}{refreshing && <Loading />}</div>
 ```ts
 const { run, params, refresh } = useQuery(fetchData)
 
-// 获取上次请求的参数，存在 initialParams 时第一次为 initialParams，否则第一次为 []
+// 获取上次请求的参数，如果存在 initialParams，则第一次为即为它，否则为 []
 console.log(params)
 // 使用上一次的参数重新请求，即「刷新」，等价于 `run(params)`
 refresh()
@@ -152,8 +177,8 @@ refresh()
 
 ```ts
 const { loading, data, error } = useQuery(fetchData, {
-  clearBeforeRun: true, // 每次请求前清空数据，默认 false
-  cancelOnUnmount: false, // 组件卸载时不取消请求，默认 true
+  clearBeforeRun: true, // 是否在请求前清空数据，默认 false，即不清空
+  cancelOnUnmount: false, // 是否在组件卸载时取消请求，默认 true，即自动取消
 })
 ```
 
@@ -163,32 +188,36 @@ const { loading, data, error } = useQuery(fetchData, {
 
 ```ts
 const { run, loading, data, error } = useQuery(fetchData, {
-  throttle: 1_000, // 在频繁触发的情况下，限制每秒只触发一次
-  // throttle: { wait: 1_000 }, // 或者指定整个 UseThrottledFnOptions 对象
-  debounce: 1_000, // 在频繁触发的情况下，等待操作停止的 1 秒后触发
-  // debounce: { wait: 1_000 }, // 或者指定整个 UseDebouncedFnOptions 对象
+  throttle: 1_000, // 节流等待值，默认为 0，不开启，这里设置在频繁触发的情况下，限制每秒只触发一次
+  // throttle: { wait: 1_000 }, // 也可以指定为整个 UseThrottledFnOptions 对象
+
+  debounce: 1_000, // 防抖等待值，默认为 0，不开启，这里设置在频繁触发的情况下，等待操作停止的 1 秒后触发
+  // debounce: { wait: 1_000 }, // 也可以指定为整个 UseDebouncedFnOptions 对象
 })
 ```
 
 ### 数据和参数修改 \{#mutate}
 
-使用 `mutate` 可以直接修改数据和请求参数，同时触发重新渲染，但不触发额外的请求，由 [useAsyncFn](/reference/use-async-fn) 提供支持。
+使用 `mutate` 可以直接修改数据和请求参数并同时触发重新渲染，不会触发额外的请求，由 [useAsyncFn](/reference/use-async-fn) 提供支持。
 
 ```ts
 const { data, mutate } = useQuery(fetchData)
 
 // 更新数据
 mutate('newData')
-// mutate((preData) => 'newData') // 支持 setState 风格的更新
+
+// 支持 setState 风格的更新
+// mutate((preData) => 'newData')
 
 // 同时更新数据和参数
 mutate('newData', ['newPrams'])
+
 // 参数也支持 setState 风格的更新
 // mutate((preData) => 'newData', (preParams) => ['newPrams'])
 
-// 修改全局缓存
+// 修改全局缓存，仅对默认的全局 Map provider 有效，自定义 provider 需自行处理
 import { mutate } from '@shined/react-use'
-mutate((key) => key === 'cacheKey', 'newData')
+mutate((key) => key === 'cacheKey', 'newData', ['newParams'])
 ```
 
 ### 轮询加载 \{#polling}
@@ -197,7 +226,7 @@ mutate((key) => key === 'cacheKey', 'newData')
 
 ```ts
 const { loading, data, error } = useQuery(fetchData, {
-  refreshInterval: 5_000, // 轮询时间间隔，默认 0，关闭
+  refreshInterval: 5_000, // 轮询时间间隔，默认 0，不启用
   refreshWhenHidden: true, // 是否在页面不可见时轮询，默认 false
   refreshWhenOffline: true, // 是否在离线时轮询，默认 false
 })
@@ -209,13 +238,13 @@ const { loading, data, error } = useQuery(fetchData, {
 
 ```ts
 const { loading, data, error } = useQuery(fetchData, {
-  refreshOnFocus: true,
-  refreshOnReconnect: true,
-  refreshOnFocusThrottleWait: 3_000, // 聚焦刷新的节流时间，默认 5_000，仅 refreshOnFocus 为 true 时生效
+  refreshOnFocus: true, // 聚焦时是否重新加载，默认 false
+  refreshOnReconnect: true, // 网络重连时是否重新加载，默认 false
+  refreshOnFocusThrottleWait: 3_000, // 聚焦刷新的节流等待时间，默认 5_000
 })
 ```
 
-如果需要在 [React Native](https://reactnative.dev/)、[Ink](https://term.ink) 等**非 Web 环境**中使用，可以手动指定相关的可见性和网络状况的逻辑。
+如果需要在 [React Native](https://reactnative.dev/)、[Ink](https://term.ink) 等**非浏览器环境**中使用，可以手动指定相关的可见性和网络状况的判断逻辑。
 
 ```ts
 import { createReactNativeReFocusRegister } from '@shined/react-use'
@@ -231,20 +260,20 @@ const { loading, data, error } = useQuery(fetchData, {
 
 ### 可暂停 (Pasuable) \{#pausable}
 
-当不指定 `manual` 为 `false` 时，如果也想控制内部自动行为，可以使用 Hooks 里对外暴露的 [Pausable](/docs/features/pausable) 实例属性，由 [usePausable](/reference/use-pausable) 提供支持。
+当没有显式地指定 `manual` 为 `false` 时，如果也想控制内部自动行为，可以使用对外暴露的 [Pausable](/docs/features/pausable) 实例，由 [usePausable](/reference/use-pausable) 提供支持。
 
 ```tsx
 const { pause, resume, isActive } = useQuery(fetchData, {
   refreshInterval: 5_000, // 指定每 5 秒刷新一次
 })
 
-// 暂停自动行为
+// 暂停自动行为，这里只有「轮询刷新」这一个自动行为
 pause() 
 
-// 恢复自动行为
+// 恢复自动行为，这里只有「轮询刷新」这一个自动行为
 resume()
 
-// 判断是否处于活跃状态
+// 判断当前配置的自动行为是否处于活跃状态
 console.log(isActive())
 ```
 
@@ -255,24 +284,24 @@ console.log(isActive())
 ```ts
 const { loading, data, error } = useQuery(fetchData, {
   errorRetryCount: 3, // 错误重试次数，默认 0，关闭
-  errorRetryInterval: 1_000, // 错误重试间隔，默认使用 `useRetryFn` 的 `defaultRetryInterval`，退避算法
-  onErrorRetry: (error) => console.log(error), // 错误重试时的回调
+  errorRetryInterval: 1_000, // 错误重试间隔，默认为 `useRetryFn` 中内置的退避算法
+  onErrorRetry: (error) => console.log(error), // 尝试重试时的回调
   onErrorRetryFailed: (error) => console.log(error), // 错误重试失败时的回调
 })
 ```
 
 ### 缓存与 SWR \{#cache-swr}
 
-设置 `cacheKey` 可以启用缓存功能，缓存的内容包括 data 与 param，当存在缓存数据且未过期时（过期会被清空），会优先返回缓存数据，同时触发请求，更新缓存数据，以保证数据的最新性，也就是 SWR（Stale-While-Revalidate）策略。
+设置 `cacheKey` 可以启用缓存功能，缓存的内容包括 `data` 与 `param`，当存在缓存数据且未过期时（过期会被清空），会优先返回缓存数据，同时触发请求，并在请求结果返回时更新缓存数据，以保证数据可用性和最新性，也就是 `SWR`（Stale-While-Revalidate）策略。
 
 ```ts
 const { loading, data, error } = useQuery(fetchData, {
-  cacheKey: 'cacheKey', // 缓存键，可以是字符串或返回字符串的函数
-  cacheExpirationTime: 5 * 60 * 1000, // 最大缓存时间，默认 5 分钟，设置 `false` 以禁用
+  cacheKey: 'cacheKey', // 缓存 key，可以是字符串或返回字符串的函数
+  cacheExpirationTime: 5 * 60 * 1000, // 最大缓存时间，默认 5 分钟，设置 `false` 以阻止过期，即永久缓存
 })
 ```
 
-可以指定 `provider` 为一个外部存储（如 [Reactive](https://sheinsight.github.io/reactive)）、`localStorage` 等，以实现多处共享缓存或者更加精细化的局部缓存。一个 `Provider` 需要符合以下接口定义（基本就是 `Map` 类型的接口）：
+可以指定 `provider` 为一个外部存储（如 [Reactive](https://sheinsight.github.io/reactive)）、`localStorage` 等，以实现多处共享缓存或者更加精细化的局部缓存。一个 `Provider` 需要符合以下接口定义（基本上就是符合 `Map` 类型接口的对象）：
 
 ```ts
 export interface UseQueryCacheLike<Data> {
@@ -306,7 +335,7 @@ const { loading, data, error } = useQuery(fetchData, {
 })
 ```
 
-或者使用 `localStorage` 作为缓存提供者，以实现页面刷新后的数据持久化。
+或者使用 `localStorage` 作为缓存提供者，以实现页面刷新后的数据持久化，但请注意数据的序列化和反序列化，以及数据的大小限制是否符合需求。
 
 ```ts
 const localStorageProvider = {
@@ -325,19 +354,19 @@ const { loading, data, error } = useQuery(fetchData, {
 })
 ```
 
-如果 `cacheKey` 与 `provider` 均相同，则其会被认为是同一个缓存。**同一缓存的任一处状态、数据、请求变更，都会同步到其他处**。
+如果 `cacheKey` 与 `provider` 均相同，则其会被认为是同一个缓存，**同一缓存的任一处状态、数据的变更，都会自动同步到其他处**，常见于多个组件使用同一份数据的情况。
 
-这种情况常见于多个组件使用同一份数据，比如用户信息，可能在 nav 组件、header 组件、sidebar 组件等多处使用，这时候可以使用 `cacheKey` 和 `provider` 来实现数据的共享。
+例如用户信息，可能在 nav 组件、header 组件、sidebar 组件等多处被使用，这时候可以使用 `cacheKey` 和 `provider` 来实现数据的共享，以实现数据的同步更新。
 
 ```ts
 // 组件 A
 const { loading, data, mutate, refresh } = useQuery(fetchData, {
-  cacheKey: 'cacheKey',
+  cacheKey: 'sameCacheKey',
 })
 
 // 组件 B
 const { data, params } = useQuery(fetchData, {
-  cacheKey: 'cacheKey',
+  cacheKey: 'sameCacheKey',
 })
 
 // 在组件 A 中执行 refresh 或者 mutate 操作
@@ -350,15 +379,17 @@ console.log(data, params) // 'newData', ['newParams']
 
 ### 自定义数据更新 \{#custom-data-update}
 
-使用 `compare` 可以自定义数据更新逻辑，防止频繁刷新，这在处理某些**伪不同**的数据的情况下非常有用，比如时间戳，可以降低不必要的渲染，默认使用 `shallowEqual`，即只比较一层，由 [useAsyncFn](/reference/use-async-fn) 提供支持。
+使用 `compare` 可以自定义数据更新逻辑，防止频繁刷新，这在处理某些**伪变化**数据的情况下非常有用，这可以降低不必要的渲染。例如请求返回的 `body` 只是时间戳 (`timestamp`) 改变，但实际数据 (`data`) 不变的情况。
+
+默认使用 `shallowEqual`，即只比较一层，由 [useAsyncFn](/reference/use-async-fn) 提供支持。
 
 ```ts
 const { loading, data, error } = useQuery(fetchData, {
   compare: (preData, nextData) => {
-    // 比较数据是否相同，返回 true 则不更新，返回 false 则更新
-    return preData === nextData
+    // 比较数据是否严格相同，返回 true 则不更新，返回 false 则更新
+    // return preData === nextData
 
-    // 或者比较数据的某个字段，比如 timestamp 可能不同，但实际有效数据是一样的
+    // 只比较数据的某个字段，忽略干扰字段，比如 timestamp
     return deepCompare(preData?.data, nextData?.data)
 
     // 但请注意，数据量太大时，深比较会影响性能，请权衡使用
@@ -371,20 +402,17 @@ const { loading, data, error } = useQuery(fetchData, {
 `useQuery` 实现了依赖收集策略，实现了按需渲染，最大限度优化性能，由内部的 [useTrackedRefState](/reference/use-tracked-ref-state) 提供支持。
 
 ```ts
-// 所有状态变化都会触发重新渲染，不推荐！！！
-const fn = useQuery(fetchData)
-
 // 当 loading、data、error 状态变化时，都会触发重新渲染
 const { loading, data, error } = useQuery(fetchData)
 
-// 仅当 loading 状态变化时，才会触发重新渲染，data 和 error 状态变化不会触发
+// 仅当 loading 状态变化时，才会触发重新渲染，data 和 error 状态变化不会触发，因为没有用到
 const { loading } = useQuery(fetchData)
 
 // 所有支持依赖收集的状态属性
 const { loading, data, error, params, loadingSlow, initializing, refreshing } = useQuery(fetchData)
 ```
 
-更多详情参考 [依赖收集](/docs/features/dependencies-collection)。
+有关其背景、实现原理、细节等，请参考 [依赖收集](/docs/features/dependencies-collection)。
 
 ## 源码 \{#source}
 
@@ -397,7 +425,7 @@ import { Source } from '@/components'
 ```tsx
 const {
   run, data, loading, refreshing, initializing, error,
-  cancel, refresh, mutate, loadingSlow, ...pausable
+  cancel, params, refresh, mutate, loadingSlow, ...pausable
 } = useQuery(fetcher, options)
 ```
 
@@ -409,12 +437,12 @@ const {
 // 原生 Fetch 请求
 const fetchData = async () => await (await fetch('https://api.example.com/data').json())
 // Axios 请求
-const fetchData = () => axios.get('https://api.example.com/data').then(res => res.data)
+const fetchData = async () => (await axios.get('https://api.example.com/data')).data
 // GraphQL 请求
-const fetchData = () => graphqlClient.query({ query: gql`{ data }` }).then(res => res.data)
+const fetchData = () => (await graphqlClient.query({ query: gql`{ data }` })).data
 // 自定义 Promise 函数
 const fetchData = () => new Promise(resolve => setTimeout(() => resolve('data'), 1000))
-// 可以抛出错误
+// 可以抛出错误，会被 `onError` 捕获，可通过返回的 `error` 属性控制 UI
 const fetchData = () => new Promise((_, reject) => setTimeout(() => reject('error'), 1000))
 ```
 
@@ -569,11 +597,11 @@ export interface UseQueryReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>, 
    */
   data: D | undefined
   /**
-   * 请求是否处于初始化状态（无数据 + 加载中, initializing => !data && loading）
+   * 请求是否处于初始化状态，无数据 + 加载中, initializing => Boolean(!data && loading)
    */
   initializing: boolean
   /**
-   * 请求是否正在刷新数据（有数据 + 加载中, refreshing => data && loading）
+   * 请求是否正在刷新数据，有数据 + 加载中, refreshing => Boolean(data && loading)
    */
   refreshing: boolean
 }

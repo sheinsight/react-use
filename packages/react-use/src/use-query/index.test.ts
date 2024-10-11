@@ -1,16 +1,15 @@
 import { act, renderHook } from '@/test'
-// packages/react-use/src/use-query/index.test.ts
-import { type Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { useQuery } from './index'
 
+import type { Mock } from 'vitest'
+
 describe('useQuery', () => {
-  let fetcher: Mock
-  let options: any
+  let mockFetcher: Mock
 
   beforeEach(() => {
+    mockFetcher = vi.fn().mockResolvedValue('data')
     vi.useFakeTimers()
-    fetcher = vi.fn()
-    options = {}
   })
 
   afterEach(() => {
@@ -18,42 +17,95 @@ describe('useQuery', () => {
     vi.useRealTimers()
   })
 
-  it('should initialize with default values', () => {
-    const { result } = renderHook(() => useQuery(fetcher, options))
+  it('should initialize with default values when ser manual', async () => {
+    const { result } = renderHook(() => useQuery(mockFetcher, { manual: true }))
+
+    expect(mockFetcher).not.toHaveBeenCalled()
+
+    expect(result.current.data).toBeUndefined()
+    expect(result.current.loading).toBe(false)
+    expect(result.current.error).toBeUndefined()
+    expect(result.current.initializing).toBe(false)
+    expect(result.current.refreshing).toBe(false)
+    expect(result.current.loadingSlow).toBe(false)
+    expect(result.current.params).toEqual([])
+
+    expect(result.current.run).toBeDefined()
+    expect(result.current.refresh).toBeInstanceOf(Function)
+    expect(result.current.cancel).toBeInstanceOf(Function)
+    expect(result.current.mutate).toBeInstanceOf(Function)
+    expect(result.current.pause).toBeInstanceOf(Function)
+    expect(result.current.resume).toBeInstanceOf(Function)
+    expect(result.current.isActive).toBeInstanceOf(Function)
+    expect(result.current.isActive()).toBe(true)
+  })
+
+  it('should handle fetcher when running', async () => {
+    const { result } = renderHook(() => useQuery(mockFetcher))
+
+    expect(mockFetcher).not.toHaveBeenCalled() // promise not resolved yet
+
     expect(result.current.data).toBeUndefined()
     expect(result.current.loading).toBe(true)
+    expect(result.current.error).toBeUndefined()
     expect(result.current.initializing).toBe(true)
+    expect(result.current.refreshing).toBe(false)
+    expect(result.current.loadingSlow).toBe(false)
+    expect(result.current.params).toEqual([])
   })
 
-  it('should fetch data successfully', async () => {
-    fetcher.mockResolvedValueOnce('data')
-    const { result } = renderHook(() => useQuery(fetcher, options))
+  it('should handle fetcher when operation done', async () => {
+    const { result } = renderHook(() => useQuery(mockFetcher))
 
-    await act(async () => {})
+    await act(async () => {}) // wait for fetcher to resolve
 
-    expect(fetcher).toHaveBeenCalled()
+    expect(mockFetcher).toHaveBeenCalled()
+
     expect(result.current.data).toBe('data')
     expect(result.current.loading).toBe(false)
+    expect(result.current.error).toBeUndefined()
     expect(result.current.initializing).toBe(false)
+    expect(result.current.refreshing).toBe(false)
+    expect(result.current.loadingSlow).toBe(false)
+    expect(result.current.params).toEqual([])
   })
 
-  it.skip('should handle fetch error', async () => {
-    fetcher.mockRejectedValue(new Error('fetch error'))
-    const { result } = renderHook(() => useQuery(fetcher, options))
+  it('should handle fetch error', async () => {
+    mockFetcher.mockRejectedValue(new Error('fetch error'))
 
-    await act(async () => {})
+    const { result } = renderHook(() => useQuery(mockFetcher))
 
-    expect(fetcher).toHaveBeenCalled()
-    expect(result.current.error).toBeInstanceOf(Error) // FIXME: fix it
+    await act(async () => {}) // wait for fetcher to reject
+
+    expect(mockFetcher).toHaveBeenCalled()
+    expect(result.current.error).toBeInstanceOf(Error)
     expect(result.current.loading).toBe(false)
+  })
+
+  it('should handle dependencies refresh', async () => {
+    const { result, rerender } = renderHook(({ id }) => useQuery(mockFetcher, { refreshDependencies: [id] }), {
+      initialProps: { id: 1 },
+    })
+
+    await act(async () => {}) // wait for fetcher to resolve
+
+    expect(result.current.data).toBe('data')
+
+    mockFetcher.mockResolvedValueOnce('newData')
+
+    rerender({ id: 2 })
+
+    expect(result.current.data).toBe('data') // not updated yet && not clear previous data
+
+    await act(async () => {}) // wait for fetcher to resolve
+
+    expect(result.current.data).toBe('newData')
   })
 
   it('should refresh data on focus', async () => {
-    fetcher.mockResolvedValueOnce('data')
-    options.refreshOnFocus = true
-    const { result } = renderHook(() => useQuery(fetcher, options))
+    const { result } = renderHook(() => useQuery(mockFetcher, { refreshOnFocus: true }))
 
-    await act(async () => {})
+    await act(async () => {}) // wait for fetcher to reject
 
     expect(result.current.data).toBe('data')
 
@@ -62,15 +114,13 @@ describe('useQuery', () => {
       window.dispatchEvent(new FocusEvent('focus'))
     })
 
-    expect(fetcher).toHaveBeenCalledTimes(2)
+    expect(mockFetcher).toHaveBeenCalledTimes(2)
   })
 
   it('should not refresh data on focus if disabled', async () => {
-    fetcher.mockResolvedValueOnce('data')
-    options.refreshOnFocus = false
-    const { result } = renderHook(() => useQuery(fetcher, options))
+    const { result } = renderHook(() => useQuery(mockFetcher, { refreshOnFocus: false }))
 
-    await act(async () => {})
+    await act(async () => {}) // wait for fetcher to reject
 
     expect(result.current.data).toBe('data')
 
@@ -79,15 +129,13 @@ describe('useQuery', () => {
       window.dispatchEvent(new FocusEvent('focus'))
     })
 
-    expect(fetcher).toHaveBeenCalledTimes(1)
+    expect(mockFetcher).toHaveBeenCalledTimes(1)
   })
 
   it('should handle manual refresh', async () => {
-    fetcher.mockResolvedValueOnce('data')
-    options.manual = true
-    const { result } = renderHook(() => useQuery(fetcher, options))
+    const { result } = renderHook(() => useQuery(mockFetcher, { manual: true }))
 
-    await act(async () => {})
+    await act(async () => {}) // wait for fetcher to reject
 
     expect(result.current.data).toBeUndefined()
 
@@ -99,12 +147,14 @@ describe('useQuery', () => {
   })
 
   it('should respect cache expiration', async () => {
-    fetcher.mockResolvedValue('data')
-    options.cacheKey = 'test'
-    options.cacheExpirationTime = 100 // 100 ms
-    const { result } = renderHook(() => useQuery(fetcher, options))
+    const { result } = renderHook(() =>
+      useQuery(mockFetcher, {
+        cacheKey: 'test',
+        cacheExpirationTime: 100,
+      }),
+    )
 
-    await act(async () => {})
+    await act(async () => {}) // wait for fetcher to reject
 
     expect(result.current.data).toBe('data')
 

@@ -157,7 +157,9 @@ function Demo5() {
       immediate: false,
       cacheKey: 'cacheKeyForDemo5',
       // provider: localStorageProvider,
-      onErrorRetry: (error, { currentCount }) => toast.error(`Retry ${currentCount} failed.`),
+      errorRetryCount: 3,
+      onErrorRetry: (error, { currentCount }) => toast.loading(`Retry ${currentCount} times ...`, { id: 'retry' }),
+      onSuccess: (data, params) => toast.success(`Success! ${data}`, { id: 'retry' }),
     },
   )
 

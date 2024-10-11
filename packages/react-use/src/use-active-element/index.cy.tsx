@@ -7,7 +7,7 @@ function App() {
 
   return (
     <div>
-      <div>Active element: {value}</div>
+      <div id="result">Active element: {value}</div>
       <div>
         <input placeholder="Click here to test" />
         <button type="button">Also press here</button>
@@ -17,13 +17,35 @@ function App() {
 }
 
 describe('useActiveElement', () => {
-  it('playground', () => {
+  beforeEach(() => {
     cy.mount(<App />)
+  })
+
+  it('should with initial default value', () => {
+    expect(cy.get('#result').contains('body')).to.exist
+  })
+
+  it('should detect change', () => {
     cy.get('input').click()
-    expect(cy.get('div').contains('input')).to.exist
+    expect(cy.get('#result').contains('input')).to.exist
+  })
+
+  it('should detect multiple changes', () => {
+    cy.get('input').click()
+    expect(cy.get('#result').contains('input')).to.exist
     cy.get('button').click()
-    expect(cy.get('div').contains('button')).to.exist
+    expect(cy.get('#result').contains('button')).to.exist
     cy.get('body').click()
-    expect(cy.get('div').contains('body')).to.exist
+    expect(cy.get('#result').contains('body')).to.exist
+  })
+
+  it('should handle html click', () => {
+    cy.mount(<App />)
+    cy.get('html').click() // <html> click always link to <body>
+    expect(cy.get('#result').contains('body')).to.exist
+    cy.get('button').click()
+    expect(cy.get('#result').contains('button')).to.exist
+    cy.get('html').click() // <html> click always link to <body>
+    expect(cy.get('#result').contains('body')).to.exist
   })
 })
