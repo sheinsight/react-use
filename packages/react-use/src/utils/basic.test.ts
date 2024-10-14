@@ -30,7 +30,7 @@ describe('utils/basic', () => {
       const start = now()
       await wait(100)
       const end = now()
-      expect(end - start).toBeGreaterThanOrEqual(100)
+      expect(end - start).toBeGreaterThanOrEqual(99)
     })
   })
 

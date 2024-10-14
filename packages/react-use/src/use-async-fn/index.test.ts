@@ -413,6 +413,95 @@ describe('useAsyncFn', () => {
     expect(callbacks.onCancel).toHaveBeenCalledTimes(1)
   })
 
+  it('should handle onError callback', async () => {
+    const error = new Error('Test Error')
+    const onError = vi.fn()
+    const mockFn = vi.fn().mockRejectedValue(error)
+    const { result } = renderHook(() => useAsyncFn(mockFn, { onError }))
+
+    expect(onError).not.toHaveBeenCalled()
+
+    await act(async () => {
+      await result.current.run()
+    })
+
+    expect(onError).toHaveBeenCalledWith(error, [])
+  })
+
+  it('should handle onMutate callback', () => {
+    const onMutate = vi.fn()
+    const { result } = renderHook(() => useAsyncFn(async (a: string = '') => a, { onMutate }))
+
+    expect(onMutate).not.toHaveBeenCalled()
+
+    act(() => {
+      result.current.mutate('new value')
+      result.current.mutate('new value2', [])
+    })
+
+    expect(onMutate).toHaveBeenCalledTimes(2)
+
+    act(() => {
+      result.current.mutate('new value3', ['1'])
+    })
+
+    expect(onMutate).toHaveBeenLastCalledWith('new value3', ['1'])
+    expect(onMutate).toHaveBeenCalledTimes(3)
+  })
+
+  it('should handle onRefresh callback', async () => {
+    const onRefresh = vi.fn()
+    const { result } = renderHook(() => useAsyncFn(async () => '', { onRefresh }))
+
+    expect(onRefresh).not.toHaveBeenCalled()
+
+    await act(async () => {
+      await result.current.refresh()
+    })
+
+    expect(onRefresh).toHaveBeenCalled()
+  })
+
+  it('should handle onCancel callback', () => {
+    const onCancel = vi.fn()
+    const { result } = renderHook(() => useAsyncFn(async () => '', { onCancel }))
+
+    expect(onCancel).not.toHaveBeenCalled()
+
+    act(() => {
+      result.current.cancel()
+    })
+
+    expect(onCancel).toHaveBeenCalled()
+  })
+
+  it('should handle onFinally callback when success', async () => {
+    const onFinally = vi.fn()
+    const { result } = renderHook(() => useAsyncFn(async () => '', { onFinally }))
+
+    expect(onFinally).not.toHaveBeenCalled()
+
+    await act(async () => {
+      await result.current.run()
+    })
+
+    expect(onFinally).toHaveBeenCalled()
+  })
+
+  it('should handle onFinally callback when error', async () => {
+    const onFinally = vi.fn()
+    const mockFn = vi.fn().mockRejectedValue(new Error('Test Error'))
+    const { result } = renderHook(() => useAsyncFn(mockFn, { onFinally }))
+
+    expect(onFinally).not.toHaveBeenCalled()
+
+    await act(async () => {
+      await result.current.run()
+    })
+
+    expect(onFinally).toHaveBeenCalled()
+  })
+
   it('should handle compare option', async () => {
     const compare = vi.fn().mockReturnValue(true)
     const mockFn = vi.fn().mockResolvedValue('success')
@@ -464,5 +553,19 @@ describe('useAsyncFn', () => {
 
     expect(mockFn).toHaveBeenCalledTimes(3)
     expect(result.current.value).toBe('third')
+  })
+
+  it('should handle `cancelOnUnmount` options', async () => {
+    const mockFn = vi.fn().mockResolvedValue('success')
+    const onCancel = vi.fn()
+    const { result, unmount } = renderHook(() => useAsyncFn(mockFn, { onCancel, cancelOnUnmount: true }))
+
+    act(() => {
+      result.current.run()
+    })
+
+    unmount()
+
+    expect(onCancel).toHaveBeenCalled()
   })
 })
