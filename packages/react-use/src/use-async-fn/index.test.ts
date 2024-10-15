@@ -55,6 +55,20 @@ describe('useAsyncFn', () => {
     expect(result.current.params).toEqual(['initial'])
   })
 
+  it('should return initial params properly when set `initialParams` to a function', async () => {
+    const { result } = renderHook(() => useAsyncFn(mockFn, { initialParams: () => ['initial'] }))
+    expect(result.current.params).toEqual([])
+    await act(async () => {}) // wait for async function to resolve
+    expect(result.current.params).toEqual(['initial'])
+  })
+
+  it('should return initial params properly when set `initialParams and `immediate`', async () => {
+    const { result } = renderHook(() => useAsyncFn(mockFn, { initialParams: ['initial'], immediate: true }))
+    expect(result.current.params).toEqual(['initial'])
+    await act(async () => {}) // wait for async function to resolve
+    expect(mockFn).toHaveBeenCalledWith('initial')
+  })
+
   it('should return initial refresh properly', () => {
     const { result } = renderHook(() => useAsyncFn(mockFn))
     expect(result.current.refresh).toBeInstanceOf(Function)
@@ -375,13 +389,30 @@ describe('useAsyncFn', () => {
   })
 
   it('should handle mutate function', () => {
-    const { result } = renderHook(() => useAsyncFn(async () => ''))
+    const { result } = renderHook(() => useAsyncFn(async (a: string = '') => a))
 
     act(() => {
       result.current.mutate('new value')
     })
+    expect(result.current.value).toBe('new value')
+
+    act(() => {
+      result.current.mutate('new value 2', ['param2'])
+    })
+
+    expect(result.current.value).toBe('new value 2')
+    expect(result.current.params).toEqual(['param2'])
+  })
+
+  it('should handle mutate function different values', () => {
+    const { result } = renderHook(() => useAsyncFn(async (a: string = '') => a))
+
+    act(() => {
+      result.current.mutate(() => ['new value', ['param1']])
+    })
 
     expect(result.current.value).toBe('new value')
+    expect(result.current.params).toEqual(['param1'])
   })
 
   it('should handle all lifecycle callbacks', async () => {

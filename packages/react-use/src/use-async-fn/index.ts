@@ -175,7 +175,8 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = an
     error: undefined as E | undefined,
     loading: Boolean(immediate),
     value: options.initialValue,
-    params: initialParams as Parameters<T> | [],
+    // async function could not be used as default value, so all the functions will be initialized in useEffect
+    params: (isFunction(initialParams) ? [] : initialParams) as Parameters<T> | [],
   })
 
   const latest = useLatest({ fn, ...options, initialParams, clearBeforeRun, cancelOnUnmount })
@@ -245,9 +246,12 @@ export function useAsyncFn<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = an
   })
 
   useMount(async () => {
+    if (isFunction(initialParams)) {
+      actions.updateRefState('params', await initialParams())
+    }
+
     if (immediate) {
-      const params = await (isFunction(initialParams) ? initialParams() : initialParams)
-      await run(...params)
+      await run(...stateRef.params.value)
     }
   })
 
