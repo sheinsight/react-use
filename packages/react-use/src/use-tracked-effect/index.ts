@@ -28,5 +28,6 @@ function findChangedIndexes(depsA?: Deps, depsB?: Deps) {
   if (depsA) {
     return depsA.map((_, idx) => (!Object.is(depsA[idx], depsB?.[idx]) ? idx : -1)).filter((idx) => idx >= 0)
   }
+  /* v8 ignore next */
   return (depsB || []).map((_, idx) => idx)
 }

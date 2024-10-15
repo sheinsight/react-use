@@ -56,6 +56,7 @@ declare const process: {
 export const isDev = process.env.NODE_ENV !== 'production'
 
 // useful in Server-side Rendering (SSR)
+/* v8 ignore next */
 export const isClient = Boolean(typeof window !== 'undefined' && isFunction(window?.document?.createElement))
 
 export function noop(): undefined {}

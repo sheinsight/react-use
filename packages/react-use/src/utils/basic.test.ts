@@ -7,6 +7,7 @@ import {
   hasOwn,
   increaseWithUnit,
   isBoolean,
+  isClient,
   isDefined,
   isFunction,
   isNumber,
@@ -24,6 +25,12 @@ describe('utils/basic', () => {
   describe('noop', () => {
     it('should return undefined', () => {
       expect(noop()).toBeUndefined()
+    })
+  })
+
+  describe('isClient', () => {
+    it('should return true', () => {
+      expect(isClient).toBe(true)
     })
   })
 

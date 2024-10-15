@@ -76,11 +76,22 @@ describe('useWindowSize', () => {
     expect(result.current.width).toBe(800)
     expect(result.current.height).toBe(600)
 
-    // Simulate orientation change
     act(() => {
       window.dispatchEvent(new Event('orientationchange'))
     })
-    expect(result.current.width).toBe(800) // Adjust as necessary for your orientation logic
-    expect(result.current.height).toBe(600) // Adjust as necessary for your orientation logic
+    expect(result.current.width).toBe(800)
+    expect(result.current.height).toBe(600)
+  })
+
+  it('should not handle portrait orientation when disabled', () => {
+    mockMatchMedia.mockReturnValue({ matches: true })
+    const { result } = renderHook(() => useWindowSize({ listenOrientation: false }))
+    act(() => {
+      window.innerWidth = 600
+      window.innerHeight = 800
+      window.dispatchEvent(new Event('resize'))
+    })
+    expect(result.current.width).toBe(600)
+    expect(result.current.height).toBe(800)
   })
 })
