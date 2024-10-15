@@ -28,6 +28,35 @@ describe('usePausableEffect', () => {
     expect(callback).toHaveBeenCalledTimes(1)
   })
 
+  it('should render once when resume(true)', () => {
+    const renderCount = { value: 0 }
+
+    const { result } = renderHook(() => {
+      renderCount.value++
+      return usePausableEffect(callback, [])
+    })
+
+    expect(renderCount.value).toBe(1)
+
+    act(() => result.current.resume(true))
+
+    expect(renderCount.value).toBe(2)
+
+    act(() => result.current.pause(true))
+
+    expect(renderCount.value).toBe(3)
+
+    expect(callback).toHaveBeenCalledTimes(1)
+
+    act(() => result.current.resume(true, true))
+    expect(renderCount.value).toBe(4)
+    expect(callback).toHaveBeenCalledTimes(2)
+
+    act(() => result.current.pause(true, true))
+    expect(renderCount.value).toBe(5)
+    expect(callback).toHaveBeenCalledTimes(3)
+  })
+
   it('should resume calling the effect when dep changed', () => {
     // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
     const { rerender } = renderHook(({ count }) => usePausableEffect(callback, [count]), {
