@@ -105,8 +105,6 @@ export function createSingleLoading(options: CreateSingleLoadingOptions): Create
         }
 
         throw error
-      } finally {
-        // do nothing
       }
     }) as T
   }

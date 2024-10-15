@@ -9,6 +9,12 @@ describe('createSingleLoading', () => {
     expect(createSingleLoading).toBeInstanceOf(Function)
   })
 
+  it('should throw an error if the create function is not provided', () => {
+    expect(() => createSingleLoading({} as any)).toThrowError(
+      'Please provide the `create` function from `@shined/reactive`',
+    )
+  })
+
   it('should return an object with the correct shape', () => {
     const loading = createSingleLoading({ create })
     expect(loading).toEqual(

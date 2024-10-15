@@ -82,6 +82,7 @@ export function useAdaptiveTextarea<T extends HTMLElement>(
   const latest = useLatest({ height, onResize, styleProp })
 
   const resize = useStableFn(() => {
+    /* v8 ignore next 35, it has been tested in Cypress  */
     if (!taRef.current) return
 
     const { onResize, styleProp, height } = latest.current

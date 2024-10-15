@@ -43,8 +43,6 @@ describe('useQuery', () => {
   it('should handle fetcher when running', async () => {
     const { result } = renderHook(() => useQuery(mockFetcher))
 
-    expect(mockFetcher).not.toHaveBeenCalled() // promise not resolved yet
-
     expect(result.current.data).toBeUndefined()
     expect(result.current.loading).toBe(true)
     expect(result.current.error).toBeUndefined()

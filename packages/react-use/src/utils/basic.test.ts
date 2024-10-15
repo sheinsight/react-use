@@ -3,6 +3,7 @@ import {
   clamp,
   createPromiseWithResolvers,
   createSingletonPromise,
+  ensureSSRSecurity,
   hasOwn,
   increaseWithUnit,
   isBoolean,
@@ -15,6 +16,7 @@ import {
   noNullish,
   noop,
   now,
+  timestamp,
   wait,
 } from './basic'
 
@@ -22,6 +24,30 @@ describe('utils/basic', () => {
   describe('noop', () => {
     it('should return undefined', () => {
       expect(noop()).toBeUndefined()
+    })
+  })
+
+  describe('now', () => {
+    it('should return current timestamp', () => {
+      const start = now()
+      const end = Date.now()
+      expect(start).toBeGreaterThanOrEqual(end)
+    })
+  })
+
+  describe('ensureSSRSecurity', () => {
+    it('should return the result of the function on the client', () => {
+      const fn = vi.fn(() => 'client')
+      const result = ensureSSRSecurity(fn, 'server')
+      expect(result).toBe('client')
+    })
+  })
+
+  describe('timestamp', () => {
+    it('should return current timestamp', () => {
+      const start = timestamp()
+      const end = Date.now()
+      expect(start).toBeGreaterThanOrEqual(end)
     })
   })
 
@@ -189,6 +215,10 @@ describe('utils/basic', () => {
 
     it('should handle negative delta', () => {
       expect(increaseWithUnit('15em', -2)).toBe('13em')
+    })
+
+    it('should handle non-numeric value', () => {
+      expect(increaseWithUnit('test', 1)).toBe('test')
     })
   })
 

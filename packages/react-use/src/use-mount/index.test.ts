@@ -1,4 +1,5 @@
 import { renderHook } from '@/test'
+import { StrictMode } from 'react'
 import { describe, expect, test, vi } from 'vitest'
 import { useMount } from './index'
 
@@ -8,6 +9,16 @@ describe('useMount', () => {
     renderHook(() => useMount(callback))
 
     expect(callback).toHaveBeenCalledTimes(1)
+  })
+
+  test('should handle `strictOnce`', () => {
+    const callback = vi.fn()
+    renderHook(() => useMount(callback, true), { wrapper: StrictMode })
+    expect(callback).toHaveBeenCalledTimes(1)
+
+    callback.mockReset()
+    renderHook(() => useMount(callback, false), { wrapper: StrictMode })
+    expect(callback).toHaveBeenCalledTimes(2)
   })
 
   test('should call the callback function only once when strictOnce is true', () => {
