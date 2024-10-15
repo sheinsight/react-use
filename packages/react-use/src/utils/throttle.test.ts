@@ -62,10 +62,10 @@ describe('throttle', () => {
     throttledFn()
     await vi.advanceTimersByTimeAsync(20)
     throttledFn()
-    expect(fn).toHaveBeenCalledTimes(2) // 1 + leading call
+    expect(fn).toHaveBeenCalledTimes(2)
 
     await vi.advanceTimersByTimeAsync(200)
-    expect(fn).toHaveBeenCalledTimes(3) // 2 + trailing call
+    expect(fn).toHaveBeenCalledTimes(3)
 
     throttledFn()
     throttledFn()
@@ -73,19 +73,19 @@ describe('throttle', () => {
     throttledFn()
     await vi.advanceTimersByTimeAsync(200)
 
-    expect(fn).toHaveBeenCalledTimes(5) // 3 + leading call + trailing calls
+    expect(fn).toHaveBeenCalledTimes(5)
 
     throttledFn()
     throttledFn()
     throttledFn()
     throttledFn()
     throttledFn.clear()
-    expect(fn).toHaveBeenCalledTimes(6) // 5 + leading call
+    expect(fn).toHaveBeenCalledTimes(6)
     await vi.advanceTimersByTimeAsync(200)
-    expect(fn).toHaveBeenCalledTimes(6) // 6
+    expect(fn).toHaveBeenCalledTimes(6)
   })
 
-  it('should handle leading and trailing options correctly', async () => {
+  it('should handle `leading` `true` and `trailing` `false` correctly', async () => {
     throttledFn = throttle(fn, { wait: 100, leading: true, trailing: false })
     throttledFn()
     expect(fn).toHaveBeenCalledTimes(1)
@@ -94,12 +94,52 @@ describe('throttle', () => {
     throttledFn()
     await vi.advanceTimersByTimeAsync(10)
     throttledFn()
-    expect(fn).toHaveBeenCalledTimes(2) // 1 + leading call
+    expect(fn).toHaveBeenCalledTimes(2)
 
     await vi.advanceTimersByTimeAsync(200)
-    expect(fn).toHaveBeenCalledTimes(2) // 2
+    expect(fn).toHaveBeenCalledTimes(2)
 
     throttledFn()
-    expect(fn).toHaveBeenCalledTimes(3) // 2 + leading call
+    expect(fn).toHaveBeenCalledTimes(3)
+  })
+
+  it('should handle `leading` `false` and `trailing` `true` correctly', async () => {
+    throttledFn = throttle(fn, { wait: 100, leading: false, trailing: true })
+    throttledFn()
+    expect(fn).toHaveBeenCalledTimes(0)
+
+    await vi.advanceTimersByTimeAsync(200)
+    expect(fn).toHaveBeenCalledTimes(1)
+
+    throttledFn()
+    await vi.advanceTimersByTimeAsync(10)
+
+    throttledFn()
+    expect(fn).toHaveBeenCalledTimes(1)
+
+    await vi.advanceTimersByTimeAsync(200)
+    expect(fn).toHaveBeenCalledTimes(2)
+
+    throttledFn()
+    expect(fn).toHaveBeenCalledTimes(2)
+  })
+
+  it('should handle system time changes', async () => {
+    const spyDateNow = vi.spyOn(Date, 'now')
+    throttledFn()
+    expect(fn).toHaveBeenCalledTimes(1)
+    throttledFn()
+    expect(fn).toHaveBeenCalledTimes(1)
+    throttledFn()
+    expect(fn).toHaveBeenCalledTimes(1)
+    spyDateNow.mockReturnValueOnce(0)
+    throttledFn()
+    expect(fn).toHaveBeenCalledTimes(2)
+    throttledFn()
+    expect(fn).toHaveBeenCalledTimes(3)
+    throttledFn()
+    expect(fn).toHaveBeenCalledTimes(3)
+    await vi.advanceTimersByTimeAsync(1_000)
+    expect(fn).toHaveBeenCalledTimes(4)
   })
 })

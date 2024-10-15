@@ -1,3 +1,5 @@
+import { debounce } from './debounce'
+
 import type { AnyFunc } from './basic'
 
 export type ThrottleOptions = {
@@ -21,48 +23,39 @@ export type ThrottleOptions = {
   trailing?: boolean
 }
 
+export type ThrottledFn<T extends AnyFunc> = {
+  /**
+   * The throttled function.
+   */
+  (this: ThisParameterType<T>, ...args: Parameters<T>): ReturnType<T> | undefined
+  /**
+   * Cancels the throttled function.
+   *
+   * @deprecated Use `throttled.cancel()` instead.
+   */
+  clear: () => void
+  /**
+   * Cancels the throttled function.
+   */
+  cancel: () => void
+  /**
+   * Invokes the debounced function immediately.
+   */
+  flush: () => ReturnType<T> | undefined
+}
+
+/**
+ * Creates a throttled function that only invokes the provided function at most once per every `wait` milliseconds.
+ *
+ * @from lodash/throttle
+ */
 export function throttle<T extends AnyFunc>(fn: T, options: ThrottleOptions = {}) {
   const { wait = 0, leading = true, trailing = true } = options
 
-  let timeoutId: ReturnType<typeof setTimeout> | null = null
-  let lastArgs: Parameters<T> | null = null
-  let lastInvokeTime: number | null = null
-
-  const throttled = function (this: ThisParameterType<T>, ...args: Parameters<T>) {
-    lastArgs = args
-    const now = Date.now()
-    const leadingCall = leading && !lastInvokeTime
-    const remaining = wait - (now - (lastInvokeTime || 0))
-
-    const invoke = () => {
-      if (lastArgs) fn.apply(this, lastArgs)
-      lastArgs = null
-      lastInvokeTime = Date.now()
-    }
-
-    if (remaining <= 0 || remaining > wait) {
-      if (timeoutId) {
-        clearTimeout(timeoutId)
-        timeoutId = null
-      }
-      invoke()
-    } else if (!timeoutId && trailing) {
-      timeoutId = setTimeout(() => {
-        lastInvokeTime = leading ? Date.now() : null
-        timeoutId = null
-        invoke()
-      }, remaining)
-    } else if (leadingCall) {
-      invoke()
-    }
-  }
-
-  throttled.clear = () => {
-    if (timeoutId) clearTimeout(timeoutId)
-    timeoutId = null
-    lastArgs = null
-    lastInvokeTime = null
-  }
-
-  return throttled as T & { clear(): void }
+  return debounce(fn, {
+    wait,
+    leading,
+    trailing,
+    maxWait: wait,
+  })
 }

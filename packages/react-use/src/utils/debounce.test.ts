@@ -1,9 +1,12 @@
-import { type Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { debounce } from './debounce'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { type DebouncedFn, debounce } from './debounce'
+
+import type { Mock } from 'vitest'
+import type { AnyFunc } from './basic'
 
 describe('debounce', () => {
   let fn: Mock
-  let debounced: ((...args: any[]) => void) & { clear(): void }
+  let debounced: DebouncedFn<AnyFunc>
 
   beforeEach(() => {
     fn = vi.fn()
@@ -26,6 +29,61 @@ describe('debounce', () => {
     debounced = debounce(fn, { wait: 100, leading: true })
     debounced()
     expect(fn).toHaveBeenCalled()
+  })
+
+  it('should support a `maxWait` option', () => {
+    const debounced = debounce(fn, { maxWait: 64, wait: 32 })
+    debounced()
+    debounced()
+    expect(fn).not.toHaveBeenCalled()
+    vi.advanceTimersByTime(128)
+    expect(fn).toHaveBeenCalledTimes(1)
+    debounced()
+    debounced()
+    expect(fn).toHaveBeenCalledTimes(1)
+    vi.advanceTimersByTime(128)
+    expect(fn).toHaveBeenCalledTimes(2)
+  })
+
+  it('should handle maxWait correctly', () => {
+    const debounced = debounce(fn, {
+      wait: 200,
+      maxWait: 200,
+      leading: false,
+      trailing: true,
+    })
+
+    debounced()
+
+    vi.advanceTimersByTime(190)
+    debounced()
+
+    vi.advanceTimersByTime(10)
+    debounced()
+
+    vi.advanceTimersByTime(10)
+    debounced()
+
+    vi.advanceTimersByTime(500)
+    expect(fn).toHaveBeenCalledTimes(2)
+  })
+
+  it('should cancel `maxDelayed` when `delayed` is invoked', () => {
+    const debounced = debounce(fn, {
+      wait: 32,
+      maxWait: 64,
+      leading: false,
+      trailing: true,
+    })
+
+    debounced()
+
+    vi.advanceTimersByTime(128)
+    debounced()
+    expect(fn).toHaveBeenCalledTimes(1)
+
+    vi.advanceTimersByTime(64)
+    expect(fn).toHaveBeenCalledTimes(2)
   })
 
   it('should not invoke leading function when leading is false', () => {
@@ -56,6 +114,13 @@ describe('debounce', () => {
     expect(fn).not.toHaveBeenCalled()
   })
 
+  it('should flush pending calls when flush is called', () => {
+    debounced = debounce(fn, { wait: 100 })
+    debounced()
+    debounced.flush()
+    expect(fn).toHaveBeenCalled()
+  })
+
   it('should handle multiple calls correctly', () => {
     debounced = debounce(fn, { wait: 100 })
     debounced()
@@ -63,7 +128,7 @@ describe('debounce', () => {
     vi.advanceTimersByTime(50)
     debounced()
     vi.advanceTimersByTime(100)
-    expect(fn).toHaveBeenCalledTimes(1) // Only the last call should be invoked
+    expect(fn).toHaveBeenCalledTimes(1)
   })
 
   it('should invoke immediately if leading is true and wait is 0', () => {
