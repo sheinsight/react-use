@@ -7,3 +7,5 @@ dist
 build
 docs-dist
 coverage
+
+cypress/screenshots

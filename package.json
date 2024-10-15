@@ -12,7 +12,7 @@
     "prerelease": "pnpm lint",
     "release": "bumpp -r",
     "postrelease": "pnpm changelog && git add CHANGELOG.md && git commit -m 'chore: update changelog' && git push",
-    "test": "vitest --coverage --coverage.include 'packages/**/src/**/*.{ts,tsx}' --coverage.exclude '**/demo.{ts,tsx}' --coverage.exclude '**/*.cy.{ts,tsx}'",
+    "test": "vitest --coverage --coverage.include 'packages/**/src/**/*.{ts,tsx}' --coverage.exclude '**/demo.{ts,tsx}' --coverage.exclude '**/*.{test,cy}.{ts,tsx}' --coverage.exclude '**/*.ssr.{test.cy}.{ts,tsx}'",
     "cy:open": "cypress open --component --browser chrome --config-file cypress.config.mjs",
     "cy:run": "cypress run --component --browser chrome --config-file cypress.config.mjs",
     "test:ci": "pnpm build && pnpm lint && vitest",
