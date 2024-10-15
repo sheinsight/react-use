@@ -3,7 +3,7 @@ import { useLatest } from '../use-latest'
 import { debounce as createDebouncedFn } from '../utils/debounce'
 
 import type { AnyFunc } from '../utils/basic'
-import type { DebounceOptions } from '../utils/debounce'
+import type { DebounceOptions, DebouncedFn } from '../utils/debounce'
 
 export interface UseDebouncedFnOptions extends DebounceOptions {}
 
@@ -13,7 +13,7 @@ export interface UseDebouncedFnOptions extends DebounceOptions {}
 export function useDebouncedFn<T extends AnyFunc, P extends Parameters<T>>(
   fn: T,
   options: UseDebouncedFnOptions = {},
-): T & { clear(): void } {
+): DebouncedFn<T> {
   const latest = useLatest({ fn })
 
   return useCreation(() => {
