@@ -313,7 +313,7 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
     ...pausable,
     mutate: mutateWithCache,
     refresh: refreshWithCache,
-    run: enableRateControl ? serviceWithRateControl : service.run,
+    run: (enableRateControl ? serviceWithRateControl : service.run) as T,
     cancel: service.cancel,
     get params() {
       return cacheActions.isCacheEnabled ? cache.params : service.params
