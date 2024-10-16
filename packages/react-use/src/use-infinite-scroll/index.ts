@@ -98,6 +98,7 @@ export function useInfiniteScroll<R = any, T extends HTMLElement = HTMLElement>(
   } = options
 
   const el = useTargetElement<T>(target)
+  const isCalculating = useRef(false)
   const previousReturn = useRef<R | undefined>(undefined)
   const [incVersion, runVersionedAction] = useVersionedAction()
   const [state, { updateRefState }, stateRef] = useTrackedRefState({
@@ -129,6 +130,10 @@ export function useInfiniteScroll<R = any, T extends HTMLElement = HTMLElement>(
   const calculate = useStableFn(async () => {
     if (!el.current || stateRef.isLoadDone.value || stateRef.loading.value) return
 
+    if (isCalculating.current) return
+
+    isCalculating.current = true
+
     const { scrollHeight, scrollTop, clientHeight, scrollWidth, clientWidth } = el.current
 
     const isYScroll = latest.current.direction === 'bottom' || latest.current.direction === 'top'
@@ -141,6 +146,8 @@ export function useInfiniteScroll<R = any, T extends HTMLElement = HTMLElement>(
     if (isScrollNarrower || isAlmostBottom) {
       await loadMore()
     }
+
+    isCalculating.current = false
   })
 
   useMount(immediate && calculate)
