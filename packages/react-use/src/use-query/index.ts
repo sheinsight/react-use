@@ -198,7 +198,8 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
 
   const service = useLoadingSlowFn<T, D, E>(
     useRetryFn<T, E>(
-      ((...args) => {
+      ((...args: Parameters<T>) => {
+        if (!cacheActions.isCacheEnabled) return latest.current.fetcher(...args)
         const prePromise = cacheActions.getPromiseCache()
         if (prePromise) return prePromise
         const promise = latest.current.fetcher(...args)
@@ -305,7 +306,7 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
 
   const refreshWithCache = useStableFn(async (params?: Parameters<T> | []) => {
     const outerParams = cacheActions.isCacheEnabled ? latest.current.cache.params : service.params
-    const actualParams = params ?? (outerParams || [])
+    const actualParams = params ?? outerParams
     return latest.current.enableRateControl ? refreshWithRateControl(actualParams) : service.refresh(actualParams)
   })
 
