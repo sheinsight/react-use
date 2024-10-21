@@ -95,7 +95,7 @@ export function useQueryCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
 
     paramsCache.set(cacheKeyValue, params)
 
-    if (!latest.current.compare(preValue, value)) {
+    if (!latest.current.compare(preValue, value) || !shallowEqual(preParams, params)) {
       cacheBus.emit(cacheKeyValue)
     }
   })
