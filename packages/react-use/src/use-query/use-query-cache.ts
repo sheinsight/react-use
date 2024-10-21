@@ -101,14 +101,12 @@ export function useQueryCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
   })
 
   const getPromiseCache = useStableFn(() => {
-    const { cacheKeyValue } = latest.current
-    if (!cacheKeyValue) return
+    const { cacheKeyValue = '' } = latest.current
     return promiseCache.get(cacheKeyValue)
   })
 
   const setPromiseCache = useStableFn((promise: Promise<D>) => {
-    const { cacheKeyValue } = latest.current
-    if (!cacheKeyValue) return
+    const { cacheKeyValue = '' } = latest.current
     promiseCache.set(cacheKeyValue, promise)
   })
 
@@ -133,7 +131,11 @@ export function useQueryCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
 
 export const mutate = /* #__PURE__ */ createMutate(dataCache, paramsCache)
 
-export type UseQueryMutate = (keyFilter: (key: string) => boolean, value?: unknown, params?: unknown[]) => void
+export type UseQueryMutate = (
+  keyFilter: Arrayable<string> | ((key: string) => boolean),
+  value?: SetStateAction<unknown>,
+  params?: SetStateAction<unknown[]>,
+) => void
 
 function createMutate(dataCache: UseQueryCacheLike<unknown>, paramsCache: Map<string, unknown[]>): UseQueryMutate {
   return (
@@ -148,17 +150,16 @@ function createMutate(dataCache: UseQueryCacheLike<unknown>, paramsCache: Map<st
     for (const key of keys) {
       const prevData = dataCache.get(key)
       const nextData = isFunction(value) ? value(prevData) : value
-
       const prevParams = paramsCache.get(key) ?? []
       const nextParams = isFunction(params) ? params(prevParams) : params
 
-      if (isDefined(key)) {
+      if (isDefined(nextData)) {
         dataCache.set(key, nextData)
-        paramsCache.set(key, nextParams)
       } else {
         dataCache.delete(key)
-        paramsCache.delete(key)
       }
+
+      paramsCache.set(key, nextParams)
 
       cacheBus.emit(key)
     }
