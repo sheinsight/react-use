@@ -81,7 +81,7 @@ export function useQueryCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     if (!cacheKeyValue) return
 
     const preValue = provider.get(cacheKeyValue) as D | undefined
-    const preParams = paramsCache.get(cacheKeyValue) as Parameters<T> | []
+    const preParams = paramsCache.get(cacheKeyValue) as Parameters<T> | [] | undefined
 
     if (shallowEqual(preValue, value) && shallowEqual(preParams, params)) return
 
@@ -178,9 +178,8 @@ function createEventBus() {
 
   function off(eventName: string, listener: () => void) {
     const set = listeners.get(eventName)
-    if (!set) return
-    set.delete(listener)
-    if (set.size === 0) listeners.delete(eventName)
+    set?.delete(listener)
+    if (set?.size === 0) listeners.delete(eventName)
   }
 
   function emit(eventName: string) {
