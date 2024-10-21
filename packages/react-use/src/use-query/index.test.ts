@@ -467,6 +467,24 @@ describe('useQuery', () => {
     expect(result.current.data).toBe(undefined)
   })
 
+  it('should respect cache expiration `false`', async () => {
+    const { result } = renderHook(() =>
+      useQuery(mockFetcher, {
+        cacheKey: 'expiration',
+        cacheExpirationTime: false,
+      }),
+    )
+
+    await act(async () => {}) // wait for fetcher to resolve
+
+    expect(result.current.data).toBe('data')
+
+    // Wait for cache to expire, should not expire
+    await vi.advanceTimersByTimeAsync(10_000)
+
+    expect(result.current.data).toBe('data')
+  })
+
   it('should handle throttle', async () => {
     const { result } = renderHook(() => useQuery(mockFetcher, { immediate: false, throttle: 100 }))
 
@@ -597,6 +615,14 @@ describe('useQuery', () => {
     })
 
     expect(result.current.data).toBe('newData')
+    expect(result.current.params).toEqual([])
+
+    await act(async () => {
+      result.current.mutate(undefined, ['newParams'])
+    })
+
+    expect(result.current.data).toBe(undefined)
+    expect(result.current.params).toEqual(['newParams'])
   })
 
   it('should handle refresh with cache', async () => {
@@ -707,5 +733,43 @@ describe('useQuery', () => {
     await act(async () => {}) // wait for fetcher to resolve
 
     expect(result.current.initializing).toBe(false)
+  })
+
+  it('should handle global mutate', async () => {
+    const { result } = renderHook(() => useQuery(mockFetcher, { cacheKey: 'global-mutate' }))
+    const { result: result2 } = renderHook(() => useQuery(mockFetcher, { cacheKey: 'global-mutate' }))
+    const { result: result3 } = renderHook(() => useQuery(mockFetcher, { cacheKey: 'global-mutate' }))
+
+    await act(async () => {}) // wait for fetcher to resolve
+
+    expect(result.current.data).toBe('data')
+    expect(result2.current.data).toBe('data')
+    expect(result3.current.data).toBe('data')
+
+    act(() => {
+      mutate(['global-mutate', 'not-exist'], 'newData', [])
+    })
+
+    expect(result.current.data).toBe('newData')
+    expect(result.current.params).toEqual([])
+    expect(result2.current.data).toBe('newData')
+    expect(result2.current.params).toEqual([])
+    expect(result3.current.data).toBe('newData')
+    expect(result3.current.params).toEqual([])
+
+    act(() => {
+      mutate(
+        'global-mutate',
+        () => undefined,
+        () => ['newParams'],
+      )
+    })
+
+    expect(result.current.data).toBe(undefined)
+    expect(result.current.params).toEqual(['newParams'])
+    expect(result2.current.data).toBe(undefined)
+    expect(result2.current.params).toEqual(['newParams'])
+    expect(result3.current.data).toBe(undefined)
+    expect(result3.current.params).toEqual(['newParams'])
   })
 })
