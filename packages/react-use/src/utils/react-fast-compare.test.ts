@@ -48,6 +48,18 @@ describe('reactFastCompare', () => {
     expect(reactFastCompare(arrA, arrB)).toBe(false)
   })
 
+  it('should return false for different arrays length', () => {
+    const arrA = [1, 2, 3]
+    const arrB = [1, 2, 3, 4]
+    expect(reactFastCompare(arrA, arrB)).toBe(false)
+  })
+
+  it('should return false for different object', () => {
+    const obj = Object.create(null)
+    const map = new Map()
+    expect(reactFastCompare(obj, map)).toBe(false)
+  })
+
   it('should handle circular references gracefully', () => {
     const objA: any = { a: 1 }
     objA.self = objA
@@ -66,6 +78,31 @@ describe('reactFastCompare', () => {
       ['key2', 'value2'],
     ])
     expect(reactFastCompare(mapA, mapB)).toBe(true)
+  })
+
+  it('should return true for different Maps with different size', () => {
+    const mapA = new Map([
+      ['key1', 'value1'],
+      ['key2', 'value2'],
+    ])
+    const mapB = new Map([
+      ['key1', 'value1'],
+      ['key2', 'value2'],
+      ['key3', 'value3'],
+    ])
+    expect(reactFastCompare(mapA, mapB)).toBe(false)
+  })
+
+  it('should return true for different Maps with different keys', () => {
+    const mapA = new Map([
+      ['key1', 'value1'],
+      ['key2', 'value2'],
+    ])
+    const mapB = new Map([
+      ['key1', 'value1'],
+      ['key3', 'value2'],
+    ])
+    expect(reactFastCompare(mapA, mapB)).toBe(false)
   })
 
   it('should return false for different Maps', () => {
@@ -89,6 +126,12 @@ describe('reactFastCompare', () => {
   it('should return false for different Sets', () => {
     const setA = new Set(['value1', 'value2'])
     const setB = new Set(['value1', 'value3'])
+    expect(reactFastCompare(setA, setB)).toBe(false)
+  })
+
+  it('should return false for different Sets size', () => {
+    const setA = new Set(['value1', 'value2'])
+    const setB = new Set(['value1', 'value2', 'value3'])
     expect(reactFastCompare(setA, setB)).toBe(false)
   })
 
