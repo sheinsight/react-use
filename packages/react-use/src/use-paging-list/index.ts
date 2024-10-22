@@ -154,21 +154,14 @@ export function usePagingList<
     },
   })
 
-  const startNewQuery = useStableFn((resetPageSize = false) => {
+  const startNewQuery = useStableFn(() => {
     previousDataRef.current = undefined
     paginationActions.go(1)
-
-    let pageSize = paginationState.pageSize
-
-    if (resetPageSize) {
-      paginationActions.setPageSize(options.pagination?.pageSize ?? 10)
-      pageSize = options.pagination?.pageSize ?? 10
-    }
 
     query.run({
       previousData: previousDataRef.current,
       page: 1,
-      pageSize,
+      pageSize: paginationState.pageSize,
       form: form.value,
       setTotal,
     })
@@ -194,7 +187,7 @@ export function usePagingList<
     },
   })
 
-  const query = useQuery<Fetcher>((options.fetcher ?? (() => {})) as Fetcher, {
+  const query = useQuery<Fetcher>(options?.fetcher as Fetcher, {
     ...options.query,
     initialParams: [
       {
