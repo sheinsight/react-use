@@ -121,6 +121,7 @@ export function useInfiniteScroll<R = any, T extends HTMLElement = HTMLElement>(
     ])
 
     runVersionedAction(version, () => {
+      isCalculating.current = false
       previousReturn.current = result
       updateRefState('loading', false)
       updateRefState('isLoadDone', !latest.current.canLoadMore(previousReturn.current))
