@@ -92,4 +92,40 @@ describe('usePagination', () => {
     expect(pagination.pageCount).toBe(1)
     expect(pagination.list).toEqual([])
   })
+
+  it('should handle onPageSizeChange', () => {
+    const onPageSizeChange = vi.fn()
+
+    const { result } = renderHook(() => usePagination({ ...options, onPageSizeChange }))
+
+    act(() => {
+      result.current[1].setPageSize(5)
+    })
+
+    expect(onPageSizeChange).toHaveBeenCalledTimes(1)
+  })
+
+  it('should handle onPageChange', () => {
+    const onPageChange = vi.fn()
+
+    const { result } = renderHook(() => usePagination({ ...options, onPageChange }))
+
+    act(() => {
+      result.current[1].next()
+    })
+
+    expect(onPageChange).toHaveBeenCalledTimes(1)
+  })
+
+  it('should handle onPageCountChange', () => {
+    const onPageCountChange = vi.fn()
+
+    const { result } = renderHook(() => usePagination({ ...options, onPageCountChange, pageSize: 10 }))
+
+    act(() => {
+      result.current[1].setPageSize(5)
+    })
+
+    expect(onPageCountChange).toHaveBeenCalledTimes(1)
+  })
 })

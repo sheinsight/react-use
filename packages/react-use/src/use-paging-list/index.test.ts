@@ -82,4 +82,27 @@ describe('usePagingList', () => {
 
     expect(result.current.loading).toBe(false)
   })
+
+  it('should handle pageSize change', async () => {
+    const onPageSizeChange = vi.fn()
+
+    const { result } = renderHook(() =>
+      usePagingList({
+        fetcher: fetcherMock,
+        pagination: {
+          pageSize: 10,
+          onPageSizeChange,
+        },
+      }),
+    )
+
+    expect(fetcherMock).toHaveBeenCalledTimes(1)
+
+    await act(async () => {
+      result.current.pagination.setPageSize(5)
+    })
+
+    expect(fetcherMock).toHaveBeenCalledTimes(2)
+    expect(onPageSizeChange).toHaveBeenCalledTimes(1)
+  })
 })
