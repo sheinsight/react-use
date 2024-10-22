@@ -1,3 +1,32 @@
+## [1.9.2](https://github.com/sheinsight/react-use/compare/v1.9.1...v1.9.2) (2024-10-22)
+
+
+### Bug Fixes
+
+* **useInfiniteScroll:** fix `loadMore` may not be called when container too large in some cases ([36e10a1](https://github.com/sheinsight/react-use/commit/36e10a170d062e88f7afc7354630768eea1af94e))
+* **useQuery:** fix params update issue when data was not changed ([3497c4b](https://github.com/sheinsight/react-use/commit/3497c4b26a103c6c25a70a26059a47ebe0ec1045))
+* **useQuery:** fix TS type definition for global `mutate` ([83941ab](https://github.com/sheinsight/react-use/commit/83941ab33e47d0eae87032101a2ce1e0acc988bd))
+
+
+### Performance Improvements
+
+* **useQuery:** don't cache promise when not set cacheKey ([9e0d513](https://github.com/sheinsight/react-use/commit/9e0d513a4fb29bc6bcf4b12015f21893db1e33e6))
+
+
+
+## [1.9.1](https://github.com/sheinsight/react-use/compare/v1.9.0...v1.9.1) (2024-10-16)
+
+
+### Bug Fixes
+
+* **useAsyncFn:** fix `initialParams` may not work when `initialParams` is a function & params not update after initial call ([2ee1c2f](https://github.com/sheinsight/react-use/commit/2ee1c2f61607c88f7a63209fa2b6f5632b58ae13))
+* **useAsyncFn:** fix `initialParams` not working when set ([9b5c7a1](https://github.com/sheinsight/react-use/commit/9b5c7a1dfb4e024e21ce6df83e333f8370cbe6bc))
+* **useAsyncFn:** fix TS type definition error ([ccd107e](https://github.com/sheinsight/react-use/commit/ccd107e06ddf9a42c18a668610bc8b7726dd0829))
+* **useInfiniteScroll:** fix `loadMore` may be called twice when first mount in some scenarios. ([319c863](https://github.com/sheinsight/react-use/commit/319c86385b73cf6ba33af6de2a97723519f31e4c))
+* **useQuery:** fix `onError` params ([921f947](https://github.com/sheinsight/react-use/commit/921f947439f7a740c963f3f58cc5796465a8d50f))
+
+
+
 # [1.9.0](https://github.com/sheinsight/react-use/compare/v1.8.0...v1.9.0) (2024-10-09)
 
 
