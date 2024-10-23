@@ -37,6 +37,22 @@ describe('useBluetooth', () => {
     expect(result.current.isSupported).toBe(false)
   })
 
+  it('should `requestDevice` do nothing when isSupported is false', async () => {
+    // @ts-ignore
+    // biome-ignore lint/performance/noDelete: <explanation>
+    delete global.navigator.bluetooth
+
+    const { result } = renderHook(() => useBluetooth())
+
+    expect(result.current.isSupported).toBe(false)
+
+    await act(async () => {
+      result.current.requestDevice()
+    })
+
+    expect(result.current.device).not.toBeDefined()
+  })
+
   it('should call requestDevice with correct options', async () => {
     const options = {
       filters: [{ services: ['heart_rate'] }],
