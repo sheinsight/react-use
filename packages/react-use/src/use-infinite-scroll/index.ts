@@ -170,6 +170,7 @@ export function useInfiniteScroll<R = any, T extends HTMLElement = HTMLElement>(
 
   const reset = useStableFn(() => {
     previousReturn.current = undefined
+    isCalculating.current = false
     incVersion()
     updateRefState('loading', false)
     updateRefState('isLoadDone', false)
