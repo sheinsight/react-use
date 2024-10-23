@@ -1,3 +1,12 @@
+## [1.9.3](https://github.com/sheinsight/react-use/compare/v1.9.2...v1.9.3) (2024-10-23)
+
+
+### Bug Fixes
+
+* **useInfiniteScroll:** fix reset may not work as expected when frequency is too high ([c129047](https://github.com/sheinsight/react-use/commit/c1290475d9b900d5462d9914ab960b06cb08276d))
+
+
+
 ## [1.9.2](https://github.com/sheinsight/react-use/compare/v1.9.1...v1.9.2) (2024-10-22)
 
 
