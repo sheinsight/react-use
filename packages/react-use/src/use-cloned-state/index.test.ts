@@ -121,4 +121,16 @@ describe('useClonedState', () => {
 
     expect(result.current[0]).toBe(result.current[0]) // Reference should not change
   })
+
+  it('should handle deep options', async () => {
+    const source = { a: 1, b: { c: 2 } }
+    const { result, rerender } = renderHook(({ s }) => useClonedState(s, { deep: true }), {
+      initialProps: { s: source },
+    })
+
+    const newSource = { a: 2, b: { c: 3 } }
+    rerender({ s: newSource })
+
+    expect(result.current[0]).toEqual(newSource)
+  })
 })

@@ -184,4 +184,61 @@ describe('useCounter', () => {
     })
     expect(result.current[0]).toBe(30)
   })
+
+  it('should  handle setState', () => {
+    const { result } = renderHook(() => useCounter(0))
+
+    act(() => {
+      result.current[1].setState(20)
+    })
+
+    expect(result.current[0]).toBe(20)
+  })
+
+  it('should  handle setState functional call', () => {
+    const { result } = renderHook(() => useCounter(0))
+
+    act(() => {
+      result.current[1].setState((prev) => prev + 10)
+    })
+
+    expect(result.current[0]).toBe(10)
+  })
+
+  it('should handle max & min changes', () => {
+    const { result, rerender } = renderHook((props) => useCounter(0, props), {
+      initialProps: { min: -10, max: 10 } as {
+        min?: number
+        max?: number
+      },
+    })
+
+    act(() => {
+      result.current[1].inc(10)
+    })
+
+    expect(result.current[0]).toBe(10)
+
+    rerender({ max: 20 })
+
+    act(() => {
+      result.current[1].dec(100)
+    })
+
+    expect(result.current[0]).toBe(-90)
+
+    rerender({ max: 3, min: 1 })
+
+    expect(result.current[0]).toBe(1)
+
+    act(() => {
+      result.current[1].setState(20)
+    })
+
+    expect(result.current[0]).toBe(3)
+
+    rerender()
+
+    expect(result.current[0]).toBe(3)
+  })
 })
