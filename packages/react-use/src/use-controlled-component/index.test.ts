@@ -48,6 +48,28 @@ describe('useControlledComponent', () => {
     expect(result.current.value).toBe('event-value')
   })
 
+  it('should handle value in onChange', () => {
+    const { result } = renderHook(() => useControlledComponent('initial'))
+    act(() => {
+      result.current.props.onChange('event-value')
+    })
+    expect(result.current.value).toBe('event-value')
+  })
+
+  it('should handle fallbackValue', () => {
+    const { result } = renderHook(() => useControlledComponent('initial', { fallbackValue: 'fallback' }))
+    act(() => {
+      // @ts-ignore for test
+      result.current.props.onChange({ target: { value: undefined } })
+    })
+    expect(result.current.value).toBe('fallback')
+    act(() => {
+      // @ts-ignore for test
+      result.current.props.onChange({ target: { value: null } })
+    })
+    expect(result.current.value).toBe('fallback')
+  })
+
   it('should use fallbackValue when value is undefined', () => {
     const { result } = renderHook(() => useControlledComponent('initial', { fallbackValue: 'fallback' }))
     act(() => {

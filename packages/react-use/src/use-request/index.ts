@@ -17,6 +17,7 @@ export interface UseRequestReturns<T extends AnyFunc, D = Awaited<ReturnType<T>>
  * @deprecated deprecated since `1.5.0`, use `useQuery` instead
  *
  */
+/* v8 ignore next 6 */
 export function useRequest<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>(
   fetcher: T,
   options: UseQueryOptions<T, D, E> = {},

@@ -98,4 +98,12 @@ describe('useDateFormat', () => {
     rerender({ format: 'HH:mm:ss' })
     expect(result.current).toBe('12:34:56')
   })
+
+  it('should formate AA with period', () => {
+    const { result } = renderHook(() => useDateFormat(new Date('2023-04-15T09:00:00'), 'hh:mm AA'))
+    expect(result.current).toBe('09:00 A.M.')
+
+    const { result: pmResult } = renderHook(() => useDateFormat(new Date('2023-04-15T15:00:00'), 'hh:mm AA'))
+    expect(pmResult.current).toBe('03:00 P.M.')
+  })
 })

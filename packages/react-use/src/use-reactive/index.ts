@@ -16,6 +16,7 @@ export type UseReactiveOptions<State> = SnapshotOptions<State> & { create: typeo
  *
  * @deprecated will be removed in the future, maybe moved to `@shined/reactive`
  */
+/* v8 ignore next 24 */
 export function useReactive<State extends object>(
   initialState: State,
   options: UseReactiveOptions<State>,
