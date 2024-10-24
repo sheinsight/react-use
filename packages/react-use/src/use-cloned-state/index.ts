@@ -69,8 +69,6 @@ export function useClonedState<T>(source: T, options: UseClonedStateOptions = {}
   // for shallow compare
   useUpdateEffect(
     () => {
-      if (latest.current.deep) return
-
       !latest.current.manual && syncSource()
     },
     deep ? [] : [source],
@@ -79,8 +77,6 @@ export function useClonedState<T>(source: T, options: UseClonedStateOptions = {}
   // for deep compare
   useUpdateDeepCompareEffect(
     () => {
-      if (!latest.current.deep) return
-
       !latest.current.manual && syncSource()
     },
     deep ? [source] : [],
