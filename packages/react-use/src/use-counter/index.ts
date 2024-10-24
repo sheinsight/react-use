@@ -134,7 +134,7 @@ export function useCounter(initialCount: number = 0, options: UseCounterOptions 
 
   const setState = useStableFn((state: SetStateAction<number>) => {
     _setState((pre) => ({
-      count: isFunction(state) ? state(pre.count) : state,
+      count: clamp(isFunction(state) ? state(pre.count) : state, pre.min, pre.max),
     }))
   })
 
