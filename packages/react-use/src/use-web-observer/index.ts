@@ -133,6 +133,9 @@ export function useWebObserver(...args: any[]): any {
     if (els.length || hasNoElements) {
       ref.current = true
       const Observer = window[observer] as any
+
+      if (!Observer) return
+
       observerRef.current = new Observer((...args: any[]) => latest.current.callback(...args), initOptions)
 
       if (els.length) {
