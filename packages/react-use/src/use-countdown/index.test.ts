@@ -115,4 +115,23 @@ describe('useCountdown', () => {
     expect(result.current).toBeGreaterThan(4000)
     expect(result.current).toBeLessThanOrEqual(5000)
   })
+
+  it('should handle nullish date', () => {
+    const { result } = renderHook(() => useCountdown(null))
+
+    expect(result.current).toBe(0)
+  })
+
+  it('should handle date change', () => {
+    const { result, rerender } = renderHook(({ date }) => useCountdown(date), {
+      initialProps: { date: new Date(Date.now() + 5000) as Date | null },
+    })
+
+    expect(result.current).toBeGreaterThan(4000)
+    expect(result.current).toBeLessThanOrEqual(5000)
+
+    rerender({ date: null })
+
+    expect(result.current).toBe(0)
+  })
 })

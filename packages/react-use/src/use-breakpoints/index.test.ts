@@ -25,5 +25,21 @@ describe('useBreakpoints', () => {
       xl: false,
       xxl: false,
     })
+
+    expect(result.current.isInBetween).toBeInstanceOf(Function)
+  })
+
+  it('should handle isInBetween correctly', () => {
+    const { result } = renderHook(() => useBreakpoints())
+
+    expect(result.current.breakpoints).toEqual({
+      lg: false,
+      md: false,
+      sm: false,
+      xl: false,
+      xxl: false,
+    })
+
+    expect(result.current.isInBetween('sm', 'md')).toBe(false)
   })
 })
