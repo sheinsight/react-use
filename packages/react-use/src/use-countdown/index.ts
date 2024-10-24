@@ -53,23 +53,30 @@ export type UseCountdownReturns<Controls extends boolean> = Controls extends tru
   ? { ms: number; isStop: boolean } & Pausable
   : number
 
-function calRemainingTime(date: Gettable<DateLike>) {
+function calRemainingTime(date: Gettable<DateLike | null | undefined>) {
   const dateValue = unwrapGettable(date)
 
   if (noNullish(dateValue)) {
     return Math.max(0, normalizeDate(dateValue).getTime() - now())
   }
+
   return 0
 }
 
 /**
  * A React Hook that provides a countdown timer.
  */
-export function useCountdown(date: Gettable<DateLike>): UseCountdownReturns<false>
-export function useCountdown(date: Gettable<DateLike>, options: UseCountdownOptions<false>): UseCountdownReturns<false>
-export function useCountdown(date: Gettable<DateLike>, options: UseCountdownOptions<true>): UseCountdownReturns<true>
+export function useCountdown(date: Gettable<DateLike | null | undefined>): UseCountdownReturns<false>
 export function useCountdown(
-  date: Gettable<DateLike>,
+  date: Gettable<DateLike | null | undefined>,
+  options: UseCountdownOptions<false>,
+): UseCountdownReturns<false>
+export function useCountdown(
+  date: Gettable<DateLike | null | undefined>,
+  options: UseCountdownOptions<true>,
+): UseCountdownReturns<true>
+export function useCountdown(
+  date: Gettable<DateLike | null | undefined>,
   options: UseCountdownOptions<boolean> = {},
 ): UseCountdownReturns<boolean> {
   const {
@@ -78,16 +85,13 @@ export function useCountdown(
     interval = 'requestAnimationFrame',
     onStop,
     onUpdate,
-  } = options || {}
+  } = options
 
   const [ms, setMs] = useSafeState(() => calRemainingTime(date))
 
   const update = useStableFn(() => {
     const { date, onUpdate, onStop } = latest.current
     const ms = calRemainingTime(date)
-
-    // ignore same value when use `requestAnimationFrame` or smaller interval
-    if (latest.current.ms === ms) return
 
     onUpdate?.(ms, Math.ceil(ms / 1000))
 
