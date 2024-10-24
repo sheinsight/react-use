@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { useEventListener } from '../use-event-listener'
+import { useLatest } from '../use-latest'
 import { useSetState } from '../use-set-state'
 import { useTargetElement } from '../use-target-element'
 import { isFunction, noNullish } from '../utils/basic'
@@ -57,8 +58,9 @@ export function useDropZone(
   const countRef = useRef(0)
   const isTypeAcceptedRef = useRef(true)
 
-  const _options = isFunction(options) ? { onDrop: options } : options
-  const { dataTypes, onDrop, onEnter, onLeave, onOver } = _options
+  const latest = useLatest({
+    options: isFunction(options) ? { onDrop: options } : options,
+  })
 
   useEventListener<DragEvent>(el, 'dragenter', (event) => {
     event.preventDefault()
@@ -67,14 +69,10 @@ export function useDropZone(
       .map((i) => (i.kind === 'file' ? i.type : null))
       .filter(noNullish)
 
-    if (dataTypes && event.dataTransfer) {
-      const dataTypes = _options.dataTypes
+    const { dataTypes } = latest.current.options
 
-      const isTypeAccepted = isFunction(dataTypes)
-        ? dataTypes(types)
-        : dataTypes
-          ? dataTypes.some((item) => types.includes(item))
-          : true
+    if (dataTypes && event.dataTransfer) {
+      const isTypeAccepted = isFunction(dataTypes) ? dataTypes(types) : dataTypes.some((item) => types.includes(item))
 
       isTypeAcceptedRef.current = isTypeAccepted
 
@@ -87,13 +85,13 @@ export function useDropZone(
       setState({ isOverDropZone: true })
     }
 
-    onEnter?.(getFiles(event), event)
+    latest.current.options.onEnter?.(getFiles(event), event)
   })
 
   useEventListener<DragEvent>(el, 'dragover', (event) => {
     if (!isTypeAcceptedRef.current) return
     event.preventDefault()
-    onOver?.(getFiles(event), event)
+    latest.current.options.onOver?.(getFiles(event), event)
   })
 
   useEventListener<DragEvent>(el, 'dragleave', (event) => {
@@ -101,14 +99,15 @@ export function useDropZone(
     event.preventDefault()
     countRef.current--
     if (countRef.current === 0) setState({ isOverDropZone: false })
-    onLeave?.(getFiles(event), event)
+    latest.current.options.onLeave?.(getFiles(event), event)
   })
 
   useEventListener<DragEvent>(el, 'drop', (event) => {
+    if (!isTypeAcceptedRef.current) return
     event.preventDefault()
     countRef.current = 0
     setState({ isOverDropZone: false, files: getFiles(event) })
-    onDrop?.(getFiles(event), event)
+    latest.current.options.onDrop?.(getFiles(event), event)
   })
 
   return state
