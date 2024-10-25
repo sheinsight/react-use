@@ -82,7 +82,7 @@ export interface UseFaviconReturns {
   /**
    * 同步 document 中的 `<link rel='icon' />` 到 hooks 状态中的 favicon
    */
-  syncFavicon(): void
+  syncFavicon(isInitial?: boolean): void
   /**
    * 将 favicon 设置为一个 emoji
    */

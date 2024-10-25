@@ -7,7 +7,7 @@ export function App() {
 
   return (
     <Card>
-      {favicon && <img src={href} alt="icon" className="size-12 rounded" />}
+      {favicon && <img src={favicon.href ?? ''} alt="icon" className="size-12 rounded" />}
       <KeyValue label="Favicon" value={href} />
       <Zone>
         <Button onClick={() => favicon.setFavicon('https://www.google.com/favicon.ico')}>Set Google favicon</Button>
