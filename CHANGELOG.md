@@ -1,3 +1,16 @@
+## [1.9.4](https://github.com/sheinsight/react-use/compare/v1.9.3...v1.9.4) (2024-10-25)
+
+
+### Bug Fixes
+
+* **useCountdown:** fix TS type definition for `DateLike` ([3615692](https://github.com/sheinsight/react-use/commit/3615692bf1a73ecc724baa0a29fd70802210f185))
+* **useCounter:** fix `setState` may not controlled by `max` & `min` options ([67bb246](https://github.com/sheinsight/react-use/commit/67bb24624c4a7bd75de1568c96e8dd0d4d05a411))
+* **useDropZone:** fix dataTypes may not work correctly in some cases ([4a44b4b](https://github.com/sheinsight/react-use/commit/4a44b4b8b6ff16f845e56244f104c046ff71b885))
+* **useDynamicList:** fix `setList` may not work in some cases ([ef538ab](https://github.com/sheinsight/react-use/commit/ef538abe92b8ae9f4ee505fb07561e459043f0bc))
+* **useFavicon:** fix TS type definition ([4998afc](https://github.com/sheinsight/react-use/commit/4998afcbc960a1953573bf0a5332931e589d05ae))
+
+
+
 ## [1.9.3](https://github.com/sheinsight/react-use/compare/v1.9.2...v1.9.3) (2024-10-23)
 
 
