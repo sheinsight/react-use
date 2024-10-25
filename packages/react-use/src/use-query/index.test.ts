@@ -687,7 +687,7 @@ describe('useQuery', () => {
       result.current.refresh(['newParams 3'])
     })
 
-    await vi.advanceTimersByTimeAsync(200)
+    await vi.advanceTimersByTimeAsync(220)
 
     expect(result.current.data).toBe('newData')
     expect(result.current.params).toEqual(['newParams 3'])

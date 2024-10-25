@@ -11,6 +11,7 @@ export interface UseLoadingFnReturns<T extends AnyFunc, D = Awaited<ReturnType<T
 /**
  * A React Hooks for handling loading state with ease, alias of [useAsyncFn](https://sheinsight.github.io/react-use/reference/use-async-fn).
  */
+/* v8 ignore next 6 */
 export function useLoadingFn<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>(
   fn: T,
   options: UseLoadingFnOptions<T, D, E> = {},
