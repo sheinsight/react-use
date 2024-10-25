@@ -2,8 +2,9 @@ import { useRef } from 'react'
 import { useCreation } from '../use-creation'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
-import { isDev } from '../utils/basic'
+import { isDev, isFunction } from '../utils/basic'
 
+import type { SetStateAction } from 'react'
 import type { ReactSetState } from '../use-safe-state'
 
 export interface UseDynamicListReturnsActions<T> {
@@ -84,21 +85,21 @@ export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturns<
     keysRef.current.splice(index, 0, listIdxRef.current++)
   }
 
-  const [list, setList] = useSafeState(() => {
+  const [list, nativeSetList] = useSafeState(() => {
     initialList.forEach((_, index) => updateInternalKeyAt(index))
     return initialList
   })
 
   const reset = useStableFn((newList: T[]) => {
     keysRef.current.length = 0
-    setList(() => {
+    nativeSetList(() => {
       newList.forEach((_, index) => updateInternalKeyAt(index))
       return newList
     })
   })
 
   const insert = useStableFn((index: number, item: T) => {
-    setList((list) => {
+    nativeSetList((list) => {
       const temp = [...list]
       temp.splice(index, 0, item)
       updateInternalKeyAt(index)
@@ -110,7 +111,7 @@ export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturns<
   const getKey = useStableFn((index: number) => keysRef.current[index])
 
   const merge = useStableFn((index: number, items: T[]) => {
-    setList((list) => {
+    nativeSetList((list) => {
       const temp = [...list]
       items.forEach((_, i) => updateInternalKeyAt(index + i))
       temp.splice(index, 0, ...items)
@@ -119,7 +120,7 @@ export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturns<
   })
 
   const replace = useStableFn((index: number, item: T) => {
-    setList((list) => {
+    nativeSetList((list) => {
       const temp = [...list]
       temp[index] = item
       return temp
@@ -127,7 +128,7 @@ export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturns<
   })
 
   const remove = useStableFn((index: number) => {
-    setList((list) => {
+    nativeSetList((list) => {
       const temp = [...list]
       temp.splice(index, 1)
       try {
@@ -141,7 +142,7 @@ export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturns<
 
   const move = useStableFn((preIndex: number, nextIndex: number) => {
     if (preIndex === nextIndex) return
-    setList((list) => {
+    nativeSetList((list) => {
       const newList = [...list]
       const temp = newList.filter((_, index: number) => index !== preIndex)
       temp.splice(nextIndex, 0, newList[preIndex])
@@ -158,7 +159,7 @@ export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturns<
   })
 
   const push = useStableFn((item: T) => {
-    setList((list) => {
+    nativeSetList((list) => {
       updateInternalKeyAt(list.length)
       return list.concat([item])
     })
@@ -171,11 +172,11 @@ export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturns<
       if (isDev) console.error(e)
     }
 
-    setList((list) => list.slice(0, list.length - 1))
+    nativeSetList((list) => list.slice(0, list.length - 1))
   })
 
   const unshift = useStableFn((item: T) => {
-    setList((list) => {
+    nativeSetList((list) => {
       updateInternalKeyAt(0)
       return [item].concat(list)
     })
@@ -187,15 +188,23 @@ export function useDynamicList<T>(initialList: T[] = []): UseDynamicListReturns<
     } catch (e) {
       if (isDev) console.error(e)
     }
-    setList((list) => list.slice(1, list.length))
+    nativeSetList((list) => list.slice(1, list.length))
   })
 
   const sort = useStableFn((compare?: (pre: T, next: T) => number) => {
-    setList((list) => {
+    nativeSetList((list) => {
       const temp = [...list]
       const result = temp.sort(compare)
       result.forEach((_, index) => updateInternalKeyAt(index))
       return result
+    })
+  })
+
+  const setList = useStableFn((action: SetStateAction<T[]>) => {
+    nativeSetList((preList) => {
+      const newList = isFunction(action) ? action(preList) : action
+      newList.forEach((_, index) => updateInternalKeyAt(index))
+      return newList
     })
   })
 
