@@ -5,7 +5,7 @@ import { useMount } from '../use-mount'
 import { useRender } from '../use-render'
 import { useStableFn } from '../use-stable-fn'
 import { isFunction, noop } from '../utils/basic'
-import { getFormStateFromDom, isInvalidFormChildElement, syncFormStateToDom } from './bind-dom'
+import { getFormStateFromDom, isValidFormChildElement, syncFormStateToDom } from './bind-dom'
 
 import type { ChangeEvent, FormEvent, RefObject, SetStateAction } from 'react'
 import type { ReactSetState } from '../use-safe-state'
@@ -45,6 +45,8 @@ export interface UseFormOptions<FormState extends object> {
    * Whether to emit change event when the form is reset
    *
    * @defaultValue false
+   *
+   * @deprecated will be removed in the next major version
    */
   triggerOnChangeWhenReset?: boolean
 }
@@ -187,7 +189,7 @@ export function useForm<FormState extends object>(options: UseFormOptions<FormSt
   })
 
   const handleNativeChange = useStableFn((e: FormEvent<HTMLFormElement>) => {
-    if (!isInvalidFormChildElement(e.target) || !formRef.current) return
+    if (!isValidFormChildElement(e.target) || !formRef.current) return
     const nextForm = getFormStateFromDom<FormState>(formRef.current, latest.current.initialValue)
     handleChange(nextForm)
   })
