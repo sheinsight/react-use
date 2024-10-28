@@ -1,7 +1,8 @@
 /**
  * Whether the element is a form item element
  */
-export function isInvalidFormChildElement(
+/* v8 ignore next 180 */
+export function isValidFormChildElement(
   element: unknown,
 ): element is HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement {
   return [HTMLInputElement, HTMLSelectElement, HTMLTextAreaElement].some((type) => element instanceof type)
@@ -16,7 +17,7 @@ export function syncFormStateToDom<FormState extends object>(
   defaultForm: FormState,
 ) {
   for (const element of Array.from(formEl.elements)) {
-    if (isInvalidFormChildElement(element) && 'name' in element) {
+    if (isValidFormChildElement(element) && 'name' in element) {
       const name = element.name as keyof FormState
       const value = form[name]
 
@@ -104,7 +105,7 @@ export function getFormStateFromDom<FormState extends object>(formEl: HTMLFormEl
   const formValue = structuredClone(form)
 
   for (const element of Array.from(formEl.elements)) {
-    if (isInvalidFormChildElement(element) && 'name' in element) {
+    if (isValidFormChildElement(element) && 'name' in element) {
       const name = element.name as keyof FormState
 
       switch (true) {

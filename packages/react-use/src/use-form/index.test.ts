@@ -37,13 +37,17 @@ describe('useForm', () => {
     expect(result.current.value).toEqual({ name: 'John Doe', email: '' })
   })
 
-  it('should call onSubmit when form is submitted', () => {
+  it('should call onSubmit when form is submitted', async () => {
+    onSubmitMock.mockResolvedValue('ok')
     const { result } = renderHook(() => useForm({ initialValue, onSubmit: onSubmitMock }))
+    expect(result.current.submitting).toBe(false)
 
-    act(() => {
+    await act(async () => {
       result.current.submit()
+      expect(result.current.submitting).toBe(true)
     })
 
+    expect(result.current.submitting).toBe(false)
     expect(onSubmitMock).toHaveBeenCalledWith(initialValue)
   })
 
@@ -88,5 +92,68 @@ describe('useForm', () => {
     })
 
     expect(result.current.reportValidity()).toBe(false) // Assuming the form is invalid initially
+  })
+
+  it('should handle chechValidity and reportValidity', () => {
+    const checkFn = vi.fn().mockReturnValue(false)
+    const { result } = renderHook(() => useForm({ initialValue }))
+
+    // @ts-ignore for test
+    result.current.nativeProps.ref.current = {
+      checkValidity: checkFn,
+      reportValidity: checkFn,
+    }
+
+    expect(checkFn).toHaveBeenCalledTimes(0)
+
+    expect(result.current.checkValidity()).toBe(false)
+    expect(checkFn).toHaveBeenCalledTimes(1)
+
+    expect(result.current.reportValidity()).toBe(false)
+    expect(checkFn).toHaveBeenCalledTimes(2)
+  })
+
+  it('should handle triggerOnChangeWhenReset true', () => {
+    const { result } = renderHook(() =>
+      useForm({
+        initialValue,
+        onChange: onChangeMock,
+        triggerOnChangeWhenReset: true,
+      }),
+    )
+
+    act(() => {
+      result.current.setFieldValue('name', 'John Doe')
+    })
+
+    expect(onChangeMock).toHaveBeenCalledTimes(1)
+
+    act(() => {
+      result.current.reset()
+    })
+
+    expect(onChangeMock).toHaveBeenCalledTimes(3)
+  })
+
+  it('should handle triggerOnChangeWhenReset false', () => {
+    const { result } = renderHook(() =>
+      useForm({
+        initialValue,
+        onChange: onChangeMock,
+        triggerOnChangeWhenReset: false,
+      }),
+    )
+
+    act(() => {
+      result.current.setFieldValue('name', 'John Doe')
+    })
+
+    expect(onChangeMock).toHaveBeenCalledTimes(1)
+
+    act(() => {
+      result.current.reset()
+    })
+
+    expect(onChangeMock).toHaveBeenCalledTimes(2)
   })
 })

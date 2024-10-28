@@ -144,9 +144,11 @@ export interface UseFormOptions<FormState extends object> {
    */
   preventDefaultWhenSubmit?: boolean
   /**
-   * Whether to emit change event when the form is reset
+   * Whether to emit extra change event when the form is reset
    *
    * @defaultValue false
+   * 
+   * @deprecated will be removed in the next major version, please avoid using
    */
   triggerOnChangeWhenReset?: boolean
 }

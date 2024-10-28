@@ -144,9 +144,11 @@ export interface UseFormOptions<FormState extends object> {
    */
   preventDefaultWhenSubmit?: boolean
   /**
-   * 当重置时，是否触发 onChange 回调
+   * 当重置时，是否额外触发 onChange 回调
    *
    * @defaultValue false
+   * 
+   * @deprecated 将在后续大版本中移除，请避免使用
    */
   triggerOnChangeWhenReset?: boolean
 }
