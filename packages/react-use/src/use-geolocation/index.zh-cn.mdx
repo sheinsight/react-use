@@ -68,11 +68,11 @@ export type UseGeolocationReturns = Pausable & {
   /**
    * 当前的纬度。
    */
-  latitude: number
+  latitude: number | null
   /**
    * 当前的经度。
    */
-  longitude: number
+  longitude: number | null
   /**
    * 当前地理位置状态。
    */
@@ -88,6 +88,9 @@ export type UseGeolocationReturns = Pausable & {
   /**
    * 当前地理位置坐标。
    */
-  coords: GeolocationPosition['coords']
+  coords: Omit<GeolocationPosition['coords'], 'latitude' | 'longitude'> & {
+    latitude: number | null
+    longitude: number | null
+  }
 }
 ```

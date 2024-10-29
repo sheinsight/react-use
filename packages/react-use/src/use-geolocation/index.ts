@@ -23,11 +23,11 @@ export interface UseGeolocationReturns extends Pausable {
   /**
    * The current latitude.
    */
-  latitude: number
+  latitude: number | null
   /**
    * The current longitude.
    */
-  longitude: number
+  longitude: number | null
   /**
    * The current geolocation state.
    */
@@ -43,7 +43,10 @@ export interface UseGeolocationReturns extends Pausable {
   /**
    * The current geolocation coordinates.
    */
-  coords: GeolocationPosition['coords']
+  coords: Omit<GeolocationPosition['coords'], 'latitude' | 'longitude'> & {
+    latitude: number | null
+    longitude: number | null
+  }
 }
 
 /**
@@ -89,13 +92,16 @@ export function useGeolocation(options: UseGeolocationOptions = {}): UseGeolocat
     error: null as GeolocationPositionError | null,
     coords: {
       accuracy: 0,
-      latitude: Number.POSITIVE_INFINITY,
-      longitude: Number.POSITIVE_INFINITY,
+      latitude: null,
+      longitude: null,
       altitude: null,
       altitudeAccuracy: null,
       heading: null,
       speed: null,
-    } as GeolocationPosition['coords'],
+    } as Omit<GeolocationPosition['coords'], 'latitude' | 'longitude'> & {
+      latitude: number | null
+      longitude: number | null
+    },
   })
 
   const watcherRef = useRef<number | null>(null)

@@ -68,11 +68,11 @@ export type UseGeolocationReturns = Pausable & {
   /**
    * The current latitude.
    */
-  latitude: number
+  latitude: number | null
   /**
    * The current longitude.
    */
-  longitude: number
+  longitude: number | null
   /**
    * The current geolocation state.
    */
@@ -88,6 +88,9 @@ export type UseGeolocationReturns = Pausable & {
   /**
    * The current geolocation coordinates.
    */
-  coords: GeolocationPosition['coords']
+  coords: Omit<GeolocationPosition['coords'], 'latitude' | 'longitude'> & {
+    latitude: number | null
+    longitude: number | null
+  }
 }
 ```
