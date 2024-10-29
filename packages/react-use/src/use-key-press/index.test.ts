@@ -12,15 +12,15 @@ describe('useKeyPress', () => {
     expect(result.current).toBeInstanceOf(Function)
   })
 
-  it('should call callback', () => {
+  it('should call callback', async () => {
     const callback = vi.fn()
-    const { result } = renderHook(() => useKeyPress('a', callback))
+    const { result } = renderHook(() => useKeyPress('a', callback, { target: 'body' }))
 
-    // act(() => {
-    //   const event = new KeyboardEvent('keydown', { key: 'a' })
-    //   document.dispatchEvent(event)
-    // })
+    await act(async () => {
+      const event = new KeyboardEvent('keypress', { key: 'a' })
+      document.body.dispatchEvent(event)
+    })
 
-    // expect(callback).toBeCalled()
+    expect(callback).toBeCalledTimes(1)
   })
 })
