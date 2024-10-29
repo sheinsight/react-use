@@ -17,7 +17,7 @@
     "cy:run": "cypress run --component --browser chrome --config-file cypress.config.mjs",
     "test:ci": "pnpm build && pnpm lint && vitest",
     "docs:dev": "pnpm build && pnpm -C docs dev",
-    "docs:build": "pnpm install && pnpm build && pnpm -C docs build",
+    "docs:build": "CYPRESS_INSTALL_BINARY=0 pnpm install && pnpm build && pnpm -C docs build",
     "docs:release": "pnpm -C docs release",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "typecheck": "pnpm -r typecheck",
