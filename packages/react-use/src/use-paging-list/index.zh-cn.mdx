@@ -78,11 +78,42 @@ const {
 ### 配置项 Options \{#options}
 
 ```tsx
-export interface UsePagingListFetcherParams<FormState extends object, Data> {
+export interface UsePagingListOptions<Item, FormState extends object> {
+  /**
+   * 数据获取函数
+   */
+  fetcher?: UsePagingListFetcher<Item, FormState>
+  /**
+   * `useForm` 的配置项，参考 useForm 文档
+   *
+   * @defaultValue undefined
+   */
+  form?: UseFormOptions<FormState>
+  /**
+   * `useQuery` 的配置项，参考 `useQuery` 文档
+   *
+   * @defaultValue undefined
+   */
+  query?: Omit<UseQueryOptions<UsePagingListFetcher<Item, FormState>>, 'initialParams' | 'initialData'>
+  /**
+   * `usePagination` 的配置项，参考 `usePagination` 文档
+   *
+   * @defaultValue undefined
+   */
+  pagination?: UsePaginationOptions<Item[]>
+  /**
+   * 立即查询的表单字段，当表单字段变化时，会自动触发查询
+   *
+   * @defaultValue []
+   */
+  immediateQueryKeys?: (keyof FormState)[]
+}
+
+export interface UsePagingListFetcherParams<Item, FormState extends object> {
   /**
    * 上次请求的数据
    */
-  previousData: Data | undefined
+  previousData: Item[] | undefined
   /**
    * 当前页码
    */
@@ -101,74 +132,38 @@ export interface UsePagingListFetcherParams<FormState extends object, Data> {
   setTotal: ReactSetState<number>
 }
 
-export type UsePagingListFetcher<FormState extends object, Data> = (
-  params: UsePagingListFetcherParams<FormState, Data>,
-) => Promise<Data>
-
-export interface UsePagingListOptions<Fetcher extends AnyFunc, FormState extends object> {
-  /**
-   * 数据获取函数
-   */
-  fetcher?: Fetcher
-  /**
-   * `useForm` 的配置项，参考 useForm 文档
-   *
-   * @defaultValue undefined
-   */
-  form?: UseFormOptions<FormState>
-  /**
-   * `useQuery` 的配置项，参考 `useQuery` 文档
-   *
-   * @defaultValue undefined
-   */
-  query?: Omit<UseQueryOptions<Fetcher>, 'initialParams' | 'initialData'>
-  /**
-   * `usePagination` 的配置项，参考 `usePagination` 文档
-   *
-   * @defaultValue undefined
-   */
-  pagination?: UsePaginationOptions<ReturnType<Fetcher>>
-  /**
-   * 立即查询的表单字段，当表单字段变化时，会自动触发查询
-   *
-   * @defaultValue []
-   */
-  immediateQueryKeys?: (keyof FormState)[]
-}
+export type UsePagingListFetcher<Item, FormState extends object> = (
+  params: UsePagingListFetcherParams<Item, FormState>,
+) => Promise<Item[]>
 ```
 
 ### 返回值 \{#returns}
 
 ```tsx
-export interface UsePagingListReturns<
-  Item,
-  FormState extends object,
-  Data extends Item[],
-  Fetcher extends UsePagingListFetcher<FormState, Data>,
-> {
+export interface UsePagingListReturns<Item, FormState extends object> {
   /**
-   * 是否正在加载
+   * loading status
    */
   loading: boolean
   /**
-   * 数据列表
+   * list data
    */
-  list: Data
+  list: Item[]
   /**
-   * form 实例，参考 useForm 文档
+   * form state
    */
   form: UseFormReturns<FormState>
   /**
-   * 使用上次请求参数（表单状态等），刷新数据
+   * refresh query
    */
   refresh: () => void
   /**
-   * 选中状态和操作，参考 useMultiSelect 文档
+   * selection state
    */
-  selection: UseMultiSelectReturnsState<Item> & UseMultiSelectReturns<Item>
+  selection: UseMultiSelectReturnsState<Item> & UseMultiSelectReturnsActions<Item>
   /**
-   * 分页状态和操作，参考 usePagination 文档
+   * pagination state
    */
-  pagination: UsePaginationReturnsState<Data> & UsePaginationReturnsActions
+  pagination: UsePaginationReturnsState<Item[]> & UsePaginationReturnsActions
 }
 ```

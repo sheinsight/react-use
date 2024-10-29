@@ -78,97 +78,92 @@ const {
 ### Options \{#options}
 
 ```tsx
-export interface UsePagingListFetcherParams<FormState extends object, Data> {
+export interface UsePagingListOptions<Item, FormState extends object> {
   /**
-   * Data from the last request
+   * fetcher function that will be called when the query is triggered
    */
-  previousData: Data | undefined
+  fetcher?: UsePagingListFetcher<Item, FormState>
   /**
-   * Current page number
-   */
-  page: number
-  /**
-   * Quantity per page
-   */
-  pageSize: number
-  /**
-   * Form state
-   */
-  form: FormState
-  /**
-   * Set the total number of data
-   */
-  setTotal: ReactSetState<number>
-}
-
-export type UsePagingListFetcher<FormState extends object, Data> = (
-  params: UsePagingListFetcherParams<FormState, Data>,
-) => Promise<Data>
-
-export interface UsePagingListOptions<Fetcher extends AnyFunc, FormState extends object> {
-  /**
-   * Data fetcher function
-   */
-  fetcher?: Fetcher
-  /**
-   * `useForm` configuration, see useForm documentation
+   * options for `useForm`, see `useForm` for more details
    *
    * @defaultValue undefined
    */
   form?: UseFormOptions<FormState>
   /**
-   * `useQuery` configuration, see `useQuery` documentation
+   * options for `useQuery`, see `useQuery` for more details
    *
    * @defaultValue undefined
    */
-  query?: Omit<UseQueryOptions<Fetcher>, 'initialParams' | 'initialData'>
+  query?: Omit<UseQueryOptions<UsePagingListFetcher<Item, FormState>>, 'initialParams' | 'initialData'>
   /**
-   * `usePagination` configuration, see `usePagination` documentation
+   * options for `usePagination`, see `usePagination` for more details
    *
    * @defaultValue undefined
    */
-  pagination?: UsePaginationOptions<ReturnType<Fetcher>>
+  pagination?: UsePaginationOptions<Item[]>
   /**
-   * Form fields for immediate querying, changes in these fields will automatically trigger querying
+   * keys of form state that will trigger a new query when changed
    *
    * @defaultValue []
    */
   immediateQueryKeys?: (keyof FormState)[]
 }
+
+export interface UsePagingListFetcherParams<Item, FormState extends object> {
+  /**
+   * previous data
+   */
+  previousData: Item[] | undefined
+  /**
+   * current page
+   */
+  page: number
+  /**
+   * page size
+   */
+  pageSize: number
+  /**
+   * form state
+   */
+  form: FormState
+  /**
+   * set total count
+   */
+  setTotal: ReactSetState<number>
+}
+
+export type UsePagingListFetcher<Item, FormState extends object> = (
+  params: UsePagingListFetcherParams<Item, FormState>,
+) => Promise<Item[]>
 ```
 
 ### Returns \{#returns}
 
 ```tsx
-export interface UsePagingListReturns<
-  Item,
-  FormState extends object,
-  Data extends Item[],
-  Fetcher extends UsePagingListFetcher<FormState, Data>,
-> {
+export interface UsePagingListReturns<Item, FormState extends object> {
   /**
-   * Whether it is loading
+   * loading status
    */
   loading: boolean
   /**
-   * Data list
+   * list data
    */
-  list: Data
+  list: Item[]
   /**
-   * Form instance, see useForm documentation
+   * form state
    */
   form: UseFormReturns<FormState>
   /**
-   * Refresh data using the last request parameters (form state, etc.)
+   * refresh query
    */
   refresh: () => void
   /**
-   * Selection status and operations, see useMultiSelect documentation
+   * selection state
    */
-  selection: UseMultiSelectReturnsState<Item> & UseMultiSelectReturns<Item>
+  selection: UseMultiSelectReturnsState<Item> & UseMultiSelectReturnsActions<Item>
   /**
-   * Pagination status and operations, see usePagination documentation
+   * pagination state
    */
-  pagination: UsePaginationReturnsState<Data> & UsePaginationReturnsActions
+  pagination: UsePaginationReturnsState<Item[]> & UsePaginationReturnsActions
 }
 ```
