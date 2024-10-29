@@ -1,3 +1,19 @@
+# [1.10.0](https://github.com/sheinsight/react-use/compare/v1.9.4...v1.10.0) (2024-10-29)
+
+
+### Bug Fixes
+
+* **useGeolocation:** fix TS type definition ([c39ec03](https://github.com/sheinsight/react-use/commit/c39ec03b83d84ed54e62b0d41abf26cedf900acb))
+* **useKeyStroke:** fix TS type definition ([a9b1a5f](https://github.com/sheinsight/react-use/commit/a9b1a5fd907b2f1b0ba823d92b85d843038baa2f))
+* **usePagingList:** fix TS type definition ([6ceb776](https://github.com/sheinsight/react-use/commit/6ceb776a36de26d18cadcf1b8e9dbfa74e8299be))
+
+
+### Features
+
+* **useForm:** deprecated `triggerOnChangeWhenReset` options ([28f9a69](https://github.com/sheinsight/react-use/commit/28f9a69919fe19fddfa308556f64ec5678fc26ca))
+
+
+
 ## [1.9.4](https://github.com/sheinsight/react-use/compare/v1.9.3...v1.9.4) (2024-10-25)
 
 
