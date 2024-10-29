@@ -71,9 +71,9 @@ export type UseKeyStrokeOptions = {
   /**
    * 添加事件监听器的目标。
    * 
-   * @defaultValue window
+   * @defaultValue () => window
    */
-  target?: ElementTarget
+  target?: ElementTarget | (() => Window) | (() => Document)
   /**
    * 设置为 `true` 以使用被动事件监听器。
    * 

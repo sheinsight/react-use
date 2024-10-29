@@ -24,7 +24,7 @@ export interface UseKeyStrokeOptions {
    *
    * @defaultValue window
    */
-  target?: ElementTarget
+  target?: ElementTarget | (() => Window) | (() => Document)
   /**
    * Set to `true` to use passive event listeners.
    *
