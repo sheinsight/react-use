@@ -1,5 +1,5 @@
-import { Button, CodeBlock, ReactUseIcon, cn, useI18n, useRoutePath } from '@/components'
-import { useDark, useLang, useNavigate } from 'rspress/runtime'
+import { Button, ReactUseIcon, cn, useI18n, useRoutePath } from '@/components'
+import { useLang, useNavigate } from 'rspress/runtime'
 
 export function Main() {
   const t = useI18n()
@@ -7,11 +7,8 @@ export function Main() {
   const navigate = useNavigate()
   // const isDark = useDark()
 
-  const [start, reference, github] = [
-    useRoutePath('/docs/get-started'),
-    useRoutePath('/reference'),
-    useRoutePath('/docs/overview'),
-  ]
+  const github = 'https://github.com/sheinsight/react-use'
+  const [start, reference] = [useRoutePath('/docs/get-started'), useRoutePath('/reference')]
 
   return (
     <div className="flex flex-col items-center md:items-start gap-4 pt-20vh md:pt-12vh">
@@ -46,14 +43,7 @@ export function Main() {
         >
           {t('homepage.reference')}
         </a>
-        <a
-          className="user-link"
-          onClick={(e) => {
-            e.preventDefault()
-            navigate(github)
-          }}
-          href={github}
-        >
+        <a className="user-link" href={github}>
           {t('homepage.github')}
         </a>
       </div>
