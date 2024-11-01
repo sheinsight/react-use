@@ -269,6 +269,35 @@ describe('useQuery', () => {
     expect(onSuccess).toHaveBeenCalledWith('data', [])
   })
 
+  it('should ignore previous onSuccess when run multiple times', async () => {
+    const onSuccess = vi.fn()
+
+    mockFetcher.mockImplementation((value = 1) => Promise.resolve(value))
+
+    const { result } = renderHook(() => useQuery(mockFetcher, { onSuccess }))
+
+    expect(onSuccess).not.toHaveBeenCalled()
+
+    await act(async () => {}) // wait for fetcher to resolve
+
+    expect(onSuccess).toHaveBeenCalledTimes(1)
+
+    act(() => {
+      result.current.run(1)
+      result.current.run(2)
+      result.current.run(3)
+    })
+
+    await act(async () => {}) // wait for fetcher to resolve
+
+    expect(onSuccess).toHaveBeenCalledTimes(2)
+
+    expect(onSuccess).not.toHaveBeenLastCalledWith(1, [1])
+    expect(onSuccess).not.toHaveBeenLastCalledWith(2, [2])
+
+    expect(onSuccess).toHaveBeenLastCalledWith(3, [3])
+  })
+
   it('should handle onError', async () => {
     const onError = vi.fn()
 
