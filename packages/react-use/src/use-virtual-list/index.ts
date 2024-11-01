@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import { useCreation } from '../use-creation'
 import { useElementSize } from '../use-element-size'
 import { useEventListener } from '../use-event-listener'
@@ -144,13 +144,14 @@ export function useVirtualList<D = any>(list: D[], options: UseVirtualListOption
     return list.slice(0, idx).reduce((sum, _, i) => sum + itemSize(i, list[i]), 0)
   }
 
-  const totalSize = useCreation(() => getOffsetSize(list.length), [list])
+  const latestGetOffsetSize = useLatest(getOffsetSize)
+  const totalSize = useMemo(() => latestGetOffsetSize.current(list.length), [list])
 
   function calculateVirtualOffset() {
     const containerEl = containerRef.current
     const wrapperEl = wrapperRef.current
 
-    if (!containerEl || !wrapperEl) return
+    if (!containerEl || !wrapperEl || !list.length) return
 
     const { scrollTop, scrollLeft, clientHeight, clientWidth } = containerEl
 
@@ -189,7 +190,7 @@ export function useVirtualList<D = any>(list: D[], options: UseVirtualListOption
       return
     }
 
-    calculateVirtualOffset()
+    latest.current.calculateVirtualOffset()
   })
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: The effect should only run when the container size changes.
