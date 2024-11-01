@@ -1,3 +1,12 @@
+## [1.10.1](https://github.com/sheinsight/react-use/compare/v1.10.0...v1.10.1) (2024-11-01)
+
+
+### Bug Fixes
+
+* **useVirtualList:** fix `Maximum update depth exceeded` error when list is empty ([9d78057](https://github.com/sheinsight/react-use/commit/9d780573f9ad68135169778515aae783e043b328))
+
+
+
 # [1.10.0](https://github.com/sheinsight/react-use/compare/v1.9.4...v1.10.0) (2024-10-29)
 
 
