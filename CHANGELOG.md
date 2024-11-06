@@ -1,3 +1,12 @@
+## [1.10.2](https://github.com/sheinsight/react-use/compare/v1.10.1...v1.10.2) (2024-11-06)
+
+
+### Bug Fixes
+
+* **useWebSocket:** fix TS type definition & not retry on first failed open ([b436935](https://github.com/sheinsight/react-use/commit/b43693519b2a71b90c441992a62eed292611c7e3))
+
+
+
 ## [1.10.1](https://github.com/sheinsight/react-use/compare/v1.10.0...v1.10.1) (2024-11-01)
 
 
