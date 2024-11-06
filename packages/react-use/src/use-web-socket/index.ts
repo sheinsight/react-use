@@ -44,11 +44,11 @@ export interface UseWebSocketOptionsReconnect {
   /**
    * The number of times to reconnect, default is `() => true`, reconnect indefinitely.
    */
-  count: number | (() => boolean)
+  count?: number | (() => boolean)
   /**
    * The interval at which to reconnect.
    */
-  interval: number
+  interval?: number
   /**
    * A callback function that is called when the WebSocket connection is closed and the reconnection limit is reached.
    */
@@ -80,6 +80,13 @@ export interface UseWebSocketOptions {
    * @defaultValue undefined
    */
   onMessage?: (event: MessageEvent, ws: WebSocket) => void
+  /**
+   * A callback function that is called when the WebSocket connection fails to open,
+   * such as an error or an invalid URL, which will cause the ws to fail to create a connection and close the connection.
+   *
+   * @defaultValue undefined
+   */
+  onOpenFailed?: (event: CloseEvent, ws: WebSocket) => void
   /**
    * Whether to send a heartbeat message to the server.
    *
@@ -136,11 +143,11 @@ export interface UseWebSocketReturns<HasURL extends boolean> {
   /**
    * Close the WebSocket connection.
    */
-  close: () => void
+  close: () => Promise<void>
   /**
    * Open the WebSocket connection.
    */
-  open: HasURL extends true ? () => void : (wsUrl?: string, protocols?: string | string[]) => void
+  open: HasURL extends true ? () => Promise<void> : (wsUrl?: string, protocols?: string | string[]) => Promise<void>
 }
 
 // export type UseWebSocketReturnsReadyState = (typeof WebSocket)[keyof Omit<typeof WebSocket, 'prototype'>]
@@ -175,6 +182,7 @@ export function useWebSocket(
   const retriesRef = useRef(0)
   const messageQueue = useRef<UseWebSocketSendable[]>([])
   const isClosedIntentionally = useRef<boolean>(false)
+  const hasBeenOnlineBeforeRef = useRef(false)
   const [incVersion, runVersionedAction] = useVersionedAction()
   const [readyState, setReadyState] = useSafeState<UseWebSocketReturnsReadyState>(WebSocket.CLOSED)
 
@@ -186,6 +194,7 @@ export function useWebSocket(
     onClose: _options.onClose ?? noop,
     onError: _options.onError ?? noop,
     onMessage: _options.onMessage ?? noop,
+    onOpenFailed: _options.onOpenFailed ?? noop,
     protocols: _options.protocols ?? [],
     filter: _options.filter ?? (() => false),
   })
@@ -204,11 +213,16 @@ export function useWebSocket(
 
       const version = incVersion()
       setReadyState(WebSocket.CONNECTING)
+
+      hasBeenOnlineBeforeRef.current = false
+      isClosedIntentionally.current = false
+
       wsRef.current = new WebSocket(url, protocols)
 
       wsRef.current.onopen = (event) => {
         runVersionedAction(version, () => {
           retriesRef.current = 0
+          hasBeenOnlineBeforeRef.current = true
           setReadyState(WebSocket.OPEN)
           latest.current.onOpen(event, ws() as WebSocket)
         })
@@ -217,9 +231,17 @@ export function useWebSocket(
       wsRef.current.onclose = (event) => {
         runVersionedAction(version, () => {
           setReadyState(WebSocket.CLOSED)
+
+          const notOpen = !hasBeenOnlineBeforeRef.current
+          const reconnect = latest.current.reconnect
+
+          if (notOpen) {
+            latest.current.onOpenFailed(event, ws() as WebSocket)
+            return
+          }
+
           latest.current.onClose(event, ws() as WebSocket)
 
-          const reconnect = latest.current.reconnect
           if (!reconnect || isClosedIntentionally.current) return
 
           const {
@@ -240,6 +262,10 @@ export function useWebSocket(
       wsRef.current.onerror = (event) => {
         runVersionedAction(version, () => {
           setReadyState(WebSocket.CLOSED)
+
+          const notOpen = !hasBeenOnlineBeforeRef.current
+          if (notOpen) return
+
           latest.current?.onError?.(event, ws() as WebSocket)
         })
       }
@@ -262,12 +288,13 @@ export function useWebSocket(
   )
 
   const open = useStableFn(
-    (
+    async (
       wsUrl: string | undefined = latest.current.wsUrl,
       protocols: string | string[] | undefined = latest.current.protocols,
     ) => {
+      // `reason` will be send to the ws server, not on client's CloseEvent
+      await close(1000, 'Opening a new connection')
       retriesRef.current = 0
-      close()
       initWebSocket(wsUrl, protocols)
     },
   )
@@ -305,13 +332,21 @@ export function useWebSocket(
     }
   })
 
-  function conditionClose(code?: number, reason?: string, intentional = true) {
-    if (wsRef.current) {
+  async function conditionClose(code?: number, reason?: string, intentional = true) {
+    if (wsRef.current && wsRef.current.readyState !== WebSocket.CLOSED) {
       responseTimeout.pause()
       setReadyState(WebSocket.CLOSING)
       isClosedIntentionally.current = intentional
-      wsRef.current.close(code, reason)
-      wsRef.current = null
+
+      // wait for the close action to complete
+      await new Promise<void>((resolve) => {
+        if (!wsRef.current) return resolve()
+        wsRef.current.addEventListener('close', () => {
+          wsRef.current = null
+          resolve()
+        })
+        wsRef.current.close(code, reason)
+      })
     }
   }
 
@@ -320,8 +355,8 @@ export function useWebSocket(
    *
    * @see https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent/code#value
    */
-  const close = useStableFn((code: number = 1000, reason?: string) => {
-    conditionClose(code, reason, true)
+  const close = useStableFn(async (code: number = 1000, reason?: string) => {
+    await conditionClose(code, reason, true)
   })
 
   useMount(immediate && open)

@@ -126,13 +126,13 @@ export interface UseWebSocketOptionsReconnect {
    * 
    * @defaultValue () => true
    */
-  count: number | (() => boolean)
+  count?: number | (() => boolean)
   /**
    * The interval between reconnection attempts.
    * 
    * @defaultValue 1_000
    */
-  interval: number
+  interval?: number
   /**
    * A callback function when reconnection fails.
    */
@@ -164,6 +164,13 @@ export interface UseWebSocketOptions {
    * @defaultValue undefined
    */
   onMessage?: (event: MessageEvent, ws: WebSocket) => void
+  /**
+   * A callback function that is called when the WebSocket connection fails to open,
+   * such as an error or an invalid URL, which will cause the ws to fail to create a connection and close the connection.
+   *
+   * @defaultValue undefined
+   */
+  onOpenFailed?: (event: CloseEvent, ws: WebSocket) => void
   /**
    * Heartbeat configuration, set to true to use default configuration, refer to UseWebSocketOptionsHeartbeat's default settings.
    *
@@ -222,11 +229,11 @@ export interface UseWebSocketReturns<HasURL extends boolean> {
   /**
    * Close the WebSocket connection.
    */
-  close: () => void
+  close: () => Promise<void>
   /**
    * Open the WebSocket connection, closes the old connection if it exists.
    */
-  open: HasURL extends true ? () => void : (wsUrl?: string, protocols?: string | string[]) => void
+  open: HasURL extends true ? () => Promise<void> : (wsUrl?: string, protocols?: string | string[]) => Promise<void>
 }
 
 export type UseWebSocketReturnsReadyState =

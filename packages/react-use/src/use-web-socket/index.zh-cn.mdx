@@ -126,13 +126,13 @@ export interface UseWebSocketOptionsReconnect {
    * 
    * @defaultValue () => true
    */
-  count: number | (() => boolean)
+  count?: number | (() => boolean)
   /**
    * 重连的间隔时间。
    * 
    * @defaultValue 1_000
    */
-  interval: number
+  interval?: number
   /**
    * 当重连失败时的回调函数。
    */
@@ -164,6 +164,12 @@ export interface UseWebSocketOptions {
    * @defaultValue undefined
    */
   onMessage?: (event: MessageEvent, ws: WebSocket) => void
+  /**
+   * 当 WebSocket 连接打开失败时的回调函数，比如错误、无效的 URL，会导致 ws 在创建连接时失败，并关闭连接。
+   *
+   * @defaultValue undefined
+   */
+  onOpenFailed?: (event: CloseEvent, ws: WebSocket) => void
   /**
    * 心跳配置，设置为 true 时使用默认配置，参考 UseWebSocketOptionsHeartbeat 的默认配置。
    *
@@ -222,11 +228,11 @@ export interface UseWebSocketReturns<HasURL extends boolean> {
   /**
    * 关闭 WebSocket 连接。
    */
-  close: () => void
+  close: () => Promise<void>
   /**
    * 打开 WebSocket 连接，当存在旧的连接时会先关闭旧连接。
    */
-  open: HasURL extends true ? () => void : (wsUrl?: string, protocols?: string | string[]) => void
+  open: HasURL extends true ? () => Promise<void> : (wsUrl?: string, protocols?: string | string[]) => Promise<void>
 }
 
 export type UseWebSocketReturnsReadyState =

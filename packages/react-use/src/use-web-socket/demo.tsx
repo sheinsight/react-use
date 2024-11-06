@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, LabelInput, Zone } from '@/components'
+import { Button, Card, KeyValue, LabelInput, Toaster, Zone, toast } from '@/components'
 import { useControlledComponent, useSafeState, useWebSocket } from '@shined/react-use'
 
 export function App() {
@@ -6,6 +6,7 @@ export function App() {
     <Card>
       <PassedUrl />
       <DynamicUrl />
+      <Toaster />
     </Card>
   )
 }
@@ -69,16 +70,22 @@ export function PassedUrl() {
 }
 
 export function DynamicUrl() {
-  const wsUrl = useControlledComponent('')
+  const wsUrl = useControlledComponent('ws://localhost:12312')
   const [messageList, setMessageList] = useSafeState<string[]>([])
 
   const ws = useWebSocket({
-    onClose() {
+    onClose(event) {
+      toast(`Connection Closed. Code: ${event.code}, Reason: ${event.reason}`)
       setMessageList([])
     },
+    onError(event: any) {
+      toast(`Connection Error: ${event?.message || ''}`)
+    },
     onMessage(message) {
-      console.log('message', message)
       setMessageList((list) => [...list, `Server: ${message.data}`])
+    },
+    onOpenFailed(event) {
+      toast(`Open failed: ${event.reason}`)
     },
   })
 
