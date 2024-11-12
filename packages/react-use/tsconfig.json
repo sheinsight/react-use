@@ -2,7 +2,8 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "composite": true,
-    "module": "Preserve"
+    "module": "Preserve",
+    "isolatedDeclarations": true
   },
   "include": ["./src/**/*"],
   "exclude": [
