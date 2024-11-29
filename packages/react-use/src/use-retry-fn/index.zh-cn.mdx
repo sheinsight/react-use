@@ -29,7 +29,7 @@ import { Source } from '@/components'
 
 <Source />
 
-## API API \{#api}
+## API \{#api}
 
 ```tsx
 const fnWithRetry = useRetryFn(fn, options)
@@ -74,4 +74,15 @@ export interface UseRetryFnOptions<E = unknown> {
    */
   onRetryFailed?: (error: E | undefined, state: UseRetryFnRetryState) => void
 }
+```
+
+### 返回值 \{#returns}
+
+一个带有重试机制、与传入函数签名相同的函数，带有额外的 `cancel` 方法。
+  
+```tsx
+export function useRetryFn<T extends AnyFunc, E = any>(
+  fn: T,
+  options: UseRetryFnOptions<E> = {},
+): T & { cancel: () => void }
 ```

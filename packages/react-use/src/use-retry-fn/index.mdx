@@ -76,3 +76,13 @@ export interface UseRetryFnOptions<E = unknown> {
 }
 ```
 
+### Returns \{#returns}
+
+A function with retry mechanism, with the same signature as the input function, with an additional `cancel` method.
+  
+```tsx
+export function useRetryFn<T extends AnyFunc, E = any>(
+  fn: T,
+  options: UseRetryFnOptions<E> = {},
+): T & { cancel: () => void }
+```

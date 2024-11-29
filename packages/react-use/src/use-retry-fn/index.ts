@@ -54,7 +54,7 @@ export interface UseRetryFnRetryState {
   version: object
 }
 
-export function defaultRetryInterval(currentCount: number) {
+export function defaultRetryInterval(currentCount: number): number {
   const nextInterval = 1000 * 2 ** (currentCount - 1)
   return nextInterval >= 30_000 ? 30_000 : nextInterval
 }
