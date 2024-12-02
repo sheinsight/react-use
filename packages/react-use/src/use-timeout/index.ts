@@ -53,7 +53,7 @@ export function useTimeout<C extends AnyFunc>(interval = 1000, options: UseTimeo
       latest.current.callback?.(...args)
     }) as C,
     interval,
-    { immediate: !exposeControls, ...options },
+    { immediate: immediate ?? !exposeControls, ...options },
   )
 
   const reset = useStableFn(() => {
