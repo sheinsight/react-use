@@ -49,7 +49,7 @@ export type ThrottledFn<T extends AnyFunc> = {
  *
  * @from lodash/throttle
  */
-export function throttle<T extends AnyFunc>(fn: T, options: ThrottleOptions = {}) {
+export function throttle<T extends AnyFunc>(fn: T, options: ThrottleOptions = {}): ThrottledFn<T> {
   const { wait = 0, leading = true, trailing = true } = options
 
   return debounce(fn, {

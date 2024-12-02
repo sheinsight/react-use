@@ -1,7 +1,7 @@
 import { useUpdateEffect } from '../use-update-effect'
 import { createAsyncEffect } from '../utils/create-effect/async'
 
-import type { AsyncEffectCallback } from '../utils/create-effect/async'
+import type { AsyncEffectCallback, UseAsyncEffect } from '../utils/create-effect/async'
 
 export interface UseAsyncUpdateEffectCallback extends AsyncEffectCallback {}
 
@@ -16,4 +16,4 @@ export interface UseAsyncUpdateEffectCallback extends AsyncEffectCallback {}
  * @param {DependencyList} [deps] - `DependencyList`, an array of dependencies, see [React.useEffect](https://react.dev/reference/react/useEffect)
  *
  */
-export const useAsyncUpdateEffect = createAsyncEffect(useUpdateEffect)
+export const useAsyncUpdateEffect: UseAsyncEffect<never> = createAsyncEffect(useUpdateEffect)

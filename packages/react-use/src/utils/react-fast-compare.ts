@@ -9,7 +9,7 @@ const hasArrayBuffer = typeof ArrayBuffer === 'function' && !!ArrayBuffer.isView
  * @description `react-fast-compare` rewritten using TypeScript
  * @from {@link https://github.com/FormidableLabs/react-fast-compare/blob/6f7d8afe02e4480c32f5af16f571367cccd47abc/index.js | react-fast-compare - GitHub}
  */
-export function reactFastCompare(objA: unknown, objB: unknown) {
+export function reactFastCompare(objA: unknown, objB: unknown) : boolean {
   try {
     return equal(objA, objB)
   } catch (error: any) {

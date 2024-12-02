@@ -7,7 +7,14 @@ import type { DependencyList, EffectCallback } from 'react'
 import type { ExtendedReactEffect } from '../basic'
 import type { ThrottleOptions } from '../throttle'
 
-export function createThrottledEffect<T = unknown>(effect: ExtendedReactEffect<T>) {
+export type UseThrottledEffect<T = unknown> = (
+  callback: EffectCallback,
+  deps?: DependencyList,
+  options?: ThrottleOptions,
+  ...args: T[]
+) => void
+
+export function createThrottledEffect<T = unknown>(effect: ExtendedReactEffect<T>): UseThrottledEffect<T> {
   const useUpdateEffect = createUpdateEffect(useEffect)
 
   return (callback: EffectCallback, deps?: DependencyList, options?: ThrottleOptions, ...args: T[]): void => {

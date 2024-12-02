@@ -1,7 +1,7 @@
 import { hasOwn } from './basic'
 import { reactFastCompare } from './react-fast-compare'
 
-export function shallowEqual<T>(objA: T, objB: T) {
+export function shallowEqual<T>(objA: T, objB: T): boolean {
   if (Object.is(objA, objB)) {
     return true
   }
@@ -26,6 +26,6 @@ export function shallowEqual<T>(objA: T, objB: T) {
   return true
 }
 
-export function deepEqual<T>(objA: T, objB: T) {
+export function deepEqual<T>(objA: T, objB: T): boolean {
   return reactFastCompare(objA, objB)
 }

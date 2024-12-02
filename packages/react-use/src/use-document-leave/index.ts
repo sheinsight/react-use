@@ -9,7 +9,7 @@ export interface UseDocumentLeaveEvent {
 /**
  * A React Hook that tracks whether the user is leaving the document.
  */
-export function useDocumentLeave() {
+export function useDocumentLeave(): boolean {
   const [isLeft, setIsLeft] = useSafeState(false)
 
   function handler(event: MouseEvent) {

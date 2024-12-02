@@ -26,8 +26,8 @@ import type { UseThrottledFnOptions } from '../use-throttled-fn'
 import type { AnyFunc, Gettable, Promisable } from '../utils/basic'
 import type { UseQueryCacheLike } from './use-query-cache'
 
-export const defaultIsVisible = () => !document.hidden
-export const defaultIsOnline = () => navigator.onLine
+export const defaultIsVisible: () => boolean = () => !document.hidden
+export const defaultIsOnline: () => boolean = () => navigator.onLine
 
 export { mutate } from './use-query-cache'
 

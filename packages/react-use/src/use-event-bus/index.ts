@@ -55,7 +55,10 @@ export interface UseEventBusOptions {
   autoCleanup?: boolean
 }
 
-export const events = /* #__PURE__ */ new Map<EventBusIdentifier, EventBusEvents<any>>()
+export const events: Map<EventBusIdentifier, EventBusEvents<any>> = /* #__PURE__ */ new Map<
+  EventBusIdentifier,
+  EventBusEvents<any>
+>()
 
 /**
  * A React Hook that provides a simple event bus for your application.

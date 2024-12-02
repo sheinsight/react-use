@@ -4,7 +4,7 @@ import { useEffectOnce } from '../use-effect-once'
 /**
  * A React Hook that helps to create a ref that can be checked if the component is unmounted.
  */
-export function useUnmountedRef() {
+export function useUnmountedRef(): React.MutableRefObject<boolean> {
   const unmountedRef = useRef(false)
 
   useEffectOnce(() => {

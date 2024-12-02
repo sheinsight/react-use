@@ -5,7 +5,9 @@ import { deepEqual } from '../equal'
 import type { DependencyList, EffectCallback } from 'react'
 import type { ExtendedReactEffect } from '../basic'
 
-export function createDeepCompareEffect<T = unknown>(effect: ExtendedReactEffect<T>) {
+export type UseDeepCompareEffect<T> = (callback: EffectCallback, deps?: DependencyList, ...args: T[]) => void
+
+export function createDeepCompareEffect<T = unknown>(effect: ExtendedReactEffect<T>): UseDeepCompareEffect<T> {
   return (callback: EffectCallback, deps?: DependencyList, ...args: T[]): void => {
     const updateTriggerRef = useRef({})
     const previousDepsRef = useRef(deps)

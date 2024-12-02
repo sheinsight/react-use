@@ -11,7 +11,7 @@ import type { ExtendedReactEffect } from '../basic'
  */
 export type AsyncEffectCallback = (isCancelled: () => boolean) => void
 
-type UseAsyncEffect<T = unknown> = (callback: AsyncEffectCallback, deps?: DependencyList, ...args: T[]) => void
+export type UseAsyncEffect<T = unknown> = (callback: AsyncEffectCallback, deps?: DependencyList, ...args: T[]) => void
 
 export function createAsyncEffect<T = unknown>(effect: ExtendedReactEffect<T>): UseAsyncEffect<T> {
   return (callback: AsyncEffectCallback, deps?: DependencyList, ...args: T[]): void => {

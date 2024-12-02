@@ -6,7 +6,22 @@ import { shallowEqual } from '../utils/equal'
 
 export type UseTrackedRefStateRefState<S> = { [K in keyof S]: { used: boolean; value: S[K] } }
 
-export function useTrackedRefState<S extends object, Keys extends keyof S = keyof S>(refState: S) {
+export type UseTrackedRefStateReturns<S extends object, Keys extends keyof S = keyof S> = readonly [
+  S,
+  {
+    updateRefState: <K extends Keys>(
+      key: K,
+      newValue: S[K],
+      compare?: (prevData: S[K], nextData: S[K]) => boolean,
+    ) => void
+    markKeyAsUsed: <K extends Keys>(key: K) => void
+  },
+  UseTrackedRefStateRefState<S>,
+]
+
+export function useTrackedRefState<S extends object, Keys extends keyof S = keyof S>(
+  refState: S,
+): UseTrackedRefStateReturns<S, Keys> {
   const render = useRender()
 
   const stateRef = useRef(

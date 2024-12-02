@@ -5,7 +5,9 @@ import { createEffectOnce } from './once'
 import type { DependencyList } from 'react'
 import type { ExtendedReactEffect } from '../basic'
 
-export function createUpdateEffect<T = unknown>(effect: ExtendedReactEffect<T>) {
+export type UseUpdateEffect<T = unknown> = (callback: () => void, deps?: DependencyList, ...args: T[]) => void
+
+export function createUpdateEffect<T = unknown>(effect: ExtendedReactEffect<T>): UseUpdateEffect<T> {
   const effectOnce = createEffectOnce<T>(effect)
 
   return (callback: () => void, deps?: DependencyList, ...args: T[]): void => {

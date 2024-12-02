@@ -7,7 +7,14 @@ import type { DependencyList, EffectCallback } from 'react'
 import type { ExtendedReactEffect } from '../basic'
 import type { DebounceOptions } from '../debounce'
 
-export function createDebouncedEffect<T = unknown>(effect: ExtendedReactEffect<T>) {
+export type UseDebouncedEffect<T> = (
+  callback: EffectCallback,
+  deps?: DependencyList,
+  options?: DebounceOptions,
+  ...args: T[]
+) => void
+
+export function createDebouncedEffect<T = unknown>(effect: ExtendedReactEffect<T>): UseDebouncedEffect<T> {
   const useUpdateEffect = createUpdateEffect(useEffect)
 
   return (callback: EffectCallback, deps?: DependencyList, options?: DebounceOptions, ...args: T[]): void => {

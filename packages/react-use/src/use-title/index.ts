@@ -32,7 +32,7 @@ export type UseTitleOptions = {
 /**
  * A React Hook that helps to manage the title of the document.
  */
-export function useTitle(newTitle: Gettable<string>, options: UseTitleOptions = {}) {
+export function useTitle(newTitle: Gettable<string>, options: UseTitleOptions = {}): () => void {
   const [originalTitleRef, originalTitle] = useGetterRef('')
   const { template = '%s', restoreOnUnmount = false } = options
 

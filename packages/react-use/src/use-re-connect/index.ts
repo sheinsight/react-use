@@ -10,14 +10,14 @@ export interface UseReConnectOptions {
   registerReConnect?: (callback: AnyFunc) => void
 }
 
-export function registerWebReConnect(callback: AnyFunc) {
+export function registerWebReConnect(callback: AnyFunc): () => void {
   function handleOnline() {
     callback()
   }
 
   window.addEventListener('online', handleOnline, { passive: true })
 
-  return () => {
+  return (): void => {
     window.removeEventListener('online', handleOnline)
   }
 }
@@ -27,7 +27,7 @@ export function registerWebReConnect(callback: AnyFunc) {
  *
  * @since 1.4.0
  */
-export function useReConnect(callback: AnyFunc, options: UseReConnectOptions = {}) {
+export function useReConnect(callback: AnyFunc, options: UseReConnectOptions = {}): void {
   const { registerReConnect = registerWebReConnect } = options
 
   const latest = useLatest({ callback })

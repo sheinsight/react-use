@@ -53,11 +53,11 @@ declare const process: {
 }
 
 // build tools are expected to replace this value when building for production
-export const isDev = process.env.NODE_ENV !== 'production'
+export const isDev: boolean = process.env.NODE_ENV !== 'production'
 
 // useful in Server-side Rendering (SSR)
 /* v8 ignore next */
-export const isClient = Boolean(typeof window !== 'undefined' && isFunction(window?.document?.createElement))
+export const isClient: boolean = Boolean(typeof window !== 'undefined' && isFunction(window?.document?.createElement))
 
 export function noop(): undefined {}
 
@@ -159,7 +159,7 @@ export function increaseWithUnit(target: string | number, delta: number) {
   return result + unit
 }
 
-export function createSingletonPromise<T>(fn: () => Promise<T>) {
+export function createSingletonPromise<T>(fn: () => Promise<T>): (() => Promise<T>) & { reset: () => Promise<void> } {
   const promise = {
     current: undefined as Promise<T> | undefined,
   }
