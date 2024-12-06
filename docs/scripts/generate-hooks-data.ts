@@ -1,5 +1,7 @@
 import 'zx/globals'
 
+$.verbose = true
+
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { camelCase } from 'change-case'

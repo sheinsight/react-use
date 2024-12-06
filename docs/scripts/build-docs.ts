@@ -2,6 +2,8 @@ import 'zx/globals'
 
 const isSoDoc = process.env.PIPLINENAME === 'SODOC'
 
+$.verbose = true
+
 if (isSoDoc) {
   process.env.IS_SODOC = 'true'
 
