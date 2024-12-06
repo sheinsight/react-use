@@ -1,3 +1,18 @@
+# [1.11.0](https://github.com/sheinsight/react-use/compare/v1.10.2...v1.11.0) (2024-12-06)
+
+
+### Bug Fixes
+
+* fix TypeScript types error in React v19 ([870161f](https://github.com/sheinsight/react-use/commit/870161f87060ff1eae3a7f45194a980ac56ad4fb))
+* **useTimeout:** fix `immediate` option not working ([8edf98d](https://github.com/sheinsight/react-use/commit/8edf98d72cb603ada4113b42a72913888d24ed70))
+
+
+### Features
+
+* update dependencies & support React v19 ([ee7e58c](https://github.com/sheinsight/react-use/commit/ee7e58cf5980d65c4b68b832ac065ce533aa6b16))
+
+
+
 ## [1.10.2](https://github.com/sheinsight/react-use/compare/v1.10.1...v1.10.2) (2024-11-06)
 
 
