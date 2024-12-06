@@ -11,7 +11,7 @@
   },
   "files": {
     "include": ["./packages/**/*", "./docs/**/*", "./testing/**/*", "./*.ts"],
-    "ignore": ["./**/react-fast-compare.ts", "hooks.json", "./**/.next", "./coverage"],
+    "ignore": ["./**/react-fast-compare.ts", "hooks.json", "./**/.next", "./coverage", "./cypress"],
     "ignoreUnknown": true
   },
   "linter": {
