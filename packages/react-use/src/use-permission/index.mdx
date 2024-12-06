@@ -94,11 +94,11 @@ export type UsePermissionReturns<Controls extends boolean> = Controls extends tr
       /**
        * Query the permission status
        */
-      state: RefObject<PermissionState>
+      state: RefObject<PermissionState | null>
       /**
        * Query the permission status
        */
       query(): Promise<PermissionStatus | null>
     }
-  : RefObject<PermissionState>
+  : RefObject<PermissionState | null>
 ```

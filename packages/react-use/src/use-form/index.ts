@@ -55,7 +55,7 @@ export type UseFormReturnsNativeProps = {
   /**
    * Ref of the form element
    */
-  ref: RefObject<HTMLFormElement>
+  ref: RefObject<HTMLFormElement | null>
   /**
    * Callback to be called when the form value changes
    */
@@ -203,7 +203,7 @@ export function useForm<FormState extends object>(options: UseFormOptions<FormSt
     handleSubmit(formValueRef.current)
   })
 
-  const handleNativeReset = useStableFn((e: FormEvent<HTMLFormElement>) => {
+  const handleNativeReset = useStableFn((_e: FormEvent<HTMLFormElement>) => {
     handleReset()
   })
 

@@ -3,7 +3,7 @@ import { useCreation } from '../use-creation'
 import { useEventListener } from '../use-event-listener'
 import { useStableFn } from '../use-stable-fn'
 import { useTargetElement } from '../use-target-element'
-import { isFunction, isObject, isString } from '../utils/basic'
+import { isFunction, isObject, isString, noop } from '../utils/basic'
 
 import type { ElementTarget } from '../use-target-element'
 import type { Noop } from '../utils/basic'
@@ -66,9 +66,9 @@ export type UseKeyStrokeHandler = (event: KeyboardEvent) => void
 export function useKeyStroke(key?: KeyFilter, handler?: UseKeyStrokeHandler, options?: UseKeyStrokeOptions): Noop
 export function useKeyStroke(handler?: UseKeyStrokeHandler, options?: UseKeyStrokeOptions): Noop
 export function useKeyStroke(...args: any[]) {
-  const key = useRef<KeyFilter>()
-  const handler = useRef<UseKeyStrokeHandler>()
-  const options = useRef<UseKeyStrokeOptions>()
+  const key = useRef<KeyFilter>(undefined)
+  const handler = useRef<UseKeyStrokeHandler>(undefined)
+  const options = useRef<UseKeyStrokeOptions>(undefined)
 
   if (args.length === 3) {
     ;[key.current, handler.current, options.current] = args

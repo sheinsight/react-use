@@ -27,8 +27,8 @@ interface UsePreviousOptions {
  * A React Hook that retains the *different* value of the state from the last render.
  */
 export function usePrevious<T = undefined>(state: T, options: UsePreviousOptions = {}): T | undefined {
-  const preRef = useRef<T>()
-  const curRef = useRef<T>()
+  const preRef = useRef<T>(undefined)
+  const curRef = useRef<T>(undefined)
   const isFirstRender = useFirstRender()
 
   const { deep = false, isEqual = deep ? deepEqual : Object.is } = options

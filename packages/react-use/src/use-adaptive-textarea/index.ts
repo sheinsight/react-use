@@ -52,7 +52,7 @@ export interface UseAdaptiveTextareaReturns {
   /**
    * a React ref that should be passed to the `textarea` element
    */
-  ref: RefObject<HTMLTextAreaElement>
+  ref: RefObject<HTMLTextAreaElement | null>
   /**
    * the current height of the `textarea` element
    */

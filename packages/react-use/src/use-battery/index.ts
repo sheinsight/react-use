@@ -79,7 +79,7 @@ export function useBattery(): UseBatteryReturns {
     { deep: true },
   )
 
-  const bmRef = useRef<BatteryManager | null>()
+  const bmRef = useRef<BatteryManager | null>(null)
 
   async function getBatteryState() {
     bmRef.current = await (navigator as NavigatorWithBattery).getBattery()

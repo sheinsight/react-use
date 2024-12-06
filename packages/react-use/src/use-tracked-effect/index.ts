@@ -10,7 +10,7 @@ export type TrackedEffectCallback = (depIndexes: number[], previousDeps?: Deps, 
  * A React Hook for detecting dependencies that have **actually changed** between renders, only run in development mode.
  */
 export function useTrackedEffect(callback: TrackedEffectCallback, deps?: Deps): void {
-  const previousDepsRef = useRef<Deps>()
+  const previousDepsRef = useRef<Deps>(undefined)
   const latest = useLatest({ callback })
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: for dev

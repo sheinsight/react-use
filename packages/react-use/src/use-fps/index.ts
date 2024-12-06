@@ -27,7 +27,7 @@ export interface UseFpsReturns extends Pausable {
 export function useFps(options: UseFpsOptions = {}): UseFpsReturns {
   const { every = 10 } = options
 
-  const last = useRef<DOMHighResTimeStamp>()
+  const last = useRef<DOMHighResTimeStamp>(undefined)
   const ticks = useRef(0)
   const [fps, setFps] = useSafeState(0)
 

@@ -56,13 +56,13 @@ export type UsePermissionReturns<Controls extends boolean> = Controls extends tr
       /**
        * Query the permission status
        */
-      stateRef: RefObject<PermissionState>
+      stateRef: RefObject<PermissionState | null>
       /**
        * Query the permission status
        */
       query(): Promise<PermissionStatus | null>
     }
-  : RefObject<PermissionState>
+  : RefObject<PermissionState | null>
 
 /**
  * A React Hook that helps to query the permission status of a browser feature.

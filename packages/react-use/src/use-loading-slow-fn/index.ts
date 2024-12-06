@@ -44,7 +44,7 @@ export function useLoadingSlowFn<T extends AnyFunc, D = Awaited<ReturnType<T>>, 
   const { loadingTimeout = 0, onLoadingSlow, ...useAsyncFnOptions } = options
 
   const latest = useLatest({ fn, onLoadingSlow, loadingTimeout })
-  const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>()
+  const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
   const [refState, actions] = useTrackedRefState({ loadingSlow: false })
   const [incVersion, runVersionedAction] = useVersionedAction()

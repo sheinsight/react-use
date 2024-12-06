@@ -91,7 +91,7 @@ export function useLongPress(
 ): UseLongPressReturns {
   const el = useTargetElement(target)
   const timeout = useRef<SetTimeoutReturn | null>(null)
-  const posStart = useRef<Position | undefined>()
+  const posStart = useRef<Position | undefined>(undefined)
   const [state, setState] = useSetState({ ...defaultFalsyState }, { deep: true })
 
   const latest = useLatest({
