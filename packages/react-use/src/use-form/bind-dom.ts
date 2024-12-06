@@ -15,7 +15,7 @@ export function syncFormStateToDom<FormState extends object>(
   formEl: HTMLFormElement,
   form: FormState,
   defaultForm: FormState,
-) {
+): void {
   for (const element of Array.from(formEl.elements)) {
     if (isValidFormChildElement(element) && 'name' in element) {
       const name = element.name as keyof FormState

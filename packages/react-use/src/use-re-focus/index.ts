@@ -12,7 +12,7 @@ export interface UseReFocusOptions extends UseThrottledFnOptions {
   registerReFocus?: (callback: AnyFunc) => void
 }
 
-export function registerWebReFocus(callback: AnyFunc) {
+export function registerWebReFocus(callback: AnyFunc): () => void {
   function handleFocus() {
     callback()
   }
@@ -37,7 +37,7 @@ export function registerWebReFocus(callback: AnyFunc) {
  *
  * @since 1.4.0
  */
-export function useReFocus(callback: AnyFunc, options: UseReFocusOptions = {}) {
+export function useReFocus(callback: AnyFunc, options: UseReFocusOptions = {}): () => void {
   const { registerReFocus = registerWebReFocus, ...throttleOptions } = options
 
   const throttledFn = useThrottledFn(callback, {
@@ -52,10 +52,10 @@ export function useReFocus(callback: AnyFunc, options: UseReFocusOptions = {}) {
     return registerReFocus(() => latest.current.throttledFn())
   })
 
-  return throttledFn.clear
+  return () => throttledFn.cancel()
 }
 
-export function createReactNativeReFocusRegister(appState: any) {
+export function createReactNativeReFocusRegister(appState: any): (callback: AnyFunc) => () => void {
   return function registerReactNativeReFocus(callback: AnyFunc) {
     let state = appState.currentState
 

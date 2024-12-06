@@ -1,6 +1,6 @@
 import { noop } from '../utils/basic'
 
-export function legacyCopy(value: string) {
+export function legacyCopy(value: string): void {
   const restoreSelection = removeSelection()
   const textarea = createHiddenTextarea(value)
   document.body.appendChild(textarea)
@@ -10,12 +10,12 @@ export function legacyCopy(value: string) {
   restoreSelection()
 }
 
-export function legacyRead() {
+export function legacyRead(): string {
   return document.getSelection()?.toString() ?? ''
 }
 
 // @see https://github.com/sudodoki/toggle-selection/blob/ac73e2b274c10d019d1f13e4da5f8fc93809806a/index.js
-export function removeSelection() {
+export function removeSelection(): () => void {
   const activeEl = document.activeElement
   const selection = document.getSelection()
 
@@ -44,7 +44,7 @@ export function removeSelection() {
   }
 }
 
-function createHiddenTextarea(value: string = '') {
+function createHiddenTextarea(value: string = ''): HTMLTextAreaElement {
   const textarea = document.createElement('textarea')
 
   // reset user styles for textarea element

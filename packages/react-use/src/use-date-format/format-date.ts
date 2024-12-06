@@ -9,13 +9,13 @@ const REGEX = /* #__PURE__ */ {
   unicodeSymbol: /\[([^\]]+)]|y{2,4}|M{1,4}|d{1,2}|e{3,5}|H{1,2}|h{1,2}|a{4}|m{1,2}|s{1,2}|S{1,3}/g,
 } as const
 
-export const defaultMeridiem = (hours: number, minutes: number, isLowercase?: boolean, hasPeriod?: boolean) => {
+export const defaultMeridiem = (hours: number, minutes: number, isLowercase?: boolean, hasPeriod?: boolean): string => {
   let m = hours < 12 ? 'AM' : 'PM'
   if (hasPeriod) m = m.split('').reduce((acc, curr) => `${acc}${curr}.`, '')
   return isLowercase ? m.toLowerCase() : m
 }
 
-export const formatOrdinal = (num: number) => {
+export const formatOrdinal = (num: number): string => {
   const suffixes = ['th', 'st', 'nd', 'rd']
   const v = num % 100
   return num + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0])
@@ -40,7 +40,7 @@ export type FormatDateOptions = {
   customMeridiem?: (hours: number, minutes: number, isLowercase?: boolean, hasPeriod?: boolean) => string
 }
 
-export const formatDate = (date: Date, formatStr: string, options: FormatDateOptions = {}) => {
+export const formatDate = (date: Date, formatStr: string, options: FormatDateOptions = {}): string => {
   const years = date.getFullYear()
   const month = date.getMonth()
   const days = date.getDate()

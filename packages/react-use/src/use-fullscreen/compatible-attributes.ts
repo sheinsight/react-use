@@ -4,7 +4,7 @@ export const EventHandlerList = [
   'webkitendfullscreen',
   'mozfullscreenchange',
   'MSFullscreenChange',
-]
+] as const
 
 export const EnterMethodList = [
   'requestFullscreen',
@@ -14,7 +14,7 @@ export const EnterMethodList = [
   'webkitRequestFullScreen',
   'mozRequestFullScreen',
   'msRequestFullscreen',
-]
+] as const
 
 export const ExitMethodList = [
   'exitFullscreen',
@@ -23,7 +23,7 @@ export const ExitMethodList = [
   'webkitCancelFullScreen',
   'mozCancelFullScreen',
   'msExitFullscreen',
-]
+] as const
 
 export const FullscreenEnabledAttrList = [
   'fullscreen',
@@ -31,16 +31,21 @@ export const FullscreenEnabledAttrList = [
   'webkitDisplayingFullscreen',
   'mozFullScreen',
   'msFullscreenElement',
-]
+] as const
 
 export const FullscreenElementAttrList = [
   'fullscreenElement',
   'webkitFullscreenElement',
   'mozFullScreenElement',
   'msFullscreenElement',
-]
+] as const
 
-export function getCompatibleAttr(el?: Element | null) {
+export function getCompatibleAttr(el?: Element | null): {
+  enter: (typeof EnterMethodList)[number] | undefined
+  exit: (typeof ExitMethodList)[number] | undefined
+  fsEnabled: (typeof FullscreenEnabledAttrList)[number] | undefined
+  fsElement: (typeof FullscreenElementAttrList)[number] | undefined
+} {
   return {
     enter: EnterMethodList.find((m) => (document && m in document) || (el && m in el)),
     exit: ExitMethodList.find(

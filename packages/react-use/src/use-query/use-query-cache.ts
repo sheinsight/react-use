@@ -31,7 +31,16 @@ export function useQueryCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     cacheExpirationTime?: number | false
     compare?: (prevData: D | undefined, nextData: D | undefined) => boolean
   } = {},
-) {
+): [
+  { data: D | undefined; params: Parameters<T> | [] },
+  {
+    setCache: (value: D | undefined, params?: Parameters<T> | []) => void
+    getPromiseCache: () => Promise<unknown> | undefined
+    setPromiseCache: (promise: Promise<D>) => void
+    clearPromiseCache: () => void
+    isCacheEnabled: boolean
+  },
+] {
   const render = useRender()
   const provider = unwrapGettable(options.provider) || dataCache
   const cacheKeyValue = unwrapGettable(options.cacheKey)
@@ -129,7 +138,7 @@ export function useQueryCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
   return [{ data: cachedData, params: cachedParams }, actions] as const
 }
 
-export const mutate = /* #__PURE__ */ createMutate(dataCache, paramsCache)
+export const mutate: UseQueryMutate = /* #__PURE__ */ createMutate(dataCache, paramsCache)
 
 export type UseQueryMutate = (
   keyFilter: Arrayable<string> | ((key: string) => boolean),

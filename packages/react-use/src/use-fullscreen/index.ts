@@ -130,8 +130,8 @@ export function useFullscreen(
     }
   })
 
-  useEventListener(() => document, EventHandlerList, handlerFullscreenChange, false)
-  useEventListener(el, EventHandlerList, handlerFullscreenChange, false)
+  useEventListener(() => document, [...EventHandlerList], handlerFullscreenChange, false)
+  useEventListener(el, [...EventHandlerList], handlerFullscreenChange, false)
 
   useUnmount(() => autoExit && exit())
 
