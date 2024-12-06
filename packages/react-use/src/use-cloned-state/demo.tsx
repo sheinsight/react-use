@@ -1,4 +1,4 @@
-import { Button, Card, Input, KeyValue, LabelInput, Zone } from '@/components'
+import { Button, Card, KeyValue, LabelInput, Zone } from '@/components'
 import { useClonedState, useSafeState } from '@shined/react-use'
 
 export function App() {

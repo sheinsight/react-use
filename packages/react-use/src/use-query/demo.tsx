@@ -77,7 +77,7 @@ function Demo2() {
         <Button mono onClick={() => mutate(OTP())}>
           mutate(data)
         </Button>
-        <Button mono onClick={() => mutate((data, params) => [data ? `${data}.` : data, [222]])}>
+        <Button mono onClick={() => mutate((data, _params) => [data ? `${data}.` : data, [222]])}>
           mutate((d, p) =&gt; [d, p])
         </Button>
         <Button mono onClick={() => refresh()}>
@@ -133,7 +133,7 @@ function Demo4() {
   return <KeyValue label="Data" value={initializing ? 'Initializing...' : data ? `${data}${slowStr}` : 'Not loaded'} />
 }
 
-const localStorageProvider = {
+const _localStorageProvider = {
   get: (key: string) => {
     const value = localStorage.getItem(key)
     return value ? JSON.parse(value) : undefined
@@ -159,7 +159,7 @@ function Demo5() {
       // provider: localStorageProvider,
       errorRetryCount: 3,
       onErrorRetry: (error, { currentCount }) => toast.loading(`Retry ${currentCount} times ...`, { id: 'retry' }),
-      onSuccess: (data, params) => toast.success(`Success! ${data}`, { id: 'retry' }),
+      onSuccess: (data, _params) => toast.success(`Success! ${data}`, { id: 'retry' }),
     },
   )
 

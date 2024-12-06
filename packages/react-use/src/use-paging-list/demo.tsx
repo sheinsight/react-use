@@ -18,7 +18,7 @@ interface Item {
 export function App() {
   const { list, loading, form, refresh, pagination, selection } = usePagingList<Item, FormState>({
     fetcher: async (params) => {
-      const { page, pageSize, form, setTotal } = params
+      const { page, pageSize, form: _form, setTotal } = params
       const { data, total } = await fetchPagination({ page, pageSize })
       setTotal(total)
       return data
@@ -121,7 +121,7 @@ export function App() {
               type="checkbox"
               className="mr-2"
               checked={selection.isItemSelected(item)}
-              onChange={(e) => {
+              onChange={() => {
                 selection.toggle(item)
               }}
             />

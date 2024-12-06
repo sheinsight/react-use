@@ -1,4 +1,4 @@
-import { configDefaults, defineProject } from 'vitest/config'
+import { defineProject } from 'vitest/config'
 
 const fromDir = (path: string) => new URL(path, import.meta.url).pathname
 

@@ -25,7 +25,7 @@ export function App() {
   const [_list, _actions] = useVirtualList(data, {
     containerTarget: '#scroll-container-h',
     wrapperTarget: '#scroll-wrapper-h',
-    itemWidth: (index, item) => getSize(index),
+    itemWidth: (index, _item) => getSize(index),
   })
 
   return (

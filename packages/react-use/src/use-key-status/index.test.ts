@@ -78,7 +78,7 @@ describe('useKeyStatus', () => {
   })
 
   it('should call handler on key down', () => {
-    const { result } = renderHook(() => useKeyStatus(key, handler))
+    renderHook(() => useKeyStatus(key, handler))
 
     act(() => {
       window.dispatchEvent(new KeyboardEvent('keydown', { key }))
@@ -88,7 +88,7 @@ describe('useKeyStatus', () => {
   })
 
   it('should call handler on key up', () => {
-    const { result } = renderHook(() => useKeyStatus(key, handler))
+    renderHook(() => useKeyStatus(key, handler))
 
     act(() => {
       window.dispatchEvent(new KeyboardEvent('keydown', { key }))

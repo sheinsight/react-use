@@ -35,7 +35,7 @@ export function App() {
 }
 
 // biome-ignore format: no wrap
-function MySelect<T>(props: { items: Item[]; value: Item; onChange: (value: Item) => void }) {
+function MySelect(props: { items: Item[]; value: Item; onChange: (value: Item) => void }) {
   return (
     <div className='flex gap-2 items-center'>
       {props.items.map(item => {

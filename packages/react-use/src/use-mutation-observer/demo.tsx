@@ -7,7 +7,11 @@ const boxCls = 'size-120px grid place-content-center rounded transition-all bg-b
 export function App() {
   const divRef = useRef<HTMLDivElement>(null)
 
-  const { observerRef, isSupported, ...controls } = useMutationObserver(
+  const {
+    observerRef: _ref,
+    isSupported,
+    ..._controls
+  } = useMutationObserver(
     divRef,
     (records) => {
       toast.success(`Mutation detected: ${records[0]?.attributeName} changed!`)

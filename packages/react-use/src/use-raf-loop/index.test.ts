@@ -69,7 +69,7 @@ describe('useRafLoop', () => {
   it('should call immediateCallback before the first frame', () => {
     const immediateCallback = vi.fn()
 
-    const { result } = renderHook(() =>
+    renderHook(() =>
       useRafLoop(callback, {
         immediate: true,
         immediateCallback: true,

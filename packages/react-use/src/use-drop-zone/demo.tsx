@@ -23,7 +23,7 @@ export function App() {
       </Zone>
 
       <Zone>
-        {files?.map((file, index) => (
+        {files?.map((file, _index) => (
           <div key={file.name} className="flex items-center space-x-2">
             <img alt="img" src={URL.createObjectURL(file)} className="size-8" />
             <div>

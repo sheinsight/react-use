@@ -1,5 +1,5 @@
 import { act, renderHook } from '@/test'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { useMultiSelect } from './index'
 
 describe('useMultiSelect', () => {

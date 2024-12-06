@@ -38,7 +38,7 @@ describe('useReFocus', () => {
 
   it('should use custom registerReFocus function', async () => {
     const customRegister = vi.fn()
-    const { result } = renderHook(() => useReFocus(callback, { registerReFocus: customRegister }))
+    renderHook(() => useReFocus(callback, { registerReFocus: customRegister }))
 
     await act(async () => {
       customRegister.mock.calls[0][0]()

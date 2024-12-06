@@ -1,5 +1,5 @@
 import { act, renderHook } from '@/test'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { type UsePaginationOptions, usePagination } from './index'
 
 describe('usePagination', () => {

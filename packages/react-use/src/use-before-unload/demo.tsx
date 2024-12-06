@@ -4,7 +4,7 @@ import { useBeforeUnload, useToggle } from '@shined/react-use'
 export function App() {
   const [show, { toggle }] = useToggle(true)
 
-  function callback(event: BeforeUnloadEvent) {
+  function callback(_event: BeforeUnloadEvent) {
     // do something before the page is unload, such as sending beacon
   }
 

@@ -1,5 +1,5 @@
 import { act, renderHook } from '@/test'
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { useCircularList } from './index'
 
 describe('useCircularList', () => {

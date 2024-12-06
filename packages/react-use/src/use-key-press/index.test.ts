@@ -14,7 +14,7 @@ describe('useKeyPress', () => {
 
   it('should call callback', async () => {
     const callback = vi.fn()
-    const { result } = renderHook(() => useKeyPress('a', callback, { target: 'body' }))
+    renderHook(() => useKeyPress('a', callback, { target: 'body' }))
 
     await act(async () => {
       const event = new KeyboardEvent('keypress', { key: 'a' })

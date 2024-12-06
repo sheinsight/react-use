@@ -1,4 +1,4 @@
-import { Button, Card, Input, KeyValue, Zone } from '@/components'
+import { Card, KeyValue, Zone } from '@/components'
 import { useParentElement } from '@shined/react-use'
 
 export function App() {

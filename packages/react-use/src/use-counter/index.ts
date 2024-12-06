@@ -126,7 +126,7 @@ export function useCounter(initialCount: number = 0, options: UseCounterOptions 
   const get = useStableFn(() => latest.current.count)
 
   const reset = useStableFn((n = latest.current.initialCount) => {
-    _setState((pre) => ({
+    _setState((_pre) => ({
       initialCount: n,
       count: clamp(n, latest.current.min, latest.current.max),
     }))

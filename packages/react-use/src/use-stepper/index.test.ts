@@ -1,5 +1,5 @@
 import { act, renderHook } from '@/test'
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { useStepper } from './index'
 
 describe('useStepper', () => {

@@ -82,7 +82,7 @@ describe('useQuery', () => {
   })
 
   it('should handle refreshInterval', async () => {
-    const { result } = renderHook(() => useQuery(mockFetcher, { refreshInterval: 100 }))
+    renderHook(() => useQuery(mockFetcher, { refreshInterval: 100 }))
 
     await act(async () => {}) // wait for fetcher to resolve
 
@@ -94,7 +94,7 @@ describe('useQuery', () => {
   })
 
   it('should handle refreshInterval when set manual', async () => {
-    const { result } = renderHook(() => useQuery(mockFetcher, { refreshInterval: 100, manual: true }))
+    renderHook(() => useQuery(mockFetcher, { refreshInterval: 100, manual: true }))
 
     await act(async () => {}) // wait for fetcher to resolve
 
@@ -141,7 +141,7 @@ describe('useQuery', () => {
     const onErrorRetryFailed = vi.fn()
     mockFetcher.mockRejectedValue(new Error('fetch error'))
 
-    const { result } = renderHook(() =>
+    renderHook(() =>
       useQuery(mockFetcher, {
         errorRetryCount: 2,
         onErrorRetryFailed,
@@ -248,7 +248,7 @@ describe('useQuery', () => {
   it('should handle onFinally', async () => {
     const onFinally = vi.fn()
 
-    const { result } = renderHook(() => useQuery(mockFetcher, { onFinally }))
+    renderHook(() => useQuery(mockFetcher, { onFinally }))
 
     expect(onFinally).not.toHaveBeenCalled()
 
@@ -260,7 +260,7 @@ describe('useQuery', () => {
   it('should handle onSuccess', async () => {
     const onSuccess = vi.fn()
 
-    const { result } = renderHook(() => useQuery(mockFetcher, { onSuccess }))
+    renderHook(() => useQuery(mockFetcher, { onSuccess }))
 
     expect(onSuccess).not.toHaveBeenCalled()
 
@@ -303,7 +303,7 @@ describe('useQuery', () => {
 
     mockFetcher.mockRejectedValue(new Error('fetch error'))
 
-    const { result } = renderHook(() => useQuery(mockFetcher, { onError }))
+    renderHook(() => useQuery(mockFetcher, { onError }))
 
     expect(onError).not.toHaveBeenCalled()
 
@@ -327,7 +327,7 @@ describe('useQuery', () => {
   it('should handle onBefore', async () => {
     const onBefore = vi.fn()
 
-    const { result } = renderHook(() => useQuery(mockFetcher, { onBefore }))
+    renderHook(() => useQuery(mockFetcher, { onBefore }))
 
     await act(async () => {}) // wait for fetcher to resolve
 

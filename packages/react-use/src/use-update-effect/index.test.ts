@@ -47,7 +47,7 @@ describe('useUpdateEffect', () => {
   })
 
   it('should call effect multiple times on multiple updates', () => {
-    const { rerender } = renderHook(({ count }) => useUpdateEffect(effect), {
+    const { rerender } = renderHook(() => useUpdateEffect(effect), {
       initialProps: { count: 0 },
     })
 

@@ -171,7 +171,7 @@ describe('useDropZone', () => {
 
   it('should handle onEnter callback', async () => {
     const onEnter = vi.fn()
-    const { result } = renderHook(() => useDropZone('#target', { onEnter }))
+    renderHook(() => useDropZone('#target', { onEnter }))
 
     expect(onEnter).toHaveBeenCalledTimes(0)
 
@@ -185,7 +185,7 @@ describe('useDropZone', () => {
 
   it('should handle onOver callback', async () => {
     const onOver = vi.fn()
-    const { result } = renderHook(() => useDropZone('#target', { onOver }))
+    renderHook(() => useDropZone('#target', { onOver }))
 
     expect(onOver).toHaveBeenCalledTimes(0)
 
@@ -199,7 +199,7 @@ describe('useDropZone', () => {
 
   it('should handle onLeave callback', async () => {
     const onLeave = vi.fn()
-    const { result } = renderHook(() => useDropZone('#target', { onLeave }))
+    renderHook(() => useDropZone('#target', { onLeave }))
 
     expect(onLeave).toHaveBeenCalledTimes(0)
 

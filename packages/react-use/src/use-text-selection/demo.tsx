@@ -3,7 +3,7 @@ import { useLoremIpsum, useTextSelection } from '@shined/react-use'
 
 export function App() {
   const lorem = useLoremIpsum()
-  const { text, rects, ranges, selectionRef } = useTextSelection()
+  const { text, rects: _, ranges: __, selectionRef: ___ } = useTextSelection()
 
   return (
     <Card>

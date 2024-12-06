@@ -52,7 +52,7 @@ describe('useLongPress', () => {
 
   it('should prevent default behavior when preventDefault is true', () => {
     const handler = vi.fn()
-    const { result } = renderHook(() => useLongPress(target, handler, { modifiers: { preventDefault: true } }))
+    renderHook(() => useLongPress(target, handler, { modifiers: { preventDefault: true } }))
     const preventDefault = vi.fn()
 
     act(() => {
@@ -68,7 +68,7 @@ describe('useLongPress', () => {
 
   it('should stop propagation when stopPropagation is true', () => {
     const handler = vi.fn()
-    const { result } = renderHook(() => useLongPress(target, handler, { modifiers: { stopPropagation: true } }))
+    renderHook(() => useLongPress(target, handler, { modifiers: { stopPropagation: true } }))
     const stopPropagation = vi.fn()
 
     act(() => {
@@ -84,7 +84,7 @@ describe('useLongPress', () => {
 
   it('should handle multiple events correctly', () => {
     const handler = vi.fn()
-    const { result } = renderHook(() => useLongPress(target, handler))
+    renderHook(() => useLongPress(target, handler))
 
     act(() => {
       target.dispatchEvent(new PointerEvent('pointerdown'))

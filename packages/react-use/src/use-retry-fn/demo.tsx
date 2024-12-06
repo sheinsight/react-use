@@ -12,7 +12,7 @@ export function App() {
       onErrorRetry(error, retryState) {
         toast.error(`Retry... (count ${retryState.currentCount})`)
       },
-      onRetryFailed(error) {
+      onRetryFailed(_error) {
         toast.error('Retry failed')
       },
     },

@@ -4,7 +4,7 @@ import { usePerformanceObserver } from '@shined/react-use'
 const entryTypes = ['paint', 'paint', 'navigation', 'resource', 'mark', 'measure']
 
 export function App() {
-  const { observerRef, isSupported, ...controls } = usePerformanceObserver(
+  const { observerRef, isSupported, ..._controls } = usePerformanceObserver(
     (entryList, observer) => {
       const records = observer.takeRecords()
       console.log(entryList.getEntries(), records)

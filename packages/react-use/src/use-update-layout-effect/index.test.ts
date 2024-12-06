@@ -25,7 +25,7 @@ describe('useUpdateLayoutEffect', () => {
   })
 
   it('should call effect after state change', () => {
-    const { rerender } = renderHook(({ count }) => useUpdateLayoutEffect(effect), {
+    const { rerender } = renderHook(() => useUpdateLayoutEffect(effect), {
       initialProps: { count: 0 },
     })
     rerender({ count: 1 })

@@ -37,7 +37,7 @@ export function PassedUrl() {
   // const isConnected = ws.readyState === WebSocket.OPEN
 
   // for SSR compatibility
-  const isConnected = ws.readyState === 1
+  const _isConnected = ws.readyState === 1
 
   return (
     <Zone row={false} border="primary">
@@ -96,7 +96,7 @@ export function DynamicUrl() {
   // const isConnected = ws.readyState === WebSocket.OPEN
 
   // for SSR compatibility
-  const isConnected = ws.readyState === 1
+  const _isConnected = ws.readyState === 1
 
   return (
     <Zone row={false} border="primary">

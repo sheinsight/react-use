@@ -1,4 +1,4 @@
-import { act, renderHook } from '@/test'
+import { renderHook } from '@/test'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { useParentElement } from './index'
 

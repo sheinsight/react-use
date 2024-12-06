@@ -226,7 +226,7 @@ describe('useAsyncFn', () => {
   })
 
   it('should handle async function with parameters', async () => {
-    const mockFn = vi.fn((a: string, b: string) => Promise.resolve('')).mockResolvedValue('success')
+    const mockFn = vi.fn((a: string, b: string) => Promise.resolve(a + b)).mockResolvedValue('success')
     const { result } = renderHook(() => useAsyncFn(mockFn))
 
     await act(async () => {
@@ -238,7 +238,7 @@ describe('useAsyncFn', () => {
   })
 
   it('should handle multiple operation with parameters', async () => {
-    const mockFn = vi.fn((a: string, b: string) => Promise.resolve('')).mockResolvedValue('success')
+    const mockFn = vi.fn((a: string, b: string) => Promise.resolve(a + b)).mockResolvedValue('success')
     const { result } = renderHook(() => useAsyncFn(mockFn))
 
     await act(async () => {

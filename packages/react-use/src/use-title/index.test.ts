@@ -14,17 +14,17 @@ describe('useTitle', () => {
   })
 
   it('should update document title', () => {
-    const { result } = renderHook(() => useTitle('New Title'))
+    renderHook(() => useTitle('New Title'))
     expect(document.title).toBe('New Title')
   })
 
   it('should format title using string template', () => {
-    const { result } = renderHook(() => useTitle('Page Title', { template: 'My Website - %s' }))
+    renderHook(() => useTitle('Page Title', { template: 'My Website - %s' }))
     expect(document.title).toBe('My Website - Page Title')
   })
 
   it('should format title using function template', () => {
-    const { result } = renderHook(() => useTitle('Page Title', { template: (title) => `Custom - ${title}` }))
+    renderHook(() => useTitle('Page Title', { template: (title) => `Custom - ${title}` }))
     expect(document.title).toBe('Custom - Page Title')
   })
 

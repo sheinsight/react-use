@@ -136,6 +136,7 @@ export function debounce<T extends AnyFunc>(fn: T, options: DebounceOptions = {}
     const isInvoking = shouldInvoke(time)
 
     lastArgs = args
+    // eslint-disable-next-line no-this-alias
     lastThis = this
     lastCallTime = time
 

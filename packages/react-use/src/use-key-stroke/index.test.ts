@@ -17,7 +17,7 @@ describe('useKeyStroke', () => {
 
   it('should call handler on keydown event', () => {
     const handler = vi.fn()
-    const { result } = renderHook(() => useKeyStroke('a', handler))
+    renderHook(() => useKeyStroke('a', handler))
 
     act(() => {
       const event = new KeyboardEvent('keydown', { key: 'a' })
@@ -29,7 +29,7 @@ describe('useKeyStroke', () => {
 
   it('should not call handler if key does not match', () => {
     const handler = vi.fn()
-    const { result } = renderHook(() => useKeyStroke('a', handler))
+    renderHook(() => useKeyStroke('a', handler))
 
     act(() => {
       const event = new KeyboardEvent('keydown', { key: 'b' })
@@ -41,7 +41,7 @@ describe('useKeyStroke', () => {
 
   it('should handle multiple keys', () => {
     const handler = vi.fn()
-    const { result } = renderHook(() => useKeyStroke(['a', 'b'], handler))
+    renderHook(() => useKeyStroke(['a', 'b'], handler))
 
     act(() => {
       const eventA = new KeyboardEvent('keydown', { key: 'a' })
@@ -55,7 +55,7 @@ describe('useKeyStroke', () => {
 
   it('should ignore repeated events when dedupe is true', () => {
     const handler = vi.fn()
-    const { result } = renderHook(() => useKeyStroke('a', handler, { dedupe: true }))
+    renderHook(() => useKeyStroke('a', handler, { dedupe: true }))
 
     act(() => {
       const event = new KeyboardEvent('keydown', { key: 'a' })
@@ -76,7 +76,7 @@ describe('useKeyStroke', () => {
 
   it('should call handler only once if once is true', () => {
     const handler = vi.fn()
-    const { result } = renderHook(() => useKeyStroke('a', handler, { once: true }))
+    renderHook(() => useKeyStroke('a', handler, { once: true }))
 
     act(() => {
       const event = new KeyboardEvent('keydown', { key: 'a' })
@@ -89,7 +89,7 @@ describe('useKeyStroke', () => {
 
   it('should work with passive event listeners', () => {
     const handler = vi.fn()
-    const { result } = renderHook(() => useKeyStroke('a', handler, { passive: true }))
+    renderHook(() => useKeyStroke('a', handler, { passive: true }))
 
     act(() => {
       const event = new KeyboardEvent('keydown', { key: 'a' })
@@ -101,7 +101,7 @@ describe('useKeyStroke', () => {
 
   it('should handle undefined key gracefully', () => {
     const handler = vi.fn()
-    const { result } = renderHook(() => useKeyStroke(undefined, handler))
+    renderHook(() => useKeyStroke(undefined, handler))
 
     act(() => {
       const event = new KeyboardEvent('keydown', { key: 'a' })

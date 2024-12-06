@@ -1,4 +1,4 @@
-import { act, renderHook } from '@/test'
+import { renderHook } from '@/test'
 import { describe, expect, it } from 'vitest'
 import { useClipboardItems } from './index'
 

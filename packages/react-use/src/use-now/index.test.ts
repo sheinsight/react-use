@@ -31,7 +31,7 @@ describe('useNow', () => {
 
   it('should call the callback function on each update', () => {
     const callback = vi.fn()
-    const { result } = renderHook(() => useNow({ callback, interval: 1000 }))
+    renderHook(() => useNow({ callback, interval: 1000 }))
 
     act(() => {
       vi.advanceTimersByTime(1000)

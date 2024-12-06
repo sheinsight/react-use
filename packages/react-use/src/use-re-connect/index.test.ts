@@ -24,13 +24,15 @@ describe('useReConnect', () => {
   })
 
   it('should register the reconnect event listener', () => {
-    const { result } = renderHook(() => useReConnect(mockCallback))
+    renderHook(() => useReConnect(mockCallback))
 
-    expect(window.addEventListener).toHaveBeenCalledWith('online', expect.any(Function), { passive: true })
+    expect(window.addEventListener).toHaveBeenCalledWith('online', expect.any(Function), {
+      passive: true,
+    })
   })
 
   it('should call the callback when the network is reconnected', () => {
-    const { result } = renderHook(() => useReConnect(mockCallback))
+    renderHook(() => useReConnect(mockCallback))
     // Simulate the online event
     const onlineEvent = (window.addEventListener as Mock).mock.calls[0][1]
     act(() => {

@@ -1,4 +1,4 @@
-import { act, renderHook } from '@/test'
+import { renderHook } from '@/test'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { useVirtualList } from './index'
 

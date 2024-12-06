@@ -214,7 +214,7 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
           latest.current.onErrorRetryFailed?.(...args)
           throw args[0]
         },
-        onError(...args) {
+        onError(..._args) {
           cacheActions.clearPromiseCache()
         },
       },

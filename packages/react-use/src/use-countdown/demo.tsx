@@ -1,5 +1,5 @@
 import { Button, Card, Input, KeyValue, Zone } from '@/components'
-import { useCountdown, useDateFormat, useSafeState } from '@shined/react-use'
+import { useCountdown, useSafeState } from '@shined/react-use'
 
 export function App() {
   const ms = useCountdown(() => new Date('2030-01-01T00:00:00Z'))

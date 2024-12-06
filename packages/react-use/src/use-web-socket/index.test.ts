@@ -1,5 +1,5 @@
-import { act, renderHook } from '@/test'
-import { describe, expect, it, vi } from 'vitest'
+import { renderHook } from '@/test'
+import { describe, expect, it } from 'vitest'
 import { useWebSocket } from './index'
 
 describe('useWebSocket', () => {

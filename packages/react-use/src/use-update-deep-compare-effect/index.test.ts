@@ -1,4 +1,4 @@
-import { act, renderHook } from '@/test'
+import { renderHook } from '@/test'
 import { type Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { useUpdateDeepCompareEffect } from './index'
 
@@ -20,8 +20,8 @@ describe('useUpdateDeepCompareEffect', () => {
   })
 
   it('should call effect on subsequent renders with different dependencies', () => {
-    // biome-ignore lint/correctness/useExhaustiveDependencies: for test
-    const { result, rerender } = renderHook(({ count }) => useUpdateDeepCompareEffect(effectFn, [count]), {
+    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+    const { rerender } = renderHook(({ count }) => useUpdateDeepCompareEffect(effectFn, [count]), {
       initialProps: { count: 1 },
     })
 
@@ -31,7 +31,7 @@ describe('useUpdateDeepCompareEffect', () => {
 
   it('should not call effect when dependencies are the same', () => {
     // biome-ignore lint/correctness/useExhaustiveDependencies: for test
-    const { result, rerender } = renderHook(({ count }) => useUpdateDeepCompareEffect(effectFn, [count]), {
+    const { rerender } = renderHook(({ count }) => useUpdateDeepCompareEffect(effectFn, [count]), {
       initialProps: { count: 1 },
     })
 
@@ -41,7 +41,7 @@ describe('useUpdateDeepCompareEffect', () => {
 
   it('should call effect when dependencies deeply change', () => {
     // biome-ignore lint/correctness/useExhaustiveDependencies: for test
-    const { result, rerender } = renderHook(({ obj }) => useUpdateDeepCompareEffect(effectFn, [obj]), {
+    const { rerender } = renderHook(({ obj }) => useUpdateDeepCompareEffect(effectFn, [obj]), {
       initialProps: { obj: { a: 1 } },
     })
 
@@ -53,10 +53,13 @@ describe('useUpdateDeepCompareEffect', () => {
   })
 
   it('should handle multiple dependencies', () => {
-    // biome-ignore lint/correctness/useExhaustiveDependencies: for test
-    const { result, rerender } = renderHook(({ obj, count }) => useUpdateDeepCompareEffect(effectFn, [obj, count]), {
-      initialProps: { obj: { a: 1 }, count: 1 },
-    })
+    const { rerender } = renderHook(
+      // biome-ignore lint/correctness/useExhaustiveDependencies: for test
+      ({ obj, count }) => useUpdateDeepCompareEffect(effectFn, [obj, count]),
+      {
+        initialProps: { obj: { a: 1 }, count: 1 },
+      },
+    )
 
     rerender({ obj: { a: 1 }, count: 1 }) // No change
     expect(effectFn).not.toHaveBeenCalled()
