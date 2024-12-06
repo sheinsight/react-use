@@ -490,8 +490,10 @@ describe('useQuery', () => {
 
     expect(result.current.data).toBe('data')
 
-    // Wait for cache to expire
-    await vi.advanceTimersByTimeAsync(150)
+    await act(async () => {
+      // Wait for cache to expire
+      await vi.advanceTimersByTimeAsync(160)
+    })
 
     expect(result.current.data).toBe(undefined)
   })
@@ -716,7 +718,9 @@ describe('useQuery', () => {
       result.current.refresh(['newParams 3'])
     })
 
-    await vi.advanceTimersByTimeAsync(220)
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(260)
+    })
 
     expect(result.current.data).toBe('newData')
     expect(result.current.params).toEqual(['newParams 3'])
