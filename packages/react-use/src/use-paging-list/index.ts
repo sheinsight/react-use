@@ -30,7 +30,10 @@ export interface UsePagingListOptions<Item, FormState extends object> {
    *
    * @defaultValue undefined
    */
-  query?: Omit<UseQueryOptions<UsePagingListFetcher<Item, FormState>>, 'initialParams' | 'initialData'>
+  query?: Omit<
+    UseQueryOptions<UsePagingListFetcher<Item, FormState>>,
+    'initialParams' | 'initialData' | 'cacheKey' | 'cacheExpirationTime' | 'provider'
+  >
   /**
    * options for `usePagination`, see `usePagination` for more details
    *
