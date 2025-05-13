@@ -292,7 +292,7 @@ const { loading, data, error } = useQuery(fetchData, {
 
 ### 缓存与 SWR \{#cache-swr}
 
-设置 `cacheKey` 可以启用缓存功能，缓存的内容包括 `data` 与 `param`，当存在缓存数据且未过期时（过期会被清空），会优先返回缓存数据，同时触发请求，并在请求结果返回时更新缓存数据，以保证数据可用性和最新性，也就是 `SWR`（Stale-While-Revalidate）策略。
+设置 `cacheKey` 可以启用缓存功能，缓存的内容包括 `data` 与 `param`，会优先返回缓存数据，当存在缓存数据且未过期时（过期会被清空）触发请求，并在请求结果返回时更新缓存数据，以保证数据可用性和最新性，也就是 `SWR`（Stale-While-Revalidate）策略。
 
 ```ts
 const { loading, data, error } = useQuery(fetchData, {
