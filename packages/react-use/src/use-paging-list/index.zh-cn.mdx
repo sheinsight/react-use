@@ -42,8 +42,8 @@ const {
 // 在这个函数里面使用 setTotal 来设置数据总数，以便分页器能够正确显示总数
 const { form, pagination, selection, list, refresh, loading } = usePagingList(
   {
-    fetcher: async (params) => {
-      const { page, pageSize, form } = params
+    fetcher: async (payload) => {
+      const { page, pageSize, form, setTotal } = payload
       const { list, total } = await fetchPaginationList({ page, pageSize })
       setTotal(total)
       return list

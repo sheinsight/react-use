@@ -42,8 +42,8 @@ const {
 // Use setTotal within this function to set the total number of data, so that the paginator can display the total correctly
 const { form, pagination, selection, list, refresh, loading } = usePagingList(
   {
-    fetcher: async (params) => {
-      const { page, pageSize, form } = params
+    fetcher: async (payload) => {
+      const { page, pageSize, form, setTotal } = payload
       const { list, total } = await fetchPaginationList({ page, pageSize })
       setTotal(total)
       return list
