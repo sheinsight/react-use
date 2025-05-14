@@ -19,28 +19,28 @@
     "@shined/reactive": "^0.1.4",
     "change-case": "^5.4.4",
     "classnames": "^2.5.1",
-    "react-hot-toast": "^2.4.1",
-    "rspress": "^1.37.4",
-    "semver": "^7.6.3",
-    "shiki": "^1.24.0"
+    "react-hot-toast": "^2.5.2",
+    "rspress": "^1.44.0",
+    "semver": "^7.7.2",
+    "shiki": "^1.29.2"
   },
   "devDependencies": {
-    "@iconify-json/mdi": "^1.2.1",
-    "@rspress/plugin-shiki": "^1.37.4",
-    "@rspress/shared": "^1.37.4",
-    "@types/node": "^22.10.1",
-    "@types/react": "18",
-    "@types/react-dom": "18",
-    "@types/semver": "^7.5.8",
+    "@iconify-json/mdi": "^1.2.3",
+    "@rspress/plugin-shiki": "^1.44.0",
+    "@rspress/shared": "^1.44.0",
+    "@types/node": "^22.15.18",
+    "@types/react": "^18.3.21",
+    "@types/react-dom": "^18.3.7",
+    "@types/semver": "^7.7.0",
     "@unocss/postcss": "^0.61.9",
     "@unocss/reset": "^0.61.9",
     "esno": "^4.8.0",
     "gray-matter": "^4.0.3",
-    "react": "18",
-    "react-dom": "18",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "rimraf": "^6.0.1",
     "rsbuild-plugin-google-analytics": "^1.0.3",
     "unocss": "^0.61.9",
-    "zx": "^8.2.4"
+    "zx": "^8.5.4"
   }
 }
