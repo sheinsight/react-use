@@ -1,3 +1,12 @@
+# [1.12.0](https://github.com/sheinsight/react-use/compare/v1.11.0...v1.12.0) (2025-05-21)
+
+
+### Features
+
+* support `params`, `error`, `initializing`, `refreshing`, `loadingSlow` in `usePagingList` returns ([593acee](https://github.com/sheinsight/react-use/commit/593acee2fd111e35462e6928e2a4f1fe7317a9e3))
+
+
+
 # [1.11.0](https://github.com/sheinsight/react-use/compare/v1.10.2...v1.11.0) (2024-12-06)
 
 
