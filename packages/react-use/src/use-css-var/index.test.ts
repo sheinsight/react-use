@@ -46,7 +46,7 @@ describe('useCssVar', () => {
     })
 
     // Wait for MutationObserver to trigger
-    return new Promise((resolve) => setTimeout(resolve, 0)).then(() => {
+    return new Promise((resolve) => setTimeout(resolve, 10)).then(() => {
       expect(result.current[0]).toBe('observed-value')
     })
   })
