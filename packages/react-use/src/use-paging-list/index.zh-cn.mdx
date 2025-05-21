@@ -140,11 +140,11 @@ export type UsePagingListFetcher<Item, FormState extends object> = (
 ### 返回值 \{#returns}
 
 ```tsx
-export interface UsePagingListReturns<Item, FormState extends object> {
-  /**
-   * loading status
-   */
-  loading: boolean
+export interface UsePagingListReturns<Item, FormState extends object>
+  extends Pick<
+    UseQueryReturns<any, any>,
+    'loading' | 'params' | 'error' | 'initializing' | 'refreshing' | 'loadingSlow'
+  > {
   /**
    * list data
    */

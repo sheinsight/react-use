@@ -11,7 +11,7 @@ import { shallowEqual } from '../utils/equal'
 import type { UseFormOptions, UseFormReturns } from '../use-form'
 import type { UseMultiSelectReturnsActions, UseMultiSelectReturnsState } from '../use-multi-select'
 import type { UsePaginationOptions, UsePaginationReturnsActions, UsePaginationReturnsState } from '../use-pagination'
-import type { UseQueryOptions } from '../use-query'
+import type { UseQueryOptions, UseQueryReturns } from '../use-query'
 import type { ReactSetState } from '../use-safe-state'
 
 export interface UsePagingListOptions<Item, FormState extends object> {
@@ -75,11 +75,11 @@ export type UsePagingListFetcher<Item, FormState extends object> = (
   params: UsePagingListFetcherParams<Item, FormState>,
 ) => Promise<Item[]>
 
-export interface UsePagingListReturns<Item, FormState extends object> {
-  /**
-   * loading status
-   */
-  loading: boolean
+export interface UsePagingListReturns<Item, FormState extends object>
+  extends Pick<
+    UseQueryReturns<any, any>,
+    'loading' | 'params' | 'error' | 'initializing' | 'refreshing' | 'loadingSlow'
+  > {
   /**
    * list data
    */
@@ -231,10 +231,27 @@ export function usePagingList<Item, FormState extends object = object>(
   const refresh = useStableFn(() => query.refresh())
 
   return {
+    get params() {
+      return query.params
+    },
+    get loadingSlow() {
+      return query.loadingSlow
+    },
+    get error() {
+      return query.error
+    },
     get loading() {
       return query.loading
     },
-    list: (query.data ?? []) as Item[],
+    get refreshing() {
+      return query.refreshing
+    },
+    get initializing() {
+      return query.initializing
+    },
+    get list() {
+      return (query.data ?? []) as Item[]
+    },
     form,
     refresh,
     selection: {
