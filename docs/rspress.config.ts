@@ -36,7 +36,7 @@ export default defineConfig({
   icon: '/icon.svg',
   title: '@shined/react-use',
   description: i18n['homepage.tagline'].en,
-  outDir: 'build',
+  outDir: process.env.IS_SODOC ? 'docs-dist' : 'build',
   logo: {
     dark: '/logo-dark.svg',
     light: '/logo-light.svg',
@@ -109,7 +109,10 @@ function reactUseRspressPlugin(): RspressPlugin {
     // currently only `en` & `zh-cn` supported
     return [
       { routePath: `/en/reference/${hook.slug}`, filepath: enPath },
-      { routePath: `/zh-cn/reference/${hook.slug}`, filepath: fs.existsSync(zhCNPath) ? zhCNPath : enPath },
+      {
+        routePath: `/zh-cn/reference/${hook.slug}`,
+        filepath: fs.existsSync(zhCNPath) ? zhCNPath : enPath,
+      },
     ]
   })
 
