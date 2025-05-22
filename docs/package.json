@@ -20,14 +20,14 @@
     "change-case": "^5.4.4",
     "classnames": "^2.5.1",
     "react-hot-toast": "^2.5.2",
-    "rspress": "^1.44.0",
+    "rspress": "1.43.0",
     "semver": "^7.7.2",
     "shiki": "^1.29.2"
   },
   "devDependencies": {
     "@iconify-json/mdi": "^1.2.3",
-    "@rspress/plugin-shiki": "^1.44.0",
-    "@rspress/shared": "^1.44.0",
+    "@rspress/plugin-shiki": "1.43.0",
+    "@rspress/shared": "1.43.0",
     "@types/node": "^22.15.18",
     "@types/react": "^18.3.21",
     "@types/react-dom": "^18.3.7",

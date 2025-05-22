@@ -7,7 +7,7 @@ $.verbose = true
 if (isSoDoc) {
   process.env.IS_SODOC = 'true'
 
-  await $`pnpm add @alita/rspress-plugin@^1.6.3 @shein/rspress-plugin-sodoc`
+  await $`pnpm add @alita/rspress-plugin@1.6.15 @shein/rspress-plugin-sodoc@0.0.3`
 }
 
 await $`rspress build`
