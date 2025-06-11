@@ -46,9 +46,11 @@ return <div>{data}</div>
 
 ### 手动触发 \{#manual}
 
-当设置 `manual` 选项为 `true` 时，`useQuery` 的所有内置自动行为（这些行为包括**轮询加载**、**聚焦重加载**、**网络重连重加载**等，均**默认关闭**）将失效，同时 `immediate` 的缺省**默认值**被指定为 `false`。
+- 如果不需要组件挂载时自动获取数据，可以设置 `immediate` 选项为 `false` 来禁用。
 
-`immediate` 由 [useMount](/reference/use-mount) 提供支持。
+- 如果需要禁用所有内置自动行为（包括**轮询加载**、**聚焦重加载**、**网络重连重加载**等，均**默认关闭**），可以设置 `manual` 选项为 `true`，此时 `immediate` 的缺省**默认值**也将被指定为 `false`。
+
+`immediate` 由 [useMount](/reference/use-mount) 提供支持，`manual` 选项通常用于调试等场景，不需要首次触发时，首选 `immediate` 选项。
 
 ```ts
 const { run, loading, data, error, params } = useQuery(fetchData, {

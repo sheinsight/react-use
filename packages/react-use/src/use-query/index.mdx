@@ -41,9 +41,11 @@ return <div>{data}</div>
 
 ### Manual Trigger \{#manual-trigger}
 
-When `manual` is set to `true`, all built-in automatic behaviors (none of which are enabled by default, including polling loading, focus reloading, network reconnect reloading) are disabled. Also, the **default value** of `immediate` is set to `false`.
+- If you don't need the component to automatically fetch data when it mounts, you can disable this feature by setting the `immediate` option to `false`.
 
-`immediate` is supported by [useMount](/reference/use-mount).
+- If you need to disable all built-in automatic behaviors (including polling loading, focus reloading, network reconnection reloading, etc., all of which are turned off by default), you can set the `manual` option to `true`. In this case, the default value of `immediate` will also be specified as `false`.
+
+`immediate` is supported by [useMount](/reference/use-mount). The `manual` option is typically used in scenarios such as debugging. When you don't need the first trigger, the `immediate` option is preferred.
 
 ```ts
 const { run, loading, data, error, params } = useQuery(fetchData, {
