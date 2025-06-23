@@ -15,7 +15,7 @@ export function App() {
       <Zone>
         <Key name="Control" isPressed={isCtrlPressed} size="md" />
         <Key name="Alt/Opt" isPressed={isAltPressed} size="md" />
-        <Key name="Command/Meta" isPressed={isMetaPressed} size="md" />
+        <Key name="Cmd/Meta" isPressed={isMetaPressed} size="md" />
         <Key name="Shift" isPressed={isShiftPressed} size="md" />
       </Zone>
       <Zone>
