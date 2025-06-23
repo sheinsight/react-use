@@ -3,6 +3,7 @@ import { useKeyModifier } from '@shined/react-use'
 
 export function App() {
   const isShiftPressed = useKeyModifier('Shift')
+  const isMetaPressed = useKeyModifier('Meta')
   const isCtrlPressed = useKeyModifier('Control')
   const isAltPressed = useKeyModifier('Alt')
   const isCapsLockPressed = useKeyModifier('CapsLock')
@@ -14,6 +15,7 @@ export function App() {
       <Zone>
         <Key name="Control" isPressed={isCtrlPressed} size="md" />
         <Key name="Alt/Opt" isPressed={isAltPressed} size="md" />
+        <Key name="Command/Meta" isPressed={isMetaPressed} size="md" />
         <Key name="Shift" isPressed={isShiftPressed} size="md" />
       </Zone>
       <Zone>
