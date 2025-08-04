@@ -32,7 +32,7 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const obsererReturn = useIntersectionObserver(elementTarget, options)
+const observerReturn = useIntersectionObserver(elementTarget, callback, options)
 ```
 
 ### ElementTarget
@@ -67,9 +67,19 @@ interface IntersectionObserverInit {
 export type UseIntersectionObserverOptions = UseWebObserverOptions & IntersectionObserverInit
 ```
 
+### Callback
+
+When the visibility of the target element changes, this callback function will be called.
+
+```tsx
+interface IntersectionObserverCallback {
+    (entries: IntersectionObserverEntry[], observer: IntersectionObserver): void;
+}
+```
+
 ### Returns
 
-Retuerns contain [Pausable](/docs/react-use/pausable) instance that can be paused, resumed.
+Returns contain [Pausable](/docs/react-use/pausable) instance that can be paused, resumed.
 
 See [Pausable](/docs/react-use/pausable) for more details.
 
