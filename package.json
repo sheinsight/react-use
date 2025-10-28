@@ -11,6 +11,7 @@
     "lint:fix": "biome check --write --unsafe && oxlint ./packages --fix",
     "prerelease": "pnpm lint",
     "release": "bumpp -r",
+    "publish:ci": "esno ./scripts/publish-ci.ts",
     "postrelease": "pnpm changelog && git add CHANGELOG.md && git commit -m 'chore: update changelog' && git push",
     "test": "vitest --coverage --coverage.include 'packages/**/src/**/*.{ts,tsx}' --coverage.exclude '{**/demo.{ts,tsx},**/*.{demo,test,cy,ssr.test,ssr.cy}.{ts,tsx}}'",
     "cy:open": "cypress open --component --browser chrome --config-file cypress.config.mjs",
