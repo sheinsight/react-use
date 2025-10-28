@@ -14,33 +14,33 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@formkit/auto-animate": "^0.8.2",
+    "@formkit/auto-animate": "^0.8.4",
     "@shined/react-use": "workspace:*",
-    "@shined/reactive": "^0.1.4",
+    "@shined/reactive": "^0.3.1",
     "change-case": "^5.4.4",
     "classnames": "^2.5.1",
-    "react-hot-toast": "^2.5.2",
+    "react-hot-toast": "^2.6.0",
     "rspress": "1.43.0",
-    "semver": "^7.7.2",
+    "semver": "^7.7.3",
     "shiki": "^1.29.2"
   },
   "devDependencies": {
     "@iconify-json/mdi": "^1.2.3",
     "@rspress/plugin-shiki": "1.43.0",
     "@rspress/shared": "1.43.0",
-    "@types/node": "^22.15.18",
-    "@types/react": "^18.3.21",
-    "@types/react-dom": "^18.3.7",
-    "@types/semver": "^7.7.0",
+    "@types/node": "^22.18.12",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@types/semver": "^7.7.1",
     "@unocss/postcss": "^0.61.9",
     "@unocss/reset": "^0.61.9",
     "esno": "^4.8.0",
     "gray-matter": "^4.0.3",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "rimraf": "^6.0.1",
-    "rsbuild-plugin-google-analytics": "^1.0.3",
+    "rsbuild-plugin-google-analytics": "^1.0.4",
     "unocss": "^0.61.9",
-    "zx": "^8.5.4"
+    "zx": "^8.8.5"
   }
 }
