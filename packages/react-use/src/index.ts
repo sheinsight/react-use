@@ -1,5 +1,6 @@
 export * from './create-single-loading'
 export * from './use-active-element'
+export * from './use-activity-mount'
 export * from './use-adaptive-textarea'
 export * from './use-async-effect'
 export * from './use-async-fn'

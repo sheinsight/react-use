@@ -1,0 +1,91 @@
+---
+category: Lifecycle
+---
+
+# useActivityMount
+
+import { HooksType, Since } from '@/components'
+
+<HooksType {...frontmatter} />
+
+<Since version="v1.13.0" />
+
+A React Hook that runs a function only once when the component mounts in an [Activity](https://react.dev/reference/react/Activity) component.
+
+Unlike `useMount`, this hook ensures the callback is executed only once **strictly**, even when the Activity is hidden and shown again. This is particularly useful for initialization logic that should only run once in Activity contexts, not every time the component becomes visible.
+
+## Demo
+
+import { App } from './demo'
+
+<App />
+
+## Usage
+
+See API for more details.
+
+## Source
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+useActivityMount(callback)
+```
+
+### Callback
+
+A `function` that will be called when the component mounts, can be **async**.
+
+The callback will only execute once when the component first mounts, and will **NOT** re-execute when the Activity is shown again after being hidden.
+
+## Key Differences
+
+### vs useMount
+
+| Hook | Behavior in Activity | Use Case |
+|------|---------------------|----------|
+| `useMount` | Runs when Activity becomes visible | Use for side effects that should happen every time content is shown |
+| `useActivityMount` | Runs only once on first mount | Use for initialization logic that should only run once (e.g., data fetching, subscriptions) |
+
+### Example Comparison
+
+```tsx
+import { Activity } from 'react'
+import { useMount, useActivityMount } from '@shined/react-use'
+
+function Component() {
+  // Runs every time Activity becomes visible
+  useMount(() => {
+    console.log('Activity is now visible')
+  })
+
+  // Runs only once when component first mounts
+  useActivityMount(() => {
+    console.log('Component initialized')
+    fetchInitialData()
+  })
+
+  return <div>Content</div>
+}
+```
+
+## Use Cases
+
+1. **Initial Data Fetching**: Fetch data once when the component is first mounted, not every time it becomes visible
+2. **Subscriptions**: Set up event listeners or subscriptions that should persist across visibility changes
+3. **Analytics**: Track initial component mount events without double-counting
+4. **Resource Initialization**: Initialize expensive resources only once
+
+## Notes
+
+:::tip
+This hook internally uses `useMount` with `strictOnce=true`, which ensures the callback only runs once by using a ref to track execution status.
+:::
+
+:::info
+The [Activity API](https://react.dev/reference/react/Activity) is a React feature that allows components to be hidden (using `display: none`) while preserving their state. This is different from unmounting, where the component is completely removed from the DOM.
+:::

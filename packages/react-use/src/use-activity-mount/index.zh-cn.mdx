@@ -1,0 +1,91 @@
+---
+category: Lifecycle
+---
+
+# useActivityMount
+
+import { HooksType, Since } from '@/components'
+
+<HooksType {...frontmatter} />
+
+<Since version="v1.13.0" />
+
+一个 React Hook，用于在 [Activity](https://react.dev/reference/react/Activity) 组件中仅在组件挂载时运行一次函数。
+
+与 `useMount` 不同，此 Hook 确保回调函数在 Activity 被隐藏和再次显示时也只执行一次。这对于只应在 Activity 上下文中运行一次的初始化逻辑特别有用，而不是每次组件变为可见时都运行。
+
+## 演示 \{#demo}
+
+import { App } from './demo'
+
+<App />
+
+## 用法 \{#usage}
+
+请查看 API。
+
+## 源码 \{#source}
+
+import { Source } from '@/components'
+
+<Source />
+
+## API
+
+```tsx
+useActivityMount(callback)
+```
+
+### 回调函数 Callback \{#callback}
+
+在组件挂载时调用的 `function`，支持异步函数。
+
+回调函数只会在组件首次挂载时执行一次，当 Activity 在隐藏后再次显示时**不会**重新执行。
+
+## 主要区别 \{#key-differences}
+
+### 与 useMount 的对比 \{#vs-use-mount}
+
+| Hook | Activity 中的行为 | 使用场景 |
+|------|-----------------|---------|
+| `useMount` | 每次 Activity 变为可见时运行 | 用于每次显示内容时都应该发生的副作用 |
+| `useActivityMount` | 仅在首次挂载时运行一次 | 用于只应运行一次的初始化逻辑（如数据获取、订阅） |
+
+### 对比示例 \{#example-comparison}
+
+```tsx
+import { Activity } from 'react'
+import { useMount, useActivityMount } from '@shined/react-use'
+
+function Component() {
+  // 每次 Activity 变为可见时运行
+  useMount(() => {
+    console.log('Activity 现在可见了')
+  })
+
+  // 仅在组件首次挂载时运行一次
+  useActivityMount(() => {
+    console.log('组件已初始化')
+    fetchInitialData()
+  })
+
+  return <div>内容</div>
+}
+```
+
+## 使用场景 \{#use-cases}
+
+1. **初始数据获取**: 在组件首次挂载时获取一次数据，而不是每次变为可见时都获取
+2. **订阅管理**: 设置应在可见性变化期间持续存在的事件监听器或订阅
+3. **分析统计**: 跟踪初始组件挂载事件而不会重复计数
+4. **资源初始化**: 仅初始化一次昂贵的资源
+
+## 注意事项 \{#notes}
+
+:::tip 提示
+此 Hook 内部使用带有 `strictOnce=true` 的 `useMount`，通过使用 ref 跟踪执行状态来确保回调只运行一次。
+:::
+
+:::info 信息
+[Activity API](https://react.dev/reference/react/Activity) 是 React 的一个特性，允许组件被隐藏（使用 `display: none`）同时保留其状态。这与卸载不同，卸载会将组件完全从 DOM 中移除。
+:::
