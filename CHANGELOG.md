@@ -1,3 +1,17 @@
+# [1.13.0](https://github.com/sheinsight/react-use/compare/v1.12.0...v1.13.0) (2025-11-06)
+
+
+### Bug Fixes
+
+* **useSafeState:** 修复 React 18 版本检测问题 ([f76a724](https://github.com/sheinsight/react-use/commit/f76a7246666e3b676c930f31e5f729f41944b9c2))
+
+
+### Features
+
+* 新增 `useActivityMount` API 对应 `<Activity />` 下的 `useMount` ([f7aa015](https://github.com/sheinsight/react-use/commit/f7aa015562412575b2a9183a0c6b9524379575b2))
+
+
+
 # [1.12.0](https://github.com/sheinsight/react-use/compare/v1.11.0...v1.12.0) (2025-05-21)
 
 
