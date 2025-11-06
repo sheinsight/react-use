@@ -106,7 +106,13 @@ export function isObject(val: unknown): val is object {
 }
 
 export function isReact18OrLater(): boolean {
-  return Number(ReactVersion?.split('.')[0].trim()) >= 18
+  if (!ReactVersion || !isString(ReactVersion)) {
+    return false
+  }
+
+  const mainVersion = Number(ReactVersion.split('.')[0].trim())
+
+  return Number.isNaN(mainVersion) ? false : mainVersion >= 18
 }
 
 export function hasOwn<T extends object, K extends PropertyKey>(val: T, key: K): boolean {

@@ -41,7 +41,8 @@ export function useSafeState<T>(initialState?: Gettable<T>, options?: UseSafeSta
     /**
      * @see https://github.com/reactwg/react-18/discussions/82
      */
-    if (!isReact18OrLater && isUnmounted()) return
+    // React < 18, and the component is unmounted, return as noop
+    if (!isReact18OrLater() && isUnmounted()) return
 
     const { deep } = latest.current
 
