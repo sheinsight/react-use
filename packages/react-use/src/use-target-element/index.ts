@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
+import { useIsomorphicLayoutEffect } from '../use-isomorphic-layout-effect'
 import { normalizeElement } from './normalize-element'
 
 import type { MutableRefObject, RefObject } from 'react'
@@ -7,8 +8,20 @@ import type { AtomBaseTarget, ElementTarget, GlobalTarget } from './normalize-el
 
 export * from './normalize-element'
 
-// biome-ignore lint/complexity/noBannedTypes: for the future
-export type UseTargetElementOptions = {}
+export type UseTargetElementOptions = {
+  /**
+   * Callback when the target element is initialized
+   *
+   * @since 1.14.0
+   */
+  onInitialized?: (element: Element | GlobalTarget | null) => void
+  /**
+   * Callback when the target element changes
+   *
+   * @since 1.14.0
+   */
+  onChange?: (element: Element | GlobalTarget | null) => void
+}
 
 /**
  * A React Hook that helps to get the target element via selector, ref, element and more.
@@ -37,12 +50,28 @@ export function useTargetElement<
   R extends GlobalTarget | Element,
   T extends string | null | undefined | false | MutableRefObject<AtomBaseTarget | undefined> | R,
 >(target: Gettable<T>, options?: UseTargetElementOptions): RefObject<R>
-export function useTargetElement(target: any, _options: UseTargetElementOptions = {}) {
+export function useTargetElement(target: any, options: UseTargetElementOptions = {}) {
   const elementRef = useRef(null)
+  const initializedRef = useRef(false)
 
-  useEffect(() => {
-    elementRef.current = normalizeElement(target)
-  }, [target])
+  useIsomorphicLayoutEffect(() => {
+    const nextElement = normalizeElement(target)
+
+    if (!initializedRef.current) {
+      if (nextElement) {
+        initializedRef.current = true
+        elementRef.current = nextElement
+        options.onInitialized?.(elementRef.current)
+      }
+
+      return
+    }
+
+    if (nextElement !== elementRef.current) {
+      elementRef.current = nextElement
+      options.onChange?.(nextElement)
+    }
+  })
 
   return elementRef
 }

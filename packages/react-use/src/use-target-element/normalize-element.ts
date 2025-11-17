@@ -31,15 +31,28 @@ export function normalizeElement(target: unknown) {
 
   const unrefValue = unwrapReffable(target)
 
-  if ([window, document].some((e) => e === unrefValue)) {
+  if (
+    [typeof window !== 'undefined' ? window : null, typeof document !== 'undefined' ? document : null]
+      .filter((e) => Boolean(e))
+      .some((e) => e === unrefValue)
+  ) {
     return unrefValue
   }
 
   if (isString(unrefValue)) {
-    return document.querySelector(unrefValue) || null
+    return typeof document !== 'undefined' && 'querySelector' in document
+      ? document.querySelector(unrefValue) || null
+      : null
   }
 
-  if (unrefValue instanceof HTMLElement || unrefValue instanceof SVGElement) {
+  if (
+    (
+      [
+        typeof HTMLElement !== 'undefined' ? HTMLElement : null,
+        typeof SVGElement !== 'undefined' ? SVGElement : null,
+      ].filter((e) => Boolean(e)) as (typeof HTMLElement | typeof SVGElement)[]
+    ).some((classConstructor) => unrefValue instanceof classConstructor)
+  ) {
     return unrefValue
   }
 
