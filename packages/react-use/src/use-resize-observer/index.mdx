@@ -30,8 +30,14 @@ import { Source } from '@/components'
 ## API
 
 ```tsx
-const { observerRef, isSupported, ...controls } = useResizeObserver(callback, options)
+const { observerRef, isSupported, ...controls } = useResizeObserver(elementTarget, callback, options)
 ```
+
+### ElementTarget
+
+`ElementTarget` is a union type that represents various kinds of elements that can be targeted.
+
+See [ElementTarget](/docs/features/element-target) or [ElementTarget Types](/docs/features/element-target#element-target-types) for more details.
 
 ### Callback
 

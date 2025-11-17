@@ -76,7 +76,7 @@ export type WebObserverType =
 
 export function useWebObserver(
   observer: 'IntersectionObserver',
-  target: Arrayable<ElementTarget>,
+  target: ElementTarget,
   callback: IntersectionObserverCallback,
   options?: UseWebObserverOptions,
   initOptions?: IntersectionObserverInit,
@@ -84,7 +84,7 @@ export function useWebObserver(
 ): UseWebObserverReturns<IntersectionObserver>
 export function useWebObserver(
   observer: 'MutationObserver',
-  target: Arrayable<ElementTarget>,
+  target: ElementTarget,
   callback: MutationCallback,
   options?: UseWebObserverOptions,
   initOptions?: undefined,
@@ -92,7 +92,7 @@ export function useWebObserver(
 ): UseWebObserverReturns<MutationObserver>
 export function useWebObserver(
   observer: 'ResizeObserver',
-  target: Arrayable<ElementTarget>,
+  target: ElementTarget,
   callback: ResizeObserverCallback,
   options?: UseWebObserverOptions,
   initOptions?: undefined,

@@ -30,8 +30,15 @@ import { Source } from '@/components'
 ## API \{#api}
 
 ```tsx
-const { observerRef, isSupported, ...controls } = useResizeObserver(callback, options)
+const { observerRef, isSupported, ...controls } = useResizeObserver(elementTarget, callback, options)
 ```
+
+### 元素目标 ElementTarget \{#element-target}
+
+`ElementTarget` 是一个联合类型，代表可以被定位的各种元素。
+
+更多详情，请参见 [ElementTarget](/docs/features/element-target) 或 [ElementTarget 类型](/docs/features/element-target#element-target-types)。
+
 
 ### 回调函数 Callback \{#callback}
 

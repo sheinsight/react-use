@@ -2,14 +2,12 @@ import { useEffect, useRef } from 'react'
 import { useLatest } from '../use-latest'
 import { usePausable } from '../use-pausable'
 import { useSupported } from '../use-supported'
-import { normalizeElement } from '../use-target-element'
-import { noNullish } from '../utils/basic'
-import { unwrapArrayable } from '../utils/unwrap'
+import { useTargetElement } from '../use-target-element'
+import { noop } from '../utils/basic'
 
 import type { MutableRefObject } from 'react'
 import type { Pausable } from '../use-pausable'
 import type { ElementTarget } from '../use-target-element'
-import type { Arrayable } from '../utils/basic'
 
 export interface UseWebObserverOptions {
   /**
@@ -42,10 +40,6 @@ export type WebObserverType =
   | 'PerformanceObserver'
   | 'ReportingObserver'
 
-function getElements(target: Arrayable<ElementTarget>) {
-  return unwrapArrayable(target).map(normalizeElement).filter(noNullish)
-}
-
 /**
  * A low level React Hooks that helps to use Observer with ease. Available Observer:
  *
@@ -69,7 +63,7 @@ function getElements(target: Arrayable<ElementTarget>) {
  */
 export function useWebObserver(
   observer: 'IntersectionObserver',
-  target: Arrayable<ElementTarget>,
+  target: ElementTarget,
   callback: IntersectionObserverCallback,
   options?: UseWebObserverOptions,
   initOptions?: IntersectionObserverInit,
@@ -77,7 +71,7 @@ export function useWebObserver(
 ): UseWebObserverReturns<IntersectionObserver>
 export function useWebObserver(
   observer: 'MutationObserver',
-  target: Arrayable<ElementTarget>,
+  target: ElementTarget,
   callback: MutationCallback,
   options?: UseWebObserverOptions,
   initOptions?: undefined,
@@ -85,7 +79,7 @@ export function useWebObserver(
 ): UseWebObserverReturns<MutationObserver>
 export function useWebObserver(
   observer: 'ResizeObserver',
-  target: Arrayable<ElementTarget>,
+  target: ElementTarget,
   callback: ResizeObserverCallback,
   options?: UseWebObserverOptions,
   initOptions?: undefined,
@@ -109,48 +103,57 @@ export function useWebObserver(
 ): UseWebObserverReturns<ReportingObserver>
 export function useWebObserver(...args: any[]): any {
   const [observer, target, callback, options = {}, initOptions = {}, observerOptions = {}] = args
-
   const { immediate = true, supported = () => true } = options
-
-  const latest = useLatest({ target, supported, callback, initOptions, observerOptions })
 
   const isSupported = useSupported(() => observer in window && latest.current.supported())
   const observerRef = useRef<any | null>(null)
 
   const stopObserver = () => {
-    observerRef.current?.disconnect()
-    observerRef.current = null
+    if (observerRef.current) {
+      observerRef.current?.disconnect()
+      observerRef.current = null
+    }
   }
+
+  const element = useTargetElement(target, {
+    onChange() {
+      pausable.pause()
+      pausable.resume()
+    },
+  })
+
+  const latest = useLatest({ supported, callback, initOptions, observerOptions })
 
   const pausable = usePausable(false, stopObserver, (ref) => {
     ref.current = false
 
-    const { initOptions, observerOptions, target } = latest.current
-    const els = getElements(target)
+    const { initOptions, observerOptions } = latest.current
 
     const hasNoElements = ['PerformanceObserver', 'ReportingObserver'].includes(observer)
 
-    if (els.length || hasNoElements) {
-      ref.current = true
+    if (element.current || hasNoElements) {
       const Observer = window[observer] as any
 
       if (!Observer) return
 
       observerRef.current = new Observer((...args: any[]) => latest.current.callback(...args), initOptions)
 
-      if (els.length) {
-        for (const el of els) {
-          observerRef.current?.observe(el, observerOptions)
-        }
+      if (element.current) {
+        observerRef.current?.observe(element.current, observerOptions)
       } else {
         observerRef.current?.observe(observerOptions)
       }
+
+      ref.current = true
     }
   })
 
   useEffect(() => {
-    immediate && pausable.resume()
-    return pausable.pause
+    if (immediate) {
+      pausable.resume()
+    }
+
+    return immediate ? () => pausable.pause() : noop
   }, [immediate])
 
   return {
