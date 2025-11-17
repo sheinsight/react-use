@@ -3,7 +3,7 @@ import { useMount } from '../use-mount'
 import { useMutationObserver } from '../use-mutation-observer'
 import { useSafeState } from '../use-safe-state'
 import { useStableFn } from '../use-stable-fn'
-import { normalizeElement, useTargetElement } from '../use-target-element'
+import { useTargetElement } from '../use-target-element'
 import { isFunction } from '../utils/basic'
 import { unwrapGettable } from '../utils/unwrap'
 
@@ -48,7 +48,7 @@ export function useCssVar<T extends HTMLElement = HTMLElement>(
     const { propName, defaultValue } = latest.current
 
     if (el.current) {
-      const value = getCssVar(propName, el, defaultValue)
+      const value = getCssVar(propName, el.current)
       _setVariable(value || defaultValue)
     }
   })
@@ -71,14 +71,6 @@ export function useCssVar<T extends HTMLElement = HTMLElement>(
   return [variable, setVariable] as const
 }
 
-function getCssVar<T extends HTMLElement = HTMLElement>(
-  propName: string,
-  target: ElementTarget<T> = () => document.documentElement as T,
-  defaultValue = '',
-): string {
-  const el = normalizeElement(target)
-
-  if (!el) return defaultValue
-
+function getCssVar<T extends HTMLElement = HTMLElement>(propName: string, el: T): string {
   return window.getComputedStyle(el).getPropertyValue(propName).trim()
 }

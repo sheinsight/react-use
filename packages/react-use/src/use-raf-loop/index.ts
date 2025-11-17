@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { useLatest } from '../use-latest'
 import { usePausable } from '../use-pausable'
 import { useStableFn } from '../use-stable-fn'
+import { noop } from '../utils/basic'
 
 import type { Pausable } from '../use-pausable'
 
@@ -62,7 +63,11 @@ export function useRafLoop(callback: UseRafLoopCallback, options: UseRafLoopOpti
     latest.current.clearRafIfActive()
     lastTsRef.current = 0
     const { immediateCallback, callback } = latest.current
-    immediateCallback && callback({ timestamp: 0, delta: 0 })
+
+    if (immediateCallback) {
+      callback({ timestamp: 0, delta: 0 })
+    }
+
     rafIdRef.current = window.requestAnimationFrame(raf)
   })
 
@@ -85,8 +90,11 @@ export function useRafLoop(callback: UseRafLoopCallback, options: UseRafLoopOpti
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: effect should re-run when limit changes
   useEffect(() => {
-    immediate && pausable.resume()
-    return pausable.pause
+    if (immediate) {
+      pausable.resume()
+    }
+
+    return immediate ? () => pausable.pause() : noop
   }, [immediate, limit])
 
   return pausable

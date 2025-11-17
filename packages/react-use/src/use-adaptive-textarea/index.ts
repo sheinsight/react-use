@@ -77,7 +77,13 @@ export function useAdaptiveTextarea<T extends HTMLElement>(
   const { onResize, events = ['input'], autoHeight = true, watch = [], styleTarget, styleProp = 'height' } = options
 
   const taRef = useRef<HTMLTextAreaElement>(null)
-  const target = useTargetElement<T>(styleTarget)
+
+  const target = useTargetElement<T>(styleTarget, {
+    onChange() {
+      resize()
+    },
+  })
+
   const [height, setHeight] = useSafeState(0)
   const latest = useLatest({ height, onResize, styleProp })
 

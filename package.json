@@ -53,5 +53,11 @@
     "typescript": "^5.9.3",
     "vite": "^6.4.1",
     "vitest": "^2.1.9"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 120,
+    "trailingComma": "all"
   }
 }

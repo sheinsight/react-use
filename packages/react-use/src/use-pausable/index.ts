@@ -38,21 +38,33 @@ export function usePausable<
 
   const pause = useStableFn((update?: boolean, ...args: [...PauseCP]) => {
     isActiveRef.current = false
+
     const res = latest.current.pausableCallback?.(isActiveRef, ...args)
+
+    if (!update) {
+      return
+    }
+
     if (res instanceof Promise) {
-      res.finally(() => update && render())
+      res.finally(render)
     } else {
-      update && render()
+      render()
     }
   })
 
   const resume = useStableFn((update?: boolean, ...args: [...ResumeCP]) => {
     isActiveRef.current = true
+
     const res = latest.current.resumeCallback?.(isActiveRef, ...args)
+
+    if (!update) {
+      return
+    }
+
     if (res instanceof Promise) {
-      res.finally(() => update && render())
+      res.finally(render)
     } else {
-      update && render()
+      render()
     }
   })
 

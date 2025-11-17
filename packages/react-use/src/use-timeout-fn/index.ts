@@ -5,7 +5,7 @@ import { useRender } from '../use-render'
 import { unwrapGettable } from '../utils/unwrap'
 
 import type { Pausable } from '../use-pausable'
-import type { AnyFunc, Gettable, SetTimeoutReturn } from '../utils/basic'
+import { type AnyFunc, type Gettable, type SetTimeoutReturn, noop } from '../utils/basic'
 
 export interface UseTimeoutFnOptions {
   /**
@@ -51,8 +51,12 @@ export function useTimeoutFn<Callback extends AnyFunc = AnyFunc>(
     timerRef.current = setTimeout(() => {
       ref.current = false
       timerRef.current = null
+
       latest.current.callback(...args)
-      latest.current.updateOnEnd && render()
+
+      if (latest.current.updateOnEnd) {
+        render()
+      }
     }, interval)
   })
 
@@ -61,8 +65,10 @@ export function useTimeoutFn<Callback extends AnyFunc = AnyFunc>(
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: effect should re-run when intervalValue changes
   useEffect(() => {
-    immediate && pausable.resume()
-    return pausable.pause
+    if (immediate) {
+      pausable.resume()
+    }
+    return immediate ? () => pausable.pause() : noop
   }, [immediate, pausable, intervalValue])
 
   return pausable
