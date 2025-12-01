@@ -9,7 +9,7 @@ import { defineConfig } from 'rspress/config'
 
 import hooks from './hooks.json'
 import i18n from './i18n.json'
-import { locale, version } from './locale'
+import { langSlug, locale, version } from './locale'
 
 import type { RspressPlugin } from '@rspress/shared'
 
@@ -32,10 +32,10 @@ if (process.env.IS_SODOC) {
 export default defineConfig({
   root: path.resolve(__dirname, './docs'),
   base,
-  lang: process.env.IS_SODOC ? 'zh-cn' : 'en',
+  lang: process.env.IS_SODOC ? langSlug.zhCN : langSlug.en,
   icon: '/icon.svg',
   title: '@shined/react-use',
-  description: i18n['homepage.tagline'][process.env.IS_SODOC ? 'zh-cn' : 'en'],
+  description: i18n['homepage.tagline'][process.env.IS_SODOC ? langSlug.zhCN : langSlug.en],
   outDir: process.env.IS_SODOC ? 'docs-dist' : 'build',
   logo: {
     dark: '/logo-dark.svg',
@@ -76,7 +76,7 @@ export default defineConfig({
         '@': path.resolve(__dirname, './src'),
       },
       define: {
-        'process.env.DEFAULT_LANG': JSON.stringify(process.env.IS_SODOC ? 'zh-cn' : 'en'),
+        'process.env.DEFAULT_LANG': JSON.stringify(process.env.IS_SODOC ? langSlug.zhCN : langSlug.en),
         'process.env.ASSETS_PREFIX': JSON.stringify(assetsPrefix),
         'process.env.REACT_USE_VERSION': JSON.stringify(version),
       },
@@ -111,14 +111,14 @@ function reactUseRspressPlugin(): RspressPlugin {
     return process.env.IS_SODOC
       ? [
           {
-            routePath: `/zh-cn/reference/${hook.slug}`,
+            routePath: `/reference/${hook.slug}`,
             filepath: fs.existsSync(zhCNPath) ? zhCNPath : enPath,
           },
         ]
       : [
-          { routePath: `/en/reference/${hook.slug}`, filepath: enPath },
+          { routePath: `/${langSlug.en}/reference/${hook.slug}`, filepath: enPath },
           {
-            routePath: `/zh-cn/reference/${hook.slug}`,
+            routePath: `/${langSlug.zhCN}/reference/${hook.slug}`,
             filepath: fs.existsSync(zhCNPath) ? zhCNPath : enPath,
           },
         ]
@@ -132,7 +132,7 @@ function reactUseRspressPlugin(): RspressPlugin {
 
   return {
     name: 'plugin-hooks-documentation',
-    addPages(config, isProd) {
+    addPages(_config, _isProd) {
       return routes
     },
     config(config) {
@@ -141,7 +141,10 @@ function reactUseRspressPlugin(): RspressPlugin {
 
       for (const locale of config.themeConfig.locales) {
         locale.sidebar ??= {}
-        const path = `${locale.lang === 'en' ? '' : `/${locale.lang}`}/reference`
+
+        const path = process.env.IS_SODOC
+          ? '/reference'
+          : `${locale.lang === langSlug.en ? '' : `/${locale.lang}`}/reference`
 
         locale.sidebar[path] = Array.from(categories.entries()).map(([category, hooks]) => {
           const i18nItem = i18n[`reference.sidebar.${kebabCase(category)}` as never]
@@ -167,7 +170,7 @@ function reactUseRspressPlugin(): RspressPlugin {
   }
 }
 
-function replaceAssetsPrefixPlugin(): RspressPlugin {
+export function replaceAssetsPrefixPlugin(): RspressPlugin {
   return {
     name: 'replace-assets-prefix',
     config(config) {

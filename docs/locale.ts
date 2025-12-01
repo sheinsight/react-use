@@ -3,10 +3,10 @@ import { version } from './package.json'
 
 import type { LocaleConfig } from '@rspress/shared'
 
-const langSlug = {
+export const langSlug = {
   en: 'en',
   zhCN: 'zh-cn',
-}
+} as const
 
 export { version }
 
@@ -214,10 +214,10 @@ export const navbar = {
 
 export const locale = {
   en: {
-    lang: 'en',
+    lang: langSlug.en,
     label: 'English',
     title: '@shined/react-use',
-    description: i18n['homepage.tagline'].en,
+    description: i18n['homepage.tagline'][langSlug.en],
     lastUpdatedText: 'Updated at',
     lastUpdated: !process.env.IS_SODOC,
     prevPageText: 'Previous',
@@ -229,10 +229,10 @@ export const locale = {
     sidebar: sidebar.en,
   },
   zhCN: {
-    lang: 'zh-cn',
+    lang: langSlug.zhCN,
     label: '简体中文',
     title: '@shined/react-use',
-    description: i18n['homepage.tagline']['zh-cn'],
+    description: i18n['homepage.tagline'][langSlug.zhCN],
     lastUpdatedText: '更新于',
     lastUpdated: !process.env.IS_SODOC,
     prevPageText: '上一页',
@@ -240,7 +240,50 @@ export const locale = {
     searchPlaceholderText: '搜索...',
     searchNoResultsText: '没有找到相关结果',
     searchSuggestedQueryText: '试试不同的关键词？',
-    nav: navbar.zhCN,
-    sidebar: sidebar.zhCN,
+    nav: process.env.IS_SODOC
+      ? navbar.zhCN.map((item) =>
+          item.items && Array.isArray(item.items)
+            ? {
+                ...item,
+                items: item.items.map((subItem) => ({
+                  ...subItem,
+                  link: replaceLinksForSodoc(subItem.link),
+                })),
+              }
+            : item.link
+              ? {
+                  ...item,
+                  link: replaceLinksForSodoc(item.link),
+                  activeMatch: item.activeMatch ? replaceLinksForSodoc(item.activeMatch) : undefined,
+                }
+              : item,
+        )
+      : navbar.zhCN,
+    sidebar: process.env.IS_SODOC
+      ? Object.fromEntries(
+          Object.entries(sidebar.zhCN).map(([key, item]) => [
+            key.replace(`/${langSlug.zhCN}`, ''),
+            'link' in item && typeof item.link === 'string' && item.link
+              ? {
+                  ...item,
+                  link: replaceLinksForSodoc(item.link),
+                }
+              : Array.isArray(item)
+                ? item.map((subItem) =>
+                    'link' in subItem && typeof subItem.link === 'string'
+                      ? {
+                          ...subItem,
+                          link: replaceLinksForSodoc(subItem.link),
+                        }
+                      : subItem,
+                  )
+                : item,
+          ]),
+        )
+      : sidebar.zhCN,
   },
 } satisfies Record<string, LocaleConfig>
+
+function replaceLinksForSodoc(link: string): string {
+  return link.replace(`/${langSlug.zhCN}/`, '/')
+}

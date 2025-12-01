@@ -14,7 +14,7 @@ const hooksSrc = resolve(__dirname, '../../packages/react-use/src')
 const ignoredDirs = ['utils', 'use-track-ref-state', 'use-web-observer']
 
 const dirents = await fs.readdir(hooksSrc, { withFileTypes: true })
-const hooksDirents = dirents.filter((d) => d.isDirectory() && ignoredDirs.every((e) => e !== d.name))
+const hooksDirents = dirents.filter((d: any) => d.isDirectory() && ignoredDirs.every((e) => e !== d.name))
 
 const hooks: {
   name: string
