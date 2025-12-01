@@ -32,10 +32,10 @@ if (process.env.IS_SODOC) {
 export default defineConfig({
   root: path.resolve(__dirname, './docs'),
   base,
-  lang: process.env.IS_SODOC ? 'en' : 'zh-cn',
+  lang: process.env.IS_SODOC ? 'zh-cn' : 'en',
   icon: '/icon.svg',
   title: '@shined/react-use',
-  description: i18n['homepage.tagline'].en,
+  description: i18n['homepage.tagline'][process.env.IS_SODOC ? 'zh-cn' : 'en'],
   outDir: process.env.IS_SODOC ? 'docs-dist' : 'build',
   logo: {
     dark: '/logo-dark.svg',
