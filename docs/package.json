@@ -13,6 +13,11 @@
     "preview": "rspress preview",
     "typecheck": "tsc --noEmit"
   },
+  "pnpm": {
+    "overrides": {
+      "goober": "2.1.16"
+    }
+  },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.4",
     "@shined/react-use": "workspace:*",
