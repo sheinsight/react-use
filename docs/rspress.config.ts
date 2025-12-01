@@ -32,7 +32,7 @@ if (process.env.IS_SODOC) {
 export default defineConfig({
   root: path.resolve(__dirname, './docs'),
   base,
-  lang: 'en',
+  lang: process.env.IS_SODOC ? 'en' : 'zh-cn',
   icon: '/icon.svg',
   title: '@shined/react-use',
   description: i18n['homepage.tagline'].en,
@@ -58,7 +58,7 @@ export default defineConfig({
         content: 'https://github.com/sheinsight/react-use',
       },
     ],
-    locales: [locale.en, locale.zhCN],
+    locales: process.env.IS_SODOC ? [locale.zhCN] : [locale.en, locale.zhCN],
   },
   builderPlugins,
   builderConfig: {
@@ -107,13 +107,20 @@ function reactUseRspressPlugin(): RspressPlugin {
     categories.set(category, (categories.get(category) ?? []).concat(hook.slug))
 
     // currently only `en` & `zh-cn` supported
-    return [
-      { routePath: `/en/reference/${hook.slug}`, filepath: enPath },
-      {
-        routePath: `/zh-cn/reference/${hook.slug}`,
-        filepath: fs.existsSync(zhCNPath) ? zhCNPath : enPath,
-      },
-    ]
+    return process.env.IS_SODOC
+      ? [
+          {
+            routePath: `/zh-cn/reference/${hook.slug}`,
+            filepath: fs.existsSync(zhCNPath) ? zhCNPath : enPath,
+          },
+        ]
+      : [
+          { routePath: `/en/reference/${hook.slug}`, filepath: enPath },
+          {
+            routePath: `/zh-cn/reference/${hook.slug}`,
+            filepath: fs.existsSync(zhCNPath) ? zhCNPath : enPath,
+          },
+        ]
   })
 
   for (const [category, hooks] of categories.entries()) {
