@@ -76,6 +76,7 @@ export default defineConfig({
         '@': path.resolve(__dirname, './src'),
       },
       define: {
+        'process.env.DEFAULT_LANG': JSON.stringify(process.env.IS_SODOC ? 'zh-cn' : 'en'),
         'process.env.ASSETS_PREFIX': JSON.stringify(assetsPrefix),
         'process.env.REACT_USE_VERSION': JSON.stringify(version),
       },

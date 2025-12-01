@@ -6,7 +6,7 @@ export * from '@formkit/auto-animate/react'
 export * from './hooks'
 
 export const repoBase = 'https://github.com/sheinsight/react-use/blob/main/packages/react-use/src'
-export const defaultLang = 'en'
+export const defaultLang = process.env.DEFAULT_LANG || 'en'
 
 export const OTP = (): string => Math.random().toString(16).slice(-6).toUpperCase()
 export const wait = (ms = 300, res: string = OTP()): Promise<string> =>
