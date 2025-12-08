@@ -115,7 +115,7 @@ export function usePagingList<Item, FormState extends object = object>(
   const previousDataRef = useRef<Item[] | undefined>(undefined)
   const previousFormRef = useRef<FormState>((options.form?.initialValue || {}) as FormState)
   const previousSelectedRef = useRef<Item[]>([])
-  const [total, setTotal] = useSafeState<number>(10)
+  const [total, setTotal] = useSafeState<number>(Number.POSITIVE_INFINITY)
 
   const form = useForm<FormState>({
     ...options.form,
@@ -213,7 +213,10 @@ export function usePagingList<Item, FormState extends object = object>(
 
         for (const item of previousSelectedRef.current) {
           const matchedSelectedItem = data.find((d) => shallowEqual(d, item))
-          matchedSelectedItem && selected.push(matchedSelectedItem)
+
+          if (matchedSelectedItem) {
+            selected.push(matchedSelectedItem)
+          }
         }
 
         selectActions.setSelected(selected)
