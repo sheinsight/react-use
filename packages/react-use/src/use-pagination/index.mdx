@@ -57,15 +57,15 @@ export type UsePaginationOptions = {
   /**
    * Callback when the `page` change.
    */
-  onPageChange?: (pagination: UsePaginationReturnsState) => void
+  onPageChange?: (pagination: UsePaginationReturnsState, lastPage: number) => void
   /**
    * Callback when the `pageSize` change.
    */
-  onPageSizeChange?: (pagination: UsePaginationReturnsState) => void
+  onPageSizeChange?: (pagination: UsePaginationReturnsState, lastPageSize: number) => void
   /**
    * Callback when the `pageCount` change.
    */
-  onPageCountChange?: (pagination: UsePaginationReturnsState) => void
+  onPageCountChange?: (pagination: UsePaginationReturnsState, lastPageCount: number) => void
 }
 ```
 

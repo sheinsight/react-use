@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { useClamp } from '../use-clamp'
 import { useCreation } from '../use-creation'
 import { useLatest } from '../use-latest'
+import { usePrevious } from '../use-previous'
 import { useStableFn } from '../use-stable-fn'
 import { useUpdateEffect } from '../use-update-effect'
 
@@ -32,23 +33,26 @@ export interface UsePaginationOptions<T> {
    * Callback when the `page` change.
    *
    * @param {PaginationInfo} pagination - `PaginationInfo`, the pagination info
+   * @param {number} lastPage - `number`, the last page
    * @returns {void} `void`
    */
-  onPageChange?: (pagination: UsePaginationReturnsState) => void
+  onPageChange?: (pagination: UsePaginationReturnsState, lastPage: number) => void
   /**
    * Callback when the `pageSize` change.
    *
    * @param {PaginationInfo} pagination - `PaginationInfo`, the pagination info
+   * @param {number} lastPageSize - `number`, the last page size
    * @returns {void} `void`
    */
-  onPageSizeChange?: (pagination: UsePaginationReturnsState) => void
+  onPageSizeChange?: (pagination: UsePaginationReturnsState, lastPageSize: number) => void
   /**
    * Callback when the `pageCount` change.
    *
    * @param {PaginationInfo} pagination - `PaginationInfo`, the pagination info
+   * @param {number} lastPageCount - `number`, the last page count
    * @returns {void} `void`
    */
-  onPageCountChange?: (pagination: UsePaginationReturnsState) => void
+  onPageCountChange?: (pagination: UsePaginationReturnsState, lastPageCount: number) => void
 }
 
 export interface UsePaginationReturnsState<T = any> {
@@ -189,21 +193,33 @@ export function usePagination<T = any>(options: UsePaginationOptions<T> = {}): U
     list: slicedList,
   }
 
-  const latest = useLatest({ pagination, onPageChange, onPageCountChange, onPageSizeChange })
+  const lastPage = usePrevious(currentPage) || currentPage
+  const lastPageSize = usePrevious(currentPageSize) || currentPageSize
+  const lastPageCount = usePrevious(pageCount) || pageCount
+
+  const latest = useLatest({
+    pagination,
+    lastPage,
+    lastPageSize,
+    lastPageCount,
+    onPageChange,
+    onPageCountChange,
+    onPageSizeChange,
+  })
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: effect need to re-run when currentPage changes
   useUpdateEffect(() => {
-    latest.current.onPageChange?.(latest.current.pagination)
+    latest.current.onPageChange?.(latest.current.pagination, latest.current.lastPage)
   }, [currentPage])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: effect need to re-run when pageCount changes
   useUpdateEffect(() => {
-    latest.current.onPageCountChange?.(latest.current.pagination)
+    latest.current.onPageCountChange?.(latest.current.pagination, latest.current.lastPageCount)
   }, [pageCount])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: effect need to re-run when currentPageSize changes
   useUpdateEffect(() => {
-    latest.current.onPageSizeChange?.(latest.current.pagination)
+    latest.current.onPageSizeChange?.(latest.current.pagination, latest.current.lastPageSize)
   }, [currentPageSize])
 
   const actions = useCreation(() => ({ go, prev, next, setPageSize }))

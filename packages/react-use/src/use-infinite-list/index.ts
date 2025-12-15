@@ -216,7 +216,10 @@ export function useInfiniteList<
     selectActions.setSelected([])
     paginationActions.go(1)
     infiniteScroll.reset()
-    !latest.current.options.target && infiniteScroll.loadMore()
+
+    if (!latest.current.options.target) {
+      infiniteScroll.loadMore()
+    }
   })
 
   const latestMapFullList = useLatest(options.mapFullList)
@@ -229,9 +232,9 @@ export function useInfiniteList<
 
   const [paginationState, paginationActions] = usePagination<Data>({
     ...options.pagination,
-    onPageSizeChange: (paging) => {
+    onPageSizeChange: (paging, lastPageSize) => {
       reset()
-      return latest.current.options.pagination?.onPageSizeChange?.(paging)
+      return latest.current.options.pagination?.onPageSizeChange?.(paging, lastPageSize)
     },
   })
 

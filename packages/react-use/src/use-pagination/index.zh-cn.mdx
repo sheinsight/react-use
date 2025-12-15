@@ -57,15 +57,15 @@ export type UsePaginationOptions = {
   /**
    * 当 `page` 发生变化时的回调。
    */
-  onPageChange?: (pagination: UsePaginationReturnsState) => void
+  onPageChange?: (pagination: UsePaginationReturnsState, lastPage: number) => void
   /**
    * 当 `pageSize` 发生变化时的回调。
    */
-  onPageSizeChange?: (pagination: UsePaginationReturnsState) => void
+  onPageSizeChange?: (pagination: UsePaginationReturnsState, lastPageSize: number) => void
   /**
    * 当 `pageCount` 发生变化时的回调。
    */
-  onPageCountChange?: (pagination: UsePaginationReturnsState) => void
+  onPageCountChange?: (pagination: UsePaginationReturnsState, lastPageCount: number) => void
 }
 ```
 
