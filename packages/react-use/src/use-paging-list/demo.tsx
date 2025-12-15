@@ -38,6 +38,7 @@ export function App() {
       pageSize: 5,
     },
     immediateQueryKeys: ['color', 'gender'],
+    pageStrategy: 'preserve',
   })
 
   // when you use third-party components, you can use `selection.isPartiallySelected` directly

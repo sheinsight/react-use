@@ -46,6 +46,17 @@ export interface UsePagingListOptions<Item, FormState extends object> {
    * @defaultValue []
    */
   immediateQueryKeys?: (keyof FormState)[]
+  /**
+   * strategy to handle page number when page size changes
+   *
+   * - 'reset' - reset to page 1
+   * - 'preserve' - preserve the current position by keeping the first item visible on the new page
+   *
+   * @since 1.14.0
+   *
+   * @defaultValue 'reset'
+   */
+  pageStrategy?: 'reset' | 'preserve'
 }
 
 export interface UsePagingListFetcherParams<Item, FormState extends object> {
@@ -116,7 +127,7 @@ export function usePagingList<Item, FormState extends object = object>(
   const previousFormRef = useRef<FormState>((options.form?.initialValue || {}) as FormState)
   const previousSelectedRef = useRef<Item[]>([])
   const isFormChangedRef = useRef<boolean>(false)
-  const isStartingNewQueryRef = useRef<boolean>(false)
+  const isChangingPageInternallyRef = useRef<boolean>(false)
   const [total, setTotal] = useSafeState<number>(Number.POSITIVE_INFINITY)
 
   const form = useForm<FormState>({
@@ -165,8 +176,9 @@ export function usePagingList<Item, FormState extends object = object>(
   })
 
   const startNewQuery = useStableFn(() => {
-    isStartingNewQueryRef.current = true
     previousDataRef.current = undefined
+
+    isChangingPageInternallyRef.current = true
     paginationActions.go(1)
 
     query.run({
@@ -182,8 +194,8 @@ export function usePagingList<Item, FormState extends object = object>(
     ...options.pagination,
     list: undefined,
     total,
-    onPageChange(state) {
-      if (!isStartingNewQueryRef.current) {
+    onPageChange(state, lastPage) {
+      if (!isChangingPageInternallyRef.current) {
         query.run({
           previousData: previousDataRef.current,
           page: state.page,
@@ -193,11 +205,30 @@ export function usePagingList<Item, FormState extends object = object>(
         })
       }
 
-      latest.current.options.pagination?.onPageChange?.(state)
+      latest.current.options.pagination?.onPageChange?.(state, lastPage)
     },
-    onPageSizeChange(state) {
-      startNewQuery()
-      latest.current.options.pagination?.onPageSizeChange?.(state)
+    onPageSizeChange(state, lastPageSize) {
+      const strategy = latest.current.options.pageStrategy || 'reset'
+      const isReset = strategy === 'reset'
+
+      if (isReset) {
+        startNewQuery()
+      } else {
+        const transformedPage = Math.floor(((state.page - 1) * lastPageSize) / state.pageSize) + 1
+
+        isChangingPageInternallyRef.current = true
+        paginationActions.go(transformedPage)
+
+        query.run({
+          previousData: previousDataRef.current,
+          page: transformedPage,
+          pageSize: state.pageSize,
+          form: form.value,
+          setTotal,
+        })
+      }
+
+      latest.current.options.pagination?.onPageSizeChange?.(state, lastPageSize)
     },
   })
 
@@ -240,7 +271,7 @@ export function usePagingList<Item, FormState extends object = object>(
     },
     onFinally(...args) {
       isFormChangedRef.current = false
-      isStartingNewQueryRef.current = false
+      isChangingPageInternallyRef.current = false
 
       latest.current.options.query?.onFinally?.(...args)
     },
