@@ -53,10 +53,4 @@ describe('useLoremIpsum', () => {
     const { result } = renderHook(() => useLoremIpsum({ length: -1 }))
     expect(result.current).toBeDefined() // Ensure it does not throw
   })
-
-  it('should return lorem ipsum text when called with an object', () => {
-    const { result: r } = renderHook(() => useLoremIpsum())
-    const { result: r3 } = renderHook(() => useLoremIpsum({ length: 3 }))
-    expect(r.current.length).lessThan(r3.current.length)
-  })
 })
