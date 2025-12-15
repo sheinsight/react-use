@@ -1,7 +1,7 @@
 {
   "name": "vite-unocss-csr",
   "private": true,
-  "version": "1.14.0-beta.2",
+  "version": "1.14.0-beta.3",
   "type": "module",
   "description": "react-ts-vite-unocss template",
   "scripts": {
