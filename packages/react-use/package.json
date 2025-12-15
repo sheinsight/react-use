@@ -1,7 +1,7 @@
 {
   "name": "@shined/react-use",
   "type": "module",
-  "version": "1.14.0-beta.5",
+  "version": "1.14.0-beta.6",
   "description": "A New Programming Paradigm to Reshape React Development.",
   "author": "Viki <hi@viki.moe> (https://github.com/vikiboss)",
   "license": "MIT",
