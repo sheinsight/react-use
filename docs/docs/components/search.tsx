@@ -8,8 +8,8 @@ const filterLabelCls =
   'transition will-change-auto inline-flex gap-1 items-center rounded border border-solid text-xs border-gray/20 px-2 py-1 rounded-full cursor-pointer'
 
 export function SearchHooks() {
-  const categories = useCreation(() => Array.from(new Set(hooks.map((e) => e.category))).sort())
-  const features = useCreation(() => Array.from(new Set(hooks.flatMap((e) => e.features))).sort())
+  const categories = useCreation(() => Array.from(new Set(hooks.map((e) => e.category))).toSorted())
+  const features = useCreation(() => Array.from(new Set(hooks.flatMap((e) => e.features))).toSorted())
 
   const input = useControlledComponent('')
 

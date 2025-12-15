@@ -158,8 +158,8 @@ export function usePagination<T = any>(options: UsePaginationOptions<T> = {}): U
 
   const isInfinity = total === Number.POSITIVE_INFINITY
   const [currentPageSize, pageSizeActions] = useClamp(pageSize, 1, Number.POSITIVE_INFINITY)
-  const pageCount = Math.max(1, Math.ceil(total / currentPageSize))
-  const [currentPage, pageActions] = useClamp(page, 1, pageCount)
+  const pageCount = isInfinity ? 0 : Math.max(1, Math.ceil(total / currentPageSize))
+  const [currentPage, pageActions] = useClamp(page, 1, isInfinity ? Number.POSITIVE_INFINITY : pageCount)
 
   const go = useStableFn((page: number) => pageActions.set(page))
   const prev = useStableFn(() => pageActions.dec())

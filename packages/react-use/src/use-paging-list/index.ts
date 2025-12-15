@@ -115,6 +115,7 @@ export function usePagingList<Item, FormState extends object = object>(
   const previousDataRef = useRef<Item[] | undefined>(undefined)
   const previousFormRef = useRef<FormState>((options.form?.initialValue || {}) as FormState)
   const previousSelectedRef = useRef<Item[]>([])
+  const isFormChangedRef = useRef<boolean>(false)
   const [total, setTotal] = useSafeState<number>(Number.POSITIVE_INFINITY)
 
   const form = useForm<FormState>({
@@ -125,18 +126,25 @@ export function usePagingList<Item, FormState extends object = object>(
     },
     onSubmit(...args) {
       const form = args[0]
+      const isFormChanged = isFormChangedRef.current
 
-      query.run({
-        previousData: previousDataRef.current,
-        page: paginationState.page,
-        pageSize: paginationState.pageSize,
-        form,
-        setTotal,
-      })
+      if (isFormChanged) {
+        startNewQuery()
+      } else {
+        query.run({
+          previousData: previousDataRef.current,
+          page: paginationState.page,
+          pageSize: paginationState.pageSize,
+          form,
+          setTotal,
+        })
+      }
 
       latest.current.options.form?.onSubmit?.(...args)
     },
     onChange(...args) {
+      isFormChangedRef.current = true
+
       const nextForm = args[0]
       const keys = options.immediateQueryKeys || []
 
@@ -200,6 +208,8 @@ export function usePagingList<Item, FormState extends object = object>(
       },
     ] as Parameters<Fetcher>,
     onBefore(...args) {
+      isFormChangedRef.current = false
+
       if (latest.current.selectState.selected.length) {
         previousSelectedRef.current = latest.current.selectState.selected
       }

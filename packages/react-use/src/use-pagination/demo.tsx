@@ -17,7 +17,7 @@ export function App() {
         <LabelInput label="Page size" {...pageSizeInput.props} />
       </Zone>
       <Zone>
-        <KeyValue label="Current page" value={state.currentPage} />
+        <KeyValue label="Current page" value={state.page} />
         <KeyValue label="Page count" value={state.pageCount} />
       </Zone>
       <Zone border="primary">

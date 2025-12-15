@@ -94,8 +94,12 @@ export function App() {
           onClick={() => {
             selection.unselectAll()
             const [item1, _, item3] = list
-            item1 && selection.select(item1)
-            item3 && selection.select(item3)
+            if (item1) {
+              selection.select(item1)
+            }
+            if (item3) {
+              selection.select(item3)
+            }
           }}
         >
           Select 1, 3
@@ -164,10 +168,7 @@ export function App() {
   )
 }
 
-async function fetchPagination(params: {
-  page: number
-  pageSize: number
-}): Promise<{ data: Item[]; total: number }> {
+async function fetchPagination(params: { page: number; pageSize: number }): Promise<{ data: Item[]; total: number }> {
   await wait()
 
   const total = 217
