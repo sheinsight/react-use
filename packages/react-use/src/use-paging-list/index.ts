@@ -116,6 +116,7 @@ export function usePagingList<Item, FormState extends object = object>(
   const previousFormRef = useRef<FormState>((options.form?.initialValue || {}) as FormState)
   const previousSelectedRef = useRef<Item[]>([])
   const isFormChangedRef = useRef<boolean>(false)
+  const isStartingNewQueryRef = useRef<boolean>(false)
   const [total, setTotal] = useSafeState<number>(Number.POSITIVE_INFINITY)
 
   const form = useForm<FormState>({
@@ -164,6 +165,7 @@ export function usePagingList<Item, FormState extends object = object>(
   })
 
   const startNewQuery = useStableFn(() => {
+    isStartingNewQueryRef.current = true
     previousDataRef.current = undefined
     paginationActions.go(1)
 
@@ -181,13 +183,16 @@ export function usePagingList<Item, FormState extends object = object>(
     list: undefined,
     total,
     onPageChange(state) {
-      query.run({
-        previousData: previousDataRef.current,
-        page: state.page,
-        pageSize: state.pageSize,
-        form: form.value,
-        setTotal,
-      })
+      if (!isStartingNewQueryRef.current) {
+        query.run({
+          previousData: previousDataRef.current,
+          page: state.page,
+          pageSize: state.pageSize,
+          form: form.value,
+          setTotal,
+        })
+      }
+
       latest.current.options.pagination?.onPageChange?.(state)
     },
     onPageSizeChange(state) {
@@ -208,8 +213,6 @@ export function usePagingList<Item, FormState extends object = object>(
       },
     ] as Parameters<Fetcher>,
     onBefore(...args) {
-      isFormChangedRef.current = false
-
       if (latest.current.selectState.selected.length) {
         previousSelectedRef.current = latest.current.selectState.selected
       }
@@ -234,6 +237,12 @@ export function usePagingList<Item, FormState extends object = object>(
       }
 
       latest.current.options.query?.onSuccess?.(data, ...reset)
+    },
+    onFinally(...args) {
+      isFormChangedRef.current = false
+      isStartingNewQueryRef.current = false
+
+      latest.current.options.query?.onFinally?.(...args)
     },
   })
 
