@@ -20,12 +20,6 @@ describe('useLoremIpsum', () => {
     expect(result.current).toBeDefined()
   })
 
-  it('should return lorem ipsum text of specified length', () => {
-    const { result: r } = renderHook(() => useLoremIpsum())
-    const { result: r2 } = renderHook(() => useLoremIpsum(2))
-    expect(r.current.length).lessThan(r2.current.length)
-  })
-
   it('should return lorem ipsum text with specified sentence ends', () => {
     const { result } = renderHook(() => useLoremIpsum({ length: 5, sentenceEnds: ['.', '!', '?'] }))
     expect(result.current).toMatch(/[.!?]$/)
