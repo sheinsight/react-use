@@ -29,8 +29,8 @@
   },
   "bugs": "https://github.com/sheinsight/react-use/issues",
   "scripts": {
-    "dev": "tsup --watch",
-    "build": "tsup",
+    "dev": "lecp --watch",
+    "build": "lecp",
     "prepack": "clean-pkg-json",
     "typecheck": "tsc --noEmit"
   },
@@ -64,6 +64,7 @@
     "react-dom": ">= 16.8.0"
   },
   "devDependencies": {
+    "@shined/lecp": "^0.2.2",
     "@swc/core": "^1.13.5",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",

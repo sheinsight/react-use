@@ -1,3 +1,6 @@
 {
-  "mdx.validate.validateFileLinks": "ignore"
+  "mdx.validate.validateFileLinks": "ignore",
+  "cSpell.words": [
+    "lecp"
+  ]
 }
