@@ -18,7 +18,7 @@ describe('useRafLoop', () => {
     renderHook(() => useRafLoop(callback, { immediate: true }))
 
     act(() => {
-      vi.advanceTimersByTime(1000 / 60) // Simulate frame
+      vi.advanceTimersToNextFrame()
     })
 
     expect(callback).toHaveBeenCalled()
@@ -28,7 +28,7 @@ describe('useRafLoop', () => {
     renderHook(() => useRafLoop(callback, { immediate: false }))
 
     act(() => {
-      vi.advanceTimersByTime(1000 / 60) // Simulate frame
+      vi.advanceTimersToNextFrame()
     })
 
     expect(callback).not.toHaveBeenCalled()
@@ -41,11 +41,11 @@ describe('useRafLoop', () => {
     act(() => {
       vi.advanceTimersByTime(1_000) // Simulate 1 second
     })
-
-    setTimeout(() => {
-      expect(count.value).toBeLessThan(30)
-      expect(count.value).toBeGreaterThan(0)
+    act(() => {
+      vi.advanceTimersToNextFrame()
     })
+
+    expect(count.value).toSatisfy((v: number) => v > 0 && v <= 30, 'within (0, 30] range')
   })
 
   it('should pause and resume correctly', () => {
@@ -53,22 +53,20 @@ describe('useRafLoop', () => {
 
     act(() => {
       result.current.pause()
-      vi.advanceTimersByTime(1000 / 60) // Simulate frame
+      vi.advanceTimersToNextFrame()
     })
 
     expect(callback).not.toHaveBeenCalled()
 
     act(() => {
       result.current.resume()
-      vi.advanceTimersByTime(1000 / 60) // Simulate frame
+      vi.advanceTimersToNextFrame()
     })
 
     expect(callback).toHaveBeenCalled()
   })
 
   it('should call immediateCallback before the first frame', () => {
-    const immediateCallback = vi.fn()
-
     renderHook(() =>
       useRafLoop(callback, {
         immediate: true,
@@ -76,8 +74,6 @@ describe('useRafLoop', () => {
       }),
     )
 
-    setTimeout(() => {
-      expect(immediateCallback).toHaveBeenCalled()
-    })
+    expect(callback).toHaveBeenCalled()
   })
 })

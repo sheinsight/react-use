@@ -19,7 +19,7 @@ describe('useRafFn', () => {
 
     act(() => {
       result.current()
-      vi.advanceTimersByTime(16) // Simulate the passage of time for the next frame
+      vi.advanceTimersToNextFrame()
     })
 
     expect(callback).toHaveBeenCalled()
@@ -32,23 +32,11 @@ describe('useRafFn', () => {
       result.current()
       unmount()
     })
-
-    setTimeout(() => {
-      expect(callback).toHaveBeenCalled()
-    })
-  })
-
-  it('should not call the callback if unmounted before the next frame', () => {
-    const { result, unmount } = renderHook(() => useRafFn(callback))
-
     act(() => {
-      result.current()
-      unmount()
+      vi.advanceTimersToNextFrame()
     })
 
-    setTimeout(() => {
-      expect(callback).toHaveBeenCalledTimes(1) // Should only be called once
-    })
+    expect(callback).not.toHaveBeenCalled()
   })
 
   it('should fallback to pure callback if requestAnimationFrame is not available', () => {
