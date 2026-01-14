@@ -32,35 +32,40 @@ describe('useRafState', () => {
     expect(result.current[0]).toBe(1)
   })
 
-  it('should handle multiple updates correctly', () => {
-    const { result } = renderHook(() => useRafState(initialState))
-
-    act(() => {
-      result.current[1](2)
-      result.current[1](3)
-    })
-    act(() => {
-      vi.advanceTimersToNextFrame()
-    })
-
-    expect(result.current[0]).toBe(3)
-  })
-
   it('should work with undefined initial state', () => {
     const { result } = renderHook(() => useRafState())
     expect(result.current[0]).toBeUndefined()
   })
 
-  it('should update state with a function', () => {
+  it.each([
+    {
+      name: 'value updates',
+      updates: [2, 3],
+      expected: 3,
+    },
+    {
+      name: 'function updates',
+      updates: [(prev: number) => prev + 2, (prev: number) => prev + 1],
+      expected: 3,
+    },
+    {
+      name: 'mixed updates',
+      updates: [2, (prev: number) => prev + 1],
+      expected: 3,
+    },
+  ])('should handle multiple updates correctly > $name', ({ updates, expected }) => {
     const { result } = renderHook(() => useRafState(initialState))
 
     act(() => {
-      result.current[1]((prev) => prev + 1)
+      const [_, setState] = result.current
+      for (const update of updates) {
+        setState(update)
+      }
     })
     act(() => {
       vi.advanceTimersToNextFrame()
     })
 
-    expect(result.current[0]).toBe(1)
+    expect(result.current[0]).toBe(expected)
   })
 })
