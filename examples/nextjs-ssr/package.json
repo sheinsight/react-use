@@ -1,6 +1,6 @@
 {
   "name": "nextjs-ssr",
-  "version": "1.14.0-beta.8",
+  "version": "1.14.0-beta.9",
   "private": true,
   "scripts": {
     "dev": "next dev --port 3006",
