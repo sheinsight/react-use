@@ -1,5 +1,7 @@
+import { useCallback, useRef } from 'react'
 import { useRafFn } from '../use-raf-fn'
 import { useSafeState } from '../use-safe-state'
+import { isFunction } from '../utils/basic'
 
 import type { ReactSetState, UseSafeStateOptions } from '../use-safe-state'
 import type { Gettable } from '../utils/basic'
@@ -15,5 +17,17 @@ export function useRafState<T>(initialState: Gettable<T>, options?: UseRafStateO
 export function useRafState<T = undefined>(): readonly [T | undefined, ReactSetState<T | undefined>]
 export function useRafState<T>(initialState?: Gettable<T>, options?: UseRafStateOptions) {
   const [state, setState] = useSafeState(initialState, options)
-  return [state, useRafFn(setState)] as const
+  const stateRef = useRef(state)
+
+  const scheduleSet = useRafFn(setState, true)
+
+  const set = useCallback<typeof setState>(
+    (value) => {
+      stateRef.current = isFunction(value) ? value(stateRef.current) : value
+      scheduleSet(() => stateRef.current)
+    },
+    [scheduleSet],
+  )
+
+  return [state, set] as const
 }
