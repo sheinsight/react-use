@@ -1,9 +1,9 @@
-import { Button, Card, KeyValue, OTP, Toaster, Zone, cn, toast, wait } from '@/components'
+import { Button, KeyValue, OTP, Section, Toaster, Zone, cn, toast, wait } from '@/components'
 import { mutate, useCounter, useQuery } from '@shined/react-use'
 
 export function App() {
   return (
-    <Card>
+    <Section>
       <h3 className="font-bold text-xl">Immediate + Trigger by user + Dependencies</h3>
       <Demo1 />
       <h3 className="font-bold text-xl">Lifecycle + Refresh + Params + Mutate + Cancel</h3>
@@ -15,7 +15,7 @@ export function App() {
       <h3 className="font-bold text-xl">Error Retry + Cache (SWR)</h3>
       <Demo5 />
       <Toaster />
-    </Card>
+    </Section>
   )
 }
 

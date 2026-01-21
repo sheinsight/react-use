@@ -1,4 +1,4 @@
-import { Card, KeyValue, Zone } from '@/components'
+import { KeyValue, Section, Zone } from '@/components'
 import { useParentElement } from '@shined/react-use'
 
 export function App() {
@@ -6,7 +6,7 @@ export function App() {
   const elStr = parentEl ? `${parentEl?.tagName.toLowerCase()}#${parentEl?.id}` : ''
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Parent Element" value={elStr} />
       <Zone id="parent" border="primary">
         Parent #parent
@@ -14,6 +14,6 @@ export function App() {
           Child #el-use-parent
         </Zone>
       </Zone>
-    </Card>
+    </Section>
   )
 }

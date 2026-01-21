@@ -1,4 +1,4 @@
-import { Card, Key, Zone } from '@/components'
+import { Key, Section, Zone } from '@/components'
 import { useKeyStatus } from '@shined/react-use'
 
 export function App() {
@@ -20,7 +20,7 @@ export function App() {
   const isEEPressed = useKeyStatus('E')
 
   return (
-    <Card>
+    <Section>
       <Zone>
         <Key name="-" isPressed={isPlusPressed} />
         <Key name="=" isPressed={isEqualPressed} />
@@ -39,6 +39,6 @@ export function App() {
         <Key name="S" isPressed={isSSPressed} />
         <Key name="E" isPressed={isEEPressed} />
       </Zone>
-    </Card>
+    </Section>
   )
 }

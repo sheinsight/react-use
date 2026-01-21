@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Toaster, Zone, wait as mockFetch, toast } from '@/components'
+import { Button, KeyValue, Section, Toaster, Zone, wait as mockFetch, toast } from '@/components'
 import { useAsyncEffect, useAsyncFn, useCounter, useSafeState, useToggle } from '@shined/react-use'
 
 export function App() {
@@ -25,7 +25,7 @@ export function App() {
   )
 
   return (
-    <Card>
+    <Section>
       <h2>Try to click the button multiple times quickly.</h2>
       <Zone>
         <KeyValue label="Data" value={value} />
@@ -34,6 +34,6 @@ export function App() {
       <KeyValue label="Ignored count" value={count} />
       <Button onClick={toggle}>Re-fetch data</Button>
       <Toaster />
-    </Card>
+    </Section>
   )
 }

@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useCounter, usePausableEffect } from '@shined/react-use'
 
 export function App() {
@@ -9,7 +9,7 @@ export function App() {
   const pausable = usePausableEffect(() => actions.inc(), [depCount])
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="isEffectActive" value={pausable.isActive()} />
 
       <Zone>
@@ -27,6 +27,6 @@ export function App() {
         <Button onClick={() => depActions.dec()}>Dec dep count</Button>
         <Button onClick={() => depActions.reset()}>Reset dep count</Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

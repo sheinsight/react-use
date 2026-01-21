@@ -15,8 +15,12 @@ import { HooksType } from '@/components'
 尝试点击加载 CSS，然后在下方输入框中编辑样式（如 `* { color: red; }`），并查看样式应用到文档上的效果。
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## 用法 \{#usage}
 

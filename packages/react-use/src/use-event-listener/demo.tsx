@@ -1,4 +1,4 @@
-import { Card, Toaster, Zone, toast } from '@/components'
+import { Section, Toaster, Zone, toast } from '@/components'
 import { useEventListener, useUnmount } from '@shined/react-use'
 import { useRef } from 'react'
 
@@ -20,13 +20,13 @@ export function App() {
   useUnmount(() => toast.remove())
 
   return (
-    <Card className="select-none">
+    <Section className="select-none">
       <Zone border="amber" className="bg-primary/20">
         <div ref={divRef} className="size-full">
           <p className="my-2">Click inside this dashed box to see the toast</p>
         </div>
       </Zone>
       <Toaster />
-    </Card>
+    </Section>
   )
 }

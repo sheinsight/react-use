@@ -16,8 +16,12 @@ A React Hook like [React.useEffect](https://react.dev/reference/react/useEffect)
 Quickly click the button below, you will see the effect is debounced.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

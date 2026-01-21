@@ -16,8 +16,12 @@ A React Hook to run **async** functions with extra **loading** state that indica
 Click to mock fetch, and check the loading state.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

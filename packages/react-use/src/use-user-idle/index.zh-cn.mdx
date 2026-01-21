@@ -18,8 +18,12 @@ import { HooksType } from '@/components'
 默认超时时间 1 分钟，这里为了方便演示，设置为 1 秒。
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## 用法 \{#usage}
 

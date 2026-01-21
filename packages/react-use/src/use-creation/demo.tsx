@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Toaster, Zone, toast } from '@/components'
+import { Button, KeyValue, Section, Toaster, Zone, toast } from '@/components'
 import { useCounter, useCreation, useUnmount } from '@shined/react-use'
 import { useEffect } from 'react'
 
@@ -25,7 +25,7 @@ export function App() {
   useUnmount(() => toast.remove())
 
   return (
-    <Card>
+    <Section>
       <pre>{JSON.stringify(Object.fromEntries(map.entries()), null, 0)}</pre>
 
       <Zone>
@@ -39,6 +39,6 @@ export function App() {
       </Zone>
 
       <Toaster />
-    </Card>
+    </Section>
   )
 }

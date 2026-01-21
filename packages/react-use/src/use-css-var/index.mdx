@@ -15,8 +15,12 @@ A React Hook that allows you to use CSS variables in your components.
 Try to toggle dark mode or click button below to see the effect.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

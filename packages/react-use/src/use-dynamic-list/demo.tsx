@@ -1,4 +1,4 @@
-import { Button, Card, Input, Zone, useAutoAnimate } from '@/components'
+import { Button, Input, Section, Zone, useAutoAnimate } from '@/components'
 import { useDynamicList } from '@shined/react-use'
 
 export function App() {
@@ -11,7 +11,7 @@ export function App() {
   ])
 
   return (
-    <Card>
+    <Section>
       <Zone>
         <Zone>
           <div ref={containerRef} className="size-full flex flex-col gap-2">
@@ -41,6 +41,6 @@ export function App() {
         </Zone>
         <pre>{JSON.stringify(list, null, 2)}</pre>
       </Zone>
-    </Card>
+    </Section>
   )
 }

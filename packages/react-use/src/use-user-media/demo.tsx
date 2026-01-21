@@ -1,4 +1,4 @@
-import { Button, Card, Zone } from '@/components'
+import { Button, Section, Zone } from '@/components'
 import { useDeviceList, useUserMedia } from '@shined/react-use'
 import { useRef } from 'react'
 
@@ -24,7 +24,7 @@ export function App() {
   })
 
   return (
-    <Card>
+    <Section>
       <Zone center>
         <video ref={videoRef} muted autoPlay controls className="h-160px md:h-100 w-auto" />
       </Zone>
@@ -32,6 +32,6 @@ export function App() {
         <Button onClick={() => media.resume()}>Resume</Button>
         <Button onClick={() => media.pause()}>Pause</Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

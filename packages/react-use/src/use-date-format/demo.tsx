@@ -1,4 +1,4 @@
-import { Card, KeyValue, LabelInput, Zone } from '@/components'
+import { KeyValue, LabelInput, Section, Zone } from '@/components'
 import { useControlledComponent, useDateFormat, useNow } from '@shined/react-use'
 
 export function App() {
@@ -13,7 +13,7 @@ export function App() {
   const unicodePlayground = useDateFormat(now, unicodeInput.value, { unicodeSymbols: true })
 
   return (
-    <Card>
+    <Section>
       <h3 className="mb-0">Convention Date Symbols (by default)</h3>
       <Zone border="primary" row={false}>
         <KeyValue label="Format" value="YYYY-MM-DD ddd HH:mm:ss.SSS" />
@@ -32,6 +32,6 @@ export function App() {
         <KeyValue label="Result" value={unicodePlayground} />
         <LabelInput label="Template" className="flex-1" {...unicodeInput.props} />
       </Zone>
-    </Card>
+    </Section>
   )
 }

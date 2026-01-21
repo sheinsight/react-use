@@ -1,4 +1,4 @@
-import { Card, KeyValue } from '@/components'
+import { KeyValue, Section } from '@/components'
 import { useHover } from '@shined/react-use'
 
 export function App() {
@@ -7,11 +7,11 @@ export function App() {
   const bgColor = isHovered ? 'bg-primary/60' : 'bg-red/60'
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="isHovered">{isHovered}</KeyValue>
       <div id="el-hover" className={`w-36 h-24 rounded grid place-content-center ${bgColor}`}>
         {isHovered ? 'Nice try 👍' : 'Hover me 😭'}
       </div>
-    </Card>
+    </Section>
   )
 }

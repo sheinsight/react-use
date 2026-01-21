@@ -1,11 +1,11 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { usePausable } from '@shined/react-use'
 
 export function App() {
   const pausable = usePausable(false)
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="isActive" value={pausable.isActive()} />
       <Zone>
         <Button onClick={() => pausable.resume()}>Resume</Button>
@@ -14,6 +14,6 @@ export function App() {
         <Button onClick={() => pausable.pause(true)}>Pause (with re-render)</Button>
       </Zone>
       <Zone />
-    </Card>
+    </Section>
   )
 }

@@ -1,4 +1,4 @@
-import { Card, KeyValue } from '@/components'
+import { KeyValue, Section } from '@/components'
 import { useDocumentVisibility, useTitle } from '@shined/react-use'
 
 export function App() {
@@ -9,8 +9,8 @@ export function App() {
   useTitle(isHidden ? 'またね！ヾ(＾-＾)ノ' : 'おかえりなさい！(≧◡≦) ♡')
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Visibility" value={visibility} />
-    </Card>
+    </Section>
   )
 }

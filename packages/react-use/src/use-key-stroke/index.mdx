@@ -15,8 +15,12 @@ A React Hook that helps to handle key strokes.
 Try to (long) press `-`/`=` to increase/decrease the counter, `-` will ignore repeated events (set `dedupe` to true).
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

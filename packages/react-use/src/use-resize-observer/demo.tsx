@@ -1,4 +1,4 @@
-import { Card } from '@/components'
+import { Section } from '@/components'
 import { useResizeObserver, useSafeState } from '@shined/react-use'
 
 export function App() {
@@ -10,7 +10,7 @@ export function App() {
   })
 
   return (
-    <Card>
+    <Section>
       <textarea
         id="el-resize-observer"
         disabled
@@ -18,6 +18,6 @@ export function App() {
         onChange={() => {}}
         className="h-160px p-2 text-4 input-border text-pretty"
       />
-    </Card>
+    </Section>
   )
 }

@@ -1,11 +1,11 @@
-import { Card } from '@/components'
+import { Section } from '@/components'
 import { useBattery } from '@shined/react-use'
 
 export function App() {
   const battery = useBattery()
 
   return (
-    <Card>
+    <Section>
       {!battery.isSupported && 'Your device does not support the Battery API.'}
 
       {battery.isSupported && (
@@ -18,6 +18,6 @@ export function App() {
           </div>
         </div>
       )}
-    </Card>
+    </Section>
   )
 }

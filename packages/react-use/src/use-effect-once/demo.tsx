@@ -1,4 +1,4 @@
-import { Card, KeyValue } from '@/components'
+import { KeyValue, Section } from '@/components'
 import { useCounter, useEffectOnce } from '@shined/react-use'
 
 export function App() {
@@ -10,8 +10,8 @@ export function App() {
   })
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Count" value={count} />
-    </Card>
+    </Section>
   )
 }

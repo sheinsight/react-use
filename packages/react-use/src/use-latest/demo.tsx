@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Toaster, Zone, wait as mockFetch, toast } from '@/components'
+import { Button, KeyValue, Section, Toaster, Zone, wait as mockFetch, toast } from '@/components'
 import {
   useCounter,
   useEffectOnce,
@@ -41,7 +41,7 @@ export function App() {
   useUnmount(() => toast.remove())
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Count" value={count} />
       <KeyValue label="Dependency count" value={depCount} />
       <KeyValue label="State (will be stale)" value={state} />
@@ -49,6 +49,6 @@ export function App() {
         <Button onClick={() => depActions.inc()}>Increment dep counter</Button>
       </Zone>
       <Toaster />
-    </Card>
+    </Section>
   )
 }

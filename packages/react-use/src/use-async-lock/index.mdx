@@ -15,8 +15,12 @@ A React Hook to create a function that can be used to ensure that **only one is 
 Quickly and repeatedly click the button to check the effect.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

@@ -1,11 +1,11 @@
-import { Card } from '@/components'
+import { Section } from '@/components'
 import { useElementBounding } from '@shined/react-use'
 
 export function App() {
   const [bounding, _update] = useElementBounding('#el-bounding')
 
   return (
-    <Card>
+    <Section>
       <textarea
         id="el-bounding"
         disabled
@@ -13,6 +13,6 @@ export function App() {
         value={JSON.stringify(bounding, null, 2)}
         onChange={() => {}} // Prevent React warning
       />
-    </Card>
+    </Section>
   )
 }

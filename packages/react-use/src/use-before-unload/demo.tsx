@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useBeforeUnload, useToggle } from '@shined/react-use'
 
 export function App() {
@@ -11,12 +11,12 @@ export function App() {
   useBeforeUnload(callback, { preventDefault: show })
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Show confirm dialog" value={show} />
       <Zone>
         <Button onClick={() => location.reload()}>Reload this page</Button>
         <Button onClick={toggle}>Toggle confirm dialog</Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

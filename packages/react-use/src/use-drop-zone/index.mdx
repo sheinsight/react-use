@@ -15,8 +15,12 @@ A React Hook that allows you to create a dropzone.
 Try to drop a PNG file from your computer, or just test the over state via image below.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

@@ -15,8 +15,12 @@ A React Hook that tracks whether the user is leaving the document.
 Try to move your mouse outside the browser viewport to check.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

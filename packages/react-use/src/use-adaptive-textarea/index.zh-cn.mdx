@@ -15,8 +15,12 @@ import { HooksType } from '@/components'
 在文本域中输入内容，然后看文本域的高度如何自动调整。
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## 用法 \{#usage}
 

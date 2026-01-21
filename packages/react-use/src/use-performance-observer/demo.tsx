@@ -1,4 +1,4 @@
-import { Card, KeyValue } from '@/components'
+import { KeyValue, Section } from '@/components'
 import { usePerformanceObserver } from '@shined/react-use'
 
 const entryTypes = ['paint', 'paint', 'navigation', 'resource', 'mark', 'measure']
@@ -13,9 +13,9 @@ export function App() {
   )
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="isSupported" value={isSupported} />
       <KeyValue label="observerRef" value={observerRef.current ? 'ready' : 'not ready'} />
-    </Card>
+    </Section>
   )
 }

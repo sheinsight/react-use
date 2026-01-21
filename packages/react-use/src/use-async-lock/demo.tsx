@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, OTP, Zone, wait as mockFetch } from '@/components'
+import { Button, KeyValue, OTP, Section, Zone, wait as mockFetch } from '@/components'
 import { useAsyncFn, useAsyncLock, useCounter } from '@shined/react-use'
 
 export function App() {
@@ -12,7 +12,7 @@ export function App() {
   const lockedFetchData = useAsyncLock(fetchData.run, countActions.inc)
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Fetched data" value={fetchData.value} />
       <KeyValue label="Locked status" value={fetchData.loading} />
       <KeyValue label="Invalid fetch times" value={invalidCount} />
@@ -23,6 +23,6 @@ export function App() {
           Fetch with locked status
         </Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

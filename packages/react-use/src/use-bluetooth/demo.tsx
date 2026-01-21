@@ -1,4 +1,4 @@
-import { Button, Card, Input, KeyValue, Zone } from '@/components'
+import { Button, Input, KeyValue, Section, Zone } from '@/components'
 import { useBluetooth, useControlledComponent, useSetState } from '@shined/react-use'
 import { useEffect } from 'react'
 
@@ -41,7 +41,7 @@ export function App() {
   }, [bluetooth.isConnected, bluetooth.server])
 
   return (
-    <Card>
+    <Section>
       <Zone>
         <KeyValue label="Supported" value={bluetooth.isSupported} />
         <KeyValue label="Device name" value={bluetooth.device?.name ?? null} />
@@ -62,6 +62,6 @@ export function App() {
       </div>
 
       {info.battery > 0 && <pre>{JSON.stringify(info, null, 2)}</pre>}
-    </Card>
+    </Section>
   )
 }

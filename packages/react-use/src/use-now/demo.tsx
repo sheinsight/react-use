@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useCounter, useDateFormat, useNow } from '@shined/react-use'
 
 export function App() {
@@ -16,7 +16,7 @@ export function App() {
   })
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Now">{dateStr}</KeyValue>
       <Zone border="primary">
         <KeyValue label="isActive">{controls.isActive()}</KeyValue>
@@ -27,6 +27,6 @@ export function App() {
           <Button onClick={() => controls.pause(true)}>Pause</Button>
         </Zone>
       </Zone>
-    </Card>
+    </Section>
   )
 }

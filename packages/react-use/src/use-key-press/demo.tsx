@@ -1,4 +1,4 @@
-import { Card, Key, KeyValue, Toaster, toast } from '@/components'
+import { Key, KeyValue, Section, Toaster, toast } from '@/components'
 import { useCounter, useKeyPress, useKeyStatus, useUnmount } from '@shined/react-use'
 
 export function App() {
@@ -14,10 +14,10 @@ export function App() {
   useUnmount(() => toast.remove())
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Key press times" value={times} />
       <Key size="md" name="Enter" isPressed={isEnterPressed} />
       <Toaster />
-    </Card>
+    </Section>
   )
 }

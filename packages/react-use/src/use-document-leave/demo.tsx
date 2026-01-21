@@ -1,11 +1,11 @@
-import { Card, KeyValue } from '@/components'
+import { KeyValue, Section } from '@/components'
 import { useDocumentLeave } from '@shined/react-use'
 
 export function App() {
   const isLeave = useDocumentLeave()
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Is user leave page">{isLeave}</KeyValue>
 
       <div className={isLeave ? 'text-amber/80' : 'text-primary/80'}>
@@ -17,6 +17,6 @@ export function App() {
       <div className={isLeave ? 'text-amber/80' : 'text-primary/80'}>
         {isLeave ? 'Goodbye~! See you! ヾ(＾-＾)ノ' : 'Welcome back! (≧◡≦) ♡'}
       </div>
-    </Card>
+    </Section>
   )
 }

@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, OTP, Zone, wait as mockFetch } from '@/components'
+import { Button, KeyValue, OTP, Section, Zone, wait as mockFetch } from '@/components'
 import { createSingleLoading } from '@shined/react-use'
 import { create } from '@shined/reactive'
 
@@ -22,7 +22,7 @@ export function App() {
   })
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Loading">{loading}</KeyValue>
       <Zone>
         <Button disabled={loading} onClick={fetchUser.run}>
@@ -45,6 +45,6 @@ export function App() {
         <Button onClick={() => fetchUser.setLoading(!loading)}>Toggle via Hook</Button>
         <Button onClick={() => pageLoading.set(!loading)}>Toggle via instance</Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

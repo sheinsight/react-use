@@ -15,8 +15,12 @@ A React Hook that returns a [Ref Getter](/docs/features/ref-getter) that indicat
 Try to click `Start Timer`, and then click the "Toggle mount" button in one second to see the result.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

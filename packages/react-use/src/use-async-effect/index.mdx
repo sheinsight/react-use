@@ -28,8 +28,12 @@ If you need to clean up something, please use `isCancelled()` within `UseAsyncEf
 ## Demo \{#demo}
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage \{#usage}
 

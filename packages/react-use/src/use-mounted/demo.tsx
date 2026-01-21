@@ -1,4 +1,4 @@
-import { Button, Card, Toaster, Zone, toast } from '@/components'
+import { Button, Section, Toaster, Zone, toast } from '@/components'
 import { useMounted, useToggle, useUnmount } from '@shined/react-use'
 
 export function App() {
@@ -7,11 +7,11 @@ export function App() {
   useUnmount(() => toast.remove())
 
   return (
-    <Card>
+    <Section>
       <Button onClick={toggle}>Toggle mount</Button>
       {show && <Child />}
       <Toaster />
-    </Card>
+    </Section>
   )
 }
 

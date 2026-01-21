@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useInterval } from '@shined/react-use'
 
 export function App() {
@@ -6,7 +6,7 @@ export function App() {
   const [count, actions] = useInterval(300, { controls: true })
 
   return (
-    <Card>
+    <Section>
       <Zone border="primary">
         <KeyValue label="Intervals" value={intervals} />
       </Zone>
@@ -21,6 +21,6 @@ export function App() {
           <Button onClick={() => actions.reset()}>Reset</Button>
         </Zone>
       </Zone>
-    </Card>
+    </Section>
   )
 }

@@ -16,8 +16,12 @@ import { HooksType } from '@/components'
 点击模拟 fetch，检查加载状态。
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## 用法 \{#usage}
 

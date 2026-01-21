@@ -1,12 +1,12 @@
-import { Card, KeyValue } from '@/components'
+import { KeyValue, Section } from '@/components'
 import { useWindowFocus } from '@shined/react-use'
 
 export function App() {
   const isWinFocused = useWindowFocus()
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Is window focused" value={isWinFocused.toString()} />
-    </Card>
+    </Section>
   )
 }

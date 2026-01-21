@@ -1,4 +1,4 @@
-import { Button, Card, Input, OTP, Select, Toaster, Zone, wait as mockFetch, toast } from '@/components'
+import { Button, Input, OTP, Section, Select, Toaster, Zone, wait as mockFetch, toast } from '@/components'
 import { useForm } from '@shined/react-use'
 
 const genders = ['Boy', 'Girl'] as const
@@ -35,7 +35,7 @@ export function App() {
   })
 
   return (
-    <Card className="py-8">
+    <Section className="py-8">
       <form {...form.nativeProps}>
         <Zone>
           <Zone>
@@ -126,6 +126,6 @@ export function App() {
         <Button onClick={form.submit}>Submit outside</Button>
       </Zone>
       <Toaster />
-    </Card>
+    </Section>
   )
 }

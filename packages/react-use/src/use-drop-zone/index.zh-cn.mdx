@@ -15,8 +15,12 @@ import { HooksType } from '@/components'
 尝试从您的电脑拖放一个 PNG 文件，或者通过下方的图像测试 over 状态。
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## 用法 \{#usage}
 

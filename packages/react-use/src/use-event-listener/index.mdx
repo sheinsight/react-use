@@ -17,8 +17,12 @@ Register using `addEventListener` on mounted, and `removeEventListener` automati
 Double-click anywhere on the window, or click inside the dotted box below to see the Toast prompt.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

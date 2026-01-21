@@ -1,5 +1,5 @@
-import { Card } from '@/components'
+import { Section } from '@/components'
 
 export function App() {
-  return <Card>It's NOT recommended to use this Hook directly. Use high level Hooks above instead.</Card>
+  return <Section>It's NOT recommended to use this Hook directly. Use high level Hooks above instead.</Section>
 }

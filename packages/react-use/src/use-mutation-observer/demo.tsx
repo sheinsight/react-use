@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Toaster, toast } from '@/components'
+import { Button, KeyValue, Section, Toaster, toast } from '@/components'
 import { useMutationObserver, useUnmount } from '@shined/react-use'
 import { useRef } from 'react'
 
@@ -27,11 +27,11 @@ export function App() {
   useUnmount(() => toast.remove())
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Supported" value={isSupported} />
       <div ref={divRef} className={boxCls} />
       <Button onClick={mutateStyle}>Toggle bg color</Button>
       <Toaster />
-    </Card>
+    </Section>
   )
 }

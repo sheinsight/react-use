@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useMouse } from '@shined/react-use'
 
 export function App() {
@@ -11,7 +11,7 @@ export function App() {
   const isActive = controls.every((e) => e.isActive())
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Type: page (default)" value={`(${page.x}, ${page.y}, ${page.sourceType})`} />
       <KeyValue label="Type: client" value={`(${client.x}, ${client.y}, ${client.sourceType})`} />
       <KeyValue label="Type: screen" value={`(${screen.x}, ${screen.y}, ${screen.sourceType})`} />
@@ -27,6 +27,6 @@ export function App() {
           <Button onClick={() => controls.forEach((e) => e.resume(true))}>Resume</Button>
         </Zone>
       </Zone>
-    </Card>
+    </Section>
   )
 }

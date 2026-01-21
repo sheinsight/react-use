@@ -1,4 +1,4 @@
-import { Card } from '@/components'
+import { Section } from '@/components'
 import { useScroll } from '@shined/react-use'
 import { useRef } from 'react'
 
@@ -10,11 +10,11 @@ export function App() {
   })
 
   return (
-    <Card row>
+    <Section row>
       <div ref={divRef} className="rounded p-4 size-240px bg-amber/80 overflow-scroll">
         <div className="rounded size-480px bg-primary/80" />
       </div>
       <pre>{JSON.stringify({ isScrolling, position, directions, arrivedState }, null, 2)}</pre>
-    </Card>
+    </Section>
   )
 }

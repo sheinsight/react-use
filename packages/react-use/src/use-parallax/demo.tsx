@@ -1,4 +1,4 @@
-import { Card } from '@/components'
+import { Section } from '@/components'
 import { useParallax } from '@shined/react-use'
 
 const wrapperCls = 'inline-block bg-amber/12 rounded-2'
@@ -9,12 +9,12 @@ export function App() {
   const parallax = useParallax('#el-parallax')
 
   return (
-    <Card>
+    <Section>
       <div id="el-parallax" style={parallax.containerStyle()} className={wrapperCls}>
         <div style={parallax.elementStyle()} className={elementCls}>
           <div className={boxCls}>React Hooks</div>
         </div>
       </div>
-    </Card>
+    </Section>
   )
 }

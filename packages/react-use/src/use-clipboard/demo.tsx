@@ -1,4 +1,4 @@
-import { Button, Card, Input, KeyValue } from '@/components'
+import { Button, Input, KeyValue, Section } from '@/components'
 import { useClipboard, useControlledComponent } from '@shined/react-use'
 
 const hash = () => Math.random().toString(36).slice(2, 8).toUpperCase()
@@ -8,7 +8,7 @@ export function App() {
   const clipboard = useClipboard({ read: true })
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Clipboard content" value={clipboard.text} />
 
       <div className="flex gap-2">
@@ -22,6 +22,6 @@ export function App() {
         <Button onClick={() => input.setValue(hash())}>Random text</Button>
         <Button onClick={clipboard.clear}>Empty clipboard</Button>
       </div>
-    </Card>
+    </Section>
   )
 }

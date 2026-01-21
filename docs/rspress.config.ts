@@ -81,6 +81,30 @@ export default defineConfig({
         'process.env.REACT_USE_VERSION': JSON.stringify(version),
       },
     },
+    tools: {
+      rspack: (config) => {
+        config.module = config.module || {}
+        config.module.rules = config.module.rules || []
+
+        // Exclude ?raw from all loaders
+        for (const rule of config.module.rules) {
+          if (rule && typeof rule === 'object' && rule.test) {
+            // Skip if already has resourceQuery exclusion
+            if (!rule.resourceQuery) {
+              rule.resourceQuery = { not: [/raw/] }
+            }
+          }
+        }
+
+        // Add raw loader at the very beginning with highest priority
+        config.module.rules.unshift({
+          resourceQuery: /raw/,
+          type: 'asset/source',
+        })
+
+        return config
+      },
+    },
   },
 })
 

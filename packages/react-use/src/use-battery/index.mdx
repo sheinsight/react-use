@@ -16,8 +16,12 @@ A React Hook that get [Battery](https://developer.mozilla.org/zh-CN/docs/Web/API
 Unplug or Insert your charger to observe the state change.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

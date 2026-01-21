@@ -16,8 +16,12 @@ A React Hook that helps to use [PerformanceObserver API](https://developer.mozil
 Try to open DevTools to see the performance observer logs.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

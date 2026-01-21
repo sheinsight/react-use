@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue } from '@/components'
+import { Button, KeyValue, Section } from '@/components'
 import { usePermission, useRender } from '@shined/react-use'
 
 export function App() {
@@ -15,11 +15,11 @@ export function App() {
   })
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="isSupported" value={permission.isSupported} />
       <KeyValue label="Clipboard read permission state" value={permissionStateRef.current} />
       <KeyValue label="Geolocation permission state" value={permission.stateRef.current} />
       <Button onClick={permission.query}>Query geolocation permission</Button>
-    </Card>
+    </Section>
   )
 }

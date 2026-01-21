@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, OTP, Zone } from '@/components'
+import { Button, KeyValue, OTP, Section, Zone } from '@/components'
 import { useUrlSearchParams } from '@shined/react-use'
 
 export function App() {
@@ -13,7 +13,7 @@ export function App() {
   const [hpUsp, setHpUsp, clearHpUsp] = useUrlSearchParams('hash-params')
 
   return (
-    <Card>
+    <Section>
       <Zone border="primary">
         <KeyValue label="Params (history)" value={JSON.stringify(usp, null, 0)} />
         <Zone>
@@ -40,6 +40,6 @@ export function App() {
           <Button onClick={clearHpUsp}>Clear</Button>
         </Zone>
       </Zone>
-    </Card>
+    </Section>
   )
 }

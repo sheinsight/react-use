@@ -15,8 +15,12 @@ A React Hook that helps to apply a style tag to the document with ease in React.
 Try to click to load css, and then edit the style (such as `* { color: red; }`) in the input box below and see the style applied to the document.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

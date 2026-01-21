@@ -16,8 +16,12 @@ import { HooksType } from '@/components'
 尝试打开 DevTools 以查看性能观察器日志。
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## 用法 \{#usage}
 

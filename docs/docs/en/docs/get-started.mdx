@@ -6,8 +6,8 @@ import { ReactUseIcon } from '@/components'
 
 <div className="flex gap-2 mt-4">
   <img
-  alt="NPM Version"
-  src="https://img.shields.io/npm/v/%40shined%2Freact-use?style=flat&labelColor=%23ffffff&color=%232e8555"
+    alt="NPM Version"
+    src="https://img.shields.io/npm/v/%40shined%2Freact-use?style=flat&labelColor=%23ffffff&color=%232e8555"
   />
   <img src="https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome" alt="Biome Badge" />
   <img src="https://pkg-size.dev/badge/bundle/125650" alt="Version Badge" />
@@ -63,14 +63,19 @@ function App() {
   return (
     <>
       <div>{data}</div>
-      <button onClick={run} disabled={loading}>Fetch</button>
+      <button onClick={run} disabled={loading}>
+        Fetch
+      </button>
     </>
   )
 }
 ```
 
 import { App } from '../../../../packages/react-use/src/use-async-fn/demo'
+import { Card } from '@/components'
 
-<App />
+<Card>
+  <App />
+</Card>
 
 Next, you can proceed to the [Usage Guide](/docs/usage-guide) to learn how to improve existing code, or visit the [Hooks List](/reference) to see all available Hooks.

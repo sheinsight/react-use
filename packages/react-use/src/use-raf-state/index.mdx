@@ -19,8 +19,12 @@ A React Hook that uses [requestAnimationFrame](https://developer.mozilla.org/en-
 ## Demo \{#demo}
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage \{#usage}
 

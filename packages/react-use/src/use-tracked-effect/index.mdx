@@ -16,8 +16,12 @@ A React Hook for detecting dependencies that have **actually changed** between r
 Try to open DevTools to see the logs.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

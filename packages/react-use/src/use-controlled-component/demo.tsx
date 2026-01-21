@@ -1,4 +1,4 @@
-import { Button, Card, Input, Toaster, Zone, toast } from '@/components'
+import { Button, Input, Section, Toaster, Zone, toast } from '@/components'
 import { useControlledComponent, useUnmount } from '@shined/react-use'
 
 // biome-ignore format: no wrap
@@ -20,7 +20,7 @@ export function App() {
   useUnmount(() => toast.remove())
 
   return (
-    <Card>
+    <Section>
       <Zone>
         <Input {...input.props} />
         <Button onClick={() => toast.success(input.value)}>Toast input value</Button>
@@ -30,7 +30,7 @@ export function App() {
         <Button onClick={() => toast.success(`You select ${select.value.label}!`)}>Toast selected item</Button>
       </Zone>
       <Toaster />
-    </Card>
+    </Section>
   )
 }
 

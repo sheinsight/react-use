@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useMultiSelect } from '@shined/react-use'
 
 // biome-ignore format: for demo
@@ -8,7 +8,7 @@ export function App() {
   const [state, actions] = useMultiSelect(list)
 
   return (
-    <Card>
+    <Section>
       <h2>Choose your favorite fruits</h2>
       <div className="flex items-center gap-x-6 flex-wrap">
         {list.map((item) => {
@@ -37,6 +37,6 @@ export function App() {
       <Zone border="primary">
         <KeyValue label="Selected" value={state.selected.join(', ')} />
       </Zone>
-    </Card>
+    </Section>
   )
 }

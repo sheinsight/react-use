@@ -1,11 +1,11 @@
-import { Card, KeyValue, Zone } from '@/components'
+import { KeyValue, Section, Zone } from '@/components'
 import { useMouseInElement } from '@shined/react-use'
 
 export function App() {
   const mouseInEl = useMouseInElement('#el-mouse-in-element')
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="isOutside" value={mouseInEl.isOutside} />
       <Zone>
         <KeyValue label="elementX" value={mouseInEl.elementX} />
@@ -23,6 +23,6 @@ export function App() {
         id="el-mouse-in-element"
         className={`mt-2 size-120px rounded ${mouseInEl.isOutside ? 'bg-amber/80' : 'bg-primary/80'}`}
       />
-    </Card>
+    </Section>
   )
 }

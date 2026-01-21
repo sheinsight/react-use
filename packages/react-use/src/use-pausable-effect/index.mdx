@@ -16,8 +16,12 @@ A React Hook like [React.useEffect](https://react.dev/reference/react/useEffect)
 Try to increase the dep counter when effect in different states.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

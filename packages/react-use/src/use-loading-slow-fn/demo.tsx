@@ -1,11 +1,11 @@
-import { Button, Card, KeyValue, Zone, wait as mockFetch } from '@/components'
+import { Button, KeyValue, Section, Zone, wait as mockFetch } from '@/components'
 import { useLoadingSlowFn } from '@shined/react-use'
 
 export function App() {
   const fetchFn = useLoadingSlowFn(() => mockFetch(2000), { loadingTimeout: 1_000 })
 
   return (
-    <Card>
+    <Section>
       <Zone>
         <KeyValue label="Loading" value={fetchFn.loading} />
         <KeyValue label="LoadingSlow" value={fetchFn.loadingSlow} />
@@ -14,6 +14,6 @@ export function App() {
       <Button disabled={fetchFn.loading} onClick={fetchFn.run}>
         Fetch
       </Button>
-    </Card>
+    </Section>
   )
 }

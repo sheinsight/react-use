@@ -1,4 +1,4 @@
-import { Card, KeyValue, Zone } from '@/components'
+import { KeyValue, Section, Zone } from '@/components'
 import { useCircularList, useCssVar, useIntervalFn, useLoremIpsum, useUpdateEffect } from '@shined/react-use'
 
 // biome-ignore format: no wrap
@@ -16,7 +16,7 @@ export function App() {
   useUpdateEffect(() => setVariable(list[1]), [list])
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="`--ifm-background-color` in this doc" value={value} />
       <Zone border="primary" row={false}>
         <KeyValue label="`--color` of `<html>`" value={variable} />
@@ -24,6 +24,6 @@ export function App() {
           {lorem}
         </div>
       </Zone>
-    </Card>
+    </Section>
   )
 }

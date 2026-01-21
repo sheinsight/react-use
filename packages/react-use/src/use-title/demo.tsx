@@ -1,4 +1,4 @@
-import { Button, Card, Input, Zone } from '@/components'
+import { Button, Input, Section, Zone } from '@/components'
 import { useControlledComponent } from '@shined/react-use'
 import { useTitle, useToggle } from '@shined/react-use'
 
@@ -6,10 +6,10 @@ export function App() {
   const [show, { toggle }] = useToggle(true)
 
   return (
-    <Card>
+    <Section>
       <Button onClick={toggle}>Toggle mount</Button>
       {show && <Child />}
-    </Card>
+    </Section>
   )
 }
 

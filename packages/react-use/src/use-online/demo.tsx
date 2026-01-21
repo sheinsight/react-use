@@ -1,12 +1,12 @@
-import { Card, KeyValue } from '@/components'
+import { KeyValue, Section } from '@/components'
 import { useOnline } from '@shined/react-use'
 
 export function App() {
   const isOnline = useOnline()
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Is online">{isOnline}</KeyValue>
-    </Card>
+    </Section>
   )
 }

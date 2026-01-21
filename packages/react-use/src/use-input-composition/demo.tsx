@@ -1,14 +1,14 @@
-import { Card, Input, KeyValue } from '@/components'
+import { Input, KeyValue, Section } from '@/components'
 import { useInputComposition } from '@shined/react-use'
 
 export function App() {
   const composition = useInputComposition('#el-input')
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="isComposing">{composition.isComposing}</KeyValue>
       <KeyValue label="Composition data">{composition.data}</KeyValue>
       <Input id="el-input" type="text" />
-    </Card>
+    </Section>
   )
 }

@@ -1,4 +1,4 @@
-import { Button, Card, Toaster, wait as mockFetch, toast } from '@/components'
+import { Button, Section, Toaster, wait as mockFetch, toast } from '@/components'
 import { useRetryFn } from '@shined/react-use'
 
 export function App() {
@@ -19,9 +19,9 @@ export function App() {
   )
 
   return (
-    <Card>
+    <Section>
       <Button onClick={retryFn}>Fetch</Button>
       <Toaster />
-    </Card>
+    </Section>
   )
 }

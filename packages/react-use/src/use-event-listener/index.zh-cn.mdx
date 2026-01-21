@@ -17,8 +17,12 @@ import { HooksType } from '@/components'
 双击窗口上的任何地方，或者在下方虚线框内单击以查看 Toast 提示。
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## 用法 \{#usage}
 

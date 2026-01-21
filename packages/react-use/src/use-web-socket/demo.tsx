@@ -1,13 +1,13 @@
-import { Button, Card, KeyValue, LabelInput, Toaster, Zone, toast } from '@/components'
+import { Button, KeyValue, LabelInput, Section, Toaster, Zone, toast } from '@/components'
 import { useControlledComponent, useSafeState, useWebSocket } from '@shined/react-use'
 
 export function App() {
   return (
-    <Card>
+    <Section>
       <PassedUrl />
       <DynamicUrl />
       <Toaster />
-    </Card>
+    </Section>
   )
 }
 

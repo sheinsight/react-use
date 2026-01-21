@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, LabelInput, Zone } from '@/components'
+import { Button, KeyValue, LabelInput, Section, Zone } from '@/components'
 import { useSetState, useStepper } from '@shined/react-use'
 
 export function App() {
@@ -14,7 +14,7 @@ export function App() {
   const step = useStepper(steps)
 
   return (
-    <Card>
+    <Section>
       <Zone border="primary" row={false}>
         <h2>{step.current.title}</h2>
         {step.current.key === 'info' && (
@@ -51,6 +51,6 @@ export function App() {
         {step.next?.title && <span className="text-gray">Next: {step.next.title}</span>}
       </Zone>
       <pre>{JSON.stringify(form, null, 2)}</pre>
-    </Card>
+    </Section>
   )
 }

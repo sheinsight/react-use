@@ -1,4 +1,4 @@
-import { Button, Card, Input, KeyValue, Zone, cn, wait } from '@/components'
+import { Button, Input, KeyValue, Section, Zone, cn, wait } from '@/components'
 import { usePagingList, useUpdateEffect } from '@shined/react-use'
 
 const genders = ['Boy', 'Girl'] as const
@@ -48,7 +48,7 @@ export function App() {
   }, [selection.isPartiallySelected])
 
   return (
-    <Card>
+    <Section>
       <form {...form.nativeProps}>
         <Zone border="amber">
           <Zone>
@@ -165,7 +165,7 @@ export function App() {
           </Button>
         ))}
       </Zone>
-    </Card>
+    </Section>
   )
 }
 

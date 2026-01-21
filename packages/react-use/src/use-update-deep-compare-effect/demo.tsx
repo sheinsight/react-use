@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Toaster, Zone, toast } from '@/components'
+import { Button, KeyValue, Section, Toaster, Zone, toast } from '@/components'
 import { useDeepCompareEffect, useUnmount, useUpdateDeepCompareEffect } from '@shined/react-use'
 import { useState } from 'react'
 
@@ -18,13 +18,13 @@ export function App() {
   useUnmount(() => toast.remove())
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Count" value={state.count} />
       <Zone>
         <Button onClick={() => setState({ count: state.count + 1 })}>Increment</Button>
         <Button onClick={() => setState({ count: state.count })}>Set "same" object</Button>
       </Zone>
       <Toaster />
-    </Card>
+    </Section>
   )
 }

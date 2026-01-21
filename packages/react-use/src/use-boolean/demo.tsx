@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useBoolean, useCircularList } from '@shined/react-use'
 
 const list = ['A', 'B', 'C', 'D', 'E', 'F']
@@ -8,7 +8,7 @@ export function App() {
   const [value, listActions] = useCircularList(list)
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Boolean Value" value={bool} />
       <Zone>
         <Button onClick={actions.toggle}>Toggle bool</Button>
@@ -23,6 +23,6 @@ export function App() {
         <Button onClick={() => listActions.prev()}>Prev value</Button>
         <Button onClick={() => listActions.next()}>Next value</Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

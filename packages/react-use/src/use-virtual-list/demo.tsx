@@ -1,4 +1,4 @@
-import { Button, Card, Zone, cn } from '@/components'
+import { Button, Section, Zone, cn } from '@/components'
 import { useCreation, useVirtualList } from '@shined/react-use'
 import { useRef } from 'react'
 
@@ -29,7 +29,7 @@ export function App() {
   })
 
   return (
-    <Card>
+    <Section>
       <Zone>
         <h3 className="font-medium text-xl">Fixed Size Virtual List (Vertical, 100,000 Count)</h3>
 
@@ -81,6 +81,6 @@ export function App() {
           <Button onClick={() => _actions.scrollToEnd()}>Scroll to End</Button>
         </Zone>
       </Zone>
-    </Card>
+    </Section>
   )
 }

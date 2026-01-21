@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, LabelInput, Zone } from '@/components'
+import { Button, KeyValue, LabelInput, Section, Zone } from '@/components'
 import { useCounter, useSetState, useTrackedEffect } from '@shined/react-use'
 
 export function App() {
@@ -14,7 +14,7 @@ export function App() {
   )
 
   return (
-    <Card>
+    <Section>
       <pre>{`${JSON.stringify(state, null, 2)}\n\ncount: ${count}`}</pre>
       <LabelInput
         label="Name"
@@ -28,6 +28,6 @@ export function App() {
         <Button onClick={() => actions.inc()}>Increment</Button>
         <Button onClick={() => setState({ age: state.age + 1 })}>Age++</Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

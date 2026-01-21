@@ -1,4 +1,4 @@
-import { Card, Toaster, toast } from '@/components'
+import { Section, Toaster, toast } from '@/components'
 import { useReFocus } from '@shined/react-use'
 
 export function App() {
@@ -10,9 +10,9 @@ export function App() {
   )
 
   return (
-    <Card>
+    <Section>
       <div>This component will show a toast when the user refocuses on the window.</div>
       <Toaster />
-    </Card>
+    </Section>
   )
 }

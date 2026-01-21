@@ -16,8 +16,12 @@ A basic React hook for data fetching that supports caching, automatic refreshing
 ## Demo \{#demo}
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage \{#usage}
 

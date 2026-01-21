@@ -16,8 +16,12 @@ import { HooksType } from '@/components'
 尝试增加计数器以更新组件并触发重新渲染，你会发现函数的内存地址永不改变，所以永远不会显示对应的提示。
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## 用法 \{#usage}
 

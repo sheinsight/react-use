@@ -1,4 +1,4 @@
-import { Button, Card, Zone } from '@/components'
+import { Button, Section, Zone } from '@/components'
 import { useIntervalFn, useRafLoop, useSafeState } from '@shined/react-use'
 
 const FPS = 60
@@ -26,7 +26,7 @@ export function App() {
   const restart = () => void (reset(), rafC.resume(true), intervalC.resume(true))
 
   return (
-    <Card>
+    <Section>
       <div className={railCls}>
         {/* biome-ignore format: for demo */}
         <div className={`${boxCls} bg-blue`} style={{ left: rafLeft }}>RAF</div>
@@ -41,6 +41,6 @@ export function App() {
         <Button onClick={reset}>Reset</Button>
         <Button onClick={restart}>Restart</Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useScrollLock } from '@shined/react-use'
 import { useRef } from 'react'
 
@@ -7,7 +7,7 @@ export function App() {
   const [isLocked, _setLocked, actions] = useScrollLock(divRef, false)
 
   return (
-    <Card>
+    <Section>
       <div ref={divRef} className="rounded p-4 size-36 bg-blue-2 overflow-scroll">
         <div className="rounded size-40 bg-gradient-to-tr from-primary to-amber" />
       </div>
@@ -17,6 +17,6 @@ export function App() {
         <Button onClick={actions.unlock}>Unlock</Button>
         <Button onClick={actions.toggle}>Toggle lock</Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

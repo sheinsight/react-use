@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Toaster, Zone, toast } from '@/components'
+import { Button, KeyValue, Section, Toaster, Zone, toast } from '@/components'
 import { useGetterRef, useRender, useUnmount } from '@shined/react-use'
 
 export function App() {
@@ -10,7 +10,7 @@ export function App() {
   useUnmount(() => toast.remove())
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Value">{get()}</KeyValue>
       <Zone>
         <Button onClick={() => ref.current++}>Increment</Button>
@@ -40,6 +40,6 @@ export function App() {
         <Button onClick={() => toast.success(`Current value of isOpen is ${isOpen().toString()}`)}>Show isOpen</Button>
       </Zone>
       <Toaster />
-    </Card>
+    </Section>
   )
 }

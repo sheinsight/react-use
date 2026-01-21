@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Toaster, toast } from '@/components'
+import { Button, KeyValue, Section, Toaster, toast } from '@/components'
 import { useCounter, useUnmount, useUpdateLayoutEffect } from '@shined/react-use'
 
 export function App() {
@@ -12,10 +12,10 @@ export function App() {
   useUnmount(() => toast.remove())
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Count" value={count} />
       <Button onClick={() => actions.inc()}>Increment</Button>
       <Toaster />
-    </Card>
+    </Section>
   )
 }

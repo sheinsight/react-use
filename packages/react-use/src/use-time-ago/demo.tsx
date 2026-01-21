@@ -1,4 +1,4 @@
-import { Card, KeyValue, Zone } from '@/components'
+import { KeyValue, Section, Zone } from '@/components'
 import { CHINESE_MESSAGES, CHINESE_TRADITIONAL_MESSAGES, JAPANESE_MESSAGES, useTimeAgo } from '@shined/react-use'
 import { useRef } from 'react'
 
@@ -72,7 +72,7 @@ export function App() {
   ]
 
   return (
-    <Card>
+    <Section>
       <Zone border="primary">
         {engResults.map((result, idx) => (
           <KeyValue key={result} label={`EN Result ${idx + 1}`} value={result} />
@@ -93,6 +93,6 @@ export function App() {
           <KeyValue key={result} label={`JP Result ${idx + 1}`} value={result} />
         ))}
       </Zone>
-    </Card>
+    </Section>
   )
 }

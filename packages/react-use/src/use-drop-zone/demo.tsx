@@ -1,4 +1,4 @@
-import { Card, KeyValue, Zone } from '@/components'
+import { KeyValue, Section, Zone } from '@/components'
 import { useDropZone } from '@shined/react-use'
 
 export function App() {
@@ -8,7 +8,7 @@ export function App() {
   const zoneCls = 'grid size-48 p-4 border-2 border-dashed border-gray/32 rounded-2 place-content-center'
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="IsOverDropZone" value={isOverDropZone} />
 
       <Zone>
@@ -35,6 +35,6 @@ export function App() {
 
         {(!files || files?.length === 0) && 'No files dropped 🤷'}
       </Zone>
-    </Card>
+    </Section>
   )
 }

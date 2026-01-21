@@ -22,8 +22,12 @@ import { HooksType, Since } from '@/components'
 快速点击下面的两个按钮，只有“带版本”的操作会忽略“已过期”的操作，确保只执行最新的操作。
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## 用法 \{#usage} 
 

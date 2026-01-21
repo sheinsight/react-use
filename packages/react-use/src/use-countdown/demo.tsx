@@ -1,4 +1,4 @@
-import { Button, Card, Input, KeyValue, Zone } from '@/components'
+import { Button, Input, KeyValue, Section, Zone } from '@/components'
 import { useCountdown, useSafeState } from '@shined/react-use'
 
 export function App() {
@@ -13,7 +13,7 @@ export function App() {
   const seconds = Math.ceil(countdown.ms / 1000)
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="ms from `now` to `2030-01-01`" value={ms} />
 
       <Zone>
@@ -22,6 +22,6 @@ export function App() {
           {!countdown.isStop ? `${seconds}s` : 'Send'}
         </Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

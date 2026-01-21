@@ -1,4 +1,4 @@
-import { Button, Card, Input } from '@/components'
+import { Button, Input, Section } from '@/components'
 import { useSetState } from '@shined/react-use'
 
 export function App() {
@@ -6,10 +6,10 @@ export function App() {
   const [state, setState] = useSetState(defaultInfo, { deep: true })
 
   return (
-    <Card>
+    <Section>
       <Input placeholder="Name" value={state.name} onChange={(e) => setState({ name: e.target.value })} />
       <Input placeholder="Age" value={state.age} onChange={(e) => setState({ age: e.target.value })} />
       <Button onClick={() => setState({ ...defaultInfo })}>Reset</Button>
-    </Card>
+    </Section>
   )
 }

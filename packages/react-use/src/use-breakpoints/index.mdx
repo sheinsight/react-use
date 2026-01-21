@@ -15,8 +15,12 @@ A React Hook that provides a simple API to interact with the viewport breakpoint
 Resize the window to see the effect.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

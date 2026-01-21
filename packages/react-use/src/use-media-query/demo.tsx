@@ -1,4 +1,4 @@
-import { Card, KeyValue, Zone } from '@/components'
+import { KeyValue, Section, Zone } from '@/components'
 import { useMediaQuery } from '@shined/react-use'
 
 export function App() {
@@ -13,7 +13,7 @@ export function App() {
   ])
 
   return (
-    <Card>
+    <Section>
       <Zone>
         <KeyValue label="isPhoneView" value={isPhoneView} />
         <KeyValue label="isPadView" value={isPadView} />
@@ -24,6 +24,6 @@ export function App() {
         <KeyValue label="isPortraitPrint" value={isPortraitPrint} />
         <KeyValue label="isNotPrint" value={isNotPrint} />
       </Zone>
-    </Card>
+    </Section>
   )
 }

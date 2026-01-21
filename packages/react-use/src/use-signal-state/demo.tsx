@@ -1,4 +1,4 @@
-import { Button, Card, Input, Toaster, toast } from '@/components'
+import { Button, Input, Section, Toaster, toast } from '@/components'
 import { useSafeState, useSignalState } from '@shined/react-use'
 
 export function App() {
@@ -6,7 +6,7 @@ export function App() {
   const [name2, setName2] = useSafeState('')
 
   return (
-    <Card>
+    <Section>
       <Input
         placeholder="Name"
         value={name()}
@@ -27,6 +27,6 @@ export function App() {
         Show name
       </Button>
       <Toaster />
-    </Card>
+    </Section>
   )
 }

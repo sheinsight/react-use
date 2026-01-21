@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, OTP, Zone } from '@/components'
+import { Button, KeyValue, OTP, Section, Zone } from '@/components'
 import { useReactive } from '@shined/react-use'
 import { create } from '@shined/reactive'
 
@@ -13,7 +13,7 @@ export function App() {
   )
 
   return (
-    <Card>
+    <Section>
       <Zone>
         {/* biome-ignore lint/suspicious/noAssignInExpressions: no wrap for demo */}
         <Button onClick={() => void (mutate.name = OTP())}>Random name</Button>
@@ -29,6 +29,6 @@ export function App() {
           <li key={e}>{e}</li>
         ))}
       </ul>
-    </Card>
+    </Section>
   )
 }

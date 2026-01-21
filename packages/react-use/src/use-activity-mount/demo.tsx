@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Toaster, Zone, toast } from '@/components'
+import { Button, KeyValue, Section, Toaster, Zone, toast } from '@/components'
 import { useActivityMount, useCounter, useMount, useToggle, useUnmount } from '@shined/react-use'
 import { Activity } from 'react'
 
@@ -8,13 +8,13 @@ export function App() {
   useUnmount(() => toast.remove())
 
   return (
-    <Card>
+    <Section>
       <Button onClick={toggle}>Toggle Activity {visible ? 'Hidden' : 'Visible'}</Button>
       <Activity mode={visible ? 'visible' : 'hidden'}>
         <ComparisonDemo />
       </Activity>
       <Toaster />
-    </Card>
+    </Section>
   )
 }
 

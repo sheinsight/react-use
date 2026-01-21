@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useClamp, useCounter } from '@shined/react-use'
 
 export function App() {
@@ -8,7 +8,7 @@ export function App() {
   const [count, actions] = useClamp(8, min, max)
 
   return (
-    <Card>
+    <Section>
       <div className="rounded transition-all p-1 bg-primary/36 box-content" style={{ width: max * 20 }}>
         <div className="rounded transition-all h-[20px] bg-primary/80" style={{ width: count * 20 }} />
       </div>
@@ -45,6 +45,6 @@ export function App() {
           Max - 1
         </Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

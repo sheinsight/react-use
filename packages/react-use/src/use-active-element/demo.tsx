@@ -1,4 +1,4 @@
-import { Button, Card, Input, KeyValue, Zone } from '@/components'
+import { Button, Input, KeyValue, Section, Zone } from '@/components'
 import { useActiveElement } from '@shined/react-use'
 
 export function App() {
@@ -8,13 +8,13 @@ export function App() {
   const value = tagName ? `<${tagName} />` : 'null'
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Active element" value={value} />
 
       <Zone>
         <Input placeholder="Click here to test" />
         <Button>Also press here</Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

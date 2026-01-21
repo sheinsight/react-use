@@ -1,4 +1,4 @@
-import { Card, KeyValue } from '@/components'
+import { KeyValue, Section } from '@/components'
 import { formatDate, normalizeDate, useUserIdle } from '@shined/react-use'
 
 export function App() {
@@ -7,9 +7,9 @@ export function App() {
   const time = formatDate(normalizeDate(idleInfo.lastActive), 'YYYY-MM-DD HH:mm:ss')
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Is User Idle" value={idleInfo.isIdle} />
       <KeyValue label="Last Active" value={time} />
-    </Card>
+    </Section>
   )
 }

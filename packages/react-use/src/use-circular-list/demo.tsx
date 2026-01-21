@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue } from '@/components'
+import { Button, KeyValue, Section } from '@/components'
 import { useCircularList } from '@shined/react-use'
 
 const fruits = ['🍌 banner', '🍎 apple', '🍇 grape', '🍉 watermelon', '🍊 orange']
@@ -7,7 +7,7 @@ export function App() {
   const [item, actions, index] = useCircularList(fruits)
 
   return (
-    <Card>
+    <Section>
       <div className="flex gap-2">
         {fruits.map((fruit) => (
           <div
@@ -26,6 +26,6 @@ export function App() {
         <Button onClick={() => actions.next(2)}>Next(2)</Button>
         <Button onClick={() => actions.go(2)}>Go index 2</Button>
       </div>
-    </Card>
+    </Section>
   )
 }

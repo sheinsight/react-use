@@ -16,8 +16,12 @@ A React Hook that provides a simple API to interact with the Web [Bluetooth API]
 Click `requestDevice` to choose a Bluetooth device, and then click `connect` to connect to the device.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

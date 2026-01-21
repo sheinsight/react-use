@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useFullscreen, useStyleTag } from '@shined/react-use'
 
 export function App() {
@@ -6,10 +6,10 @@ export function App() {
   useStyleTag(':fullscreen { background-color: var(--ifm-color-content-inverse) !important; }')
 
   return (
-    <Card className="gap-4">
+    <Section className="gap-4">
       <HtmlDemo />
       <ElementDemo />
-    </Card>
+    </Section>
   )
 }
 

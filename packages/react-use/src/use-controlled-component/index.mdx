@@ -28,8 +28,12 @@ export interface ControlledComponentProps<T> = {
 Try to clear the input and type something.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

@@ -1,4 +1,4 @@
-import { Card, KeyValue, Zone } from '@/components'
+import { KeyValue, Section, Zone } from '@/components'
 import { useMousePressed } from '@shined/react-use'
 
 const boxCls = 'size-120px grid place-content-center rounded bg-red'
@@ -8,7 +8,7 @@ export function App() {
   const targetPressed = useMousePressed('#el-mouse-pressed')
 
   return (
-    <Card>
+    <Section>
       <Zone row={false} border="primary">
         <KeyValue label="Mouse Pressed" value={pressed} />
         <KeyValue label="Source Type" value={sourceType} />
@@ -20,6 +20,6 @@ export function App() {
       <div id="el-mouse-pressed" className={boxCls}>
         Target
       </div>
-    </Card>
+    </Section>
   )
 }

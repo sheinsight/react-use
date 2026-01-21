@@ -16,8 +16,12 @@ A React Hook that returns a list of devices that are currently connected.
 Grant permission to access the devices.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

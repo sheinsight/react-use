@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, LabelInput, Zone } from '@/components'
+import { Button, KeyValue, LabelInput, Section, Zone } from '@/components'
 import { useClonedState, useSafeState } from '@shined/react-use'
 
 export function App() {
@@ -6,7 +6,7 @@ export function App() {
   const [cloned, setCloned, syncSource] = useClonedState(state)
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="State" value={JSON.stringify(state, null, 2)} />
       <KeyValue label="Cloned state" value={JSON.stringify(cloned, null, 2)} />
       <LabelInput
@@ -18,6 +18,6 @@ export function App() {
         <Button onClick={() => setState(cloned)}>Save</Button>
         <Button onClick={syncSource}>Reset</Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

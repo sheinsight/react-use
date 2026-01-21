@@ -18,8 +18,12 @@ import { HooksType } from '@/components'
 > 注意：ref 值的更改不会触发重新渲染，您应该调用 `render` 来更新 UI。
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## 用法 \{#usage}
 

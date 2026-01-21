@@ -1,11 +1,11 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useResetState } from '@shined/react-use'
 
 export function App() {
   const [state, setState, reset, initialValue] = useResetState(0)
 
   return (
-    <Card>
+    <Section>
       <Zone>
         <KeyValue label="State">{state}</KeyValue>
         <KeyValue label="Initial State">{initialValue}</KeyValue>
@@ -16,6 +16,6 @@ export function App() {
         <Button onClick={() => reset()}>Reset</Button>
         <Button onClick={() => reset(10)}>Reset(10)</Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

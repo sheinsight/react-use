@@ -17,8 +17,12 @@ A React Hooks that is similar to [useMount](/reference/use-mount) but use [useIs
 Open DevTools to see the logs.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

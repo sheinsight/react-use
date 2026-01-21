@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useEventBus, useMount, useReactive } from '@shined/react-use'
 import { create } from '@shined/reactive'
 
@@ -10,14 +10,14 @@ export function App() {
   const bus = useEventBus<EventType>(busIdentifier)
 
   return (
-    <Card>
+    <Section>
       <Zone>
         <Button onClick={() => bus.emit('eventA', 1)}>Emit 'eventA': child.a++</Button>
         <Button onClick={() => bus.emit('eventB', 2)}>Emit 'eventB': child.b + 2</Button>
         <Button onClick={() => bus.emit('eventC', 3)}>Emit 'eventC': child.c + 3</Button>
       </Zone>
       <Child />
-    </Card>
+    </Section>
   )
 }
 

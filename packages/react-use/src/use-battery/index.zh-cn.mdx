@@ -16,8 +16,12 @@ import { HooksType } from '@/components'
 拔下或插入您的充电器以观察状态变化。
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## 用法 \{#usage}
 

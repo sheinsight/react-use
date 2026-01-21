@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useCounter, useDateFormat, useLastUpdated } from '@shined/react-use'
 
 export function App() {
@@ -12,7 +12,7 @@ export function App() {
   const tip2 = date2 ? `Last updated at ${date2}` : 'Not update yet'
 
   return (
-    <Card>
+    <Section>
       <Zone row={false} border="primary">
         <KeyValue label="Count" value={`${count} (${tip})`} />
         <KeyValue label="Other" value={`${other} (${tip2})`} />
@@ -21,6 +21,6 @@ export function App() {
         <Button onClick={() => actions.inc()}>Increment count</Button>
         <Button onClick={() => otherActions.inc()}>Increment other</Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, OTP, Zone, wait as mockFetch } from '@/components'
+import { Button, KeyValue, OTP, Section, Zone, wait as mockFetch } from '@/components'
 import { useSafeState, useVersionedAction } from '@shined/react-use'
 
 export function App() {
@@ -19,12 +19,12 @@ export function App() {
   }
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Value" value={value} />
       <Zone>
         <Button onClick={fetch}>Fetch</Button>
         <Button onClick={versionedFetch}>Versioned Fetch</Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

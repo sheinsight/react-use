@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useCounter, usePausableUpdateDeepCompareEffect, useSetState } from '@shined/react-use'
 
 export function App() {
@@ -10,7 +10,7 @@ export function App() {
   const pausable = usePausableUpdateDeepCompareEffect(() => actions.inc(), [state])
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="isEffectActive" value={pausable.isActive()} />
 
       <Zone>
@@ -27,6 +27,6 @@ export function App() {
         <Button onClick={() => setState({ count: 0 })}>{'Set "same" value'}</Button>
         <Button onClick={addOne}>Set different value</Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

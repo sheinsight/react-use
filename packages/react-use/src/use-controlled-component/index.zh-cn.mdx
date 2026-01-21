@@ -29,8 +29,12 @@ export interface ControlledComponentProps<T> = {
 尝试清除输入并输入一些内容。
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## 用法 \{#usage}
 

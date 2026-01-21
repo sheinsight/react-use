@@ -16,8 +16,12 @@ import { HooksType } from '@/components'
 尝试在两秒内快速点击检查按钮，两秒后再试一次，或重置超时并再次尝试。
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## 用法 \{#usage}
 

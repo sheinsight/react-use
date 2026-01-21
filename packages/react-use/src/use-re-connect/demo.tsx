@@ -1,4 +1,4 @@
-import { Card, Toaster, toast } from '@/components'
+import { Section, Toaster, toast } from '@/components'
 import { useReConnect } from '@shined/react-use'
 
 export function App() {
@@ -7,9 +7,9 @@ export function App() {
   })
 
   return (
-    <Card>
+    <Section>
       <div>This component will show a toast when the user reconnects to the internet.</div>
       <Toaster />
-    </Card>
+    </Section>
   )
 }

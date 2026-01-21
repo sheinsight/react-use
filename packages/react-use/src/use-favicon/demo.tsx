@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useFavicon } from '@shined/react-use'
 
 export function App() {
@@ -6,7 +6,7 @@ export function App() {
   const href = favicon.href ? favicon.href.slice(0, 64) + (favicon.href.length > 64 ? '...' : '') : ''
 
   return (
-    <Card>
+    <Section>
       {favicon && <img src={favicon.href ?? ''} alt="icon" className="size-12 rounded" />}
       <KeyValue label="Favicon" value={href} />
       <Zone>
@@ -15,6 +15,6 @@ export function App() {
         <Button onClick={() => favicon.setEmojiFavicon('🪝')}>Set emoji favicon</Button>
         <Button onClick={() => favicon.setPreviousFavicon()}>Set previous favicon</Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

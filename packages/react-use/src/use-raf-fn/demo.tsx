@@ -1,4 +1,4 @@
-import { Button, Card } from '@/components'
+import { Button, Section } from '@/components'
 import { useRafFn } from '@shined/react-use'
 
 export function App() {
@@ -17,8 +17,8 @@ export function App() {
   }
 
   return (
-    <Card>
+    <Section>
       <Button onClick={handlerClick}>Log in RAF & do heavy work</Button>
-    </Card>
+    </Section>
   )
 }

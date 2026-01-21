@@ -1,11 +1,11 @@
-import { Card } from '@/components'
+import { Section } from '@/components'
 import { useElementSize } from '@shined/react-use'
 
 export function App() {
   const { height, width } = useElementSize('#el-size')
 
   return (
-    <Card>
+    <Section>
       <textarea
         id="el-size"
         disabled
@@ -13,6 +13,6 @@ export function App() {
         value={JSON.stringify({ height, width }, null, 2)}
         onChange={() => {}} // Prevent React warning
       />
-    </Card>
+    </Section>
   )
 }

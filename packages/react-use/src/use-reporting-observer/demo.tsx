@@ -1,4 +1,4 @@
-import { Card } from '@/components'
+import { Section } from '@/components'
 import { useReportingObserver } from '@shined/react-use'
 
 export function App() {
@@ -6,5 +6,5 @@ export function App() {
     console.log(reports)
   })
 
-  return <Card>See log in console for reports</Card>
+  return <Section>See log in console for reports</Section>
 }

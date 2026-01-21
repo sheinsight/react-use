@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, OTP, Toaster, Zone, toast } from '@/components'
+import { Button, KeyValue, OTP, Section, Toaster, Zone, toast } from '@/components'
 import { useSafeState, useUnmount, useUpdateEffect } from '@shined/react-use'
 
 export function App() {
@@ -13,7 +13,7 @@ export function App() {
   useUnmount(() => toast.remove())
 
   return (
-    <Card>
+    <Section>
       <Zone border="primary" row={false}>
         <KeyValue label="Basic State" value={state} />
         {/* biome-ignore format: for demo */}
@@ -34,6 +34,6 @@ export function App() {
         </Zone>
       </Zone>
       <Toaster />
-    </Card>
+    </Section>
   )
 }

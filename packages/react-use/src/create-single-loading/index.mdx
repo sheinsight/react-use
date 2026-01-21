@@ -20,8 +20,12 @@ You need to install `@shined/reactive` to use this utility.
 ## Demo
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage \{#usage}
 

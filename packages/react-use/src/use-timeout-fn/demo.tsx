@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Toaster, Zone, toast } from '@/components'
+import { Button, KeyValue, Section, Toaster, Zone, toast } from '@/components'
 import { useTimeoutFn, useUnmount } from '@shined/react-use'
 
 export function App() {
@@ -11,13 +11,13 @@ export function App() {
   useUnmount(() => toast.remove())
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="isActive" value={pausable.isActive()} />
       <Zone>
         <Button onClick={() => pausable.resume(true)}>Start timeout</Button>
         <Button onClick={() => pausable.pause(true)}>Stop timeout</Button>
       </Zone>
       <Toaster />
-    </Card>
+    </Section>
   )
 }

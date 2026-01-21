@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useCounter, useIntervalFn } from '@shined/react-use'
 
 export function App() {
@@ -8,7 +8,7 @@ export function App() {
   const isActive = controls.isActive()
 
   return (
-    <Card>
+    <Section>
       <Zone>
         <KeyValue label="Active">{isActive}</KeyValue>
         <KeyValue label="Count">{count}</KeyValue>
@@ -19,6 +19,6 @@ export function App() {
         {/* biome-ignore format: for demo */}
         <Button disabled={isActive} onClick={() => controls.resume(true)}>Resume</Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

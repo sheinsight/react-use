@@ -1,4 +1,4 @@
-import { Button, Card, Toaster, Zone, wait as mockFetch, toast } from '@/components'
+import { Button, Section, Toaster, Zone, wait as mockFetch, toast } from '@/components'
 import { useMemoize, useUnmount } from '@shined/react-use'
 
 async function getUserById(id: number) {
@@ -23,7 +23,7 @@ export function App() {
   useUnmount(() => toast.remove())
 
   return (
-    <Card>
+    <Section>
       <Zone>
         <Button onClick={() => show(1)}>Fetch user 1</Button>
         <Button onClick={() => show(2)}>Fetch user 2</Button>
@@ -35,6 +35,6 @@ export function App() {
         <Button onClick={() => showWithoutCache(1)}>Reload user 1 (no cache)</Button>
       </Zone>
       <Toaster />
-    </Card>
+    </Section>
   )
 }

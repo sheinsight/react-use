@@ -27,8 +27,12 @@ It possesses the following features:
 ## Demo \{#demo}
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage \{#usage} 
 

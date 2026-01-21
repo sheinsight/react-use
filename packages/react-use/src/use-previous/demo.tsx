@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useCounter, usePrevious } from '@shined/react-use'
 import { StrictMode } from 'react'
 
@@ -10,7 +10,7 @@ export function App() {
   const prePrePreviousCount = usePrevious(prePrevious?.count)
 
   return (
-    <Card>
+    <Section>
       <Zone>
         <KeyValue label="CurCount" value={count} />
         <KeyValue label="PreCount" value={previousCount} />
@@ -26,7 +26,7 @@ export function App() {
           <Content />
         </StrictMode>
       </Zone>
-    </Card>
+    </Section>
   )
 }
 

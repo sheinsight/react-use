@@ -16,8 +16,12 @@ import { HooksType } from '@/components'
 点击下方的 `input`、`button` 或通过 `tab` 切换，观察活动元素的变化。
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## 用法 \{#usage}
 

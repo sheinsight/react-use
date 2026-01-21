@@ -16,8 +16,12 @@ import { HooksType } from '@/components'
 尝试在不同状态下增加效果的依赖计数器。
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## 用法 \{#usage}
 

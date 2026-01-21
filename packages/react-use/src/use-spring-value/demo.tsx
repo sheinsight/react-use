@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useSpringValue } from '@shined/react-use'
 
 const cls =
@@ -8,7 +8,7 @@ export function App() {
   const spring = useSpringValue(0, 1, { damping: 1 })
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Spring Value" value={spring.value} />
       <Zone className="relative h-180px w-280px">
         <div className={cls} style={{ top: `${spring.value * 80 - 32}px` }}>
@@ -20,6 +20,6 @@ export function App() {
         <Button onClick={() => spring.resume(true)}>▶️ resume</Button>
         <Button onClick={spring.restart}>🔁 restart</Button>
       </div>
-    </Card>
+    </Section>
   )
 }

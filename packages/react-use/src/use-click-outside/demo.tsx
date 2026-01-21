@@ -1,4 +1,4 @@
-import { Button, Card, Zone } from '@/components'
+import { Button, Section, Zone } from '@/components'
 import { useClickOutside, useToggle } from '@shined/react-use'
 import { useRef } from 'react'
 
@@ -10,7 +10,7 @@ export function App() {
   useClickOutside(ref, () => actions.setState(false), { ignore: ['#btn-ignored'] })
 
   return (
-    <Card>
+    <Section>
       <Zone>
         <Button onClick={actions.toggle}>Toggle Modal</Button>
         <Button variant="warning">Outer Element</Button>
@@ -23,6 +23,6 @@ export function App() {
         <h3>This is a Modal</h3>
         <p>Click outside to close</p>
       </div>
-    </Card>
+    </Section>
   )
 }

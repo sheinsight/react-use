@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useEyeDropper } from '@shined/react-use'
 
 export function App() {
@@ -6,7 +6,7 @@ export function App() {
   const shouldTextBlack = Number.parseInt(eyeDropper.sRGBHex.slice(1), 16) > 0xffffff / 2
 
   return (
-    <Card>
+    <Section>
       <Zone>
         <KeyValue label="isSupported" value={eyeDropper.isSupported} />
         <KeyValue label="sRGBHex" value={eyeDropper.sRGBHex} />
@@ -24,6 +24,6 @@ export function App() {
       >
         Color Preview Here
       </div>
-    </Card>
+    </Section>
   )
 }

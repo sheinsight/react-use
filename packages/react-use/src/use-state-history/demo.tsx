@@ -1,4 +1,4 @@
-import { Button, Card, Zone } from '@/components'
+import { Button, Section, Zone } from '@/components'
 import { useSetState, useStateHistory } from '@shined/react-use'
 
 const hash = () => Math.random().toString(36).substring(3, 9).toUpperCase()
@@ -8,7 +8,7 @@ export function App() {
   const history = useStateHistory(state, { capacity: 10 })
 
   return (
-    <Card>
+    <Section>
       <Zone border="primary">
         <pre className="mb-0 py-2">{JSON.stringify(state, null, 0)}</pre>
         <Button onClick={() => setState({ hash: hash() })}>Change hash</Button>
@@ -29,6 +29,6 @@ export function App() {
             .join('\n')}
         </pre>
       </Zone>
-    </Card>
+    </Section>
   )
 }

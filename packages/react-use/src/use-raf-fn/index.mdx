@@ -16,8 +16,12 @@ A React Hook that run a function only once on the next frame using [requestAnima
 Try to open DevTools to see the console log.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

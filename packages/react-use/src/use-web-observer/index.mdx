@@ -31,8 +31,12 @@ You should **NOT** use this Hook directly, use the high level Hooks below instea
 ## Demo
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

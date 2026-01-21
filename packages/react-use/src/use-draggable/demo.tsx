@@ -1,4 +1,4 @@
-import { Card } from '@/components'
+import { Section } from '@/components'
 import { useDraggable } from '@shined/react-use'
 
 export function App() {
@@ -24,7 +24,7 @@ export function App() {
   }
 
   return (
-    <Card>
+    <Section>
       <div
         id="drag-me"
         style={draggable.style}
@@ -48,6 +48,6 @@ export function App() {
           </div>
         </div>
       </div>
-    </Card>
+    </Section>
   )
 }

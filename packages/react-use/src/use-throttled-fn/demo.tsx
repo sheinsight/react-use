@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useCounter, useThrottledFn } from '@shined/react-use'
 
 const wait = 1000
@@ -8,7 +8,7 @@ export function App() {
   const throttledInc = useThrottledFn(actions.inc, { wait })
 
   return (
-    <Card>
+    <Section>
       <Zone>
         <KeyValue label="Count" value={count} />
         <KeyValue label="wait" value={wait} />
@@ -17,6 +17,6 @@ export function App() {
         <Button onClick={() => actions.inc()}>Increment</Button>
         <Button onClick={() => throttledInc()}>throttled increment</Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

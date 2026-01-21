@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, wait as mockFetch } from '@/components'
+import { Button, KeyValue, Section, wait as mockFetch } from '@/components'
 import { useAsyncUpdateEffect, useCounter, useSafeState, useToggle } from '@shined/react-use'
 
 export function App() {
@@ -21,12 +21,12 @@ export function App() {
   )
 
   return (
-    <Card row={false}>
+    <Section row={false}>
       <KeyValue label="Value" value={value} />
       <KeyValue label="Ignored action count" value={count} />
       <div>
         <Button onClick={toggle}>Re-fetch data</Button>
       </div>
-    </Card>
+    </Section>
   )
 }

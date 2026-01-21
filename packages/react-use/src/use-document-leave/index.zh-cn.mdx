@@ -15,8 +15,12 @@ import { HooksType } from '@/components'
 尝试将鼠标移动到浏览器视口之外以进行检查。
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## 用法 \{#usage}
 

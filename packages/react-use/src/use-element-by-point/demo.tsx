@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useElementBounding, useElementByPoint, useMouse, useStyleTag } from '@shined/react-use'
 
 export function App() {
@@ -24,7 +24,7 @@ export function App() {
   const lineCls = 'fixed pointer-events-none bg-amber/80 z-9999'
 
   return (
-    <Card>
+    <Section>
       <Zone>
         <KeyValue label="Supported" value={isSupported} />
         <KeyValue label="isActive" value={isActive} />
@@ -55,6 +55,6 @@ export function App() {
       />
       <div className={lineCls} style={{ left: x, top: 0, width: controls.isActive() ? 1 : 0, height: '100%' }} />
       <div className={lineCls} style={{ left: 0, top: y, width: '100%', height: controls.isActive() ? 1 : 0 }} />
-    </Card>
+    </Section>
   )
 }

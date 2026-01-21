@@ -22,8 +22,12 @@ import { HooksType, Since } from '@/components'
 ## 演示 \{#demo}
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## 用法 \{#usage}
 

@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue } from '@/components'
+import { Button, KeyValue, Section } from '@/components'
 import { useSafeState, useScriptTag } from '@shined/react-use'
 
 declare global {
@@ -21,9 +21,9 @@ export function App() {
   }
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Script Loaded" value={loaded} />
       <Button onClick={handleConfettiClick}>Click me</Button>
-    </Card>
+    </Section>
   )
 }

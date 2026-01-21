@@ -16,8 +16,12 @@ A React Hook that returns a function whose memory address will never change.
 Try to increase the counter to update the component to trigger re-render, you will see that the function's memory address will never change, so the toast will never show up.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

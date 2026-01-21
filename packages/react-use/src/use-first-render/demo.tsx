@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useCounter, useFirstRender } from '@shined/react-use'
 
 export function App() {
@@ -8,13 +8,13 @@ export function App() {
   console.log('Count:', count, 'isFirstRender:', isFirstRender)
 
   return (
-    <Card>
+    <Section>
       <p>Open the console to see the log. (Rspress will render twice when demo mounted)</p>
       <Zone>
         <KeyValue label="isFirstRender" value={isFirstRender} />
         <KeyValue label="Count" value={count} />
       </Zone>
       <Button onClick={() => actions.inc(1)}>Inc(1)</Button>
-    </Card>
+    </Section>
   )
 }

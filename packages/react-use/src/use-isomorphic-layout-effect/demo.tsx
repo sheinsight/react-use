@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useCounter, useIsomorphicLayoutEffect } from '@shined/react-use'
 
 export function App() {
@@ -9,12 +9,12 @@ export function App() {
   }, [count])
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Count" value={count} />
       <Zone>
         <Button onClick={() => actions.inc()}>Increment</Button>
         <Button onClick={() => actions.dec()}>Decrement</Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

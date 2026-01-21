@@ -14,8 +14,12 @@ A React Hook that use [MutationObserver API](https://developer.mozilla.org/en-US
 ## Demo
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

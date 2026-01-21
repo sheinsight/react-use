@@ -24,8 +24,12 @@ import { HooksType } from '@/components'
 它**不会**在首次挂载时执行。
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## 用法 \{#usage}
 

@@ -1,11 +1,11 @@
-import { Button, Card, Input, KeyValue, Zone } from '@/components'
+import { Button, Input, KeyValue, Section, Zone } from '@/components'
 import { useFocusWithin } from '@shined/react-use'
 
 export function App() {
   const isFocusWithin = useFocusWithin('#el-focus-within')
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Focused Within Amber Box" value={isFocusWithin} />
       <Zone id="el-focus-within" border="primary">
         {/* biome-ignore format: for demo */}
@@ -19,6 +19,6 @@ export function App() {
         <Input placeholder="Type here" />
         <Button>Click me</Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

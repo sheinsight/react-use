@@ -1,4 +1,4 @@
-import { Button, Card, Input, KeyValue, Zone, cn, wait } from '@/components'
+import { Button, Input, KeyValue, Section, Zone, cn, wait } from '@/components'
 import { generateLoremIpsum, useInfiniteList, useUpdateEffect } from '@shined/react-use'
 import { useRef } from 'react'
 
@@ -43,7 +43,7 @@ export function App() {
   }, [selection.isPartiallySelected])
 
   return (
-    <Card>
+    <Section>
       <h1 className="text-xl font-medium mt-4">1. Scroll to Load More</h1>
       <form {...form.nativeProps}>
         <Zone border="amber">
@@ -160,7 +160,7 @@ export function App() {
 
       <h1 className="text-xl font-medium mt-4">2. Click to Load More</h1>
       <LoadMoreList />
-    </Card>
+    </Section>
   )
 }
 

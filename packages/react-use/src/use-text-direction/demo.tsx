@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useLoremIpsum, useTextDirection } from '@shined/react-use'
 
 export function App() {
@@ -6,13 +6,13 @@ export function App() {
   const [dir, setDir] = useTextDirection({ initialValue: 'auto' })
 
   return (
-    <Card>
+    <Section>
       <div>{lorem}</div>
       <KeyValue label="Text direction" value={dir} />
       <Zone>
         <Button onClick={() => setDir('ltr')}>Set "LTR"</Button>
         <Button onClick={() => setDir('rtl')}>Set "RTL"</Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

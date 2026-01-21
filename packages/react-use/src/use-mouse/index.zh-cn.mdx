@@ -16,8 +16,12 @@ import { HooksType } from '@/components'
 尝试滚动页面或移动您的鼠标来观察不同类型之间的差异。
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## 用法 \{#usage}
 

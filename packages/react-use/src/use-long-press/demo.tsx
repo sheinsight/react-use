@@ -1,4 +1,4 @@
-import { Card, KeyValue } from '@/components'
+import { KeyValue, Section } from '@/components'
 import { useCounter, useLongPress } from '@shined/react-use'
 
 import type { UseLongPressReturns } from '@shined/react-use'
@@ -17,11 +17,11 @@ export function App() {
   const { bgColor, tip } = getTipAndBgColor(lp)
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Long press times" value={count} />
       <div id="el-long-press" className={`${bgColor} w-48 h-24 rounded grid place-content-center select-none`}>
         {tip}
       </div>
-    </Card>
+    </Section>
   )
 }

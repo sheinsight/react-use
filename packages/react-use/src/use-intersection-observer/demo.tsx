@@ -1,4 +1,4 @@
-import { Card, KeyValue, Zone } from '@/components'
+import { KeyValue, Section, Zone } from '@/components'
 import { useIntersectionObserver, useSafeState } from '@shined/react-use'
 
 const threshold = [0, 0.25, 0.5, 0.75, 1]
@@ -17,7 +17,7 @@ export function App() {
   useIntersectionObserver('#el-intersection', callback, { threshold })
 
   return (
-    <Card>
+    <Section>
       <Zone>
         <KeyValue label="isIntersecting" value={isIntersecting} />
         <KeyValue label="intersectionRatio" value={intersectionRatio} />
@@ -30,6 +30,6 @@ export function App() {
         </div>
         <div className="h-60 p-2 bg-amber/60 text-white rounded" />
       </div>
-    </Card>
+    </Section>
   )
 }

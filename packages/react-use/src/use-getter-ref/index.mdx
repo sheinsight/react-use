@@ -18,8 +18,12 @@ Try to increase the counter and then toast the latest ref value.
 > NOTE: Changes in the ref value will not trigger a re-render, you should call `render` to update the UI.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useCounter, useDebouncedFn } from '@shined/react-use'
 
 const wait = 300
@@ -8,7 +8,7 @@ export function App() {
   const debouncedInc = useDebouncedFn(actions.inc, { wait })
 
   return (
-    <Card>
+    <Section>
       <Zone>
         <KeyValue label="Count" value={count} />
         <KeyValue label="wait" value={wait} />
@@ -17,6 +17,6 @@ export function App() {
         <Button onClick={() => actions.inc()}>Increment</Button>
         <Button onClick={() => debouncedInc()}>Debounced increment</Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

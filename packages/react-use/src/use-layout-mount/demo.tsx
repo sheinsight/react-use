@@ -1,13 +1,13 @@
-import { Card } from '@/components'
+import { Section } from '@/components'
 import { useLayoutMount, useMount, useSafeState } from '@shined/react-use'
 import { useRef } from 'react'
 
 export function App() {
   return (
-    <Card>
+    <Section>
       <LayoutMount />
       <Mount />
-    </Card>
+    </Section>
   )
 }
 

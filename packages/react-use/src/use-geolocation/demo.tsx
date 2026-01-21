@@ -1,4 +1,4 @@
-import { Card, Input, KeyValue, Zone } from '@/components'
+import { Input, KeyValue, Section, Zone } from '@/components'
 import { useDateFormat, useGeolocation } from '@shined/react-use'
 
 export function App() {
@@ -8,7 +8,7 @@ export function App() {
   const borderColor = geo.isSupported ? (geo.isLocating ? 'amber' : 'primary') : 'red'
 
   return (
-    <Card>
+    <Section>
       <Zone>
         <KeyValue label="Is supported" value={geo.isSupported} />
         <KeyValue label="Is locating" value={geo.isLocating} />
@@ -29,6 +29,6 @@ export function App() {
           <Input disabled value="Not supported" />
         )}
       </Zone>
-    </Card>
+    </Section>
   )
 }

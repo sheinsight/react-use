@@ -16,8 +16,12 @@ import { HooksType } from '@/components'
 点击 `requestDevice` 以选择一个蓝牙设备，然后点击 `connect` 来连接该设备。
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## 用法 \{#usage}
 

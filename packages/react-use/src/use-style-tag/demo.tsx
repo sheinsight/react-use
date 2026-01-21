@@ -1,4 +1,4 @@
-import { Button, Card, Input, Zone } from '@/components'
+import { Button, Input, Section, Zone } from '@/components'
 import { useStyleTag } from '@shined/react-use'
 
 const initialCss = '#el-style-tag { background: skyblue; }'
@@ -7,7 +7,7 @@ export function App() {
   const { load, unload, setCss, css } = useStyleTag(initialCss, { manual: true })
 
   return (
-    <Card>
+    <Section>
       <div id="el-style-tag" className="bg-amber/80 rounded size-120px grid place-content-center">
         #el-style-tag
       </div>
@@ -16,6 +16,6 @@ export function App() {
         <Button onClick={load}>Load</Button>
         <Button onClick={unload}>Unload</Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

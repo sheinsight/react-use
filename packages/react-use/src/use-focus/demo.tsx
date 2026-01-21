@@ -1,4 +1,4 @@
-import { Button, Card, Input, KeyValue, Zone } from '@/components'
+import { Button, Input, KeyValue, Section, Zone } from '@/components'
 import { useFocus } from '@shined/react-use'
 
 export function App() {
@@ -9,7 +9,7 @@ export function App() {
   const [pFocused, pActions] = useFocus('#el-focus-p')
 
   return (
-    <Card>
+    <Section>
       <Zone border="primary" row={false} className="mb-6">
         <div className="text-3xl">Welcome, {inputFocused ? '🙈' : '🐵'}</div>
         <Zone>
@@ -38,6 +38,6 @@ export function App() {
           <Button onClick={() => pActions.blur()}>Blur #el-focus-p</Button>
         </Zone>
       </Zone>
-    </Card>
+    </Section>
   )
 }

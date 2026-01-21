@@ -1,4 +1,4 @@
-import { Card } from '@/components'
+import { Section } from '@/components'
 import { useIntervalFn, useTargetElement } from '@shined/react-use'
 import { useId, useRef } from 'react'
 
@@ -23,7 +23,7 @@ export function App() {
   }, 1000)
 
   return (
-    <Card row>
+    <Section row>
       <button type="button" className="green-btn border-0 text-base rounded bg-primary/60 px-4 py-1">
         button.green-btn
       </button>
@@ -35,6 +35,6 @@ export function App() {
       {/* biome-ignore format: no wrap */}
       <div id={`${id}-div`} className="blue-bg rounded bg-purple/80 px-4 py-1">{'id={`${id}-div`}'}</div>
       <section className="rounded bg-red/80 px-4 py-1">section</section>
-    </Card>
+    </Section>
   )
 }

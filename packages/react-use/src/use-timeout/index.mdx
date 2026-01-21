@@ -16,8 +16,12 @@ A React Hook that create a state that changes after a specified delay.
 Try to click the check button quickly in two seonds and after two seconds, or reset timeout and do it again.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, LabelInput, Zone } from '@/components'
+import { Button, KeyValue, LabelInput, Section, Zone } from '@/components'
 import { useControlledComponent, usePagination } from '@shined/react-use'
 
 const TOTAL = 100
@@ -11,7 +11,7 @@ export function App() {
   const [state, actions] = usePagination({ list: DATA, pageSize: +pageSizeInput.value, total: TOTAL })
 
   return (
-    <Card>
+    <Section>
       <Zone>
         <KeyValue label="Total count" value={TOTAL} />
         <LabelInput label="Page size" {...pageSizeInput.props} />
@@ -48,6 +48,6 @@ export function App() {
         <LabelInput className="min-w-60px! w-60px" label="Target Page" {...targetPageInput.props} />
         <Button onClick={() => actions.go(+targetPageInput.value)}>Go</Button>
       </Zone>
-    </Card>
+    </Section>
   )
 }

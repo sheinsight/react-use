@@ -1,4 +1,4 @@
-import { Button, Card } from '@/components'
+import { Button, Section } from '@/components'
 import { useClipboardItems } from '@shined/react-use'
 
 export function App() {
@@ -13,10 +13,10 @@ export function App() {
   }
 
   return (
-    <Card>
+    <Section>
       <Button disabled={clipboard.copied} onClick={handleClick}>
         {clipboard.copied ? 'Copied!' : 'Copy text item'}
       </Button>
-    </Card>
+    </Section>
   )
 }

@@ -1,4 +1,4 @@
-import { Card, Key, Zone } from '@/components'
+import { Key, Section, Zone } from '@/components'
 import { useKeyModifier } from '@shined/react-use'
 
 export function App() {
@@ -11,7 +11,7 @@ export function App() {
   const isScrollLockPressed = useKeyModifier('ScrollLock')
 
   return (
-    <Card>
+    <Section>
       <Zone>
         <Key name="Control" isPressed={isCtrlPressed} size="md" />
         <Key name="Alt/Opt" isPressed={isAltPressed} size="md" />
@@ -23,6 +23,6 @@ export function App() {
         <Key name="NumLock" isPressed={isNumLockPressed} size="md" />
         <Key name="ScrollLock" isPressed={isScrollLockPressed} size="md" />
       </Zone>
-    </Card>
+    </Section>
   )
 }

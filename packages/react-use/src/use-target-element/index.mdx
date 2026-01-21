@@ -16,8 +16,12 @@ A React Hook that helps to get the target element via selector, ref, element and
 Open DevTools to see the log.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

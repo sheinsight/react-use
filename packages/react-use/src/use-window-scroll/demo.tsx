@@ -1,11 +1,11 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useWindowScroll } from '@shined/react-use'
 
 export function App() {
   const scroll = useWindowScroll({ behavior: 'smooth' })
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="(X, Y)" value={`(${scroll.x}, ${scroll.y})`} />
       <KeyValue label="(maxX, maxY)" value={`(${scroll.maxX}, ${scroll.maxY})`} />
       <Button onClick={() => scroll.scrollTo({ x: 160, y: 160 })}>Scroll to (160, 160)</Button>
@@ -24,6 +24,6 @@ export function App() {
         </Button>
       </Zone>
       <div className="opacity-0 w-[calc(100vw+320px)] h-0">horizontal scroll helper</div>
-    </Card>
+    </Section>
   )
 }

@@ -16,8 +16,12 @@ A React Hook that uses the [Intersection Observer API](https://developer.mozilla
 Try to scroll down to see the effect.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

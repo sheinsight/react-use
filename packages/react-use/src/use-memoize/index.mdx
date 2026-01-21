@@ -15,8 +15,12 @@ A React Hook that return a function that memoize value (return same memoized val
 Try to click multiple times to fetch, you will see that the first fetch will actually fetch data, but the rest will return the memoized value.
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

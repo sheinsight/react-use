@@ -17,8 +17,12 @@ import { HooksType, Since } from '@/components'
 打开控制台查看日志。
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## 用法 \{#usage}
 

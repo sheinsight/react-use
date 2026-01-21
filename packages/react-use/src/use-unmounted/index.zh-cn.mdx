@@ -15,8 +15,12 @@ import { HooksType } from '@/components'
 尝试点击 `开始计时器`，然后在一秒内点击 "切换挂载" 按钮以查看结果。
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## 用法 \{#usage}
 

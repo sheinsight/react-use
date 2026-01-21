@@ -1,4 +1,4 @@
-import { Button, Card, KeyValue, Zone, cn, wait as mockFetch } from '@/components'
+import { Button, KeyValue, Section, Zone, cn, wait as mockFetch } from '@/components'
 import { generateLoremIpsum, useInfiniteScroll, useSafeState, useVersionedAction } from '@shined/react-use'
 import { useRef } from 'react'
 
@@ -37,7 +37,7 @@ export function App() {
   }
 
   return (
-    <Card>
+    <Section>
       <Zone>
         <KeyValue label="Loading" value={infiniteScroll.loading} />
         <KeyValue label="isLoadDone" value={infiniteScroll.isLoadDone} />
@@ -61,6 +61,6 @@ export function App() {
         {infiniteScroll.isLoadDone && <div className="text-center my-1 py-1 dark:text-white/60">No more data</div>}
       </div>
       <Button onClick={reset}>Reset List</Button>
-    </Card>
+    </Section>
   )
 }

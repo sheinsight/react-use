@@ -15,8 +15,12 @@ import { HooksType } from '@/components'
 尝试以不同状态关闭/刷新此页面，看看会发生什么！
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## 用法 \{#usage}
 

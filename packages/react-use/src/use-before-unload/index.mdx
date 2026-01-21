@@ -15,8 +15,12 @@ A React Hook to perform actions **before the page is unloaded** (e.g., closing, 
 Try to close/refresh this page with different status and see what happens!
 
 import { App } from './demo'
+import demoSource from './demo.tsx?raw'
+import { Card } from '@/components'
 
-<App />
+<Card source={demoSource}>
+  <App />
+</Card>
 
 ## Usage
 

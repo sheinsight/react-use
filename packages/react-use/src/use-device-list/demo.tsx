@@ -1,11 +1,11 @@
-import { Button, Card, KeyValue, Zone } from '@/components'
+import { Button, KeyValue, Section, Zone } from '@/components'
 import { useDeviceList } from '@shined/react-use'
 
 export function App() {
   const device = useDeviceList({ requestPermissions: true })
 
   return (
-    <Card>
+    <Section>
       <KeyValue label="Permission granted" value={device.isPermissionGranted} />
       {!device.isPermissionGranted && <Button onClick={device.ensurePermission}>Request permission</Button>}
       {device.isPermissionGranted && device.devices.length > 0 ? (
@@ -19,6 +19,6 @@ export function App() {
       ) : (
         <KeyValue label="Devices" value="No devices found" />
       )}
-    </Card>
+    </Section>
   )
 }
