@@ -310,7 +310,7 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
 
   useUpdateEffect(() => void refreshWithStatusCheck(), [...(options.refreshDependencies ?? [])])
 
-  // revalidate when cache becomes stale, but skip the first time when component is mounted
+  // revalidate when cache becomes stale
   // install of `useUpdateEffect`: cover the case when cache is enabled and stale at the first time mount
   useEffect(() => {
     if (!cacheActions.isCacheEnabled || !cache.stale || latest.current.manual) return
