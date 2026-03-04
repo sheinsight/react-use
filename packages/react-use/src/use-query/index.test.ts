@@ -425,7 +425,7 @@ describe('useQuery', () => {
       window.dispatchEvent(new FocusEvent('focus'))
     })
 
-    expect(mockFetcher).toHaveBeenCalledTimes(2)
+    expect(mockFetcher).toHaveBeenCalledTimes(1)
   })
 
   it('should refresh data on focus when custom isVisible', async () => {
@@ -491,11 +491,20 @@ describe('useQuery', () => {
     expect(result.current.data).toBe('data')
 
     await act(async () => {
-      // Wait for cache to expire
-      await vi.advanceTimersByTimeAsync(160)
+      // Wait for cache to not expire yet
+      await vi.advanceTimersByTimeAsync(80)
     })
 
-    expect(result.current.data).toBe(undefined)
+    expect(result.current.data).toBe('data') // should return stale data immediately
+
+    mockFetcher.mockResolvedValue('newData')
+
+    await act(async () => {
+      // Wait for cache to expire
+      await vi.advanceTimersByTimeAsync(80)
+    })
+
+    expect(result.current.data).toBe('newData') // should return new data after cache expired
   })
 
   it('should respect cache expiration `false`', async () => {
@@ -607,7 +616,7 @@ describe('useQuery', () => {
       window.dispatchEvent(new Event('online'))
     })
 
-    expect(mockFetcher).toHaveBeenCalledTimes(2)
+    expect(mockFetcher).toHaveBeenCalledTimes(1) // not refresh when enable cache
   })
 
   it('should handle refreshOnReconnect when custom isOnline', async () => {
@@ -670,7 +679,7 @@ describe('useQuery', () => {
       result.current.refresh()
     })
 
-    expect(result.current.data).toBe('newData')
+    expect(result.current.data).toBe('data')
     expect(result.current.params).toEqual([])
 
     await act(async () => {

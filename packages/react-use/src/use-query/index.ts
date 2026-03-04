@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { resolveMutateActions } from '../use-async-fn'
 import { useDebouncedFn } from '../use-debounced-fn'
 import { useIntervalFn } from '../use-interval-fn'
@@ -10,7 +11,8 @@ import { useRetryFn } from '../use-retry-fn'
 import { useStableFn } from '../use-stable-fn'
 import { useThrottledFn } from '../use-throttled-fn'
 import { useUpdateEffect } from '../use-update-effect'
-import { isNumber } from '../utils/basic'
+import { isDefined, isNumber } from '../utils/basic'
+import { shallowEqual } from '../utils/equal'
 import { useQueryCache } from './use-query-cache'
 
 import type { DependencyList } from 'react'
@@ -199,11 +201,22 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
   const service = useLoadingSlowFn<T, D, E>(
     useRetryFn<T, E>(
       ((...args: Parameters<T>) => {
+        // no cache, directly fetch
         if (!cacheActions.isCacheEnabled) return latest.current.fetcher(...args)
+
+        // prevent multiple call in different components with the same cacheKey, reuse the promise
         const prePromise = cacheActions.getPromiseCache()
         if (prePromise) return prePromise
+
+        // SWR: stale-while-revalidate
+        const { data, params, stale } = latest.current.cache
+        const isMeetSWR = isDefined(data) && !stale && shallowEqual(args, params)
+        if (isMeetSWR) return Promise.resolve(data)
+
+        // if not meet SWR, fetch new data and update promise cache
         const promise = latest.current.fetcher(...args)
         cacheActions.setPromiseCache(promise)
+
         return promise
       }) as T,
       {
@@ -296,6 +309,14 @@ export function useQuery<T extends AnyFunc, D = Awaited<ReturnType<T>>, E = any>
   )
 
   useUpdateEffect(() => void refreshWithStatusCheck(), [...(options.refreshDependencies ?? [])])
+
+  // revalidate when cache becomes stale, but skip the first time when component is mounted
+  // install of `useUpdateEffect`: cover the case when cache is enabled and stale at the first time mount
+  useEffect(() => {
+    if (!cacheActions.isCacheEnabled || !cache.stale || latest.current.manual) return
+    if (service.loading || cacheActions.getPromiseCache()) return
+    refreshWithStatusCheck()
+  }, [cache.stale, cacheActions.isCacheEnabled])
 
   const mutateWithCache = useStableFn((...actions: UseAsyncFnMutateAction<D | undefined, Parameters<T> | []>) => {
     const data = cacheActions.isCacheEnabled ? latest.current.cache.data : service.value

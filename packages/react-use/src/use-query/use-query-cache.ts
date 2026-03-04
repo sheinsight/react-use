@@ -21,6 +21,7 @@ const dataCache: UseQueryCacheLike<unknown> = /* #__PURE__ */ new Map()
 const paramsCache: Map<string, unknown[]> = /* #__PURE__ */ new Map()
 const timerCache: Map<string, SetTimeoutReturn> = /* #__PURE__ */ new Map()
 const promiseCache: Map<string, Promise<unknown>> = /* #__PURE__ */ new Map()
+const staleCache: Set<string> = /* #__PURE__ */ new Set()
 
 const cacheBus = createEventBus()
 
@@ -32,7 +33,7 @@ export function useQueryCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     compare?: (prevData: D | undefined, nextData: D | undefined) => boolean
   } = {},
 ): [
-  { data: D | undefined; params: Parameters<T> | [] },
+  { data: D | undefined; params: Parameters<T> | []; stale: boolean },
   {
     setCache: (value: D | undefined, params?: Parameters<T> | []) => void
     getPromiseCache: () => Promise<unknown> | undefined
@@ -46,6 +47,7 @@ export function useQueryCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
   const cacheKeyValue = unwrapGettable(options.cacheKey)
   const cachedData = (cacheKeyValue ? provider.get(cacheKeyValue) : undefined) as D | undefined
   const cachedParams = (cacheKeyValue ? (paramsCache.get(cacheKeyValue) ?? []) : []) as Parameters<T> | []
+  const cachedStale = Boolean(cacheKeyValue && staleCache.has(cacheKeyValue))
   const cacheExpirationTime = options.cacheExpirationTime ?? 5 * 60_000
 
   const latest = useLatest({
@@ -75,7 +77,7 @@ export function useQueryCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
 
     if (isNumber(cacheExpirationTime)) {
       const timer = setTimeout(() => {
-        provider.delete(cacheKeyValue)
+        staleCache.add(cacheKeyValue)
         timerCache.delete(cacheKeyValue)
         cacheBus.emit(cacheKeyValue)
       }, cacheExpirationTime)
@@ -91,20 +93,30 @@ export function useQueryCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
 
     const preValue = provider.get(cacheKeyValue) as D | undefined
     const preParams = paramsCache.get(cacheKeyValue) as Parameters<T> | [] | undefined
+    const wasStale = staleCache.has(cacheKeyValue)
 
-    if (shallowEqual(preValue, value) && shallowEqual(preParams, params)) return
+    if (isDefined(value) && shallowEqual(preValue, value) && shallowEqual(preParams, params)) {
+      if (wasStale) {
+        staleCache.delete(cacheKeyValue)
+        resetCacheTimer()
+        cacheBus.emit(cacheKeyValue)
+      }
+      return
+    }
 
     if (!isDefined(value)) {
       provider.delete(cacheKeyValue)
       timerCache.delete(cacheKeyValue)
+      staleCache.delete(cacheKeyValue)
     } else {
       provider.set(cacheKeyValue, value)
+      staleCache.delete(cacheKeyValue)
       resetCacheTimer()
     }
 
     paramsCache.set(cacheKeyValue, params)
 
-    if (!latest.current.compare(preValue, value) || !shallowEqual(preParams, params)) {
+    if (wasStale || !latest.current.compare(preValue, value) || !shallowEqual(preParams, params)) {
       cacheBus.emit(cacheKeyValue)
     }
   })
@@ -135,7 +147,7 @@ export function useQueryCache<T extends AnyFunc, D = Awaited<ReturnType<T>>>(
     isCacheEnabled,
   }))
 
-  return [{ data: cachedData, params: cachedParams }, actions] as const
+  return [{ data: cachedData, params: cachedParams, stale: cachedStale }, actions] as const
 }
 
 export const mutate: UseQueryMutate = /* #__PURE__ */ createMutate(dataCache, paramsCache)
@@ -168,6 +180,7 @@ function createMutate(dataCache: UseQueryCacheLike<unknown>, paramsCache: Map<st
         dataCache.delete(key)
       }
 
+      staleCache.delete(key)
       paramsCache.set(key, nextParams)
 
       cacheBus.emit(key)
